@@ -6,7 +6,7 @@ import server from '../src/main'
 
 describe('aktnmap', () => {
   let userService, userObject, orgService, orgObject, authorisationService, devicesService, pusherService, sns,
-  memberService, tagService, tagObject, groupService, groupObject
+    memberService, tagService, tagObject, groupService, groupObject
   let now = new Date()
   let logFilePath = path.join(__dirname, 'logs', 'aktnmap-' + now.toISOString().slice(0, 10) + '.log')
   const device = {
@@ -59,7 +59,7 @@ describe('aktnmap', () => {
     expect(sns).toExist()
   })
 
-  it('creates a user with its org', () => {
+  it('creates a user with his org', () => {
     let operation = userService.create({
       email: 'test@test.org',
       password: 'test-password',
@@ -107,7 +107,7 @@ describe('aktnmap', () => {
       password: 'test-password',
       name: 'test-user'
     }, { checkAuthorisation: true })
-    .catch(error => {
+    .catch(() => {
       let log = 'duplicate key error collection: kalisio-test.users'
       // FIXME: need to let some time to proceed with log file
       // Didn't find a better way since fs.watch() does not seem to work...
@@ -267,7 +267,7 @@ describe('aktnmap', () => {
   // Let enough time to process
   .timeout(10000)
 
-  it('restore user tags, group to prepare testing user cleanup', () => {
+  it('restore user tags, group to prepare testing cleanup', () => {
     return memberService.patch(userObject._id.toString(), { // We need at least devices for subscription
       tags: [{ value: 'test', scope: 'members' }],
       devices: userObject.devices
@@ -286,30 +286,40 @@ describe('aktnmap', () => {
   // Let enough time to process
   .timeout(10000)
 
-  it('removes a user', () => {
-    let operation = userService.remove(userObject._id, { user: userObject, checkAuthorisation: true })
+  it('removes the user from his organisation', () => {
+    let operation = authorisationService.remove(orgObject._id, {
+      query: {
+        scope: 'organisations',
+        subjects: userObject._id.toString(),
+        subjectsService: orgObject._id.toString() + '/members',
+        resourcesService: 'organisations'
+      },
+      user: userObject,
+      checkAuthorisation: true,
+      force: true // By pass checks for tests
+    })
+    .then(authorisation => {
+      expect(authorisation).toExist()
+      return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
+    })
     .then(user => {
-      return userService.find({ query: { name: 'test-user' }, checkAuthorisation: true })
+      // Update user with his new permissions
+      userObject = user
+      expect(userObject.organisations).toExist()
+      expect(userObject.organisations.length === 0).beTrue()
+      expect(userObject.tags).toExist()
+      expect(userObject.tags.length === 0).beTrue()
+      expect(userObject.groups).toExist()
+      expect(userObject.groups.length === 0).beTrue()
     })
-    .then(users => {
-      expect(users.data.length === 0).beTrue()
-    })
-    // We need to synchronize 2 events
     let events = new Promise((resolve, reject) => {
       // This should unsubscribe device to all topics: org, group, tag
       const expectedUnsubscriptions = 3
       let unsubscriptions = 0
-      // This should unregister the device
-      let userDeleted = false
-      sns.once('userDeleted', endpointArn => {
-        expect(userObject.devices[0].arn).to.equal(endpointArn)
-        userDeleted = true
-        if (userDeleted && (unsubscriptions === expectedUnsubscriptions)) resolve()
-      })
       sns.on('unsubscribed', (subscriptionArn) => {
         // We do not store subscription ARN
         unsubscriptions++
-        if (userDeleted && (unsubscriptions === expectedUnsubscriptions)) {
+        if (unsubscriptions === expectedUnsubscriptions) {
           sns.removeAllListeners('unsubscribed')
           resolve()
         }
@@ -319,6 +329,34 @@ describe('aktnmap', () => {
   })
   // Let enough time to process
   .timeout(20000)
+
+  it('removes the user and his organisation', () => {
+    let operation = userService.remove(userObject._id, { user: userObject, checkAuthorisation: true })
+    .then(user => {
+      return userService.find({ query: {}, checkAuthorisation: true })
+    })
+    .then(users => {
+      expect(users.data.length === 0).beTrue()
+      return orgService.remove(orgObject._id, { force: true })
+    })
+    .then(org => {
+      return orgService.find({ query: {} })
+    })
+    .then(orgs => {
+      expect(orgs.data.length === 0).beTrue()
+    })
+    let event = new Promise((resolve, reject) => {
+      // This should unregister the device
+      let userDeleted = false
+      sns.once('userDeleted', endpointArn => {
+        expect(userObject.devices[0].arn).to.equal(endpointArn)
+        resolve()
+      })
+    })
+    return Promise.all([operation, event])
+  })
+  // Let enough time to process
+  .timeout(10000)
 
   // Cleanup
   after(() => {

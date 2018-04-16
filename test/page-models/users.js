@@ -1,7 +1,5 @@
 import { Selector } from 'testcafe'
-import VueSelector from 'testcafe-vue-selectors'
 import ApplicationLayout from './layout'
-import _ from 'lodash'
 
 export default class Users extends ApplicationLayout {
   constructor (authentication, account, organisations) {
@@ -16,6 +14,7 @@ export default class Users extends ApplicationLayout {
       await this.auth.signIn(test, users[i])
       await this.auth.logOut(test)
       await test.click(Selector('#login-link'))
+      await test.wait(2000)
     }
   }
   async unregisterUsers (test, users) {
@@ -24,7 +23,7 @@ export default class Users extends ApplicationLayout {
       await this.org.deleteOrganisation(test, users[i].name)
       await this.account.removeAccount(test, users[i].name)
       await test.click('#login-link')
+      await test.wait(2000)
     }
   }
 }
-

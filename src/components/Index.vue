@@ -22,8 +22,7 @@ export default {
       if (typeof result === 'string') {
         // Redirect to a given route based on authentication state
         this.$router.push({ name: result })
-      }
-      else if (!result) {
+      } else if (!result) {
         // This route was previously allowed but due to changes in authorisations it is not anymore
         this.$router.push({ name: (this.user ? 'home' : 'login') })
       }
@@ -95,15 +94,15 @@ export default {
       })
     }
     // Check for API version, this one is not a service but a basic route so we don't use Feathers client
-    this.$store.set('about.client', {
+    this.$store.set('capabilities.client', {
       version: config.version,
       buildNumber: config.buildNumber,
       domain: config.domain
     })
-    window.fetch(this.$api.getBaseUrl() + config.apiPath + '/about')
+    window.fetch(this.$api.getBaseUrl() + config.apiPath + '/capabilities')
       .then(response => response.json())
       .then(api => {
-        this.$store.set('about.api', api)
+        this.$store.set('capabilities.api', api)
         // FIXME: we should elaborate a more complex check between compatible versions
         if (api.version === config.version) {
           if (!api.buildNumber) return

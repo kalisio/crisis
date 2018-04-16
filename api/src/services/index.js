@@ -14,11 +14,12 @@ module.exports = async function () {
 
   // Set up our plugin services
   try {
-    app.use(app.get('apiPath') + '/about', (req, res, next) => {
+    app.use(app.get('apiPath') + '/capabilities', (req, res, next) => {
       let response = {
         name: 'aktnmap',
         domain: app.get('domain'),
-        version: packageInfo.version
+        version: packageInfo.version,
+        billing: app.get('billing')
       }
       if (process.env.BUILD_NUMBER) {
         response.buildNumber = process.env.BUILD_NUMBER
@@ -46,8 +47,7 @@ module.exports = async function () {
     app.configureService('devices', app.getService('devices'), servicesPath)
     await app.configure(kMap)
     await app.configure(kEvent)
-  }
-  catch (error) {
+  } catch (error) {
     logger.error(error.message)
   }
 
