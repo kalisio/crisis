@@ -8,7 +8,7 @@ services:
       args:
         BUILD_NUMBER: ${BUILD_NUMBER}
     container_name: aktnmap
-    image: kalisio/aktnmap:${FLAVOR}
+    image: kalisio/aktnmap:${VERSION_TAG}
     depends_on:
       - mongodb-aktnmap
     links:
@@ -42,6 +42,20 @@ services:
     image: mongo
     volumes:
       - mongodb_aktnmap:/data/db
+    networks:
+      - aktnmap
+  mongodb-aktnmap-backup:
+    container_name: mongodb-aktnmap-backup
+    image: stefanprodan/mgob
+    depends_on:
+      - mongodb-aktnmap
+    links:
+      - mongodb-aktnmap:mongodb
+    volumes:
+      - ./app.backup.yml:/config/aktnmap-${FLAVOR}.yml
+    environment:
+      - S3_ACCESS_KEY
+      - S3_SECRET_ACCESS_KEY
     networks:
       - aktnmap
 
