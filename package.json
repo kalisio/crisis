@@ -109,7 +109,7 @@
     "rxjs": "^5.4.1",
     "showdown": "^1.8.6",
     "socket.io-client": "^2.0.1",
-    "testcafe": "^0.19.2",
+    "testcafe": "^13.1.1",
     "testcafe-vue-selectors": "^3.0.0",
     "togeojson": "^0.16.0",
     "uglifyjs-webpack-plugin": "^1.2.3",
