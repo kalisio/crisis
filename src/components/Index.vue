@@ -73,7 +73,7 @@ export default {
         }, 3000)
       })
       // Display error message if we have been banned from the server
-      this.$api.socket.on('disconnect', (reason) => {
+      this.$api.socket.on('rate-limit', (error) => {
         Alert.create({
           html: this.$t('Index.REFUSED'),
           actions: [{
