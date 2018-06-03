@@ -98,6 +98,5 @@ module.exports = {
     */
   },
   map: require('./map'),
-  globe: require('./globe'),
   routes: require('./routes')
 }
