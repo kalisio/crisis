@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { hooks as coreHooks } from 'kCore'
 import { hooks as teamHooks } from 'kTeam'
 import { hooks as notifyHooks } from 'kNotify'
 import { when } from 'feathers-hooks-common'
@@ -8,12 +9,14 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [ coreHooks.preventEscalation ],
     update: [],
     patch: [],
-    remove: [ when(hook => hook.params.resource && !hook.params.resource.deleted,
-      teamHooks.preventRemovingLastOwner('organisations'),
-      teamHooks.preventRemovingLastOwner('groups')) ]
+    remove: [ coreHooks.preventEscalation,
+      // Except when the resource is deleted by a owner check to keep at least one
+      when(hook => !_.get(hook.params, 'resource.deleted', false),
+        teamHooks.preventRemovingLastOwner('organisations'),
+        teamHooks.preventRemovingLastOwner('groups')) ]
   },
 
   after: {
