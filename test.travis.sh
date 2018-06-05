@@ -9,11 +9,11 @@ else
 	docker-compose -f docker-compose.yml up -d mongodb-aktnmap
 	# Output directory for server coverage
 	mkdir server-coverage
-	chmod -R 666 server-coverage
+	chmod -R 777 server-coverage
 	docker-compose -f docker-compose.yml -f docker-compose.server-tests.yml up aktnmap
+	docker-compose -f docker-compose.yml -f docker-compose.client-tests.yml up -d aktnmap
 	# Output directory for client screenshots
 	mkdir client-screenshots
-	chmod -R 666 client-screenshots
-	docker-compose -f docker-compose.yml -f docker-compose.client-tests.yml up -d aktnmap
+	chmod -R 777 client-screenshots
 	docker-compose -f docker-compose.yml -f docker-compose.client-tests.yml up testcafe
 fi
