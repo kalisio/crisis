@@ -44,7 +44,6 @@ module.exports = {
     max: 50
   },
   // Global API limiter
-  /*
   apiLimiter: {
     http: {
       windowMs: 60*1000, // 1 minutes window
@@ -53,13 +52,14 @@ module.exports = {
       max: 60 // start blocking after 60 requests
     },
     websocket: {
-      tokensPerInterval: 10, // start blocking after 60 requests
-      interval: 60*1000, // 1 minutes window,
-      maxConcurrency: 2, // Number of simultaneous connections globally allowed, 0 means no limit
+      tokensPerInterval: 60, // start blocking after 60 requests
+      interval: 60*1000 // 1 minutes window
+      /*
+      maxConcurrency: 500, // Number of simultaneous connections globally allowed, 0 means no limit
       concurrency: 10 // Number of simultaneous connections allowed per IP, 0 means no limit
+      */
     }
   },
-  */
   authentication: {
     secret: process.env.APP_SECRET,
     strategies: [
@@ -79,7 +79,6 @@ module.exports = {
       history: 5
     },
     // Authentication limiter
-    /*
     limiter: {
       http: {
         windowMs: 60*1000, // 1 minutes window
@@ -92,7 +91,6 @@ module.exports = {
         interval: 60*1000 // 1 minutes window
       }
     },
-    */
     defaultUsers: [
       {
         email: 'kalisio@kalisio.xyz',
