@@ -9,12 +9,15 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ coreHooks.preventEscalation ],
+    create: [ coreHooks.preventEscalation,
+      when(hook => hook.params.resource,
+        teamHooks.preventRemovingLastOwner('organisations'),
+        teamHooks.preventRemovingLastOwner('groups')) ],
     update: [],
     patch: [],
     remove: [ coreHooks.preventEscalation,
       // Except when the resource is deleted by a owner check to keep at least one
-      when(hook => !_.get(hook.params, 'resource.deleted', false),
+      when(hook => hook.params.resource && !hook.params.resource.deleted,
         teamHooks.preventRemovingLastOwner('organisations'),
         teamHooks.preventRemovingLastOwner('groups')) ]
   },
