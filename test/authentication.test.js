@@ -50,8 +50,12 @@ test('Local login', async test => {
 
 test('Cleanup local user', async test => {
   await auth.logIn(test)
+
   let user = await pages.getFromStore('user')
+  await pages.api.remove('organisations', user._id)
   await pages.api.remove('users', user._id)
+
+  await auth.logOut(test)
 })
 
 test.skip('Google login', async test => {
@@ -68,8 +72,12 @@ test.skip('Google login', async test => {
 
 test.skip('Cleanup Google user', async test => {
   await auth.logInGoogle(test)
+
   let user = await pages.getFromStore('user')
+  await pages.api.remove('organisations', user._id)
   await pages.api.remove('users', user._id)
+
+  await auth.logOut(test)
 })
 
 test.skip('GitHub login', async test => {
@@ -86,6 +94,10 @@ test.skip('GitHub login', async test => {
 
 test.skip('Cleanup GitHub user', async test => {
   await auth.logInGitHub(test)
+
   let user = await pages.getFromStore('user')
+  await pages.api.remove('organisations', user._id)
   await pages.api.remove('users', user._id)
+
+  await auth.logOut(test)
 })
