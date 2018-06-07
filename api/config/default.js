@@ -94,7 +94,7 @@ module.exports = {
     defaultUsers: [
       {
         email: 'kalisio@kalisio.xyz',
-        password: 'kalisio',
+        password: 'Pass;word1',
         /*
         device: {
           registrationId: 'xxx',
