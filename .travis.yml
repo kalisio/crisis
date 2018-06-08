@@ -98,8 +98,7 @@ jobs:
       - tools
       - build-tools-26.0.2
       - android-26
-      - extra-google-m2repository
-      - extra-android-m2repository
+      - extra
     before_install:
     - nvm install 8
     - yes | sdkmanager "platforms;android-26"
