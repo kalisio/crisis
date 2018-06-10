@@ -2,13 +2,14 @@ import { hooks as coreHooks } from 'kCore'
 import { hooks as teamHooks } from 'kTeam'
 import { hooks as notifyHooks } from 'kNotify'
 import { hooks as eventHooks } from 'kEvent'
+import { checkOrganisationsQuotas } from '../../hooks'
 
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [ checkOrganisationsQuotas ],
     update: [],
     patch: [],
     remove: [ teamHooks.preventRemoveOrganisation ]

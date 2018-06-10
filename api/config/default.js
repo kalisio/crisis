@@ -135,27 +135,32 @@ module.exports = {
       maxUsers: 1000
     }
   },
-  billing: {
+  plans: {
     bronze: {
-      limits: {
-        users: 10,
-        storage: 50
-      },
       price: 0
     },
     silver: {
-      limits: {
-        users: 50,
-        storage: 250
-      },
       price: 99
     },
     gold: {
-      limits: {
-        users: 250,
-        storage: 1000
-      },
       price: 399
+    }
+  },
+  quotas: {
+    global: {
+      organisations: 1
+    },
+    bronze: {
+      users: 10,
+      storage: 50
+    },
+    silver: {
+      users: 50,
+      storage: 250
+    },
+    gold: {
+      users: 250,
+      storage: 1000
     }
   },
   mailer: {
