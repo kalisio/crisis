@@ -1,0 +1,9 @@
+// Required to manage this issue https://github.com/zo0r/react-native-push-notification/issues/748
+allprojects {
+    repositories {
+        maven {
+            url "https://maven.google.com"
+        }
+        jcenter()
+    }
+}
