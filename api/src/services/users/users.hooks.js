@@ -1,14 +1,16 @@
-import { iff, iffElse } from 'feathers-hooks-common'
+import { iff, iffElse, when } from 'feathers-hooks-common'
 import { hooks as coreHooks } from 'kCore'
 import { hooks as teamHooks } from 'kTeam'
 import { hooks as notifyHooks } from 'kNotify'
+import { checkInvitationsQuotas } from '../../hooks'
 
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [ notifyHooks.addVerification ],
+    create: [ when(hook => hook.data.sponsor, checkInvitationsQuotas),
+      notifyHooks.addVerification ],
     update: [],
     patch: [],
     remove: [ teamHooks.preventRemoveUser ]

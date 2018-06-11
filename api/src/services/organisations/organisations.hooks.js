@@ -9,7 +9,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ checkOrganisationsQuotas ],
+    create: [ checkOrganisationsQuotas, teamHooks.addOrganisationPlan ],
     update: [],
     patch: [],
     remove: [ teamHooks.preventRemoveOrganisation ]

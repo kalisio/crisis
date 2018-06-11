@@ -136,31 +136,36 @@ module.exports = {
     }
   },
   plans: {
+    // First plan is the default one
     bronze: {
-      price: 0
+      color: 'light-green-4'
     },
     silver: {
-      price: 99
+      color: 'light-green-6'
     },
     gold: {
-      price: 399
+      color: 'light-green-8'
+    },
+    diamond: {
+      color: 'light-green-10',
+      url: 'https://www.kalisio.com/#footer'
     }
   },
   quotas: {
     global: {
-      organisations: 1
+      bronze: 1
     },
     bronze: {
-      users: 10,
-      storage: 50
+      members: 25
     },
     silver: {
-      users: 50,
-      storage: 250
+      members: 50
     },
     gold: {
-      users: 250,
-      storage: 1000
+      members: 250
+    },
+    diamond: {
+      members: 1000
     }
   },
   mailer: {

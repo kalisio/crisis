@@ -3,6 +3,7 @@ import { hooks as coreHooks } from 'kCore'
 import { hooks as teamHooks } from 'kTeam'
 import { hooks as notifyHooks } from 'kNotify'
 import { when } from 'feathers-hooks-common'
+import { checkMembersQuotas } from '../../hooks'
 
 module.exports = {
   before: {
@@ -12,7 +13,9 @@ module.exports = {
     create: [ coreHooks.preventEscalation,
       when(hook => hook.params.resource,
         teamHooks.preventRemovingLastOwner('organisations'),
-        teamHooks.preventRemovingLastOwner('groups')) ],
+        teamHooks.preventRemovingLastOwner('groups')),
+      when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations',
+        checkMembersQuotas) ],
     update: [],
     patch: [],
     remove: [ coreHooks.preventEscalation,
