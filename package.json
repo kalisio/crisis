@@ -33,7 +33,7 @@
     "cordova:remove:android": "cd cordova && cordova platform remove android && cd ..",
     "cordova:remove:ios": "cd cordova && cordova platform remove ios && cd ..",
     "cordova:remove": "npm run cordova:remove:android && npm run cordova:remove:ios",
-    "cordova:clean": "cd cordova && cordova clean remove ios && cd ..",
+    "cordova:clean": "cd cordova && cordova clean && cd ..",
     "cordova:add:android": "cd cordova && cordova platform add android@6.4 && cd ..",
     "cordova:add:ios": "cd cordova && cordova platform add ios && cd platforms/ios && pod install && cd ../../..",
     "cordova:add": "npm run cordova:add:android && npm run cordova:add:ios",

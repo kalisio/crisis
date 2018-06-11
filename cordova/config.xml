@@ -30,7 +30,7 @@
     <preference name="loadUrlTimeoutValue" value="30000" />
     <preference name="SplashScreen" value="screen" />
     <platform name="android">
-        <hook src="hooks/build-extras.js" type="before_build" />
+        <hook src="hooks/before-build.js" type="before_build" />
         <allow-intent href="market:*" />
         <resource-file src="google-services.json" target="google-services.json" />
         <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png" />
