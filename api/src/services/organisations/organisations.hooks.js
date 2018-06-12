@@ -1,3 +1,5 @@
+import _ from 'lodash'
+import { when } from 'feathers-hooks-common'
 import { hooks as coreHooks } from 'kCore'
 import { hooks as teamHooks } from 'kTeam'
 import { hooks as notifyHooks } from 'kNotify'
@@ -11,7 +13,8 @@ module.exports = {
     get: [],
     create: [ checkOrganisationsQuotas, teamHooks.addOrganisationPlan ],
     update: [],
-    patch: [],
+    // When changing billing plan check for quotas
+    patch: [ when(hook => _.get(hook, 'data.billing'), checkOrganisationsQuotas) ],
     remove: [ teamHooks.preventRemoveOrganisation ]
   },
 

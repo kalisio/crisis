@@ -7,17 +7,17 @@ async function getOrgWithBilling(hook, id) {
   return org
 }
 
-async function countMembers(hook, org) {
-  // Retrieve the list of members
-  const orgMembersService = hook.app.getService('members', org)
+async function countItems(hook, service, org) {
+  // Retrieve the target service
+  const orgItemsService = (typeof service === 'object' ? service : hook.app.getService(service, org))
   // Indicate we'd only like to count
-  let members = await orgMembersService.find({ query: { $limit: 0 } })
-  return members.total + 1 // Take new member into account
+  let items = await orgItemsService.find({ query: { $limit: 0 } })
+  return items.total + (hook.method === 'create' ? 1 : 0) // Take new item into account when required
 }
 
-function getMembersQuota(hook, org) {
+function getItemsQuota(hook, service, org) {
   const quotas = hook.app.get('quotas')
-  return _.get(quotas, _.get(org, 'billing.plan', 'bronze') + '.members', 1)
+  return _.get(quotas, _.get(org, 'billing.plan', 'bronze') + '.' + service, 1)
 }
 
 export const checkOrganisationsQuotas = coreHooks.countLimit({
@@ -31,7 +31,7 @@ export const checkOrganisationsQuotas = coreHooks.countLimit({
     }
     // Then filter those with bronze plan
     orgs = _.filter(orgs, (org) => _.get(org, 'billing.plan', 'bronze') === 'bronze')
-    return orgs.length + 1 // Take new org into account
+    return orgs.length + (hook.method === 'create' ? 1 : 0) // Take new org into account when required
   },
   max: (hook) => {
     const quotas = hook.app.get('quotas')
@@ -44,12 +44,12 @@ export const checkMembersQuotas = coreHooks.countLimit({
   count: async (hook) => {
     // Retrieve the org with billing infos
     const org = await getOrgWithBilling(hook, _.get(hook.params, 'resource._id'))
-    return countMembers(hook, org)
+    return countItems(hook, 'members', org)
   },
   max: async (hook) => {
     // Retrieve the org with billing infos
     const org = await getOrgWithBilling(hook, _.get(hook.params, 'resource._id'))
-    return getMembersQuota(hook, org)
+    return getItemsQuota(hook, 'members', org)
   }
 })
 
@@ -58,12 +58,47 @@ export const checkInvitationsQuotas = coreHooks.countLimit({
   count: async (hook) => {
     // Retrieve the org with billing infos
     const org = await getOrgWithBilling(hook, _.get(hook.data, 'sponsor.organisationId'))
-    return countMembers(hook, org)
+    return countItems(hook, 'members', org)
   },
   max: async (hook) => {
     // Retrieve the org with billing infos
     const org = await getOrgWithBilling(hook, _.get(hook.data, 'sponsor.organisationId'))
-    return getMembersQuota(hook, org)
+    return getItemsQuota(hook, 'members', org)
   }
 })
 
+export const checkGroupsQuotas = coreHooks.countLimit({
+  service: 'groups',
+  count: async (hook) => {
+    return countItems(hook, hook.service)
+  },
+  max: async (hook) => {
+    // Retrieve the org with billing infos
+    const org = await getOrgWithBilling(hook, hook.service.getContextId())
+    return getItemsQuota(hook, 'groups', org)
+  }
+})
+
+export const checkEventsQuotas = coreHooks.countLimit({
+  service: 'events',
+  count: async (hook) => {
+    return countItems(hook, hook.service)
+  },
+  max: async (hook) => {
+    // Retrieve the org with billing infos
+    const org = await getOrgWithBilling(hook, hook.service.getContextId())
+    return getItemsQuota(hook, 'events', org)
+  }
+})
+
+export const checkTemplatesQuotas = coreHooks.countLimit({
+  service: 'event-templates',
+  count: async (hook) => {
+    return countItems(hook, hook.service)
+  },
+  max: async (hook) => {
+    // Retrieve the org with billing infos
+    const org = await getOrgWithBilling(hook, hook.service.getContextId())
+    return getItemsQuota(hook, 'templates', org)
+  }
+})

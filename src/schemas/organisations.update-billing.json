@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://www.kalisio.xyz/schemas/organisations.update-billing.json#",
+  "title": "<%= object.name %>'s billing plan",
+  "description": "Organisation billing perspective",
+  "type": "object",
+  "properties": {
+    "plan": {
+      "type": "string",
+      "field": {
+        "component": "form/KSelectField",
+        "helper": "schemas.ORGANISATIONS_PLAN_FIELD_HELPER",
+        "options": [
+          { "label": "plans.gold_LABEL", "value": "gold", "color": "yellow" },
+          { "label": "plans.silver_LABEL", "value": "silver", "color": "grey" },
+          { "label": "plans.bronze_LABEL", "value": "bronze", "color": "amber" }
+        ]
+      }
+    },
+    "extraInfos": {
+      "type": "string", 
+      "field": {
+        "component": "form/KTextareaField",
+        "helper": "schemas.ORGANISATIONS_EXTRA_INFOS_FIELD_HELPER"
+      }
+    }
+  },
+  "required": ["plan", "extraInfos"]
+}
+

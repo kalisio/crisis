@@ -32,7 +32,11 @@ function loadSchema (schema) {
         .catch(errorTeam => {
           return import(`kEvent/lib/common/schemas/${schema}.json`)
             .catch(errorEvent => {
-              console.log(errorCore, errorTeam, errorEvent)
+              // Otherwise this should be app component
+              return import(`./schemas/${schema}.json`)
+                .catch(errorApp => {
+                  console.log(errorCore, errorTeam, errorEvent, errorApp)
+                })
             })
         })
     })

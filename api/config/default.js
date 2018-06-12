@@ -156,16 +156,28 @@ module.exports = {
       bronze: 1
     },
     bronze: {
-      members: 25
+      members: 25,
+      groups: 5,
+      events: -1,
+      templates: 5
     },
     silver: {
-      members: 50
+      members: 50,
+      groups: 10,
+      events: -1,
+      templates: -1
     },
     gold: {
-      members: 250
+      members: 250,
+      groups: -1,
+      events: -1,
+      templates: -1
     },
     diamond: {
-      members: 1000
+      members: -1,
+      groups: -1,
+      events: -1,
+      templates: -1
     }
   },
   mailer: {

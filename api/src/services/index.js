@@ -35,10 +35,15 @@ module.exports = async function () {
     // Add hooks for topic (un)subscription on (un)authorisation
     app.configureService('authorisations', app.getService('authorisations'), servicesPath)
 
-    // Add hooks for topic creation/removal on org/group/tag object creation/removal
-    // and event notifications on attachment upload
+    // Add hooks for topic creation/removal on org/group/tag object creation/removal,
+    // event notifications on attachment upload, etc.
     app.on('service', service => {
-      if (service.name === 'groups' || service.name === 'members' || service.name === 'tags' || service.name === 'storage') {
+      if (service.name === 'groups' ||
+          service.name === 'members' ||
+          service.name === 'tags' ||
+          service.name === 'storage' ||
+          service.name === 'events' ||
+          service.name === 'event-templates') {
         app.configureService(service.name, service, servicesPath)
       }
     })
