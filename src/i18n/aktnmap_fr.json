@@ -1,8 +1,8 @@
 {
   "screen": {
-    "ABOUT_KALISIO": "A propos de Kalisio",
+    "ABOUT_KALISIO": "A propos",
     "CONTACT": "Contact",
-    "TERMS_AND_POLICIES": "Termes et conditions"
+    "TERMS_AND_POLICIES": "Conditions générales"
   },
   "sideNav": {
     "DASHBOARD": "Tableau de bord",
@@ -17,6 +17,26 @@
   "Index": {
     "VERSION_MISMATCH": "Discordance de version, merci d'installer la dernière version disponible ou de vérifier votre point d'accès",
     "DISCONNECT": "La connexion au serveur a été interrompue, merci de patienter jusqu'à la reconnexion...",
-    "RECONNECT": "Tentative de reconnection en cours..."
+    "RECONNECT": "Tentative de reconnection en cours...",
+    "REFUSED": "Votre connexion a été refusé par le serveur, vous avez été déconnecté...",
+    "RETRY": "Rééssayer"
+  },
+  "plans": {
+    "bronze_LABEL": "Bronze",
+    "bronze_PRICE": "Gratuit",
+    "bronze_DESCRIPTION": "Notre version basique pour les personnes qui souhaitent découvrir",
+    "bronze_DETAILS": "<ul><li>Etiquettes illimités</li><li>Evénements illimités</li><li>Jusqu’à <b>{{templates}}</b> modèles</li><li>Jusqu’à <b>{{groups}}</b> groupes</li><li>Jusqu’à <b>{{members}}</b> membres</li></br></br></ul>",
+    "silver_LABEL": "Argent",
+    "silver_PRICE": "99€ par mois",
+    "silver_DESCRIPTION": "Assez puissant pour gérer une association ou une entreprise de taille moyenne",
+    "silver_DETAILS": "<ul><li>Etiquettes illimités</li><li>Evénements illimités</li><li>Modèles illimités</li><li>Jusqu’à <b>{{groups}}</b> groupes</li><li>Jusqu’à <b>{{members}}</b> membres</li></br></br></ul>",
+    "gold_LABEL": "Or",
+    "gold_PRICE": "399€ par mois",
+    "gold_DESCRIPTION": "Assez puissant pour gérer une association ou une entreprise de grande taille",
+    "gold_DETAILS": "<ul><li>Etiquettes illimités</li><li>Evénements illimités</li><li>Modèles illimités</li><li>Groupes illimités</li><li>Jusqu’à <b>{{members}}</b> membres</li></br></br></ul>",
+    "diamond_LABEL": "Diamant",
+    "diamond_PRICE": "Parlons-en !",
+    "diamond_DESCRIPTION": "Définissons ensemble une solution adapté à vos besoins, avec un contrôle accru et plus d’assistance",
+    "diamond_DETAILS": "<ul><li>Etiquettes illimités</li><li>Evénements illimités</li><li>Modèles illimités</li><li>Groupes illimités</li><li>Membres illimités</li><li>Hébergement sur vos serveurs</li><li>Produit personnalisé</li></ul>"
   }
 }

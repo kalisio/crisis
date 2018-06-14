@@ -5,7 +5,7 @@ import ApplicationLayout from './layout'
 const defaultTestUser = {
   name: 'Kalisio',
   email: 'test@kalisio.xyz',
-  password: 'kalisio'
+  password: 'Pass;word1'
 }
 
 export default class Authentication extends ApplicationLayout {
@@ -27,6 +27,7 @@ export default class Authentication extends ApplicationLayout {
     this.registerEmailInput = VueSelector('k-register k-email-field')
     this.registerPasswordInput = VueSelector('k-register k-password-field').nth(0)
     this.registerConfirmPasswordInput = VueSelector('k-register k-password-field').nth(1)
+    this.registerConsentTerms = VueSelector('k-register k-toggle-field q-toggle')
     this.register = Selector('#register')
     // OAuth2 login
     this.loginGoogle = Selector('#google')
@@ -65,6 +66,7 @@ export default class Authentication extends ApplicationLayout {
       .typeText(this.registerEmailInput, identity.email || defaultTestUser.email, { replace: true })
       .typeText(this.registerPasswordInput, identity.password || defaultTestUser.password, { replace: true })
       .typeText(this.registerConfirmPasswordInput, identity.password || defaultTestUser.password, { replace: true })
+      .click(this.registerConsentTerms)
       .click(this.register)
       // Need this so that we are sure dynamic components, user, etc. have been loaded
       .wait(5000)

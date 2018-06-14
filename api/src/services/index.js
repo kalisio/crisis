@@ -19,7 +19,8 @@ module.exports = async function () {
         name: 'aktnmap',
         domain: app.get('domain'),
         version: packageInfo.version,
-        billing: app.get('billing')
+        plans: app.get('plans'),
+        quotas: app.get('quotas')
       }
       if (process.env.BUILD_NUMBER) {
         response.buildNumber = process.env.BUILD_NUMBER
@@ -34,9 +35,15 @@ module.exports = async function () {
     // Add hooks for topic (un)subscription on (un)authorisation
     app.configureService('authorisations', app.getService('authorisations'), servicesPath)
 
-    // Add hooks for topic creation/removal on org/group/tag object creation/removal
+    // Add hooks for topic creation/removal on org/group/tag object creation/removal,
+    // event notifications on attachment upload, etc.
     app.on('service', service => {
-      if (service.name === 'groups' || service.name === 'members' || service.name === 'tags') {
+      if (service.name === 'groups' ||
+          service.name === 'members' ||
+          service.name === 'tags' ||
+          service.name === 'storage' ||
+          service.name === 'events' ||
+          service.name === 'event-templates') {
         app.configureService(service.name, service, servicesPath)
       }
     })
@@ -54,7 +61,8 @@ module.exports = async function () {
   let usersService = app.getService('users')
   let pusherService = app.getService('pusher')
   let defaultUsers = app.get('authentication').defaultUsers
-  if (defaultUsers) {
+  // Do not use exposed passwords on staging/prod environments
+  if (defaultUsers && !process.env.NODE_APP_INSTANCE) {
     // Create default users if not already done
     const users = await usersService.find({ paginate: false })
     for (let i = 0; i < defaultUsers.length; i++) {

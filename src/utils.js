@@ -32,7 +32,11 @@ function loadSchema (schema) {
         .catch(errorTeam => {
           return import(`kEvent/lib/common/schemas/${schema}.json`)
             .catch(errorEvent => {
-              console.log(errorCore, errorTeam, errorEvent)
+              // Otherwise this should be app component
+              return import(`./schemas/${schema}.json`)
+                .catch(errorApp => {
+                  console.log(errorCore, errorTeam, errorEvent, errorApp)
+                })
             })
         })
     })
@@ -98,14 +102,14 @@ function buildRoutes (config) {
         route.component = loadComponent(value)
       } else {
         // Take care that path can be empty so we cannot just check with a if
-        if (value.hasOwnProperty('path')) {
+        if (_.has(value, 'path')) {
           route.path = value.path
         }
         // Take care that name can be empty so we cannot just check with a if
-        if (value.hasOwnProperty('name')) {
+        if (_.has(value, 'name')) {
           route.name = value.name
         }
-        if (value.hasOwnProperty('component')) {
+        if (_.has(value, 'component')) {
           route.component = loadComponent(value.component)
         }
         if (_.has(value, 'props')) {

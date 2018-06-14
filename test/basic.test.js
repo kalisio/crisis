@@ -18,8 +18,8 @@ const app = new pages.ApplicationLayout()
 const auth = new pages.Authentication()
 const org = new pages.Organisations()
 
-test('Login as default user', async test => {
-  await auth.logInAndCloseSignupAlert(test, { email: 'kalisio@kalisio.xyz', password: 'kalisio' })
+test.skip('Login as default user', async test => {
+  await auth.logInAndCloseSignupAlert(test, { email: 'kalisio@kalisio.xyz', password: 'Pass;word1' })
   await org.selectOrganisation(test, 'kalisio')
   await app.clickToolbar(test, '#members')
   await app.clickTabBar(test, '#groups')

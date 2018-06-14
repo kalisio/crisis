@@ -1,6 +1,6 @@
 {
   "screen": {
-    "ABOUT_KALISIO": "About Kalisio",
+    "ABOUT_KALISIO": "About",
     "CONTACT": "Contact",
     "TERMS_AND_POLICIES": "Terms and Policies"
   },
@@ -17,6 +17,26 @@
   "Index": {
     "VERSION_MISMATCH": "Application version mismatch, please install the latest available version or check your end point",
     "DISCONNECT": "The server connection has been lost, please wait until reconnection...",
-    "RECONNECT": "We are trying to reconnect..."
+    "RECONNECT": "We are trying to reconnect...",
+    "REFUSED": "Your connection have been refused by the server, you have been disconnected...",
+    "RETRY": "Retry"
+  },
+  "plans": {
+    "bronze_LABEL": "Bronze",
+    "bronze_PRICE": "Free",
+    "bronze_DESCRIPTION": "Our basic version for users just getting started",
+    "bronze_DETAILS": "<ul><li>Unlimited tags</li><li>Unlimited events</li><li>Up to <b>{{groups}}</b> groups</li><li>Up to <b>{{templates}}</b> templates</li><li>Up to <b>{{members}}</b> members</li></br></br></ul>",
+    "silver_LABEL": "Silver",
+    "silver_PRICE": "99€ per month",
+    "silver_DESCRIPTION": "Powerful enough to run a small business",
+    "silver_DETAILS": "<ul><li>Unlimited tags</li><li>Unlimited events</li><li>Unlimited templates</li><li>Up to <b>{{groups}}</b> groups</li><li>Up to <b>{{members}}</b> members</li></br></br></ul>",
+    "gold_LABEL": "Gold",
+    "gold_PRICE": "399€ per month",
+    "gold_DESCRIPTION": "Powerful enough to run a large business",
+    "gold_DETAILS": "<ul><li>Unlimited tags</li><li>Unlimited events</li><li>Unlimited templates</li><li>Unlimited groups</li><li>Up to <b>{{members}}</b> members</li></br></br></ul>",
+    "diamond_LABEL": "Diamond",
+    "diamond_PRICE": "Let's talk !",
+    "diamond_DESCRIPTION": "Work with us for a custom plan tailored for your business, with more control and support",
+    "diamond_DETAILS": "<ul><li>Unlimited events</li><li>Unlimited tags</li><li>Unlimited groups</li><li>Unlimited templates</li><li>Unlimited members</li><li>Host on your servers</li><li>Custom branding</li></ul>"
   }
 }

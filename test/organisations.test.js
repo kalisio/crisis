@@ -17,7 +17,7 @@ const account = new pages.Account(auth)
 const organisations = new pages.Organisations()
 
 const data = {
-  user: { name: 'Organisations owner', email: 'organisations-owner@kalisio.xyz', password: 'kalisio' },
+  user: { name: 'Organisations owner', email: 'organisations-owner@kalisio.xyz', password: 'Pass;word1' },
   organisation: { name: 'Test Organisation', description: 'An organisation test' }
 }
 
@@ -40,7 +40,7 @@ test('Create organisation', async test => {
   await organisations.createOrganisation(test, data.organisation)
   // We should have the created organisation in the organisations panel
   // FIXME: innerText contains an additionnal \n which makes the test fail
-  await test.expect(organisations.appBarTitle.innerText).eql(data.organisation.name + '\n', 'AppBar title should be the organisation name')
+  await test.expect(organisations.appBarTitle.innerText).eql(data.organisation.name, 'AppBar title should be the organisation name')
   const panel = await organisations.panel.getVue()
   await test.expect(panel.state.items.length).eql(2, 'New organisation should be added to the panel')
   await pages.checkNoClientError(test)

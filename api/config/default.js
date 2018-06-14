@@ -1,4 +1,5 @@
 var path = require('path')
+var fs = require('fs')
 var containerized = require('containerized')()
 
 const serverPort = process.env.PORT || 8081
@@ -42,18 +43,58 @@ module.exports = {
     default: 10,
     max: 50
   },
+  // Global API limiter
+  apiLimiter: {
+    http: {
+      windowMs: 60*1000, // 1 minutes window
+      delayAfter: 30, // begin slowing down responses after the 30th request
+      delayMs: 1000, // slow down subsequent responses by 1 seconds per request 
+      max: 60 // start blocking after 60 requests
+    },
+    websocket: {
+      tokensPerInterval: 60, // start blocking after 60 requests
+      interval: 60*1000 // 1 minutes window
+      /*
+      maxConcurrency: 500, // Number of simultaneous connections globally allowed, 0 means no limit
+      concurrency: 10 // Number of simultaneous connections allowed per IP, 0 means no limit
+      */
+    }
+  },
   authentication: {
-    secret: 'b5KqXTye4fVxhGFpwMVZRO3R56wS5LNoJHifwgGOFkB5GfMWvIdrWyQxEJXswhAC',
+    secret: process.env.APP_SECRET,
     strategies: [
       'jwt',
       'local'
     ],
     path: API_PREFIX + '/authentication',
     service: API_PREFIX + '/users',
+    passwordPolicy: {
+      minLength: 8,
+      maxLength: 128,
+      uppercase: true,
+      lowercase: true,
+      digits: true,
+      symbols: true,
+      prohibited: fs.readFileSync(path.join(__dirname, '10k_most_common_passwords.txt')).toString().split('\n'),
+      history: 5
+    },
+    // Authentication limiter
+    limiter: {
+      http: {
+        windowMs: 60*1000, // 1 minutes window
+        delayAfter: 5, // begin slowing down responses after the 5th request
+        delayMs: 3000, // slow down subsequent responses by 3 seconds per request 
+        max: 10 // start blocking after 10 requests
+      },
+      websocket: {
+        tokensPerInterval: 10, // start blocking after 10 requests
+        interval: 60*1000 // 1 minutes window
+      }
+    },
     defaultUsers: [
       {
         email: 'kalisio@kalisio.xyz',
-        password: 'kalisio',
+        password: 'Pass;word1',
         /*
         device: {
           registrationId: 'xxx',
@@ -86,7 +127,7 @@ module.exports = {
       enabled: true,
       name: 'feathers-jwt',
       httpOnly: false,
-      secure: false
+      secure: (process.env.NODE_ENV === 'development' ? false : true)
     }
   },
   authorisation: {
@@ -94,27 +135,49 @@ module.exports = {
       maxUsers: 1000
     }
   },
-  billing: {
+  plans: {
+    // First plan is the default one
     bronze: {
-      limits: {
-        users: 10,
-        storage: 50
-      },
-      price: 0
+      color: 'light-green-4'
     },
     silver: {
-      limits: {
-        users: 50,
-        storage: 250
-      },
-      price: 99
+      color: 'light-green-6'
     },
     gold: {
-      limits: {
-        users: 250,
-        storage: 1000
-      },
-      price: 399
+      color: 'light-green-8'
+    },
+    diamond: {
+      color: 'light-green-10',
+      url: 'https://www.kalisio.com/#footer'
+    }
+  },
+  quotas: {
+    global: {
+      bronze: 1
+    },
+    bronze: {
+      members: 25,
+      groups: 5,
+      events: -1,
+      templates: 5
+    },
+    silver: {
+      members: 50,
+      groups: 10,
+      events: -1,
+      templates: -1
+    },
+    gold: {
+      members: 250,
+      groups: -1,
+      events: -1,
+      templates: -1
+    },
+    diamond: {
+      members: -1,
+      groups: -1,
+      events: -1,
+      templates: -1
     }
   },
   mailer: {
