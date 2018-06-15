@@ -1,4 +1,4 @@
-<img src="https://github.com/kalisio/kDocs/blob/master/images/kalisio-logo-256.png" width="256">
+<img src="https://s3.eu-central-1.amazonaws.com/kalisio-artwork/aktnmap/aktnmap-icon-256x256.png" width="256">
 
 ## Akt'n'Map application
 
