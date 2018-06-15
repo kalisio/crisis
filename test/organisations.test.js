@@ -35,6 +35,21 @@ test('Default organisation', async test => {
   await pages.checkNoClientError(test)
 })
 
+test('Forbid additional free org creation', async test => {
+  await auth.logInAndCloseSignupAlert(test, data.user)
+  // Cannot remove the account because the user is still owning an organisation
+  await organisations.createOrganisation(test, data.organisation)
+  await test.expect(organisations.isErrorVisible()).ok('Forbidden error should be displayed')
+  await pages.checkClientError(test)
+})
+
+test('Update organisation billing', async test => {
+  await auth.logInAndCloseSignupAlert(test, data.user)
+  // Default org as the same name as the user
+  await organisations.updateOrganisationBilling(test, data.user.name)
+  await pages.checkNoClientError(test)
+})
+
 test('Create organisation', async test => {
   await auth.logInAndCloseSignupAlert(test, data.user)
   await organisations.createOrganisation(test, data.organisation)
@@ -43,12 +58,6 @@ test('Create organisation', async test => {
   await test.expect(organisations.appBarTitle.innerText).eql(data.organisation.name, 'AppBar title should be the organisation name')
   const panel = await organisations.panel.getVue()
   await test.expect(panel.state.items.length).eql(2, 'New organisation should be added to the panel')
-  await pages.checkNoClientError(test)
-})
-
-test('Update organisation billing', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
-  await organisations.updateOrganisationBilling(test, data.organisation.name)
   await pages.checkNoClientError(test)
 })
 

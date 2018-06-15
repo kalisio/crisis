@@ -12,7 +12,7 @@ export default class Organisations extends ApplicationLayout {
     this.createModal = VueSelector('k-organisations-panel k-modal-editor')
     // Settings activity
     this.descriptionEditor = VueSelector('k-settings-acitivy k-editor')
-    this.billingEditor = VueSelector('k-settings-activity k-editor')
+    this.billingEditor = VueSelector('k-settings-activity k-organisation-billing k-editor')
     this.dzZone = VueSelector('k-settings-activity k-organisation-dz')
   }
   async selectOrganisation (test, orgName) {
@@ -38,7 +38,7 @@ export default class Organisations extends ApplicationLayout {
     await this.clickOverflowMenu(test, '#settings')
     await this.clickTabBar(test, '#billing')
     await test
-      .click(this.billingEditor.find('#billing-field'))
+      .click(this.billingEditor.find('#plan-field'))
       .wait(500)
     await test
       .click(Selector('.q-popover .q-item').nth(1))
