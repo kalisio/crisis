@@ -5,8 +5,8 @@
     "TERMS_AND_POLICIES": "Terms and Policies"
   },
   "sideNav": {
-    "DASHBOARD": "Tableau de bord",
-    "LOGOUT": "Se déconnecter"
+    "DASHBOARD": "Dashboard",
+    "LOGOUT": "Logout"
   },
   "Context": {
     "EVENTS": "Events & templates",
