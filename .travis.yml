@@ -24,7 +24,7 @@ jobs:
     - docker
     install: true
     script:
-    - bash build.travis.sh
+    - bash travis.build.sh
     deploy:
       skip_cleanup: true
       provider: s3
@@ -48,7 +48,7 @@ jobs:
     install:
     - npm install -g codeclimate-test-reporter
     script:
-    - bash test.travis.sh
+    - bash travis.test.sh
     after_script:
     - codeclimate-test-reporter < server-coverage/lcov.info
     deploy:
@@ -85,7 +85,7 @@ jobs:
     deploy:
       provider: script
       skip_cleanup: true
-      script: bash deploy.travis.sh
+      script: bash travis.deploy.sh
       on:
         all_branches: true
 
@@ -111,7 +111,7 @@ jobs:
       -in secrets.tar.enc -out secrets.tar -d
     - tar xvf secrets.tar
     - aws s3 sync s3://aktnmap-builds/$TRAVIS_BUILD_NUMBER/dist cordova/www
-    - bash android.travis.sh
+    - bash travis.android.sh
     deploy:
       skip_cleanup: true
       provider: s3
@@ -138,7 +138,7 @@ jobs:
       -in secrets.tar.enc -out secrets.tar -d
     - tar xvf secrets.tar
     - aws s3 sync s3://aktnmap-builds/$TRAVIS_BUILD_NUMBER/dist cordova/www
-    - bash ios.travis.sh
+    - bash travis.ios.sh
     deploy:
       skip_cleanup: true
       provider: s3

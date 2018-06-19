@@ -1,16 +1,14 @@
-version: '3'
+version: '3.3'
 
 services:
   testcafe:
     build:
-      context: .
+      context: ../.
       dockerfile: dockerfile.testcafe
-    container_name: testcafe
     image: kalisio/testcafe
-    links:
-      - aktnmap:aktnmap
     depends_on:
-      - aktnmap
+      - app
+      - mongodb
     environment:
       - GOOGLE_USER
       - GOOGLE_PASSWORD
@@ -19,6 +17,12 @@ services:
       - NODE_ENV=production
       - APP_URL=172.17.0.1:${PORT}
     volumes:
-      - ./test:/opt/testcafe/aktnmap
-      - ./client-screenshots:/opt/testcafe/screenshots
-    command: firefox /opt/testcafe/aktnmap/*.test.js -S -s /opt/testcafe/screenshots
+      - ../test:/opt/testcafe/${APP}
+    command: firefox /opt/testcafe/${APP}/*.test.js -S -s screenshots
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external:
+      name: ${DOCKER_NETWORK}
