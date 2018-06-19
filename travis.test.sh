@@ -1,4 +1,11 @@
 #!/bin/bash
+# Output directory for server coverage
+mkdir server-coverage
+chmod -R 777 server-coverage
+# Output directory for client screenshots
+mkdir client-screenshots
+chmod -R 777 client-screenshots
+
 if [[ $TRAVIS_COMMIT_MESSAGE == *"[skip test]"* ]]
 then
 	echo "Skipping test stage"
