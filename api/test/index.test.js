@@ -14,7 +14,8 @@ describe('aktnmap', () => {
     platform: 'ANDROID',
     uuid: 'id'
   }
-
+  const newDevice = Object.assign({}, device, { registrationId: 'mynewfakeId' })
+  
   before(() => {
     chailint(chai, util)
 
@@ -71,6 +72,8 @@ describe('aktnmap', () => {
       done()
     })
   })
+  // Let enough time to process
+  .timeout(5000)
 
   it('creates a user with his org', () => {
     let operation = userService.create({
@@ -190,8 +193,6 @@ describe('aktnmap', () => {
 
   it('updates the user device', () => {
     const previousDevice = userObject.devices[0]
-    const newDevice = Object.assign({}, device)
-    newDevice.registrationId = 'mynewfakeId'
     let operation = devicesService.update(newDevice.registrationId, newDevice, { user: userObject, checkAuthorisation: true })
     .then(device => {
       return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
@@ -207,7 +208,8 @@ describe('aktnmap', () => {
     })
     let events = new Promise((resolve, reject) => {
       // This should subscribe the new device to all topics: org, group, tag
-      const expectedSubscriptions = 3
+      // Because we check for resubscription after update to avoid any problem we get 2 for each
+      const expectedSubscriptions = 2 * 3
       let subscriptions = 0
       // This should unsubscribe old device to all topics: org, group, tag
       const expectedUnsubscriptions = 3
