@@ -1,13 +1,13 @@
 import _ from 'lodash'
 import { hooks as coreHooks } from 'kCore'
 
-async function getOrgWithBilling(hook, id) {
+async function getOrgWithBilling (hook, id) {
   const orgService = hook.app.getService('organisations')
   const org = await orgService.get(id.toString(), { query: { $select: ['_id', 'billing'] } })
   return org
 }
 
-async function countItems(hook, service, org) {
+async function countItems (hook, service, org) {
   // Retrieve the target service
   const orgItemsService = (typeof service === 'object' ? service : hook.app.getService(service, org))
   // Indicate we'd only like to count
@@ -15,7 +15,7 @@ async function countItems(hook, service, org) {
   return items.total + (hook.method === 'create' ? 1 : 0) // Take new item into account when required
 }
 
-function getItemsQuota(hook, service, org) {
+function getItemsQuota (hook, service, org) {
   const quotas = hook.app.get('quotas')
   return _.get(quotas, _.get(org, 'billing.plan', 'bronze') + '.' + service, 1)
 }
