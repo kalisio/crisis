@@ -35,7 +35,12 @@ module.exports = {
       notifyHooks.updateSubjectSubscriptions({ field: 'groups', service: 'groups' }),
       notifyHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' })
     ],
-    update: [],
+    update: [
+      // Resubscribe the device to all possible topics in case some have been lost
+      notifyHooks.updateSubjectSubscriptions({ field: 'organisations', service: 'organisations' }),
+      notifyHooks.updateSubjectSubscriptions({ field: 'groups', service: 'groups' }),
+      notifyHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' })
+    ],
     patch: [],
     remove: []
   },
