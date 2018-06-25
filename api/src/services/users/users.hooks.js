@@ -30,14 +30,12 @@ module.exports = {
     remove: [
       coreHooks.setAsDeleted,
       coreHooks.removeAttachments('avatar'),
-      coreHooks.updateTags,
-      // Avoid removing subscriptions on removed (ie unused) tags
       notifyHooks.updateSubjectSubscriptions({
         field: 'tags',
         service: 'tags',
-        filter: (operation, topics) => operation === 'unsubscribe' ? topics.filter(topic => topic.count > 1) : topics,
         subjectAsItem: true
       }),
+      coreHooks.updateTags, // After unsubscriptions otherwise will remove topic of unused tags before it
       teamHooks.leaveOrganisations(),
       notifyHooks.unregisterDevices
     ]
