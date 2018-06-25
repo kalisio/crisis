@@ -23,6 +23,10 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   }
 }
 
+// Start blocking after N requests or N auth requests
+const nbRequestsPerMinute = 120
+const nbAuthenticationRequestsPerMinute = 10
+
 module.exports = {
   // Proxy your API if using any.
   // Also see /build/script.dev.js and search for "proxy api requests"
@@ -46,14 +50,14 @@ module.exports = {
   // Global API limiter
   apiLimiter: {
     http: {
-      windowMs: 60*1000, // 1 minutes window
-      delayAfter: 30, // begin slowing down responses after the 30th request
+      windowMs: 60*1000, // 1 minute window
+      delayAfter: nbRequestsPerMinute / 2, // begin slowing down responses after the 1/2 requests
       delayMs: 1000, // slow down subsequent responses by 1 seconds per request 
-      max: 60 // start blocking after 60 requests
+      max: nbRequestsPerMinute // start blocking after N requests
     },
     websocket: {
-      tokensPerInterval: 60, // start blocking after 60 requests
-      interval: 60*1000 // 1 minutes window
+      tokensPerInterval: nbRequestsPerMinute, // start blocking after N requests
+      interval: 60*1000 // 1 minute window
       /*
       maxConcurrency: 500, // Number of simultaneous connections globally allowed, 0 means no limit
       concurrency: 10 // Number of simultaneous connections allowed per IP, 0 means no limit
@@ -81,14 +85,14 @@ module.exports = {
     // Authentication limiter
     limiter: {
       http: {
-        windowMs: 60*1000, // 1 minutes window
-        delayAfter: 5, // begin slowing down responses after the 5th request
+        windowMs: 60*1000, // 1 minute window
+        delayAfter: nbAuthenticationRequestsPerMinute / 2, // begin slowing down responses after the 1/2 requests
         delayMs: 3000, // slow down subsequent responses by 3 seconds per request 
-        max: 10 // start blocking after 10 requests
+        max: nbAuthenticationRequestsPerMinute // start blocking after N requests
       },
       websocket: {
-        tokensPerInterval: 10, // start blocking after 10 requests
-        interval: 60*1000 // 1 minutes window
+        tokensPerInterval: nbAuthenticationRequestsPerMinute, // start blocking after N requests
+        interval: 60*1000 // 1 minute window
       }
     },
     defaultUsers: [
