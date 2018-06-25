@@ -10,12 +10,10 @@ module.exports = {
     update: [],
     patch: [  // Required to update subscriptions correctly
       coreHooks.populatePreviousObject,
-      coreHooks.updateTags,
-              // Avoid removing subscriptions on removed (ie unused) tags
+      coreHooks.updateTags, // Before subscriptions to have topics already created on tags before it
       notifyHooks.updateSubjectSubscriptions({
         field: 'tags',
         service: 'tags',
-        filter: (operation, topics) => operation === 'unsubscribe' ? topics.filter(topic => topic.count > 1) : topics,
         subjectAsItem: true
       })
     ],

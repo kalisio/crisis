@@ -141,6 +141,14 @@ describe('aktnmap', () => {
   // Let enough time to process
   .timeout(5000)
 
+  it('cannot create multiple free organisations', () => {
+    return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
+    .catch(error => {
+      expect(error).toExist()
+      expect(error.name).to.equal('Forbidden')
+    })
+  })
+
   it('create user tag', () => {
     let operation = memberService.patch(userObject._id.toString(), { // We need at least devices for subscription
       tags: [{ value: 'test', scope: 'members' }],
@@ -159,9 +167,9 @@ describe('aktnmap', () => {
         tagService.find({ query: { value: 'test', scope: 'members' }, paginate: false })
         .then(tags => {
           tagObject = tags[0]
-          tagObject.context =
           expect(tagObject.topics).toExist()
           expect(tagObject.topics[device.platform]).to.equal(topicArn)
+          expect(tagObject.count).to.equal(1)
           expect(userObject.devices[0].arn).to.equal(endpointArn)
           resolve()
         })
@@ -287,7 +295,7 @@ describe('aktnmap', () => {
   // Let enough time to process
   .timeout(5000)
 
-  it('create member tag', () => {
+  it('creates a member tag', () => {
     let operation = memberService.patch(memberObject._id.toString(), { // We need at least devices for subscription
       tags: [{ value: 'test-member', scope: 'members' }],
       devices: _.clone(memberObject.devices)
@@ -301,12 +309,14 @@ describe('aktnmap', () => {
       expect(memberObject.tags[0].context.toString()).to.equal(orgObject._id.toString())
     })
     let event = new Promise((resolve, reject) => {
+      // This should subscribe the device to new tag topic
       sns.once('subscribed', (subscriptionArn, endpointArn, topicArn) => {
         tagService.find({ query: { value: 'test-member', scope: 'members' }, paginate: false })
         .then(tags => {
           memberTagObject = tags[0]
           expect(memberTagObject.topics).toExist()
           expect(memberTagObject.topics[device.platform]).to.equal(topicArn)
+          expect(memberTagObject.count).to.equal(1)
           expect(memberObject.devices[0].arn).to.equal(endpointArn)
           resolve()
         })
@@ -317,7 +327,7 @@ describe('aktnmap', () => {
   // Let enough time to process
   .timeout(10000)
 
-  it('add existing tag to member', () => {
+  it('adds existing tag to member', () => {
     let operation = memberService.patch(memberObject._id.toString(), { // We need at least devices for subscription
       tags: [_.clone(memberObject.tags[0]), _.clone(tagObject)],
       devices: _.clone(memberObject.devices)
@@ -325,41 +335,22 @@ describe('aktnmap', () => {
     .then(user => {
       // Update member with its tag
       memberObject = user
-      console.log(memberObject)
       expect(memberObject.tags).toExist()
       expect(memberObject.tags.length === 2).beTrue()
       expect(memberObject.tags[1].value).to.equal('test')
       expect(memberObject.tags[1].context.toString()).to.equal(orgObject._id.toString())
     })
     let event = new Promise((resolve, reject) => {
+      // This should subscribe the device to new tag topic
       sns.once('subscribed', (subscriptionArn, endpointArn, topicArn) => {
-        // FIXME: because we check for resubscription after update to avoid any problem we get old tags resubscripted
-        // expect(tagObject.topics[device.platform]).to.equal(topicArn)
-        expect(memberObject.devices[0].arn).to.equal(endpointArn)
-        resolve()
-      })
-    })
-    return Promise.all([operation, event])
-    .catch(error => {
-      console.log(error)
-      throw error
-    })
-  })
-  // Let enough time to process
-  .timeout(10000)
-
-  it('removes an organisation group', () => {
-    let operation = groupService.remove(groupObject._id, { user: userObject, checkAuthorisation: true })
-    .then(() => {
-      return groupService.find({ query: { name: groupObject.name }, user: userObject, checkAuthorisation: true })
-    })
-    .then(groups => {
-      expect(groups.data.length === 0).beTrue()
-    })
-    let event = new Promise((resolve, reject) => {
-      sns.once('unsubscribed', (subscriptionArn) => {
-        // We do not store subscription ARN
-        resolve()
+        tagService.find({ query: { value: 'test', scope: 'members' }, paginate: false })
+        .then(tags => {
+          tagObject = tags[0]
+          expect(tagObject.count).to.equal(2)
+          expect(tagObject.topics[device.platform]).to.equal(topicArn)
+          expect(memberObject.devices[0].arn).to.equal(endpointArn)
+          resolve()
+        })
       })
     })
     return Promise.all([operation, event])
@@ -367,56 +358,67 @@ describe('aktnmap', () => {
   // Let enough time to process
   .timeout(10000)
 
-  it('remove user tags', () => {
+  it('removes user tags', () => {
     let operation = memberService.patch(userObject._id.toString(), { // We need at least devices for unsubscription
       tags: [],
       devices: _.clone(userObject.devices)
     }, { user: userObject, previousItem: _.clone(userObject), checkAuthorisation: true }) // Because we bypass populate hooks give the previousItem directly
     .then(user => {
       userObject = user
-      console.log(userObject)
       expect(userObject.tags).toExist()
       expect(userObject.tags.length === 0).beTrue()
     })
     let event = new Promise((resolve, reject) => {
       sns.once('unsubscribed', (subscriptionArn) => {
-        // We do not store subscription ARN
+        tagService.find({ query: { value: 'test', scope: 'members' }, paginate: false })
+        .then(tags => {
+          tagObject = tags[0]
+          expect(tagObject.count).to.equal(1)
+          // We do not store subscription ARN
+          resolve()
+        })
+      })
+    })
+    return Promise.all([operation, event])
+  })
+  // Let enough time to process
+  .timeout(10000)
+
+  it('adds member to a group', () => {
+    let operation = authorisationService.create({
+      scope: 'groups',
+      permissions: 'member',
+      subjects: memberObject._id.toString(),
+      subjectsService: 'users',
+      resource: groupObject._id.toString(),
+      resourcesService: orgObject._id.toString() + '/groups'
+    }, {
+      user: userObject,
+      checkAuthorisation: true
+    })
+    .then(authorisation => {
+      expect(authorisation).toExist()
+      return userService.get(memberObject._id.toString(), { checkAuthorisation: true, user: memberObject })
+    })
+    .then(user => {
+      // Update member with its group
+      memberObject = user
+      expect(memberObject.groups[0]._id.toString()).to.equal(groupObject._id.toString())
+      expect(memberObject.groups[0].permissions).to.equal('member')
+    })
+    let event = new Promise((resolve, reject) => {
+      sns.once('subscribed', (subscriptionArn, endpointArn, topicArn) => {
+        expect(groupObject.topics[device.platform]).to.equal(topicArn)
+        expect(memberObject.devices[0].arn).to.equal(endpointArn)
         resolve()
       })
     })
     return Promise.all([operation, event])
-    .catch(error => {
-      console.log(error)
-      throw error
-    })
   })
   // Let enough time to process
   .timeout(10000)
 
-  it('restore user tags, group to prepare testing cleanup', () => {
-    return memberService.patch(userObject._id.toString(), { // We need at least devices for subscription
-      tags: [{ value: 'test', scope: 'members' }],
-      devices: _.clone(userObject.devices)
-    }, { user: userObject, previousItem: _.clone(userObject), checkAuthorisation: true }) // Because we bypass populate hooks give the previousItem directly
-    .then(user => {
-      return groupService.create({ name: 'test-group' }, { user: userObject, checkAuthorisation: true })
-    })
-    .then(group => {
-      return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
-    })
-    .then(user => {
-      // Update user with its device, etc
-      userObject = user
-    })
-    .catch(error => {
-      console.log(error)
-      throw error
-    })
-  })
-  // Let enough time to process
-  .timeout(10000)
-
-  it('removes the member from his organisation', () => {
+  it('removes member from the organisation', () => {
     let operation = authorisationService.remove(orgObject._id, {
       query: {
         scope: 'organisations',
@@ -434,7 +436,6 @@ describe('aktnmap', () => {
     .then(user => {
       // Update member with his new permissions
       memberObject = user
-      console.log(memberObject)
       expect(memberObject.organisations).toExist()
       expect(memberObject.organisations.length === 0).beTrue()
       expect(memberObject.tags).toExist()
@@ -443,8 +444,8 @@ describe('aktnmap', () => {
       expect(memberObject.groups.length === 0).beTrue()
     })
     let events = new Promise((resolve, reject) => {
-      // This should unsubscribe device to all topics: org, group, tag
-      const expectedUnsubscriptions = 3
+      // This should unsubscribe device to all topics: org, group, 2 tags
+      const expectedUnsubscriptions = 4
       let unsubscriptions = 0
       sns.on('unsubscribed', (subscriptionArn) => {
         // We do not store subscription ARN
@@ -456,24 +457,46 @@ describe('aktnmap', () => {
       })
     })
     return Promise.all([operation, events])
-    .catch(error => {
-      console.log(error)
-      throw error
-    })
   })
   // Let enough time to process
   .timeout(20000)
 
-  it('removes the user organisation', () => {
+  it('cannot remove the organisation while a group do exists', () => {
+    return orgService.remove(orgObject._id, { user: userObject, checkAuthorisation: true })
+    .catch(error => {
+      expect(error).toExist()
+      expect(error.name).to.equal('Forbidden')
+    })
+  })
+
+  it('removes an organisation group', () => {
+    let operation = groupService.remove(groupObject._id, { user: userObject, checkAuthorisation: true })
+    .then(() => {
+      return groupService.find({ query: { name: groupObject.name }, user: userObject, checkAuthorisation: true })
+    })
+    .then(groups => {
+      expect(groups.data.length === 0).beTrue()
+    })
+    let event = new Promise((resolve, reject) => {
+      // This should unsubscribe device to group topic
+      sns.once('unsubscribed', (subscriptionArn) => {
+        // We do not store subscription ARN
+        resolve()
+      })
+    })
+    return Promise.all([operation, event])
+  })
+  // Let enough time to process
+  .timeout(10000)
+
+  it('removes the organisation', () => {
     let operation = orgService.remove(orgObject._id, { user: userObject, checkAuthorisation: true })
-    .then(authorisation => {
-      expect(authorisation).toExist()
+    .then(org => {
       return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
     })
     .then(user => {
       // Update user with his new permissions
       userObject = user
-      console.log(userObject)
       expect(userObject.organisations).toExist()
       expect(userObject.organisations.length === 0).beTrue()
       expect(userObject.tags).toExist()
@@ -486,29 +509,22 @@ describe('aktnmap', () => {
       expect(orgs.data.length === 0).beTrue()
     })
     let events = new Promise((resolve, reject) => {
-      // This should unsubscribe device to all topics: org, group, tag
-      const expectedUnsubscriptions = 3
-      let unsubscriptions = 0
-      sns.on('unsubscribed', (subscriptionArn) => {
+      // This should unsubscribe device to org topic
+      sns.once('unsubscribed', (subscriptionArn) => {
         // We do not store subscription ARN
-        unsubscriptions++
-        if (unsubscriptions === expectedUnsubscriptions) {
-          sns.removeAllListeners('unsubscribed')
-          resolve()
-        }
+        resolve()
       })
     })
     return Promise.all([operation, events])
-    .catch(error => {
-      console.log(error)
-      throw error
-    })
   })
   // Let enough time to process
   .timeout(20000)
 
-  it('removes the user', () => {
+  it('removes the users', () => {
     let operation = userService.remove(userObject._id, { user: userObject, checkAuthorisation: true })
+    .then(user => {
+      return userService.remove(memberObject._id, { user: memberObject, checkAuthorisation: true })
+    })
     .then(user => {
       return userService.find({ query: {}, checkAuthorisation: true })
     })
@@ -516,10 +532,16 @@ describe('aktnmap', () => {
       expect(users.data.length === 0).beTrue()
     })
     let event = new Promise((resolve, reject) => {
-      // This should unregister the device
-      sns.once('userDeleted', endpointArn => {
-        expect(userObject.devices[0].arn).to.equal(endpointArn)
-        resolve()
+      // This should unregister the devices
+      const expectedDeletions = 2
+      let deletions = 0
+      sns.on('userDeleted', endpointArn => {
+        deletions++
+        if (deletions === expectedDeletions) {
+          sns.removeAllListeners('unsubscribed')
+          resolve()
+        }
+        expect(endpointArn).to.satisfy(arn => (arn === userObject.devices[0].arn) || (arn === memberObject.devices[0].arn))
       })
     })
     return Promise.all([operation, event])
