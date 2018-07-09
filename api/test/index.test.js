@@ -17,7 +17,7 @@ describe('aktnmap', () => {
   }
   const newDevice = Object.assign({}, device, { registrationId: 'mynewfakeId' })
   const memberDevice = Object.assign({}, device, { registrationId: 'memberfakeId' })
-  
+
   before(() => {
     chailint(chai, util)
 
