@@ -1715,9 +1715,9 @@ feathers-socket-commons@^2.3.1:
     feathers-commons "^0.8.0"
     feathers-errors "^2.2.0"
 
-feathers-sync@0.1.4:
+"feathers-sync@https://github.com/kalisio/feathers-sync.git#v0.1.5":
   version "0.1.4"
-  resolved "https://registry.yarnpkg.com/feathers-sync/-/feathers-sync-0.1.4.tgz#8bff59a6404b4f3f761f832b563f9a23a86902a9"
+  resolved "https://github.com/kalisio/feathers-sync.git#d3599d1e8a177683f7d53a09e64896fdb7fee931"
   dependencies:
     amqplib "^0.5.0"
     debug "^3.0.0"

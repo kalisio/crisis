@@ -9,6 +9,7 @@ import kEvent, { hooks as eventHooks } from 'kEvent'
 import packageInfo from '../../package.json'
 
 const servicesPath = path.join(__dirname, '..', 'services')
+
 module.exports = async function () {
   const app = this
 
@@ -61,19 +62,33 @@ module.exports = async function () {
     orgsService.on('created', organisation => {
       // Check if already done (initiator)
       const orgMembersService = app.getService('members', organisation)
-      if (orgMembersService) return
-      // Jump from infos/stats to real DB object
-      const db = app.db.instance.db(organisation._id.toString())
-      orgsService.createOrganisationServices(organisation, db)
-      // We fake a hook call
-      eventHooks.createOrganisationServices({ app, result: organisation })
+      if (!orgMembersService) {
+        // Jump from infos/stats to real DB object
+        const db = app.db.instance.db(organisation._id.toString())
+        orgsService.createOrganisationServices(organisation, db)
+        // We fake a hook call
+        eventHooks.createOrganisationServices({ app, result: organisation })
+      }
+      // Need to sync manually dynamic services, internally Feathers strip slashes
+      function stripSlashes (name) {
+        return name.replace(/^(\/*)|(\/*)$/g, '')
+      }
+      const apiPath = stripSlashes(app.get('apiPath'))
+      const orgId = organisation._id.toString()
+      app.syncService(`${apiPath}/${orgId}/members`)
+      app.syncService(`${apiPath}/${orgId}/groups`)
+      app.syncService(`${apiPath}/${orgId}/tags`)
+      app.syncService(`${apiPath}/${orgId}/storage`)
+      app.syncService(`${apiPath}/${orgId}/events`)
+      app.syncService(`${apiPath}/${orgId}/event-templates`)
+      app.syncService(`${apiPath}/${orgId}/event-logs`)
     })
     orgsService.on('removed', organisation => {
       // Check if already done (initiator)
       const orgMembersService = app.getService('members', organisation)
       if (orgMembersService) return
-      orgsService.removeOrganisationServices(organisation)
       eventHooks.removeOrganisationServices({ app, result: organisation })
+      orgsService.removeOrganisationServices(organisation)
     })
   
     await app.configure(kNotify)
