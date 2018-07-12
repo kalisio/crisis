@@ -2,9 +2,9 @@ var path = require('path')
 var fs = require('fs')
 var containerized = require('containerized')()
 
-const serverPort = process.env.PORT || 8081
+const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
-const clientPort = process.env.CLIENT_PORT || 8080
+const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
 let domain
 // If we build a specific staging instance
@@ -39,7 +39,7 @@ module.exports = {
   https: {
     key: path.join(__dirname, 'server.key'),
     cert: path.join(__dirname, 'server.crt'),
-    port: process.env.HTTPS_PORT || 8084
+    port: serverPort
   },
   */
   apiPath: API_PREFIX,

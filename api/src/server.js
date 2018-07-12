@@ -6,6 +6,7 @@ const https = require('https')
 const proxyMiddleware = require('http-proxy-middleware')
 
 const feathers = require('feathers')
+const sync = require('feathers-sync')
 const middleware = require('./middleware')
 const services = require('./services')
 const appHooks = require('./main.hooks')
@@ -13,6 +14,10 @@ const appHooks = require('./main.hooks')
 export class Server {
   constructor () {
     this.app = kalisio()
+    this.app.configure(sync({
+      db: this.app.db._dbUrl,
+      collection: 'events'
+    }))
     // Serve pure static assets
     if (process.env.NODE_ENV === 'production') {
       this.app.use('/', feathers.static('../dist'))

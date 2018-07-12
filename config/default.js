@@ -1,8 +1,8 @@
 const website = 'https://www.kalisio.com'
 
-const serverPort = process.env.PORT || 8081
+const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
-const clientPort = process.env.CLIENT_PORT || 8080
+const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
 let domain
 // If we build a specific staging instance
