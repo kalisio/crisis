@@ -14,10 +14,12 @@ const appHooks = require('./main.hooks')
 export class Server {
   constructor () {
     this.app = kalisio()
-    this.app.configure(sync({
-      db: this.app.db._dbUrl,
-      collection: 'events'
-    }))
+    const syncConfig = this.app.get('sync')
+    if (syncConfig) {
+      this.app.configure(sync(Object.assign({
+        db: this.app.db._dbUrl
+      }, syncConfig)))
+    }
     // Serve pure static assets
     if (process.env.NODE_ENV === 'production') {
       this.app.use('/', feathers.static('../dist'))
