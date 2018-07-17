@@ -40,10 +40,12 @@ export default class ApplicationLayout {
   }
   async checkIdentity (test, name) {
     const identityPanel = await this.identityPanel.getVue()
+    await test.wait(1000)
     await test.expect(identityPanel.state.name).eql(name, 'User name is invalid')
   }
   async closeSignupAlert (test) {
     await test
+      .wait(1000)
       .click(this.signupAlert.find('.q-alert-close').find('.cursor-pointer'))
       .wait(1000)
   }
@@ -81,6 +83,7 @@ export default class ApplicationLayout {
   }
   async getItem (test, collectionSelector, name) {
     const collection = await collectionSelector.getVue()
+    await test.wait(1000)
     return _.find(collection.state.items, { name: name })
   }
   async getItemId (test, collectionSelector, name) {
@@ -90,6 +93,7 @@ export default class ApplicationLayout {
   }
   async checkCollectionCount (test, collectionSelector, count) {
     const collection = await collectionSelector.getVue()
+    await test.wait(1000)
     await test.expect(collection.state.items.length).eql(count, 'Invalid collection length')
   }
 }

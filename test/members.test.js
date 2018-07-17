@@ -26,7 +26,7 @@ const data = {
     { name: 'Members manager', email: 'members-manager@kalisio.xyz', password: 'Pass;word1' },
     { name: 'Members member', email: 'members-member@kalisio.xyz', password: 'Pass;word1' }
   ],
-  guest: { name: 'Members guest', email: 'members-guest@kalisio.xyz' }
+  guest: { name: 'Members guest', email: 'test-guest@kalisio.xyz' }
 }
 
 test.page`${pages.getUrl('login')}`

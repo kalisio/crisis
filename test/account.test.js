@@ -62,6 +62,7 @@ test('Delete account', async test => {
   await account.removeAccount(test, 'toto')
 
   let screen = await auth.logoutScreen.getVue()
+  await test.wait(1000)
   // The home page should be the logout screen
   await test.expect(screen.props.title).ok('Your are now logged out')
   // And we cannot login anymore
