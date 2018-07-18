@@ -6,7 +6,7 @@ import { permissions as teamPermissions } from 'kTeam'
 import { permissions as notifyPermissions, hooks as notifyHooks } from 'kNotify'
 import { permissions as mapPermissions } from 'kMap'
 import { permissions as eventPermissions } from 'kEvent'
-const { authenticate } = require('feathers-authentication').hooks
+const { authenticate } = require('@feathersjs/authentication').hooks
 
 // Register all default hooks for authorisation
 // Default rules for all users

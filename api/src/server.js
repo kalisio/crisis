@@ -5,7 +5,7 @@ const fs = require('fs-extra')
 const https = require('https')
 const proxyMiddleware = require('http-proxy-middleware')
 
-const feathers = require('feathers')
+const feathers = require('@feathersjs/feathers')
 const sync = require('feathers-sync')
 const middleware = require('./middleware')
 const services = require('./services')
