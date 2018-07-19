@@ -69,19 +69,6 @@ module.exports = async function () {
         // We fake a hook call
         eventHooks.createOrganisationServices({ app, result: organisation })
       }
-      // Need to sync manually dynamic services, internally Feathers strip slashes
-      function stripSlashes (name) {
-        return name.replace(/^(\/*)|(\/*)$/g, '')
-      }
-      const apiPath = stripSlashes(app.get('apiPath'))
-      const orgId = organisation._id.toString()
-      app.syncService(`${apiPath}/${orgId}/members`)
-      app.syncService(`${apiPath}/${orgId}/groups`)
-      app.syncService(`${apiPath}/${orgId}/tags`)
-      app.syncService(`${apiPath}/${orgId}/storage`)
-      app.syncService(`${apiPath}/${orgId}/events`)
-      app.syncService(`${apiPath}/${orgId}/event-templates`)
-      app.syncService(`${apiPath}/${orgId}/event-logs`)
     })
     orgsService.on('removed', organisation => {
       // Check if already done (initiator)

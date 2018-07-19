@@ -17,7 +17,7 @@ export class Server {
     const syncConfig = this.app.get('sync')
     if (syncConfig) {
       this.app.configure(sync(Object.assign({
-        db: this.app.db._dbUrl
+        uri: this.app.get('db').url
       }, syncConfig)))
     }
     // Serve pure static assets
