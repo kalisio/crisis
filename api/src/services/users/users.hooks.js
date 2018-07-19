@@ -17,12 +17,11 @@ module.exports = {
   },
 
   after: {
-    all: [],
+    all: [ notifyHooks.removeVerification ],
     find: [],
     get: [],
     create: [
       iff(hook => !hook.result.sponsor, notifyHooks.sendVerificationEmail),
-      notifyHooks.removeVerification,
       iffElse(hook => hook.result.sponsor, teamHooks.joinOrganisation, teamHooks.createPrivateOrganisation)
     ],
     update: [],
