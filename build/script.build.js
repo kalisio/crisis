@@ -45,6 +45,7 @@ copyModule('kTeam')
 copyModule('kNotify')
 copyModule('kEvent')
 copyModule('kMap')
+copyModule('kBilling')
 
 function finalize () {
   deleteModule('kCore')
@@ -52,6 +53,7 @@ function finalize () {
   deleteModule('kNotify')
   deleteModule('kEvent')
   deleteModule('kMap')
+  deleteModule('kBilling')
 
   console.log((
     '\n Build complete with "' + env.platform.theme.bold + '" theme in ' +
