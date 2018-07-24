@@ -4,7 +4,7 @@ import { hooks as coreHooks } from 'kCore'
 import { hooks as teamHooks } from 'kTeam'
 import { hooks as notifyHooks } from 'kNotify'
 import { hooks as eventHooks } from 'kEvent'
-import { checkOrganisationsQuotas } from '../../hooks'
+import { checkOrganisationsQuotas, checkPlanQuotas } from '../../hooks'
 
 module.exports = {
   before: {
@@ -14,7 +14,7 @@ module.exports = {
     create: [ checkOrganisationsQuotas, teamHooks.addOrganisationPlan ],
     update: [],
     // When changing billing plan check for quotas
-    patch: [ when(hook => _.get(hook, 'data.billing'), checkOrganisationsQuotas) ],
+    patch: [ when(hook => _.get(hook, 'data.billing'), checkOrganisationsQuotas, checkPlanQuotas) ],
     remove: [ teamHooks.preventRemoveOrganisation ]
   },
 
