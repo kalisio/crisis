@@ -99,6 +99,30 @@ export const checkTemplatesQuotas = coreHooks.countLimit({
   max: async (hook) => {
     // Retrieve the org with billing infos
     const org = await getOrgWithBilling(hook, hook.service.getContextId())
-    return getItemsQuota(hook, 'templates', org)
+    return getItemsQuota(hook, 'event-templates', org)
   }
 })
+
+export const checkPlanQuotas = async (hook) => {
+  const services = ['members', 'groups', 'events', 'event-templates']
+  let quotaHooks = []
+  services.forEach(service => {
+    quotaHooks.push(coreHooks.countLimit({
+      service,
+      count: async (hook) => {
+        // Retrieve the org with billing infos, when patching ID is not in data
+        const org = Object.assign({ _id: hook.id }, hook.data)
+        return countItems(hook, service, org)
+      },
+      max: async (hook) => {
+        // Retrieve the org with billing infos, when patching ID is not in data
+        const org = Object.assign({ _id: hook.id }, hook.data)
+        return getItemsQuota(hook, service, org)
+      }
+    })(hook))
+  })
+  await Promise.all(quotaHooks)
+  return hook
+}
+
+  

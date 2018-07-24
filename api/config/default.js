@@ -163,25 +163,25 @@ module.exports = {
       members: 25,
       groups: 5,
       events: -1,
-      templates: 5
+      'event-templates': 5
     },
     silver: {
       members: 50,
       groups: 10,
       events: -1,
-      templates: -1
+      'event-templates': -1
     },
     gold: {
       members: 250,
       groups: -1,
       events: -1,
-      templates: -1
+      'event-templates': -1
     },
     diamond: {
       members: -1,
       groups: -1,
       events: -1,
-      templates: -1
+      'event-templates': -1
     }
   },
   mailer: {
