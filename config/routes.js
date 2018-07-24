@@ -119,8 +119,8 @@ module.exports = {
                 }
               },
               ':perspective': {
-                name: 'settings-activity',
-                component: 'KSettingsActivity',
+                name: 'organisation-settings-activity',
+                component: 'OrganisationSettingsActivity',
                 props: true
               }
             }

@@ -1,4 +1,9 @@
 {
+  "schemas": {
+    "ORGANISATIONS_PLAN_FIELD_HELPER": "Select the billing plan of this organisation",
+    "ORGANISATIONS_PAYMENT_FIELD_HELPER": "Select a payment method",
+    "ORGANISATIONS_EXTRA_INFOS_FIELD_HELPER": "Enter any extra information to appear on your receipts",
+  },
   "screen": {
     "ABOUT_KALISIO": "About",
     "CONTACT": "Contact",
@@ -13,6 +18,20 @@
     "MEMBERS": "Members & groups",
     "REFRESH": "Refresh",
     "SETTINGS": "Settings"
+  },
+  "OrganisationBilling": {
+    "PAYMENT_BLOCK_TITLE": "Payment Information",
+    "PAYMENT_BLOCK_TEXT": "You did not fill in any payment information",
+    "PAYMENT_BLOCK_ACTION": "Update",
+    "SELECT": "Select",
+    "CURRENT_PLAN": "Your plan",
+    "BLOCK_NO_BILLING_TITLE": "You cannot change your plan",
+    "BLOCK_NO_BILLING_TEXT": "The feature is not available on this version, to change your plan please contact us using this address: <a href='mailto:support@kalisio.com'>support@kalisio.com</a>."
+  },
+  "OrganisationSettingsActivity": {
+    "PROPERTIES_LABEL": "Properties",
+    "BILLING_LABEL": "Billing Plan",
+    "DANGER_ZONE_LABEL": "Danger Zone"
   },
   "Index": {
     "VERSION_MISMATCH": "Application version mismatch, please install the latest available version or check your end point",

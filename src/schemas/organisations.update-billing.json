@@ -17,6 +17,13 @@
         ]
       }
     },
+    "payment": {
+      "type": "string",
+      "field": {
+        "component": "KPaymentField",
+        "helper": "schemas.ORGANISATIONS_PAYMENT_FIELD_HELPER"
+      }
+    },
     "extraInfos": {
       "type": "string", 
       "field": {

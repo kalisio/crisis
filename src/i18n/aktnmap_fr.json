@@ -1,4 +1,9 @@
 {
+  "schemas": {
+    "ORGANISATIONS_PLAN_FIELD_HELPER": "Sélectionnez le plan de paiement pour l'organisation",
+    "ORGANISATIONS_PAYMENT_FIELD_HELPER": "Sélectionnez une méthode de paiement",
+    "ORGANISATIONS_EXTRA_INFOS_FIELD_HELPER": "Saisissez des informations supplémentaires apparaissant sur vos facturess"
+  },
   "screen": {
     "ABOUT_KALISIO": "A propos",
     "CONTACT": "Contact",
@@ -13,6 +18,20 @@
     "MEMBERS": "Membres & groupes",
     "REFRESH": "Rafraîchir",
     "SETTINGS": "Paramètres"
+  },
+  "OrganisationBilling": {
+    "PAYMENT_BLOCK_TITLE": "Information de paiement",
+    "PAYMENT_BLOCK_TEXT": "Vous n'avez renseigné aucune information de paiement",
+    "PAYMENT_BLOCK_ACTION": "Mettre à jour",
+    "SELECT": "Sélectionner",
+    "CURRENT_PLAN": "Votre offre",
+    "BLOCK_NO_BILLING_TITLE": "Vous ne pouvez pas modifier votre offre",
+    "BLOCK_NO_BILLING_TEXT": "La fonctionnalité n'est pas disponible sur cette version, pour changer d'offre merci de nous contacter à cette adresse: <a href='mailto:support@kalisio.com'>support@kalisio.com</a>."
+  },
+  "OrganisationSettingsActivity": {
+    "PROPERTIES_LABEL": "Propriétés",
+    "BILLING_LABEL": "Plan de paiement",
+    "DANGER_ZONE_LABEL": "Zone de danger"
   },
   "Index": {
     "VERSION_MISMATCH": "Discordance de version, merci d'installer la dernière version disponible ou de vérifier votre point d'accès",

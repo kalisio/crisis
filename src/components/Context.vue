@@ -24,7 +24,7 @@ export default {
       }
       actions.toolbar.push({ name: 'refresh', icon: 'refresh', label: this.$t('Context.REFRESH'), handler: this.refresh })
       if (this.$can('update', 'organisations', context._id, { _id: context._id })) {
-        actions.menu.push({ name: 'settings', icon: 'settings', label: this.$t('Context.SETTINGS'), route: { name: 'settings-activity', params: { perspective: 'properties', contextId: context._id } } })
+        actions.menu.push({ name: 'settings', icon: 'settings', label: this.$t('Context.SETTINGS'), route: { name: 'organisation-settings-activity', params: { perspective: 'properties', contextId: context._id } } })
       }
       return actions
     }

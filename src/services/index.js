@@ -4,6 +4,7 @@ import kTeam from 'kTeam/client'
 import kNotify from 'kNotify/client'
 import kMap from 'kMap/client'
 import kEvent from 'kEvent/client'
+import kBilling from 'kBilling/client'
 import usersHooks from './users.hooks'
 
 export default function () {
@@ -18,6 +19,7 @@ export default function () {
     api.configure(kNotify)
     api.configure(kMap)
     api.configure(kEvent)
+    api.configure(kBilling)
   } catch (error) {
     logger.error(error.message)
   }

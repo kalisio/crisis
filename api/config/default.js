@@ -152,7 +152,7 @@ module.exports = {
     },
     diamond: {
       color: 'light-green-10',
-      url: 'https://www.kalisio.com/#footer'
+      url: 'https://kalisio.com/#footer'
     }
   },
   quotas: {
