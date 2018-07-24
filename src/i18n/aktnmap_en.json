@@ -2,7 +2,7 @@
   "schemas": {
     "ORGANISATIONS_PLAN_FIELD_HELPER": "Select the billing plan of this organisation",
     "ORGANISATIONS_PAYMENT_FIELD_HELPER": "Select a payment method",
-    "ORGANISATIONS_EXTRA_INFOS_FIELD_HELPER": "Enter any extra information to appear on your receipts",
+    "ORGANISATIONS_EXTRA_INFOS_FIELD_HELPER": "Enter any extra information to appear on your receipts"
   },
   "screen": {
     "ABOUT_KALISIO": "About",
