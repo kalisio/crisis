@@ -5,7 +5,7 @@ const fs = require('fs-extra')
 const https = require('https')
 const proxyMiddleware = require('http-proxy-middleware')
 
-const feathers = require('@feathersjs/feathers')
+const express = require('@feathersjs/express')
 const sync = require('feathers-sync')
 const middleware = require('./middleware')
 const services = require('./services')
@@ -22,7 +22,7 @@ export class Server {
     }
     // Serve pure static assets
     if (process.env.NODE_ENV === 'production') {
-      this.app.use('/', feathers.static('../dist'))
+      this.app.use('/', express.static('../dist'))
     }
     // In dev this is done by the webpack server
 
