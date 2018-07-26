@@ -1,0 +1,7 @@
+<h1>Alerte de sécurité - nouvel appareil</h1>
+
+<p>Bonjour <%= user.name %>, depuis un nouvel appareil <%= device.platform %>. Merci de vérifier qu'il s'agit bien d'une activité légitime.</p>
+
+<p>Suivez <a href='<%= email.link %>'>ce lien</a> pour vérifier cette activité.</p>
+
+<p>Si vous n'êtes pas à l'origine de cette activité envoyez-nous un mail en cliquant sur <a href='mailto:<%= email.from %>?subject=Je ne reconnais pas cette activité&body=Quelqu'un non autorisé a utilisé mon compte depuis un appareil inconnu.'>ce lien</a>.</p>
