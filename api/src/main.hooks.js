@@ -5,6 +5,7 @@ import { permissions as corePermissions, hooks as coreHooks } from 'kCore'
 import { permissions as teamPermissions } from 'kTeam'
 import { permissions as notifyPermissions, hooks as notifyHooks } from 'kNotify'
 import { permissions as mapPermissions } from 'kMap'
+import { permissions as billingPermissions } from 'kBilling/common'
 import { permissions as eventPermissions } from 'kEvent'
 const { authenticate } = require('@feathersjs/authentication').hooks
 
@@ -13,6 +14,7 @@ const { authenticate } = require('@feathersjs/authentication').hooks
 corePermissions.defineAbilities.registerHook(corePermissions.defineUserAbilities)
 corePermissions.defineAbilities.registerHook(notifyPermissions.defineUserAbilities)
 corePermissions.defineAbilities.registerHook(mapPermissions.defineUserAbilities)
+corePermissions.defineAbilities.registerHook(billingPermissions.defineUserAbilities)
 // Then rules for organisations
 corePermissions.defineAbilities.registerHook(teamPermissions.defineOrganisationAbilities)
 // Then rules for groups

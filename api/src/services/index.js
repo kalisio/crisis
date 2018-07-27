@@ -5,6 +5,7 @@ import kCore from 'kCore'
 import kTeam from 'kTeam'
 import kMap from 'kMap'
 import kNotify from 'kNotify'
+import kBilling from 'kBilling'
 import kEvent, { hooks as eventHooks } from 'kEvent'
 import packageInfo from '../../package.json'
 
@@ -81,6 +82,7 @@ module.exports = async function () {
     await app.configure(kNotify)
     app.configureService('devices', app.getService('devices'), servicesPath)
     await app.configure(kMap)
+    await app.configure(kBilling)
     await app.configure(kEvent)
   } catch (error) {
     logger.error(error.message)
