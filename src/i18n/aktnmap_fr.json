@@ -21,7 +21,9 @@
   },
   "OrganisationBilling": {
     "PAYMENT_BLOCK_TITLE": "Information de paiement",
-    "PAYMENT_BLOCK_TEXT": "Vous n'avez renseigné aucune information de paiement",
+    "PAYMENT_BLOCK_TEXT_NO_PAYMENT": "Vous n'avez renseigné aucune information de paiement",
+    "PAYMENT_BLOCK_TEXT_INVOICE_PAYMENT": "Vous avez choisis une méthode paiement par facturation mensuelle",
+    "PAYMENT_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisis une méthode paiement par débit bancaire mensuel",
     "PAYMENT_BLOCK_ACTION": "Mettre à jour",
     "SELECT": "Sélectionner",
     "CURRENT_PLAN": "Votre offre",

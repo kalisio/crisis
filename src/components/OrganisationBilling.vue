@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div class="col-12">
+      <k-block
+        :color="paymentBlockColor" 
+        :title="$t('OrganisationBilling.PAYMENT_BLOCK_TITLE')"
+        :text="paymentBlockText"
+        :action="$t('OrganisationBilling.PAYMENT_BLOCK_ACTION')"
+        @action-triggered="onUpdatePayment" />
+    </div>
+
     <div :class="isBillingAvailable() ? '' : 'disabled no-pointer-events'" class="row">
       <q-card class="col" :color="properties.color" :key="plan" v-for="(properties, plan) in plans">     
         <q-card-title class="text-center">
@@ -27,6 +36,7 @@
       </q-card>
     </div>
     <k-editor ref="editor" :class="isBillingAvailable() ? '' : 'disabled no-pointer-events'" service="organisations" :objectId="objectId" perspective="billing" @editor-ready="onEditorReady" @field-changed="onFieldChanged" />
+    <k-customer-editor ref="customerEditor" @payment-updated="onPaymentUpdated" :billingObjectId="objectId" billingService="organisations" />
   </div>
 </template>
 
@@ -52,15 +62,29 @@ export default {
       default: ''
     }
   },
+  computed: {
+    paymentBlockColor () {
+      if (this.currentPayment) {
+        return this.currentPayment.isValid ?  'green' : 'red'
+      }
+      return 'orange'
+    },
+    paymentBlockText () {
+      if (_.isNil(this.currentPayment)) return this.$t('OrganisationBilling.PAYMENT_BLOCK_TEXT_NO_PAYMENT')
+      if (_.isNil(this.currentPayment.token)) return this.$t('OrganisationBilling.PAYMENT_BLOCK_TEXT_INVOICE_PAYMENT')
+      this.$t('OrganisationBilling.PAYMENT_BLOCK_TEXT_CARD_PAYMENT')
+    }
+  },
   data () {
     return {
       plans: {},
-      currentPlan: ''
+      currentPlan: '',
+      currentPayment: null
     }
   },
   methods: {
     onUpdatePayment () {
-      this.$refs.paymentEditor.open()
+      this.$refs.customerEditor.open(_.get(this.editor.getObject(), 'billing.payment'))
     },
     onSelectPlan (plan, properties) {
       // Open information link
@@ -77,7 +101,8 @@ export default {
     },
     onEditorReady (editor) {
       this.editor = editor
-      this.currentPlan = _.get(this.editor.getObject(), 'billing.plan', '')
+      this.currentPlan = _.get(this.editor.getObject(), 'billing.plan', 'bronze')
+      this.currentPayment = _.get(this.editor.getObject(), 'billing.payment', null)
     },
     onFieldChanged (field, value) {
       if (field === 'plan') {
@@ -103,12 +128,16 @@ export default {
     },
     isBillingAvailable () {
       return this.$config('domain', '').includes('localhost')
+    },
+    onPaymentUpdated (payment) {
+      this.currentPayment = Object.assign(payment)
     }
   },
   created () {
     // Load the required components
+    this.$options.components['k-block'] = this.$load('frame/KBlock')
     this.$options.components['k-editor'] = this.$load('editor/KEditor')
-    this.$options.components['k-payment-editor'] = this.$load('KPaymentEditor')
+    this.$options.components['k-customer-editor'] = this.$load('KCustomerEditor')
     this.refreshPlans()
     // Whenever the cabilities are updated, update plans as well
     Events.$on('capabilities-api-changed', this.refreshPlans)

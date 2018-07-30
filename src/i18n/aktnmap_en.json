@@ -21,7 +21,9 @@
   },
   "OrganisationBilling": {
     "PAYMENT_BLOCK_TITLE": "Payment Information",
-    "PAYMENT_BLOCK_TEXT": "You did not fill in any payment information",
+    "PAYMENT_BLOCK_TEXT_NO_PAYMENT": "You did not fill in any payment information",
+    "PAYMENT_BLOCK_TEXT_INVOICE_PAYMENT": "You have chosen a monthly bill payment method",
+    "PAYMENT_BLOCK_TEXT_CARD_PAYMENT": "You have chosen a monthly bank debit payment method",
     "PAYMENT_BLOCK_ACTION": "Update",
     "SELECT": "Select",
     "CURRENT_PLAN": "Your plan",

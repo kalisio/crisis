@@ -204,6 +204,9 @@ module.exports = {
   geocoder: {
     provider: 'opendatafrance'
   },
+  billing: {
+    secretKey: process.env.STRIPE_SECRET_KEY
+  },
   logs: {
     Console: {
       colorize: true,

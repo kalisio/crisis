@@ -16,22 +16,8 @@
           { "label": "plans.bronze_LABEL", "value": "bronze", "color": "amber" }
         ]
       }
-    },
-    "payment": {
-      "type": "string",
-      "field": {
-        "component": "KPaymentField",
-        "helper": "schemas.ORGANISATIONS_PAYMENT_FIELD_HELPER"
-      }
-    },
-    "extraInfos": {
-      "type": "string", 
-      "field": {
-        "component": "form/KTextareaField",
-        "helper": "schemas.ORGANISATIONS_EXTRA_INFOS_FIELD_HELPER"
-      }
     }
   },
-  "required": ["plan", "extraInfos"]
+  "required": ["plan"]
 }
 
