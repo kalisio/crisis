@@ -44,7 +44,7 @@ module.exports = {
   */
   apiPath: API_PREFIX,
   paginate: {
-    default: 10,
+    default: 20,
     max: 50
   },
   // Global API limiter
