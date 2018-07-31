@@ -32,11 +32,12 @@ export const createGmailClient = (gmailApiConfig) => {
               userId: user.email
             }, (err, response) => {
               if (err) done(err)
-              expect(response.payload).toExist()
-              expect(response.payload.headers).toExist()
-              const from = _.find(response.payload.headers, header => header.name === 'From')
+              const message = response.payload
+              expect(message).toExist()
+              expect(message.headers).toExist()
+              const from = _.find(message.headers, header => header.name === 'From')
               expect(from.value).to.equal(fromValue)
-              const subject = _.find(response.payload.headers, header => header.name === 'Subject')
+              const subject = _.find(message.headers, header => header.name === 'Subject')
               expect(subject.value).to.equal(subjectValue)
               // Remove message to not pollute the mailbox
               // or simply call done for debug
@@ -46,7 +47,7 @@ export const createGmailClient = (gmailApiConfig) => {
                 id: response.id,
                 userId: user.email
               }, (err, response) => {
-                done(err)
+                done(err, message)
               })
             })
           })
