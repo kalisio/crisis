@@ -124,5 +124,3 @@ export const checkPlanQuotas = async (hook) => {
   await Promise.all(quotaHooks)
   return hook
 }
-
-  

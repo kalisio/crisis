@@ -1,26 +1,37 @@
 import _ from 'lodash'
 import fs from 'fs-extra'
 import path from 'path'
+import feathers from '@feathersjs/client'
+import io from 'socket.io-client'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
+import { createGmailClient } from './utils'
 import server from '../src/main'
 
 describe('aktnmap', () => {
   let userService, userObject, memberObject, orgService, orgObject, authorisationService, devicesService, pusherService, sns,
-    memberService, tagService, tagObject, memberTagObject, groupService, groupObject
+    mailerService, memberService, tagService, tagObject, memberTagObject, groupService, groupObject, gmailClient, gmailUser,
+    client, password
   let now = new Date()
   let logFilePath = path.join(__dirname, 'logs', 'aktnmap-' + now.toISOString().slice(0, 10) + '.log')
   const device = {
-    registrationId: 'myfakeId',
+    registrationId: 'fakeId',
     platform: 'ANDROID',
     uuid: 'id'
   }
-  const newDevice = Object.assign({}, device, { registrationId: 'mynewfakeId' })
-  const memberDevice = Object.assign({}, device, { registrationId: 'memberfakeId' })
-
+  const otherDevice = {
+    registrationId: 'other-fakeId',
+    platform: 'ANDROID',
+    uuid: 'other-id'
+  }
+  const memberDevice = {
+    registrationId: 'member-fakeId',
+    platform: 'ANDROID',
+    uuid: 'member-id'
+  }
+  
   before(() => {
     chailint(chai, util)
-
     // Add hooks for contextual services
     server.app.on('service', service => {
       if (service.name === 'members') {
@@ -37,8 +48,15 @@ describe('aktnmap', () => {
     expect(typeof server).to.equal('object')
   })
 
-  it('initialize the server', (done) => {
-    server.run().then(() => done())
+  it('initialize the server/client', async () => {
+    await server.run() 
+    client = feathers()
+    let socket = io(server.app.get('domain'), {
+      transports: ['websocket'],
+      path: server.app.get('apiPath') + 'ws'
+    })
+    client.configure(feathers.socketio(socket))
+    client.configure(feathers.authentication({ path: server.app.get('apiPath') + '/authentication' }))
   })
   // Let enough time to process
   .timeout(10000)
@@ -52,6 +70,8 @@ describe('aktnmap', () => {
     expect(authorisationService).toExist()
     devicesService = server.app.getService('devices')
     expect(devicesService).toExist()
+    mailerService = server.app.getService('mailer')
+    expect(mailerService).toExist()
     pusherService = server.app.getService('pusher')
     expect(pusherService).toExist()
   })
@@ -62,9 +82,23 @@ describe('aktnmap', () => {
     expect(sns).toExist()
   })
 
+  it('setup access to gmail', async () => {
+    const gmailApiConfig = {
+      user: process.env.GMAIL_API_USER,
+      clientEmail: process.env.GMAIL_API_CLIENT_EMAIL,
+      // The private key file is set as an environment variable containing \n
+      // So we need to parse it such as if it came from a JSON file
+      privateKey: JSON.parse('{ "key": "' + process.env.GMAIL_API_PRIVATE_KEY + '" }').key
+    }
+    gmailUser = gmailApiConfig.user
+    gmailClient = await createGmailClient(gmailApiConfig)
+  })
+  // Let enough time to process
+  .timeout(5000)
+
   it('cannot create a user with a weak password', (done) => {
     userService.create({
-      email: 'test@test.org',
+      email: gmailUser,
       password: '12345678',
       name: 'test-user'})
     .catch(error => {
@@ -79,7 +113,7 @@ describe('aktnmap', () => {
 
   it('creates a user with his org', () => {
     let operation = userService.create({
-      email: 'test@test.org',
+      email: gmailUser,
       password: 'Pass;word1',
       name: 'test-user'
     }, { checkAuthorisation: true })
@@ -103,25 +137,38 @@ describe('aktnmap', () => {
       userObject = user
       expect(userObject.devices).toExist()
       expect(userObject.devices.length === 1).beTrue()
+      expect(userObject.devices[0].uuid).to.equal(device.uuid)
       expect(userObject.devices[0].registrationId).to.equal(device.registrationId)
       expect(userObject.devices[0].platform).to.equal(device.platform)
       expect(userObject.devices[0].arn).toExist()
+      expect(userObject.devices[0].lastActivity).toExist()
     })
     let event = new Promise((resolve, reject) => {
       sns.once('subscribed', (subscriptionArn, endpointArn, topicArn) => {
         expect(orgObject.topics[device.platform]).to.equal(topicArn)
-        expect(userObject.devices[0].arn).to.equal(endpointArn)
         resolve()
       })
     })
     return Promise.all([operation, event])
   })
   // Let enough time to process
-  .timeout(10000)
+  .timeout(15000)
+
+  it('check user emails', (done) => {
+    // Add some delay to wait for email reception
+    setTimeout(() => {
+      gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Security alert - new device signin', (err) => {
+        if (err) done(err)
+        else gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Confirm your signup', (err) => done(err))
+      })
+    }, 10000)
+  })
+  // Let enough time to process
+  .timeout(15000)
 
   it('errors appear in logs', (done) => {
     userService.create({
-      email: 'test@test.org',
+      email: gmailUser,
       password: 'Pass;word1',
       name: 'test-user'
     }, { checkAuthorisation: true })
@@ -216,9 +263,55 @@ describe('aktnmap', () => {
   // Let enough time to process
   .timeout(10000)
 
-  it('updates the user device', () => {
-    const previousDevice = userObject.devices[0]
-    let operation = devicesService.update(newDevice.registrationId, newDevice, { user: userObject, checkAuthorisation: true })
+  it('updates the user devices', () => {
+    let operation = devicesService.update(otherDevice.registrationId, otherDevice, { user: userObject, checkAuthorisation: true })
+    .then(device => {
+      return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
+    })
+    .then(user => {
+      // Update user with its new device
+      userObject = user
+      expect(userObject.devices).toExist()
+      expect(userObject.devices.length === 2).beTrue()
+      expect(userObject.devices[1].uuid).to.equal(otherDevice.uuid)
+      expect(userObject.devices[1].registrationId).to.equal(otherDevice.registrationId)
+      expect(userObject.devices[1].platform).to.equal(otherDevice.platform)
+      expect(userObject.devices[1].arn).toExist()
+      expect(userObject.devices[1].lastActivity).toExist()
+    })
+    let events = new Promise((resolve, reject) => {
+      // This should subscribe the new device to all topics: org, group, tag
+      // Because we check for resubscription after update to avoid any problem we get 2 for each
+      const expectedSubscriptions = 2 * 3
+      let subscriptions = 0
+      sns.on('subscribed', (subscriptionArn, endpointArn, topicArn) => {
+        expect(topicArn).to.satisfy(topic => (topic === orgObject.topics[otherDevice.platform]) ||
+          (topic === groupObject.topics[otherDevice.platform]) ||
+          (topic === tagObject.topics[otherDevice.platform]))
+        subscriptions++
+        if (subscriptions === expectedSubscriptions) {
+          sns.removeAllListeners('subscribed')
+          resolve()
+        }
+      })
+    })
+    return Promise.all([operation, events])
+  })
+  // Let enough time to process
+  .timeout(10000)
+
+  it('check new device email', (done) => {
+    // Add some delay to wait for email reception
+    setTimeout(() => {
+      gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Security alert - new device signin', (err) => done(err))
+    }, 10000)
+  })
+  // Let enough time to process
+  .timeout(15000)
+
+  it('removes a user device', () => {
+    const previousArn = userObject.devices[0].arn
+    let operation = devicesService.remove(device.registrationId, { user: userObject, checkAuthorisation: true })
     .then(device => {
       return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
     })
@@ -227,40 +320,27 @@ describe('aktnmap', () => {
       userObject = user
       expect(userObject.devices).toExist()
       expect(userObject.devices.length === 1).beTrue()
-      expect(userObject.devices[0].registrationId).to.equal(newDevice.registrationId)
-      expect(userObject.devices[0].platform).to.equal(newDevice.platform)
-      expect(userObject.devices[0].arn).toExist()
+      expect(userObject.devices[0].uuid).to.equal(otherDevice.uuid)
+      expect(userObject.devices[0].registrationId).to.equal(otherDevice.registrationId)
     })
     let events = new Promise((resolve, reject) => {
-      // This should subscribe the new device to all topics: org, group, tag
-      // Because we check for resubscription after update to avoid any problem we get 2 for each
-      const expectedSubscriptions = 2 * 3
-      let subscriptions = 0
       // This should unsubscribe old device to all topics: org, group, tag
       const expectedUnsubscriptions = 3
       let unsubscriptions = 0
       // This should unregister the old device
       let userDeleted = false
-      sns.on('subscribed', (subscriptionArn, endpointArn, topicArn) => {
-        expect(userObject.devices[0].arn).to.equal(endpointArn)
-        subscriptions++
-        if (userDeleted && (subscriptions === expectedSubscriptions) && (unsubscriptions === expectedUnsubscriptions)) {
-          sns.removeAllListeners('subscribed')
-          resolve()
-        }
-      })
       sns.on('unsubscribed', (subscriptionArn) => {
         // We do not store subscription ARN
         unsubscriptions++
-        if (userDeleted && (subscriptions === expectedSubscriptions) && (unsubscriptions === expectedUnsubscriptions)) {
+        if (userDeleted && (unsubscriptions === expectedUnsubscriptions)) {
           sns.removeAllListeners('unsubscribed')
           resolve()
         }
       })
       sns.once('userDeleted', endpointArn => {
-        expect(previousDevice.arn).to.equal(endpointArn)
+        expect(previousArn).to.equal(endpointArn)
         userDeleted = true
-        if (userDeleted && (subscriptions === expectedSubscriptions) && (unsubscriptions === expectedUnsubscriptions)) resolve()
+        if (userDeleted && (unsubscriptions === expectedUnsubscriptions)) resolve()
       })
     })
     return Promise.all([operation, events])
@@ -270,7 +350,7 @@ describe('aktnmap', () => {
 
   it('invites a member to join the organisation', () => {
     let sponsor = { id: userObject._id, organisationId: orgObject._id, roleGranted: 'member' }
-    return userService.create({ email: 'test-3@test.org', name: 'test-user-3', sponsor: sponsor }, { checkAuthorisation: true })
+    return userService.create({ email: gmailUser.replace('com', 'xyz'), name: 'test-user-3', sponsor: sponsor }, { checkAuthorisation: true })
     .then(user => {
       memberObject = user
       expect(memberObject.organisations).toExist()
@@ -290,7 +370,43 @@ describe('aktnmap', () => {
       expect(memberObject.devices[0].registrationId).to.equal(memberDevice.registrationId)
       expect(memberObject.devices[0].platform).to.equal(memberDevice.platform)
       expect(memberObject.devices[0].arn).toExist()
+      expect(memberObject.devices[0].lastActivity).toExist()
     })
+  })
+  // Let enough time to process
+  .timeout(10000)
+
+  it('check invitation email', (done) => {
+    // Add some delay to wait for email reception
+    setTimeout(() => {
+      gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Security alert - new device signin', (err) => {
+        if (err) done(err)
+        else gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Welcome', (err, message) => {
+          if (err) done(err)
+          else {
+            // Extract password from email
+            message = Buffer.from(message.body.data, 'base64').toString()
+            const passwordEntry = 'password: ' // then come the password xxxxxxxx
+            const passwordIndex = message.indexOf(passwordEntry) + passwordEntry.length
+            // Generated passwords have 8 characters
+            password = message.substring(passwordIndex, passwordIndex + 8)
+            done()
+          }
+        })
+      })
+    }, 10000)
+  })
+  // Let enough time to process
+  .timeout(15000)
+
+  it('connects member client', async () => {
+    let response = await client.authenticate({
+      strategy: 'local',
+      email: gmailUser.replace('com', 'xyz'),
+      password
+    })
+    const payload = await client.passport.verifyJWT(response.accessToken)
+    expect(payload.userId).to.equal(memberObject._id.toString())
   })
   // Let enough time to process
   .timeout(5000)
@@ -384,6 +500,21 @@ describe('aktnmap', () => {
   // Let enough time to process
   .timeout(10000)
 
+  it('updating group should not dispatch event to non member client', (done) => {
+    const clientGroupService = client.service(server.app.get('apiPath') + '/' + orgObject._id.toString() + '/groups')
+    let count = 0
+    clientGroupService.on('patched', (group) => count++)
+    groupService.patch(groupObject._id.toString(),
+      { name: 'new-test-group' }, { user: userObject, checkAuthorisation: true })
+    setTimeout(() => {
+      clientGroupService.removeListener('patched')
+      if (count > 0) done(new Error('Service event raised'))
+      else done()
+    }, 5000)
+  })
+  // Let enough time to process
+  .timeout(10000)
+
   it('adds member to a group', () => {
     let operation = authorisationService.create({
       scope: 'groups',
@@ -414,6 +545,21 @@ describe('aktnmap', () => {
       })
     })
     return Promise.all([operation, event])
+  })
+  // Let enough time to process
+  .timeout(10000)
+
+  it('updating group should dispatch event to member client', (done) => {
+    const clientGroupService = client.service(server.app.get('apiPath') + '/' + orgObject._id.toString() + '/groups')
+    let count = 0
+    clientGroupService.on('patched', (group) => count++)
+    groupService.patch(groupObject._id.toString(),
+      { name: 'new-test-group' }, { user: userObject, checkAuthorisation: true })
+    setTimeout(() => {
+      clientGroupService.removeListener('patched')
+      if (count === 0) done(new Error('Service event not raised'))
+      else done()
+    }, 5000)
   })
   // Let enough time to process
   .timeout(10000)
@@ -521,6 +667,8 @@ describe('aktnmap', () => {
   .timeout(20000)
 
   it('removes the users', () => {
+    const previousUserArn = userObject.devices[0].arn
+    const previousMemberArn = memberObject.devices[0].arn
     let operation = userService.remove(userObject._id, { user: userObject, checkAuthorisation: true })
     .then(user => {
       return userService.remove(memberObject._id, { user: memberObject, checkAuthorisation: true })
@@ -541,7 +689,7 @@ describe('aktnmap', () => {
           sns.removeAllListeners('unsubscribed')
           resolve()
         }
-        expect(endpointArn).to.satisfy(arn => (arn === userObject.devices[0].arn) || (arn === memberObject.devices[0].arn))
+        expect(endpointArn).to.satisfy(arn => (arn === previousUserArn) || (arn === previousMemberArn))
       })
     })
     return Promise.all([operation, event])

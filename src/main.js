@@ -8,7 +8,7 @@ import i18next from 'i18next'
 import VueI18next from '@panter/vue-i18next'
 import Quasar from 'quasar'
 import router from './router'
-import appHooks from './main.hooks'
+import hooks from './app.hooks'
 import services from './services'
 import { configureI18n } from './i18n'
 import { kalisio, beforeGuard, authenticationGuard } from 'kCore/client'
@@ -39,7 +39,7 @@ if (__THEME === 'mat') {
 let api = kalisio()
 
 // Setup app hooks
-api.hooks(appHooks)
+api.hooks(hooks)
 // Then all services
 services.call(api)
 

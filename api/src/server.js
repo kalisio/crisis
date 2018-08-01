@@ -7,62 +7,67 @@ const proxyMiddleware = require('http-proxy-middleware')
 
 const express = require('@feathersjs/express')
 const sync = require('feathers-sync')
-const middleware = require('./middleware')
 const services = require('./services')
-const appHooks = require('./main.hooks')
+const middlewares = require('./app.middlewares')
+const hooks = require('./app.hooks')
+const channels = require('./app.channels')
 
 export class Server {
   constructor () {
-    this.app = kalisio()
-    const syncConfig = this.app.get('sync')
+    let app = kalisio()
+    const syncConfig = app.get('sync')
     if (syncConfig) {
-      this.app.configure(sync(Object.assign({
-        uri: this.app.get('db').url
+      app.configure(sync(Object.assign({
+        uri: app.get('db').url
       }, syncConfig)))
     }
     // Serve pure static assets
     if (process.env.NODE_ENV === 'production') {
-      this.app.use('/', express.static('../dist'))
+      app.use('/', express.static('../dist'))
     }
     // In dev this is done by the webpack server
 
     // Define HTTP proxies to your custom API backend. See /config/index.js -> proxyTable
     // https://github.com/chimurai/http-proxy-middleware
-    const proxyTable = this.app.get('proxyTable')
+    const proxyTable = app.get('proxyTable')
     Object.keys(proxyTable).forEach(context => {
       let options = proxyTable[context]
       if (typeof options === 'string') {
         options = { target: options }
       }
-      this.app.use(proxyMiddleware(context, options))
+      app.use(proxyMiddleware(context, options))
     })
+    this.app = app
   }
 
   async run () {
+    let app = this.app
     // First try to connect to DB
-    await this.app.db.connect()
+    await app.db.connect()
 
     // Set up our services (see `services/index.js`)
-    await this.app.configure(services)
+    await app.configure(services)
     // Register authorisation, perspective, etc. hooks
-    this.app.hooks(appHooks)
-    // Configure middleware (see `middleware/index.js`) - always has to be last
-    this.app.configure(middleware)
+    app.hooks(hooks)
+    // Set up real-time event channels
+    app.configure(channels)
+    // Configure middlewares - always has to be last
+    app.configure(middlewares)
 
     // Last lauch server
-    const httpsConfig = this.app.get('https')
+    const httpsConfig = app.get('https')
     if (httpsConfig) {
       const port = httpsConfig.port
       let server = https.createServer({
         key: fs.readFileSync(httpsConfig.key),
         cert: fs.readFileSync(httpsConfig.cert)
-      }, this.app)
+      }, app)
       logger.info('Configuring HTTPS server at port ' + port.toString())
       await server.listen(port)
     } else {
-      const port = this.app.get('port')
+      const port = app.get('port')
       logger.info('Configuring HTTP server at port ' + port.toString())
-      await this.app.listen(port)
+      await app.listen(port)
     }
   }
 }
