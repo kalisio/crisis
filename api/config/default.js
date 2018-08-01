@@ -146,11 +146,11 @@ module.exports = {
     },
     silver: {
       color: 'light-green-6',
-      subscription: 'plan_D9lRPmBX3N4MzO'
+      subscription: 'plan_DHd5HGwsl31NoC',
     },
     gold: {
       color: 'light-green-8',
-      subsription: 'plan_D9lSeSigaoIck3'
+      subscription: 'plan_DHd5RMLMSlpUmQ',
     },
     diamond: {
       color: 'light-green-10',
@@ -207,7 +207,8 @@ module.exports = {
     provider: 'opendatafrance'
   },
   billing: {
-    secretKey: process.env.STRIPE_SECRET_KEY
+    secretKey: process.env.STRIPE_SECRET_KEY,
+    daysUntilInvoiceDue: 7
   },
   logs: {
     Console: {

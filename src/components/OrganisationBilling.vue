@@ -34,7 +34,7 @@
                 <q-btn flat @click="onSelectPlan(plan, properties)">{{$t('OrganisationBilling.SELECT')}}</q-btn>
               </div>
               <div v-else>
-                <q-btn v-show="plan !== currentPlan" flat @click="onSelectPlan(plan, properties)">{{$t('OrganisationBilling.SELECT')}}</q-btn>
+                <q-btn v-show="plan !== currentPlan" flat :disable="properties.subscription && !customer" @click="onSelectPlan(plan, properties)">{{$t('OrganisationBilling.SELECT')}}</q-btn>
                 <q-btn v-show="plan === currentPlan" flat disable>{{$t('OrganisationBilling.CURRENT_PLAN')}}</q-btn>
               </div>
             </q-card-actions>
@@ -74,7 +74,7 @@ export default {
     customerBlockText () {
       if (_.isNil(this.customer)) return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_NO_PAYMENT')
       if (_.isNil(this.customer.card)) return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT', {email: this.customer.email})
-      return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_CARD_PAYMENT', {last4: this.customer.card.last4})
+      return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_CARD_PAYMENT', {brand: this.customer.card.brand, last4: this.customer.card.last4})
     }
   },
   data () {
@@ -118,23 +118,26 @@ export default {
 
       // Remove the subscription if needed
       const billingService = this.$api.getService('billing')
-      if (this.subscription) {
+      if (! _.isNil(this.subscription)) {
         await billingService.remove(this.subscription.id, {
           query: {
             action: 'subscription',
-            billingObjectId: this.billingObjectId,
-            billingObjectService: this.billingObjectService
+            billingObjectId: this.objectId,
+            billingObjectService: 'organisations'
           }
         })
       }
       // Create a new subscription if needed
       if (properties.subscription) {
+        let billingMethod = 'send_invoice'
+        if (this.hasCard) billingMethod = 'charge_automatically'
         this.subscriptionn = await billingService.create({
           action: 'subscription',
           customerId: this.customer.id,
           planId: properties.subscription,
-          billingObjectId: this.billingObjectId,
-          billingObjectService: this.billingObjectService
+          billing: billingMethod,
+          billingObjectId: this.objectId,
+          billingObjectService: 'organisations'
         })
       } else if (properties.url) {
         openURL(properties.url)

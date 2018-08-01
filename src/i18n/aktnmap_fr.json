@@ -23,7 +23,7 @@
     "CUSTOMER_BLOCK_TITLE": "Information de paiement",
     "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "Vous n'avez renseigné aucune information de paiement",
     "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "Vous avez choisis une méthode paiement par facturation mensuelle.<br/>Les factures seront envoyés à <b>{{email}}</b>",
-    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisis une méthode paiement par débit bancaire mensuel.<br/>Votre carte de crédit se termine par <b>{{last4}}</b>",
+    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisis une méthode paiement par débit bancaire mensuel.<br/>Vous utilisze une carte <b>{{brand}}</b> qui se termine par <b>{{last4}}</b>",
     "CUSTOMER_BLOCK_ACTION": "Mettre à jour",
     "SELECT": "Sélectionner",
     "CURRENT_PLAN": "Votre offre",
