@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { when } from 'feathers-hooks-common'
 import { hooks as coreHooks } from 'kCore'
+import { hooks as billingHooks } from 'kBilling'
 import { hooks as teamHooks } from 'kTeam'
 import { hooks as notifyHooks } from 'kNotify'
 import { hooks as eventHooks } from 'kEvent'
@@ -29,6 +30,7 @@ module.exports = {
     update: [],
     patch: [],
     remove: [ coreHooks.setAsDeleted,
+      billingHooks.removeBilling,
       teamHooks.removeOrganisationGroups,
       teamHooks.removeOrganisationTags,
       teamHooks.removeOrganisationAuthorisations,
