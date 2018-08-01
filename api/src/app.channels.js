@@ -31,6 +31,10 @@ export default function(app) {
     // and take permissions into account
     let authorisationService = app.getService('authorisations')
     return app.channel('authenticated').filter(connection => {
+      // We filter built-in Feathers services like authentication
+      if (typeof hook.service.getPath !== 'function') {
+        return false
+      }
       // Build ability for user
       const abilities = authorisationService.getAbilities(connection.user)
       const resourceType = hook.service.name
