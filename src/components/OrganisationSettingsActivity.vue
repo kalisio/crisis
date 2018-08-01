@@ -4,7 +4,7 @@
       <k-editor service="organisations" :objectId="contextId" />
     </div>
     <div v-else-if="perspective === 'billing'" class="col-11">
-      <organisation-billing :objectId="contextId" />
+      <organisation-billing :objectId="contextId" perspective="billing" />
     </div>
     <div v-else-if="perspective === 'danger-zone'" class="col-11">
       <k-organisation-dz :objectId="contextId" />

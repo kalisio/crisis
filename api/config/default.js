@@ -145,10 +145,12 @@ module.exports = {
       color: 'light-green-4'
     },
     silver: {
-      color: 'light-green-6'
+      color: 'light-green-6',
+      subscription: 'plan_D9lRPmBX3N4MzO'
     },
     gold: {
-      color: 'light-green-8'
+      color: 'light-green-8',
+      subsription: 'plan_D9lSeSigaoIck3'
     },
     diamond: {
       color: 'light-green-10',

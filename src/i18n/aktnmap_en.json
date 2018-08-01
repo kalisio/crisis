@@ -1,7 +1,7 @@
 {
   "schemas": {
     "ORGANISATIONS_PLAN_FIELD_HELPER": "Select the billing plan of this organisation",
-    "ORGANISATIONS_PAYMENT_FIELD_HELPER": "Select a payment method",
+    "ORGANISATIONS_CUSTOMER_FIELD_HELPER": "Select a payment method",
     "ORGANISATIONS_EXTRA_INFOS_FIELD_HELPER": "Enter any extra information to appear on your receipts"
   },
   "screen": {
@@ -20,11 +20,11 @@
     "SETTINGS": "Settings"
   },
   "OrganisationBilling": {
-    "PAYMENT_BLOCK_TITLE": "Payment Information",
-    "PAYMENT_BLOCK_TEXT_NO_PAYMENT": "You did not fill in any payment information",
-    "PAYMENT_BLOCK_TEXT_INVOICE_PAYMENT": "You have chosen a monthly bill payment method",
-    "PAYMENT_BLOCK_TEXT_CARD_PAYMENT": "You have chosen a monthly bank debit payment method",
-    "PAYMENT_BLOCK_ACTION": "Update",
+    "CUSTOMER_BLOCK_TITLE": "Payment Information",
+    "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "You did not fill in any payment information",
+    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "You have chosen a monthly bill payment method.<br/>An invioce will be send to <b>{{email}}</b>",
+    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "You have chosen a monthly bank debit payment method.<br/>Your credit card ending with <b>{{last4}}</b>",
+    "CUSTOMER_BLOCK_ACTION": "Update",
     "SELECT": "Select",
     "CURRENT_PLAN": "Your plan",
     "BLOCK_NO_BILLING_TITLE": "You cannot change your plan",
