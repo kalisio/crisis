@@ -23,7 +23,6 @@
             </q-card-title>
             <q-card-separator inset />
             <q-card-main class="text-center">
-              <!--div v-html="$t('plans.' + plan + '_DESCRIPTION', quotas[plan])" /-->
               <q-collapsible :label="$t('plans.' + plan + '_DESCRIPTION', quotas[plan])">
                 <div v-html="$t('plans.' + plan + '_DETAILS', quotas[plan])" />
               </q-collapsible>
@@ -31,10 +30,14 @@
             <q-card-separator />
             <q-card-actions align="end">
               <div v-if="properties.url || properties.route">
-                <q-btn flat @click="onSelectPlan(plan, properties)">{{$t('OrganisationBilling.SELECT')}}</q-btn>
+                <q-btn flat @click="onSelectPlan(plan, properties)">{{$t('OrganisationBilling.CLICK')}}</q-btn>
               </div>
               <div v-else>
-                <q-btn v-show="plan !== currentPlan" flat :disable="properties.subscription && !customer" @click="onSelectPlan(plan, properties)">{{$t('OrganisationBilling.SELECT')}}</q-btn>
+                <q-btn v-show="plan !== currentPlan" flat :disable="properties.subscription && !customer" @click="onSelectPlan(plan, properties)">{{$t('OrganisationBilling.SELECT')}}
+                  <q-tooltip v-if="properties.subscription && !customer">
+                    {{$t('OrganisationBilling.PLAN_DISABLED_TOOLTIP')}}
+                  </q-tooltip>
+                </q-btn>
                 <q-btn v-show="plan === currentPlan" flat disable>{{$t('OrganisationBilling.CURRENT_PLAN')}}</q-btn>
               </div>
             </q-card-actions>
@@ -47,7 +50,7 @@
 
 <script>
 import _ from 'lodash'
-import { Events, openURL, QCard, QCardTitle, QCardActions, QCardSeparator, QCardMain, QCardMedia, QBtn, QIcon, QCollapsible } from 'quasar'
+import { Events, openURL, QCard, QCardTitle, QCardActions, QCardSeparator, QCardMain, QCardMedia, QBtn, QIcon, QCollapsible, Dialog, QTooltip } from 'quasar'
 import { mixins as kCoreMixins } from 'kCore/client'
 
 export default {
@@ -61,7 +64,9 @@ export default {
     QCardMedia,
     QBtn,
     QIcon,
-    QCollapsible
+    QCollapsible,
+    Dialog,
+    QTooltip
   },
   mixins: [
     kCoreMixins.objectProxy
@@ -89,13 +94,6 @@ export default {
     loadService () {
       return this.$api.getService('organisations')
     },
-    refreshBilling () {
-      this.loadObject().then(perspective => {
-        this.currentPlan = perspective.billing.plan
-        this.customer = perspective.billing.customer
-        this.subscription = perspective.billing.subscription
-      })
-    },
     refreshPlans () {
       this.plans = this.$store.get('capabilities.api.plans', {})
       this.quotas = this.$store.get('capabilities.api.quotas', {})
@@ -113,52 +111,70 @@ export default {
     onCustomerUpdated (customer) {
       this.customer = customer
     },
-    async onSelectPlan (plan, properties) {
-      // TODO Confirm if needed
-
-      // Remove the subscription if needed
-      const billingService = this.$api.getService('billing')
-      if (! _.isNil(this.subscription)) {
-        await billingService.remove(this.subscription.id, {
-          query: {
-            action: 'subscription',
-            billingObjectId: this.objectId,
-            billingObjectService: 'organisations'
-          }
-        })
-      }
-      // Create a new subscription if needed
-      if (properties.subscription) {
-        let billingMethod = 'send_invoice'
-        if (this.hasCard) billingMethod = 'charge_automatically'
-        this.subscriptionn = await billingService.create({
-          action: 'subscription',
-          customerId: this.customer.id,
-          planId: properties.subscription,
-          billing: billingMethod,
-          billingObjectId: this.objectId,
-          billingObjectService: 'organisations'
-        })
-      } else if (properties.url) {
+    onSelectPlan (plan, properties) {
+      if (properties.url) {
         openURL(properties.url)
       } else if (properties.route) {
         this.$router.push(properties.route)
+      } else {
+        // Ask confimation
+        Dialog.create({
+          title: this.$t('OrganisationBilling.CONFIRM_DIALOG_TITLE'),
+          message: this.$t('OrganisationBilling.CONFIRM_DIALOG_MESSAGE', { plan: 'plans.' + plan + '_LABEL' }),
+          buttons: [
+            {
+              label: 'Ok',
+              handler: async () => {
+                const billingService = this.$api.getService('billing')
+                // Stop the current subscription if needed 
+                if (!_.isNil(this.subscription)) {
+                  await billingService.remove(this.subscription.id, {
+                    query: {
+                      action: 'subscription',
+                      billingObjectId: this.objectId,
+                      billingObjectService: 'organisations'
+                    }
+                  })
+                  this.subscription = null
+                }
+                // Create a new subscription if needed
+                if (!_.isNil(properties.subscription)) {
+                  let billingMethod = 'send_invoice'
+                  if (!_.isNil(this.customer.card)) billingMethod = 'charge_automatically'
+                  this.subscription = await billingService.create({
+                    action: 'subscription',
+                    customerId: this.customer.id,
+                    planId: properties.subscription,
+                    billing: billingMethod,
+                    billingObjectId: this.objectId,
+                    billingObjectService: 'organisations'
+                  })
+                } 
+                // Patch the perspective
+                await this.loadService().patch(this.objectId, { 'billing.plan': plan })
+                this.currentPlan = plan
+              }    
+            },
+            'Cancel'
+          ]
+        })
       }
-      // Patch the perspective
-      await this.loadService().patch(this.objectId, { 'billing.plan': plan })
-      this.currentPlan = plan
     }
   },
   created () {
     // Load the required components
     this.$options.components['k-block'] = this.$load('frame/KBlock')
     this.$options.components['k-customer-editor'] = this.$load('KCustomerEditor')
-    // Load underlying billing perspective
-    this.refreshBilling()
     // Load available plans
     this.refreshPlans()
     // Whenever the cabilities are updated, update plans as well
     Events.$on('capabilities-api-changed', this.refreshPlans)
+    // Load underlying billing perspective
+     this.loadObject().then(perspective => {
+      this.currentPlan = perspective.billing.plan
+      this.customer = perspective.billing.customer
+      this.subscription = perspective.billing.subscription
+    })
   },
   beforeDestroy () {
     Events.$off('capabilities-api-changed', this.refreshPlans)

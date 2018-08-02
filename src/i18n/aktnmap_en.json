@@ -25,10 +25,14 @@
     "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "You have chosen a monthly bill payment method.<br/>An invioce will be send to <b>{{email}}</b>",
     "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "You have chosen a monthly bank debit payment method.<br/>Your are using a <b>{{brand}}</b> card ending with <b>{{last4}}</b>",
     "CUSTOMER_BLOCK_ACTION": "Update",
+    "CLICK": "Click",
     "SELECT": "Select",
     "CURRENT_PLAN": "Your plan",
     "BLOCK_NO_BILLING_TITLE": "You cannot change your plan",
-    "BLOCK_NO_BILLING_TEXT": "The feature is not available on this version, to change your plan please contact us using this address: <a href='mailto:support@kalisio.com'>support@kalisio.com</a>."
+    "BLOCK_NO_BILLING_TEXT": "The feature is not available on this version, to change your plan please contact us using this address: <a href='mailto:support@kalisio.com'>support@kalisio.com</a>.",
+    "CONFIRM_DIALOG_TITLE": "Are you sure you want to update your plan ?",
+    "CONFIRM_DIALOG_MESSAGE": "Please confirm to subscribe to the <b>$t({{plan}})</b> plan",
+    "PLAN_DISABLED_TOOLTIP": "Please provide the payment information to subscribe to this plan"
   },
   "OrganisationSettingsActivity": {
     "PROPERTIES_LABEL": "Properties",
