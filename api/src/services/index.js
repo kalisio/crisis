@@ -36,7 +36,7 @@ module.exports = async function () {
     app.configureService('authentication', app.getService('authentication'), servicesPath)
     // Add hooks for topic (un)subscription on (un)authorisation
     app.configureService('authorisations', app.getService('authorisations'), servicesPath)
-    
+
     // Add hooks for topic creation/removal on org/group/tag object creation/removal,
     // event notifications on attachment upload, etc.
     app.on('service', service => {
@@ -78,7 +78,7 @@ module.exports = async function () {
       eventHooks.removeOrganisationServices({ app, result: organisation })
       orgsService.removeOrganisationServices(organisation)
     })
-  
+
     await app.configure(kNotify)
     app.configureService('devices', app.getService('devices'), servicesPath)
     await app.configure(kMap)

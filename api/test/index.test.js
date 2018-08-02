@@ -29,7 +29,7 @@ describe('aktnmap', () => {
     platform: 'ANDROID',
     uuid: 'member-id'
   }
-  
+
   before(() => {
     chailint(chai, util)
     // Add hooks for contextual services
@@ -49,7 +49,7 @@ describe('aktnmap', () => {
   })
 
   it('initialize the server/client', async () => {
-    await server.run() 
+    await server.run()
     client = feathers()
     let socket = io(server.app.get('domain'), {
       transports: ['websocket'],
@@ -381,18 +381,20 @@ describe('aktnmap', () => {
     setTimeout(() => {
       gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Security alert - new device signin', (err) => {
         if (err) done(err)
-        else gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Welcome', (err, message) => {
-          if (err) done(err)
-          else {
+        else {
+          gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Welcome', (err, message) => {
+            if (err) done(err)
+            else {
             // Extract password from email
-            message = Buffer.from(message.body.data, 'base64').toString()
-            const passwordEntry = 'password: ' // then come the password xxxxxxxx
-            const passwordIndex = message.indexOf(passwordEntry) + passwordEntry.length
+              message = Buffer.from(message.body.data, 'base64').toString()
+              const passwordEntry = 'password: ' // then come the password xxxxxxxx
+              const passwordIndex = message.indexOf(passwordEntry) + passwordEntry.length
             // Generated passwords have 8 characters
-            password = message.substring(passwordIndex, passwordIndex + 8)
-            done()
-          }
-        })
+              password = message.substring(passwordIndex, passwordIndex + 8)
+              done()
+            }
+          })
+        }
       })
     }, 10000)
   })
