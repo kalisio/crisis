@@ -22,7 +22,7 @@
   "OrganisationBilling": {
     "CUSTOMER_BLOCK_TITLE": "Payment Information",
     "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "You did not fill in any payment information",
-    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "You have chosen a monthly bill payment method.<br/>An invioce will be send to <b>{{email}}</b>",
+    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "You have chosen a monthly bill payment method.<br/>Invoices will be send to <b>{{email}}</b>",
     "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "You have chosen a monthly bank debit payment method.<br/>Your are using a <b>{{brand}}</b> card ending with <b>{{last4}}</b>",
     "CUSTOMER_BLOCK_ACTION": "Update",
     "CLICK": "Click",

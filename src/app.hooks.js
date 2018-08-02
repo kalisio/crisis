@@ -16,8 +16,6 @@ corePermissions.defineAbilities.registerHook(billingPermissions.defineUserAbilit
 corePermissions.defineAbilities.registerHook(teamPermissions.defineOrganisationAbilities)
 // Then rules for groups
 corePermissions.defineAbilities.registerHook(teamPermissions.defineGroupAbilities)
-// Then rules for maps
-
 // Then rules for events
 corePermissions.defineAbilities.registerHook(eventPermissions.defineEventAbilities)
 
