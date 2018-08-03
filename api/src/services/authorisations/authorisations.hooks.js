@@ -3,7 +3,7 @@ import { hooks as coreHooks } from 'kCore'
 import { hooks as teamHooks } from 'kTeam'
 import { hooks as notifyHooks } from 'kNotify'
 import { when } from 'feathers-hooks-common'
-import { checkMembersQuotas } from '../../hooks'
+import { checkMembersQuotas, preventRemovingCustomer } from '../../hooks'
 
 module.exports = {
   before: {
@@ -15,7 +15,8 @@ module.exports = {
         teamHooks.preventRemovingLastOwner('organisations'),
         teamHooks.preventRemovingLastOwner('groups')),
       when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations',
-        checkMembersQuotas) ],
+        checkMembersQuotas,
+        preventRemovingCustomer) ],
     update: [],
     patch: [],
     remove: [ coreHooks.preventEscalation,
@@ -27,6 +28,7 @@ module.exports = {
       // Need to be done in a before and not a after hook because otherwise the user has been
       // removed from the member service and will not be available anymore for subsequent operations
       when(hook => _.get(hook.params, 'query.scope') === 'organisations',
+        preventRemovingCustomer,
         teamHooks.removeOrganisationTagsAuthorisations,
         teamHooks.removeOrganisationGroupsAuthorisations) ]
   },

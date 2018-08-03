@@ -1,11 +1,6 @@
 import _ from 'lodash'
 import { hooks as coreHooks } from 'kCore'
-
-async function getOrgWithBilling (hook, id) {
-  const orgService = hook.app.getService('organisations')
-  const org = await orgService.get(id.toString(), { query: { $select: ['_id', 'billing'] } })
-  return org
-}
+import { getOrgWithBilling } from './hooks.billing'
 
 async function countItems (hook, service, org) {
   // Retrieve the target service

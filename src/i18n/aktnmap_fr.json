@@ -1,4 +1,7 @@
 {
+  "errors": {
+    "CANNOT_REMOVE_CUSTOMER": "Vous n'êtes pas autorisé à supprimer le client de <b>{{resource}}</b>, modifiez préalablement les informations de paiement."
+  },
   "schemas": {
     "ORGANISATIONS_PLAN_FIELD_HELPER": "Sélectionnez le plan de paiement pour l'organisation",
     "ORGANISATIONS_CUSTOMER_FIELD_HELPER": "Sélectionnez une méthode de paiement",

@@ -1,4 +1,7 @@
 {
+  "errors": {
+    "CANNOT_REMOVE_CUSTOMER": "You are not allowed to remove the customer of <b>{{resource}}</b>, change the payment information first."
+  },
   "schemas": {
     "ORGANISATIONS_PLAN_FIELD_HELPER": "Select the billing plan of this organisation",
     "ORGANISATIONS_CUSTOMER_FIELD_HELPER": "Select a payment method",
