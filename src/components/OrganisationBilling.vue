@@ -8,12 +8,13 @@
       :title="$t('OrganisationBilling.CUSTOMER_BLOCK_TITLE')"
       :text="customerBlockText"
       :action="$t('OrganisationBilling.CUSTOMER_BLOCK_ACTION')"
+      :disabled="!isUserVerified"
       @action-triggered="onUpdateCustomer" />
     <k-customer-editor ref="customerEditor" @customer-updated="onCustomerUpdated" :billingObjectId="objectId" billingObjectService="organisations" />
     <!-- 
       Plan subscription section 
     -->
-    <div class="row">
+    <div class="row" :disable="!isUserVerified">
       <template v-for="(properties, plan) in plans">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3" :key="plan">
           <q-card :color="properties.color" >     
@@ -73,10 +74,12 @@ export default {
   ],
   computed: {
     customerBlockColor () {
+      if (! this.isUserVerified) return 'red'
       if (this.customer) return 'grey'
       return 'orange'
     },
     customerBlockText () {
+      if (! this.isUserVerified) return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER')
       if (_.isNil(this.customer)) return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_NO_PAYMENT')
       if (_.isNil(this.customer.card)) return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT', {email: this.customer.email})
       return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_CARD_PAYMENT', {brand: this.customer.card.brand, last4: this.customer.card.last4})
@@ -84,6 +87,7 @@ export default {
   },
   data () {
     return {
+      isUserVerified: this.$store.get('user.isVerified'),
       plans: {},
       currentPlan: '',
       customer: null,
