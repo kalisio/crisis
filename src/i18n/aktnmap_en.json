@@ -24,7 +24,7 @@
     "CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER": "You must be verified to enter your payment information",
     "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "You did not enter in any payment information",
     "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "You have chosen a monthly bill payment method.<br/>Invoices will be send to <b>{{email}}</b>",
-    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "You have chosen a monthly bank debit payment method.<br/>Your are using a <b>{{brand}}</b> card ending with <b>{{last4}}</b>",
+    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "You have chosen a monthly bank debit payment method.<br/>Your are using a <b>{{brand}}</b> card which number is ending with <b>{{last4}}</b>",
     "CUSTOMER_BLOCK_ACTION": "Update",
     "CLICK": "Click",
     "SELECT": "Select",
@@ -51,18 +51,18 @@
     "bronze_LABEL": "Bronze",
     "bronze_PRICE": "Free",
     "bronze_DESCRIPTION": "Our basic version for users just getting started",
-    "bronze_DETAILS": "<ul><li>Unlimited tags</li><li>Unlimited events</li><li>Up to <b>{{groups}}</b> groups</li><li>Up to <b>{{templates}}</b> templates</li><li>Up to <b>{{members}}</b> members</li></br></br></ul>",
+    "bronze_DETAILS": "</br>Unlimited tags</br>Unlimited events<br>Up to <b>{{groups}}</b> groups</br>Up to <b>{{templates}}</b> templates</br>Up to <b>{{members}}</b> members</br></br>",
     "silver_LABEL": "Silver",
     "silver_PRICE": "99€ per month",
     "silver_DESCRIPTION": "Powerful enough to run a small business",
-    "silver_DETAILS": "<ul><li>Unlimited tags</li><li>Unlimited events</li><li>Unlimited templates</li><li>Up to <b>{{groups}}</b> groups</li><li>Up to <b>{{members}}</b> members</li></br></br></ul>",
+    "silver_DETAILS": "</br>Unlimited tags</br>Unlimited events</br>Unlimited templates</br>Up to <b>{{groups}}</b> groups</br>Up to <b>{{members}}</b> members</br></br>",
     "gold_LABEL": "Gold",
     "gold_PRICE": "399€ per month",
     "gold_DESCRIPTION": "Powerful enough to run a large business",
-    "gold_DETAILS": "<ul><li>Unlimited tags</li><li>Unlimited events</li><li>Unlimited templates</li><li>Unlimited groups</li><li>Up to <b>{{members}}</b> members</li></br></br></ul>",
+    "gold_DETAILS": "</br>Unlimited tags</br>Unlimited events</br>Unlimited templates</br>Unlimited groups</br>Up to <b>{{members}}</b> members</br></br>",
     "diamond_LABEL": "Diamond",
     "diamond_PRICE": "Let's talk !",
-    "diamond_DESCRIPTION": "Work with us for a custom plan tailored for your business, with more control and support",
-    "diamond_DETAILS": "<ul><li>Unlimited events</li><li>Unlimited tags</li><li>Unlimited groups</li><li>Unlimited templates</li><li>Unlimited members</li><li>Host on your servers</li><li>Custom branding</li></ul>"
+    "diamond_DESCRIPTION": "Custom plan tailored for your business, with more control and support",
+    "diamond_DETAILS": "Unlimited events</br>Unlimited tags</br>Unlimited groups</br>Unlimited templates</br>Unlimited members</br>Host on your servers</br>Custom branding</br>"
   }
 }
