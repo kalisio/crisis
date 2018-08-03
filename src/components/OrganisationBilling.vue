@@ -8,7 +8,7 @@
       :title="$t('OrganisationBilling.CUSTOMER_BLOCK_TITLE')"
       :text="customerBlockText"
       :action="$t('OrganisationBilling.CUSTOMER_BLOCK_ACTION')"
-      :disabled="!isUserVerified"
+      :disable="!isUserVerified"
       @action-triggered="onUpdateCustomer" />
     <k-customer-editor ref="customerEditor" @customer-updated="onCustomerUpdated" :billingObjectId="objectId" billingObjectService="organisations" />
     <!-- 
