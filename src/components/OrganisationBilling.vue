@@ -102,15 +102,28 @@ export default {
       this.plans = this.$store.get('capabilities.api.plans', {})
       this.quotas = this.$store.get('capabilities.api.quotas', {})
     },
-    onUpdateCustomer () {
+    async getAvailablePurchasers () {
+      const usersService = this.$api.getService('users')
+      let results = await usersService.find({ query: {
+        'organisations._id': this.$store.get('context._id'),
+        'organisations.permissions': 'owner',
+        'isVerified': true,
+        '$select': ['profile', 'email']
+      }})
+      let purchasers = results.data.map(result => {
+        return { label: result.profile.name, value: result.email }
+      })
+      return purchasers
+    },
+    async onUpdateCustomer () {
       let customer = this.customer
       if (_.isNil(customer)) {
         customer = {
-          email: this.$store.get('user.description'),
-          description: this.$store.get('context.name')
+          email: this.$store.get('user.description')
         }
       }
-      this.$refs.customerEditor.open(customer)
+      let availablePurchasers = await this.getAvailablePurchasers()
+      this.$refs.customerEditor.open(customer, availablePurchasers)
     },
     onCustomerUpdated (customer) {
       this.customer = customer
@@ -169,9 +182,8 @@ export default {
     // Load the required components
     this.$options.components['k-block'] = this.$load('frame/KBlock')
     this.$options.components['k-customer-editor'] = this.$load('KCustomerEditor')
-    // Load available plans
+    // Load available plans and Whenever the cabilities are updated, update plans as well
     this.refreshPlans()
-    // Whenever the cabilities are updated, update plans as well
     Events.$on('capabilities-api-changed', this.refreshPlans)
     // Load underlying billing perspective
      this.loadObject().then(perspective => {
