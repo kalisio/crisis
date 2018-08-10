@@ -8,7 +8,7 @@
       :title="$t('OrganisationBilling.CUSTOMER_BLOCK_TITLE')"
       :text="customerBlockText"
       :action="$t('OrganisationBilling.CUSTOMER_BLOCK_ACTION')"
-      :disable="!isUserVerified"
+      :disabled="!isUserVerified"
       @action-triggered="onUpdateCustomer" />
     <k-customer-editor ref="customerEditor" @customer-updated="onCustomerUpdated" :billingObjectId="objectId" billingObjectService="organisations" />
     <!-- 
@@ -167,8 +167,6 @@ export default {
                     billingObjectService: 'organisations'
                   })
                 } 
-                // Patch the perspective
-                await this.loadService().patch(this.objectId, { 'billing.plan': plan })
                 this.currentPlan = plan
               }    
             },

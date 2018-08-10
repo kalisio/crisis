@@ -83,6 +83,7 @@ module.exports = async function () {
     app.configureService('devices', app.getService('devices'), servicesPath)
     await app.configure(kMap)
     await app.configure(kBilling)
+    app.configureService('billing', app.getService('billing'), servicesPath)
     await app.configure(kEvent)
   } catch (error) {
     logger.error(error.message)

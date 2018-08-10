@@ -10,16 +10,18 @@ export default class Organisations extends ApplicationLayout {
     this.panel = VueSelector('k-organisations-panel')
     this.newLink = this.panel.find('#new-organisation')
     this.createModal = VueSelector('k-organisations-panel k-modal-editor')
-    // Settings activity
-    this.descriptionEditor = VueSelector('k-settings-acitivy k-editor')
-    this.billingEditor = VueSelector('k-settings-activity k-organisation-billing k-editor')
-    this.dzZone = VueSelector('k-settings-activity k-organisation-dz')
   }
   async selectOrganisation (test, orgName) {
     await this.openSideNav(test)
     await test
       .click(this.panel.find('#' + _.kebabCase(orgName)))
       .wait(5000)
+  }
+  async selectOrganisationSettingsTab (test, orgName, tab) {
+    await this.selectOrganisation(test, orgName)
+    await this.clickOverflowMenu(test, '#settings')
+    await this.clickTabBar(test, tab)
+    await test.wait(5000)
   }
   async createOrganisation (test, org) {
     await this.openSideNav(test)
@@ -32,24 +34,29 @@ export default class Organisations extends ApplicationLayout {
       .click(this.createModal.find('#apply-button'))
       .wait(5000)
   }
-  async updateOrganisationBilling (test, orgName) {
-    await this.openSideNav(test)
-    await this.selectOrganisation(test, orgName)
-    await this.clickOverflowMenu(test, '#settings')
-    await this.clickTabBar(test, '#billing')
+  async getBillingState (test) {
+    const billingPane = await VueSelector('organisation-billing').getVue()
+    return billingPane.state
+  }
+  async canEditCustomer (test) {
+    const customerBlock = await VueSelector('organisation-billing k-block').getVue()
+    if (customerBlock.props.disabled) return !customerBlock.props.disabled
+    return true
+  }
+  async updateOrganisationCustomer (test, orgName, purchaser) {
+    await this.selectOrganisationSettingsTab (test, orgName, '#billing')
     await test
-      .click(this.billingEditor.find('#plan-field'))
+      .click(VueSelector('organisation-billing k-block q-btn'))
       .wait(500)
     await test
-      .click(Selector('.q-popover .q-item').nth(1))
-      .click(this.billingEditor.find('#apply-button'))
+      .click(this.customerEditor.find('#email-field'))
+      .click(Selector('.q-popover .q-item').nth(purchaser))
+      .typeText(await this.customerEditor.find('#vat-number-field'), 'My vat number', { replace: true })
+      .click(await this.customEditor.find("#apply-button"))
       .wait(5000)
   }
   async deleteOrganisation (test, orgName) {
-    await this.openSideNav(test)
-    await this.selectOrganisation(test, orgName)
-    await this.clickOverflowMenu(test, '#settings')
-    await this.clickTabBar(test, '#danger-zone')
+    await this.selectOrganisationSettingsTab (test, orgName, '#danger-zone')
     await test
       .click(VueSelector('k-organisation-dz k-block q-btn'))
       .wait(500)

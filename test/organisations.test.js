@@ -44,13 +44,6 @@ test('Forbid additional free org creation', async test => {
   await pages.checkClientError(test)
 })
 
-test.skip('Update organisation billing', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
-  // Default org as the same name as the user
-  await organisations.updateOrganisationBilling(test, data.user.name)
-  await pages.checkNoClientError(test)
-})
-
 test('Delete default organisation', async test => {
   await auth.logInAndCloseSignupAlert(test, data.user)
   await organisations.deleteOrganisation(test, data.user.name)

@@ -8,6 +8,23 @@ export async function getOrgWithBilling (hook, id) {
   return org
 }
 
+export async function updatePlan (hook) {
+  if (hook.type !== 'after') {
+    throw new Error(`The 'updatePlan' hook should only be used as a 'after' hook.`)
+  }
+  const data = hook.data || {}
+  const query = hook.params.query || {}
+  const billingObjectId = data.billingObjectId || query.billingObjectId
+  let plan = _.head(_.keys(hook.app.get('plans') || {}))
+  if (hook.method === 'create') {
+    plan = _.lowerCase(hook.result.plan.name)
+  }
+  const orgService = hook.app.getService('organisations')
+  await orgService.patch(billingObjectId, { 'billing.plan': plan })
+
+  return hook
+}
+
 export async function preventRemovingCustomer (hook) {
   // By pass check ?
   if (hook.params.force) return hook
@@ -17,7 +34,7 @@ export async function preventRemovingCustomer (hook) {
   const grantedPermissions = data.permissions || query.permissions
   const grantedRole = (grantedPermissions ? permissions.Roles[grantedPermissions] : undefined)
   const resource = hook.params.resource
-  
+
   if (resource && resource._id) {
     const org = (resource.billing ? resource : await getOrgWithBilling(hook, resource._id))
     const customer = _.get(org, 'billing.customer.email')
