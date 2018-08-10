@@ -154,7 +154,7 @@ module.exports = {
     },
     diamond: {
       color: 'light-green-10',
-      url: 'https://kalisio.com/#footer'
+      url: 'https://aktnmap.com/#footer'
     }
   },
   quotas: {

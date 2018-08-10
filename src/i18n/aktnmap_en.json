@@ -29,7 +29,7 @@
     "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "You have chosen a monthly bill payment method.<br/>Invoices will be send to <b>{{email}}</b>",
     "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "You have chosen a monthly bank debit payment method.<br/>Your are using a <b>{{brand}}</b> card which number is ending with <b>{{last4}}</b>",
     "CUSTOMER_BLOCK_ACTION": "Update",
-    "CLICK": "Click",
+    "CLICK": "Contact us",
     "SELECT": "Select",
     "CURRENT_PLAN": "Your plan",
     "BLOCK_NO_BILLING_TITLE": "You cannot change your plan",

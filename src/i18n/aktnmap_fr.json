@@ -26,10 +26,10 @@
     "CUSTOMER_BLOCK_TITLE": "Information de paiement",
     "CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER": "Vous devez être vérifié pour renseigner vos informations de paiement",
     "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "Vous n'avez renseigné aucune information de paiement",
-    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "Vous avez choisis une méthode paiement par facturation mensuelle.<br/>Les factures seront envoyés à <b>{{email}}</b>",
-    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisis une méthode paiement par débit bancaire mensuel.<br/>Vous utilisez une carte <b>{{brand}}</b> dont le numéro se termine par <b>{{last4}}</b>",
+    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "Vous avez choisi une méthode paiement par facturation mensuelle.<br/>Les factures seront envoyées à <b>{{email}}</b>",
+    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisi une méthode paiement par débit bancaire mensuel.<br/>Vous utilisez une carte <b>{{brand}}</b> dont le numéro se termine par <b>{{last4}}</b>",
     "CUSTOMER_BLOCK_ACTION": "Mettre à jour",
-    "CLICK": "Cliquer",
+    "CLICK": "Nous contacter",
     "SELECT": "Sélectionner",
     "CURRENT_PLAN": "Votre offre",
     "BLOCK_NO_BILLING_TITLE": "Vous ne pouvez pas modifier votre offre",
@@ -46,26 +46,26 @@
   "Index": {
     "VERSION_MISMATCH": "Discordance de version, merci d'installer la dernière version disponible ou de vérifier votre point d'accès",
     "DISCONNECT": "La connexion au serveur a été interrompue, merci de patienter jusqu'à la reconnexion...",
-    "RECONNECT": "Tentative de reconnection en cours...",
-    "REFUSED": "Votre connexion a été refusé par le serveur, vous avez été déconnecté...",
+    "RECONNECT": "Tentative de reconnexion en cours...",
+    "REFUSED": "Votre connexion a été refusée par le serveur, vous avez été déconnecté...",
     "RETRY": "Rééssayer"
   },
   "plans": {
     "bronze_LABEL": "Bronze",
     "bronze_PRICE": "Gratuit",
     "bronze_DESCRIPTION": "Notre version basique pour les personnes qui souhaitent découvrir",
-    "bronze_DETAILS": "</br>Etiquettes illimités</br>Evénements illimités</br>Jusqu’à <b>{{templates}}</b> modèles</br>Jusqu’à <b>{{groups}}</b> groupes</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
+    "bronze_DETAILS": "</br>Etiquettes illimités</br>Evénements illimitées</br>Jusqu’à <b>{{templates}}</b> modèles</br>Jusqu’à <b>{{groups}}</b> groupes</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
     "silver_LABEL": "Argent",
     "silver_PRICE": "99€ par mois",
     "silver_DESCRIPTION": "Assez puissant pour gérer une association ou une entreprise de taille moyenne",
-    "silver_DETAILS": "</br>Etiquettes illimités</br>Evénements illimités</br>Modèles illimités</br>Jusqu’à <b>{{groups}}</b> groupes</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
+    "silver_DETAILS": "</br>Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Jusqu’à <b>{{groups}}</b> groupes</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
     "gold_LABEL": "Or",
     "gold_PRICE": "399€ par mois",
     "gold_DESCRIPTION": "Assez puissant pour gérer une association ou une entreprise de grande taille",
-    "gold_DETAILS": "</br>Etiquettes illimités</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
+    "gold_DETAILS": "</br>Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
     "diamond_LABEL": "Diamant",
     "diamond_PRICE": "Parlons-en !",
-    "diamond_DESCRIPTION": "Définissons une solution adapté à vos besoins, avec un contrôle accru et plus d’assistance",
-    "diamond_DETAILS": "Etiquettes illimités</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Membres illimités</br>Hébergement sur vos serveurs</br>Produit personnalisé</br>"
+    "diamond_DESCRIPTION": "Définissons une solution adaptée à vos besoins, avec un contrôle accru et plus d’assistance",
+    "diamond_DETAILS": "Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Membres illimités</br>Hébergement sur vos serveurs</br>Produit personnalisé</br>"
   }
 }
