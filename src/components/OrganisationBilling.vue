@@ -148,6 +148,7 @@ export default {
                   await billingService.remove(this.subscription.id, {
                     query: {
                       action: 'subscription',
+                      customerId: this.customer.id,
                       billingObjectId: this.objectId,
                       billingObjectService: 'organisations'
                     }
