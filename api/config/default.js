@@ -208,7 +208,25 @@ module.exports = {
   },
   billing: {
     secretKey: process.env.STRIPE_SECRET_KEY,
-    daysUntilInvoiceDue: 7
+    daysUntilInvoiceDue: 7,
+    plans: {
+      // First plan is the default one
+      bronze: {
+        color: 'light-green-4'
+      },
+      silver: {
+        color: 'light-green-6',
+        stripeId: 'plan_DHd5HGwsl31NoC',
+      },
+      gold: {
+        color: 'light-green-8',
+        stripeId: 'plan_DHd5RMLMSlpUmQ',
+      },
+      diamond: {
+        color: 'light-green-10',
+        url: 'https://aktnmap.com/#footer'
+      }
+    }
   },
   logs: {
     Console: {
