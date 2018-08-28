@@ -1,3 +1,4 @@
+import { MongoClient, MongoError } from 'mongodb'
 // Page models
 import * as pages from './page-models'
 
@@ -26,7 +27,7 @@ test.page`${pages.getUrl('register')}`
   await pages.checkNoClientError(test)
 })
 
-test('Check billing state', async test => {
+test('Check billing state for unverified user', async test => {
   await auth.logInAndCloseSignupAlert(test, data.user)
   await organisations.selectOrganisationSettingsTab(test, data.user.name, '#billing')
   await test.wait(1000)
@@ -37,8 +38,30 @@ test('Check billing state', async test => {
   await test.expect(await organisations.canEditCustomer(test)).notOk()
 })
 
+// To update billing the user has to be verified, because it requires a manual user action (click a link in an email)
+// we cannot emulate it so we need to directly patch the object in the DB to do so.
+// However, depending on the deployment configuration the database could not be accessible so that we skip in this case
+const dbUrl = process.env.DB_URL
+
+test('Check billing state for verified user', async test => {
+  if (dbUrl) {
+    const dbClient = await MongoClient.connect(dbUrl)
+    const db = dbClient.db(dbUrl.substring(dbUrl.lastIndexOf('/') + 1))
+    const users = db.collection('users')
+    await users.updateOne({ email: data.user.email }, { $set: { isVerified: true } })
+    await dbClient.close()
+    await auth.logIn(test, data.user)
+    await organisations.selectOrganisationSettingsTab(test, data.user.name, '#billing')
+    await test.wait(1000)
+    const billingState = await organisations.getBillingState(test)
+    await test.expect(billingState.isUserVerified).eql(true)
+    await test.expect(await organisations.canEditCustomer(test)).ok()
+  }
+})
+
 test('Delete default organisation', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  if (dbUrl) await auth.logIn(test, data.user)
+  else await auth.logInAndCloseSignupAlert(test, data.user)
   await organisations.deleteOrganisation(test, data.user.name)
   // We should have the deleted organisation removed from the organisations panel
   const panel = await organisations.panel.getVue()
@@ -48,7 +71,8 @@ test('Delete default organisation', async test => {
 })
 
 test('Delete account', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  if (dbUrl) await auth.logIn(test, data.user)
+  else await auth.logInAndCloseSignupAlert(test, data.user)
   await account.removeAccount(test, data.user.name)
   await pages.checkNoClientError(test)
 })
