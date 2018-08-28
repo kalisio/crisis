@@ -212,7 +212,8 @@ module.exports = {
     plans: {
       // First plan is the default one
       bronze: {
-        color: 'light-green-4'
+        color: 'light-green-4',
+        default: true
       },
       silver: {
         color: 'light-green-6',
