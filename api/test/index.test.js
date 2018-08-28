@@ -192,7 +192,6 @@ describe('aktnmap', () => {
   // Let enough time to process
   .timeout(5000)
 
-  // FIXME: when running this test, it makes the fo
   it('cannot create multiple free organisations', () => {
     return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
     .catch(error => {
@@ -205,8 +204,9 @@ describe('aktnmap', () => {
     return billingService.create({
       action: 'customer',
       email: userObject.email,
-      billingObjectId: orgObject._id,
-      billingObjectService: 'organisations'
+      billingObject: orgObject._id,
+      billingObjectService: 'organisations',
+      billingPerspective: 'billing'
     }, {
       user: userObject, checkAuthorisation: true
     })
@@ -217,39 +217,44 @@ describe('aktnmap', () => {
   })
   .timeout(10000)
 
-  it('subscribe to a paying plan', () => {
-    return billingService.create({
+  it('subscribe to the silver plan', () => {
+    return billingService.update(orgObject._id, {
       action: 'subscription',
-      customerId: customerObject.id,
-      planId: 'plan_DHd5HGwsl31NoC',
+      plan: 'silver',
       billing: 'send_invoice',
-      billingObjectId: orgObject._id,
-      billingObjectService: 'organisations'
+      billingObjectService: 'organisations',
+      billingPerspective: 'billing'
     }, {
       user: userObject, checkAuthorisation: true
     })
     .then(subscription => {
       subscriptionObject = subscription
-      expect(subscriptionObject.id).toExist()
+      expect(subscriptionObject.stripeId).toExist()
       return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
     })
     .then(result => {
       const billingPerspective = result.data[0].billing
-      expect(billingPerspective.plan).eq('silver')
+      expect(billingPerspective.subscription.plan).eq('silver')
     })
   })
   .timeout(10000)
 
   it('unsubscribe the paying plan', () => {
-    return billingService.remove(subscriptionObject.id, {
-      query: { action: 'subscription', customerId: customerObject.id, billingObjectId: orgObject._id, billingObjectService: 'organisations' }, user: userObject, checkAuthorisation: true
+    return billingService.remove(orgObject._id, {
+      query: {
+        action: 'subscription',
+        billingObjectService: 'organisations',
+        billingPerspective: 'billing'
+      },
+      user: userObject,
+      checkAuthorisation: true
     })
     .then(() => {
       return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
     })
     .then(result => {
       const billingPerspective = result.data[0].billing
-      expect(billingPerspective.plan).eq('bronze')
+      expect(billingPerspective.subscription).to.equal(null)
     })
   })
   .timeout(10000)

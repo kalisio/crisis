@@ -14,61 +14,17 @@
     <!-- 
       Plan subscription section 
     -->
-    <div class="row" :disable="!isUserVerified">
-      <template v-for="(properties, plan) in plans">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3" :key="plan">
-          <q-card :color="properties.color" >     
-            <q-card-title class="text-center">
-              <h4>{{$t('plans.' + plan + '_LABEL', quotas[plan])}}</h4>
-              <h5 slot="subtitle">{{$t('plans.' + plan + '_PRICE', quotas[plan])}}</h5>
-            </q-card-title>
-            <q-card-separator inset />
-            <q-card-main class="text-center">
-              <q-collapsible :label="$t('plans.' + plan + '_DESCRIPTION', quotas[plan])">
-                <div v-html="$t('plans.' + plan + '_DETAILS', quotas[plan])" />
-              </q-collapsible>
-            </q-card-main>
-            <q-card-separator />
-            <q-card-actions align="end">
-              <div v-if="properties.url || properties.route">
-                <q-btn flat @click="onSelectPlan(plan, properties)">{{$t('OrganisationBilling.CLICK')}}</q-btn>
-              </div>
-              <div v-else>
-                <q-btn v-show="plan !== currentPlan" flat :disable="properties.subscription && !customer" @click="onSelectPlan(plan, properties)">{{$t('OrganisationBilling.SELECT')}}
-                  <q-tooltip v-if="properties.subscription && !customer">
-                    {{$t('OrganisationBilling.PLAN_DISABLED_TOOLTIP')}}
-                  </q-tooltip>
-                </q-btn>
-                <q-btn v-show="plan === currentPlan" flat disable>{{$t('OrganisationBilling.CURRENT_PLAN')}}</q-btn>
-              </div>
-            </q-card-actions>
-          </q-card>
-        </div>
-      </template>
-    </div>
+    <k-plan-chooser :billingObjectId="objectId" billingObjectService="organisations" :quotas="quotas" :plans="plans" v-model="currentPlan" :hasCustomer="customer !== null" />
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
-import { Events, openURL, QCard, QCardTitle, QCardActions, QCardSeparator, QCardMain, QCardMedia, QBtn, QIcon, QCollapsible, Dialog, QTooltip } from 'quasar'
+import { Events } from 'quasar'
 import { mixins as kCoreMixins } from 'kCore/client'
 
 export default {
   name: 'organisation-billing',
-  components: {
-    QCard,
-    QCardTitle,
-    QCardActions,
-    QCardSeparator,
-    QCardMain,
-    QCardMedia,
-    QBtn,
-    QIcon,
-    QCollapsible,
-    Dialog,
-    QTooltip
-  },
   mixins: [
     kCoreMixins.objectProxy
   ],
@@ -88,10 +44,8 @@ export default {
   data () {
     return {
       isUserVerified: this.$store.get('user.isVerified'),
-      plans: {},
       currentPlan: '',
-      customer: null,
-      subscription: null
+      customer: null
     }
   },
   methods: {
@@ -127,68 +81,21 @@ export default {
     },
     onCustomerUpdated (customer) {
       this.customer = customer
-    },
-    onSelectPlan (plan, properties) {
-      if (properties.url) {
-        openURL(properties.url)
-      } else if (properties.route) {
-        this.$router.push(properties.route)
-      } else {
-        // Ask confimation
-        Dialog.create({
-          title: this.$t('OrganisationBilling.CONFIRM_DIALOG_TITLE'),
-          message: this.$t('OrganisationBilling.CONFIRM_DIALOG_MESSAGE', { plan: 'plans.' + plan + '_LABEL' }),
-          buttons: [
-            {
-              label: 'Ok',
-              handler: async () => {
-                const billingService = this.$api.getService('billing')
-                // Stop the current subscription if needed 
-                if (!_.isNil(this.subscription)) {
-                  await billingService.remove(this.subscription.id, {
-                    query: {
-                      action: 'subscription',
-                      customerId: this.customer.id,
-                      billingObjectId: this.objectId,
-                      billingObjectService: 'organisations'
-                    }
-                  })
-                  this.subscription = null
-                }
-                // Create a new subscription if needed
-                if (!_.isNil(properties.subscription)) {
-                  let billingMethod = 'send_invoice'
-                  if (!_.isNil(this.customer.card)) billingMethod = 'charge_automatically'
-                  this.subscription = await billingService.create({
-                    action: 'subscription',
-                    customerId: this.customer.id,
-                    planId: properties.subscription,
-                    billing: billingMethod,
-                    billingObjectId: this.objectId,
-                    billingObjectService: 'organisations'
-                  })
-                } 
-                this.currentPlan = plan
-              }    
-            },
-            'Cancel'
-          ]
-        })
-      }
     }
   },
   created () {
     // Load the required components
     this.$options.components['k-block'] = this.$load('frame/KBlock')
     this.$options.components['k-customer-editor'] = this.$load('KCustomerEditor')
+    this.$options.components['k-plan-chooser'] = this.$load('KPlanChooser')
     // Load available plans and Whenever the cabilities are updated, update plans as well
     this.refreshPlans()
     Events.$on('capabilities-api-changed', this.refreshPlans)
     // Load underlying billing perspective
      this.loadObject().then(perspective => {
-      this.currentPlan = perspective.billing.plan
+      console.log(perspective)
+      this.currentPlan = perspective.billing.subscription.plan
       this.customer = perspective.billing.customer
-      this.subscription = perspective.billing.subscription
     })
   },
   beforeDestroy () {

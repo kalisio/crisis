@@ -56,7 +56,7 @@ export default {
             default: this.perspective === 'properties' }
         })
       }
-      if (this.$can('update', 'billing', null, { billingObjectId: this.contextId })) {
+      if (this.$can('update', 'billing', null, { billingObject: this.contextId })) {
         this.registerTabAction({
           name: 'billing',
           label: this.$t('OrganisationSettingsActivity.BILLING_LABEL'),

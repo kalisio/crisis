@@ -28,15 +28,7 @@
     "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "Vous n'avez renseigné aucune information de paiement",
     "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "Vous avez choisi une méthode paiement par facturation mensuelle.<br/>Les factures seront envoyées à <b>{{email}}</b>",
     "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisi une méthode paiement par débit bancaire mensuel.<br/>Vous utilisez une carte <b>{{brand}}</b> dont le numéro se termine par <b>{{last4}}</b>",
-    "CUSTOMER_BLOCK_ACTION": "Mettre à jour",
-    "CLICK": "Nous contacter",
-    "SELECT": "Sélectionner",
-    "CURRENT_PLAN": "Votre offre",
-    "BLOCK_NO_BILLING_TITLE": "Vous ne pouvez pas modifier votre offre",
-    "BLOCK_NO_BILLING_TEXT": "La fonctionnalité n'est pas disponible sur cette version, pour changer d'offre merci de nous contacter à cette adresse: <a href='mailto:support@kalisio.com'>support@kalisio.com</a>.",
-    "CONFIRM_DIALOG_TITLE": "Êtes vous sur de vouloir mettre à jour votre plan ?",
-    "CONFIRM_DIALOG_MESSAGE": "Merci de confirmer la souscription au plan <b>$t({{plan}})</b>",
-    "PLAN_DISABLED_TOOLTIP": "Merci de renseigner les informations de paiement pour souscrire à ce plan"
+    "CUSTOMER_BLOCK_ACTION": "Mettre à jour"
   },
   "OrganisationSettingsActivity": {
     "PROPERTIES_LABEL": "Propriétés",
