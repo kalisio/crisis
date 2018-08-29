@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { iff } from 'feathers-hooks-common'
+import { hooks as coreHooks } from 'kCore'
 
 module.exports = {
   before: {
@@ -21,10 +22,12 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
+    create: [ coreHooks.unpopulateAttachmentResource ],
     update: [],
     patch: [],
-    remove: []
+    // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
+    remove: [ coreHooks.unpopulateAttachmentResource ]
   },
 
   error: {
