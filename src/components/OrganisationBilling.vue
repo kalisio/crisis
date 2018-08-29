@@ -14,7 +14,7 @@
     <!-- 
       Plan subscription section 
     -->
-    <k-plan-chooser :billingObjectId="objectId" billingObjectService="organisations" :quotas="quotas" :plans="plans" v-model="currentPlan" :hasCustomer="customer !== null" />
+    <k-plan-chooser :billingObjectId="objectId" billingObjectService="organisations" :quotas="quotas" :plans="plans" v-model="currentPlan" :hasCustomer="customer !== undefined" />
   </div>
 </template>
 
@@ -45,7 +45,7 @@ export default {
     return {
       isUserVerified: this.$store.get('user.isVerified'),
       currentPlan: '',
-      customer: null
+      customer: undefined
     }
   },
   methods: {
@@ -54,6 +54,7 @@ export default {
     },
     refreshPlans () {
       this.plans = this.$store.get('capabilities.api.plans', {})
+      console.log(this.plans)
       this.quotas = this.$store.get('capabilities.api.quotas', {})
     },
     async getAvailablePurchasers () {
@@ -93,7 +94,6 @@ export default {
     Events.$on('capabilities-api-changed', this.refreshPlans)
     // Load underlying billing perspective
      this.loadObject().then(perspective => {
-      console.log(perspective)
       this.currentPlan = perspective.billing.subscription.plan
       this.customer = perspective.billing.customer
     })
