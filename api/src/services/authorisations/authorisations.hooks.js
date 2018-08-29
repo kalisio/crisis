@@ -37,10 +37,12 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ notifyHooks.subscribeSubjectsToResourceTopic ],
+    // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
+    create: [ notifyHooks.subscribeSubjectsToResourceTopic, coreHooks.unpopulateSubjects, coreHooks.unpopulateResource ],
     update: [],
     patch: [],
-    remove: [ notifyHooks.unsubscribeSubjectsFromResourceTopic ]
+    // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
+    remove: [ notifyHooks.unsubscribeSubjectsFromResourceTopic, coreHooks.unpopulateSubjects, coreHooks.unpopulateResource ]
   },
 
   error: {
