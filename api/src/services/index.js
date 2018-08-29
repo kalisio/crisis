@@ -21,7 +21,7 @@ module.exports = async function () {
         name: 'aktnmap',
         domain: app.get('domain'),
         version: packageInfo.version,
-        plans: app.get('plans'),
+        plans: _.get(app.get('billing'), 'plans'),
         quotas: app.get('quotas')
       }
       if (process.env.BUILD_NUMBER) {
