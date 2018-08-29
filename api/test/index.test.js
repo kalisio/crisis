@@ -10,7 +10,7 @@ import server from '../src/main'
 
 describe('aktnmap', () => {
   let userService, userObject, memberObject, orgService, orgObject, authorisationService, devicesService, pusherService, billingService, sns,
-    mailerService, memberService, tagService, tagObject, memberTagObject, groupService, groupObject, gmailClient, gmailUser, customerObject,
+    mailerService, memberService, tagService, tagObject, memberTagObject, groupService, groupObject, gmailClient, gmailUser,
     subscriptionObject, client, password
   let now = new Date()
   let logFilePath = path.join(__dirname, 'logs', 'aktnmap-' + now.toISOString().slice(0, 10) + '.log')
@@ -211,7 +211,6 @@ describe('aktnmap', () => {
       user: userObject, checkAuthorisation: true
     })
     .then(customer => {
-      customerObject = customer
       expect(customer.email).toExist()
     })
   })
