@@ -9,8 +9,11 @@ USER root
 
 # Add missing modules for our tests to run
 RUN npm install testcafe-vue-selectors
+RUN npm install mongodb
+
 # Create a symlink so that we use the testcafe project as if installed in our test code
 RUN cd node_modules && ln -nsf ../ testcafe
+
 # Create a folder holding screenshots
 RUN mkdir /opt/testcafe/screenshots
 RUN chown user /opt/testcafe/screenshots
