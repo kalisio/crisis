@@ -23,6 +23,8 @@ services:
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - BUILD_NUMBER=${BUILD_NUMBER}
       - NODE_APP_INSTANCE=${FLAVOR}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_PUBLIC_KEY=${STRIPE_PUBLIC_KEY}
       - DB_URL=${DB_URL}
     networks:
       - app-network
