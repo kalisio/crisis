@@ -18,7 +18,8 @@ const account = new pages.Account(auth)
 const organisations = new pages.Organisations()
 
 const data = {
-  user: { name: 'billing', email: 'purchaser@kalisio.xyz', password: 'Pass;word1' },
+  user: { name: 'Purchaser', email: 'purchaser@kalisio.xyz', password: 'Pass;word1' },
+  customer: { index: 0, description: 'A purchaser', vatNumber: 'a VAT number'}
 }
 
 test.page`${pages.getUrl('register')}`
@@ -31,11 +32,15 @@ test('Check billing state for unverified user', async test => {
   await auth.logInAndCloseSignupAlert(test, data.user)
   await organisations.selectOrganisationSettingsTab(test, data.user.name, '#billing')
   await test.wait(1000)
-  const billingState = await organisations.getBillingState(test)
+  const billingState = await organisations.getOrganisationBillingState(test)
   await test.expect(billingState.isUserVerified).eql(false)
   await test.expect(billingState.customer).eql(undefined)
   await test.expect(billingState.currentPlan).eql('bronze')
-  await test.expect(await organisations.canEditCustomer(test)).notOk()
+  await test.expect(await organisations.canEditOrganisationCustomer(test)).notOk()
+  await test.expect(await organisations.canSelectOrganisationPlan(test, 'bronze')).notOk()
+  await test.expect(await organisations.canSelectOrganisationPlan(test, 'silver')).notOk()
+  await test.expect(await organisations.canSelectOrganisationPlan(test, 'gold')).notOk()
+  await test.expect(await organisations.canSelectOrganisationPlan(test, 'diamond')).ok()
 })
 
 // To update billing the user has to be verified, because it requires a manual user action (click a link in an email)
@@ -53,9 +58,43 @@ test('Check billing state for verified user', async test => {
     await auth.logIn(test, data.user)
     await organisations.selectOrganisationSettingsTab(test, data.user.name, '#billing')
     await test.wait(1000)
-    const billingState = await organisations.getBillingState(test)
+    const billingState = await organisations.getOrganisationBillingState(test)
     await test.expect(billingState.isUserVerified).eql(true)
-    await test.expect(await organisations.canEditCustomer(test)).ok()
+    await test.expect(await organisations.canEditOrganisationCustomer(test)).ok()
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'bronze')).notOk()
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'silver')).notOk()
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'gold')).notOk()
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'diamond')).ok()
+  }
+})
+
+test('Add payment information', async test => {
+  if (dbUrl) {
+    await auth.logIn(test, data.user)
+    await organisations.updateOrganisationCustomer(test, data.user.name, data.customer)
+    const billingState = await organisations.getOrganisationBillingState(test)
+    await test.expect(billingState.customer.stripeId).contains('cus_')
+    await test.expect(billingState.customer.email).eql(data.user.email)
+    //await test.expect(billingState.customer.description).eql(data.customer.description)
+    await test.expect(billingState.customer.vatNumber).eql(data.customer.vatNumber)
+    await test.expect(billingState.currentPlan).eql('bronze')
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'bronze')).notOk()
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'silver')).ok()
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'gold')).ok()
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'diamond')).ok()
+  }
+})
+
+test('Change plan to silver', async test => {
+  if (dbUrl) {
+    await auth.logIn(test, data.user)
+    await organisations.selectOrganisationPlan(test, data.user.name, 'silver')
+    const billingState = await organisations.getOrganisationBillingState(test)
+    await test.expect(billingState.currentPlan).eql('silver')
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'bronze')).ok()
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'silver')).notOk()
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'gold')).ok()
+    await test.expect(await organisations.canSelectOrganisationPlan(test, 'diamond')).ok()
   }
 })
 
