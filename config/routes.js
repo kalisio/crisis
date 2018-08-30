@@ -14,7 +14,10 @@ module.exports = {
       },
       'register': 'authentication/KRegister',
       'change-endpoint': 'authentication/KChangeEndpoint',
-      'resend-verify-signup': 'account/KResendVerifySignup',
+      'resend-verify-signup': {
+        component: 'account/KResendVerifySignup',
+        meta: { authenticated: true }
+      },
       'verify-signup/:token': {
         component: 'account/KVerifySignup',
         meta: { authenticated: true }

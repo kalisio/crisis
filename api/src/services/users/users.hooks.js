@@ -17,15 +17,16 @@ module.exports = {
   },
 
   after: {
-    all: [ notifyHooks.removeVerification ],
-    find: [],
-    get: [],
+    all: [],
+    find: [ notifyHooks.removeVerification ],
+    get: [ notifyHooks.removeVerification ],
     create: [
       iff(hook => !hook.result.sponsor, notifyHooks.sendVerificationEmail),
-      iffElse(hook => hook.result.sponsor, teamHooks.joinOrganisation, teamHooks.createPrivateOrganisation)
+      iffElse(hook => hook.result.sponsor, teamHooks.joinOrganisation, teamHooks.createPrivateOrganisation),
+      notifyHooks.removeVerification
     ],
-    update: [],
-    patch: [],
+    update: [ notifyHooks.removeVerification ],
+    patch: [ notifyHooks.removeVerification ],
     remove: [
       coreHooks.setAsDeleted,
       coreHooks.removeAttachments('avatar'),
@@ -36,7 +37,8 @@ module.exports = {
       }),
       coreHooks.updateTags, // After unsubscriptions otherwise will remove topic of unused tags before it
       teamHooks.leaveOrganisations(),
-      notifyHooks.unregisterDevices
+      notifyHooks.unregisterDevices,
+      notifyHooks.removeVerification
     ]
   },
 
