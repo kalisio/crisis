@@ -54,7 +54,6 @@ export default {
     },
     refreshPlans () {
       this.plans = this.$store.get('capabilities.api.plans', {})
-      console.log(this.plans)
       this.quotas = this.$store.get('capabilities.api.quotas', {})
     },
     async getAvailablePurchasers () {
