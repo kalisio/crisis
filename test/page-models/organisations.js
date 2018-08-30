@@ -11,6 +11,9 @@ export default class Organisations extends ApplicationLayout {
     this.newLink = this.panel.find('#new-organisation')
     this.createModal = VueSelector('k-organisations-panel k-modal-editor')
     this.customerEditor = VueSelector('organisation-billing k-customer-editor')
+    this.cardFieldNumber = Selector('organisation-billing k-customer-editor .Cardfield-number')
+    this.cardFieldExpiry = VueSelector('organisation-billing k-customer-editor .Cardfield-expiry')
+    this.cardFieldCVC = VueSelector('organisation-billing k-customer-editor .Cardfield-cvc')
   }
   async selectOrganisation (test, orgName) {
     await this.openSideNav(test)
@@ -22,7 +25,7 @@ export default class Organisations extends ApplicationLayout {
     await this.selectOrganisation(test, orgName)
     await this.clickOverflowMenu(test, '#settings')
     await this.clickTabBar(test, tab)
-    await test.wait(250)
+    await test.wait(1000)
   }
   async createOrganisation (test, org) {
     await this.openSideNav(test)
@@ -44,6 +47,11 @@ export default class Organisations extends ApplicationLayout {
     if (customerBlock.props.disabled) return !customerBlock.props.disabled
     return true
   }
+  async checkOrganisationCustomer (test, pattern) {
+    const customerBlock = await VueSelector('organisation-billing k-block').getVue()
+    await test.expect(customerBlock.props.text).contains(pattern)
+    return true
+  }
   async updateOrganisationCustomer (test, orgName, customer) {
     await this.selectOrganisationSettingsTab (test, orgName, '#billing')
     await test
@@ -54,8 +62,29 @@ export default class Organisations extends ApplicationLayout {
       .click(Selector('.q-popover .q-item').nth(customer.index))      
       .typeText(this.customerEditor.find('#description-field'), customer.description, { replace: true })
       .typeText(this.customerEditor.find('#vatNumber-field'), customer.vatNumber, { replace: true })
+    if (customer.card) {
+      await test
+        .switchToIframe(Selector('.modal iframe'))
+        .typeText(Selector('input[type=tel]').nth(0), customer.card.number, { replace: true })
+        .typeText(Selector('input[type=tel]').nth(1), customer.card.expiry, { replace: true })
+        .typeText(Selector('input[type=tel]').nth(2), customer.card.cvc, { replace: true })
+        .typeText(Selector('input[type=tel]').nth(3), customer.card.postalCode, { replace: true })
+        .switchToMainWindow()
+        .wait(2000)
+    }
+    await test
       .click(this.customerEditor.find("#update-button"))
-      .wait(2000)
+      .wait(5000)
+  }
+  async clearOrganisationCustomerCard (test, orgName) {
+    await this.selectOrganisationSettingsTab (test, orgName, '#billing')
+    await test
+      .click(VueSelector('organisation-billing k-block q-btn'))
+      .wait(250)
+      .click(this.customerEditor.find('#clear-card-button'))
+      .wait(250)
+      .click(this.customerEditor.find("#update-button"))
+      .wait(5000)
   }
   async canSelectOrganisationPlan (test, plan) {
     const planAction = await VueSelector('organisation-billing k-plan-chooser').find('#' + plan + '-action').getVue()
@@ -66,7 +95,7 @@ export default class Organisations extends ApplicationLayout {
     await test
       .click(VueSelector('organisation-billing k-plan-chooser').find('#' + plan + '-action'))
       .click(Selector('.modal-buttons button').nth(0))
-      .wait(2000)
+      .wait(5000)
   }
   async deleteOrganisation (test, orgName) {
     await this.selectOrganisationSettingsTab (test, orgName, '#danger-zone')
