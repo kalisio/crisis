@@ -12,7 +12,7 @@ async function countItems (hook, service, org) {
 
 function getItemsQuota (hook, service, org) {
   const quotas = hook.app.get('quotas')
-  return _.get(quotas, _.get(org, 'billing.plan', 'bronze') + '.' + service, 1)
+  return _.get(quotas, _.get(org, 'billing.subscription.plan', 'bronze') + '.' + service, 1)
 }
 
 export const checkOrganisationsQuotas = coreHooks.countLimit({
