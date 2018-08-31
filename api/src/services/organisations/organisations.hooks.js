@@ -12,7 +12,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ checkOrganisationsQuotas, teamHooks.addOrganisationPlan ],
+    create: [ checkOrganisationsQuotas ],
     update: [],
     // When changing billing plan check for quotas
     patch: [ when(hook => _.get(hook, 'data.billing'), checkOrganisationsQuotas, checkPlanQuotas) ],
@@ -26,7 +26,8 @@ module.exports = {
     create: [ teamHooks.createOrganisationServices,
       eventHooks.createOrganisationServices,
       notifyHooks.createTopic,
-      teamHooks.createOrganisationAuthorisations ],
+      teamHooks.createOrganisationAuthorisations,
+      billingHooks.subscribeDefaultPlan ],
     update: [],
     patch: [],
     remove: [ coreHooks.setAsDeleted,

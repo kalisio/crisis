@@ -139,24 +139,6 @@ module.exports = {
       maxUsers: 1000
     }
   },
-  plans: {
-    // First plan is the default one
-    bronze: {
-      color: 'light-green-4'
-    },
-    silver: {
-      color: 'light-green-6',
-      subscription: 'plan_DHd5HGwsl31NoC',
-    },
-    gold: {
-      color: 'light-green-8',
-      subscription: 'plan_DHd5RMLMSlpUmQ',
-    },
-    diamond: {
-      color: 'light-green-10',
-      url: 'https://kalisio.com/#footer'
-    }
-  },
   quotas: {
     global: {
       bronze: 1
@@ -208,7 +190,26 @@ module.exports = {
   },
   billing: {
     secretKey: process.env.STRIPE_SECRET_KEY,
-    daysUntilInvoiceDue: 7
+    daysUntilInvoiceDue: 7,
+    plans: {
+      // First plan is the default one
+      bronze: {
+        color: 'light-green-4',
+        default: true
+      },
+      silver: {
+        color: 'light-green-6',
+        stripeId: 'plan_DHd5HGwsl31NoC',
+      },
+      gold: {
+        color: 'light-green-8',
+        stripeId: 'plan_DHd5RMLMSlpUmQ',
+      },
+      diamond: {
+        color: 'light-green-10',
+        url: 'https://aktnmap.com/#footer'
+      }
+    }
   },
   logs: {
     Console: {
@@ -235,12 +236,10 @@ module.exports = {
     accessKeyId: process.env.S3_ACCESS_KEY,
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
     bucket: process.env.S3_BUCKET
-  }
-  /* Waiting fix for https://github.com/feathersjs-ecosystem/feathers-sync/issues/83
+  },
   sync: {
     collection: 'events'
   }
-  */
 }
 
 /*

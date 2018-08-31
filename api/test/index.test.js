@@ -9,9 +9,9 @@ import { createGmailClient } from './utils'
 import server from '../src/main'
 
 describe('aktnmap', () => {
-  let userService, userObject, memberObject, orgService, orgObject, authorisationService, devicesService, pusherService, sns,
+  let userService, userObject, memberObject, orgService, orgObject, authorisationService, devicesService, pusherService, billingService, sns,
     mailerService, memberService, tagService, tagObject, memberTagObject, groupService, groupObject, gmailClient, gmailUser,
-    client, password
+    subscriptionObject, client, password
   let now = new Date()
   let logFilePath = path.join(__dirname, 'logs', 'aktnmap-' + now.toISOString().slice(0, 10) + '.log')
   const device = {
@@ -74,7 +74,11 @@ describe('aktnmap', () => {
     expect(mailerService).toExist()
     pusherService = server.app.getService('pusher')
     expect(pusherService).toExist()
+    billingService = server.app.getService('billing')
+    expect(billingService).toExist()
   })
+  // Let enough time to process
+  .timeout(2000)
 
   it('setup access to SNS', () => {
     // For now we only test 1 platform, should be sufficient due to SNS facade
@@ -195,6 +199,85 @@ describe('aktnmap', () => {
       expect(error.name).to.equal('Forbidden')
     })
   })
+
+  it('update billing information', () => {
+    return billingService.create({
+      action: 'customer',
+      email: userObject.email,
+      billingObject: orgObject._id,
+      billingObjectService: 'organisations',
+      billingPerspective: 'billing'
+    }, {
+      user: userObject, checkAuthorisation: true
+    })
+    .then(customer => {
+      expect(customer.email).toExist()
+    })
+  })
+  .timeout(10000)
+
+  it('subscribe to the silver plan', () => {
+    return billingService.update(orgObject._id, {
+      action: 'subscription',
+      plan: 'silver',
+      billing: 'send_invoice',
+      billingObjectService: 'organisations',
+      billingPerspective: 'billing'
+    }, {
+      user: userObject, checkAuthorisation: true
+    })
+    .then(subscription => {
+      subscriptionObject = subscription
+      expect(subscriptionObject.stripeId).toExist()
+      return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
+    })
+    .then(result => {
+      const billingPerspective = result.data[0].billing
+      expect(billingPerspective.subscription.plan).eq('silver')
+    })
+  })
+  .timeout(10000)
+
+  it('unsubscribe the paying plan', () => {
+    return billingService.remove(orgObject._id, {
+      query: {
+        action: 'subscription',
+        billingObjectService: 'organisations',
+        billingPerspective: 'billing'
+      },
+      user: userObject,
+      checkAuthorisation: true
+    })
+    .then(() => {
+      return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
+    })
+    .then(result => {
+      const billingPerspective = result.data[0].billing
+      expect(billingPerspective.subscription).to.equal(null)
+    })
+  })
+  .timeout(10000)
+
+  /* it('create a new free organisations', () => {
+    let newOrg
+    return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
+    .then(org => {
+      newOrg = org
+      return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
+    })
+    .then(user => {
+      userObject = user
+      return orgService.remove(newOrg._id, { user: userObject, checkAuthorisation: true })
+    })
+    .then(() => {
+      return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
+    })
+    .then(user => {
+      userObject = user
+    })
+  })
+  .timeout(10000)
+  */
 
   it('create user tag', () => {
     let operation = memberService.patch(userObject._id.toString(), { // We need at least devices for subscription

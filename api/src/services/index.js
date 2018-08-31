@@ -21,7 +21,7 @@ module.exports = async function () {
         name: 'aktnmap',
         domain: app.get('domain'),
         version: packageInfo.version,
-        plans: app.get('plans'),
+        plans: _.get(app.get('billing'), 'plans'),
         quotas: app.get('quotas')
       }
       if (process.env.BUILD_NUMBER) {
@@ -83,6 +83,7 @@ module.exports = async function () {
     app.configureService('devices', app.getService('devices'), servicesPath)
     await app.configure(kMap)
     await app.configure(kBilling)
+    app.configureService('billing', app.getService('billing'), servicesPath)
     await app.configure(kEvent)
   } catch (error) {
     logger.error(error.message)

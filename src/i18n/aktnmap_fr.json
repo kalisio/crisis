@@ -1,4 +1,7 @@
 {
+  "errors": {
+    "CANNOT_REMOVE_CUSTOMER": "Vous n'êtes pas autorisé à supprimer le client de <b>{{resource}}</b>, modifiez préalablement les informations de paiement."
+  },
   "schemas": {
     "ORGANISATIONS_PLAN_FIELD_HELPER": "Sélectionnez le plan de paiement pour l'organisation",
     "ORGANISATIONS_CUSTOMER_FIELD_HELPER": "Sélectionnez une méthode de paiement",
@@ -21,18 +24,11 @@
   },
   "OrganisationBilling": {
     "CUSTOMER_BLOCK_TITLE": "Information de paiement",
+    "CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER": "Vous devez être vérifié pour renseigner vos informations de paiement",
     "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "Vous n'avez renseigné aucune information de paiement",
-    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "Vous avez choisis une méthode paiement par facturation mensuelle.<br/>Les factures seront envoyés à <b>{{email}}</b>",
-    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisis une méthode paiement par débit bancaire mensuel.<br/>Vous utilisze une carte <b>{{brand}}</b> qui se termine par <b>{{last4}}</b>",
-    "CUSTOMER_BLOCK_ACTION": "Mettre à jour",
-    "CLICK": "Cliquer",
-    "SELECT": "Sélectionner",
-    "CURRENT_PLAN": "Votre offre",
-    "BLOCK_NO_BILLING_TITLE": "Vous ne pouvez pas modifier votre offre",
-    "BLOCK_NO_BILLING_TEXT": "La fonctionnalité n'est pas disponible sur cette version, pour changer d'offre merci de nous contacter à cette adresse: <a href='mailto:support@kalisio.com'>support@kalisio.com</a>.",
-    "CONFIRM_DIALOG_TITLE": "Êtes vous sur de vouloir mettre à jour votre plan ?",
-    "CONFIRM_DIALOG_MESSAGE": "Merci de confirmer la souscription au plan <b>$t({{plan}})</b>",
-    "PLAN_DISABLED_TOOLTIP": "Merci de renseigner les informations de paiement pour souscrire à ce plan"
+    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "Vous avez choisi une méthode paiement par facturation mensuelle.<br/>Les factures seront envoyées à <b>{{email}}</b>",
+    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisi une méthode paiement par débit bancaire mensuel.<br/>Vous utilisez une carte <b>{{brand}}</b> dont le numéro se termine par <b>{{last4}}</b>",
+    "CUSTOMER_BLOCK_ACTION": "Mettre à jour"
   },
   "OrganisationSettingsActivity": {
     "PROPERTIES_LABEL": "Propriétés",
@@ -42,26 +38,26 @@
   "Index": {
     "VERSION_MISMATCH": "Discordance de version, merci d'installer la dernière version disponible ou de vérifier votre point d'accès",
     "DISCONNECT": "La connexion au serveur a été interrompue, merci de patienter jusqu'à la reconnexion...",
-    "RECONNECT": "Tentative de reconnection en cours...",
-    "REFUSED": "Votre connexion a été refusé par le serveur, vous avez été déconnecté...",
+    "RECONNECT": "Tentative de reconnexion en cours...",
+    "REFUSED": "Votre connexion a été refusée par le serveur, vous avez été déconnecté...",
     "RETRY": "Rééssayer"
   },
   "plans": {
     "bronze_LABEL": "Bronze",
     "bronze_PRICE": "Gratuit",
     "bronze_DESCRIPTION": "Notre version basique pour les personnes qui souhaitent découvrir",
-    "bronze_DETAILS": "<ul><li>Etiquettes illimités</li><li>Evénements illimités</li><li>Jusqu’à <b>{{templates}}</b> modèles</li><li>Jusqu’à <b>{{groups}}</b> groupes</li><li>Jusqu’à <b>{{members}}</b> membres</li></br></br></ul>",
+    "bronze_DETAILS": "</br>Etiquettes illimités</br>Evénements illimitées</br>Jusqu’à <b>{{templates}}</b> modèles</br>Jusqu’à <b>{{groups}}</b> groupes</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
     "silver_LABEL": "Argent",
     "silver_PRICE": "99€ par mois",
     "silver_DESCRIPTION": "Assez puissant pour gérer une association ou une entreprise de taille moyenne",
-    "silver_DETAILS": "<ul><li>Etiquettes illimités</li><li>Evénements illimités</li><li>Modèles illimités</li><li>Jusqu’à <b>{{groups}}</b> groupes</li><li>Jusqu’à <b>{{members}}</b> membres</li></br></br></ul>",
+    "silver_DETAILS": "</br>Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Jusqu’à <b>{{groups}}</b> groupes</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
     "gold_LABEL": "Or",
     "gold_PRICE": "399€ par mois",
     "gold_DESCRIPTION": "Assez puissant pour gérer une association ou une entreprise de grande taille",
-    "gold_DETAILS": "<ul><li>Etiquettes illimités</li><li>Evénements illimités</li><li>Modèles illimités</li><li>Groupes illimités</li><li>Jusqu’à <b>{{members}}</b> membres</li></br></br></ul>",
+    "gold_DETAILS": "</br>Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
     "diamond_LABEL": "Diamant",
     "diamond_PRICE": "Parlons-en !",
-    "diamond_DESCRIPTION": "Définissons ensemble une solution adapté à vos besoins, avec un contrôle accru et plus d’assistance",
-    "diamond_DETAILS": "<ul><li>Etiquettes illimités</li><li>Evénements illimités</li><li>Modèles illimités</li><li>Groupes illimités</li><li>Membres illimités</li><li>Hébergement sur vos serveurs</li><li>Produit personnalisé</li></ul>"
+    "diamond_DESCRIPTION": "Définissons une solution adaptée à vos besoins, avec un contrôle accru et plus d’assistance",
+    "diamond_DETAILS": "Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Membres illimités</br>Hébergement sur vos serveurs</br>Produit personnalisé</br>"
   }
 }

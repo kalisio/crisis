@@ -46,7 +46,7 @@ export default {
       this.clearActivity()
       this.setTitle(this.$store.get('context.name'))
       // Tabbar actions
-      if (this.$can('update', 'organisations', this.contextId, { _id: this.contextId })) {
+      if (this.$can('update', 'organisations', null, { _id: this.contextId })) {
         this.registerTabAction({
           name: 'properties',
           label: this.$t('OrganisationSettingsActivity.PROPERTIES_LABEL'),
@@ -55,6 +55,8 @@ export default {
             params: { contextId: this.contextId, perspective: 'properties' },
             default: this.perspective === 'properties' }
         })
+      }
+      if (this.$can('update', 'billing', null, { billingObject: this.contextId })) {
         this.registerTabAction({
           name: 'billing',
           label: this.$t('OrganisationSettingsActivity.BILLING_LABEL'),
@@ -63,6 +65,8 @@ export default {
             params: { contextId: this.contextId, perspective: 'billing' },
             default: this.perspective === 'billing' }
         })
+      }
+      if (this.$can('remove', 'organisations', null, { _id: this.contextId })) {
         this.registerTabAction({
           name: 'danger-zone',
           label: this.$t('OrganisationSettingsActivity.DANGER_ZONE_LABEL'),
