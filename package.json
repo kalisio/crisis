@@ -109,7 +109,7 @@
     "showdown": "^1.8.6",
     "socket.io-client": "^2.0.1",
     "togeojson": "^0.16.0",
-    "vue": "2.5.2",
+    "vue": "2.5.17",
     "vue-avatar": "^2.0.0",
     "vue-router": "^2.7.0",
     "vue-stripe-elements-plus": "^0.2.8",
