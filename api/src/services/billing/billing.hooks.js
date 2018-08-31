@@ -1,4 +1,5 @@
-import _ from 'lodash'
+
+import { when } from 'feathers-hooks-common'
 import { hooks as billingHooks } from 'kBilling'
 
 module.exports = {
@@ -6,10 +7,10 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
+    create: [ when(hook => hook.params.provider, billingHooks.preventUnverifiedUser) ],
+    update: [ when(hook => hook.params.provider, billingHooks.preventUnverifiedUser) ],
     patch: [],
-    remove: []
+    remove: [ when(hook => hook.params.provider, billingHooks.preventUnverifiedUser) ]
   },
 
   after: {
