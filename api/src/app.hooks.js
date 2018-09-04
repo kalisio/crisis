@@ -39,7 +39,7 @@ module.exports = {
       }, authenticate('jwt')),
       coreHooks.processObjectIDs,
       coreHooks.authorise ],
-    find: [ fuzzySearch() ],
+    find: [ fuzzySearch(), coreHooks.marshallCollationQuery ],
     get: [],
     // This one cannot be registered on the user service directly because it should run before password hashing, etc.
     create: [ commonHooks.when(hook => hook.service.name === 'users' && hook.data.sponsor,
