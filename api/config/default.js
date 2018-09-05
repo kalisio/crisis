@@ -6,9 +6,45 @@ const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
+// Start blocking after N requests or N auth requests
+let nbRequestsPerMinute = 120
+let nbAuthenticationRequestsPerMinute = 10
+// Global API limiter
+let apiLimiter = {
+  http: {
+    windowMs: 60*1000, // 1 minute window
+    delayAfter: nbRequestsPerMinute / 2, // begin slowing down responses after the 1/2 requests
+    delayMs: 1000, // slow down subsequent responses by 1 seconds per request 
+    max: nbRequestsPerMinute // start blocking after N requests
+  },
+  websocket: {
+    tokensPerInterval: nbRequestsPerMinute, // start blocking after N requests
+    interval: 60*1000 // 1 minute window
+    /*
+    maxConcurrency: 500, // Number of simultaneous connections globally allowed, 0 means no limit
+    concurrency: 10 // Number of simultaneous connections allowed per IP, 0 means no limit
+    */
+  }
+}
+// Authentication limiter
+let limiter = {
+  http: {
+    windowMs: 60*1000, // 1 minute window
+    delayAfter: nbAuthenticationRequestsPerMinute / 2, // begin slowing down responses after the 1/2 requests
+    delayMs: 3000, // slow down subsequent responses by 3 seconds per request 
+    max: nbAuthenticationRequestsPerMinute // start blocking after N requests
+  },
+  websocket: {
+    tokensPerInterval: nbAuthenticationRequestsPerMinute, // start blocking after N requests
+    interval: 60*1000 // 1 minute window
+  }
+}
 let domain
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
+  // For benchmarking
+  apiLimiter = null
+  limiter = null
   domain = 'https://app.dev.aktnmap.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://app.test.aktnmap.xyz'
@@ -21,11 +57,10 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   } else {
     domain = 'http://localhost:' + serverPort
   }
+  // For benchmarking
+  apiLimiter = null
+  limiter = null
 }
-
-// Start blocking after N requests or N auth requests
-const nbRequestsPerMinute = 120
-const nbAuthenticationRequestsPerMinute = 10
 
 module.exports = {
   // Proxy your API if using any.
@@ -48,22 +83,7 @@ module.exports = {
     max: 50
   },
   // Global API limiter
-  apiLimiter: {
-    http: {
-      windowMs: 60*1000, // 1 minute window
-      delayAfter: nbRequestsPerMinute / 2, // begin slowing down responses after the 1/2 requests
-      delayMs: 1000, // slow down subsequent responses by 1 seconds per request 
-      max: nbRequestsPerMinute // start blocking after N requests
-    },
-    websocket: {
-      tokensPerInterval: nbRequestsPerMinute, // start blocking after N requests
-      interval: 60*1000 // 1 minute window
-      /*
-      maxConcurrency: 500, // Number of simultaneous connections globally allowed, 0 means no limit
-      concurrency: 10 // Number of simultaneous connections allowed per IP, 0 means no limit
-      */
-    }
-  },
+  apiLimiter,
   authentication: {
     secret: process.env.APP_SECRET,
     strategies: [
@@ -83,18 +103,7 @@ module.exports = {
       history: 5
     },
     // Authentication limiter
-    limiter: {
-      http: {
-        windowMs: 60*1000, // 1 minute window
-        delayAfter: nbAuthenticationRequestsPerMinute / 2, // begin slowing down responses after the 1/2 requests
-        delayMs: 3000, // slow down subsequent responses by 3 seconds per request 
-        max: nbAuthenticationRequestsPerMinute // start blocking after N requests
-      },
-      websocket: {
-        tokensPerInterval: nbAuthenticationRequestsPerMinute, // start blocking after N requests
-        interval: 60*1000 // 1 minute window
-      }
-    },
+    limiter,
     defaultUsers: [
       {
         email: 'kalisio@kalisio.xyz',
