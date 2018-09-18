@@ -25,7 +25,7 @@ export const checkOrganisationsQuotas = coreHooks.countLimit({
       orgs[i] = await getOrgWithBilling(hook, orgs[i]._id)
     }
     // Then filter those with bronze plan
-    orgs = _.filter(orgs, (org) => _.get(org, 'billing.plan', 'bronze') === 'bronze')
+    orgs = _.filter(orgs, (org) => _.get(org, 'billing.subscription.plan', 'bronze') === 'bronze')
     return orgs.length + (hook.method === 'create' ? 1 : 0) // Take new org into account when required
   },
   max: (hook) => {
