@@ -258,7 +258,7 @@ describe('aktnmap', () => {
   })
   .timeout(10000)
 
-  /* it('create a new free organisations', () => {
+  it('create a new free organisations', () => {
     let newOrg
     return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
     .then(org => {
@@ -277,7 +277,6 @@ describe('aktnmap', () => {
     })
   })
   .timeout(10000)
-  */
 
   it('create user tag', () => {
     let operation = memberService.patch(userObject._id.toString(), { // We need at least devices for subscription
