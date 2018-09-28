@@ -45,7 +45,9 @@ echo "APP_SECRET=$APP_SECRET" >> .env
 echo "COMPOSE_PROJECT_NAME=$APP" >> .env 
 echo "DEBUG=$DEBUG" >> .env
 echo "FLAVOR=$FLAVOR" >> .env
+echo "DB_URL=$DB_URL" >> .env
 echo "NODE_APP_INSTANCE=$FLAVOR" >> .env
+echo "NODE_APP_NB_INSTANCES=$NODE_APP_NB_INSTANCES" >> .env
 echo "VERSION=$VERSION" >> .env
 echo "VERSION_TAG=$VERSION_TAG" >> .env
 echo "DOMAIN=$DOMAIN" >> .env
@@ -79,4 +81,4 @@ echo "GOOGLE_PASSWORD=$GOOGLE_PASSWORD" >> .env
 echo "GITHUB_USER=$GITHUB_USER" >> .env
 echo "GITHUB_PASSWORD=$GITHUB_PASSWORD" >> .env
 echo "TESTCAFE_SPEED=$TESTCAFE_SPEED" >> .env
-echo "DB_URL=$DB_URL" >> .env
+
