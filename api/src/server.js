@@ -62,11 +62,11 @@ export class Server {
         key: fs.readFileSync(httpsConfig.key),
         cert: fs.readFileSync(httpsConfig.cert)
       }, app)
-      logger.info('Configuring HTTPS server at port ' + port.toString())
+      logger.info(`Configuring HTTPS server with pid ${process.pid} at port ${port}`)
       await server.listen(port)
     } else {
       const port = app.get('port')
-      logger.info('Configuring HTTP server at port ' + port.toString())
+      logger.info(`Configuring HTTP server with pid ${process.pid} at port ${port}`)
       await app.listen(port)
     }
   }
