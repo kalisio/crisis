@@ -14,6 +14,7 @@
   },
   "sideNav": {
     "DASHBOARD": "Tableau de bord",
+    "HELP": "Aide",
     "LOGOUT": "Se déconnecter"
   },
   "Context": {
@@ -59,5 +60,27 @@
     "diamond_PRICE": "Parlons-en !",
     "diamond_DESCRIPTION": "Définissons une solution adaptée à vos besoins, avec un contrôle accru et plus d’assistance",
     "diamond_DETAILS": "Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Membres illimités</br>Hébergement sur vos serveurs</br>Produit personnalisé</br>"
+  },
+  "help": {
+    "BASICS": "Quelques notions pour mieux comprendre Akt’n’Map",
+    "BASICS_ORGANISATION": "Notions: l'organisation",
+    "BASICS_ROLES": "Notions: les rôles",
+    "BASICS_EVENTS": "Notions: les événements",
+    "LOGIN": "Page de connexion",
+    "REGISTER": "Création d'un compte",
+    "HOME": "Page d'accueil",
+    "ACCOUNT": "Gestion du compte",
+    "ORGANISATION": "Page d'accueil d'une organisation",
+    "EVENT_MODELS_MANAGEMENT": "Gestion des modèles d'événement",
+    "EVENT_WORKFLOW_BASICS": "Notions de processus au sein d’un événement",
+    "EVENT_WORKFLOW_MANAGEMENT": "Gestion des processus au sein d’un événement",
+    "EVENT_WORKFLOW_EXAMPLE": "Exemple de processus au sein d’un événement",
+    "EVENTS_MANAGEMENT": "Gestion des évènements",
+    "EVENT_FOLLOWUP_PARTICIPANT": "Suivi d’un événement (participant)",
+    "EVENT_FOLLOWUP_COORDINATOR": "Suivi d'un événement (coordinateur)",
+    "MEMBERS_MANAGEMENT": "Gestion des membres",
+    "MEMBERS_ADD": "Ajouter un membre",
+    "GROUPS_MANAGEMENT": "Gestion des groupes",
+    "GROUP_MEMBERS_MANAGEMENT": "Gestion des membres d’un groupe"
   }
 }

@@ -14,6 +14,7 @@
   },
   "sideNav": {
     "DASHBOARD": "Dashboard",
+    "HELP": "Help",
     "LOGOUT": "Logout"
   },
   "Context": {
@@ -59,5 +60,27 @@
     "diamond_PRICE": "Let's talk !",
     "diamond_DESCRIPTION": "Custom plan tailored for your business, with more control and support",
     "diamond_DETAILS": "Unlimited events</br>Unlimited tags</br>Unlimited groups</br>Unlimited templates</br>Unlimited members</br>Host on your servers</br>Custom branding</br>"
+  },
+  "help": {
+    "BASICS": "Basic concepts of Akt'n'Map",
+    "BASICS_ORGANISATION": "Basic concepts: organisations",
+    "BASICS_ROLES": "Basic concepts: roles",
+    "BASICS_EVENTS": "Basic concepts: events",
+    "LOGIN": "Login page",
+    "REGISTER": "Registering a new account",
+    "HOME": "Welcome page",
+    "ACCOUNT": "Account management",
+    "ORGANISATION": "Welcome page of an organisation",
+    "EVENT_MODELS_MANAGEMENT": "Event templates management",
+    "EVENT_WORKFLOW_BASICS": "Event workflow basics",
+    "EVENT_WORKFLOW_MANAGEMENT": "Event workflow management",
+    "EVENT_WORKFLOW_EXAMPLE": "Event workflow example",
+    "EVENTS_MANAGEMENT": "Events management",
+    "EVENT_FOLLOWUP_PARTICIPANT": "Event follow up (participant)",
+    "EVENT_FOLLOWUP_COORDINATOR": "Event follow up (coordinator)",
+    "MEMBERS_MANAGEMENT": "Members management",
+    "MEMBERS_ADD": "Add a member",
+    "GROUPS_MANAGEMENT": "Groups management",
+    "GROUP_MEMBERS_MANAGEMENT": "Group members management"
   }
 }
