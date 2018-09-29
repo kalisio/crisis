@@ -19,9 +19,11 @@ services:
       - GOOGLE_CLIENT_SECRET
       - BUILD_NUMBER
       - NODE_APP_INSTANCE=${FLAVOR}
+      - NODE_APP_NB_INSTANCES
       - STRIPE_SECRET_KEY
       - STRIPE_PUBLIC_KEY
       - DB_URL
+      - DEBUG
     networks:
       - app-network
 
