@@ -1,8 +1,7 @@
 <template>
-  <div class="row justify-center" style="padding: 16px">
+  <div class="row justify-center" style="padding: 32px">
     <div class="col-12" style="max-width: 90vw;">
       <q-select
-        full-width
         v-model="current"
         :options="toc"
         @change="onSelectionChanged"
