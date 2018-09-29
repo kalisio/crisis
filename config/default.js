@@ -92,6 +92,8 @@ module.exports = {
   },
   user_actions: {
     links: [
+      { },
+      { label: 'sideNav.HELP', icon: 'help', route: { name: 'help'} },
       { }, // separator
       { label: 'sideNav.LOGOUT', icon: 'exit_to_app', route: { name: 'logout' } }
     ]

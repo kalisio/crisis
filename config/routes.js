@@ -6,7 +6,7 @@ module.exports = {
     // will be overriden when required
     meta: { unauthenticated: true },
     children: {
-      'terms': 'Terms',
+      'terms': 'Help',
       'login': 'authentication/KLogin',
       'logout': {
         component: 'authentication/KLogout',
@@ -52,6 +52,7 @@ module.exports = {
             path: 'dashboard',
             component: 'KEventDashboard'
           },
+          'help': 'Help',
           'account/:perspective': {
             name: 'account-activity',
             component: 'account/KAccountActivity',
