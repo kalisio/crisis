@@ -1,13 +1,14 @@
 <template>
-  <div class="row" style="padding: 16px">
-    <div style="max-width: 90vw;">
+  <div class="row justify-center" style="padding: 16px">
+    <div class="col-12" style="max-width: 90vw;">
       <q-select
+        full-width
         v-model="current"
         :options="toc"
         @change="onSelectionChanged"
       />
     </div>
-    <div class="content-center" style="max-width: 90vw;">
+    <div class="col-12 content-center" style="max-width: 1024px;">
       <q-gallery-carousel 
         ref="carousel" 
         :src="content" 
