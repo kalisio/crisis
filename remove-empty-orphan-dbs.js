@@ -14,7 +14,7 @@ if (!appDb) {
 		try {
 			var id = new ObjectId(dbName)
 			// Check if valid Object ID
-		  if (id.getTimestamp()) {
+		  	if (id.getTimestamp()) {
 			  var db = db.getSiblingDB(dbName)
 			  var collections = db.getCollectionNames()
 			  var remove = true
