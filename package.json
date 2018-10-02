@@ -54,7 +54,9 @@
     "cafe": "testcafe firefox test/*.test.js -S -s screenshots",
     "test:server": "cd api && npm run test",
     "test:client": "cross-env NODE_ENV=production testcafe chrome:headless test/*.test.js -f Basic --app \"npm run prod\" --app-init-delay 10000 -S -s screenshots",
-    "test": "npm-run-all --parallel test:**"
+    "test": "npm-run-all --parallel test:**",
+    "clean-databases": "node ./tools/clean-databases",
+    "clean-sns": "node ./tools/clean-sns"
   },
   "standard": {
     "parser": "babel-eslint",
@@ -161,6 +163,7 @@
     "purify-css": "^1.2.6",
     "script-loader": "^0.7.2",
     "shelljs": "^0.8.1",
+    "sns-mobile": "https://github.com/kalisio/sns-mobile#protocol",
     "standard": "^10.0.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
