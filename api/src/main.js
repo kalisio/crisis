@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { Server } from './server'
 
 const N = parseInt(process.env.NODE_APP_NB_INSTANCES)
+let server
 
 if (cluster.isMaster && N) {
 	logger.info(`Launching master with pid ${process.pid}`);
@@ -13,7 +14,7 @@ if (cluster.isMaster && N) {
     cluster.fork()
   }
 } else {
-	let server = new Server()
+	server = new Server()
 
 	const config = server.app.get('logs')
 	const logPath = _.get(config, 'DailyRotateFile.dirname')
@@ -33,3 +34,4 @@ if (cluster.isMaster && N) {
 	}
 }
 
+export default server
