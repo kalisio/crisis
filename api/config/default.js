@@ -39,17 +39,23 @@ let limiter = {
     interval: 60*1000 // 1 minute window
   }
 }
-let domain
+let domain, topicName
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   // For benchmarking
   apiLimiter = null
   limiter = null
   domain = 'https://app.dev.aktnmap.xyz'
+  // For SNS topic name generation
+  topicName = (object) => `aktnmap-dev-${object._id.toString()}`
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://app.test.aktnmap.xyz'
+  // For SNS topic name generation
+  topicName = (object) => `aktnmap-test-${object._id.toString()}`
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://app.aktnmap.xyz'
+  // For SNS topic name generation
+  topicName = (object) => `aktnmap-${object._id.toString()}`
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
@@ -57,6 +63,8 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   } else {
     domain = 'http://localhost:' + serverPort
   }
+  // For SNS topic name generation
+  topicName = (object) => `aktnmap-dev-${object._id.toString()}`
   // For benchmarking
   apiLimiter = null
   limiter = null
@@ -192,7 +200,8 @@ module.exports = {
     apiVersion: '2010-03-31',
     platforms: {
       ANDROID: process.env.SNS_ANDROID_ARN
-    }
+    },
+    topicName
   },
   geocoder: {
     provider: 'opendatafrance'
