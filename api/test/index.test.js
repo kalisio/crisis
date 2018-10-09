@@ -32,16 +32,6 @@ describe('aktnmap', () => {
 
   before(() => {
     chailint(chai, util)
-    // Add hooks for contextual services
-    server.app.on('service', service => {
-      if (service.name === 'members') {
-        memberService = service
-      } else if (service.name === 'tags') {
-        tagService = service
-      } else if (service.name === 'groups') {
-        groupService = service
-      }
-    })
   })
 
   it('is CommonJS compatible', () => {
@@ -128,6 +118,12 @@ describe('aktnmap', () => {
     .then(orgs => {
       expect(orgs.data.length > 0).beTrue()
       orgObject = orgs.data[0]
+      memberService = server.app.getService(`${orgObject._id.toString()}/members`)
+      expect(memberService).toExist()
+      tagService = server.app.getService(`${orgObject._id.toString()}/tags`)
+      expect(tagService).toExist()
+      groupService = server.app.getService(`${orgObject._id.toString()}/groups`)
+      expect(groupService).toExist()
       expect(orgObject.name).to.equal('test-user')
       expect(orgObject.topics).toExist()
       expect(Object.keys(orgObject.topics).length > 0).beTrue()
@@ -238,6 +234,15 @@ describe('aktnmap', () => {
   })
   .timeout(10000)
 
+  it('can create a new free organisation', () => {
+    return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
+    .then(org => {
+      expect(org).toExist()
+      return orgService.remove(org._id, { user: userObject, checkAuthorisation: true })
+    })
+  })
+  .timeout(10000)
+
   it('unsubscribe the paying plan', () => {
     return billingService.remove(orgObject._id, {
       query: {
@@ -258,25 +263,14 @@ describe('aktnmap', () => {
   })
   .timeout(10000)
 
-  it('create a new free organisations', () => {
-    let newOrg
+  // See https://github.com/kalisio/aktnmap/issues/15
+  it('cannot create multiple free organisations', () => {
     return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
-    .then(org => {
-      newOrg = org
-      return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
-    })
-    .then(user => {
-      userObject = user
-      return orgService.remove(newOrg._id, { user: userObject, checkAuthorisation: true })
-    })
-    .then(() => {
-      return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
-    })
-    .then(user => {
-      userObject = user
+    .catch(error => {
+      expect(error).toExist()
+      expect(error.name).to.equal('Forbidden')
     })
   })
-  .timeout(10000)
 
   it('create user tag', () => {
     let operation = memberService.patch(userObject._id.toString(), { // We need at least devices for subscription
@@ -493,7 +487,7 @@ describe('aktnmap', () => {
     expect(payload.userId).to.equal(memberObject._id.toString())
   })
   // Let enough time to process
-  .timeout(5000)
+  .timeout(10000)
 
   it('creates a member tag', () => {
     let operation = memberService.patch(memberObject._id.toString(), { // We need at least devices for subscription
