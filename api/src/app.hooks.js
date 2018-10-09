@@ -6,7 +6,8 @@ import { permissions as teamPermissions } from 'kTeam'
 import { permissions as notifyPermissions, hooks as notifyHooks } from 'kNotify'
 import { permissions as mapPermissions } from 'kMap'
 import { permissions as eventPermissions } from 'kEvent'
-const { authenticate } = require('feathers-authentication').hooks
+import { permissions as billingPermissions } from 'kBilling/common'
+const { authenticate } = require('@feathersjs/authentication').hooks
 
 // Register all default hooks for authorisation
 // Default rules for all users
@@ -19,6 +20,8 @@ corePermissions.defineAbilities.registerHook(teamPermissions.defineOrganisationA
 corePermissions.defineAbilities.registerHook(teamPermissions.defineGroupAbilities)
 // Then rules for events
 corePermissions.defineAbilities.registerHook(eventPermissions.defineEventAbilities)
+// Then rules for billing
+corePermissions.defineAbilities.registerHook(billingPermissions.defineBillingAbilities)
 
 module.exports = {
   before: {
@@ -36,7 +39,7 @@ module.exports = {
       }, authenticate('jwt')),
       coreHooks.processObjectIDs,
       coreHooks.authorise ],
-    find: [ fuzzySearch() ],
+    find: [ fuzzySearch(), coreHooks.marshallCollationQuery ],
     get: [],
     // This one cannot be registered on the user service directly because it should run before password hashing, etc.
     create: [ commonHooks.when(hook => hook.service.name === 'users' && hook.data.sponsor,

@@ -12,10 +12,13 @@ function loadComponent (component) {
                   .catch(errorMap => {
                     return import(`kEvent/lib/client/components/${component}.vue`)
                       .catch(errorEvent => {
-                        // Otherwise this should be app component
-                        return import(`@/${component}.vue`)
-                          .catch(errorApp => {
-                            console.log(errorCore, errorTeam, errorNotify, errorMap, errorEvent, errorApp)
+                        return import(`kBilling/lib/client/components/${component}.vue`)
+                          .catch(errorBilling => {
+                            // Otherwise this should be app component
+                            return import(`@/${component}.vue`)
+                              .catch(errorApp => {
+                                console.log(errorCore, errorTeam, errorNotify, errorMap, errorEvent, errorBilling, errorApp)
+                              })
                           })
                       })
                   })
@@ -54,9 +57,12 @@ function loadTranslation (module, locale) {
                 .catch(errorMap => {
                   return import(`kEvent/lib/client/i18n/${translation}`)
                     .catch(errorEvent => {
-                      return import(`./i18n/${translation}`)
-                        .catch(errorApp => {
-                          console.log(errorCore, errorTeam, errorNotify, errorMap, errorEvent, errorApp)
+                      return import(`kBilling/lib/client/i18n/${translation}`)
+                        .catch(errorBilling => {
+                          return import(`./i18n/${translation}`)
+                            .catch(errorApp => {
+                              console.log(errorCore, errorTeam, errorNotify, errorMap, errorEvent, errorBilling, errorApp)
+                            })
                         })
                     })
                 })

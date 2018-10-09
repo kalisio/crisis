@@ -33,6 +33,7 @@ test('Local login', async test => {
   await auth.logIn(test)
 
   const signupAlert = await app.signupAlert.getVue()
+  await test.wait(1000)
   let user = await pages.getFromStore('user')
   // We should have at least a populated user and an unverified email
   await test.expect(user).ok('User should be populated')

@@ -1,14 +1,17 @@
 import _ from 'lodash'
 import fs from 'fs-extra'
 import path from 'path'
+import feathers from '@feathersjs/client'
+import io from 'socket.io-client'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import { createGmailClient } from './utils'
 import server from '../src/main'
 
 describe('aktnmap', () => {
-  let userService, userObject, memberObject, orgService, orgObject, authorisationService, devicesService, pusherService, sns,
-    mailerService, memberService, tagService, tagObject, memberTagObject, groupService, groupObject, gmailClient, gmailUser
+  let userService, userObject, memberObject, orgService, orgObject, authorisationService, devicesService, pusherService, billingService, sns,
+    mailerService, memberService, tagService, tagObject, memberTagObject, groupService, groupObject, gmailClient, gmailUser,
+    subscriptionObject, client, password
   let now = new Date()
   let logFilePath = path.join(__dirname, 'logs', 'aktnmap-' + now.toISOString().slice(0, 10) + '.log')
   const device = {
@@ -26,10 +29,9 @@ describe('aktnmap', () => {
     platform: 'ANDROID',
     uuid: 'member-id'
   }
-  
+
   before(() => {
     chailint(chai, util)
-
     // Add hooks for contextual services
     server.app.on('service', service => {
       if (service.name === 'members') {
@@ -46,8 +48,15 @@ describe('aktnmap', () => {
     expect(typeof server).to.equal('object')
   })
 
-  it('initialize the server', (done) => {
-    server.run().then(() => done())
+  it('initialize the server/client', async () => {
+    await server.run()
+    client = feathers()
+    let socket = io(server.app.get('domain'), {
+      transports: ['websocket'],
+      path: server.app.get('apiPath') + 'ws'
+    })
+    client.configure(feathers.socketio(socket))
+    client.configure(feathers.authentication({ path: server.app.get('apiPath') + '/authentication' }))
   })
   // Let enough time to process
   .timeout(10000)
@@ -65,7 +74,11 @@ describe('aktnmap', () => {
     expect(mailerService).toExist()
     pusherService = server.app.getService('pusher')
     expect(pusherService).toExist()
+    billingService = server.app.getService('billing')
+    expect(billingService).toExist()
   })
+  // Let enough time to process
+  .timeout(2000)
 
   it('setup access to SNS', () => {
     // For now we only test 1 platform, should be sufficient due to SNS facade
@@ -150,7 +163,7 @@ describe('aktnmap', () => {
     setTimeout(() => {
       gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Security alert - new device signin', (err) => {
         if (err) done(err)
-        else gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Confirm your signup', done)
+        else gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Confirm your signup', (err) => done(err))
       })
     }, 10000)
   })
@@ -186,6 +199,84 @@ describe('aktnmap', () => {
       expect(error.name).to.equal('Forbidden')
     })
   })
+
+  it('update billing information', () => {
+    return billingService.create({
+      action: 'customer',
+      email: userObject.email,
+      billingObject: orgObject._id,
+      billingObjectService: 'organisations',
+      billingPerspective: 'billing'
+    }, {
+      user: userObject, checkAuthorisation: true
+    })
+    .then(customer => {
+      expect(customer.email).toExist()
+    })
+  })
+  .timeout(10000)
+
+  it('subscribe to the silver plan', () => {
+    return billingService.update(orgObject._id, {
+      action: 'subscription',
+      plan: 'silver',
+      billing: 'send_invoice',
+      billingObjectService: 'organisations',
+      billingPerspective: 'billing'
+    }, {
+      user: userObject, checkAuthorisation: true
+    })
+    .then(subscription => {
+      subscriptionObject = subscription
+      expect(subscriptionObject.stripeId).toExist()
+      return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
+    })
+    .then(result => {
+      const billingPerspective = result.data[0].billing
+      expect(billingPerspective.subscription.plan).eq('silver')
+    })
+  })
+  .timeout(10000)
+
+  it('unsubscribe the paying plan', () => {
+    return billingService.remove(orgObject._id, {
+      query: {
+        action: 'subscription',
+        billingObjectService: 'organisations',
+        billingPerspective: 'billing'
+      },
+      user: userObject,
+      checkAuthorisation: true
+    })
+    .then(() => {
+      return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
+    })
+    .then(result => {
+      const billingPerspective = result.data[0].billing
+      expect(billingPerspective.subscription).to.equal(null)
+    })
+  })
+  .timeout(10000)
+
+  it('create a new free organisations', () => {
+    let newOrg
+    return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
+    .then(org => {
+      newOrg = org
+      return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
+    })
+    .then(user => {
+      userObject = user
+      return orgService.remove(newOrg._id, { user: userObject, checkAuthorisation: true })
+    })
+    .then(() => {
+      return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
+    })
+    .then(user => {
+      userObject = user
+    })
+  })
+  .timeout(10000)
 
   it('create user tag', () => {
     let operation = memberService.patch(userObject._id.toString(), { // We need at least devices for subscription
@@ -294,7 +385,7 @@ describe('aktnmap', () => {
   it('check new device email', (done) => {
     // Add some delay to wait for email reception
     setTimeout(() => {
-      gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Security alert - new device signin', done)
+      gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Security alert - new device signin', (err) => done(err))
     }, 10000)
   })
   // Let enough time to process
@@ -341,7 +432,7 @@ describe('aktnmap', () => {
 
   it('invites a member to join the organisation', () => {
     let sponsor = { id: userObject._id, organisationId: orgObject._id, roleGranted: 'member' }
-    return userService.create({ email: 'test-3@test.org', name: 'test-user-3', sponsor: sponsor }, { checkAuthorisation: true })
+    return userService.create({ email: gmailUser.replace('com', 'xyz'), name: 'test-user-3', sponsor: sponsor }, { checkAuthorisation: true })
     .then(user => {
       memberObject = user
       expect(memberObject.organisations).toExist()
@@ -363,6 +454,43 @@ describe('aktnmap', () => {
       expect(memberObject.devices[0].arn).toExist()
       expect(memberObject.devices[0].lastActivity).toExist()
     })
+  })
+  // Let enough time to process
+  .timeout(10000)
+
+  it('check invitation email', (done) => {
+    // Add some delay to wait for email reception
+    setTimeout(() => {
+      gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Security alert - new device signin', (err) => {
+        if (err) done(err)
+        else {
+          gmailClient.checkEmail(userObject, mailerService.options.auth.user, 'Welcome', (err, message) => {
+            if (err) done(err)
+            else {
+            // Extract password from email
+              message = Buffer.from(message.body.data, 'base64').toString()
+              const passwordEntry = 'password: ' // then come the password xxxxxxxx
+              const passwordIndex = message.indexOf(passwordEntry) + passwordEntry.length
+            // Generated passwords have 8 characters
+              password = message.substring(passwordIndex, passwordIndex + 8)
+              done()
+            }
+          })
+        }
+      })
+    }, 10000)
+  })
+  // Let enough time to process
+  .timeout(15000)
+
+  it('connects member client', async () => {
+    let response = await client.authenticate({
+      strategy: 'local',
+      email: gmailUser.replace('com', 'xyz'),
+      password
+    })
+    const payload = await client.passport.verifyJWT(response.accessToken)
+    expect(payload.userId).to.equal(memberObject._id.toString())
   })
   // Let enough time to process
   .timeout(5000)
@@ -456,6 +584,21 @@ describe('aktnmap', () => {
   // Let enough time to process
   .timeout(10000)
 
+  it('updating group should not dispatch event to non member client', (done) => {
+    const clientGroupService = client.service(server.app.get('apiPath') + '/' + orgObject._id.toString() + '/groups')
+    let count = 0
+    clientGroupService.on('patched', (group) => count++)
+    groupService.patch(groupObject._id.toString(),
+      { name: 'new-test-group' }, { user: userObject, checkAuthorisation: true })
+    setTimeout(() => {
+      clientGroupService.removeListener('patched')
+      if (count > 0) done(new Error('Service event raised'))
+      else done()
+    }, 5000)
+  })
+  // Let enough time to process
+  .timeout(10000)
+
   it('adds member to a group', () => {
     let operation = authorisationService.create({
       scope: 'groups',
@@ -486,6 +629,21 @@ describe('aktnmap', () => {
       })
     })
     return Promise.all([operation, event])
+  })
+  // Let enough time to process
+  .timeout(10000)
+
+  it('updating group should dispatch event to member client', (done) => {
+    const clientGroupService = client.service(server.app.get('apiPath') + '/' + orgObject._id.toString() + '/groups')
+    let count = 0
+    clientGroupService.on('patched', (group) => count++)
+    groupService.patch(groupObject._id.toString(),
+      { name: 'new-test-group' }, { user: userObject, checkAuthorisation: true })
+    setTimeout(() => {
+      clientGroupService.removeListener('patched')
+      if (count === 0) done(new Error('Service event not raised'))
+      else done()
+    }, 5000)
   })
   // Let enough time to process
   .timeout(10000)

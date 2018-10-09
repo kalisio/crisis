@@ -1,11 +1,6 @@
 import _ from 'lodash'
 import { hooks as coreHooks } from 'kCore'
-
-async function getOrgWithBilling (hook, id) {
-  const orgService = hook.app.getService('organisations')
-  const org = await orgService.get(id.toString(), { query: { $select: ['_id', 'billing'] } })
-  return org
-}
+import { getOrgWithBilling } from './hooks.billing'
 
 async function countItems (hook, service, org) {
   // Retrieve the target service
@@ -17,7 +12,7 @@ async function countItems (hook, service, org) {
 
 function getItemsQuota (hook, service, org) {
   const quotas = hook.app.get('quotas')
-  return _.get(quotas, _.get(org, 'billing.plan', 'bronze') + '.' + service, 1)
+  return _.get(quotas, _.get(org, 'billing.subscription.plan', 'bronze') + '.' + service, 1)
 }
 
 export const checkOrganisationsQuotas = coreHooks.countLimit({
@@ -30,7 +25,7 @@ export const checkOrganisationsQuotas = coreHooks.countLimit({
       orgs[i] = await getOrgWithBilling(hook, orgs[i]._id)
     }
     // Then filter those with bronze plan
-    orgs = _.filter(orgs, (org) => _.get(org, 'billing.plan', 'bronze') === 'bronze')
+    orgs = _.filter(orgs, (org) => _.get(org, 'billing.subscription.plan', 'bronze') === 'bronze')
     return orgs.length + (hook.method === 'create' ? 1 : 0) // Take new org into account when required
   },
   max: (hook) => {
@@ -99,6 +94,28 @@ export const checkTemplatesQuotas = coreHooks.countLimit({
   max: async (hook) => {
     // Retrieve the org with billing infos
     const org = await getOrgWithBilling(hook, hook.service.getContextId())
-    return getItemsQuota(hook, 'templates', org)
+    return getItemsQuota(hook, 'event-templates', org)
   }
 })
+
+export const checkPlanQuotas = async (hook) => {
+  const services = ['members', 'groups', 'events', 'event-templates']
+  let quotaHooks = []
+  services.forEach(service => {
+    quotaHooks.push(coreHooks.countLimit({
+      service,
+      count: async (hook) => {
+        // Retrieve the org with billing infos, when patching ID is not in data
+        const org = Object.assign({ _id: hook.id }, hook.data)
+        return countItems(hook, service, org)
+      },
+      max: async (hook) => {
+        // Retrieve the org with billing infos, when patching ID is not in data
+        const org = Object.assign({ _id: hook.id }, hook.data)
+        return getItemsQuota(hook, service, org)
+      }
+    })(hook))
+  })
+  await Promise.all(quotaHooks)
+  return hook
+}

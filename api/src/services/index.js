@@ -5,10 +5,12 @@ import kCore from 'kCore'
 import kTeam from 'kTeam'
 import kMap from 'kMap'
 import kNotify from 'kNotify'
-import kEvent from 'kEvent'
+import kBilling from 'kBilling'
+import kEvent, { hooks as eventHooks } from 'kEvent'
 import packageInfo from '../../package.json'
 
 const servicesPath = path.join(__dirname, '..', 'services')
+
 module.exports = async function () {
   const app = this
 
@@ -19,7 +21,7 @@ module.exports = async function () {
         name: 'aktnmap',
         domain: app.get('domain'),
         version: packageInfo.version,
-        plans: app.get('plans'),
+        plans: _.get(app.get('billing'), 'plans'),
         quotas: app.get('quotas')
       }
       if (process.env.BUILD_NUMBER) {
@@ -49,10 +51,39 @@ module.exports = async function () {
     })
     await app.configure(kTeam)
     app.configureService('organisations', app.getService('organisations'), servicesPath)
+    // Replication management
+    let orgsService = app.getService('organisations')
+    let usersService = app.getService('users')
+    let authorisationsService = app.getService('authorisations')
+    // Ensure permissions are correctly distributed when replicated
+    usersService.on('patched', user => {
+      authorisationsService.updateAbilities(user)
+    })
+    // Ensure org services are correctly distributed when replicated
+    orgsService.on('created', organisation => {
+      // Check if already done (initiator)
+      const orgMembersService = app.getService('members', organisation)
+      if (!orgMembersService) {
+        // Jump from infos/stats to real DB object
+        const db = app.db.instance.db(organisation._id.toString())
+        orgsService.createOrganisationServices(organisation, db)
+        // We fake a hook call
+        eventHooks.createOrganisationServices({ app, result: organisation })
+      }
+    })
+    orgsService.on('removed', organisation => {
+      // Check if already done (initiator)
+      const orgMembersService = app.getService('members', organisation)
+      if (orgMembersService) return
+      eventHooks.removeOrganisationServices({ app, result: organisation })
+      orgsService.removeOrganisationServices(organisation)
+    })
 
     await app.configure(kNotify)
     app.configureService('devices', app.getService('devices'), servicesPath)
     await app.configure(kMap)
+    await app.configure(kBilling)
+    app.configureService('billing', app.getService('billing'), servicesPath)
     await app.configure(kEvent)
   } catch (error) {
     logger.error(error.message)

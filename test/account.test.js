@@ -30,7 +30,7 @@ test.page`${pages.getUrl('register')}`
 
 test('Edit profile', async test => {
   await auth.logIn(test)
-  await account.editProfile(test, { name: 'toto', avatar: path.join(__dirname, '..', 'src/assets/aktnmap-logo.png') })
+  await account.editProfile(test, { name: 'toto', avatar: path.join(__dirname, 'assets', 'avatar.png') })
   await account.checkIdentity(test, 'toto')
 })
 
@@ -62,6 +62,7 @@ test('Delete account', async test => {
   await account.removeAccount(test, 'toto')
 
   let screen = await auth.logoutScreen.getVue()
+  await test.wait(1000)
   // The home page should be the logout screen
   await test.expect(screen.props.title).ok('Your are now logged out')
   // And we cannot login anymore

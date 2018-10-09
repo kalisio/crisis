@@ -1,10 +1,11 @@
 const website = 'https://www.kalisio.com'
 
-const serverPort = process.env.PORT || 8081
+const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
-const clientPort = process.env.CLIENT_PORT || 8080
+const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
 let domain
+let stripeKey
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   domain = 'https://app.dev.aktnmap.xyz'
@@ -34,6 +35,10 @@ module.exports = {
   apiPath: API_PREFIX,
   apiTimeout: 20000,
   transport: 'websocket', // Could be 'http' or 'websocket',
+  stripe: {
+    secretKey: process.env.STRIPE_PUBLIC_KEY,
+    options: {}
+  },
   appName: 'Akt\'n\'Map',
   appLogo: 'aktnmap-logo.png',
   publisher: 'Kalisio',
@@ -87,6 +92,8 @@ module.exports = {
   },
   user_actions: {
     links: [
+      { },
+      { label: 'sideNav.HELP', icon: 'help', route: { name: 'help'} },
       { }, // separator
       { label: 'sideNav.LOGOUT', icon: 'exit_to_app', route: { name: 'logout' } }
     ]

@@ -6,7 +6,7 @@ module.exports = {
     // will be overriden when required
     meta: { unauthenticated: true },
     children: {
-      'terms': 'Terms',
+      'terms': 'Help',
       'login': 'authentication/KLogin',
       'logout': {
         component: 'authentication/KLogout',
@@ -14,7 +14,10 @@ module.exports = {
       },
       'register': 'authentication/KRegister',
       'change-endpoint': 'authentication/KChangeEndpoint',
-      'resend-verify-signup': 'account/KResendVerifySignup',
+      'resend-verify-signup': {
+        component: 'account/KResendVerifySignup',
+        meta: { authenticated: true }
+      },
       'verify-signup/:token': {
         component: 'account/KVerifySignup',
         meta: { authenticated: true }
@@ -49,6 +52,7 @@ module.exports = {
             path: 'dashboard',
             component: 'KEventDashboard'
           },
+          'help': 'Help',
           'account/:perspective': {
             name: 'account-activity',
             component: 'account/KAccountActivity',
@@ -119,8 +123,8 @@ module.exports = {
                 }
               },
               ':perspective': {
-                name: 'settings-activity',
-                component: 'KSettingsActivity',
+                name: 'organisation-settings-activity',
+                component: 'OrganisationSettingsActivity',
                 props: true
               }
             }

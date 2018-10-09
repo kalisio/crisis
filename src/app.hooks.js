@@ -4,6 +4,7 @@ import { permissions as teamPermissions } from 'kTeam/common'
 import { permissions as notifyPermissions } from 'kNotify/common'
 import { permissions as mapPermissions } from 'kMap/common'
 import { permissions as eventPermissions } from 'kEvent/common'
+import { permissions as billingPermissions } from 'kBilling/common'
 
 // Register all default hooks for authorisation
 // Default rules for all users
@@ -14,10 +15,10 @@ corePermissions.defineAbilities.registerHook(mapPermissions.defineUserAbilities)
 corePermissions.defineAbilities.registerHook(teamPermissions.defineOrganisationAbilities)
 // Then rules for groups
 corePermissions.defineAbilities.registerHook(teamPermissions.defineGroupAbilities)
-// Then rules for maps
-
 // Then rules for events
 corePermissions.defineAbilities.registerHook(eventPermissions.defineEventAbilities)
+// Then rules for billing
+corePermissions.defineAbilities.registerHook(billingPermissions.defineBillingAbilities)
 
 export default {
   before: {
