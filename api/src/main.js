@@ -7,7 +7,7 @@ import { Server } from './server'
 const N = parseInt(process.env.NODE_APP_NB_INSTANCES)
 let server
 
-if (cluster.isMaster && N) {
+if (cluster.isMaster && (N > 1)) {
 	logger.info(`Launching master with pid ${process.pid}`);
 
   for (let i = 0; i < N; i++) {

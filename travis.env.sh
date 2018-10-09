@@ -24,7 +24,7 @@ then
 		export SUBDOMAIN=test.$DOMAIN
 		export VERSION_TAG=$VERSION-test
 		export REPLICAS=2
-		export NODE_APP_NB_INSTANCES=2
+		export NODE_APP_NB_INSTANCES=1
 	else
 		export DEBUG=
 		export FLAVOR=prod
@@ -32,7 +32,7 @@ then
 		export SUBDOMAIN=$DOMAIN
 		export VERSION_TAG=$VERSION
 		export REPLICAS=2
-		export NODE_APP_NB_INSTANCES=2
+		export NODE_APP_NB_INSTANCES=1
 	fi
 fi
 export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
