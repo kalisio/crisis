@@ -1,4 +1,6 @@
 #!/bin/bash
+export HOST=Application
+export PORT=8081
 export VERSION=$(node -p -e "require('./package.json').version")
 if [[ $TRAVIS_BRANCH == "master" ]]
 then
