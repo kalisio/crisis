@@ -19,7 +19,7 @@ services:
       - APP_URL=app:${PORT}
     volumes:
       - ../test:/opt/testcafe/${APP}
-    command: firefox /opt/testcafe/${APP}/*.test.js -S -s screenshots --speed ${TESTCAFE_SPEED:-0.5}
+    command: firefox /opt/testcafe/${APP}/*.test.js -S -s screenshots --speed 0.9
     networks:
       - app-network
 
