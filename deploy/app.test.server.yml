@@ -7,6 +7,7 @@ services:
       - GMAIL_API_CLIENT_EMAIL
       - GMAIL_API_PRIVATE_KEY
       - DEBUG=
+      - NODE_APP_NB_INSTANCES=1
       - DB_URL=mongodb://mongodb:27017/${APP}
     working_dir: /opt/${APP}
     volumes:
