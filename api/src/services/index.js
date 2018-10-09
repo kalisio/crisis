@@ -57,7 +57,9 @@ module.exports = async function () {
     let authorisationsService = app.getService('authorisations')
     // Ensure permissions are correctly distributed when replicated
     usersService.on('patched', user => {
-      authorisationsService.updateAbilities(user)
+      // Patching profile should not trigger abilities update since
+      // it is a perspective and permissions are not available in this case
+      if (user.organisations || user.groups) authorisationsService.updateAbilities(user)
     })
     // Ensure org services are correctly distributed when replicated
     orgsService.on('created', organisation => {
