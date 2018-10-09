@@ -6,6 +6,8 @@ then
 	export FLAVOR=dev
 	export SUBDOMAIN=dev.$DOMAIN
 	export VERSION_TAG=$VERSION-dev
+	export REPLICAS=1
+	export NODE_APP_NB_INSTANCES=1
 fi
 if [[ $TRAVIS_BRANCH == "test" ]]
 then
@@ -15,11 +17,15 @@ then
 		export FLAVOR=test
 		export SUBDOMAIN=test.$DOMAIN
 		export VERSION_TAG=$VERSION-test
+		export REPLICAS=2
+		export NODE_APP_NB_INSTANCES=2
 	else
 		export DEBUG=
 		export FLAVOR=prod
 		export SUBDOMAIN=$DOMAIN
 		export VERSION_TAG=$VERSION
+		export REPLICAS=2
+		export NODE_APP_NB_INSTANCES=2
 	fi
 fi
 export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
