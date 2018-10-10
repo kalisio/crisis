@@ -18,7 +18,7 @@ RUN git clone https://github.com/kalisio/kTeam.git -b test --single-branch && cd
 RUN git clone https://github.com/kalisio/kNotify.git -b test --single-branch && cd kNotify && yarn install && yarn link @kalisio/kCore && yarn link && cd ..
 RUN git clone https://github.com/kalisio/kMap.git -b test --single-branch && cd kMap && yarn install && yarn link @kalisio/kCore && yarn link && cd ..
 RUN git clone https://github.com/kalisio/kEvent.git -b test --single-branch && cd kEvent && yarn install && yarn link @kalisio/kCore && yarn link && cd ..
-RUN git clone https://github.com/kalisio/kBilling.git -b master --single-branch && cd kBilling && yarn install && yarn link @kalisio/kCore && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kBilling.git -b test --single-branch && cd kBilling && yarn install && yarn link @kalisio/kCore && yarn link && cd ..
 
 WORKDIR /opt/aktnmap/api
 
