@@ -1,10 +1,10 @@
 import logger from 'loglevel'
-import kCore from 'kCore/client'
-import kTeam from 'kTeam/client'
-import kNotify from 'kNotify/client'
-import kMap from 'kMap/client'
-import kEvent from 'kEvent/client'
-import kBilling from 'kBilling/client'
+import kCore from '@kalisio/kCore/client'
+import kTeam from '@kalisio/kTeam/client'
+import kNotify from '@kalisio/kNotify/client'
+import kMap from '@kalisio/kMap/client'
+import kEvent from '@kalisio/kEvent/client'
+import kBilling from '@kalisio/kBilling/client'
 import usersHooks from './users.hooks'
 
 export default function () {

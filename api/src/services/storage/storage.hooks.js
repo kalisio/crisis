@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { iff } from 'feathers-hooks-common'
-import { hooks as coreHooks } from 'kCore'
+import { hooks as coreHooks } from '@kalisio/kCore'
 
 module.exports = {
   before: {

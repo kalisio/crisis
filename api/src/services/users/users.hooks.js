@@ -1,7 +1,7 @@
 import { iff, iffElse, when } from 'feathers-hooks-common'
-import { hooks as coreHooks } from 'kCore'
-import { hooks as teamHooks } from 'kTeam'
-import { hooks as notifyHooks } from 'kNotify'
+import { hooks as coreHooks } from '@kalisio/kCore'
+import { hooks as teamHooks } from '@kalisio/kTeam'
+import { hooks as notifyHooks } from '@kalisio/kNotify'
 import { checkInvitationsQuotas } from '../../hooks'
 
 module.exports = {

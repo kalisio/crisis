@@ -1,4 +1,4 @@
-import { hooks as notifyHooks } from 'kNotify'
+import { hooks as notifyHooks } from '@kalisio/kNotify'
 
 module.exports = {
   before: {

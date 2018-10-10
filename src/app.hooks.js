@@ -1,10 +1,10 @@
 // Application hooks that run for every service
-import { permissions as corePermissions, hooks as coreHooks } from 'kCore/client'
-import { permissions as teamPermissions } from 'kTeam/common'
-import { permissions as notifyPermissions } from 'kNotify/common'
-import { permissions as mapPermissions } from 'kMap/common'
-import { permissions as eventPermissions } from 'kEvent/common'
-import { permissions as billingPermissions } from 'kBilling/common'
+import { permissions as corePermissions, hooks as coreHooks } from '@kalisio/kCore/client'
+import { permissions as teamPermissions } from '@kalisio/kTeam/common'
+import { permissions as notifyPermissions } from '@kalisio/kNotify/common'
+import { permissions as mapPermissions } from '@kalisio/kMap/common'
+import { permissions as eventPermissions } from '@kalisio/kEvent/common'
+import { permissions as billingPermissions } from '@kalisio/kBilling/common'
 
 // Register all default hooks for authorisation
 // Default rules for all users

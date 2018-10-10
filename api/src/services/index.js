@@ -1,12 +1,12 @@
 import path from 'path'
 import _ from 'lodash'
 import logger from 'winston'
-import kCore from 'kCore'
-import kTeam from 'kTeam'
-import kMap from 'kMap'
-import kNotify from 'kNotify'
-import kBilling from 'kBilling'
-import kEvent, { hooks as eventHooks } from 'kEvent'
+import kCore from '@kalisio/kCore'
+import kTeam from '@kalisio/kTeam'
+import kMap from '@kalisio/kMap'
+import kNotify from '@kalisio/kNotify'
+import kBilling from '@kalisio/kBilling'
+import kEvent, { hooks as eventHooks } from '@kalisio/kEvent'
 import packageInfo from '../../package.json'
 
 const servicesPath = path.join(__dirname, '..', 'services')
