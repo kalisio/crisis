@@ -2,17 +2,17 @@ import _ from 'lodash'
 
 function loadComponent (component) {
   return () => {
-    return import(`kCore/lib/client/components/${component}.vue`)
+    return import(`@kalisio/kCore/lib/client/components/${component}.vue`)
       .catch(errorCore => {
-        return import(`kTeam/lib/client/components/${component}.vue`)
+        return import(`@kalisio/kTeam/lib/client/components/${component}.vue`)
           .catch(errorTeam => {
-            return import(`kNotify/lib/client/components/${component}.vue`)
+            return import(`@kalisio/kNotify/lib/client/components/${component}.vue`)
               .catch(errorNotify => {
-                return import(`kMap/lib/client/components/${component}.vue`)
+                return import(`@kalisio/kMap/lib/client/components/${component}.vue`)
                   .catch(errorMap => {
-                    return import(`kEvent/lib/client/components/${component}.vue`)
+                    return import(`@kalisio/kEvent/lib/client/components/${component}.vue`)
                       .catch(errorEvent => {
-                        return import(`kBilling/lib/client/components/${component}.vue`)
+                        return import(`@kalisio/kBilling/lib/client/components/${component}.vue`)
                           .catch(errorBilling => {
                             // Otherwise this should be app component
                             return import(`@/${component}.vue`)
@@ -29,11 +29,11 @@ function loadComponent (component) {
 }
 
 function loadSchema (schema) {
-  return import(`kCore/lib/common/schemas/${schema}.json`)
+  return import(`@kalisio/kCore/lib/common/schemas/${schema}.json`)
     .catch(errorCore => {
-      return import(`kTeam/lib/common/schemas/${schema}.json`)
+      return import(`@kalisio/kTeam/lib/common/schemas/${schema}.json`)
         .catch(errorTeam => {
-          return import(`kEvent/lib/common/schemas/${schema}.json`)
+          return import(`@kalisio/kEvent/lib/common/schemas/${schema}.json`)
             .catch(errorEvent => {
               // Otherwise this should be app component
               return import(`./schemas/${schema}.json`)
@@ -47,17 +47,17 @@ function loadSchema (schema) {
 
 function loadTranslation (module, locale) {
   let translation = module + '_' + locale + '.json'
-  return import(`kCore/lib/client/i18n/${translation}`)
+  return import(`@kalisio/kCore/lib/client/i18n/${translation}`)
     .catch(errorCore => {
-      return import(`kTeam/lib/client/i18n/${translation}`)
+      return import(`@kalisio/kTeam/lib/client/i18n/${translation}`)
         .catch(errorTeam => {
-          return import(`kNotify/lib/client/i18n/${translation}`)
+          return import(`@kalisio/kNotify/lib/client/i18n/${translation}`)
             .catch(errorNotify => {
-              return import(`kMap/lib/client/i18n/${translation}`)
+              return import(`@kalisio/kMap/lib/client/i18n/${translation}`)
                 .catch(errorMap => {
-                  return import(`kEvent/lib/client/i18n/${translation}`)
+                  return import(`@kalisio/kEvent/lib/client/i18n/${translation}`)
                     .catch(errorEvent => {
-                      return import(`kBilling/lib/client/i18n/${translation}`)
+                      return import(`@kalisio/kBilling/lib/client/i18n/${translation}`)
                         .catch(errorBilling => {
                           return import(`./i18n/${translation}`)
                             .catch(errorApp => {

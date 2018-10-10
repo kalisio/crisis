@@ -1,4 +1,4 @@
-import { permissions } from 'kCore/common'
+import { permissions } from '@kalisio/kCore/common'
 
 export default function (app) {
   if (typeof app.channel !== 'function') {

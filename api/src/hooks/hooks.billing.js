@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { Forbidden } from '@feathersjs/errors'
-import { permissions } from 'kCore/common'
+import { permissions } from '@kalisio/kCore/common'
 
 export async function getOrgWithBilling (hook, id) {
   const orgService = hook.app.getService('organisations')
