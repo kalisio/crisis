@@ -31,11 +31,11 @@
     lodash "^4.17.5"
     passport-local "^1.0.0"
 
-"@feathersjs/authentication@^2.1.7":
+"@feathersjs/authentication@https://github.com/kalisio/authentication.git":
   version "2.1.7"
-  resolved "https://registry.yarnpkg.com/@feathersjs/authentication/-/authentication-2.1.7.tgz#5ba6013640a30756438166c29548215b408a895b"
+  resolved "https://github.com/kalisio/authentication.git#b730e0624b112e9be372dea168702dc740037396"
   dependencies:
-    "@feathersjs/commons" "^1.2.0"
+    "@feathersjs/commons" "^2.0.0"
     "@feathersjs/errors" "^3.0.0"
     "@feathersjs/socket-commons" "^3.1.2"
     debug "^3.1.0"
@@ -63,6 +63,10 @@
 "@feathersjs/commons@^1.2.0", "@feathersjs/commons@^1.4.0", "@feathersjs/commons@^1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-1.4.1.tgz#81f19ffb83eac6afd33c629d4d0cad57441fbede"
+
+"@feathersjs/commons@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-2.0.0.tgz#48798d4a4f3a864384e25a60100c18e72516f521"
 
 "@feathersjs/errors@3.3.0", "@feathersjs/errors@^3.0.0", "@feathersjs/errors@^3.3.0":
   version "3.3.0"
