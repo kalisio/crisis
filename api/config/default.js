@@ -217,11 +217,11 @@ module.exports = {
       },
       silver: {
         color: 'light-green-6',
-        stripeId: 'plan_DHd5HGwsl31NoC',
+        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'plan_D9lRPmBX3N4MzO' : 'plan_DHd5HGwsl31NoC'),
       },
       gold: {
         color: 'light-green-8',
-        stripeId: 'plan_DHd5RMLMSlpUmQ',
+        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'plan_D9lSeSigaoIck3' : 'plan_DHd5RMLMSlpUmQ'),
       },
       diamond: {
         color: 'light-green-10',
