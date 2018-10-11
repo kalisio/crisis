@@ -21,7 +21,7 @@
 <script>
 import _ from 'lodash'
 import { Events } from 'quasar'
-import { mixins as kCoreMixins } from '@kalisio/kCore/client'
+import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
 
 export default {
   name: 'organisation-billing',

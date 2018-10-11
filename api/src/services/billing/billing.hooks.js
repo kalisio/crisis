@@ -1,6 +1,6 @@
 
 import { when } from 'feathers-hooks-common'
-import { hooks as billingHooks } from '@kalisio/kBilling'
+import { hooks as billingHooks } from '@kalisio/kdk-billing'
 
 module.exports = {
   before: {

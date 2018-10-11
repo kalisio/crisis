@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mixins } from '@kalisio/kCore/client'
+import { mixins } from '@kalisio/kdk-core/client'
 
 export default {
   name: 'context',

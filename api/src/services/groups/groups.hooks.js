@@ -1,6 +1,6 @@
-import { hooks as coreHooks } from '@kalisio/kCore'
-import { hooks as teamHooks } from '@kalisio/kTeam'
-import { hooks as notifyHooks } from '@kalisio/kNotify'
+import { hooks as coreHooks } from '@kalisio/kdk-core'
+import { hooks as teamHooks } from '@kalisio/kdk-team'
+import { hooks as notifyHooks } from '@kalisio/kdk-notify'
 import { checkGroupsQuotas } from '../../hooks'
 
 module.exports = {

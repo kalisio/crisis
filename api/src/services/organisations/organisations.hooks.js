@@ -1,10 +1,10 @@
 import _ from 'lodash'
 import { when } from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kCore'
-import { hooks as billingHooks } from '@kalisio/kBilling'
-import { hooks as teamHooks } from '@kalisio/kTeam'
-import { hooks as notifyHooks } from '@kalisio/kNotify'
-import { hooks as eventHooks } from '@kalisio/kEvent'
+import { hooks as coreHooks } from '@kalisio/kdk-core'
+import { hooks as billingHooks } from '@kalisio/kdk-billing'
+import { hooks as teamHooks } from '@kalisio/kdk-team'
+import { hooks as notifyHooks } from '@kalisio/kdk-notify'
+import { hooks as eventHooks } from '@kalisio/kdk-event'
 import { checkOrganisationsQuotas, checkPlanQuotas } from '../../hooks'
 
 module.exports = {

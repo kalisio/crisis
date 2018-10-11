@@ -20,7 +20,7 @@
 
 <script>
 import _ from 'lodash'
-import { utils as kCoreUtils } from '@kalisio/kCore/client'
+import { utils as kCoreUtils } from '@kalisio/kdk-core/client'
 import { QSelect, QGallery, QGalleryCarousel } from 'quasar'
 
 export default {

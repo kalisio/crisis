@@ -40,20 +40,20 @@ shell.rm('-fR', targetPath + '/statics/Cesium')
 
 // Copy files from linked node modules otherwise they are not correctly transpiled by babel
 // see https://github.com/kalisio/kdk/issues/28 for details
-copyModule('@kalisio/kCore')
-copyModule('@kalisio/kTeam')
-copyModule('@kalisio/kNotify')
-copyModule('@kalisio/kEvent')
-copyModule('@kalisio/kMap')
-copyModule('@kalisio/kBilling')
+copyModule('@kalisio/kdk-core')
+copyModule('@kalisio/kdk-team')
+copyModule('@kalisio/kdk-notify')
+copyModule('@kalisio/kdk-event')
+copyModule('@kalisio/kdk-map')
+copyModule('@kalisio/kdk-billing')
 
 function finalize () {
-  deleteModule('@kalisio/kCore')
-  deleteModule('@kalisio/kTeam')
-  deleteModule('@kalisio/kNotify')
-  deleteModule('@kalisio/kEvent')
-  deleteModule('@kalisio/kMap')
-  deleteModule('@kalisio/kBilling')
+  deleteModule('@kalisio/kdk-core')
+  deleteModule('@kalisio/kdk-team')
+  deleteModule('@kalisio/kdk-notify')
+  deleteModule('@kalisio/kdk-event')
+  deleteModule('@kalisio/kdk-map')
+  deleteModule('@kalisio/kdk-billing')
 
   console.log((
     '\n Build complete with "' + env.platform.theme.bold + '" theme in ' +

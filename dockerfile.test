@@ -14,21 +14,21 @@ COPY . /opt/aktnmap
 
 WORKDIR /opt/aktnmap/modules
 RUN git clone https://github.com/kalisio/kCore.git -b test --single-branch && cd kCore && yarn install && yarn link && cd ..
-RUN git clone https://github.com/kalisio/kTeam.git -b test --single-branch && cd kTeam && yarn install && yarn link @kalisio/kCore && yarn link && cd ..
-RUN git clone https://github.com/kalisio/kNotify.git -b test --single-branch && cd kNotify && yarn install && yarn link @kalisio/kCore && yarn link && cd ..
-RUN git clone https://github.com/kalisio/kMap.git -b test --single-branch && cd kMap && yarn install && yarn link @kalisio/kCore && yarn link && cd ..
-RUN git clone https://github.com/kalisio/kEvent.git -b test --single-branch && cd kEvent && yarn install && yarn link @kalisio/kCore && yarn link && cd ..
-RUN git clone https://github.com/kalisio/kBilling.git -b test --single-branch && cd kBilling && yarn install && yarn link @kalisio/kCore && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kTeam.git -b test --single-branch && cd kTeam && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kNotify.git -b test --single-branch && cd kNotify && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kMap.git -b test --single-branch && cd kMap && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kEvent.git -b test --single-branch && cd kEvent && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kBilling.git -b test --single-branch && cd kBilling && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
 
 WORKDIR /opt/aktnmap/api
 
 RUN yarn install
-RUN yarn link @kalisio/kCore
-RUN yarn link @kalisio/kTeam
-RUN yarn link @kalisio/kNotify
-RUN yarn link @kalisio/kMap
-RUN yarn link @kalisio/kEvent
-RUN yarn link @kalisio/kBilling
+RUN yarn link @kalisio/kdk-core
+RUN yarn link @kalisio/kdk-team
+RUN yarn link @kalisio/kdk-notify
+RUN yarn link @kalisio/kdk-map
+RUN yarn link @kalisio/kdk-event
+RUN yarn link @kalisio/kdk-billing
 RUN npm run build
 
 WORKDIR /opt/aktnmap

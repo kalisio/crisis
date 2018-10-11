@@ -1,4 +1,4 @@
-import { hooks as notifyHooks } from '@kalisio/kNotify/client'
+import { hooks as notifyHooks } from '@kalisio/kdk-notify/client'
 
 export default {
   before: {
