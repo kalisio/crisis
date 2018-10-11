@@ -12,10 +12,12 @@ ENV NODE_APP_INSTANCE=prod
 WORKDIR /opt/aktnmap
 COPY . /opt/aktnmap
 
+WORKDIR /opt/aktnmap/api
+
 RUN yarn install
 RUN npm run build
 
-WORKDIR /opt/aktnmap/api
+WORKDIR /opt/aktnmap
 
 RUN yarn install
 RUN npm run build
