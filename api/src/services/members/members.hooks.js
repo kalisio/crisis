@@ -1,5 +1,5 @@
-import { hooks as coreHooks } from '@kalisio/kCore'
-import { hooks as notifyHooks } from '@kalisio/kNotify'
+import { hooks as coreHooks } from '@kalisio/kdk-core'
+import { hooks as notifyHooks } from '@kalisio/kdk-notify'
 
 module.exports = {
   before: {

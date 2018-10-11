@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { hooks as coreHooks } from '@kalisio/kCore'
+import { hooks as coreHooks } from '@kalisio/kdk-core'
 import { getOrgWithBilling } from './hooks.billing'
 
 async function countItems (hook, service, org) {

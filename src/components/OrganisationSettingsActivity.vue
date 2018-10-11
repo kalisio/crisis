@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mixins as kCoreMixins } from '@kalisio/kCore/client'
+import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
 
 export default {
   name: 'organisation-settings-activity',

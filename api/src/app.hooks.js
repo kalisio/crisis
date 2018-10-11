@@ -1,12 +1,12 @@
 // Application hooks that run for every service
 import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import commonHooks from 'feathers-hooks-common'
-import { permissions as corePermissions, hooks as coreHooks } from '@kalisio/kCore'
-import { permissions as teamPermissions } from '@kalisio/kTeam'
-import { permissions as notifyPermissions, hooks as notifyHooks } from '@kalisio/kNotify'
-import { permissions as mapPermissions } from '@kalisio/kMap'
-import { permissions as eventPermissions } from '@kalisio/kEvent'
-import { permissions as billingPermissions } from '@kalisio/kBilling/common'
+import { permissions as corePermissions, hooks as coreHooks } from '@kalisio/kdk-core'
+import { permissions as teamPermissions } from '@kalisio/kdk-team'
+import { permissions as notifyPermissions, hooks as notifyHooks } from '@kalisio/kdk-notify'
+import { permissions as mapPermissions } from '@kalisio/kdk-map'
+import { permissions as eventPermissions } from '@kalisio/kdk-event'
+import { permissions as billingPermissions } from '@kalisio/kdk-billing/common'
 const { authenticate } = require('@feathersjs/authentication').hooks
 
 // Register all default hooks for authorisation
