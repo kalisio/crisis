@@ -24,9 +24,8 @@ then
 	export REPLICAS=2
 	export NODE_APP_NB_INSTANCES=1
 fi
-if [[ -z "$TRAVIS_TAG" ]]
+if [[ -n "$TRAVIS_TAG" ]]
 then
-else
 	export DEBUG=
 	export FLAVOR=prod
 	export DOMAIN=aktnmap.com
