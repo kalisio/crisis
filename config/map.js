@@ -3,7 +3,7 @@ module.exports = {
     {
       type: 'tileLayer',
       arguments: [
-        'https://mapproxy.app.aktnmap.com/wmts/osm/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png',
+        'https://mapproxy.app.aktnmap.com/wmts/osm-bright/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png',
         {
           maxZoom: 18,
           label: 'OpenStreetMap',
