@@ -3,7 +3,7 @@ module.exports = {
     {
       type: 'tileLayer',
       arguments: [
-        'https://mapproxy.kargo.test.kalisio.xyz/wmts/osm/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png',
+        'https://mapproxy.app.kalisio.com/wmts/osm/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png',
         {
           maxZoom: 18,
           label: 'OpenStreetMap',
