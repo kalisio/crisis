@@ -16,25 +16,26 @@ then
 fi
 if [[ $TRAVIS_BRANCH == "test" ]]
 then
-	if [[ -z "$TRAVIS_TAG" ]]
-	then
-		export DEBUG=
-		export FLAVOR=test
-		export DOMAIN=aktnmap.xyz
-		export SUBDOMAIN=test.$DOMAIN
-		export VERSION_TAG=$VERSION-test
-		export REPLICAS=2
-		export NODE_APP_NB_INSTANCES=1
-	else
-		export DEBUG=
-		export FLAVOR=prod
-		export DOMAIN=aktnmap.com
-		export SUBDOMAIN=$DOMAIN
-		export VERSION_TAG=$VERSION
-		export REPLICAS=2
-		export NODE_APP_NB_INSTANCES=1
-	fi
+	export DEBUG=
+	export FLAVOR=test
+	export DOMAIN=aktnmap.xyz
+	export SUBDOMAIN=test.$DOMAIN
+	export VERSION_TAG=$VERSION-test
+	export REPLICAS=2
+	export NODE_APP_NB_INSTANCES=1
 fi
+if [[ -z "$TRAVIS_TAG" ]]
+then
+else
+	export DEBUG=
+	export FLAVOR=prod
+	export DOMAIN=aktnmap.com
+	export SUBDOMAIN=$DOMAIN
+	export VERSION_TAG=$VERSION
+	export REPLICAS=2
+	export NODE_APP_NB_INSTANCES=1
+fi
+
 export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
 export NODE_APP_INSTANCE=$FLAVOR
 # These ones are just for travis to SSH to the target machine
