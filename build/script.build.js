@@ -21,10 +21,10 @@ console.log((' Building Quasar App with "' + env.platform.theme + '" theme...\n'
 
 function copyModule(module) {
   shell.mkdir('-p', path.resolve(__dirname, `../${module}`))
-  shell.cp('-R', path.resolve(__dirname, `../api/node_modules/\@kalisio/${module}/lib`), path.resolve(__dirname, `../${module}`))
+  shell.cp('-R', path.resolve(__dirname, `../api/node_modules/${module}/lib`), path.resolve(__dirname, `../${module}`))
   // Need to copy as well entry points such as kCore/client and kCore/common
-  shell.cp(path.resolve(__dirname, `../api/node_modules/\@kalisio/${module}/client.js`), path.resolve(__dirname, `../${module}`))
-  shell.cp(path.resolve(__dirname, `../api/node_modules/\@kalisio/${module}/common.js`), path.resolve(__dirname, `../${module}`))
+  shell.cp(path.resolve(__dirname, `../api/node_modules/${module}/client.js`), path.resolve(__dirname, `../${module}`))
+  shell.cp(path.resolve(__dirname, `../api/node_modules/${module}/common.js`), path.resolve(__dirname, `../${module}`))
   console.log(` Copied ${module} module files to app folder.\n`)
 }
 
@@ -40,20 +40,20 @@ shell.rm('-fR', targetPath + '/statics/Cesium')
 
 // Copy files from linked node modules otherwise they are not correctly transpiled by babel
 // see https://github.com/kalisio/kdk/issues/28 for details
-copyModule('kCore')
-copyModule('kTeam')
-copyModule('kNotify')
-copyModule('kEvent')
-copyModule('kMap')
-copyModule('kBilling')
+copyModule('@kalisio/kCore')
+copyModule('@kalisio/kTeam')
+copyModule('@kalisio/kNotify')
+copyModule('@kalisio/kEvent')
+copyModule('@kalisio/kMap')
+copyModule('@kalisio/kBilling')
 
 function finalize () {
-  deleteModule('kCore')
-  deleteModule('kTeam')
-  deleteModule('kNotify')
-  deleteModule('kEvent')
-  deleteModule('kMap')
-  deleteModule('kBilling')
+  deleteModule('@kalisio/kCore')
+  deleteModule('@kalisio/kTeam')
+  deleteModule('@kalisio/kNotify')
+  deleteModule('@kalisio/kEvent')
+  deleteModule('@kalisio/kMap')
+  deleteModule('@kalisio/kBilling')
 
   console.log((
     '\n Build complete with "' + env.platform.theme.bold + '" theme in ' +
