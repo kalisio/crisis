@@ -1,17 +1,31 @@
 # Changelog
 
-## [Unreleased](https://github.com/kalisio/aktnmap/tree/HEAD)
+## [v0.6.1](https://github.com/kalisio/aktnmap/tree/v0.6.1) (2018-10-11)
 
-[Full Changelog](https://github.com/kalisio/aktnmap/compare/2a2837264443192596b034d3b7740f7159f4c504...HEAD)
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/2a2837264443192596b034d3b7740f7159f4c504...v0.6.1)
 
 **Implemented enhancements:**
 
+- AWS SNS cleanup [\#18](https://github.com/kalisio/aktnmap/issues/18)
+- Secure payment recipient [\#16](https://github.com/kalisio/aktnmap/issues/16)
+- The user must be verified to fill the payment information [\#14](https://github.com/kalisio/aktnmap/issues/14)
+- Report deployment method from kapp [\#7](https://github.com/kalisio/aktnmap/issues/7)
 - Organisation owner should be able to access everything [\#6](https://github.com/kalisio/aktnmap/issues/6)
+- Use a Database as a Service [\#3](https://github.com/kalisio/aktnmap/issues/3)
 - Add terms/privacy policy consent screen [\#2](https://github.com/kalisio/aktnmap/issues/2)
 
 **Fixed bugs:**
 
+- Cannot create more than one organisation [\#25](https://github.com/kalisio/aktnmap/issues/25)
+- Sync between replicas does not work anymore [\#11](https://github.com/kalisio/aktnmap/issues/11)
+- Check for quotas when downgrading a plan [\#9](https://github.com/kalisio/aktnmap/issues/9)
+- Topics not subscribed when adding existing tags to a user already having others tags [\#8](https://github.com/kalisio/aktnmap/issues/8)
+- Map background not accessible in some browsers [\#5](https://github.com/kalisio/aktnmap/issues/5)
 - Map layer selector [\#1](https://github.com/kalisio/aktnmap/issues/1)
+
+**Merged pull requests:**
+
+- \[Snyk\] Fix for 1 vulnerable dependencies [\#13](https://github.com/kalisio/aktnmap/pull/13) ([snyk-bot](https://github.com/snyk-bot))
 
 
 
