@@ -196,6 +196,9 @@ describe('aktnmap', () => {
     })
   })
 
+// We cannot test billing in prod because we have our prod stripe config,
+// which requirs valid card numbers and will transfer money
+if (process.env.NODE_APP_INSTANCE !== 'prod') {
   it('update billing information', () => {
     return billingService.create({
       action: 'customer',
@@ -271,6 +274,7 @@ describe('aktnmap', () => {
       expect(error.name).to.equal('Forbidden')
     })
   })
+}
 
   it('create user tag', () => {
     let operation = memberService.patch(userObject._id.toString(), { // We need at least devices for subscription
