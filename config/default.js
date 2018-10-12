@@ -12,7 +12,7 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://app.test.aktnmap.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
-  domain = 'https://app.aktnmap.xyz'
+  domain = 'https://app.aktnmap.com'
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
