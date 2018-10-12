@@ -6,7 +6,7 @@ module.exports = {
     // will be overriden when required
     meta: { unauthenticated: true },
     children: {
-      'terms': 'Help',
+      'terms': 'Terms',
       'login': 'authentication/KLogin',
       'logout': {
         component: 'authentication/KLogout',
