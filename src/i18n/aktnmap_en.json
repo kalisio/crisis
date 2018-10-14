@@ -47,7 +47,7 @@
     "bronze_LABEL": "Bronze",
     "bronze_PRICE": "Free",
     "bronze_DESCRIPTION": "Our basic version for users just getting started",
-    "bronze_DETAILS": "</br>Unlimited tags</br>Unlimited events<br>Up to <b>{{groups}}</b> groups</br>Up to <b>{{templates}}</b> templates</br>Up to <b>{{members}}</b> members</br></br>",
+    "bronze_DETAILS": "</br>Unlimited tags</br>Unlimited events<br>Up to <b>{{groups}}</b> groups</br>Up to <b>{{event-templates}}</b> templates</br>Up to <b>{{members}}</b> members</br></br>",
     "silver_LABEL": "Silver",
     "silver_PRICE": "99€ per month",
     "silver_DESCRIPTION": "Powerful enough to run a small business",

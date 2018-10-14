@@ -47,7 +47,7 @@
     "bronze_LABEL": "Bronze",
     "bronze_PRICE": "Gratuit",
     "bronze_DESCRIPTION": "Notre version basique pour les personnes qui souhaitent découvrir",
-    "bronze_DETAILS": "</br>Etiquettes illimités</br>Evénements illimitées</br>Jusqu’à <b>{{templates}}</b> modèles</br>Jusqu’à <b>{{groups}}</b> groupes</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
+    "bronze_DETAILS": "</br>Etiquettes illimités</br>Evénements illimitées</br>Jusqu’à <b>{{event-templates}}</b> modèles</br>Jusqu’à <b>{{groups}}</b> groupes</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
     "silver_LABEL": "Argent",
     "silver_PRICE": "99€ par mois",
     "silver_DESCRIPTION": "Assez puissant pour gérer une association ou une entreprise de taille moyenne",
