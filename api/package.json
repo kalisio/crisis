@@ -35,7 +35,9 @@
     "lint": "standard src/**/*.js test/**/*.js --fix",
     "mocha": "cross-env NODE_CONFIG_DIR=./test/config/ mocha --opts mocha.opts",
     "coverage": "cross-env NODE_CONFIG_DIR=./test/config/ node node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
-    "test": "npm run build && npm run lint && npm run coverage"
+    "test": "npm run build && npm run lint && npm run coverage",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "standard": {
     "parser": "babel-eslint",
@@ -89,6 +91,8 @@
     "moment": "^2.18.1",
     "mongodb": "^2.2.26",
     "request": "^2.81.0",
-    "winston": "^2.3.1"
-  }
+    "winston": "^2.3.1",
+    "snyk": "^1.103.4"
+  },
+  "snyk": true
 }
