@@ -1,8 +1,21 @@
 # Changelog
 
-## [v0.6.0](https://github.com/kalisio/aktnmap/tree/v0.6.1) (2018-10-11)
+## [v0.6.1](https://github.com/kalisio/aktnmap/tree/v0.6.1) (2018-10-15)
 
-[Full Changelog](https://github.com/kalisio/aktnmap/compare/2a2837264443192596b034d3b7740f7159f4c504...v0.6.1)
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.0...v0.6.1)
+
+**Fixed bugs:**
+
+- Application does not work on Huawei P8 Android 5 [\#28](https://github.com/kalisio/aktnmap/issues/28)
+- Updating the user profile removes all his permissions [\#27](https://github.com/kalisio/aktnmap/issues/27)
+
+**Closed issues:**
+
+- Add a constraint to deploy Mongodb on swarm [\#26](https://github.com/kalisio/aktnmap/issues/26)
+
+## [v0.6.0](https://github.com/kalisio/aktnmap/tree/v0.6.0) (2018-10-12)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/2a2837264443192596b034d3b7740f7159f4c504...v0.6.0)
 
 **Implemented enhancements:**
 
