@@ -4,5 +4,11 @@ then
 	echo "Skipping ios stage"
 else
 	source travis.env.sh
-	npm run cordova:supply:ios
+	if [[ -n "$TRAVIS_TAG" ]]
+	then
+		npm run cordova:supply:ios
+	else
+		npm run cordova:add:ios
+		npm run cordova:build
+	fi
 fi

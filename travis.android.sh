@@ -5,5 +5,11 @@ then
 else
 	source travis.env.sh
 	export ORG_GRADLE_PROJECT_cdvVersionCode=$TRAVIS_BUILD_NUMBER
-	npm run cordova:supply:android
+	if [[ -n "$TRAVIS_TAG" ]]
+	then
+		npm run cordova:supply:android
+	else
+		npm run cordova:add:android
+		npm run cordova:build
+	fi
 fi
