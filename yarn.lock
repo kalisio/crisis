@@ -313,9 +313,9 @@
     winston "^2.3.1"
     winston-daily-rotate-file "^1.7.2"
 
-"@kalisio/kdk-core@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@kalisio/kdk-core/-/kdk-core-1.0.1.tgz#f7b6081aa65d4158ffcf7a8b81592780908e9f00"
+"@kalisio/kdk-core@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@kalisio/kdk-core/-/kdk-core-1.0.2.tgz#1f0630d12ef201249975ce36555e1f62dedad7e7"
   dependencies:
     "@feathersjs/authentication" "https://github.com/kalisio/authentication.git"
     "@feathersjs/authentication-jwt" "^2.0.1"
