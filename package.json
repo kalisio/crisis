@@ -24,7 +24,7 @@
     "release:patch": "cd api && npm run release:patch && cd .. && npm version --no-git-tag-version --force patch",
     "release:minor": "cd api && npm run release:minor && cd .. && npm version --no-git-tag-version --force minor",
     "release:major": "cd api && npm run release:major && cd .. && npm version --no-git-tag-version --force major",
-    "changelog": "github_changelog_generator -u kalisio -p aktnmap && git add CHANGELOG.md && git commit -am \"Updating changelog\" && git push origin",
+    "changelog": "github_changelog_generator -u kalisio -p aktnmap && git add CHANGELOG.md && git commit -am \"Updating changelog [skip ci]\" && git push origin",
     "clean": "node build/script.clean.js",
     "dev": "node build/script.dev.js",
     "prod": "cd api && npm run prod",

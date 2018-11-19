@@ -1,5 +1,23 @@
 # Changelog
 
+## [v0.6.3](https://github.com/kalisio/aktnmap/tree/v0.6.3) (2018-11-19)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.2...v0.6.3)
+
+**Implemented enhancements:**
+
+- Add tooltips in AppBar [\#34](https://github.com/kalisio/aktnmap/issues/34)
+- Add workload/stress tests [\#21](https://github.com/kalisio/aktnmap/issues/21)
+- Integrate an online help [\#19](https://github.com/kalisio/aktnmap/issues/19)
+
+**Fixed bugs:**
+
+- Event creation modal is blocked if open twice [\#33](https://github.com/kalisio/aktnmap/issues/33)
+
+## [v0.6.2](https://github.com/kalisio/aktnmap/tree/v0.6.2) (2018-10-15)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.1...v0.6.2)
+
 ## [v0.6.1](https://github.com/kalisio/aktnmap/tree/v0.6.1) (2018-10-15)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.0...v0.6.1)
