@@ -20,6 +20,7 @@
   "Context": {
     "EVENTS": "Events & templates",
     "MEMBERS": "Members & groups",
+    "SEARCH": "Search",
     "REFRESH": "Refresh",
     "SETTINGS": "Settings"
   },
