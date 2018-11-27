@@ -47,7 +47,7 @@ module.exports = {
   },
   roles: {
     // Member/Manager/Owner
-    colors: ['amber', 'orange', 'deep-orange'],
+    names: ['MEMBER_LABEL', 'MANAGER_LABEL', 'OWNER_LABEL'],
     icons: ['person', 'work', 'verified_user']
   },
   screen: {
