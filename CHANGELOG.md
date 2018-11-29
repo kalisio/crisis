@@ -1,5 +1,19 @@
 # Changelog
 
+## [v0.6.4](https://github.com/kalisio/aktnmap/tree/v0.6.4) (2018-11-29)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.3...v0.6.4)
+
+**Implemented enhancements:**
+
+- Add tooltips on the member card [\#38](https://github.com/kalisio/aktnmap/issues/38)
+- Simplify the card title layout  [\#37](https://github.com/kalisio/aktnmap/issues/37)
+
+**Fixed bugs:**
+
+- Avatar groups are not all displayed  [\#39](https://github.com/kalisio/aktnmap/issues/39)
+- Search bar does not work properly [\#35](https://github.com/kalisio/aktnmap/issues/35)
+
 ## [v0.6.3](https://github.com/kalisio/aktnmap/tree/v0.6.3) (2018-11-19)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.2...v0.6.3)
