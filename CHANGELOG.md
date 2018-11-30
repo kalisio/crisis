@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.6.5](https://github.com/kalisio/aktnmap/tree/v0.6.5) (2018-11-30)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.4...v0.6.5)
+
+**Fixed bugs:**
+
+- Search bar does not work properly [\#35](https://github.com/kalisio/aktnmap/issues/35)
+
 ## [v0.6.4](https://github.com/kalisio/aktnmap/tree/v0.6.4) (2018-11-29)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.3...v0.6.4)
@@ -12,7 +20,6 @@
 **Fixed bugs:**
 
 - Avatar groups are not all displayed  [\#39](https://github.com/kalisio/aktnmap/issues/39)
-- Search bar does not work properly [\#35](https://github.com/kalisio/aktnmap/issues/35)
 
 ## [v0.6.3](https://github.com/kalisio/aktnmap/tree/v0.6.3) (2018-11-19)
 
