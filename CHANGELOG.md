@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.5...v0.6.6)
 
+**Fixed bugs:**
+
+- It is impossible to browse or add any medias [\#42](https://github.com/kalisio/aktnmap/issues/42)
+
 ## [v0.6.5](https://github.com/kalisio/aktnmap/tree/v0.6.5) (2018-11-30)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.4...v0.6.5)
