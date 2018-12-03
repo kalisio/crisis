@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.6.6](https://github.com/kalisio/aktnmap/tree/v0.6.6) (2018-12-03)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.5...v0.6.6)
+
 ## [v0.6.5](https://github.com/kalisio/aktnmap/tree/v0.6.5) (2018-11-30)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.4...v0.6.5)
