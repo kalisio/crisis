@@ -1,6 +1,7 @@
 var path = require('path')
 var fs = require('fs')
 var containerized = require('containerized')()
+const layers = require('./layers')
 
 const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
@@ -39,29 +40,34 @@ let limiter = {
     interval: 60*1000 // 1 minute window
   }
 }
-let domain, topicName
+let domain, topicName, weacastApi
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   // For benchmarking
   apiLimiter = null
   limiter = null
   domain = 'https://app.dev.aktnmap.xyz'
+  weacastApi = 'https://weacast.dev.kalisio.xyz'
   // For SNS topic name generation
   topicName = (object) => `aktnmap-dev-${object._id.toString()}`
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://app.test.aktnmap.xyz'
+  weacastApi = 'https://weacast.test.kalisio.xyz'
   // For SNS topic name generation
   topicName = (object) => `aktnmap-test-${object._id.toString()}`
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://app.aktnmap.com'
+  weacastApi = 'https://weacast.kalisio.xyz'
   // For SNS topic name generation
   topicName = (object) => `aktnmap-${object._id.toString()}`
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
-    domain = 'http://localhost:' + clientPort
+    domain = 'http://localhost:' + clientPort // Akt'n'Map app client/server port = 8080/8081
+    weacastApi = 'http://localhost:' + (clientPort+2) // Weacast app client/server port = 8082/8083
   } else {
-    domain = 'http://localhost:' + serverPort
+    domain = 'http://localhost:' + serverPort // Akt'n'Map app client/server port = 8081
+    weacastApi = 'http://localhost:' + (serverPort+1) // Weacast app client/server port = 8082
   }
   // For SNS topic name generation
   topicName = (object) => `aktnmap-dev-${object._id.toString()}`
@@ -205,6 +211,13 @@ module.exports = {
   },
   geocoder: {
     provider: 'opendatafrance'
+  },
+  catalog: {
+    layers,
+    paginate: {
+      default: 100,
+      max: 100
+    }
   },
   billing: {
     secretKey: process.env.STRIPE_SECRET_KEY,
