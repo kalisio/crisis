@@ -50,21 +50,42 @@ module.exports = {
     labels: ['MEMBER_LABEL', 'MANAGER_LABEL', 'OWNER_LABEL'],
     icons: ['person', 'work', 'verified_user']
   },
-  screen: {
-    footer: [
+  screens: {
+    banner: 'aktnmap-banner.png',
+    extraLinks: [
       { label: 'screen.ABOUT_KALISIO', url: website },
       { label: 'screen.CONTACT', url: website + '/#footer' },
       { label: 'screen.TERMS_AND_POLICIES', url: domain + '/#/terms' },
     ],
-    header: 'aktnmap-banner.png'
-  },
-  login: {
-    providers: ['google', 'github']
+    login: {
+      providers: ['google', 'github'],
+      links: [
+        { id: 'reset-password-link', label: 'KLogin.FORGOT_YOUR_PASSWORD_LINK', route: {name: 'send-reset-password' } },
+        { id: 'register-link', label: 'KLogin.DONT_HAVE_AN_ACCOUNT_LINK', route: { name: 'register' } }
+      ]
+    },
+    logout: {
+      links: [
+        { id: 'login-link', label: 'KLogout.LOG_IN_AGAIN_LINK', route: { name: 'login' } },
+      ]
+    },
+    register: {
+      links: [
+        { id: 'login-link', label: 'KRegister.ALREADY_HAVE_AN_ACCOUNT_LINK', route: { name: 'login' } }
+      ]
+    },
+    changeEndpoint: {
+      links: [
+        { id: 'login-link', label: 'KChangeEndpoint.LOGIN_LINK', route: { name: 'login' } },
+        { id: 'register-link', label: 'KChangeEndpoint.DONT_HAVE_AN_ACCOUNT_LINK', route: { name: 'register' } }
+      ]
+    }
   },
   layout: {
-    appBar: 'layout/KAppBar',
-    sideNav: 'layout/KSideNav'
-  },
+    view: 'lHh LpR lFf',
+    leftBreakpoint: 9999,
+    rightBreakpoint: 9999
+  }, 
   appBar: {
     title: 'Akt\'n\'Map',
     speech: {
