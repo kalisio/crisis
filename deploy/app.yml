@@ -4,13 +4,12 @@ services:
   app:
     image: kalisio/${APP}:${VERSION_TAG}
     environment:
-      - APP_SECRET
+      - APP_SECRET    
       - BUILD_NUMBER
       - NODE_APP_INSTANCE=${FLAVOR}
       - NODE_APP_NB_INSTANCES      
       - GOOGLE_MAIL_USER
       - GOOGLE_MAIL_PASSWORD
-      - APP_SECRET
       - SNS_ACCESS_KEY
       - SNS_SECRET_ACCESS_KEY
       - SNS_ANDROID_ARN
