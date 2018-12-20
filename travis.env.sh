@@ -1,6 +1,5 @@
 #!/bin/bash
 export APP=aktnmap
-export HOST=app
 export PORT=8081
 export VERSION=$(node -p -e "require('./package.json').version")
 
@@ -8,7 +7,8 @@ if [[ $TRAVIS_BRANCH == "master" ]]
 then
 	export DEBUG=kalisio*,-kalisio:kCore:authorisations:hooks
 	export FLAVOR=dev
-	export DOMAIN=aktnmap.xyz
+	export HOST=aktnmap
+	export DOMAIN=kalisio.xyz
 	export SUBDOMAIN=dev.$DOMAIN
 	export VERSION_TAG=$VERSION-dev
 	export REPLICAS=1
@@ -18,6 +18,7 @@ if [[ $TRAVIS_BRANCH == "test" ]]
 then
 	export DEBUG=
 	export FLAVOR=test
+	export HOST=app
 	export DOMAIN=aktnmap.xyz
 	export SUBDOMAIN=test.$DOMAIN
 	export VERSION_TAG=$VERSION-test
@@ -28,6 +29,7 @@ if [[ -n "$TRAVIS_TAG" ]]
 then
 	export DEBUG=
 	export FLAVOR=prod
+	export HOST=app
 	export DOMAIN=aktnmap.com
 	export SUBDOMAIN=$DOMAIN
 	export VERSION_TAG=$VERSION
