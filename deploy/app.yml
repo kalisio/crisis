@@ -26,10 +26,10 @@ services:
       - DEBUG
     networks:
       - app
-      - docker
+      - cluster
 
 networks:
   app:
-  docker:
+  cluster:
     external:
       name: ${DOCKER_NETWORK}
