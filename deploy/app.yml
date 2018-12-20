@@ -4,6 +4,10 @@ services:
   app:
     image: kalisio/${APP}:${VERSION_TAG}
     environment:
+      - APP_SECRET
+      - BUILD_NUMBER
+      - NODE_APP_INSTANCE=${FLAVOR}
+      - NODE_APP_NB_INSTANCES      
       - GOOGLE_MAIL_USER
       - GOOGLE_MAIL_PASSWORD
       - APP_SECRET
@@ -17,17 +21,16 @@ services:
       - GITHUB_CLIENT_SECRET
       - GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET
-      - BUILD_NUMBER
-      - NODE_APP_INSTANCE=${FLAVOR}
-      - NODE_APP_NB_INSTANCES
       - STRIPE_SECRET_KEY
       - STRIPE_PUBLIC_KEY
       - DB_URL
       - DEBUG
     networks:
-      - app-network
+      - app
+      - docker
 
 networks:
-  app-network:
+  app:
+  docker:
     external:
       name: ${DOCKER_NETWORK}

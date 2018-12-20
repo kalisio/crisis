@@ -6,12 +6,10 @@ services:
     volumes:
       - mongodb_app:/data/db
     networks:
-      - app-network
+      - app
 
 volumes:
   mongodb_app:
 
 networks:
-  app-network:
-    external:
-      name: ${DOCKER_NETWORK}
+  app:
