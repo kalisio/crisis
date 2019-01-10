@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { Events } from 'quasar'
 import { mixins } from '@kalisio/kdk-core/client'
 
 export default {
@@ -31,7 +32,19 @@ export default {
         actions.menu.push({ name: 'settings', icon: 'settings', label: this.$t('Context.SETTINGS'), route: { name: 'organisation-settings-activity', params: { perspective: 'properties', contextId: context._id } } })
       }
       return actions
+    },
+    setupContext (context) {
+      // Uploading can require a long time
+      if (context) {
+        this.$api.getService('storage', context).timeout = 60*60*1000 // 1h should be sufficient since we also have size limits
+      }
     }
+  },
+  created () {
+    Events.$on('context-changed', this.setupContext)
+  },
+  beforeDestroy () {
+    Events.$off('context-changed', this.setupContext)
   }
 }
 </script>
