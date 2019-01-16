@@ -15,12 +15,8 @@ module.exports = [
     type: 'BaseLayer',
     leaflet: {
       type: 'tileLayer',
-      arguments: [
-        `${mapproxyUrl}/wmts/s2/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg`,
-        {
-          maxZoom: 18
-        }
-      ]
+      source: `${mapproxyUrl}/wmts/s2/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg`,
+      maxZoom: 18
     },
     cesium: {
       type: 'OpenStreetMap',
@@ -42,12 +38,8 @@ module.exports = [
     leaflet: {
       type: 'tileLayer',
       isVisible: true,
-      arguments: [
-        `${mapproxyUrl}/wmts/osm-bright/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png`,
-        {
-          maxZoom: 18
-        }
-      ]
+      source: `${mapproxyUrl}/wmts/osm-bright/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png`,
+      maxZoom: 18
     },
     cesium: {
       type: 'OpenStreetMap',
@@ -66,12 +58,8 @@ module.exports = [
     type: 'BaseLayer',
     leaflet: {
       type: 'tileLayer',
-      arguments: [
-        `${mapproxyUrl}/wmts/osm-dark/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png`,
-        {
-          maxZoom: 18
-        }
-      ]
+      source: `${mapproxyUrl}/wmts/osm-dark/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png`,
+      maxZoom: 18
     },
     cesium: {
       type: 'OpenStreetMap',
@@ -91,12 +79,8 @@ module.exports = [
     type: 'BaseLayer',
     leaflet: {
       type: 'tileLayer',
-      arguments: [
-        `${mapproxyUrl}/wmts/osm-terrain-bright/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png`,
-        {
-          maxZoom: 18
-        }
-      ]
+      source: `${mapproxyUrl}/wmts/osm-terrain-bright/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png`,
+      maxZoom: 18
     },
     cesium: {
       type: 'OpenStreetMap',
@@ -116,12 +100,8 @@ module.exports = [
     type: 'BaseLayer',
     leaflet: {
       type: 'tileLayer',
-      arguments: [
-        `${mapproxyUrl}/wmts/osm-terrain-dark/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png`,
-        {
-          maxZoom: 18
-        }
-      ]
+      source: `${mapproxyUrl}/wmts/osm-terrain-dark/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png`,
+      maxZoom: 18
     },
     cesium: {
       type: 'OpenStreetMap',
@@ -181,7 +161,7 @@ module.exports = [
     name: 'Wind',
     description: 'Speed and direction',
     tags: [
-      'meteo'
+      'weather'
     ],
     iconUrl: 'https://s3.eu-central-1.amazonaws.com/kalisioscope/assets/wind.jpg',
     attribution: 'Forecast data from <a href="http://www.meteofrance.com">Météo-France</a>',
@@ -191,19 +171,23 @@ module.exports = [
         name: 'windSpeed',
         label: 'Variables.WIND_SPEED',
         units: [
-          'm/s'
+          'm/s', 'km/h', 'kt'
         ],
         chartjs: {
           backgroundColor: 'rgba(255, 159, 64, 128)',
           borderColor: 'rgb(255, 159, 64)',
           fill: false
+        },
+        chromajs: {
+          scale: 'RdYlBu',
+          domain: [20, 3]
         }
       },
       {
         name: 'windDirection',
         label: 'Variables.WIND_DIRECTION',
         units: [
-          '°'
+          'deg'
         ],
         chartjs: {
           backgroundColor: 'rgba(191, 191, 63, 128)',
@@ -214,31 +198,30 @@ module.exports = [
     ],
     leaflet: {
       type: 'weacast.flowLayer',
-      arguments: [
-        {
-          elements: [
-            'u-wind',
-            'v-wind'
-          ],
-          lineWidth: 4,
-          frameRate: 20,
-          particleMultiplier: 0.001,
-          displayOptions: {
-            velocityType: 'Wind',
-            position: 'bottomright',
-            emptyString: 'No wind data',
-            angleConvention: 'meteoCW',
-            speedUnit: 'm/s'
-          }
-        }
-      ]
+      elements: [
+        'u-wind',
+        'v-wind'
+      ],
+      lineWidth: 4,
+      frameRate: 20,
+      particleMultiplier: 0.001,
+      displayValues: false
+      /*
+      displayOptions: {
+        velocityType: 'Wind',
+        position: 'bottomright',
+        emptyString: 'No wind data',
+        angleConvention: 'meteoCW',
+        speedUnit: 'm/s'
+      }
+      */
     }
   },
   {
     name: 'Gust',
     description: 'Max wind speed',
     tags: [
-      'meteo'
+      'weather'
     ],
     iconUrl: 'https://s3.eu-central-1.amazonaws.com/kalisioscope/assets/gust.jpg',
     attribution: 'Forecast data from <a href="http://www.meteofrance.com">Météo-France</a>',
@@ -248,32 +231,31 @@ module.exports = [
         name: 'gust',
         label: 'Variables.WIND_GUST',
         units: [
-          'm/s'
+          'm/s', 'km/h', 'kt'
         ],
         chartjs: {
           backgroundColor: 'rgba(255, 99, 132, 128)',
           borderColor: 'rgb(255, 99, 132)',
           fill: false
+        },
+        chromajs: {
+          scale: 'OrRd'
         }
       }
     ],
     leaflet: {
       type: 'weacast.scalarLayer',
-      arguments: [
-        {
-          elements: [
-            'gust'
-          ],
-          mesh: true
-        }
-      ]
+      elements: [
+        'gust'
+      ],
+      mesh: true
     }
   },
   {
     name: 'Precipitations',
     description: '3h accumulation',
     tags: [
-      'meteo'
+      'weather'
     ],
     iconUrl: 'https://s3.eu-central-1.amazonaws.com/kalisioscope/assets/precipitations.png',
     attribution: 'Forecast data from <a href="http://www.meteofrance.com">Météo-France</a>',
@@ -289,19 +271,10 @@ module.exports = [
           backgroundColor: 'rgba(54, 162, 235, 128)',
           borderColor: 'rgb(54, 162, 235)',
           fill: false
-        }
-      }
-    ],
-    leaflet: {
-      type: 'weacast.scalarLayer',
-      arguments: [
-        {
-          elements: [
-            'precipitations'
-          ],
-          mesh: true,
-          colorMap: 'BuPu',
-          colorClasses: [
+        },
+        chromajs: {
+          scale: 'BuPu',
+          classes: [
             0,
             1,
             2,
@@ -313,7 +286,14 @@ module.exports = [
             300
           ]
         }
-      ]
+      }
+    ],
+    leaflet: {
+      type: 'weacast.scalarLayer',
+      elements: [
+        'precipitations'
+      ],
+      mesh: true
     }
   },
   {
@@ -326,30 +306,23 @@ module.exports = [
     attribution: '',
     type: 'OverlayLayer',
     featureId: 'gid',
+    service: 'vigicrues-sections',
     leaflet: {
       type: 'geoJson',
-      arguments: [
-        'https://s3.eu-central-1.amazonaws.com/kargo/vigicrues/sections',
-        {
-          realtime: true,
-          interval: 900000,
-          popup: {
-            pick: [
-              'NomEntVigiCru'
-            ]
-          }
-        }
-      ]
+      source: '/api/vigicrues-sections',
+      realtime: true,
+      interval: 900000,
+      popup: {
+        pick: [
+          'NomEntVigiCru'
+        ]
+      }
     },
     cesium: {
       type: 'geoJson',
-      arguments: [
-        'https://s3.eu-central-1.amazonaws.com/kargo/vigicrues/sections',
-        {
-          realtime: true,
-          interval: 900000
-        }
-      ]
+      source: '/api/vigicrues-sections',
+      realtime: true,
+      interval: 900000
     }
   },
   {
@@ -363,7 +336,7 @@ module.exports = [
     type: 'OverlayLayer',
     service: 'vigicrues-observations',
     probeService: 'vigicrues-stations',
-    featureId: 'CdStationH',
+    featureId: 'CdStationHydro',
     history: 604800,
     variables: [
       {
@@ -393,35 +366,35 @@ module.exports = [
     ],
     leaflet: {
       type: 'geoJson',
-      arguments: [
-        '/api/vigicrues-observations',
-        {
-          realtime: true,
-          interval: 600000,
-          container: 'markerClusterGroup',
-          'marker-color': '#00a9ce',
-          'icon-color': 'white',
-          'icon-classes': 'fa fa-tint',
-          popup: {
-            pick: [
-              'LbStationH'
-            ]
-          },
-          tooltip: {
-            template: '<% if (properties.H) { %>H = <%= properties.H.toFixed(2) %> m<% } else if (properties.Q) { %></br>Q = <%= properties.Q.toFixed(2) %> m3/h<% } %>'
-          }
-        }
-      ]
+      source: '/api/vigicrues-observations',
+      realtime: true,
+      interval: 900000,
+      container: 'markerClusterGroup',
+      'marker-color': '#00a9ce',
+      'icon-color': 'white',
+      'icon-classes': 'fa fa-tint',
+      popup: {
+        pick: [
+          'LbStationHydro'
+        ]
+      },
+      tooltip: {
+        template: '<% if (properties.H) { %>H = <%= properties.H.toFixed(2) %> m<% }\
+                   if (feature.time && feature.time.H) { %></br><%= new Date(feature.time.H).toLocaleString() %><% }\
+                   if (properties.Q) { %></br>Q = <%= properties.Q.toFixed(2) %> m3/h<% }\
+                   if (feature.time && feature.time.Q) { %></br><%= new Date(feature.time.Q).toLocaleString() %><% } %>'
+      }
     },
     cesium: {
       type: 'geoJson',
-      arguments: [
-        '/api/vigicrues-observations',
-        {
-          realtime: true,
-          interval: 600000
-        }
-      ]
+      source: '/api/vigicrues-observations',
+      realtime: true,
+      interval: 900000,
+      cluster: {
+        pixelRange: 50
+      },
+      'marker-symbol': 'water',
+      'marker-color': '#00a9ce'
     }
   },
   {
@@ -436,37 +409,30 @@ module.exports = [
     featureId: 'irsnId',
     leaflet: {
       type: 'geoJson',
-      arguments: [
-        'https://s3.eu-central-1.amazonaws.com/kargo/teleray.json',
-        {
-          realtime: true,
-          interval: 600000,
-          container: 'markerClusterGroup',
-          popup: {
-            pick: [
-              'name'
-            ]
-          },
-          tooltip: {
-            template: '<% if (properties.value) { %>Dose rate = <%= properties.value.toFixed(2) %> nSv/h<% } %>'
-          }
-        }
-      ]
+      source: 'https://s3.eu-central-1.amazonaws.com/kargo/teleray.json',
+      realtime: true,
+      interval: 600000,
+      container: 'markerClusterGroup',
+      popup: {
+        pick: [
+          'name'
+        ]
+      },
+      tooltip: {
+        template: '<% if (properties.value) { %>Dose = <%= properties.value.toFixed(2) %> nSv/h</br>\
+                   <%= new Date(properties.measureDateFormatted).toLocaleString() %><% } %>'
+      }
     },
     cesium: {
       type: 'geoJson',
-      arguments: [
-        'https://s3.eu-central-1.amazonaws.com/kargo/teleray.json',
-        {
-          realtime: true,
-          interval: 600000,
-          cluster: {
-            pixelRange: 50
-          },
-          'marker-symbol': 'lighthouse',
-          'marker-color': '#180EF1'
-        }
-      ]
+      source: 'https://s3.eu-central-1.amazonaws.com/kargo/teleray.json',
+      realtime: true,
+      interval: 600000,
+      cluster: {
+        pixelRange: 50
+      },
+      'marker-symbol': 'lighthouse',
+      'marker-color': '#180EF1'
     }
   },
   {
@@ -481,40 +447,68 @@ module.exports = [
     probe: 'nuclear-sites',
     leaflet: {
       type: 'geoJson',
-      arguments: [
-        'https://s3.eu-central-1.amazonaws.com/kargo/nuclear-sites.json',
-        {
-          cluster: {},
-          'marker-color': 'orange',
-          'icon-color': 'white',
-          'icon-classes': 'fa fa-star',
-          popup: {
-            pick: [
-              'NAME'
-            ]
-          },
-          tooltip: {
-            property: 'LABEL'
-          }
-        }
-      ]
+      source: 'https://s3.eu-central-1.amazonaws.com/kargo/nuclear-sites.json',
+      cluster: {},
+      'marker-color': 'orange',
+      'icon-color': 'white',
+      'icon-classes': 'fa fa-star',
+      popup: {
+        pick: [
+          'NAME'
+        ]
+      },
+      tooltip: {
+        property: 'LABEL'
+      }
     },
     cesium: {
       type: 'geoJson',
-      arguments: [
-        'https://s3.eu-central-1.amazonaws.com/kargo/nuclear-sites.json',
-        {
-          cluster: {
-            pixelRange: 50
-          },
-          'marker-symbol': 'star',
-          'marker-color': '#180EF1'
-        }
-      ]
+      source: 'https://s3.eu-central-1.amazonaws.com/kargo/nuclear-sites.json',
+      cluster: {
+        pixelRange: 50
+      },
+      'marker-symbol': 'star',
+      'marker-color': '#FFA500'
     }
   },
   {
-    name: 'ADS-B',
+    name: 'Airports',
+    description: 'Major airports',
+    tags: [
+      'business'
+    ],
+    icon: 'local_airport',
+    attribution: '',
+    type: 'OverlayLayer',
+    probe: 'ne_10m_airports',
+    leaflet: {
+      type: 'geoJson',
+      source: 'https://s3.eu-central-1.amazonaws.com/kargo/ne_10m_airports.json',
+      cluster: {},
+      'marker-color': 'blue',
+      'icon-color': 'white',
+      'icon-classes': 'fa fa-plane',
+      popup: {
+        pick: [
+          'NAME'
+        ]
+      },
+      tooltip: {
+        property: 'LABEL'
+      }
+    },
+    cesium: {
+      type: 'geoJson',
+      source: 'https://s3.eu-central-1.amazonaws.com/kargo/ne_10m_airports.json',
+      cluster: {
+        pixelRange: 50
+      },
+      'marker-symbol': 'airfield',
+      'marker-color': '#00A5FF'
+    }
+  },
+  {
+    name: 'Airbus EV ADS-B',
     description: 'Flight positions',
     tags: [
       'business'
@@ -526,108 +520,134 @@ module.exports = [
     featureId: 'icao',
     leaflet: {
       type: 'geoJson',
-      arguments: [
-        'https://s3-eu-west-1.amazonaws.com/gift-backbone-adsb/adsb-airline-one.json',
-        {
-          realtime: true,
-          interval: 5000,
-          'marker-symbol': '/statics/paper-plane.png',
-          'marker-size': 32,
-          'icon-anchor': [
-            16,
-            32
-          ],
-          popup: {
-            pick: [
-              'icao'
-            ]
-          },
-          tooltip: {
-            property: 'callsign'
-          }
-        }
-      ]
+      source: 'https://s3-eu-west-1.amazonaws.com/gift-backbone-adsb/adsb-airline-one.json',
+      realtime: true,
+      interval: 5000,
+      'marker-symbol': '/statics/paper-plane.png',
+      'marker-size': 32,
+      'icon-anchor': [
+        16,
+        32
+      ],
+      popup: {
+        pick: [
+          'icao'
+        ]
+      },
+      tooltip: {
+        property: 'callsign'
+      }
     },
     cesium: {
       type: 'geoJson',
-      arguments: [
-        'https://s3-eu-west-1.amazonaws.com/gift-backbone-adsb/adsb-airline-one.json',
-        {
-          realtime: true,
-          interval: 5000,
-          'marker-symbol': 'airport',
-          'marker-color': '#57D824'
-        }
-      ]
+      source: 'https://s3-eu-west-1.amazonaws.com/gift-backbone-adsb/adsb-airline-one.json',
+      realtime: true,
+      interval: 5000,
+      'marker-symbol': 'airport',
+      'marker-color': '#57D824'
     }
   },
   {
     name: 'Wind speed',
     description: 'Isobaric surface',
     tags: [
-      'meteo'
+      'weather'
     ],
     icon: 'fingerprint',
     attribution: 'ARPEGE © <a href="http://www.meteofrance.com">Météo-France</a>',
     type: 'OverlayLayer',
     leaflet: {
       type: 'tileLayer.wms',
-      arguments: [
-        `${mapproxyUrl}/service?`,
-        {
-          timeDimension: true,
-          version: '1.3.0',
-          format: 'image/png',
-          transparent: true,
-          layers: 'ARPEGE_05_WIND_SPEED__ISOBARIC_SURFACE'
-        }
-      ]
+      source: `${mapproxyUrl}/service?`,
+      timeDimension: {},
+      version: '1.3.0',
+      format: 'image/png',
+      transparent: true,
+      layers: 'ARPEGE_05_WIND_SPEED__ISOBARIC_SURFACE'
     }
   },
   {
     name: 'Total precipitation',
     description: 'Ground or water',
     tags: [
-      'meteo'
+      'weather'
     ],
     icon: 'fingerprint',
     attribution: 'ARPEGE © <a href="http://www.meteofrance.com">Météo-France</a>',
     type: 'OverlayLayer',
     leaflet: {
       type: 'tileLayer.wms',
-      arguments: [
-        `${mapproxyUrl}/service?`,
-        {
-          timeDimension: true,
-          version: '1.3.0',
-          format: 'image/png',
-          transparent: true,
-          layers: 'ARPEGE_05_TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE'
-        }
-      ]
+      source: `${mapproxyUrl}/service?`,
+      timeDimension: {},
+      version: '1.3.0',
+      format: 'image/png',
+      transparent: true,
+      layers: 'ARPEGE_05_TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE'
     }
   },
   {
     name: 'Temperature',
     description: 'Isobaric surface',
     tags: [
-      'meteo'
+      'weather'
     ],
     icon: 'fingerprint',
     attribution: 'ARPEGE © <a href="http://www.meteofrance.com">Météo-France</a>',
     type: 'OverlayLayer',
     leaflet: {
       type: 'tileLayer.wms',
-      arguments: [
-        `${mapproxyUrl}/service?`,
-        {
-          timeDimension: true,
-          version: '1.3.0',
-          format: 'image/png',
-          transparent: true,
-          layers: 'ARPEGE_05_TEMPERATURE__ISOBARIC_SURFACE'
+      source: `${mapproxyUrl}/service?`,
+      timeDimension: {},
+      version: '1.3.0',
+      format: 'image/png',
+      transparent: true,
+      layers: 'ARPEGE_05_TEMPERATURE__ISOBARIC_SURFACE'
+    }
+  },
+  {
+    name: 'Radar des précipitations',
+    description: 'Cumuls de lames d\'eau estimés à partir de données radar (en mm/h) ',
+    tags: [
+      'weather'
+    ],
+    icon: 'beach_access',
+    attribution: 'SYCAMORE © <a href="http://www.meteofrance.com">Météo-France</a>',
+    type: 'OverlayLayer',
+    variables: [
+      {
+        name: 'rainFall',
+        label: 'Radar des précipitations',
+        units: [
+          'mm/h'
+        ],
+        chromajs: {
+          scale: [ 
+            "#ffffff00", 
+            "indigo", 
+            "mediumblue", 
+            "dodgerblue", 
+            "skyblue",
+            "forestgreen",
+            "mediumseagreen", 
+            "turquoise",
+            "springgreen",
+            "yellow", 
+            "palegoldenrod", 
+            "peachpuff", 
+            "orange",
+            "saddlebrown",
+            "red"
+          ],
+          domain: [0, 500],
+          classes: [0, 0.2, 0.6, 1.2, 2.1, 3.6, 6.5, 11.5, 20.5, 36.5, 64.8, 115.3, 205, 364.6, 500]
         }
-      ]
+      }
+    ],
+    leaflet: {
+      type: 'geotiff',
+      interval: 5 * 60 * 1000,
+      // FIXME the year/month/day should be templated too
+      url: 'https://thredds.irsn.kalisio.xyz/thredds/fileServer/mf-radar/2018/12/12/RD_CPO_NAT100.SYCOMORE.V_EUR_COMPO.LAME_DEAU__20181212<%= hh %><%= mm %>00.tif'
     }
   }
 ]

@@ -87,10 +87,7 @@ module.exports = {
     rightBreakpoint: 9999
   }, 
   appBar: {
-    title: 'Akt\'n\'Map',
-    speech: {
-      language: 'en'
-    }
+    title: 'Akt\'n\'Map'
   },
   sideNav: {
     banner: 'aktnmap-banner.png',
@@ -125,6 +122,5 @@ module.exports = {
     actions: [ ... ]
     */
   },
-  map: require('./map'),
   routes: require('./routes')
 }
