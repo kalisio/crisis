@@ -14,7 +14,7 @@ For more information please visit our websites:
 * [Kalisio Company](https://kalisio.com/)
 * [Akt'n'Map Product](https://aktnmap.com/)
 
-This application is based on the [Kalisio Development Kit](https://kalisio.gitbooks.io/kalisio/).
+This application is based on the [Kalisio Development Kit](https://kalisio.github.io/kdk/).
 
 ### License
 
