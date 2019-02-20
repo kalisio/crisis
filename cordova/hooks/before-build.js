@@ -6,7 +6,9 @@ module.exports = function(context) {
 	fs.copyFileSync(path.join(__dirname, '..', 'build-extras.gradle'),
 	path.join(__dirname, '..', 'platforms', 'android', 'build-extras.gradle'))
 
-	// Required to manage this issue https://github.com/zo0r/react-native-push-notification/issues/748
+	// Required to manage these issues
+	// https://github.com/zo0r/react-native-push-notification/issues/748
+	// https://forum.matomo.org/t/dexarchivebuilderexception-when-building-android-application-with-piwik-sdk/27518
 	var Q = context.requireCordovaModule('q')
     var defer = new Q.defer()
 	fs.readFile(path.join(__dirname, '..', 'platforms', 'android', 'build.gradle'), (error, data) => {
