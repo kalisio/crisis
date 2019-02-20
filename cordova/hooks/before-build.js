@@ -17,6 +17,7 @@ module.exports = function(context) {
 		}
 		console.log('Updating build file')
 		var buildFile = data.toString().replace(/jcenter\(\)/g, 'maven { url "https://maven.google.com" }\n\tjcenter()')
+		buildFile = data.toString().replace(/VERSION_1_6/g, 'VERSION_1_8')
 		fs.writeFileSync(path.join(__dirname, '..', 'platforms', 'android', 'build.gradle'), buildFile)
 		defer.resolve()
 	})
