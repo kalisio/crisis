@@ -41,7 +41,7 @@ test.page`${pages.getUrl('login')}`
   await members.addMember(test, data.users[1].name, pages.Roles.member)
   await members.addMember(test, data.users[2].name, pages.Roles.manager)
   await members.addMember(test, data.users[3].name, pages.Roles.member)
-  await pages.checkNoClientError(test) 
+  await pages.checkNoClientError(test)
 })
 
 test('Create groups', async test => {
@@ -51,7 +51,7 @@ test('Create groups', async test => {
   await groups.clickTabBar(test, groups.getTabBarEntry())
   for (let i in data.groups) await groups.createGroup(test, data.groups[i])
   await groups.checkGroupsCount(test, data.groups.length)
-  await pages.checkNoClientError(test) 
+  await pages.checkNoClientError(test)
 })
 
 test('Edit group', async test => {
@@ -60,7 +60,7 @@ test('Edit group', async test => {
   await groups.clickToolbar(test, members.getToolbarEntry())
   await groups.clickTabBar(test, groups.getTabBarEntry())
   await groups.editGroup(test, data.groups[0].name, 'A new description')
-  await pages.checkNoClientError(test) 
+  await pages.checkNoClientError(test)
 })
 
 test('Add members to groups', async test => {
@@ -80,7 +80,7 @@ test('Check group count', async test => {
   await members.clickToolbar(test, members.getToolbarEntry())
   await groups.clickTabBar(test, groups.getTabBarEntry())
   await groups.checkGroupsCount(test, 2)
-  await pages.checkNoClientError(test) 
+  await pages.checkNoClientError(test)
 })
 
 test('Remove member from group', async test => {
@@ -91,7 +91,7 @@ test('Remove member from group', async test => {
   await members.leaveGroup(test, data.users[2].name, data.groups[0].name)
   await members.leaveGroup(test, data.users[2].name, data.groups[1].name)
   await members.leaveGroup(test, data.users[3].name, data.groups[1].name)
-  await pages.checkNoClientError(test) 
+  await pages.checkNoClientError(test)
 })
 
 test('Delete group', async test => {
@@ -100,10 +100,10 @@ test('Delete group', async test => {
   await groups.clickToolbar(test, groups.getToolbarEntry())
   await groups.clickTabBar(test, groups.getTabBarEntry())
   await groups.deleteGroups(test, data.groups)
-  await pages.checkNoClientError(test) 
+  await pages.checkNoClientError(test)
 })
 
 test('Clear context', async test => {
   await users.unregisterUsers(test, data.users)
-  await pages.checkNoClientError(test) 
+  await pages.checkNoClientError(test)
 })

@@ -30,12 +30,12 @@ export default {
   ],
   computed: {
     customerBlockColor () {
-      if (! this.isUserVerified) return 'red'
+      if (!this.isUserVerified) return 'red'
       if (this.customer) return 'grey'
       return 'orange'
     },
     customerBlockText () {
-      if (! this.isUserVerified) return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER')
+      if (!this.isUserVerified) return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER')
       if (_.isNil(this.customer)) return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_NO_PAYMENT')
       if (_.isNil(this.customer.card)) return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT', {email: this.customer.email})
       return this.$t('OrganisationBilling.CUSTOMER_BLOCK_TEXT_CARD_PAYMENT', {brand: this.customer.card.brand, last4: this.customer.card.last4})
@@ -92,7 +92,7 @@ export default {
     this.refreshPlans()
     Events.$on('capabilities-api-changed', this.refreshPlans)
     // Load underlying billing perspective
-     this.loadObject().then(perspective => {
+    this.loadObject().then(perspective => {
       this.currentPlan = perspective.billing.subscription.plan
       this.customer = perspective.billing.customer
     })

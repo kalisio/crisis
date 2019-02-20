@@ -53,13 +53,13 @@ export default class Organisations extends ApplicationLayout {
     return true
   }
   async updateOrganisationCustomer (test, orgName, customer) {
-    await this.selectOrganisationSettingsTab (test, orgName, '#billing')
+    await this.selectOrganisationSettingsTab(test, orgName, '#billing')
     await test
       .click(VueSelector('organisation-billing k-block q-btn'))
       .wait(250)
     await test
       .click(this.customerEditor.find('#email-field'))
-      .click(Selector('.q-popover .q-item').nth(customer.index))      
+      .click(Selector('.q-popover .q-item').nth(customer.index))
       .typeText(this.customerEditor.find('#description-field'), customer.description, { replace: true })
       .typeText(this.customerEditor.find('#vatNumber-field'), customer.vatNumber, { replace: true })
     if (customer.card) {
@@ -73,17 +73,17 @@ export default class Organisations extends ApplicationLayout {
         .wait(2000)
     }
     await test
-      .click(this.customerEditor.find("#update-button"))
+      .click(this.customerEditor.find('#update-button'))
       .wait(5000)
   }
   async clearOrganisationCustomerCard (test, orgName) {
-    await this.selectOrganisationSettingsTab (test, orgName, '#billing')
+    await this.selectOrganisationSettingsTab(test, orgName, '#billing')
     await test
       .click(VueSelector('organisation-billing k-block q-btn'))
       .wait(250)
       .click(this.customerEditor.find('#clear-card-button'))
       .wait(250)
-      .click(this.customerEditor.find("#update-button"))
+      .click(this.customerEditor.find('#update-button'))
       .wait(5000)
   }
   async canSelectOrganisationPlan (test, plan) {
@@ -91,14 +91,14 @@ export default class Organisations extends ApplicationLayout {
     return !planAction.props.disable
   }
   async selectOrganisationPlan (test, orgName, plan) {
-    await this.selectOrganisationSettingsTab (test, orgName, '#billing')
+    await this.selectOrganisationSettingsTab(test, orgName, '#billing')
     await test
       .click(VueSelector('organisation-billing k-plan-chooser').find('#' + plan + '-action'))
       .click(Selector('.modal-buttons button').nth(0))
       .wait(5000)
   }
   async deleteOrganisation (test, orgName) {
-    await this.selectOrganisationSettingsTab (test, orgName, '#danger-zone')
+    await this.selectOrganisationSettingsTab(test, orgName, '#danger-zone')
     await test
       .click(VueSelector('k-organisation-dz k-block q-btn'))
       .wait(250)

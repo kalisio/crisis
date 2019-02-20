@@ -36,7 +36,7 @@ export default {
     setupContext (context) {
       // Uploading can require a long time
       if (context) {
-        this.$api.getService('storage', context).timeout = 60*60*1000 // 1h should be sufficient since we also have size limits
+        this.$api.getService('storage', context).timeout = 60 * 60 * 1000 // 1h should be sufficient since we also have size limits
       }
     }
   },
