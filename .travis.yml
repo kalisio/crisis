@@ -91,11 +91,12 @@ jobs:
 
   - stage: ANDROID
     language: android
+    jdk: oraclejdk8
     android:
       components:
       - tools
       - platform-tools
-      - tools
+      - tools # Include again to work around travis not using the latest, see: https://github.com/travis-ci/travis-ci/issues/6193
       - build-tools-26.0.2
       - android-26
       - extra
