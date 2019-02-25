@@ -63,6 +63,25 @@
     passport "^0.4.0"
     uuid "^3.1.0"
 
+"@feathersjs/authentication@git+https://github.com/kalisio/authentication.git":
+  version "2.1.7"
+  uid b730e0624b112e9be372dea168702dc740037396
+  resolved "git+https://github.com/kalisio/authentication.git#b730e0624b112e9be372dea168702dc740037396"
+  dependencies:
+    "@feathersjs/commons" "^2.0.0"
+    "@feathersjs/errors" "^3.0.0"
+    "@feathersjs/socket-commons" "^3.1.2"
+    debug "^3.1.0"
+    jsonwebtoken "^8.0.0"
+    lodash.clone "^4.5.0"
+    lodash.merge "^4.6.0"
+    lodash.omit "^4.5.0"
+    lodash.pick "^4.4.0"
+    long-timeout "^0.1.1"
+    ms "^2.0.0"
+    passport "^0.4.0"
+    uuid "^3.1.0"
+
 "@feathersjs/authentication@https://github.com/kalisio/authentication.git":
   version "2.1.7"
   resolved "https://github.com/kalisio/authentication.git#b730e0624b112e9be372dea168702dc740037396"
@@ -238,9 +257,10 @@
     vue-stripe-elements-plus "^0.2.8"
     winston "^2.3.1"
 
-"@kalisio/kdk-core@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@kalisio/kdk-core/-/kdk-core-1.0.6.tgz#6806087f282ca74c7e8e01022d59ae7c3bf7f342"
+"@kalisio/kdk-core@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@kalisio/kdk-core/-/kdk-core-1.0.7.tgz#25f5085414c8947705be2219a8d156fa9316c91d"
+  integrity sha512-mHz5ZPTska8Rb+Clry+eoIJdrn/pLvbTDIeA/nxAjj0E+CCz/d7xxNQO/E0CeQ8CZpBww4RA97+unJ2YO5Yhxg==
   dependencies:
     "@feathersjs/authentication" "https://github.com/kalisio/authentication.git"
     "@feathersjs/authentication-jwt" "^2.0.1"
@@ -352,9 +372,10 @@
     winston "^2.3.1"
     winston-daily-rotate-file "^1.7.2"
 
-"@kalisio/kdk-event@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@kalisio/kdk-event/-/kdk-event-1.0.3.tgz#0e51ca366548c356e8c9e6dc5dd64863d5072ec9"
+"@kalisio/kdk-event@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@kalisio/kdk-event/-/kdk-event-1.0.4.tgz#eb02966b6e1dc7612731e2656166e91e583bbb50"
+  integrity sha512-ItW42zisrwrBQ3xsmxApZK2J7S2LOfQWpgZU0edEiLblWuKg3lXT7Mtw33MJ8J1QNELqADvNpMAUJKp/mR2BdQ==
   dependencies:
     "@feathersjs/authentication" "^2.1.7"
     "@feathersjs/errors" "^3.3.0"
@@ -371,9 +392,10 @@
     vue-avatar "^2.1.1"
     winston "2.3.1"
 
-"@kalisio/kdk-map@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@kalisio/kdk-map/-/kdk-map-1.0.3.tgz#0a8b401c0a13201a4cbe4c5edad6b6a09bdc3c9a"
+"@kalisio/kdk-map@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@kalisio/kdk-map/-/kdk-map-1.0.4.tgz#29b809b69f7641f5ecd6358c7dc7d3b444b22d8c"
+  integrity sha512-R4W3uvvVTpucdxIkew0bUzW55DdbeNCvEc9zD8lCvGXRdiirBNGqmpCUBSXczmE0ZTPPblnqWftU1iAZz6HmmA==
   dependencies:
     "@feathersjs/authentication" "^2.1.7"
     "@feathersjs/errors" "^3.3.0"
