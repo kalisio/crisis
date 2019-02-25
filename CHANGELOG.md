@@ -1,5 +1,17 @@
 # Changelog
 
+## [v0.6.8](https://github.com/kalisio/aktnmap/tree/v0.6.8) (2019-25-02)
+
+**Implemented enhancements:**
+
+- Participants should have permissions to add/remove a media [\#50](https://github.com/kalisio/aktnmap/issues/50)
+ 
+**Fixed bugs:**
+
+- On mobile devices, the LocationMap exceeds from the screen (kMap#47)[https://github.com/kalisio/kMap/issues/47]
+
+## [v0.6.7](https://github.com/kalisio/aktnmap/tree/v0.6.7) (2019-14-01)
+
 ## [v0.6.6](https://github.com/kalisio/aktnmap/tree/v0.6.6) (2018-12-03)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.5...v0.6.6)
