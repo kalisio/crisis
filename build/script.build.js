@@ -25,6 +25,10 @@ function copyModule(module) {
   // Need to copy as well entry points such as kCore/client and kCore/common
   shell.cp(path.resolve(__dirname, `../node_modules/${module}/client*.js`), path.resolve(__dirname, `../${module}`))
   shell.cp(path.resolve(__dirname, `../node_modules/${module}/common.js`), path.resolve(__dirname, `../${module}`))
+  shell.ls(path.resolve(__dirname, `../${module}/*.js`)).forEach(function (file) {
+    console.log(file)
+  })
+
   console.log(` Copied ${module} module files to app folder.\n`)
 }
 
