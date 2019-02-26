@@ -23,6 +23,9 @@ export default {
       if (this.$can('service', 'events', context._id)) {
         actions.toolbar.push({ name: 'events', icon: 'whatshot', label: this.$t('Context.EVENTS'), route: { name: 'events-activity', params: { operation: 'current-events', contextId: context._id } } })
       }
+      //if (this.$can('service', 'events', context._id)) {
+        actions.toolbar.push({ name: 'catalog', icon: 'map', label: this.$t('Context.CATALOG'), route: { name: 'catalog-activity', params: { contextId: context._id } } })
+      //}
       if (this.$can('service', 'members', context._id)) {
         actions.toolbar.push({ name: 'members', icon: 'group', label: this.$t('Context.MEMBERS'), route: { name: 'members-activity', params: { contextId: context._id } } })
       }

@@ -122,5 +122,54 @@ module.exports = {
     actions: [ ... ]
     */
   },
+  mapPanel: {
+    categories: [
+      { name: 'BusinessLayers', label: 'LayersPanel.BUSINESS_LAYERS', icon: 'layers',
+        options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } } },
+      { name: 'MeteoLayers', label: 'LayersPanel.METEO_LAYERS', icon: 'wb_sunny',
+        options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } },
+      { name: 'MeasureLayers', label: 'LayersPanel.MEASURE_LAYERS', icon: 'fa-map-pin',
+        options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } } },
+      { name: 'OverlayLayers', label: 'LayersPanel.OVERLAY_LAYERS', icon: 'fa-map-marker',
+        options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } },
+      { name: 'BaseLayers', label: 'LayersPanel.BASE_LAYERS', icon: 'fa-map',
+        options: { exclusive: true, filter: { type: 'BaseLayer' } } }
+    ]
+  },
+  map: {
+    viewer: {
+      minZoom: 3,
+      center: [47, 3],
+      zoom: 6,
+      maxBounds: [ [-90, -180], [90, 180] ],
+      maxBoundsViscosity: 0.25,
+      timeDimension: true,
+    },
+    // Default GeoJSON layer style for polygons/lines
+    featureStyle: {
+      opacity: 1,
+      radius: 6,
+      color: 'red',
+      fillOpacity: 0.5,
+      fillColor: 'green'
+    },
+    // Default GeoJSON layer style for points
+    pointStyle: {
+      type: 'circleMarker',
+      options: {
+        opacity: 1,
+        color: 'green',
+        fillOpacity: 0.5,
+        fillColor: 'light-green'
+      }
+    },
+    // Default GeoJSON popup will display all properties
+    popup: {},
+    cluster: {},
+    fileLayers: {
+      fileSizeLimit : 1024 * 1024,
+      formats: [ '.geojson', '.kml', '.gpx' ]
+    }
+  },
   routes: require('./routes')
 }

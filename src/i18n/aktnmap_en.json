@@ -18,8 +18,9 @@
     "LOGOUT": "Logout"
   },
   "Context": {
-    "EVENTS": "Events & templates",
-    "MEMBERS": "Members & groups",
+    "EVENTS": "Events & Templates",
+    "MEMBERS": "Members & Groups",
+    "CATALOG": "Geographic Context",
     "SEARCH": "Search",
     "REFRESH": "Refresh",
     "SETTINGS": "Settings"
