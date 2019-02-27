@@ -3,7 +3,7 @@ if [[ $TRAVIS_COMMIT_MESSAGE == *"[skip deploy]"* ]]
 then
 	echo "Skipping deploy stage"
 else
-	source travis.env.sh
+	source .travis.env.sh
 
 	eval "$(ssh-agent -s)"
 	chmod 600 ssh.pem
@@ -25,6 +25,6 @@ else
 	ssh ${SSH_USER}@${SSH_REMOTE} "cd ${APP}; chmod u+x ./remove-app.sh; chmod u+x ./deploy-app.sh"
 
 	# Deploy the stack
-	ssh ${SSH_USER}@${SSH_REMOTE} "cd ${APP}; sudo ./remove-app.sh; sudo k-worker-foreach \"sudo docker image prune -a -f\"; sudo ./deploy-app.sh"
+	ssh ${SSH_USER}@${SSH_REMOTE} "cd ${APP}; sudo ./remove-app.sh; sudo k-swarm-prune; sudo ./deploy-app.sh"
 fi
 
