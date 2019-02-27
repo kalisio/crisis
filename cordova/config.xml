@@ -32,7 +32,7 @@
   <platform name="android">
     <hook src="hooks/before-build.js" type="before_build"/>
     <allow-intent href="market:*"/>
-    <resource-file src="google-services.json" target="google-services.json"/>
+    <resource-file src="google-services.json" target="app/google-services.json"/>
     <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png"/>
     <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png"/>
     <icon density="hdpi" src="res/icons/android/icon-72-hdpi.png"/>
