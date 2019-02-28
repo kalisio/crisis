@@ -50,7 +50,7 @@ else
 	cat config.ios.xml | xmlstarlet ed -i '/widget' -t attr -n 'ios-CFBundleVersion' -v $TRAVIS_BUILD_NUMBER > cordova/config.xml
 	
 	# Build the app
-	npm run cordova:build:ios
+	npm run cordova:build:ios > /dev/null
 	if [ $? -ne 0 ]; then
 		exit 1
 	fi
@@ -63,7 +63,7 @@ else
 	travis_fold start "deploy"
 
 	ALTOOL="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Support/altool"
-	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/kApp.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD"
+	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/$APP.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD"
 	if [ $? -ne 0 ]; then
 		exit 1
 	fi
