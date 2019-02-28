@@ -115,7 +115,7 @@ jobs:
     - brew install awscli
     - brew install xmlstarlet
     - npm install -g cordova
-    - npm install -g ios-deploy
+    - npm install -g ios-deploy --unsafe-perm=true
     before_script:
     - export -f travis_fold
     script:

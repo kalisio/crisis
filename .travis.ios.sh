@@ -18,7 +18,7 @@ else
 	travis_fold start "clone-private-files"
 	echo -e "machine github.com\n  login $GITHUB_TOKEN" > ~/.netrc
 	git clone -b $APP https://github.com/kalisio/kdk-workspaces workspace
-	travis_fold start "clone-private-files"
+	travis_fold end "clone-private-files"
 
 	#
 	# Privision the certificates
