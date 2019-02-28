@@ -30,7 +30,7 @@
   <preference name="loadUrlTimeoutValue" value="30000"/>
   <preference name="SplashScreen" value="screen"/>
   <platform name="android">
-    <hook src="hooks/before-build.js" type="before_build"/>
+    <hook src="hooks/android-before-build.js" type="before_build"/>
     <allow-intent href="market:*"/>
     <resource-file src="google-services.json" target="app/google-services.json"/>
     <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png"/>
@@ -53,6 +53,8 @@
     <splash density="port-xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>
   </platform>
   <platform name="ios">
+    <hook src="hooks/ios-update-pods.sh" type="before_platform_add" />
+    <hook src="hooks/ios-run-pods.sh" type="after_platform_add" />   
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
     <icon height="29" src="res/icons/ios/icon-small.png" width="29"/>
@@ -111,10 +113,10 @@
     <splash height="1280" src="res/screens/wp8/SplashScreenImage.screen-WXGA.jpg" width="768"/>
   </platform>
   <plugin name="cordova-plugin-android-permissions" spec="~1.0.0"/>
-  <plugin name="cordova-plugin-device" spec="~1.1.6"/>
+  <plugin name="cordova-plugin-device" spec="~2.0.2"/>
   <plugin name="cordova-plugin-geolocation" spec="~4.0.1"/>
   <plugin name="cordova-plugin-sim" spec="~1.3.3"/>
   <plugin name="cordova-plugin-whitelist" spec="~1.3.2"/>
-  <plugin name="cordova-plugin-inappbrowser" spec="~2.0.2"/>
+  <plugin name="cordova-plugin-inappbrowser" spec="~3.0.0"/>
   <plugin name="phonegap-plugin-push" spec="~2.1.2"/>
 </widget>
