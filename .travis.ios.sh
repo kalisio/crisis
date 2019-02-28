@@ -63,6 +63,7 @@ else
 	travis_fold start "deploy"
 
 	ALTOOL="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Support/altool"
+	ls ./cordova/platforms/ios/build/device/
 	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/$APP.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD"
 	if [ $? -ne 0 ]; then
 		exit 1
