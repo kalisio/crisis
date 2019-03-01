@@ -16,7 +16,7 @@ else
 	# Clone private repo containing the secret files
 	echo -e "machine github.com\n  login $GITHUB_TOKEN" > ~/.netrc
 	git clone -b $APP https://github.com/kalisio/kdk-workspaces workspace
-	
+
   	# FIXME  temp
 	cp workspace/$FLAVOR/config.xml cordova/config.xml
 
@@ -53,11 +53,11 @@ else
 	cat config.ios.xml | xmlstarlet ed -i '/widget' -t attr -n 'ios-CFBundleVersion' -v $TRAVIS_BUILD_NUMBER > cordova/config.xml
 	
 	# Build the app
-	npm run cordova:build:ios > logs
+	npm run cordova:build:ios > logs.txt
 	if [ $? -ne 0 ]; then
 		exit 1
 	fi
-  aws s3 cp logs s3://kapp-builds/$TRAVIS_BUILD_NUMBER/ios-logs
+  aws s3 cp logs.txt s3://kapp-builds/$TRAVIS_BUILD_NUMBER/ios-logs.txt
 	travis_fold end "build"
   
 	#
