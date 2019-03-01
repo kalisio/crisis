@@ -53,11 +53,13 @@ else
 	cat config.ios.xml | xmlstarlet ed -i '/widget' -t attr -n 'ios-CFBundleVersion' -v $TRAVIS_BUILD_NUMBER > cordova/config.xml
 	
 	# Build the app
-	npm run cordova:build:ios > logs.txt
+	npm run cordova:build:ios > log.txt
+	ls log.txt
+	aws s3 cp log.txt s3://kapp-builds/$TRAVIS_BUILD_NUMBER/log.txt
 	if [ $? -ne 0 ]; then
 		exit 1
 	fi
-  aws s3 cp logs.txt s3://kapp-builds/$TRAVIS_BUILD_NUMBER/ios-logs.txt
+  
 	travis_fold end "build"
   
 	#
