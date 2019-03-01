@@ -16,6 +16,9 @@ else
 	# Clone private repo containing the secret files
 	echo -e "machine github.com\n  login $GITHUB_TOKEN" > ~/.netrc
 	git clone -b $APP https://github.com/kalisio/kdk-workspaces workspace
+	
+  	# FIXME  temp
+	cp workspace/$FLAVOR/config.xml cordova/config.xml
 
 	# Create a custom keychain
 	security create-keychain -p travis ios-build.keychain

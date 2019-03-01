@@ -11,6 +11,9 @@ else
 		# Retrieve the secret files
 	echo -e "machine github.com\n  login $GITHUB_TOKEN" > ~/.netrc
 	git clone -b $APP https://github.com/kalisio/kdk-workspaces workspace
+	
+	# FIXME  temp
+	cp workspace/$FLAVOR/config.xml cordova/config.xml
 
 	# Install the required secret files requied to sign the app
 	ls workspace/$FLAVOR/android/
