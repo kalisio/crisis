@@ -53,9 +53,8 @@ else
 	cat config.ios.xml | xmlstarlet ed -i '/widget' -t attr -n 'ios-CFBundleVersion' -v $TRAVIS_BUILD_NUMBER > cordova/config.xml
 	
 	# Build the app
-	npm run cordova:build:ios > log.txt
-	ls log.txt
-	aws s3 cp log.txt s3://kapp-builds/$TRAVIS_BUILD_NUMBER/log.txt
+	npm run cordova:build:ios > build.ios.log
+	aws s3 cp build.ios.log s3://$APP-builds/$TRAVIS_BUILD_NUMBER/build.ios.log
 	if [ $? -ne 0 ]; then
 		exit 1
 	fi
@@ -69,7 +68,7 @@ else
 
 	ALTOOL="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Support/altool"
 	ls ./cordova/platforms/ios/build/device/
-	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/$APP.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD"
+	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/AktnMap.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD"
 	if [ $? -ne 0 ]; then
 		exit 1
 	fi
@@ -77,7 +76,7 @@ else
 	#
 	# Backup the ios build to S3
 	#
-	aws s3 sync cordova/platforms/ios/build/device s3://kapp-builds/$TRAVIS_BUILD_NUMBER/ios > /dev/null
+	aws s3 sync cordova/platforms/ios/build/device s3://$APP-builds/$TRAVIS_BUILD_NUMBER/ios > /dev/null
 	if [ $? -eq 1 ]; then
 		exit 1
 	fi
