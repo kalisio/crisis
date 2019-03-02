@@ -31,6 +31,8 @@ else
 	security import workspace/$FLAVOR/ios/AppleWWDRCA.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
 	security import workspace/$FLAVOR/ios/ios_distribution.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
 	security import workspace/$FLAVOR/ios/ios_distribution.p12 -k ~/Library/Keychains/ios-build.keychain -P $APPLE_P12_PASSWORD -T /usr/bin/codesign
+	security import workspace/$FLAVOR/ios/aps_distribution.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
+	security import workspace/$FLAVOR/ios/aps_distribution.p12 -k ~/Library/Keychains/ios-build.keychain -P $APPLE_P12_PASSWORD -T /usr/bin/codesign
 	# see: https://docs.travis-ci.com/user/common-build-problems/#mac-macos-sierra-1012-code-signing-errors
   security set-key-partition-list -S apple-tool:,apple: -s -k travis ios-build.keychain
 
