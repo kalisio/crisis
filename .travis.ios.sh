@@ -75,12 +75,12 @@ else
 	travis_fold start "deploy"
 
 	ALTOOL="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Support/altool"
-	ls ./cordova/platforms/ios/build/device/
 	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/AktnMap.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log
-	aws s3 cp ios.deploy.log s3://$APP-builds/$TRAVIS_BUILD_NUMBER/ios.deploy.log
 	if [ $? -ne 0 ]; then
+	  aws s3 cp ios.deploy.log s3://$APP-builds/$TRAVIS_BUILD_NUMBER/ios.deploy.log
 		exit 1
 	fi
+	aws s3 cp ios.deploy.log s3://$APP-builds/$TRAVIS_BUILD_NUMBER/ios.deploy.log
 
 	travis_fold end "deploy"
 fi
