@@ -31,8 +31,8 @@ else
 	security import workspace/$FLAVOR/ios/AppleWWDRCA.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
 	security import workspace/$FLAVOR/ios/ios_distribution.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
 	security import workspace/$FLAVOR/ios/ios_distribution.p12 -k ~/Library/Keychains/ios-build.keychain -P $APPLE_P12_PASSWORD -T /usr/bin/codesign
-	security import workspace/$FLAVOR/ios/aps_distribution.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
-	security import workspace/$FLAVOR/ios/aps_distribution.p12 -k ~/Library/Keychains/ios-build.keychain -P $APPLE_P12_PASSWORD -T /usr/bin/codesign
+	security import workspace/$FLAVOR/ios/apns_distribution.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
+	security import workspace/$FLAVOR/ios/apns_distribution.p12 -k ~/Library/Keychains/ios-build.keychain -P $APPLE_P12_PASSWORD -T /usr/bin/codesign
 	# see: https://docs.travis-ci.com/user/common-build-problems/#mac-macos-sierra-1012-code-signing-errors
   security set-key-partition-list -S apple-tool:,apple: -s -k travis ios-build.keychain
 
@@ -55,7 +55,7 @@ else
 	cat config.ios.xml | xmlstarlet ed -i '/widget' -t attr -n 'ios-CFBundleVersion' -v $TRAVIS_BUILD_NUMBER > cordova/config.xml
 	
 	# Build the app
-	npm run cordova:build:ios > ios.build.log
+	npm run cordova:build:ios > ios.build.log 2>&1
 	aws s3 cp ios.build.log s3://$APP-builds/$TRAVIS_BUILD_NUMBER/ios.build.log
 	if [ $? -ne 0 ]; then
 		exit 1
@@ -75,7 +75,7 @@ else
 	travis_fold start "deploy"
 
 	ALTOOL="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Support/altool"
-	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/AktnMap.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log
+	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/AktnMap.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log 2>&1
 	if [ $? -ne 0 ]; then
 	  aws s3 cp ios.deploy.log s3://$APP-builds/$TRAVIS_BUILD_NUMBER/ios.deploy.log
 		exit 1
