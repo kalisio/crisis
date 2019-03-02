@@ -55,12 +55,18 @@ else
 	cat config.ios.xml | xmlstarlet ed -i '/widget' -t attr -n 'ios-CFBundleVersion' -v $TRAVIS_BUILD_NUMBER > cordova/config.xml
 	
 	# Build the app
-	npm run cordova:build:ios > build.ios.log
-	aws s3 cp build.ios.log s3://$APP-builds/$TRAVIS_BUILD_NUMBER/build.ios.log
+	npm run cordova:build:ios > ios.build.log
+	aws s3 cp ios.build.log s3://$APP-builds/$TRAVIS_BUILD_NUMBER/ios.build.log
 	if [ $? -ne 0 ]; then
 		exit 1
 	fi
   
+	# Backup the ios build to S3
+	aws s3 sync cordova/platforms/ios/build/device s3://$APP-builds/$TRAVIS_BUILD_NUMBER/ios > /dev/null
+	if [ $? -eq 1 ]; then
+		exit 1
+	fi
+
 	travis_fold end "build"
   
 	#
@@ -70,16 +76,9 @@ else
 
 	ALTOOL="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Support/altool"
 	ls ./cordova/platforms/ios/build/device/
-	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/AktnMap.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD"
+	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/AktnMap.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log
+	aws s3 cp ios.deploy.log s3://$APP-builds/$TRAVIS_BUILD_NUMBER/ios.deploy.log
 	if [ $? -ne 0 ]; then
-		exit 1
-	fi
-
-	#
-	# Backup the ios build to S3
-	#
-	aws s3 sync cordova/platforms/ios/build/device s3://$APP-builds/$TRAVIS_BUILD_NUMBER/ios > /dev/null
-	if [ $? -eq 1 ]; then
 		exit 1
 	fi
 
