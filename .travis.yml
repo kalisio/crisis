@@ -102,6 +102,8 @@ jobs:
     - npm install -g cordova
     - npm install -g cross-env
     - gem install fastlane
+    before_script:
+    - export -f travis_fold    
     script:
     - bash .travis.android.sh
 
