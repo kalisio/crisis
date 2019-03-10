@@ -79,7 +79,7 @@ else
 	travis_fold start "deploy"
 
 	ALTOOL="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Support/altool"
-	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/AktnMap.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log 2>&1
+	"$ALTOOL" --upload-app -f "./cordova/platforms/ios/build/device/$APP.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log 2>&1
 	# Capture the deploy result
 	DEPLOY_CODE=$?
 	# Copy the log whatever the result

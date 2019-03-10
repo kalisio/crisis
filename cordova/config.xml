@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.kalisio.aktnmap" version="0.7.0">
-  <name>AktnMap</name>
+  <name>aktnmap</name>
   <description>Akt'n'Map application</description>
-  <icon src="model/icon.png"/>
+  <icon src="res/icons/icon.png"/>
   <author email="support@kalisio.com" href="http://www.kalisio.com">Kalisio</author>
   <content src="index.html"/>
   <access origin="*"/>
@@ -87,30 +87,6 @@
     <splash height="1536" src="res/screens/ios/screen-ipad-landscape-2x.png" width="2048"/>
     <splash height="2048" src="res/screens/ios/screen-ipad-landscape-ipadpro.png" width="2732"/>
     <splash height="2732" src="res/screens/ios/screen-ipad-portrait-ipadpro.png" width="2048"/>
-  </platform>
-  <platform name="windows">
-    <icon height="150" src="res/icons/windows/Square150x150Logo.scale-100.png" width="150"/>
-    <icon height="360" src="res/icons/windows/Square150x150Logo.scale-240.png" width="360"/>
-    <icon height="30" src="res/icons/windows/Square30x30Logo.scale-100.png" width="30"/>
-    <icon height="" src="res/icons/windows/Square310x310Logo.scale-100.png" width=""/>
-    <icon height="106" src="res/icons/windows/Square44x44Logo.scale-240.png" width="106"/>
-    <icon height="70" src="res/icons/windows/Square70x70Logo.scale-100.png" width="70"/>
-    <icon height="170" src="res/icons/windows/Square71x71Logo.scale-240.png" width="170"/>
-    <icon height="50" src="res/icons/windows/StoreLogo.scale-100.png" width="50"/>
-    <icon height="120" src="res/icons/windows/StoreLogo.scale-240.png" width="120"/>
-    <icon height="150" src="res/icons/windows/Wide310x150Logo.scale-100.png" width="310"/>
-    <icon height="360" src="res/icons/windows/Wide310x150Logo.scale-240.png" width="744"/>
-    <splash height="300" src="res/screens/windows/SplashScreen.scale-100.png" width="620"/>
-    <splash height="1920" src="res/screens/windows/SplashScreen.scale-240.png" width="1152"/>
-    <splash height="1920" src="res/screens/windows/SplashScreenPhone.scale-240.png" width="1152"/>
-  </platform>
-  <platform name="wp8">
-    <icon height="99" src="res/icons/wp8/ApplicationIcon.png" width="99"/>
-    <icon height="159" src="res/icons/wp8/Background.png" width="159"/>
-    <splash height="1280" src="res/screens/wp8/SplashScreenImage.jpg" width="768"/>
-    <splash height="1280" src="res/screens/wp8/SplashScreenImage.screen-720p.jpg" width="720"/>
-    <splash height="800" src="res/screens/wp8/SplashScreenImage.screen-WVGA.jpg" width="480"/>
-    <splash height="1280" src="res/screens/wp8/SplashScreenImage.screen-WXGA.jpg" width="768"/>
   </platform>
   <plugin name="cordova-plugin-android-permissions" spec="~1.0.0"/>
   <plugin name="cordova-plugin-device" spec="~2.0.2"/>
