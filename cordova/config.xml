@@ -57,36 +57,36 @@
     <hook src="hooks/ios-run-pods.sh" type="after_platform_add" />   
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
-    <icon height="29" src="res/icons/ios/icon-small.jpg" width="29"/>
-    <icon height="58" src="res/icons/ios/icon-small-2x.jpg" width="58"/>
-    <icon height="87" src="res/icons/ios/icon-small-3x.jpg" width="87"/>
-    <icon height="40" src="res/icons/ios/icon-40.jpg" width="40"/>
-    <icon height="80" src="res/icons/ios/icon-40-2x.jpg" width="80"/>
-    <icon height="120" src="res/icons/ios/icon-40-3x.jpg" width="120"/>
-    <icon height="50" src="res/icons/ios/icon-50.jpg" width="50"/>
-    <icon height="100" src="res/icons/ios/icon-50-2x.jpg" width="100"/>
-    <icon height="57" src="res/icons/ios/icon-57.jpg" width="57"/>
-    <icon height="114" src="res/icons/ios/icon-57-2x.jpg" width="114"/>
-    <icon height="60" src="res/icons/ios/icon-60.jpg" width="60"/>
-    <icon height="120" src="res/icons/ios/icon-60-2x.jpg" width="120"/>
-    <icon height="180" src="res/icons/ios/icon-60-3x.jpg" width="180"/>
-    <icon height="72" src="res/icons/ios/icon-72.jpg" width="72"/>
-    <icon height="144" src="res/icons/ios/icon-72-2x.jpg" width="144"/>
-    <icon height="76" src="res/icons/ios/icon-76.jpg" width="76"/>
-    <icon height="152" src="res/icons/ios/icon-76-2x.jpg" width="152"/>
-    <icon height="167" src="res/icons/ios/icon-83.5-2x.jpg" width="167"/>
-    <splash height="1136" src="res/screens/ios/screen-iphone-568h-2x.jpg" width="640"/>
-    <splash height="480" src="res/screens/ios/screen-iphone-portrait.jpg" width="320"/>
-    <splash height="960" src="res/screens/ios/screen-iphone-portrait-2x.jpg" width="640"/>
-    <splash height="1334" src="res/screens/ios/screen-iphone-portrait-667h.jpg" width="750"/>
-    <splash height="2208" src="res/screens/ios/screen-iphone-portrait-736h.jpg" width="1242"/>
-    <splash height="1242" src="res/screens/ios/screen-iphone-landscape-736h.jpg" width="2208"/>
-    <splash height="1024" src="res/screens/ios/screen-ipad-portrait.jpg" width="768"/>
-    <splash height="2048" src="res/screens/ios/screen-ipad-portrait-2x.jpg" width="1536"/>
-    <splash height="768" src="res/screens/ios/screen-ipad-landscape.jpg" width="1024"/>
-    <splash height="1536" src="res/screens/ios/screen-ipad-landscape-2x.jpg" width="2048"/>
-    <splash height="2048" src="res/screens/ios/screen-ipad-landscape-ipadpro.jpg" width="2732"/>
-    <splash height="2732" src="res/screens/ios/screen-ipad-portrait-ipadpro.jpg" width="2048"/>
+    <icon height="29" src="res/icons/ios/icon-small.png" width="29"/>
+    <icon height="58" src="res/icons/ios/icon-small-2x.png" width="58"/>
+    <icon height="87" src="res/icons/ios/icon-small-3x.png" width="87"/>
+    <icon height="40" src="res/icons/ios/icon-40.png" width="40"/>
+    <icon height="80" src="res/icons/ios/icon-40-2x.png" width="80"/>
+    <icon height="120" src="res/icons/ios/icon-40-3x.png" width="120"/>
+    <icon height="50" src="res/icons/ios/icon-50.png" width="50"/>
+    <icon height="100" src="res/icons/ios/icon-50-2x.png" width="100"/>
+    <icon height="57" src="res/icons/ios/icon-57.png" width="57"/>
+    <icon height="114" src="res/icons/ios/icon-57-2x.png" width="114"/>
+    <icon height="60" src="res/icons/ios/icon-60.png" width="60"/>
+    <icon height="120" src="res/icons/ios/icon-60-2x.png" width="120"/>
+    <icon height="180" src="res/icons/ios/icon-60-3x.png" width="180"/>
+    <icon height="72" src="res/icons/ios/icon-72.png" width="72"/>
+    <icon height="144" src="res/icons/ios/icon-72-2x.png" width="144"/>
+    <icon height="76" src="res/icons/ios/icon-76.png" width="76"/>
+    <icon height="152" src="res/icons/ios/icon-76-2x.png" width="152"/>
+    <icon height="167" src="res/icons/ios/icon-83.5-2x.png" width="167"/>
+    <splash height="1136" src="res/screens/ios/screen-iphone-568h-2x.png" width="640"/>
+    <splash height="480" src="res/screens/ios/screen-iphone-portrait.png" width="320"/>
+    <splash height="960" src="res/screens/ios/screen-iphone-portrait-2x.png" width="640"/>
+    <splash height="1334" src="res/screens/ios/screen-iphone-portrait-667h.png" width="750"/>
+    <splash height="2208" src="res/screens/ios/screen-iphone-portrait-736h.png" width="1242"/>
+    <splash height="1242" src="res/screens/ios/screen-iphone-landscape-736h.png" width="2208"/>
+    <splash height="1024" src="res/screens/ios/screen-ipad-portrait.png" width="768"/>
+    <splash height="2048" src="res/screens/ios/screen-ipad-portrait-2x.png" width="1536"/>
+    <splash height="768" src="res/screens/ios/screen-ipad-landscape.png" width="1024"/>
+    <splash height="1536" src="res/screens/ios/screen-ipad-landscape-2x.png" width="2048"/>
+    <splash height="2048" src="res/screens/ios/screen-ipad-landscape-ipadpro.png" width="2732"/>
+    <splash height="2732" src="res/screens/ios/screen-ipad-portrait-ipadpro.png" width="2048"/>
   </platform>
   <platform name="windows">
     <icon height="150" src="res/icons/windows/Square150x150Logo.scale-100.png" width="150"/>
