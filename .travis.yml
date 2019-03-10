@@ -82,6 +82,7 @@ jobs:
     - bash .travis.deploy.sh
 
   - stage: ANDROID
+    os: linux
     language: android
     sudo: false
     jdk: oraclejdk8
@@ -108,9 +109,9 @@ jobs:
     - bash .travis.android.sh
 
   - stage: IOS
+    os: osx
     language: objective-c
     osx_image: xcode10.1
-    sudo: required
     before_install:
     - nvm install 8
     install:
