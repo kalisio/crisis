@@ -17,6 +17,7 @@ jobs:
   include:
 
   - stage: BUILD
+    os: linux  
     language: node_js
     node_js:
     - '8'
@@ -37,6 +38,7 @@ jobs:
         all_branches: true
 
   - stage: TEST
+    os: linux  
     language: node_js
     node_js:
     - '8'
@@ -72,6 +74,7 @@ jobs:
           all_branches: true
 
   - stage: DEPLOY
+    os: linux  
     language: node_js
     node_js:
     - '8'
