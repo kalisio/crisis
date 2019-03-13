@@ -20,7 +20,7 @@
     "url": "https://github.com/kalisio/aktnmap/issues"
   },
   "scripts": {
-    "version": "cordova-set-version cordova/config.xml",
+    "version": "cordova-set-version cordova/config.xml.tpl",
     "release:patch": "cd api && npm run release:patch && cd .. && npm version --no-git-tag-version --force patch",
     "release:minor": "cd api && npm run release:minor && cd .. && npm version --no-git-tag-version --force minor",
     "release:major": "cd api && npm run release:major && cd .. && npm version --no-git-tag-version --force major",
