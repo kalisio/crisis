@@ -17,13 +17,9 @@ else
 	echo -e "machine github.com\n  login $GITHUB_TOKEN" > ~/.netrc
 	git clone -b $APP https://github.com/kalisio/kdk-workspaces workspace
 	
-	# FIXME  temp
-	cp workspace/$FLAVOR/config.xml cordova/config.xml
-
 	# Install the required secret files requied to sign the app
-	ls workspace/$FLAVOR/android/
-	cp workspace/$FLAVOR/android/*.json cordova/
-	cp workspace/$FLAVOR/android/kalisio.keystore cordova/
+	cp workspace/common/android/*.json cordova/
+	cp workspace/common/android/kalisio.keystore cordova/
 	cp workspace/$FLAVOR/android/Appfile cordova/fastlane/
 	
 	travis_fold end "privision"
@@ -32,9 +28,6 @@ else
 	# Build the app
 	#
 	travis_fold start "build"
-
-	# Increment the build number
-	export ORG_GRADLE_PROJECT_cdvVersionCode=$TRAVIS_BUILD_NUMBER
 
 	# Build and deploy the mobile app	
 	npm run cordova:build:android > android.build.log 2>&1

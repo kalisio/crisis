@@ -17,9 +17,6 @@ else
 	echo -e "machine github.com\n  login $GITHUB_TOKEN" > ~/.netrc
 	git clone -b $APP https://github.com/kalisio/kdk-workspaces workspace
 
-  	# FIXME  temp
-	cp workspace/$FLAVOR/config.xml cordova/config.xml
-
 	# Create a custom keychain
 	security create-keychain -p travis ios-build.keychain
 	security default-keychain -s ios-build.keychain
@@ -28,11 +25,11 @@ else
 
 	# Add certificates to keychain and allow codesign to access them
 	# see: https://github.com/travis-ci/travis-ci/issues/6791#issuecomment-261215038
-	security import workspace/$FLAVOR/ios/AppleWWDRCA.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
-	security import workspace/$FLAVOR/ios/ios_distribution.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
-	security import workspace/$FLAVOR/ios/ios_distribution.p12 -k ~/Library/Keychains/ios-build.keychain -P $APPLE_P12_PASSWORD -T /usr/bin/codesign
-	security import workspace/$FLAVOR/ios/apns_distribution.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
-	security import workspace/$FLAVOR/ios/apns_distribution.p12 -k ~/Library/Keychains/ios-build.keychain -P $APPLE_P12_PASSWORD -T /usr/bin/codesign
+	security import workspace/common/ios/AppleWWDRCA.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
+	security import workspace/common/ios/ios_distribution.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
+	security import workspace/common/ios/ios_distribution.p12 -k ~/Library/Keychains/ios-build.keychain -P $APPLE_P12_PASSWORD -T /usr/bin/codesign
+	security import workspace/common/ios/apns_distribution.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
+	security import workspace/common/ios/apns_distribution.p12 -k ~/Library/Keychains/ios-build.keychain -P $APPLE_P12_PASSWORD -T /usr/bin/codesign
 	# see: https://docs.travis-ci.com/user/common-build-problems/#mac-macos-sierra-1012-code-signing-errors
   security set-key-partition-list -S apple-tool:,apple: -s -k travis ios-build.keychain
 
@@ -47,12 +44,6 @@ else
 	# Build the app
 	#
 	travis_fold start "build"
-
-  # Increment the build number
-	# Warning: the config.xml must not contain any default namespace
-	# see: https://stackoverflow.com/questions/9025492/xmlstarlet-does-not-select-anything
-	cp cordova/config.xml config.ios.xml
-	cat config.ios.xml | xmlstarlet ed -i '/widget' -t attr -n 'ios-CFBundleVersion' -v $TRAVIS_BUILD_NUMBER > cordova/config.xml
 	
 	# Build the app
 	npm run cordova:build:ios > ios.build.log 2>&1

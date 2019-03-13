@@ -1,5 +1,6 @@
 #!/bin/bash
 export APP=aktnmap
+export AUTHOR=kalisio
 export PORT=8081
 export VERSION=$(node -p -e "require('./package.json').version")
 
@@ -13,6 +14,7 @@ then
 	export VERSION_TAG=$VERSION-dev
 	export REPLICAS=1
 	export NODE_APP_NB_INSTANCES=1
+	export PACKAGE_ID=com.$AUTHOR.$APP.dev
 fi
 if [[ $TRAVIS_BRANCH == "test" ]]
 then
@@ -24,6 +26,7 @@ then
 	export VERSION_TAG=$VERSION-test
 	export REPLICAS=2
 	export NODE_APP_NB_INSTANCES=1
+	export PACKAGE_ID=com.$AUTHOR.$APP.test
 fi
 if [[ -n "$TRAVIS_TAG" ]]
 then
@@ -35,6 +38,7 @@ then
 	export VERSION_TAG=$VERSION
 	export REPLICAS=2
 	export NODE_APP_NB_INSTANCES=1
+	export PACKAGE_ID=com.$AUTHOR.$APP
 fi
 
 export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
