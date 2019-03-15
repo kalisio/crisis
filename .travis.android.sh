@@ -11,18 +11,15 @@ else
 	travis_fold start "provision"
 
 	# Retrieve the built Web app
-	aws s3 sync s3://$APP-builds/$TRAVIS_BUILD_NUMBER/dist cordova/www > /dev/null
+	aws s3 sync s3://$BUILDS_BUCKET/$BUILD_NUMBER/www cordova/www > /dev/null
 
-		# Retrieve the secret files
-	echo -e "machine github.com\n  login $GITHUB_TOKEN" > ~/.netrc
-	git clone -b $APP https://github.com/kalisio/kdk-workspaces workspace
-	
 	# Install the required secret files requied to sign the app
 	cp workspace/common/android/*.json cordova/
-	cp workspace/common/android/kalisio.keystore cordova/
+	cp workspace/$FLAVOR/android/*.json cordova/
+	cp workspace/common/android/$GOOGLE_KEY_STORE cordova/	
 	cp workspace/$FLAVOR/android/Appfile cordova/fastlane/
 	
-	travis_fold end "privision"
+	travis_fold end "provision"
 
 	#
 	# Build the app
@@ -34,20 +31,20 @@ else
 	# Capture the build result
 	BUILD_CODE=$?
 	# Copy the log whatever the result
-	aws s3 cp android.build.log s3://$APP-builds/$TRAVIS_BUILD_NUMBER/android.build.log
+	aws s3 cp android.build.log s3://$BUILDS_BUCKET/$BUILD_NUMBER/android.build.log
 	if [ $BUILD_CODE -ne 0 ]; then
 		exit 1
 	fi
 
 	# Backup the android build to S3
-	aws s3 sync cordova/platforms/android/app/build/outputs/apk s3://$APP-builds/$TRAVIS_BUILD_NUMBER/android > /dev/null
+	aws s3 sync cordova/platforms/android/app/build/outputs/apk s3://$BUILDS_BUCKET/$BUILD_NUMBER/android > /dev/null
 	if [ $? -eq 1 ]; then
 		exit 1
 	fi
 
   travis_fold end "build"
 
-  #
+	#
   # Deploy the app
 	#
 	travis_fold start "deploy"
@@ -58,7 +55,7 @@ else
 	DEPLOY_CODE=$?
 	cd ..
 	# Copy the log whatever the result
-	aws s3 cp cordova/android.deploy.log s3://$APP-builds/$TRAVIS_BUILD_NUMBER/android.deploy.log
+	aws s3 cp cordova/android.deploy.log s3://$BUILDS_BUCKET/$BUILD_NUMBER/android.deploy.log
 	if [ $DEPLOY_CODE -ne 0 ]; then
 		exit 1
 	fi

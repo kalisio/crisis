@@ -29,5 +29,9 @@ fi
 # explanation on the container name
 docker cp ${APP}_app_1:/opt/${APP}/dist dist
 
-
+# Backup the artifact to S3
+aws s3 sync dist s3://$BUILDS_BUCKET/$BUILD_NUMBER/www > /dev/null
+if [ $? -eq 1 ]; then
+	exit 1
+fi
 

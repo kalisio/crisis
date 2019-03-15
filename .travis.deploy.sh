@@ -5,6 +5,11 @@ then
 else
 	source .travis.env.sh
 
+	#
+	# Deploy the app
+	#
+	travis_fold start "deploy"
+
 	# Retrieve the ssh pem
 	echo -e "machine github.com\n  login $GITHUB_TOKEN" > ~/.netrc
 	git clone -b $APP https://github.com/kalisio/kdk-workspaces workspace
@@ -32,5 +37,7 @@ else
 
 	# Deploy the stack
 	ssh ${SSH_USER}@${SSH_REMOTE} "cd ${APP}; sudo ./remove-app.sh; sudo k-swarm-prune; sudo ./deploy-app.sh"
+
+	travis_fold end "deploy"
 fi
 
