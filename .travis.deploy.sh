@@ -11,8 +11,6 @@ else
 	travis_fold start "deploy"
 
 	# Retrieve the ssh pem
-	echo -e "machine github.com\n  login $GITHUB_TOKEN" > ~/.netrc
-	git clone -b $APP https://github.com/kalisio/kdk-workspaces workspace
 	cp workspace/$FLAVOR/ssh.pem ssh.pem
 
 	# Enable ssh pem

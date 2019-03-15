@@ -16,7 +16,7 @@ else
 	# Install the required secret files requied to sign the app
 	cp workspace/common/android/*.json cordova/
 	cp workspace/$FLAVOR/android/*.json cordova/
-	cp workspace/common/android/$GOOGLE_KEY_STORE cordova/	
+	cp workspace/common/android/$GOOGLE_KEYSTORE cordova/	
 	cp workspace/$FLAVOR/android/Appfile cordova/fastlane/
 	
 	travis_fold end "provision"
