@@ -17,7 +17,6 @@ then
 else 
 	# Build the image and run the container
 	docker-compose -f deploy/app.yml -f deploy/app.build.yml up -d
-	echo $?
 	if [ $? -eq 0 ]; then
 		exit 1
 	fi
