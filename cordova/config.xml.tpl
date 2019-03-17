@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="$PACKAGE_ID" version="0.7.0" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER">
-  <name>$APP</name>
+  <name>$TITLE</name>
   <description>Akt'n'Map application</description>
   <icon src="res/icons/icon.png"/>
   <author email="support@kalisio.com" href="http://www.kalisio.com">Kalisio</author>
