@@ -32,7 +32,7 @@ fi
 # Copy the artifact from the container to the host
 # See https://docs.docker.com/compose/reference/envvars/#compose_project_name
 # explanation on the container name
-docker cp ${APP}_app_1:/opt/${APP}/dist dist
+docker cp ${APP}_app_1:/opt/$APP/dist dist
 
 # Backup the artifact to S3
 aws s3 sync dist s3://$BUILDS_BUCKET/$BUILD_NUMBER/www > /dev/null
