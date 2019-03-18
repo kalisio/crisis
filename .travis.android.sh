@@ -31,7 +31,8 @@ else
 	then
 		TITLE=$TITLE-$FLAVOR
 	fi
-	
+	echo Building $TITLE
+
 	# Build and deploy the mobile app	
 	npm run cordova:build:android > android.build.log 2>&1
 	# Capture the build result
@@ -57,7 +58,7 @@ else
 
   # Deploy the APK to GooglePlay
 	cd cordova
-	fastlane android $NODE_APP_INSTANCE > android.deploy.log 2>&1
+	fastlane android $FLAVOR > android.deploy.log 2>&1
 	DEPLOY_CODE=$?
 	cd ..
 	# Copy the log whatever the result
