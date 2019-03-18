@@ -8,7 +8,7 @@ let domain
 let stripeKey
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
-  domain = 'https://app.dev.aktnmap.xyz'
+  domain = 'https://aktnmap.dev.kalisio.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://app.test.aktnmap.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
