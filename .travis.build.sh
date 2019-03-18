@@ -26,7 +26,7 @@ else
 	echo check /opt/$APP/dist
 	docker exec -ti ${APP}_app_1 ls /opt/$APP/dist
 	echo $?
-	if [ $? -eq 1 ]; then
+	if [ $? -ne 0 ]; then
 	  exit 1
   fi
 

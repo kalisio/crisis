@@ -47,6 +47,12 @@ else
 	#
 	travis_fold start "build"
 
+	# Overwrite the title in dev/test flavor
+	if [[ $TRAVIS_BRANCH != "prod" ]]
+	then
+		TITLE=$TITLE-$FLAVOR
+	fi
+	
 	# Build the app
 	npm run cordova:build:ios > ios.build.log 2>&1
 	# Capture the build result

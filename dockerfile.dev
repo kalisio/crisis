@@ -1,7 +1,8 @@
 FROM  node:8
 
-MAINTAINER Kalisio <contact@kalisio.xyz>
+LABEL maintainer="Kalisio <contact@kalisio.xyz>"
 
+ARG APP
 ARG BUILD_NUMBER
 ENV BUILD_NUMBER=$BUILD_NUMBER
 ARG STRIPE_PUBLIC_KEY
