@@ -23,7 +23,9 @@ else
 	# Build the image and run the container
 	docker-compose -f deploy/app.yml -f deploy/app.build.yml up -d
   # Check if the build has succeeded
+	echo check /opt/$APP/dist
 	docker exec -ti ${APP}_app_1 ls /opt/$APP/dist
+	echo $?
 	if [ $? -eq 1 ]; then
 	  exit 1
   fi
