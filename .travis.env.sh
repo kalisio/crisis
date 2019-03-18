@@ -2,17 +2,14 @@
 if [[ $TRAVIS_BRANCH == "master" ]]
 then
 	export FLAVOR=dev
-	export PACKAGE_ID=com.${AUTHOR:-kalisio}.$APP.dev
 fi
 if [[ $TRAVIS_BRANCH == "test" ]]
 then
 	export FLAVOR=test
-	export PACKAGE_ID=com.${AUTHOR:-kalisio}.$APP.test
 fi
 if [[ -n "$TRAVIS_TAG" ]]
 then
 	export FLAVOR=prod
-	export PACKAGE_ID=com.${AUTHOR:-kalisio}.$APP
 fi
 
 # Exports addtionnal variables

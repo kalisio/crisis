@@ -52,7 +52,7 @@ else
 	then
 		TITLE=$TITLE-$FLAVOR
 	fi
-	
+
 	# Build the app
 	npm run cordova:build:ios > ios.build.log 2>&1
 	# Capture the build result
