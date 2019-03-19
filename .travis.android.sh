@@ -56,6 +56,10 @@ else
 	#
 	travis_fold start "deploy"
 
+	# Generate the Appfile
+	echo "json_key_file(\"google-play.json\")" > cordova/fastlane/Appfile
+	echo "package_name(\"$PACKAGE_ID\")" >> cordova/fastlane/Appfile
+
   # Deploy the APK to GooglePlay
 	cd cordova
 	fastlane android $FLAVOR > android.deploy.log 2>&1
