@@ -13,6 +13,7 @@ services:
       - SNS_ACCESS_KEY
       - SNS_SECRET_ACCESS_KEY
       - SNS_ANDROID_ARN
+      - SNS_IOS_ARN
       - S3_ACCESS_KEY
       - S3_SECRET_ACCESS_KEY
       - S3_BUCKET
