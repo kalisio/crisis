@@ -46,7 +46,7 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   // For benchmarking
   apiLimiter = null
   limiter = null
-  domain = 'https://app.dev.aktnmap.xyz'
+  domain = 'https://aktnmap.dev.kalisio.xyz'
   weacastApi = 'https://weacast.dev.kalisio.xyz'
   // For SNS topic name generation
   topicName = (object) => `aktnmap-dev-${object._id.toString()}`
