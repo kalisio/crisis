@@ -139,6 +139,7 @@ module.exports = {
   map: {
     viewer: {
       minZoom: 3,
+      maxZoom: 18,
       center: [47, 3],
       zoom: 6,
       maxBounds: [ [-90, -180], [90, 180] ],
@@ -157,10 +158,11 @@ module.exports = {
     pointStyle: {
       type: 'circleMarker',
       options: {
-        opacity: 1,
-        color: 'green',
-        fillOpacity: 0.5,
-        fillColor: 'light-green'
+        'radius': 6,
+        'stroke': 'red',
+        'stroke-opacity': 1,
+        'fill-opacity': 0.5,
+        'fill-color': 'green'
       }
     },
     // Default GeoJSON popup will display all properties
