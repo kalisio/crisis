@@ -3,7 +3,7 @@ import _ from 'lodash'
 import logger from 'winston'
 import kCore, { permissions } from '@kalisio/kdk-core'
 import kTeam from '@kalisio/kdk-team'
-import kMap, { createCatalogService, createFeatureService } from '@kalisio/kdk-map'
+import kMap, { createCatalogService } from '@kalisio/kdk-map'
 import kNotify from '@kalisio/kdk-notify'
 import kBilling from '@kalisio/kdk-billing'
 import kEvent, { hooks as eventHooks } from '@kalisio/kdk-event'
@@ -119,34 +119,19 @@ module.exports = async function () {
     }
   }
 
-  // Helper to register service and permissions for a layer
-  function createFeatureServiceForLayer(options) {
-    createFeatureService.call(app, options)
-    // Register permission for it
-    permissions.defineAbilities.registerHook((subject, can, cannot) => {
-      can('service', options.collection)
-      can('all', options.collection)
-    })
-  }
-
   let catalogService = app.getService('catalog')
-  let defaultLayers = app.get('catalog') ? app.get('catalog').layers || [] : []
-  const layers = await catalogService.find({ paginate: false })
+  const catalog = app.get('catalog')
+
+  let defaultLayers = catalog ? catalog.layers || [] : []
+  const layers = await catalogService.find({ query: { type: 'layer' }, paginate: false })
   for (let i = 0; i < defaultLayers.length; i++) {
     const defaultLayer = defaultLayers[i]
     let createdLayer = _.find(layers, { name: defaultLayer.name })
     if (!createdLayer) {
       logger.info('Adding default layer (name = ' + defaultLayer.name + ')')
       await catalogService.create(defaultLayer)
+    } else {
+      logger.info('Reusing default layer (name = ' + defaultLayer.name + ')')
     }
-    // Check if service(s) are associated to this layer
-    if (defaultLayer.service) createFeatureServiceForLayer({
-      collection: defaultLayer.service,
-      featureId: defaultLayer.featureId,
-      history: defaultLayer.history
-    })
-    if (defaultLayer.probeService) createFeatureServiceForLayer({
-      collection: defaultLayer.probeService
-    })
   }
 }
