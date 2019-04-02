@@ -150,6 +150,7 @@
     "cordova": "^8.0.0",
     "cordova-set-version": "^6.0.3",
     "css-loader": "^0.28.0",
+    "envsub": "^3.0.9",
     "es6-promise": "^4.1.1",
     "eslint": "^4.4.1",
     "eslint-friendly-formatter": "^3.0.0",
