@@ -83,7 +83,7 @@ jobs:
     - npm install -g cordova@8.1.2
     - npm install -g envsub    
     - npm install -g cross-env
-    - gem install fastlane
+    - gem install fastlane -v '~> 2.119.0'
     before_script:
     - export -f travis_fold    
     script:
@@ -97,7 +97,7 @@ jobs:
     - nvm install 8
     install:
     - brew install awscli
-    - npm install -g cordova@8.1.2
+    - npm install -g cordova
     - npm install -g envsub    
     - npm install -g ios-deploy --unsafe-perm=true
     - npm install -g cross-env
