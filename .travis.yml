@@ -80,7 +80,7 @@ jobs:
     - yes | sdkmanager "platforms;android-27"
     install:
     - pip install --user awscli
-    - npm install -g cordova
+    - npm install -g cordova@8.1.2
     - npm install -g envsub    
     - npm install -g cross-env
     - gem install fastlane
@@ -97,7 +97,7 @@ jobs:
     - nvm install 8
     install:
     - brew install awscli
-    - npm install -g cordova
+    - npm install -g cordova@8.1.2
     - npm install -g envsub    
     - npm install -g ios-deploy --unsafe-perm=true
     - npm install -g cross-env
