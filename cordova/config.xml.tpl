@@ -94,6 +94,8 @@
   <plugin name="cordova-plugin-sim" spec="~1.3.3"/>
   <plugin name="cordova-plugin-whitelist" spec="~1.3.2"/>
   <plugin name="cordova-plugin-inappbrowser" spec="~3.0.0"/>
+  <plugin name="cordova-plugin-file" spec="~6.0.0"/>
+  <plugin name="cordova-plugin-file-opener2" spec="~2.2.0"/>
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID" /> 
   </plugin>
