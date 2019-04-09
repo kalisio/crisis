@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="$PACKAGE_ID" version="0.7.0" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER">
+<widget id="$PACKAGE_ID" version="0.7.0" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER" xmlns:android="http://schemas.android.com/apk/res/android">
   <name>$TITLE</name>
   <description>Akt'n'Map application</description>
   <icon src="res/icons/icon.png"/>
@@ -51,6 +51,12 @@
     <splash density="port-xhdpi" src="res/screens/android/screen-xhdpi-portrait.png"/>
     <splash density="port-xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png"/>
     <splash density="port-xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>
+    <!-- Camera permissions whenever required -->
+    <!--config-file target="AndroidManifest.xml" parent="/*" mode="merge">
+      <uses-permission android:name="android.permission.CAMERA" />
+      <uses-feature android:name="android.hardware.camera" />
+      <uses-feature android:name="android.hardware.camera.autofocus" />
+    </config-file-->
   </platform>
   <platform name="ios">
     <hook src="hooks/ios-update-pods.sh" type="before_platform_add" />
@@ -87,6 +93,9 @@
     <splash height="1536" src="res/screens/ios/screen-ipad-landscape-2x.png" width="2048"/>
     <splash height="2048" src="res/screens/ios/screen-ipad-landscape-ipadpro.png" width="2732"/>
     <splash height="2732" src="res/screens/ios/screen-ipad-portrait-ipadpro.png" width="2048"/>
+    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Need to access your position to build meaningful events</string>
+    </edit-config>
   </platform>
   <plugin name="cordova-plugin-android-permissions" spec="~1.0.0"/>
   <plugin name="cordova-plugin-device" spec="~2.0.2"/>
