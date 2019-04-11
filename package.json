@@ -54,7 +54,8 @@
     "test:client": "cross-env NODE_ENV=production testcafe chrome:headless test/*.test.js -f Basic --app \"npm run prod\" --app-init-delay 10000 -S -s screenshots",
     "test": "npm-run-all --parallel test:**",
     "clean-databases": "node ./tools/clean-databases",
-    "clean-sns": "node ./tools/clean-sns"
+    "clean-sns": "node ./tools/clean-sns",
+    "rec": "node ./tutorials/record.js"
   },
   "standard": {
     "parser": "babel-eslint",
@@ -181,7 +182,7 @@
     "standard": "^10.0.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
-    "testcafe": "^0.19.2",
+    "testcafe": "^1.0.1",
     "testcafe-vue-selectors": "^3.0.0",
     "uglifyjs-webpack-plugin": "^1.2.3",
     "url-loader": "^0.5.7",
