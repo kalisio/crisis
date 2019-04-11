@@ -147,7 +147,7 @@ module.exports = {
       successRedirect: domain + '/',
       failureRedirect: domain + '/#/login' +
         '?error_message=An error occured while authenticating with Google, check you correctly authorized the application and have a valid public email in your profile',
-      scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
+      scope: ['profile', 'email']
     },
     // Required for OAuth2 to work correctly
     cookie: {

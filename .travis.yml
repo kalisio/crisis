@@ -83,7 +83,7 @@ jobs:
     - npm install -g cordova@8.1.2
     - npm install -g envsub    
     - npm install -g cross-env
-    - gem install fastlane
+    - gem install fastlane -v '~> 2.119.0'
     before_script:
     - export -f travis_fold    
     script:
