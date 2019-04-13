@@ -19,22 +19,12 @@ export default class ApplicationLayout {
     this.idSelector = Selector((id) => { return document.getElementById(id) })
   }
   async isSideNavVisible () {
-    if (this.sideNav.child.visible){
-      try { await this.sideNav.getVue() } catch (error) { return false }
-      let left = await this.sideNav.getBoundingClientRectProperty('left')
-      // quasar actually hides the sideNav by translating it outside the viewport,
-      // so that the visible flag is always true
-      return left >= 0
-      
-    } else {
-      return false
-    }    
-    /*
-    try { await this.sideNav.getVue() } catch (error) { return false }
+    const exists = await this.sideNav.exists
+    if (!exists) return false
     let left = await this.sideNav.getBoundingClientRectProperty('left')
     // quasar actually hides the sideNav by translating it outside the viewport,
     // so that the visible flag is always true
-    return left >= 0*/
+    return left >= 0
   }
   async openSideNav (test) {
     let isSideNavVisible = await this.isSideNavVisible()
