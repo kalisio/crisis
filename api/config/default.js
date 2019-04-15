@@ -168,9 +168,10 @@ module.exports = {
     },
     bronze: {
       members: 10,
-      groups: 1,
+      // Setup some default quotas in dev so that we can perform testing more easily
+      groups: (process.env.NODE_ENV === 'development' ? 5 : 1),
       events: -1,
-      'event-templates': 1
+      'event-templates': (process.env.NODE_ENV === 'development' ? 5 : 1)
     },
     silver: {
       members: 25,
