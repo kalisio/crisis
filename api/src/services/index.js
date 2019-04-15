@@ -1,7 +1,7 @@
 import path from 'path'
 import _ from 'lodash'
 import logger from 'winston'
-import kCore, { permissions } from '@kalisio/kdk-core'
+import kCore from '@kalisio/kdk-core'
 import kTeam from '@kalisio/kdk-team'
 import kMap, { createCatalogService } from '@kalisio/kdk-map'
 import kNotify from '@kalisio/kdk-notify'
