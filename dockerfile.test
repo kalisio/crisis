@@ -35,6 +35,12 @@ RUN npm run build
 WORKDIR /opt/$APP
 
 RUN yarn install
+RUN yarn link @kalisio/kdk-core
+RUN yarn link @kalisio/kdk-team
+RUN yarn link @kalisio/kdk-notify
+RUN yarn link @kalisio/kdk-map
+RUN yarn link @kalisio/kdk-event
+RUN yarn link @kalisio/kdk-billing
 RUN npm run build
 
 EXPOSE 8081
