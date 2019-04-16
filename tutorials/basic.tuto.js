@@ -18,32 +18,32 @@ fixture`Basic`// declare the fixture
 const app = new pages.ApplicationLayout()
 const auth = new pages.Authentication()
 const org = new pages.Organisations()
-const subtitle =  new Subtitle()
+const subtitle = new Subtitle()
 
 test('Login as default user', async test => {
-    await test.setTestSpeed(0.3)
+  await test.setTestSpeed(0.3)
 
-    subtitle.initStart()
-    subtitle.startRecord("Authentification")
-    await auth.logInAndCloseSignupAlert(test, { email: 'kalisio@kalisio.xyz', password: 'Pass;word1' })
-    subtitle.stopRecord()
+  subtitle.initStart()
+  subtitle.startRecord('Authentification')
+  await auth.logInAndCloseSignupAlert(test, { email: 'kalisio@kalisio.xyz', password: 'Pass;word1' })
+  subtitle.stopRecord()
 
-    subtitle.startRecord("Select Orga")
-    await app.openSideNav(test)
-    await org.selectOrganisation(test, 'test')
-    subtitle.stopRecord()
+  subtitle.startRecord('Select Orga')
+  await app.openSideNav(test)
+  await org.selectOrganisation(test, 'test')
+  subtitle.stopRecord()
 
-    subtitle.startRecord("Click member")
-    await app.clickToolbar(test, '#members')
-    subtitle.stopRecord()
-    
-    subtitle.startRecord("Click group")
-    await app.clickTabBar(test, '#groups')
-    subtitle.stopRecord()
-    
-    subtitle.startRecord("create group")
-    await app.clickFab(test, '#create-group')
-    subtitle.stopRecord()
+  subtitle.startRecord('Click member')
+  await app.clickToolbar(test, '#members')
+  subtitle.stopRecord()
 
-    subtitle.exportLogs('Basic');
+  subtitle.startRecord('Click group')
+  await app.clickTabBar(test, '#groups')
+  subtitle.stopRecord()
+
+  subtitle.startRecord('create group')
+  await app.clickFab(test, '#create-group')
+  subtitle.stopRecord()
+
+  subtitle.exportLogs('Basic')
 })

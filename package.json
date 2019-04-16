@@ -47,7 +47,7 @@
     "analyze:stats": "webpack --config build/webpack.prod.conf.js --profile --json > build-stats.json",
     "analyze:treemap": "webpack-bundle-analyzer build-stats.json dist",
     "analyze": "npm run analyze:stats && npm run analyze:treemap",
-    "lint": "standard src/**/*.js src/**/*.vue test/**/*.js --fix",
+    "lint": "standard src/**/*.js src/**/*.vue test/**/*.js tutorials/**/*.js --fix",
     "benchmark": "node ./benchmark",
     "cafe": "testcafe firefox test/*.test.js -S -s screenshots",
     "test:server": "cd api && npm run test",

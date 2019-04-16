@@ -1,19 +1,18 @@
 
 var filePath
 var fs = require('fs')
-module.exports.setPath = function(path){
-    filePath = './tutorials/videos/'+path
+module.exports.setPath = function (path) {
+  filePath = './tutorials/videos/' + path
 }
 
-module.exports.getPath = function(){
-    return filePath.toString()
+module.exports.getPath = function () {
+  return filePath.toString()
 }
 
-module.exports.newFolder = function(path){
-    
-    if (!fs.existsSync(path.toString())){
-        fs.mkdirSync(path.toString())
-    }
+module.exports.newFolder = function (path) {
+  if (!fs.existsSync(path.toString())) {
+    fs.mkdirSync(path.toString())
+  }
 }/*
 
 module.exports = class pathBuilder{
@@ -24,7 +23,7 @@ module.exports = class pathBuilder{
         this.path;
         this.fs = require('fs');
     }
-    
+
     getPath(){
         console.log('GET PATH '+this.folderPath+this.readPath())
         return this.folderPath+this.readPath();
@@ -51,11 +50,9 @@ module.exports = class pathBuilder{
             console.log('ERROR no file '+filepath);
             return 'undefined';
         }
-        
+
     }
 
-    
-    
 }
 
 function readPath(fs, filepath){
@@ -63,14 +60,14 @@ function readPath(fs, filepath){
         console.log('ReadPath : File exist');
         fs.readFile(filepath, (err, data) => {
             if (err) throw err;
-            console.log('ReadPath : '+data);    
-            return data.toString();  
+            console.log('ReadPath : '+data);
+            return data.toString();
         });
     }
     else{
         console.log('ERROR no file '+filepath);
         return 'undefined_';
     }
-    
-}*/
-//module.exports = pathBuilder;
+
+} */
+// module.exports = pathBuilder;
