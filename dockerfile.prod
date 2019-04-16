@@ -2,6 +2,7 @@ FROM  node:8
 
 MAINTAINER Kalisio <contact@kalisio.xyz>
 
+ARG APP
 ARG BUILD_NUMBER
 ENV BUILD_NUMBER=$BUILD_NUMBER
 ARG STRIPE_PUBLIC_KEY
@@ -9,15 +10,15 @@ ENV STRIPE_PUBLIC_KEY=$STRIPE_PUBLIC_KEY
 ENV DEBUG=
 ENV NODE_APP_INSTANCE=prod
 
-WORKDIR /opt/aktnmap
-COPY . /opt/aktnmap
+WORKDIR /opt/$APP
+COPY . /opt/$APP
 
-WORKDIR /opt/aktnmap/api
+WORKDIR /opt/$APP/api
 
 RUN yarn install
 RUN npm run build
 
-WORKDIR /opt/aktnmap
+WORKDIR /opt/$APP
 
 RUN yarn install
 RUN npm run build

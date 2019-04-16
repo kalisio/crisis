@@ -20,7 +20,7 @@ const auth = new pages.Authentication()
 const organisations = new pages.Organisations()
 const account = new pages.Account()
 
-const newPassword = 'Pass;word1-new'
+const newPassword = 'Pass;word1-new1'
 const newEmail = 'kalisio@kalisio.com'
 
 test.page`${pages.getUrl('register')}`

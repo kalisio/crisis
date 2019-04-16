@@ -96,6 +96,11 @@ module.exports = {
                   'edit/:objectId': { name: 'edit-group', component: 'editor/KModalEditor', props: true }
                 }
               },
+              'catalog': {
+                name: 'catalog-activity',
+                component: 'KCatalogActivity',
+                props: true
+              },
               'events': {
                 name: 'events-activity',
                 component: 'KEventsActivity',

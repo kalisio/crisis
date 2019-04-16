@@ -3,6 +3,7 @@
     "CANNOT_REMOVE_CUSTOMER": "You are not allowed to remove the customer of <b>{{resource}}</b>, change the payment information first."
   },
   "schemas": {
+    "ORGANISATIONS_BILLING_PLAN_NAME": "{{ object.name }}'s billing plan",
     "ORGANISATIONS_PLAN_FIELD_HELPER": "Select the billing plan of this organisation",
     "ORGANISATIONS_CUSTOMER_FIELD_HELPER": "Select a payment method",
     "ORGANISATIONS_EXTRA_INFOS_FIELD_HELPER": "Enter any extra information to appear on your receipts"
@@ -18,8 +19,9 @@
     "LOGOUT": "Logout"
   },
   "Context": {
-    "EVENTS": "Events & templates",
-    "MEMBERS": "Members & groups",
+    "EVENTS": "Events & Templates",
+    "MEMBERS": "Members & Groups",
+    "CATALOG": "Geographic Context",
     "SEARCH": "Search",
     "REFRESH": "Refresh",
     "SETTINGS": "Settings"

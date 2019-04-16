@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.kalisio.aktnmap" version="0.6.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>AktnMap</name>
+<widget id="$PACKAGE_ID" version="0.7.0" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER" xmlns:android="http://schemas.android.com/apk/res/android">
+  <name>$TITLE</name>
   <description>Akt'n'Map application</description>
-  <icon src="model/icon.png"/>
+  <icon src="res/icons/icon.png"/>
   <author email="support@kalisio.com" href="http://www.kalisio.com">Kalisio</author>
   <content src="index.html"/>
   <access origin="*"/>
@@ -30,9 +30,9 @@
   <preference name="loadUrlTimeoutValue" value="30000"/>
   <preference name="SplashScreen" value="screen"/>
   <platform name="android">
-    <hook src="hooks/before-build.js" type="before_build"/>
+    <hook src="hooks/android-before-build.js" type="before_build"/>
     <allow-intent href="market:*"/>
-    <resource-file src="google-services.json" target="google-services.json"/>
+    <resource-file src="google-services.json" target="app/google-services.json"/>
     <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png"/>
     <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png"/>
     <icon density="hdpi" src="res/icons/android/icon-72-hdpi.png"/>
@@ -51,8 +51,16 @@
     <splash density="port-xhdpi" src="res/screens/android/screen-xhdpi-portrait.png"/>
     <splash density="port-xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png"/>
     <splash density="port-xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>
+    <!-- Camera permissions whenever required -->
+    <!--config-file target="AndroidManifest.xml" parent="/*" mode="merge">
+      <uses-permission android:name="android.permission.CAMERA" />
+      <uses-feature android:name="android.hardware.camera" />
+      <uses-feature android:name="android.hardware.camera.autofocus" />
+    </config-file-->
   </platform>
   <platform name="ios">
+    <hook src="hooks/ios-update-pods.sh" type="before_platform_add" />
+    <hook src="hooks/ios-run-pods.sh" type="after_platform_add" />   
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
     <icon height="29" src="res/icons/ios/icon-small.png" width="29"/>
@@ -85,38 +93,20 @@
     <splash height="1536" src="res/screens/ios/screen-ipad-landscape-2x.png" width="2048"/>
     <splash height="2048" src="res/screens/ios/screen-ipad-landscape-ipadpro.png" width="2732"/>
     <splash height="2732" src="res/screens/ios/screen-ipad-portrait-ipadpro.png" width="2048"/>
-  </platform>
-  <platform name="windows">
-    <icon height="150" src="res/icons/windows/Square150x150Logo.scale-100.png" width="150"/>
-    <icon height="360" src="res/icons/windows/Square150x150Logo.scale-240.png" width="360"/>
-    <icon height="30" src="res/icons/windows/Square30x30Logo.scale-100.png" width="30"/>
-    <icon height="" src="res/icons/windows/Square310x310Logo.scale-100.png" width=""/>
-    <icon height="106" src="res/icons/windows/Square44x44Logo.scale-240.png" width="106"/>
-    <icon height="70" src="res/icons/windows/Square70x70Logo.scale-100.png" width="70"/>
-    <icon height="170" src="res/icons/windows/Square71x71Logo.scale-240.png" width="170"/>
-    <icon height="50" src="res/icons/windows/StoreLogo.scale-100.png" width="50"/>
-    <icon height="120" src="res/icons/windows/StoreLogo.scale-240.png" width="120"/>
-    <icon height="150" src="res/icons/windows/Wide310x150Logo.scale-100.png" width="310"/>
-    <icon height="360" src="res/icons/windows/Wide310x150Logo.scale-240.png" width="744"/>
-    <splash height="300" src="res/screens/windows/SplashScreen.scale-100.png" width="620"/>
-    <splash height="1920" src="res/screens/windows/SplashScreen.scale-240.png" width="1152"/>
-    <splash height="1920" src="res/screens/windows/SplashScreenPhone.scale-240.png" width="1152"/>
-  </platform>
-  <platform name="wp8">
-    <icon height="99" src="res/icons/wp8/ApplicationIcon.png" width="99"/>
-    <icon height="159" src="res/icons/wp8/Background.png" width="159"/>
-    <splash height="1280" src="res/screens/wp8/SplashScreenImage.jpg" width="768"/>
-    <splash height="1280" src="res/screens/wp8/SplashScreenImage.screen-720p.jpg" width="720"/>
-    <splash height="800" src="res/screens/wp8/SplashScreenImage.screen-WVGA.jpg" width="480"/>
-    <splash height="1280" src="res/screens/wp8/SplashScreenImage.screen-WXGA.jpg" width="768"/>
+    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Need to access your position to build meaningful events</string>
+    </edit-config>
   </platform>
   <plugin name="cordova-plugin-android-permissions" spec="~1.0.0"/>
-  <plugin name="cordova-plugin-device" spec="~1.1.6"/>
+  <plugin name="cordova-plugin-device" spec="~2.0.2"/>
   <plugin name="cordova-plugin-geolocation" spec="~4.0.1"/>
   <plugin name="cordova-plugin-sim" spec="~1.3.3"/>
   <plugin name="cordova-plugin-whitelist" spec="~1.3.2"/>
-  <plugin name="cordova-plugin-inappbrowser" spec="~2.0.2"/>
-  <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="~4.1.5"/>
+  <plugin name="cordova-plugin-inappbrowser" spec="~3.0.0"/>
+  <plugin name="cordova-plugin-file" spec="~6.0.0"/>
+  <plugin name="cordova-plugin-file-opener2" spec="~2.2.0"/>
+  <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
+    <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID" /> 
+  </plugin>
   <plugin name="phonegap-plugin-push" spec="~2.1.2"/>
-  <engine name="android" spec="^6.4.0"/>
 </widget>

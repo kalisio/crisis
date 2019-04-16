@@ -29,7 +29,7 @@ export class Server {
 
     // Define HTTP proxies to your custom API backend. See /config/index.js -> proxyTable
     // https://github.com/chimurai/http-proxy-middleware
-    const proxyTable = app.get('proxyTable')
+    const proxyTable = app.get('proxyTable') || {}
     Object.keys(proxyTable).forEach(context => {
       let options = proxyTable[context]
       if (typeof options === 'string') {

@@ -10,7 +10,7 @@ export default class Members extends ApplicationLayout {
     this.changeMemberRoleModal = VueSelector('k-members-activity k-change-role')
     this.tagMemberModal = VueSelector('k-members-activity k-modal-editor')
     // FIXME: don'k know why when specifying k-join-group TestCafe is not able to find the component
-    // this.joinGroupModal = VueSelector('k-members-activity k-join-group') 
+    // this.joinGroupModal = VueSelector('k-members-activity k-join-group')
     this.joinGroupModal = VueSelector('k-members-activity k-modal')
     this.membersGrid = VueSelector('k-members-activity k-grid')
   }

@@ -2,6 +2,7 @@ FROM  node:8
 
 MAINTAINER Kalisio <contact@kalisio.xyz>
 
+ARG APP
 ARG BUILD_NUMBER
 ENV BUILD_NUMBER=$BUILD_NUMBER
 ARG STRIPE_PUBLIC_KEY
@@ -9,10 +10,10 @@ ENV STRIPE_PUBLIC_KEY=$STRIPE_PUBLIC_KEY
 ENV DEBUG=
 ENV NODE_APP_INSTANCE=test
 
-WORKDIR /opt/aktnmap
-COPY . /opt/aktnmap
+WORKDIR /opt/$APP
+COPY . /opt/$APP
 
-WORKDIR /opt/aktnmap/modules
+WORKDIR /opt/$APP/modules
 RUN git clone https://github.com/kalisio/kCore.git -b test --single-branch && cd kCore && yarn install && yarn link && cd ..
 RUN git clone https://github.com/kalisio/kTeam.git -b test --single-branch && cd kTeam && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
 RUN git clone https://github.com/kalisio/kNotify.git -b test --single-branch && cd kNotify && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
@@ -20,7 +21,7 @@ RUN git clone https://github.com/kalisio/kMap.git -b test --single-branch && cd 
 RUN git clone https://github.com/kalisio/kEvent.git -b test --single-branch && cd kEvent && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
 RUN git clone https://github.com/kalisio/kBilling.git -b test --single-branch && cd kBilling && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
 
-WORKDIR /opt/aktnmap/api
+WORKDIR /opt/$APP/api
 
 RUN yarn install
 RUN yarn link @kalisio/kdk-core
@@ -31,7 +32,7 @@ RUN yarn link @kalisio/kdk-event
 RUN yarn link @kalisio/kdk-billing
 RUN npm run build
 
-WORKDIR /opt/aktnmap
+WORKDIR /opt/$APP
 
 RUN yarn install
 RUN npm run build

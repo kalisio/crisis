@@ -17,26 +17,21 @@ jobs:
   include:
 
   - stage: BUILD
+    os: linux  
     language: node_js
     node_js:
     - '8'
     services:
     - docker
-    install: true
+    install:
+    - pip install --user awscli
+    before_script:
+    - export -f travis_fold    
     script:
-    - bash travis.build.sh
-    deploy:
-      skip_cleanup: true
-      provider: s3
-      access_key_id: "$S3_ACCESS_KEY"
-      secret_access_key: "$S3_SECRET_ACCESS_KEY"
-      bucket: aktnmap-builds
-      local_dir: dist
-      upload_dir: "$TRAVIS_BUILD_NUMBER/dist"
-      on:
-        all_branches: true
+    - bash .travis.build.sh
 
   - stage: TEST
+    os: linux  
     language: node_js
     node_js:
     - '8'
@@ -46,107 +41,67 @@ jobs:
       code_climate:
         repo_token: 19d3ef0c5e4541c913514b7a3a3825829e5e354f08dc39fd2c03b7898958d597
     install:
+    - pip install --user awscli
     - npm install -g codeclimate-test-reporter
+    before_script:
+    - export -f travis_fold    
     script:
-    - bash travis.test.sh
-    after_script:
-    - codeclimate-test-reporter < server-coverage/lcov.info
-    deploy:
-      - provider: s3
-        skip_cleanup: true
-        access_key_id: "$S3_ACCESS_KEY"
-        secret_access_key: "$S3_SECRET_ACCESS_KEY"
-        bucket: aktnmap-builds
-        local_dir: server-coverage
-        upload_dir: "$TRAVIS_BUILD_NUMBER/server-tests/coverage"
-        on:
-          all_branches: true
-      - provider: s3
-        skip_cleanup: true
-        access_key_id: "$S3_ACCESS_KEY"
-        secret_access_key: "$S3_SECRET_ACCESS_KEY"
-        bucket: aktnmap-builds
-        local_dir: client-screenshots
-        upload_dir: "$TRAVIS_BUILD_NUMBER/client-tests/screenshots"
-        on:
-          all_branches: true
+    - bash .travis.test.sh
 
   - stage: DEPLOY
+    os: linux  
     language: node_js
     node_js:
     - '8'
     services:
     - docker
     install: true
+    before_script:
+    - export -f travis_fold 
     script:
-    - openssl aes-256-cbc -K $encrypted_83630750896a_key -iv $encrypted_83630750896a_iv
-      -in secrets.tar.enc -out secrets.tar -d
-    - tar xvf secrets.tar
-    deploy:
-      provider: script
-      skip_cleanup: true
-      script: bash travis.deploy.sh
-      on:
-        all_branches: true
+    - bash .travis.deploy.sh
 
   - stage: ANDROID
+    os: linux
     language: android
+    sudo: false
     jdk: oraclejdk8
     android:
       components:
       - tools
+      - tools  # Include again to work around travis not using the latest, see: https://github.com/travis-ci/travis-ci/issues/6193
       - platform-tools
-      - tools # Include again to work around travis not using the latest, see: https://github.com/travis-ci/travis-ci/issues/6193
-      - build-tools-26.0.2
-      - android-26
-      - extra
+      - build-tools-27.0.3
+      - android-27
+    licenses:
+      - '.+'
     before_install:
     - nvm install 8
-    - yes | sdkmanager "platforms;android-26"
+    - yes | sdkmanager "platforms;android-27"
     install:
     - pip install --user awscli
-    - gem install fastlane
-    - yarn install
+    - npm install -g cordova@8.1.2
+    - npm install -g envsub    
+    - npm install -g cross-env
+    - gem install fastlane -v '~> 2.119.0'
+    before_script:
+    - export -f travis_fold    
     script:
-    - openssl aes-256-cbc -K $encrypted_83630750896a_key -iv $encrypted_83630750896a_iv
-      -in secrets.tar.enc -out secrets.tar -d
-    - tar xvf secrets.tar
-    - aws s3 sync s3://aktnmap-builds/$TRAVIS_BUILD_NUMBER/dist cordova/www
-    - bash travis.android.sh
-    deploy:
-      skip_cleanup: true
-      provider: s3
-      access_key_id: "$S3_ACCESS_KEY"
-      secret_access_key: "$S3_SECRET_ACCESS_KEY"
-      bucket: aktnmap-builds
-      local_dir: cordova/platforms/android/build/outputs/apk
-      upload_dir: "$TRAVIS_BUILD_NUMBER/apk"
-      on:
-        all_branches: true
+    - bash .travis.android.sh
 
   - stage: IOS
+    os: osx
     language: objective-c
-    osx_image: xcode9.2
+    osx_image: xcode10.1
     before_install:
     - nvm install 8
     install:
     - brew install awscli
-    - npm install -g cordova
-    - gem install fastlane
-    - pod --version
+    - npm install -g cordova@8.1.2
+    - npm install -g envsub    
+    - npm install -g ios-deploy --unsafe-perm=true
+    - npm install -g cross-env
+    before_script:
+    - export -f travis_fold
     script:
-    - openssl aes-256-cbc -K $encrypted_83630750896a_key -iv $encrypted_83630750896a_iv
-      -in secrets.tar.enc -out secrets.tar -d
-    - tar xvf secrets.tar
-    - aws s3 sync s3://aktnmap-builds/$TRAVIS_BUILD_NUMBER/dist cordova/www
-    - bash travis.ios.sh
-    deploy:
-      skip_cleanup: true
-      provider: s3
-      access_key_id: "$S3_ACCESS_KEY"
-      secret_access_key: "$S3_SECRET_ACCESS_KEY"
-      bucket: aktnmap-builds
-      local_dir: cordova/platforms/ios/build
-      upload_dir: "$TRAVIS_BUILD_NUMBER/app"
-      on:
-        all_branches: true
+    - bash .travis.ios.sh
