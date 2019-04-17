@@ -51,7 +51,7 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   // For SNS topic name generation
   topicName = (object) => `aktnmap-dev-${object._id.toString()}`
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
-  domain = 'https://app.test.aktnmap.xyz'
+  domain = 'https://aktnmap.test.kalisio.xyz'
   weacastApi = 'https://weacast.test.kalisio.xyz'
   // For SNS topic name generation
   topicName = (object) => `aktnmap-test-${object._id.toString()}`

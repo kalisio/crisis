@@ -10,7 +10,7 @@ let stripeKey
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   domain = 'https://aktnmap.dev.kalisio.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
-  domain = 'https://app.test.aktnmap.xyz'
+  domain = 'https://aktnmap.test.aktnmap.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://app.aktnmap.com'
 } else {
