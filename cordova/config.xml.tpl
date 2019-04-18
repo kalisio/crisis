@@ -93,6 +93,9 @@
     <splash height="1536" src="res/screens/ios/screen-ipad-landscape-2x.png" width="2048"/>
     <splash height="2048" src="res/screens/ios/screen-ipad-landscape-ipadpro.png" width="2732"/>
     <splash height="2732" src="res/screens/ios/screen-ipad-portrait-ipadpro.png" width="2048"/>
+    <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Need to access your position to build meaningful events</string>
+    </edit-config>
     <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
       <string>Need to access your position to build meaningful events</string>
     </edit-config>
