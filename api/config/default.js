@@ -64,10 +64,10 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
     domain = 'http://localhost:' + clientPort // Akt'n'Map app client/server port = 8080/8081
-    weacastApi = 'http://localhost:' + (clientPort+2) // Weacast app client/server port = 8082/8083
+    weacastApi = 'http://localhost:' + (Number(clientPort)+2) // Weacast app client/server port = 8082/8083
   } else {
     domain = 'http://localhost:' + serverPort // Akt'n'Map app client/server port = 8081
-    weacastApi = 'http://localhost:' + (serverPort+1) // Weacast app client/server port = 8082
+    weacastApi = 'http://localhost:' + (Number(serverPort)+1) // Weacast app client/server port = 8082
   }
   // For SNS topic name generation
   topicName = (object) => `aktnmap-dev-${object._id.toString()}`

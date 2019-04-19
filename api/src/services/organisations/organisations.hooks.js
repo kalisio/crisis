@@ -5,7 +5,7 @@ import { hooks as billingHooks } from '@kalisio/kdk-billing'
 import { hooks as teamHooks } from '@kalisio/kdk-team'
 import { hooks as notifyHooks } from '@kalisio/kdk-notify'
 import { hooks as eventHooks } from '@kalisio/kdk-event'
-import { checkOrganisationsQuotas, checkPlanQuotas } from '../../hooks'
+import { checkOrganisationsQuotas, checkPlanQuotas, createOrganisationServices, removeOrganisationServices } from '../../hooks'
 
 module.exports = {
   before: {
@@ -25,6 +25,7 @@ module.exports = {
     get: [],
     create: [ teamHooks.createOrganisationServices,
       eventHooks.createOrganisationServices,
+      createOrganisationServices,
       notifyHooks.createTopic,
       teamHooks.createOrganisationAuthorisations,
       billingHooks.subscribeDefaultPlan ],
@@ -36,6 +37,7 @@ module.exports = {
       teamHooks.removeOrganisationTags,
       teamHooks.removeOrganisationAuthorisations,
       notifyHooks.removeTopic,
+      removeOrganisationServices,
       eventHooks.removeOrganisationServices,
       teamHooks.removeOrganisationServices ]
   },
