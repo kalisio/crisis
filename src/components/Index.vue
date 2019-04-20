@@ -69,7 +69,8 @@ export default {
         }
         Loading.show({ message: this.$t('Index.RECONNECT') })
         setTimeout(() => {
-          window.location.reload()
+          // Causes problems with hot reload in dev
+          if (!DEV) window.location.reload()
         }, 3000)
       })
       // Display error message if we have been banned from the server
