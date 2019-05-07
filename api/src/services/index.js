@@ -3,7 +3,7 @@ import _ from 'lodash'
 import logger from 'winston'
 import kCore from '@kalisio/kdk-core'
 import kTeam from '@kalisio/kdk-team'
-import kMap, { createFeatureService, createCatalogService } from '@kalisio/kdk-map'
+import kMap, { createFeaturesService, createCatalogService } from '@kalisio/kdk-map'
 import kNotify from '@kalisio/kdk-notify'
 import kBilling from '@kalisio/kdk-billing'
 import kEvent, { hooks as eventHooks } from '@kalisio/kdk-event'
@@ -45,6 +45,7 @@ module.exports = async function () {
           service.name === 'members' ||
           service.name === 'tags' ||
           service.name === 'storage' ||
+          service.name === 'features' ||
           service.name === 'events' ||
           service.name === 'event-templates') {
         app.configureService(service.name, service, servicesPath)
@@ -101,7 +102,7 @@ module.exports = async function () {
       // Get org DB
       let db = app.db.instance.db(organisation._id.toString())
       createCatalogService.call(app, { context: organisation, db })
-      createFeatureService.call(app, { collection: 'features', context: organisation, db })
+      createFeaturesService.call(app, { collection: 'features', context: organisation, db })
     })
   } catch (error) {
     logger.error(error.message)

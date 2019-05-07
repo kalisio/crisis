@@ -82,6 +82,7 @@
     "@kalisio/kdk-notify": "^1.1.0",
     "@kalisio/kdk-team": "^1.1.0",
     "@panter/vue-i18next": "^0.9.1",
+    "Leaflet.Geodesic": "https://github.com/henrythasler/Leaflet.Geodesic.git",
     "ajv": "^5.2.2",
     "ajv-i18n": "2",
     "annyang": "^2.6.0",
