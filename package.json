@@ -76,8 +76,8 @@
   "dependencies": {
     "@feathersjs/client": "^3.5.3",
     "@kalisio/kdk-billing": "^1.1.0",
-    "@kalisio/kdk-core": "^1.1.0",
-    "@kalisio/kdk-event": "^1.1.0",
+    "@kalisio/kdk-core": "^1.1.1",
+    "@kalisio/kdk-event": "^1.1.1",
     "@kalisio/kdk-map": "^1.1.0",
     "@kalisio/kdk-notify": "^1.1.0",
     "@kalisio/kdk-team": "^1.1.0",
