@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="$PACKAGE_ID" version="0.7.0" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER" xmlns:android="http://schemas.android.com/apk/res/android">
+<widget id="$PACKAGE_ID" version="0.7.1" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER" xmlns:android="http://schemas.android.com/apk/res/android">
   <name>$TITLE</name>
   <description>Akt'n'Map application</description>
   <icon src="res/icons/icon.png"/>
@@ -51,16 +51,10 @@
     <splash density="port-xhdpi" src="res/screens/android/screen-xhdpi-portrait.png"/>
     <splash density="port-xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png"/>
     <splash density="port-xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>
-    <!-- Camera permissions whenever required -->
-    <!--config-file target="AndroidManifest.xml" parent="/*" mode="merge">
-      <uses-permission android:name="android.permission.CAMERA" />
-      <uses-feature android:name="android.hardware.camera" />
-      <uses-feature android:name="android.hardware.camera.autofocus" />
-    </config-file-->
   </platform>
   <platform name="ios">
-    <hook src="hooks/ios-update-pods.sh" type="before_platform_add" />
-    <hook src="hooks/ios-run-pods.sh" type="after_platform_add" />   
+    <hook src="hooks/ios-update-pods.sh" type="before_platform_add"/>
+    <hook src="hooks/ios-run-pods.sh" type="after_platform_add"/>
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
     <icon height="29" src="res/icons/ios/icon-small.png" width="29"/>
@@ -118,7 +112,7 @@
   <plugin name="cordova-plugin-file" spec="~6.0.0"/>
   <plugin name="cordova-plugin-file-opener2" spec="~2.2.0"/>
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
-    <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID" /> 
+    <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
   <plugin name="phonegap-plugin-push" spec="~2.1.2"/>
 </widget>

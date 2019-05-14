@@ -144,7 +144,11 @@ module.exports = async function () {
     let createdLayer = _.find(layers, { name: defaultLayer.name })
     if (!createdLayer) {
       logger.info('Adding default layer (name = ' + defaultLayer.name + ')')
-      await catalogService.create(defaultLayer)
+      try {
+        await catalogService.create(defaultLayer)
+      } catch (error) {
+        logger.error(error)
+      }
     } else {
       logger.info('Reusing default layer (name = ' + defaultLayer.name + ')')
     }
