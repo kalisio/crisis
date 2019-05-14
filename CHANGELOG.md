@@ -1,24 +1,67 @@
 # Changelog
 
-## [v0.6.8](https://github.com/kalisio/aktnmap/tree/v0.6.8) (2019-25-02)
+## [Unreleased](https://github.com/kalisio/aktnmap/tree/HEAD)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.7.0...HEAD)
+
+**Fixed bugs:**
+
+- Can't change actor states by picking markers on the map anymore [\#77](https://github.com/kalisio/aktnmap/issues/77)
+- Login screen in production version exhibits a "Development version" [\#76](https://github.com/kalisio/aktnmap/issues/76)
+
+## [v0.7.0](https://github.com/kalisio/aktnmap/tree/v0.7.0) (2019-04-18)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.8...v0.7.0)
 
 **Implemented enhancements:**
 
-- Participants should have permissions to add/remove a media [\#50](https://github.com/kalisio/aktnmap/issues/50)
- 
+- PDF files could be used as attachment in events and downloaded when browsing [\#63](https://github.com/kalisio/aktnmap/issues/63)
+- Support iOS [\#57](https://github.com/kalisio/aktnmap/issues/57)
+- Master branch does not build [\#56](https://github.com/kalisio/aktnmap/issues/56)
+
 **Fixed bugs:**
 
-- On mobile devices, the LocationMap exceeds from the screen (kMap#47)[https://github.com/kalisio/kMap/issues/47]
+- On iOS the application crashed when trying to take a photo [\#74](https://github.com/kalisio/aktnmap/issues/74)
+- Registering a credit card does not work anymore [\#73](https://github.com/kalisio/aktnmap/issues/73)
+- Missing purpose string to access sensitive user data on iOS [\#68](https://github.com/kalisio/aktnmap/issues/68)
+- Client-side tests does not work anymore [\#67](https://github.com/kalisio/aktnmap/issues/67)
+- Android build fails with newly added plugins [\#65](https://github.com/kalisio/aktnmap/issues/65)
+- Android build is broken [\#62](https://github.com/kalisio/aktnmap/issues/62)
+- Text format is lost on event description [\#59](https://github.com/kalisio/aktnmap/issues/59)
+- Follow-up action is not available when geolocation does not work [\#58](https://github.com/kalisio/aktnmap/issues/58)
+- Build is not working on travis  [\#51](https://github.com/kalisio/aktnmap/issues/51)
 
-## [v0.6.7](https://github.com/kalisio/aktnmap/tree/v0.6.7) (2019-14-01)
+## [v0.6.8](https://github.com/kalisio/aktnmap/tree/v0.6.8) (2019-02-25)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.7...v0.6.8)
+
+**Implemented enhancements:**
+
+- Increase billing plan limits [\#53](https://github.com/kalisio/aktnmap/issues/53)
+- Participants should be able to add/remove a media [\#50](https://github.com/kalisio/aktnmap/issues/50)
+- Display the location of the event within the card [\#47](https://github.com/kalisio/aktnmap/issues/47)
+- Add billing test [\#17](https://github.com/kalisio/aktnmap/issues/17)
+
+## [v0.6.7](https://github.com/kalisio/aktnmap/tree/v0.6.7) (2019-01-13)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.6...v0.6.7)
+
+**Implemented enhancements:**
+
+- Grant the members the authorisation to create events [\#41](https://github.com/kalisio/aktnmap/issues/41)
+
+**Fixed bugs:**
+
+- Downloading medias on a slow network does not work [\#44](https://github.com/kalisio/aktnmap/issues/44)
+- It is impossible to browse or add any medias [\#42](https://github.com/kalisio/aktnmap/issues/42)
+
+**Closed issues:**
+
+- Uploading files on a slow network does not work [\#43](https://github.com/kalisio/aktnmap/issues/43)
 
 ## [v0.6.6](https://github.com/kalisio/aktnmap/tree/v0.6.6) (2018-12-03)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.5...v0.6.6)
-
-**Fixed bugs:**
-
-- It is impossible to browse or add any medias [\#42](https://github.com/kalisio/aktnmap/issues/42)
 
 ## [v0.6.5](https://github.com/kalisio/aktnmap/tree/v0.6.5) (2018-11-30)
 
