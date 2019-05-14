@@ -3,10 +3,11 @@ import _ from 'lodash'
 import logger from 'winston'
 import kCore from '@kalisio/kdk-core'
 import kTeam from '@kalisio/kdk-team'
-import kMap, { createCatalogService } from '@kalisio/kdk-map'
+import kMap, { createFeaturesService, createCatalogService } from '@kalisio/kdk-map'
 import kNotify from '@kalisio/kdk-notify'
 import kBilling from '@kalisio/kdk-billing'
 import kEvent, { hooks as eventHooks } from '@kalisio/kdk-event'
+import { createOrganisationServices, removeOrganisationServices } from '../hooks'
 import packageInfo from '../../package.json'
 
 const servicesPath = path.join(__dirname, '..', 'services')
@@ -44,6 +45,7 @@ module.exports = async function () {
           service.name === 'members' ||
           service.name === 'tags' ||
           service.name === 'storage' ||
+          service.name === 'features' ||
           service.name === 'events' ||
           service.name === 'event-templates') {
         app.configureService(service.name, service, servicesPath)
@@ -71,12 +73,15 @@ module.exports = async function () {
         orgsService.createOrganisationServices(organisation, db)
         // We fake a hook call
         eventHooks.createOrganisationServices({ app, result: organisation })
+        createOrganisationServices({ app, result: organisation })
       }
     })
     orgsService.on('removed', organisation => {
       // Check if already done (initiator)
       const orgMembersService = app.getService('members', organisation)
       if (orgMembersService) return
+      // We fake a hook call
+      removeOrganisationServices({ app, result: organisation })
       eventHooks.removeOrganisationServices({ app, result: organisation })
       orgsService.removeOrganisationServices(organisation)
     })
@@ -89,6 +94,16 @@ module.exports = async function () {
     await app.configure(kBilling)
     app.configureService('billing', app.getService('billing'), servicesPath)
     await app.configure(kEvent)
+
+    // Reinstanciated app services for all organisations
+    const organisations = await app.getService('organisations').find({ paginate: false })
+
+    organisations.forEach(organisation => {
+      // Get org DB
+      let db = app.db.instance.db(organisation._id.toString())
+      createCatalogService.call(app, { context: organisation, db })
+      createFeaturesService.call(app, { collection: 'features', context: organisation, db })
+    })
   } catch (error) {
     logger.error(error.message)
   }

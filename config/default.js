@@ -4,22 +4,32 @@ const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
-let domain
+let domain, weacastApi
 let stripeKey
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   domain = 'https://aktnmap.dev.kalisio.xyz'
+  weacastApi = 'https://weacast.dev.kalisio.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://aktnmap.test.kalisio.xyz'
+  weacastApi = 'https://weacast.test.kalisio.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://app.aktnmap.com'
+  weacastApi = 'https://weacast.kalisio.xyz'
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
-    domain = 'http://localhost:' + clientPort
+    domain = 'http://localhost:' + clientPort // Akt'n'Map app client/server port = 8080/8081
+    weacastApi = 'http://localhost:' + (Number(clientPort)+2) // Weacast app client/server port = 8082/8083
   } else {
-    domain = 'http://localhost:' + serverPort
+    domain = 'http://localhost:' + serverPort // Akt'n'Map app client/server port = 8081
+    weacastApi = 'http://localhost:' + (Number(serverPort)+1) // Weacast app client/server port = 8082
   }
+}
+// Override defaults if env provided
+if (process.env.SUBDOMAIN) {
+  domain = 'https://aktnmap.' + process.env.SUBDOMAIN
+  weacastApi = 'https://weacast.' + process.env.SUBDOMAIN
 }
 
 module.exports = {
@@ -124,17 +134,23 @@ module.exports = {
   },
   mapPanel: {
     categories: [
-      { name: 'BusinessLayers', label: 'LayersPanel.BUSINESS_LAYERS', icon: 'layers',
+      { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'layers',
         options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } } },
-      { name: 'MeteoLayers', label: 'LayersPanel.METEO_LAYERS', icon: 'wb_sunny',
+      { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'wb_sunny',
         options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } },
-      { name: 'MeasureLayers', label: 'LayersPanel.MEASURE_LAYERS', icon: 'fa-map-pin',
+      { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fa-map-pin',
         options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } } },
-      { name: 'OverlayLayers', label: 'LayersPanel.OVERLAY_LAYERS', icon: 'fa-map-marker',
+      { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'fa-map-marker',
         options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } },
-      { name: 'BaseLayers', label: 'LayersPanel.BASE_LAYERS', icon: 'fa-map',
+      { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'fa-map',
         options: { exclusive: true, filter: { type: 'BaseLayer' } } }
     ]
+  },
+  weacast: {
+    transport: 'http', // Could be 'http' or 'websocket',
+    apiUrl: weacastApi,
+    apiPath: API_PREFIX,
+    apiTimeout: 30000
   },
   map: {
     viewer: {

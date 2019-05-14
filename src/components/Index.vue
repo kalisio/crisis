@@ -67,10 +67,13 @@ export default {
           this.pendingReconnection.dismiss()
           this.pendingReconnection = null
         }
-        Loading.show({ message: this.$t('Index.RECONNECT') })
-        setTimeout(() => {
-          window.location.reload()
-        }, 3000)
+        // Causes problems with hot reload in dev
+        if (!DEV) {
+          Loading.show({ message: this.$t('Index.RECONNECT') })
+          setTimeout(() => {
+            window.location.reload()
+          }, 3000)
+        }
       })
       // Display error message if we have been banned from the server
       this.$api.socket.on('rate-limit', (error) => {

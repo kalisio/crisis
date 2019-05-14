@@ -1,4 +1,7 @@
 import _ from 'lodash'
+import Vue from 'vue'
+import i18next from 'i18next'
+import VueI18next from '@panter/vue-i18next'
 
 function loadComponent (component) {
   return () => {
@@ -33,12 +36,15 @@ function loadSchema (schema) {
     .catch(errorCore => {
       return import(`@kalisio/kdk-team/lib/common/schemas/${schema}.json`)
         .catch(errorTeam => {
-          return import(`@kalisio/kdk-event/lib/common/schemas/${schema}.json`)
-            .catch(errorEvent => {
-              // Otherwise this should be app component
-              return import(`./schemas/${schema}.json`)
-                .catch(errorApp => {
-                  console.log(errorCore, errorTeam, errorEvent, errorApp)
+          return import(`@kalisio/kdk-map/lib/common/schemas/${schema}.json`)
+            .catch(errorMap => {
+              return import(`@kalisio/kdk-event/lib/common/schemas/${schema}.json`)
+                .catch(errorEvent => {
+                  // Otherwise this should be app component
+                  return import(`./schemas/${schema}.json`)
+                    .catch(errorApp => {
+                      console.log(errorCore, errorTeam, errorMap, errorEvent, errorApp)
+                    })
                 })
             })
         })
@@ -87,6 +93,16 @@ function load (name, type = 'component') {
     default:
       return loadComponent(name)
   }
+}
+
+async function createComponent (component, options) {
+  const Component = Vue.extend(await loadComponent(component)())
+  return new Component(Object.assign({ i18n: new VueI18next(i18next) }, options))
+}
+
+async function createComponentVNode (component, options) {
+  const Component = Vue.extend(await loadComponent(component)())
+  return this.$createElement(Component, Object.assign({ i18n: new VueI18next(i18next) }, options))
 }
 
 function buildRoutes (config) {
@@ -150,6 +166,8 @@ let utils = {
   loadTranslation,
   resolveAsset,
   load,
+  createComponent,
+  createComponentVNode,
   buildRoutes
 }
 

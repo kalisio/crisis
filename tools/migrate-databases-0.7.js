@@ -87,12 +87,14 @@ async function updateItems(collectionName, filter, updater, orgId) {
 }
 // Migrate data model owing a topic
 async function migrateTopics(collectionName, orgId) {
+  console.log(`Migrating ${collectionName} topics for organisation DB ${orgId ? orgId : program.database}`)
   await updateItems(collectionName,
     (item) => _.has(item, 'topics.ANDROID') && !_.has(item, 'topics.IOS'),
     (item) => ({ $set: { 'topics.IOS': _.get(item, 'topics.ANDROID') } }), orgId)
 }
 // Migrate resource permission data model referencing objects owing a topic
 async function migratePermissionsTopics(scopeName) {
+  console.log(`Migrating ${scopeName} permissions for ${program.database} DB users`)
   await updateItems('users',
     (item) => {
       const scope = _.get(item, scopeName) || []

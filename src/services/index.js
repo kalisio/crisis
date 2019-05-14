@@ -20,6 +20,8 @@ export default function () {
     api.configure(kMap)
     api.configure(kEvent)
     api.configure(kBilling)
+    api.declareService('catalog', { context: true })
+    api.declareService('features', { context: true })
   } catch (error) {
     logger.error(error.message)
   }
