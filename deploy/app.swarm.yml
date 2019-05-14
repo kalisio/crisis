@@ -4,6 +4,8 @@ services:
   app:
     deploy:
       replicas: ${REPLICAS:-1}
+      update_config:
+        delay: 30s
       placement:
         constraints:
          - node.role == worker
