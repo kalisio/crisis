@@ -27,7 +27,7 @@ else
 	travis_fold start "build"
 
 	# Overwrite the title in dev/test flavor
-	if [[ $TRAVIS_BRANCH != "prod" ]]
+	if [[ $FLAVOR != "prod" ]]
 	then
 		TITLE=$TITLE-$FLAVOR
 	fi
