@@ -277,10 +277,10 @@
     winston "^2.3.1"
     winston-daily-rotate-file "^1.7.2"
 
-"@kalisio/kdk-core@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@kalisio/kdk-core/-/kdk-core-1.1.1.tgz#89603ed9f5c3d29c6fb74922cce5a8a50e7fd457"
-  integrity sha512-YhCfVGvCyKdfPuZYQmc+2kZPiVmIA3SDSlOOzNo+i7ZKwKswnW7fCLf2wDB/CQeHMLzcuoUQMO57voE27tg2nw==
+"@kalisio/kdk-core@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@kalisio/kdk-core/-/kdk-core-1.1.2.tgz#7097461114e42aa11b808a83eba73b590b0fa745"
+  integrity sha512-o9FL85ftfUjNu+UGGg2wsPLYFXou/8DQCOajEwIqKuLqW+BzDF6IYKkvOYNXW4GkoLbpB17b1HM+LtHwcdqqfg==
   dependencies:
     "@feathersjs/authentication" "https://github.com/kalisio/authentication.git"
     "@feathersjs/authentication-jwt" "^2.0.1"
