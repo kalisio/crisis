@@ -1,5 +1,23 @@
 # Changelog
 
+## [v0.7.2](https://github.com/kalisio/aktnmap/tree/v0.7.2) (2019-05-15)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.7.1...v0.7.2)
+
+**Fixed bugs:**
+
+- Cannot create events using Firefox v66 [\#80](https://github.com/kalisio/aktnmap/issues/80)
+- Replication can make application crash at startup [\#72](https://github.com/kalisio/aktnmap/issues/72)
+
+## [v0.7.1](https://github.com/kalisio/aktnmap/tree/v0.7.1) (2019-05-14)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.7.0...v0.7.1)
+
+**Fixed bugs:**
+
+- Can't change actor states by picking markers on the map anymore [\#77](https://github.com/kalisio/aktnmap/issues/77)
+- Login screen in production version exhibits a "Development version" [\#76](https://github.com/kalisio/aktnmap/issues/76)
+
 ## [v0.7.0](https://github.com/kalisio/aktnmap/tree/v0.7.0) (2019-04-18)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.8...v0.7.0)
@@ -8,6 +26,7 @@
 
 - PDF files could be used as attachment in events and downloaded when browsing [\#63](https://github.com/kalisio/aktnmap/issues/63)
 - Support iOS [\#57](https://github.com/kalisio/aktnmap/issues/57)
+- Master branch does not build [\#56](https://github.com/kalisio/aktnmap/issues/56)
 
 **Fixed bugs:**
 
@@ -19,6 +38,7 @@
 - Android build is broken [\#62](https://github.com/kalisio/aktnmap/issues/62)
 - Text format is lost on event description [\#59](https://github.com/kalisio/aktnmap/issues/59)
 - Follow-up action is not available when geolocation does not work [\#58](https://github.com/kalisio/aktnmap/issues/58)
+- Build is not working on travis  [\#51](https://github.com/kalisio/aktnmap/issues/51)
 
 ## [v0.6.8](https://github.com/kalisio/aktnmap/tree/v0.6.8) (2019-02-25)
 
