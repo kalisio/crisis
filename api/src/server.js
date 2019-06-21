@@ -1,26 +1,34 @@
 import logger from 'winston'
+import distribution from '@kalisio/feathers-distributed'
 import { kalisio } from '@kalisio/kdk-core'
 
-const fs = require('fs-extra')
-const https = require('https')
-const proxyMiddleware = require('http-proxy-middleware')
+import fs from 'fs-extra'
+import https from 'https'
+import proxyMiddleware from 'http-proxy-middleware'
 
-const express = require('@feathersjs/express')
-const sync = require('feathers-sync')
-const services = require('./services')
-const middlewares = require('./app.middlewares')
-const hooks = require('./app.hooks')
-const channels = require('./app.channels')
+import express from '@feathersjs/express'
+import sync from 'feathers-sync'
+import services from './services'
+import middlewares from './app.middlewares'
+import hooks from './app.hooks'
+import channels from './app.channels'
 
 export class Server {
   constructor () {
     let app = kalisio()
+    this.app = app
+
+    // Listen to distributed services
+    const distConfig = app.get('distribution')
+    if (distConfig) app.configure(distribution(distConfig))
+
     const syncConfig = app.get('sync')
     if (syncConfig) {
       app.configure(sync(Object.assign({
         uri: app.get('db').url
       }, syncConfig)))
     }
+
     // Serve pure static assets
     if (process.env.NODE_ENV === 'production') {
       app.use('/', express.static('../dist'))
@@ -37,7 +45,6 @@ export class Server {
       }
       app.use(proxyMiddleware(context, options))
     })
-    this.app = app
   }
 
   async run () {

@@ -1,7 +1,7 @@
 var path = require('path')
 var fs = require('fs')
+const express = require('@feathersjs/express')
 var containerized = require('containerized')()
-const layers = require('./layers')
 
 const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
@@ -47,27 +47,22 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   apiLimiter = null
   limiter = null
   domain = 'https://aktnmap.dev.kalisio.xyz'
-  weacastApi = 'https://weacast.dev.kalisio.xyz'
   // For SNS topic name generation
   topicName = (object) => `aktnmap-dev-${object._id.toString()}`
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://aktnmap.test.kalisio.xyz'
-  weacastApi = 'https://weacast.test.kalisio.xyz'
   // For SNS topic name generation
   topicName = (object) => `aktnmap-test-${object._id.toString()}`
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://app.aktnmap.com'
-  weacastApi = 'https://weacast.kalisio.xyz'
   // For SNS topic name generation
   topicName = (object) => `aktnmap-${object._id.toString()}`
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
     domain = 'http://localhost:' + clientPort // Akt'n'Map app client/server port = 8080/8081
-    weacastApi = 'http://localhost:' + (Number(clientPort)+2) // Weacast app client/server port = 8082/8083
   } else {
     domain = 'http://localhost:' + serverPort // Akt'n'Map app client/server port = 8081
-    weacastApi = 'http://localhost:' + (Number(serverPort)+1) // Weacast app client/server port = 8082
   }
   // For SNS topic name generation
   topicName = (object) => `aktnmap-dev-${object._id.toString()}`
@@ -92,6 +87,10 @@ module.exports = {
   },
   */
   apiPath: API_PREFIX,
+  distribution: { // Distribute no services simply use remote ones
+    services: (service) => false,
+    middlewares: { after: express.errorHandler() }
+  },
   paginate: {
     default: 20,
     max: 50
@@ -213,13 +212,6 @@ module.exports = {
   },
   geocoder: {
     provider: 'opendatafrance'
-  },
-  catalog: {
-    layers,
-    paginate: {
-      default: 100,
-      max: 100
-    }
   },
   billing: {
     secretKey: process.env.STRIPE_SECRET_KEY,

@@ -89,8 +89,6 @@ module.exports = async function () {
     await app.configure(kNotify)
     app.configureService('devices', app.getService('devices'), servicesPath)
     await app.configure(kMap)
-    // Create a global catalog service 
-    createCatalogService.call(app)
     await app.configure(kBilling)
     app.configureService('billing', app.getService('billing'), servicesPath)
     await app.configure(kEvent)
@@ -131,26 +129,6 @@ module.exports = async function () {
           })
         }
       }
-    }
-  }
-
-  let catalogService = app.getService('catalog')
-  const catalog = app.get('catalog')
-
-  let defaultLayers = catalog ? catalog.layers || [] : []
-  const layers = await catalogService.find({ query: { type: 'layer' }, paginate: false })
-  for (let i = 0; i < defaultLayers.length; i++) {
-    const defaultLayer = defaultLayers[i]
-    let createdLayer = _.find(layers, { name: defaultLayer.name })
-    if (!createdLayer) {
-      logger.info('Adding default layer (name = ' + defaultLayer.name + ')')
-      try {
-        await catalogService.create(defaultLayer)
-      } catch (error) {
-        logger.error(error)
-      }
-    } else {
-      logger.info('Reusing default layer (name = ' + defaultLayer.name + ')')
     }
   }
 }

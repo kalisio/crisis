@@ -9,13 +9,10 @@ let stripeKey
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   domain = 'https://aktnmap.dev.kalisio.xyz'
-  weacastApi = 'https://weacast.dev.kalisio.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://aktnmap.test.kalisio.xyz'
-  weacastApi = 'https://weacast.test.kalisio.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://app.aktnmap.com'
-  weacastApi = 'https://weacast.kalisio.xyz'
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
@@ -29,7 +26,6 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
 // Override defaults if env provided
 if (process.env.SUBDOMAIN) {
   domain = 'https://aktnmap.' + process.env.SUBDOMAIN
-  weacastApi = 'https://weacast.' + process.env.SUBDOMAIN
 }
 
 module.exports = {
@@ -146,12 +142,6 @@ module.exports = {
       { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'fa-map',
         options: { exclusive: true, filter: { type: 'BaseLayer' } } }
     ]
-  },
-  weacast: {
-    transport: 'http', // Could be 'http' or 'websocket',
-    apiUrl: weacastApi,
-    apiPath: API_PREFIX,
-    apiTimeout: 30000
   },
   map: {
     viewer: {
