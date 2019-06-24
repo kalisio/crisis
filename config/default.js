@@ -28,6 +28,60 @@ if (process.env.SUBDOMAIN) {
   domain = 'https://aktnmap.' + process.env.SUBDOMAIN
 }
 
+let defaultMapOptions = {
+  viewer: {
+    minZoom: 3,
+    maxZoom: 18,
+    center: [47, 3],
+    zoom: 6,
+    maxBounds: [ [-90, -180], [90, 180] ],
+    maxBoundsViscosity: 0.25
+  },
+  // Default GeoJSON layer style for polygons/lines
+  featureStyle: {
+    opacity: 1,
+    color: 'red',
+    'fill-opacity': 0.5,
+    'fill-color': 'green'
+  },
+  // Default GeoJSON layer style for points
+  pointStyle: {
+    'marker-type': 'circleMarker',
+    radius: 6,
+    stroke: 'red',
+    'stroke-opacity': 1,
+    'fill-opacity': 0.5,
+    'fill-color': 'green'
+  },
+  // Default GeoJSON popup will display all properties
+  popup: {},
+  cluster: {},
+  fileLayers: {
+    fileSizeLimit : 1024 * 1024,
+    formats: [ '.geojson', '.kml', '.gpx' ]
+  }
+}
+
+let defaultMapPanel = {
+  categories: [
+    { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'fa-map',
+      options: { exclusive: true, filter: { type: 'BaseLayer' } } },
+    { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'layers',
+      options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } } },
+    { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'fa-map-marker',
+      options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } },
+    { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fa-map-pin',
+      options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } } },
+    { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'wb_sunny',
+      options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } }
+  ]
+}
+
+let defaultMapActivity = {
+  buttons: ['panel'],
+  actions: ['fullscreen', 'geolocate', 'geocode', 'track-location', 'probe-location', 'create-layer']
+}
+
 module.exports = {
   // Special alias to host loopback interface in cordova
   //domain: 'http://10.0.2.2:8081',
@@ -102,6 +156,7 @@ module.exports = {
       user_identity: 'account/KIdentityPanel',
       user_dashboard: 'layout/KLinksPanel',
       user_organisation: 'KOrganisationsPanel',
+      user_settings: 'Settings',
       user_actions: 'layout/KLinksPanel'
     }
   },
@@ -117,7 +172,6 @@ module.exports = {
   },
   user_actions: {
     links: [
-      { },
       { label: 'sideNav.HELP', icon: 'help', route: { name: 'help'} },
       { }, // separator
       { label: 'sideNav.LOGOUT', icon: 'exit_to_app', route: { name: 'logout' } }
@@ -129,56 +183,8 @@ module.exports = {
     actions: [ ... ]
     */
   },
-  mapPanel: {
-    categories: [
-      { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'layers',
-        options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } } },
-      { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'wb_sunny',
-        options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } },
-      { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fa-map-pin',
-        options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } } },
-      { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'fa-map-marker',
-        options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } },
-      { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'fa-map',
-        options: { exclusive: true, filter: { type: 'BaseLayer' } } }
-    ]
-  },
-  map: {
-    viewer: {
-      minZoom: 3,
-      maxZoom: 18,
-      center: [47, 3],
-      zoom: 6,
-      maxBounds: [ [-90, -180], [90, 180] ],
-      maxBoundsViscosity: 0.25,
-      timeDimension: true,
-    },
-    // Default GeoJSON layer style for polygons/lines
-    featureStyle: {
-      opacity: 1,
-      radius: 6,
-      color: 'red',
-      fillOpacity: 0.5,
-      fillColor: 'green'
-    },
-    // Default GeoJSON layer style for points
-    pointStyle: {
-      type: 'circleMarker',
-      options: {
-        'radius': 6,
-        'stroke': 'red',
-        'stroke-opacity': 1,
-        'fill-opacity': 0.5,
-        'fill-color': 'green'
-      }
-    },
-    // Default GeoJSON popup will display all properties
-    popup: {},
-    cluster: {},
-    fileLayers: {
-      fileSizeLimit : 1024 * 1024,
-      formats: [ '.geojson', '.kml', '.gpx' ]
-    }
-  },
+  catalog: defaultMapOptions,
+  catalogPanel: defaultMapPanel,
+  catalogActivity: defaultMapActivity,
   routes: require('./routes')
 }

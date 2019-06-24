@@ -6,7 +6,18 @@
     "ORGANISATIONS_BILLING_PLAN_NAME": "Plan de paiement pour {{ object.name }}",
     "ORGANISATIONS_PLAN_FIELD_HELPER": "Sélectionnez le plan de paiement pour l'organisation",
     "ORGANISATIONS_CUSTOMER_FIELD_HELPER": "Sélectionnez une méthode de paiement",
-    "ORGANISATIONS_EXTRA_INFOS_FIELD_HELPER": "Saisissez des informations supplémentaires apparaissant sur vos facturess"
+    "ORGANISATIONS_EXTRA_INFOS_FIELD_HELPER": "Saisissez des informations supplémentaires apparaissant sur vos factures",
+    "UPDATE_SETTINGS_TITLE": "Vos paramètres",
+    "TIME_FORMAT_SETTINGS": "Format de date et d'heure",
+    "TIME_FORMAT_SHORT_TIME_FIELD_HELPER": "Format d'heure abrégé <a target='_blank' href='https://momentjs.com/docs/#/displaying/format/'>&#x1F6C8;</a>",
+    "TIME_FORMAT_LONG_TIME_FIELD_HELPER": "Format d'heure complet <a target='_blank' href='https://momentjs.com/docs/#/displaying/format/'>&#x1F6C8;</a>",
+    "TIME_FORMAT_SHORT_DATE_FIELD_HELPER": "Format de jour abrégé <a target='_blank' href='https://momentjs.com/docs/#/displaying/format/'>&#x1F6C8;</a>",
+    "TIME_FORMAT_LONG_DATE_FIELD_HELPER": "Format de jour complet <a target='_blank' href='https://momentjs.com/docs/#/displaying/format/'>&#x1F6C8;</a>",
+    "TIME_FORMAT_SHORT_YEAR_FIELD_HELPER": "Format d'année abrégé <a target='_blank' href='https://momentjs.com/docs/#/displaying/format/'>&#x1F6C8;</a>",
+    "TIME_FORMAT_LONG_YEAR_FIELD_HELPER": "Format d'année complet <a target='_blank' href='https://momentjs.com/docs/#/displaying/format/'>&#x1F6C8;</a>",
+    "TIME_FORMAT_UTC_FIELD_HELPER": "Mode d'affichage temporel UTC",
+    "RESTORE_VIEW_FIELD_HELPER": "Sauvegarder la vue courante",
+    "LOCATION_FORMAT": "Format de coordonnées <a target='_blank' href='https://github.com/nerik/formatcoords#formatting'>&#x1F6C8;</a>"
   },
   "screen": {
     "ABOUT_KALISIO": "A propos",
@@ -15,6 +26,7 @@
   },
   "sideNav": {
     "DASHBOARD": "Tableau de bord",
+    "SETTINGS": "Paramètres",
     "HELP": "Aide",
     "LOGOUT": "Se déconnecter"
   },

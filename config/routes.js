@@ -98,7 +98,7 @@ module.exports = {
               },
               'catalog': {
                 name: 'catalog-activity',
-                component: 'KCatalogActivity',
+                component: 'CatalogActivity',
                 props: true
               },
               'events': {
