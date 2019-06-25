@@ -51,6 +51,9 @@
     "BILLING_LABEL": "Billing Plan",
     "DANGER_ZONE_LABEL": "Danger Zone"
   },
+  "CatalogActivity": {
+    "CREATE_EVENT_TITLE": "Select an event template"
+  },
   "Index": {
     "VERSION_MISMATCH": "Application version mismatch, please install the latest available version or check your end point",
     "DISCONNECT": "The server connection has been lost, please wait until reconnection...",

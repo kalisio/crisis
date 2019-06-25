@@ -51,6 +51,9 @@
     "BILLING_LABEL": "Plan de paiement",
     "DANGER_ZONE_LABEL": "Zone de danger"
   },
+  "CatalogActivity": {
+    "CREATE_EVENT_TITLE": "Sélectectionner un modèle d'événement"
+  },
   "Index": {
     "VERSION_MISMATCH": "Discordance de version, merci d'installer la dernière version disponible ou de vérifier votre point d'accès",
     "DISCONNECT": "La connexion au serveur a été interrompue, merci de patienter jusqu'à la reconnexion...",

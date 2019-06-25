@@ -3,19 +3,18 @@
     <div ref="map" :style="viewStyle">
       <q-resize-observable @resize="onMapResized" />
     </div>
-    <k-radial-fab ref="radialMenu" 
+    <k-radial-fab ref="radialFab" 
       :style="radialFabStyle"
-      :button="false"
-      :itemSize="50"
       :radius="80"
-      :angle-restriction="-180"
       @close="unselectFeatureForAction">
-      <k-radial-fab-item 
+      <!--q-btn slot="closed-menu-container"
+        round color="secondary" icon="keyboard_arrow_up" /-->
+      <q-btn slot="open-menu-container"
+        round color="secondary" icon="close" />
+      <k-radial-fab-item
         v-for="(action, index) in featureActions" 
-        :key="index" 
-        :style="radialFabItemStyle" 
-        @click="onFeatureActionClicked(action)">
-        <q-icon :name="action.icon" style="color: #f8ffd7"/>
+        :key="index">
+        <q-btn round color="secondary" :icon="action.icon" @click="onFeatureActionClicked(action)" />
       </k-radial-fab-item>
     </k-radial-fab>
     <q-btn 
@@ -27,6 +26,13 @@
       round 
       icon="layers"
       @click="layout.toggleRight()" />
+    <k-modal ref="templateModal"
+      :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
+      :toolbar="getTemplateModalToolbar()"
+      :buttons="getTemplateModalButtons()"
+      :options="getTemplateModalOptions()" :route="false">
+      <k-list ref="templates" slot="modal-content" service="event-templates" :base-query="baseQuery" :renderer="renderer" :contextId="contextId" :list-strategy="'smart'" @selection-changed="onEventTemplateSelected" />
+    </k-modal>
   </div>
 </template>
 
@@ -46,9 +52,9 @@ export default {
     kMapMixins.weacast,
     kMapMixins.time,
     kMapMixins.activity('catalog'),
-    kMapMixins.actionButtons,
     kMapMixins.legend,
     kMapMixins.locationIndicator,
+    kMapMixins.map.actionButtons,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
     kMapMixins.map.forecastLayers,
@@ -69,6 +75,17 @@ export default {
     contextId: {
       type: String,
       default: ''
+    }
+  },
+  data () {
+    return {
+      baseQuery: {
+        $sort: { name: 1 }
+      },
+      renderer: {
+        component: 'KEventTemplateItem',
+        props: { options: { } }
+      }
     }
   },
   methods: {
@@ -101,33 +118,89 @@ export default {
     },
     refreshFeatureActions (feature, layer) {
       this.clearFeatureActions()
-      // Only on saved features
-      if (!feature._id) return
+      // Only on saved features and not in edition mode
+      if (!feature._id || this.isLayerEdited(layer.name)) return
       this.featureActions.push({
         name: 'create-event',
         icon: 'whatshot',
-        handler: this.createEvent
+        handler: this.onCreateEventAction
       })
       if (_.get(layer, 'schema._id')) {
         this.featureActions.push({
           name: 'edit-feature-properties',
           icon: 'edit',
-          handler: this.onUpdateFeatureProperties
+          handler: this.onUpdateFeaturePropertiesAction
         })
       }
       this.featureActions.push({
         name: 'remove-feature',
         icon: 'remove_circle',
-        handler: this.onRemoveFeature
+        handler: this.onRemoveFeatureAction
       })
     },
-    createEvent (feature) {
-      // TODO
+    onCreateEventAction (feature) {
+      this.eventFeature = feature
+      this.openTemplateModal()
+    },
+    async onUpdateFeaturePropertiesAction (feature, layer, leafletLayer) {
+      await this.editLayer(layer.name)
+      await this.updateFeatureProperties(feature, layer, leafletLayer)
+      await this.editLayer(layer.name)
+    },
+    onRemoveFeatureAction (feature, layer, leafletLayer) {
+      this.onRemoveFeature(feature, layer, leafletLayer)
+    },
+    getTemplateModalToolbar () {
+      return [
+        { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.closeTemplateModal() }
+      ]
+    },
+    getTemplateModalButtons () {
+      return []
+    },
+    getTemplateModalOptions () {
+      return {
+        padding: '4px',
+        minWidth: '40vw',
+        maxWidth: '60vw',
+        minHeight: '20vh'
+      }
+    },
+    openTemplateModal () {
+      if (this.$refs.templates.items.length === 1) {
+        // When we have a single template simply use it
+        this.$router.push({
+          name: 'create-event',
+          params: {
+            contextId: this.contextId,
+            templateId: this.$refs.templates.items[0]._id,
+            featureId: this.eventFeature._id
+          }
+        })
+      } else {
+        this.$refs.templateModal.open()
+      }
+    },
+    closeTemplateModal () {
+      this.$refs.templateModal.close()
+    },
+    onEventTemplateSelected (template) {
+      this.$router.push({
+        name: 'create-event',
+        params: {
+          contextId: this.contextId,
+          templateId: template._id,
+          featureId: this.eventFeature._id
+        }
+      })
     }
   },
   created () {
+    // Load the required components
+    this.$options.components['k-modal'] = this.$load('frame/KModal')
+    this.$options.components['k-list'] = this.$load('collection/KList')
   },
-  async mounted () {
+  mounted () {
   },
   beforeDestroy () {
   }

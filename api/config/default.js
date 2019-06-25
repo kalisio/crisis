@@ -211,7 +211,7 @@ module.exports = {
     topicName
   },
   geocoder: {
-    provider: 'opendatafrance'
+    providers: [{ provider: 'opendatafrance' }, { provider: 'openstreetmap' }]
   },
   billing: {
     secretKey: process.env.STRIPE_SECRET_KEY,
