@@ -55,7 +55,7 @@ let defaultMapOptions = {
   },
   // Default GeoJSON popup will display all properties
   popup: {},
-  cluster: {},
+  cluster: { disableClusteringAtZoom: 18 },
   fileLayers: {
     fileSizeLimit : 1024 * 1024,
     formats: [ '.geojson', '.kml', '.gpx' ]
@@ -75,11 +75,6 @@ let defaultMapPanel = {
     { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'wb_sunny',
       options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } }
   ]
-}
-
-let defaultMapActivity = {
-  buttons: ['panel'],
-  actions: ['fullscreen', 'geolocate', 'geocode', 'track-location', 'probe-location', 'create-layer']
 }
 
 module.exports = {
@@ -185,6 +180,16 @@ module.exports = {
   },
   catalog: defaultMapOptions,
   catalogPanel: defaultMapPanel,
-  catalogActivity: defaultMapActivity,
+  catalogActivity: {
+    actions: ['fullscreen', 'geolocate', 'geocode', 'track-location', 'create-layer'],
+    layerActions: ['zoom-to', 'save', 'edit', 'edit-data', 'remove']
+  },
+  event: defaultMapOptions,
+  eventPanel: defaultMapPanel,
+  eventActivity: {
+    actions: ['fullscreen', 'track-location', 'probe-location'],
+    layerActions: ['zoom-to'],
+    timeline: { end: 2*60*60*24 } // T0 + 48H forecast
+  },
   routes: require('./routes')
 }

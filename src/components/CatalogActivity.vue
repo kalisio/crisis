@@ -5,6 +5,8 @@
     </div>
     <k-radial-fab ref="radialFab" 
       :style="radialFabStyle"
+      :start-angle="0"
+      :end-angle="-180"
       :radius="80"
       @close="unselectFeatureForAction">
       <!--q-btn slot="closed-menu-container"
@@ -42,6 +44,8 @@ import { QResizeObservable, QBtn, QIcon } from 'quasar'
 import { mixins as kMapMixins } from '@kalisio/kdk-map/client'
 import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
 
+const activityMixin = kMapMixins.activity('catalog')
+
 export default {
   name: 'catalog-activity',
   mixins: [
@@ -51,7 +55,7 @@ export default {
     kMapMixins.featureService,
     kMapMixins.weacast,
     kMapMixins.time,
-    kMapMixins.activity('catalog'),
+    activityMixin,
     kMapMixins.legend,
     kMapMixins.locationIndicator,
     kMapMixins.map.actionButtons,
@@ -101,19 +105,12 @@ export default {
       this.setCurrentTime(moment.utc())
     },
     async getCatalogLayers () {
-      let layers = []
-      // We get layers coming from any global catalog first
-      const catalogService = this.$api.getService('catalog', '')
-      if (catalogService) {
-        let response = await catalogService.find()
-        layers = layers.concat(response.data)
-      }
-      // Then merge layers coming from any contextual catalog
-      const contextualCatalogService = this.$api.getService('catalog')
-      if (contextualCatalogService && (contextualCatalogService !== catalogService)) {
-        let response = await contextualCatalogService.find()
-        layers = layers.concat(response.data)
-      }
+      // We get layers coming from global catalog first
+      let response = await this.$api.getService('catalog', '').find()
+      let layers = response.data
+      // Then merge layers coming from contextual catalog by calling super
+      response = await activityMixin.methods.getCatalogLayers.call(this)
+      layers = layers.concat(response)
       return layers
     },
     refreshFeatureActions (feature, layer) {
@@ -206,15 +203,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.catalog-map {
-  position: absolute;
-  left: 0rem;
-  right: 0rem;
-  top: 0rem;
-  bottom: 0rem;
-  font-weight: normal;
-  z-index: 0;
-}
-</style>
