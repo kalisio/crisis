@@ -45,6 +45,8 @@ let plugins = [
         )
       )
     }
+    //children: true, // use all children of the chunk
+    //async: true // create an async commons chunk
   }),
   // extract webpack runtime and module manifest to its own file in order to
   // prevent vendor hash from being updated whenever app bundle is updated

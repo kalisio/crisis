@@ -41,7 +41,7 @@
 <script>
 import moment from 'moment'
 import { QResizeObservable, QBtn, QIcon } from 'quasar'
-import { mixins as kMapMixins } from '@kalisio/kdk-map/client'
+import { mixins as kMapMixins } from '@kalisio/kdk-map/client.map'
 import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
 
 const activityMixin = kMapMixins.activity('catalog')
