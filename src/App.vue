@@ -8,18 +8,20 @@
 
 <script>
 import _ from 'lodash'
-import { Toast, Events, QAjaxBar } from 'quasar'
 
 /*
  * Root component
  */
 export default {
-  components: {
-    QAjaxBar
+  data () {
+    return {
+      progressBarActive: false
+    }
   },
   methods: {
     showError (message) {
-      Toast.create.negative({
+      this.$toast({
+        type: 'negative',
         html: message,
         timeout: 5000
       })
@@ -34,13 +36,15 @@ export default {
     },
     startProgress () {
       let progressBar = this.$refs.bar
-      if (progressBar && !progressBar.active && (this.nbRequests > this.nbCompletedRequests)) {
+      if (progressBar && !this.progressBarActive && (this.nbRequests > this.nbCompletedRequests)) {
         progressBar.start()
+        this.progressBarActive = true
       }
     },
     stopProgress () {
       let progressBar = this.$refs.bar
-      if (progressBar && progressBar.active && (this.nbRequests <= this.nbCompletedRequests)) {
+      if (progressBar && this.progressBarActive && (this.nbRequests <= this.nbCompletedRequests)) {
+        this.progressBarActive = false
         progressBar.stop()
       }
     }

@@ -1,26 +1,27 @@
 import logger from 'loglevel'
 import i18next from 'i18next'
-import config from 'config'
+import VueI18next from '@panter/vue-i18next'
 import { utils as kCoreUtils } from '@kalisio/kdk-core/client'
-import { loadTranslation } from '../utils'
+import utils from '../utils'
+import config from 'config'
 
-export async function configureI18n () {
-  // Defines the modules to be loaded
+export default async ({ app, Vue }) => {
+    // Define the locale to be used
+  const localeConfig = config.locale || {}
+  const localeBrowser = kCoreUtils.getLocale()
+  let locale = localeConfig.default || localeBrowser
+  // Initializes i18next
+  i18next.init({
+    lng: locale,
+    fallbackLng: localeConfig.fallback || 'en',
+    defaultNS: ['kdk']
+  })
+  // Load the translation files
   const modules = ['kCore', 'kTeam', 'kNotify', 'kMap', 'kEvent', 'kBilling', 'aktnmap']
   try {
-    // Define the locale to be used
-    const localeConfig = config.locale || {}
-    const localeBrowser = kCoreUtils.getLocale()
-    let locale = localeConfig.default || localeBrowser
-    // Initializes i18next
-    i18next.init({
-      lng: locale,
-      fallbackLng: localeConfig.fallback || 'en',
-      defaultNS: ['kdk']
-    })
     // Build the translation resolvers
     const translationResolvers = modules.map(module => {
-      return loadTranslation(module, locale)
+      return utils.loadTranslation(module, locale)
     })
     // Apply the resolvers and add the translation bundles to i18next
     let translations = await Promise.all(translationResolvers)
@@ -30,4 +31,6 @@ export async function configureI18n () {
   } catch (error) {
     logger.error(error.message)
   }
+  Vue.use(VueI18next)
+  app.i18n = new VueI18next(i18next)
 }

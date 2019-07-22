@@ -191,5 +191,5 @@ module.exports = {
     layerActions: ['zoom-to'],
     timeline: { end: 2*60*60*24 } // T0 + 48H forecast
   },
-  routes: require('./routes')
+  routes: require('../src/router/routes')
 }

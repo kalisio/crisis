@@ -1,6 +1,9 @@
 # IDE
 .vscode
 
+# Quasar build
+.quasar
+
 # Logs
 logs
 *.log

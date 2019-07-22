@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { Toast, Events, Loading, Alert } from 'quasar'
+import { Loading } from 'quasar'
 import { mixins, beforeGuard } from '@kalisio/kdk-core/client'
 import config from 'config'
 import utils from '../utils'
@@ -64,7 +64,7 @@ export default {
       this.$api.socket.on('reconnect', () => {
         // Dismiss pending reconnection error message
         if (this.pendingReconnection) {
-          this.pendingReconnection.dismiss()
+          this.pendingReconnection()
           this.pendingReconnection = null
         }
         // Causes problems with hot reload in dev
@@ -108,7 +108,10 @@ export default {
     this.restoreSession()
       .then(user => {
         this.user = user
-        Toast.create.positive('Restoring previous session')
+        this.$toast({
+          type: 'positive',
+          message: 'Restoring previous session'
+        })
         // No need to redirect here since the user should be set thus managed by event handler below
       })
       .catch(() => {
