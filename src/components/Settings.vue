@@ -1,12 +1,12 @@
 <template>
   <div>
-    <q-list link no-border>
+    <q-list>
       <!--
         Edit link
       -->
-      <q-item id="edit-settings" @click="editSettings">
-        <q-item-section icon="settings" />
-        <q-item-label>{{$t('sideNav.SETTINGS')}}</q-item-label>
+      <q-item id="edit-settings" @click="editSettings" clickable v-ripple>
+        <q-item-section avatar><q-icon name="settings"/></q-item-section>
+        <q-item-section>{{$t('sideNav.SETTINGS')}}</q-item-section>
       </q-item>
     </q-list>
     <!--

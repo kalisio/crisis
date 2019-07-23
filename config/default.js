@@ -139,8 +139,12 @@ module.exports = {
   },
   layout: {
     view: 'lHh LpR lFf',
-    leftBreakpoint: 9999,
-    rightBreakpoint: 9999
+    leftDrawer: {
+      behavior: 'mobile'
+    },
+    rightDrawer: {
+      behavior: 'mobile'
+    }
   }, 
   appBar: {
     title: 'Akt\'n\'Map'
