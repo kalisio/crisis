@@ -1,7 +1,7 @@
 <template>
   <div>
     <div ref="map" :style="viewStyle">
-      <q-resize-observable @resize="onMapResized" />
+      <q-resize-observer @resize="onMapResized" />
     </div>
     <k-radial-fab ref="radialFab" 
       :style="radialFabStyle"
@@ -40,7 +40,6 @@
 
 <script>
 import moment from 'moment'
-import { QResizeObservable, QBtn, QIcon } from 'quasar'
 import { mixins as kMapMixins } from '@kalisio/kdk-map/client.map'
 import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
 
@@ -70,11 +69,6 @@ export default {
     kMapMixins.map.activity,
   ],
   inject: ['layout'],
-  components: {
-    QResizeObservable,
-    QBtn,
-    QIcon
-  },
   props: {
     contextId: {
       type: String,

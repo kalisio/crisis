@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { Events } from 'quasar'
 import { mixins } from '@kalisio/kdk-core/client'
 
 export default {
@@ -45,10 +44,10 @@ export default {
     }
   },
   created () {
-    Events.$on('context-changed', this.setupContext)
+    this.$events.$on('context-changed', this.setupContext)
   },
   beforeDestroy () {
-    Events.$off('context-changed', this.setupContext)
+    this.$events.$off('context-changed', this.setupContext)
   }
 }
 </script>

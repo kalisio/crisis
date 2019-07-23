@@ -20,7 +20,6 @@
 
 <script>
 import _ from 'lodash'
-import { Events } from 'quasar'
 import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
 
 export default {
@@ -90,7 +89,7 @@ export default {
     this.$options.components['k-plan-chooser'] = this.$load('KPlanChooser')
     // Load available plans and Whenever the cabilities are updated, update plans as well
     this.refreshPlans()
-    Events.$on('capabilities-api-changed', this.refreshPlans)
+    this.$events.$on('capabilities-api-changed', this.refreshPlans)
     // Load underlying billing perspective
     this.loadObject().then(perspective => {
       this.currentPlan = perspective.billing.subscription.plan
@@ -98,7 +97,7 @@ export default {
     })
   },
   beforeDestroy () {
-    Events.$off('capabilities-api-changed', this.refreshPlans)
+    this.$events.$off('capabilities-api-changed', this.refreshPlans)
   }
 }
 </script>

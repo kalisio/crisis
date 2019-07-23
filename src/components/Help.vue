@@ -8,12 +8,34 @@
       />
     </div>
     <div class="col-12 content-center" style="max-width: 1024px;">
-      <q-gallery-carousel 
+      <q-carousel
         ref="carousel" 
-        :src="content" 
-        fullscreen
-        @slide="onSlideChanged"
-      />
+        animated
+        v-model="current"
+        arrows
+        navigation
+        infinite
+        :fullscreen.sync="fullscreen"
+      >
+        <template v-for="slide in toc">
+          <q-carousel-slide
+            :name="slide.value"
+            :img-src="content"
+          />
+        </template>
+        <template v-slot:control>
+          <q-carousel-control
+            position="bottom-right"
+            :offset="[18, 18]"
+          >
+            <q-btn
+              push round dense color="white" text-color="primary"
+              :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
+              @click="fullscreen = !fullscreen"
+            />
+          </q-carousel-control>
+        </template>
+      </q-carousel>
     </div>
   </div>
 </template>
@@ -21,28 +43,25 @@
 <script>
 import _ from 'lodash'
 import { utils as kCoreUtils } from '@kalisio/kdk-core/client'
-import { QSelect, QGallery, QGalleryCarousel } from 'quasar'
+import { QCarousel, QCarouselSlide, QCarouselControl } from 'quasar'
 
 export default {
   name: 'Help',
   components: {
-    QSelect,
-    QGallery,
-    QGalleryCarousel
+    QCarousel,
+    QCarouselSlide,
+    QCarouselControl
   },
   data () {
     return {
       toc: [],
-      content: [],
-      current: ''
+      current: '',
+      fullscreen: false
     }
   },
   methods: {
     onSelectionChanged (selection) {
-      this.$refs.carousel.goToSlide(_.findIndex(this.toc, { value: selection }), true)
-    },
-    onSlideChanged (slide) {
-      this.current = this.toc[slide].value
+      this.$refs.carousel.goTo(selection)
     }
   },
   mounted () {
@@ -71,7 +90,7 @@ export default {
     ]
     // Init the content
     for (let i = 0; i < this.toc.length; i++) {
-      this.content.push('statics/help/' + kCoreUtils.getLocale() + '/' + this.toc[i].value + '.png')
+      this.toc[i].content = 'statics/help/' + kCoreUtils.getLocale() + '/' + this.toc[i].value + '.png'
     }
     // Init the current
     this.current = this.toc[0].value

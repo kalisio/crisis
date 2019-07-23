@@ -5,8 +5,8 @@
         Edit link
       -->
       <q-item id="edit-settings" @click="editSettings">
-        <q-item-side icon="settings" />
-        <q-item-main :label="$t('sideNav.SETTINGS')" />
+        <q-item-section icon="settings" />
+        <q-item-label>{{$t('sideNav.SETTINGS')}}</q-item-label>
       </q-item>
     </q-list>
     <!--
@@ -22,17 +22,10 @@
 </template>
 
 <script>
-import { QList, QItem, QItemMain, QItemSide } from 'quasar'
 
 export default {
   name: 'settings',
   inject: ['sideNav'],
-  components: {
-    QList,
-    QItem,
-    QItemMain,
-    QItemSide
-  },
   methods: {
     editSettings () {
       this.sideNav.layout.hideCurrentSide(() => this.$refs.editor.open())

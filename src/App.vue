@@ -63,13 +63,13 @@ export default {
   mounted () {
     // Check for error on refresh
     this.showRouteError(this.$route)
-    Events.$on('error-hook', hook => {
+    this.$events.$on('error-hook', hook => {
       this.nbCompletedRequests++
       this.stopProgress()
       // Forward to global error handler
-      Events.$emit('error', hook.error)
+      this.$events.$emit('error', hook.error)
     })
-    Events.$on('error', error => {
+    this.$events.$on('error', error => {
       // Translate the message if a translation key exists
       const translation = _.get(error, 'data.translation')
       if (translation) {
@@ -87,11 +87,11 @@ export default {
       }
       this.showError(error.message)
     })
-    Events.$on('before-hook', hook => {
+    this.$events.$on('before-hook', hook => {
       this.nbRequests++
       this.startProgress()
     })
-    Events.$on('after-hook', hook => {
+    this.$events.$on('after-hook', hook => {
       this.nbCompletedRequests++
       this.stopProgress()
     })

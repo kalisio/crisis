@@ -120,7 +120,7 @@ export default {
         this.redirect()
       })
 
-    Events.$on('user-changed', user => {
+    this.$events.$on('user-changed', user => {
       this.user = user
       // Check if we need to redirect based on the fact there is an authenticated user
       this.redirect()
