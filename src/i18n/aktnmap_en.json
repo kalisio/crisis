@@ -88,6 +88,7 @@
     "diamond_DETAILS": "Unlimited events</br>Unlimited tags</br>Unlimited groups</br>Unlimited templates</br>Unlimited members</br>Host on your servers</br>Custom branding</br>"
   },
   "help": {
+    "SECTION": "Select help section",
     "BASICS": "Basic concepts of Akt'n'Map",
     "BASICS_ORGANISATION": "Basic concepts: organisations",
     "BASICS_ROLES": "Basic concepts: roles",

@@ -1,26 +1,28 @@
 <template>
   <div class="row justify-center" style="padding: 32px">
-    <div class="col-12" style="max-width: 90vw;">
+    <div class="col-12" style="width: 960px;">
       <q-select
-        v-model="current"
+        :label="$t('help.SECTION')"
+        v-model="currentSection"
         :options="toc"
-        @change="onSelectionChanged"
+        @input="onSelectionChanged"
       />
     </div>
-    <div class="col-12 content-center" style="max-width: 1024px;">
-      <q-carousel
+    <div class="col-12 content-center shadow-2" style="width: 960px;" >
+      <q-carousel 
         ref="carousel" 
         animated
-        v-model="current"
+        v-model="currentSlide"
         arrows
-        navigation
         infinite
+        control-color="primary"
         :fullscreen.sync="fullscreen"
+        @transition="onSlideChanged"
       >
         <template v-for="slide in toc">
           <q-carousel-slide
             :name="slide.value"
-            :img-src="content"
+            :img-src="slide.content"
           />
         </template>
         <template v-slot:control>
@@ -29,7 +31,7 @@
             :offset="[18, 18]"
           >
             <q-btn
-              push round dense color="white" text-color="primary"
+              flat color="white" text-color="primary"
               :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
               @click="fullscreen = !fullscreen"
             />
@@ -55,13 +57,17 @@ export default {
   data () {
     return {
       toc: [],
-      current: '',
+      currentSection: '',
+      currentSlide: '',
       fullscreen: false
     }
   },
   methods: {
     onSelectionChanged (selection) {
-      this.$refs.carousel.goTo(selection)
+      this.currentSlide = selection.value
+    },
+    onSlideChanged (slide) {
+      this.currentSection = this.toc.find(entry => entry.value === slide)
     }
   },
   mounted () {
@@ -93,7 +99,8 @@ export default {
       this.toc[i].content = 'statics/help/' + kCoreUtils.getLocale() + '/' + this.toc[i].value + '.png'
     }
     // Init the current
-    this.current = this.toc[0].value
+    this.currentSection = this.toc[0]
+    this.currentSlide = this.currentSection.value
   }
 }
 </script>
