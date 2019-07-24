@@ -25,10 +25,8 @@
 
 export default {
   name: 'settings',
-  inject: ['klayout'],
   methods: {
     editSettings () {
-      this.klayout.hideLeftDrawer()
       this.$refs.editor.open()
     },
     onSettingsEdited () {
