@@ -68,7 +68,7 @@ export default {
           this.pendingReconnection = null
         }
         // Causes problems with hot reload in dev
-        if (!DEV) {
+        if (!process.env.DEV) {
           Loading.show({ message: this.$t('Index.RECONNECT') })
           setTimeout(() => {
             window.location.reload()
@@ -108,10 +108,6 @@ export default {
     this.restoreSession()
       .then(user => {
         this.user = user
-        this.$toast({
-          type: 'positive',
-          message: 'Restoring previous session'
-        })
         // No need to redirect here since the user should be set thus managed by event handler below
       })
       .catch(() => {

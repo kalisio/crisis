@@ -20,11 +20,7 @@ export default {
   },
   methods: {
     showError (message) {
-      this.$toast({
-        type: 'negative',
-        html: message,
-        timeout: 5000
-      })
+      this.$toast({ message, html: true })
     },
     showRouteError (route) {
       // We handle error on any page with query string
