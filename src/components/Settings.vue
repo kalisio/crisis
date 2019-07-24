@@ -25,10 +25,11 @@
 
 export default {
   name: 'settings',
-  inject: ['sideNav'],
+  inject: ['klayout'],
   methods: {
     editSettings () {
-      this.sideNav.layout.hideCurrentSide(() => this.$refs.editor.open())
+      this.klayout.hideLeftDrawer()
+      this.$refs.editor.open()
     },
     onSettingsEdited () {
       this.$refs.editor.close()
