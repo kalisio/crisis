@@ -1,9 +1,11 @@
 <template>
-  <q-card>
-    <q-card-section>
-      <k-markdown-viewer url="statics/aktnmap-terms.md"></k-markdown-viewer>
-    </q-card-section>
-  </q-card>
+  <div class="q-pa-md">
+    <q-card>
+      <q-card-section>
+        <k-markdown-viewer url="statics/aktnmap-terms.md"></k-markdown-viewer>
+      </q-card-section>
+    </q-card>
+  </div>
 </template>
 
 <script>
