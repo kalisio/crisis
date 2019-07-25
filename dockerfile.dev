@@ -4,8 +4,10 @@ LABEL maintainer="Kalisio <contact@kalisio.xyz>"
 
 ARG APP
 ARG BUILD_NUMBER
-ENV BUILD_NUMBER=$BUILD_NUMBER
+ARG BRANCH=master
 ARG STRIPE_PUBLIC_KEY
+
+ENV BUILD_NUMBER=$BUILD_NUMBER
 ENV STRIPE_PUBLIC_KEY=$STRIPE_PUBLIC_KEY
 ENV DEBUG=kalisio*,-kalisio:kCore:authorisations:hooks
 ENV NODE_APP_INSTANCE=dev
@@ -14,12 +16,12 @@ WORKDIR /opt/$APP
 COPY . /opt/$APP
 
 WORKDIR /opt/$APP/modules
-RUN git clone https://github.com/kalisio/kCore.git -b master --single-branch && cd kCore && yarn install && yarn link && cd ..
-RUN git clone https://github.com/kalisio/kTeam.git -b master --single-branch && cd kTeam && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
-RUN git clone https://github.com/kalisio/kNotify.git -b master --single-branch && cd kNotify && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
-RUN git clone https://github.com/kalisio/kMap.git -b master --single-branch && cd kMap && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
-RUN git clone https://github.com/kalisio/kEvent.git -b master --single-branch && cd kEvent && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
-RUN git clone https://github.com/kalisio/kBilling.git -b master --single-branch && cd kBilling && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kCore.git -b ${BRANCH} --single-branch && cd kCore && yarn install && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kTeam.git -b ${BRANCH} --single-branch && cd kTeam && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kNotify.git -b ${BRANCH} --single-branch && cd kNotify && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kMap.git -b ${BRANCH} --single-branch && cd kMap && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kEvent.git -b ${BRANCH} --single-branch && cd kEvent && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
+RUN git clone https://github.com/kalisio/kBilling.git -b ${BRANCH} --single-branch && cd kBilling && yarn install && yarn link @kalisio/kdk-core && yarn link && cd ..
 
 WORKDIR /opt/$APP/api
 

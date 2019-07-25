@@ -8,4 +8,5 @@ services:
       args:
         APP: ${APP}
         BUILD_NUMBER: ${BUILD_NUMBER}
+        BRANCH: ${BRANCH}
         STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
