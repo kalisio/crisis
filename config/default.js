@@ -64,13 +64,13 @@ let defaultMapOptions = {
 
 let defaultMapPanel = {
   categories: [
-    { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'fa-map',
+    { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'fas fa-map',
       options: { exclusive: true, filter: { type: 'BaseLayer' } } },
     { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'layers',
       options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } } },
-    { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'fa-map-marker',
+    { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'fas fa-map-marker',
       options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } },
-    { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fa-map-pin',
+    { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fas fa-map-pin',
       options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } } },
     { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'wb_sunny',
       options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } }

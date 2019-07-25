@@ -28,6 +28,18 @@
       round 
       icon="layers"
       @click="klayout.toggleRightDrawer()" />
+    <k-color-legend v-if="colorLegend.visible"
+      class="fixed"
+      :style="colorLegendStyle"
+      :unit="colorLegend.unit"
+      :hint="colorLegend.hint"
+      :colorMap="colorLegend.colorMap"
+      :colors="colorLegend.colors"
+      :values="colorLegend.values"
+      :unitValues="colorLegend.unitValues"
+      :showGradient="colorLegend.showGradient"
+      @click="onColorLegendClick" />
+    />
     <k-modal ref="templateModal"
       :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
       :toolbar="getTemplateModalToolbar()"
