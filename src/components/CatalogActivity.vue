@@ -27,7 +27,7 @@
       small
       round 
       icon="layers"
-      @click="layout.toggleRight()" />
+      @click="klayout.toggleRightDrawer()" />
     <k-modal ref="templateModal"
       :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
       :toolbar="getTemplateModalToolbar()"
@@ -68,7 +68,7 @@ export default {
     kMapMixins.map.popup,
     kMapMixins.map.activity,
   ],
-  inject: ['layout'],
+  inject: ['klayout'],
   props: {
     contextId: {
       type: String,
