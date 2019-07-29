@@ -1,7 +1,7 @@
 <template>
   <div>
     <k-signup-alert :isVerified="isUserVerified" :email="userEmail"></k-signup-alert>
-    <router-view class="layout-view"></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
