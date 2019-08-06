@@ -16,8 +16,14 @@ travis_fold start "build"
 if [[ $TRAVIS_COMMIT_MESSAGE != *"[skip build]"* ]]
 then
 	# Build the image
-	docker-compose -f deploy/app.yml -f deploy/app.build.yml build
-	if [ $? -ne 0 ]; then
+	docker-compose -f deploy/app.yml -f deploy/app.build.yml build > build.log 2>&1
+	 # Capture the build result
+	BUILD_CODE=$?
+	# Copy the log whatever the result
+	aws s3 cp build.log s3://$BUILDS_BUCKET/$BUILD_NUMBER/build.log
+	# Exit if an error has occured
+	if [ $BUILD_CODE -ne 0 ]; then
+		echo Build has failed with error: $BUILD_CODE
 		exit 1
 	fi
   
@@ -25,6 +31,9 @@ then
 	docker tag kalisio/$APP kalisio/$APP:$VERSION_TAG
 	docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
 	docker push kalisio/$APP:$VERSION_TAG
+	if [ $? -eq 1 ]; then
+		exit 1
+	fi
 fi
 
 travis_fold end "build"
