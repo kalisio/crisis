@@ -24,7 +24,7 @@ then
 	ERROR_CODE=$?
 	# Exit if an error has occured
 	if [ $ERROR_CODE -ne 0 ]; then
-		echo Building the docker image has failed (error: $ERROR_CODE)
+		echo "Building the docker image has failed [error: $ERROR_CODE]"
 		exit 1
 	fi
   
@@ -34,7 +34,7 @@ then
 	docker push kalisio/$APP:$VERSION_TAG > /dev/null
 	ERROR_CODE=$?
 	if [ $ERROR_CODE -eq 1 ]; then
-	  echo Pushing the docker image has failed (error: $ERROR_CODE)
+	  echo "Pushing the docker image has failed [error: $ERROR_CODE]"
 		exit 1
 	fi
 fi
@@ -56,7 +56,7 @@ docker cp ${APP}_app_1:/opt/$APP/dist/spa dist
 aws s3 sync dist s3://$BUILDS_BUCKET/$BUILD_NUMBER/www > /dev/null
 ERROR_CODE=$?
 if [ $ERROR_CODE -eq 1 ]; then
-	echo Copying the artifacr to S3 has failed (error: $ERROR_CODE)
+	echo "Copying the artifacr to S3 has failed [error: $ERROR_CODE]"
 	exit 1
 fi
 
