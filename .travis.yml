@@ -21,8 +21,6 @@ jobs:
     language: node_js
     node_js:
     - '8'
-    cache:
-      yarn: true
     services:
     - docker
     install:
