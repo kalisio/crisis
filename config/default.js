@@ -140,7 +140,10 @@ module.exports = {
   layout: {
     view: 'lHh LpR lFf',
     leftDrawer: {
-      behavior: 'mobile'
+      behavior: 'mobile',
+      component: {
+        name: 'layout/KSideNav'
+      }
     },
     rightDrawer: {
       behavior: 'mobile'

@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <q-page>
     <div ref="map" :style="viewStyle">
       <q-resize-observer @resize="onMapResized" />
     </div>
+
     <k-radial-fab ref="radialFab" 
       :style="radialFabStyle"
       :start-angle="0"
@@ -47,7 +48,7 @@
       :options="getTemplateModalOptions()" :route="false">
       <k-list ref="templates" slot="modal-content" service="event-templates" :base-query="baseQuery" :renderer="renderer" :contextId="contextId" :list-strategy="'smart'" @selection-changed="onEventTemplateSelected" />
     </k-modal>
-  </div>
+  </q-page>
 </template>
 
 <script>
@@ -103,8 +104,8 @@ export default {
       this.clearActivity()
       // Title
       this.setTitle(this.$store.get('context.name'))
-      // Setup the right pane
-      this.setRightPanelContent('KCatalogPanel', this.$data)
+      // Setup the right drawer
+      this.setRightDrawer('KCatalogPanel', this.$data)
       this.registerActivityActions()
       // Wait until map is ready
       await this.initializeMap()

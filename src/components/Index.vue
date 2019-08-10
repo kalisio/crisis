@@ -1,6 +1,6 @@
 <template>
   <div>
-    <k-signup-alert :isVerified="isUserVerified" :email="userEmail"></k-signup-alert>
+    <!-- FIXME k-signup-alert :isVerified="isUserVerified" :email="userEmail"></k-signup-alert-->
     <router-view></router-view>
   </div>
 </template>

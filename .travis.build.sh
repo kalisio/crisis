@@ -20,9 +20,7 @@ if [[ $TRAVIS_COMMIT_MESSAGE != *"[skip build]"* ]]
 then
 	# Build the image
 	docker-compose -f deploy/app.yml -f deploy/app.build.yml build #> build.log 2>&1
-	# Capture the build result
 	ERROR_CODE=$?
-	# Exit if an error has occured
 	if [ $ERROR_CODE -ne 0 ]; then
 		echo "Building the docker image has failed [error: $ERROR_CODE]"
 		exit 1
@@ -47,16 +45,20 @@ travis_fold end "build"
 travis_fold start "copy"
 
 # Copy the artifact from the container to the host
-# See https://docs.docker.com/compose/reference/envvars/#compose_project_name to 
-# get some explanation on the container name
 docker-compose -f deploy/app.yml up -d
-docker cp ${APP}_app_1:/opt/$APP/dist/spa dist
-
-# Backup the artifact to S3
-aws s3 sync dist s3://$BUILDS_BUCKET/$BUILD_NUMBER/www > /dev/null
+APP_CONTAINER_NAME=`docker ps --format '{{.Names}}' | grep $APP`
+docker cp ${APP_CONTAINER_NAME}:/opt/$APP/dist/spa www
 ERROR_CODE=$?
 if [ $ERROR_CODE -eq 1 ]; then
-	echo "Copying the artifacr to S3 has failed [error: $ERROR_CODE]"
+	echo "Copying the artifact from the image has failed [error: $ERROR_CODE]"
+	exit 1
+fi
+
+# Backup the artifact to S3
+aws s3 sync www s3://$BUILDS_BUCKET/$BUILD_NUMBER/www > /dev/null
+ERROR_CODE=$?
+if [ $ERROR_CODE -eq 1 ]; then
+	echo "Copying the artifact to S3 has failed [error: $ERROR_CODE]"
 	exit 1
 fi
 

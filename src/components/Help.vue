@@ -1,45 +1,36 @@
 <template>
-  <div class="row justify-center" style="padding: 32px">
-    <div class="col-12" style="width: 960px;">
-      <q-select
-        :label="$t('help.SECTION')"
-        v-model="currentSection"
-        :options="toc"
-        @input="onSelectionChanged"
-      />
+  <q-page padding>
+    <div class="col items-center">
+      <div class="row justify-center">
+        <q-select
+          style="width:1180px"
+          v-model="currentSection"
+          outlined
+          :options="toc"
+          @input="onSelectionChanged"
+        />
+      </div>
+      <div class="row  justify-center">
+        <q-carousel 
+          ref="carousel" 
+          style="width:1180px; height: 640px"
+          animated
+          v-model="currentSlide"
+          arrows
+          infinite
+          control-color="primary"
+          @transition="onSlideChanged"
+        >
+          <template v-for="(slide,index) in toc">
+            <q-carousel-slide 
+              :key="index"
+              :name="slide.value"
+              :img-src="slide.content" />
+          </template>
+        </q-carousel>
+      </div>
     </div>
-    <div class="col-12 content-center shadow-2" style="width: 960px;" >
-      <q-carousel 
-        ref="carousel" 
-        animated
-        v-model="currentSlide"
-        arrows
-        infinite
-        control-color="primary"
-        :fullscreen.sync="fullscreen"
-        @transition="onSlideChanged"
-      >
-        <template v-for="slide in toc">
-          <q-carousel-slide
-            :name="slide.value"
-            :img-src="slide.content"
-          />
-        </template>
-        <template v-slot:control>
-          <q-carousel-control
-            position="bottom-right"
-            :offset="[18, 18]"
-          >
-            <q-btn
-              flat color="white" text-color="primary"
-              :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
-              @click="fullscreen = !fullscreen"
-            />
-          </q-carousel-control>
-        </template>
-      </q-carousel>
-    </div>
-  </div>
+  </q-page>
 </template>
 
 <script>
@@ -58,8 +49,7 @@ export default {
     return {
       toc: [],
       currentSection: '',
-      currentSlide: '',
-      fullscreen: false
+      currentSlide: ''
     }
   },
   methods: {

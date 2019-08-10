@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="column q-gutter-md">
     <!-- 
       Customer information secion
      -->    
@@ -10,11 +10,21 @@
       :action="$t('OrganisationBilling.CUSTOMER_BLOCK_ACTION')"
       :disabled="!isUserVerified"
       @action-triggered="onUpdateCustomer" />
-    <k-customer-editor ref="customerEditor" @customer-updated="onCustomerUpdated" :billingObjectId="objectId" billingObjectService="organisations" />
+    <k-customer-editor 
+      ref="customerEditor" 
+      @customer-updated="onCustomerUpdated" 
+      :billingObjectId="objectId" 
+      billingObjectService="organisations" />
     <!-- 
       Plan subscription section 
     -->
-    <k-plan-chooser :billingObjectId="objectId" billingObjectService="organisations" :quotas="quotas" :plans="plans" v-model="currentPlan" :hasCustomer="customer !== undefined" />
+    <k-plan-chooser 
+      :billingObjectId="objectId" 
+      billingObjectService="organisations" 
+      :quotas="quotas" 
+      :plans="plans" 
+      v-model="currentPlan" 
+      :hasCustomer="customer !== undefined" />
   </div>
 </template>
 

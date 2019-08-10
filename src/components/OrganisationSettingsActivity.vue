@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-center full-width">
+  <q-page padding>
     <div v-if="perspective === 'properties'" class="col-11">
       <k-editor service="organisations" :objectId="contextId" />
     </div>
@@ -16,7 +16,7 @@
       Router view to enable routing to modals
      -->
     <router-view :router="router()"></router-view>
-  </div>
+  </q-page>
 </template>
 
 <script>
