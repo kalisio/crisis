@@ -1,12 +1,12 @@
 <template>
   <q-page padding>
-    <div v-if="perspective === 'properties'" class="col-11">
+    <div v-if="perspective === 'properties'">
       <k-editor service="organisations" :objectId="contextId" />
     </div>
-    <div v-else-if="perspective === 'billing'" class="col-11">
+    <div v-else-if="perspective === 'billing'">
       <organisation-billing :objectId="contextId" perspective="billing" />
     </div>
-    <div v-else-if="perspective === 'danger-zone'" class="col-11">
+    <div v-else-if="perspective === 'danger-zone'">
       <k-organisation-dz :objectId="contextId" />
     </div>
     <div v-else>
@@ -14,7 +14,7 @@
     </div>
     <!-- 
       Router view to enable routing to modals
-     -->
+    -->
     <router-view :router="router()"></router-view>
   </q-page>
 </template>

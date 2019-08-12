@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- FIXME k-signup-alert :isVerified="isUserVerified" :email="userEmail"></k-signup-alert-->
+    <k-signup-alert v-if="this.user" :show="!this.user.isVerified" :email="this.user.email" />
     <router-view></router-view>
   </div>
 </template>
@@ -37,14 +37,6 @@ export default {
   data () {
     return {
       user: null
-    }
-  },
-  computed: {
-    isUserVerified () {
-      return (this.user ? this.user.isVerified : true)
-    },
-    userEmail () {
-      return (this.user ? this.user.email : '')
     }
   },
   created () {
