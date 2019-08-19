@@ -81,11 +81,8 @@ module.exports = function (ctx) {
         'QTooltip'
       ],
 
-      animations: 'all',
-      /*animations: [
-        'fadeInLeft',
-        'fadeOutRight'
-      ],*/
+      animations: [
+      ],
 
       directives: [
         'Ripple',

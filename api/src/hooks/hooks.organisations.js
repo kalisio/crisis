@@ -4,8 +4,9 @@ export function createOrganisationServices (hook) {
   let app = hook.app
   // Get org DB
   let db = app.db.instance.db(hook.result._id.toString())
-  createCatalogService.call(app, { context: hook.result, db })
-  createFeatureService.call(app, { collection: 'features', context: hook.result, db })
+  // FIXME: commented to test the migration
+  // createCatalogService.call(app, { context: hook.result, db })
+  // createFeatureService.call(app, { collection: 'features', context: hook.result, db })
   return hook
 }
 
