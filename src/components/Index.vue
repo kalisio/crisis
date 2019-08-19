@@ -1,6 +1,6 @@
 <template>
   <div>
-    <k-signup-alert v-if="this.user" :show="!this.user.isVerified" :email="this.user.email" />
+    <k-signup-alert v-if="user" :isVerified="user.isVerified" :email="user.email" />
     <router-view></router-view>
   </div>
 </template>
@@ -60,7 +60,7 @@ export default {
           this.pendingReconnection = null
         }
         // Causes problems with hot reload in dev
-        if (!process.env.DEV) {
+        if (this.$config('flavor') !== 'dev') {
           Loading.show({ message: this.$t('Index.RECONNECT') })
           setTimeout(() => {
             window.location.reload()

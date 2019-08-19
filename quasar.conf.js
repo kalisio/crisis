@@ -68,6 +68,7 @@ module.exports = function (ctx) {
         'QRouteTab',
         'QSelect',
         'QSeparator',
+        'QSpace',
         'QSpinnerCube',
         'QTab',
         'QTabPanel',
@@ -80,14 +81,22 @@ module.exports = function (ctx) {
         'QTooltip'
       ],
 
+      animations: 'all',
+      /*animations: [
+        'fadeInLeft',
+        'fadeOutRight'
+      ],*/
+
       directives: [
-        'Ripple'
+        'Ripple',
+        'ClosePopup'
       ],
 
       // Quasar plugins
       plugins: [
         'Notify',
-        'Dialog'
+        'Dialog',
+        'Platform'
       ]
     },
 
@@ -138,9 +147,6 @@ module.exports = function (ctx) {
       // port: 8080,
       open: true // opens browser window automatically
     },
-
-    // animations: 'all', // --- includes all animations
-    animations: [],
 
     ssr: {
       pwa: false

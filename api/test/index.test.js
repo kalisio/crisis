@@ -198,33 +198,33 @@ describe('aktnmap', () => {
 
 // We cannot test billing in prod because we have our prod stripe config,
 // which requirs valid card numbers and will transfer money
-if (process.env.NODE_APP_INSTANCE !== 'prod') {
-  it('update billing information', () => {
-    return billingService.create({
-      action: 'customer',
-      email: userObject.email,
-      billingObject: orgObject._id,
-      billingObjectService: 'organisations',
-      billingPerspective: 'billing'
-    }, {
-      user: userObject, checkAuthorisation: true
-    })
+  if (process.env.NODE_APP_INSTANCE !== 'prod') {
+    it('update billing information', () => {
+      return billingService.create({
+        action: 'customer',
+        email: userObject.email,
+        billingObject: orgObject._id,
+        billingObjectService: 'organisations',
+        billingPerspective: 'billing'
+      }, {
+        user: userObject, checkAuthorisation: true
+      })
     .then(customer => {
       expect(customer.email).toExist()
     })
-  })
+    })
   .timeout(10000)
 
-  it('subscribe to the silver plan', () => {
-    return billingService.update(orgObject._id, {
-      action: 'subscription',
-      plan: 'silver',
-      billing: 'send_invoice',
-      billingObjectService: 'organisations',
-      billingPerspective: 'billing'
-    }, {
-      user: userObject, checkAuthorisation: true
-    })
+    it('subscribe to the silver plan', () => {
+      return billingService.update(orgObject._id, {
+        action: 'subscription',
+        plan: 'silver',
+        billing: 'send_invoice',
+        billingObjectService: 'organisations',
+        billingPerspective: 'billing'
+      }, {
+        user: userObject, checkAuthorisation: true
+      })
     .then(subscription => {
       subscriptionObject = subscription
       expect(subscriptionObject.stripeId).toExist()
@@ -234,28 +234,28 @@ if (process.env.NODE_APP_INSTANCE !== 'prod') {
       const billingPerspective = result.data[0].billing
       expect(billingPerspective.subscription.plan).eq('silver')
     })
-  })
+    })
   .timeout(10000)
 
-  it('can create a new free organisation', () => {
-    return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
+    it('can create a new free organisation', () => {
+      return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
     .then(org => {
       expect(org).toExist()
       return orgService.remove(org._id, { user: userObject, checkAuthorisation: true })
     })
-  })
+    })
   .timeout(10000)
 
-  it('unsubscribe the paying plan', () => {
-    return billingService.remove(orgObject._id, {
-      query: {
-        action: 'subscription',
-        billingObjectService: 'organisations',
-        billingPerspective: 'billing'
-      },
-      user: userObject,
-      checkAuthorisation: true
-    })
+    it('unsubscribe the paying plan', () => {
+      return billingService.remove(orgObject._id, {
+        query: {
+          action: 'subscription',
+          billingObjectService: 'organisations',
+          billingPerspective: 'billing'
+        },
+        user: userObject,
+        checkAuthorisation: true
+      })
     .then(() => {
       return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
     })
@@ -263,18 +263,18 @@ if (process.env.NODE_APP_INSTANCE !== 'prod') {
       const billingPerspective = result.data[0].billing
       expect(billingPerspective.subscription).to.equal(null)
     })
-  })
+    })
   .timeout(10000)
 
   // See https://github.com/kalisio/aktnmap/issues/15
-  it('cannot create multiple free organisations', () => {
-    return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
+    it('cannot create multiple free organisations', () => {
+      return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
     .catch(error => {
       expect(error).toExist()
       expect(error.name).to.equal('Forbidden')
     })
-  })
-}
+    })
+  }
 
   it('create user tag', () => {
     let operation = memberService.patch(userObject._id.toString(), { // We need at least devices for subscription
