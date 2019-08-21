@@ -34,6 +34,7 @@ package-lock.json
 www
 platforms
 plugins
+config.xml
 
 # Secret files
 google-services.json
