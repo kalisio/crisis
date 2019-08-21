@@ -17,14 +17,14 @@ jobs:
   include:
 
   - stage: BUILD
-    os: linux  
+    os: linux
     language: node_js
     node_js:
     - '8'
     services:
     - docker
     before_script:
-    - export -f travis_fold    
+    - export -f travis_fold
     script:
     - bash .travis.build.sh
 
@@ -42,7 +42,7 @@ jobs:
     - pip install --user awscli
     - npm install -g codeclimate-test-reporter
     before_script:
-    - export -f travis_fold    
+    - export -f travis_fold
     script:
     - bash .travis.test.sh
 
@@ -72,10 +72,10 @@ jobs:
       - android-27
     licenses:
       - '.+'
-     before_install:
+    before_install:
     # NVM
     - nvm install 8
-    # AndroidDK LIcence Mangager
+    # AndroidDK Licence Mangager
     - yes | sdkmanager "platforms;android-27"
     # Yarn
     - npm install -g yarn
@@ -110,6 +110,6 @@ jobs:
     install:
     - yarn
     before_script:
-    - export -f travis_fold
+    - export -f travis_fold   
     script:
     - bash .travis.ios.sh
