@@ -191,8 +191,7 @@ module.exports = function (ctx) {
     },
 
     cordova: {
-      // id: 'com.kalisio.titi',
-      // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
+      id: process.env.PACKAGE_ID
     },
 
     electron: {

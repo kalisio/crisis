@@ -29,21 +29,11 @@
     "dev": "cross-env NODE_ENV=development quasar dev",
     "prod": "cd api && npm run prod",
     "build": "quasar build",
-    "cordova:remove:android": "cd cordova && cordova platform remove android && cd ..",
-    "cordova:remove:ios": "cd cordova && cordova platform remove ios && cd ..",
-    "cordova:remove": "npm run cordova:remove:android && npm run cordova:remove:ios",
-    "cordova:clean": "cd cordova && cordova clean && cd ..",
-    "cordova:add:android": "cd cordova && envsub -s dollar-both config.xml.tpl config.xml && cordova platform add android@~7.1.1 && cd ..",
-    "cordova:add:ios": "cd cordova && envsub -s dollar-both config.xml.tpl config.xml && cordova platform add ios@~5.0.0 && cd ..",
-    "cordova:add": "npm run cordova:add:android && npm run cordova:add:ios",
-    "cordova:build:debug": "cd cordova && cordova build --debug --device && cd ..",
-    "cordova:build:release": "cd cordova && cordova build --release --device && cd ..",
-    "cordova:build": "npm run cordova:build:debug && npm run cordova:build:release",
-    "cordova:build:android": "npm run cordova:add:android && npm run cordova:build:release",
-    "cordova:build:ios": "npm run cordova:add:ios && npm run cordova:build:release",
-    "cordova:dev": "cd cordova && cordova run --debug && cd ..",
-    "cordova:prod": "cd cordova && cordova run --release && cd ..",
-    "cordova": "npm run cordova:dev",
+    "cordova:clean": "cd src-cordova && cordova clean && cd ..",
+    "cordova:dev:android": "envsub -s dollar-both src-cordova/config.xml.tpl src-cordova/config.xml && quasar dev -m android",
+    "cordova:dev:ios": "envsub -s dollar-both src-cordova/config.xml.tpl src-cordova/config.xml && quasar dev -m ios",
+    "cordova:build:android": "envsub -s dollar-both src-cordova/config.xml.tpl src-cordova/config.xml && quasar build -m cordova -T android",
+    "cordova:build:ios": "envsub -s dollar-both src-cordova/config.xml.tpl src-cordova/config.xml && quasar build -m cordova -T ios -- --device",
     "analyze:stats": "webpack --config build/webpack.prod.conf.js --profile --json > build-stats.json",
     "analyze:treemap": "webpack-bundle-analyzer build-stats.json dist",
     "analyze": "npm run analyze:stats && npm run analyze:treemap",
@@ -161,5 +151,15 @@
     "testcafe-vue-selectors": "^3.0.0",
     "winston": "^2.4.1",
     "worker-farm": "^1.6.0"
-  }
+  },
+  "engines": {
+    "node": ">= 8.9.0",
+    "npm": ">= 5.6.0",
+    "yarn": ">= 1.6.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ]
 }

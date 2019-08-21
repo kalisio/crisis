@@ -1,7 +1,7 @@
 #!/bin/bash
-if [[ $TRAVIS_BRANCH == "test" ]]
+if [ $TRAVIS_BRANCH == "test" ]
 then
-  if [[ -n "$TRAVIS_TAG" ]]
+  if [ -n "$TRAVIS_TAG" ]
   then
     export FLAVOR=prod
   else

@@ -10,14 +10,16 @@ else
 	#
 	travis_fold start "provision"
 
-	# Retrieve the built Web app
-	aws s3 sync s3://$BUILDS_BUCKET/$BUILD_NUMBER/www cordova/www > /dev/null
+	# Install the kdk if required
+	if [ $FLAVOR != "prod" ]
+	then
+		source .travis.kdk.sh
+	fi
 
 	# Install the required secret files requied to sign the app
-	cp workspace/common/android/*.json cordova/
-	cp workspace/$FLAVOR/android/*.json cordova/
-	cp workspace/common/android/$GOOGLE_KEYSTORE cordova/	
-	cp workspace/$FLAVOR/android/Appfile cordova/fastlane/
+	cp workspace/common/android/*.json src-cordova/
+	cp workspace/$FLAVOR/android/*.json src-cordova/
+	cp workspace/common/android/$GOOGLE_KEYSTORE src-cordova/	
 	
 	travis_fold end "provision"
 
@@ -27,11 +29,10 @@ else
 	travis_fold start "build"
 
 	# Overwrite the title in dev/test flavor
-	if [[ $FLAVOR != "prod" ]]
+	if [ $FLAVOR != "prod" ]
 	then
 		TITLE=$TITLE-$FLAVOR
 	fi
-	echo Building $TITLE
 
 	# Build and deploy the mobile app	
 	npm run cordova:build:android > android.build.log 2>&1
@@ -44,7 +45,7 @@ else
 	fi
 
 	# Backup the android build to S3
-	aws s3 sync cordova/platforms/android/app/build/outputs/apk s3://$BUILDS_BUCKET/$BUILD_NUMBER/android > /dev/null
+	aws s3 sync src-cordova/platforms/android/app/build/outputs/apk s3://$BUILDS_BUCKET/$BUILD_NUMBER/android > /dev/null
 	if [ $? -eq 1 ]; then
 		exit 1
 	fi
@@ -61,12 +62,12 @@ else
 	echo "package_name(\"$PACKAGE_ID\")" >> cordova/fastlane/Appfile
 
   # Deploy the APK to GooglePlay
-	cd cordova
+	cd src-cordova
 	fastlane android $FLAVOR > android.deploy.log 2>&1
 	DEPLOY_CODE=$?
 	cd ..
 	# Copy the log whatever the result
-	aws s3 cp cordova/android.deploy.log s3://$BUILDS_BUCKET/$BUILD_NUMBER/android.deploy.log
+	aws s3 cp src-cordova/android.deploy.log s3://$BUILDS_BUCKET/$BUILD_NUMBER/android.deploy.log
 	if [ $DEPLOY_CODE -ne 0 ]; then
 		exit 1
 	fi

@@ -23,8 +23,6 @@ jobs:
     - '8'
     services:
     - docker
-    install:
-    - pip install --user awscli
     before_script:
     - export -f travis_fold    
     script:
@@ -64,7 +62,6 @@ jobs:
   - stage: ANDROID
     os: linux
     language: android
-    sudo: false
     jdk: oraclejdk8
     android:
       components:
@@ -75,15 +72,21 @@ jobs:
       - android-27
     licenses:
       - '.+'
-    before_install:
+     before_install:
+    # NVM
     - nvm install 8
+    # AndroidDK LIcence Mangager
     - yes | sdkmanager "platforms;android-27"
-    install:
+    # Yarn
+    - npm install -g yarn
+    # AWS cli
     - pip install --user awscli
-    - npm install -g cordova@8.1.2
-    - npm install -g envsub    
-    - npm install -g cross-env
+    # Fastlane
     - gem install fastlane -v '~> 2.119.0'
+    # Quasar cli
+    - npm install -g @quasar/cli  
+    install:
+    - yarn
     before_script:
     - export -f travis_fold    
     script:
@@ -94,13 +97,18 @@ jobs:
     language: objective-c
     osx_image: xcode10.1
     before_install:
+    # NVM
     - nvm install 8
-    install:
+    # Yarn
+    - npm install -g yarn
+    # AWS cli
     - brew install awscli
-    - npm install -g cordova@8.1.2
-    - npm install -g envsub    
+    # Ios deploy
     - npm install -g ios-deploy --unsafe-perm=true
-    - npm install -g cross-env
+    # Quasar cli
+    - npm install -g @quasar/cli  
+    install:
+    - yarn
     before_script:
     - export -f travis_fold
     script:

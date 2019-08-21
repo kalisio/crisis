@@ -9,10 +9,6 @@ docker network create --attachable $DOCKER_NETWORK
 #
 travis_fold start "build"
 
-# NOTE: The process build the image and run the container in order to allow us to copy the 
-# built artifact from the container to the host. Indeed the artifact is then copied to S3 
-# and can be used by the following stages (i.e. Android and iOS).
-
 #
 # Build the docker image
 #
@@ -39,28 +35,4 @@ fi
 
 travis_fold end "build"
 
-#
-#  Copy the artifact to S3
-#
-travis_fold start "copy"
-
-# Copy the artifact from the container to the host
-docker-compose -f deploy/app.yml up -d
-APP_CONTAINER_NAME=`docker ps --format '{{.Names}}' | grep $APP`
-docker cp ${APP_CONTAINER_NAME}:/opt/$APP/dist/spa www
-ERROR_CODE=$?
-if [ $ERROR_CODE -eq 1 ]; then
-	echo "Copying the artifact from the image has failed [error: $ERROR_CODE]"
-	exit 1
-fi
-
-# Backup the artifact to S3
-aws s3 sync www s3://$BUILDS_BUCKET/$BUILD_NUMBER/www > /dev/null
-ERROR_CODE=$?
-if [ $ERROR_CODE -eq 1 ]; then
-	echo "Copying the artifact to S3 has failed [error: $ERROR_CODE]"
-	exit 1
-fi
-
-travis_fold end "copy"
 
