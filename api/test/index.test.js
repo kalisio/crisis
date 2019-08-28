@@ -9,7 +9,7 @@ import { createGmailClient } from './utils'
 import server from '../src/main'
 
 describe('aktnmap', () => {
-  let connection, userService, userObject, memberObject, orgService, orgObject, authorisationService, devicesService, pusherService, billingService, sns,
+  let expressServer, userService, userObject, memberObject, orgService, orgObject, authorisationService, devicesService, pusherService, billingService, sns,
     mailerService, memberService, tagService, tagObject, memberTagObject, groupService, groupObject, gmailClient, gmailUser,
     subscriptionObject, client, password
   const now = new Date()
@@ -39,7 +39,7 @@ describe('aktnmap', () => {
   })
 
   it('initialize the server/client', async () => {
-    connection = await server.run()
+    expressServer = await server.run()
     client = feathers()
     const socket = io(server.app.get('domain'), {
       transports: ['websocket'],
@@ -782,7 +782,7 @@ describe('aktnmap', () => {
 
   // Cleanup
   after(async () => {
-    if (connection) await connection.close()
+    if (expressServer) await expressServer.close()
     fs.emptyDirSync(path.join(__dirname, 'logs'))
     await server.app.db.instance.dropDatabase()
     await server.app.db.disconnect()
