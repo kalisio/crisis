@@ -1,6 +1,5 @@
 import path from 'path'
 import _ from 'lodash'
-import logger from 'winston'
 import kCore from '@kalisio/kdk-core'
 import kTeam from '@kalisio/kdk-team'
 import kMap, { createFeaturesService, createCatalogService } from '@kalisio/kdk-map'
@@ -18,7 +17,7 @@ module.exports = async function () {
   // Set up our plugin services
   try {
     app.use(app.get('apiPath') + '/capabilities', (req, res, next) => {
-      let response = {
+      const response = {
         name: 'aktnmap',
         domain: app.get('domain'),
         version: packageInfo.version,
@@ -54,9 +53,9 @@ module.exports = async function () {
     await app.configure(kTeam)
     app.configureService('organisations', app.getService('organisations'), servicesPath)
     // Replication management
-    let orgsService = app.getService('organisations')
-    let usersService = app.getService('users')
-    let authorisationsService = app.getService('authorisations')
+    const orgsService = app.getService('organisations')
+    const usersService = app.getService('users')
+    const authorisationsService = app.getService('authorisations')
     // Ensure permissions are correctly distributed when replicated
     usersService.on('patched', user => {
       // Patching profile should not trigger abilities update since
@@ -98,27 +97,27 @@ module.exports = async function () {
 
     organisations.forEach(organisation => {
       // Get org DB
-      let db = app.db.instance.db(organisation._id.toString())
+      const db = app.db.instance.db(organisation._id.toString())
       createCatalogService.call(app, { context: organisation, db })
       createFeaturesService.call(app, { collection: 'features', context: organisation, db })
     })
   } catch (error) {
-    logger.error(error.message)
+    app.logger.error(error.message)
   }
 
-  let usersService = app.getService('users')
-  let pusherService = app.getService('pusher')
-  let defaultUsers = app.get('authentication').defaultUsers
+  const usersService = app.getService('users')
+  const pusherService = app.getService('pusher')
+  const defaultUsers = app.get('authentication').defaultUsers
   // Do not use exposed passwords on staging/prod environments
   if (defaultUsers && !process.env.NODE_APP_INSTANCE) {
     // Create default users if not already done
     const users = await usersService.find({ paginate: false })
     for (let i = 0; i < defaultUsers.length; i++) {
       const defaultUser = defaultUsers[i]
-      let createdUser = _.find(users, user => user.email === defaultUser.email)
+      const createdUser = _.find(users, user => user.email === defaultUser.email)
       if (!createdUser) {
-        logger.info('Initializing default user (email = ' + defaultUser.email + ', password = ' + defaultUser.password + ')')
-        let user = await usersService.create(_.omit(defaultUser, 'device'))
+        app.logger.info('Initializing default user (email = ' + defaultUser.email + ', password = ' + defaultUser.password + ')')
+        const user = await usersService.create(_.omit(defaultUser, 'device'))
         // Register user device if any
         if (defaultUser.device) {
           await pusherService.create({

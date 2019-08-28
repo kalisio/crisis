@@ -1,6 +1,5 @@
 import cluster from 'cluster'
 import fs from 'fs-extra'
-import logger from 'winston'
 import _ from 'lodash'
 import { Server } from './server'
 
@@ -8,7 +7,7 @@ const N = parseInt(process.env.NODE_APP_NB_INSTANCES)
 let server
 
 if (cluster.isMaster && (N > 1)) {
-  logger.info(`Launching master with pid ${process.pid}`)
+  console.log(`Launching master with pid ${process.pid}`)
 
   for (let i = 0; i < N; i++) {
     cluster.fork()
@@ -25,11 +24,11 @@ if (cluster.isMaster && (N > 1)) {
 
   if (require.main === module) {
     process.on('unhandledRejection', (reason, p) =>
-      logger.error('Unhandled Rejection at: Promise ', p, reason)
+      server.app.logger.error('Unhandled Rejection at: Promise ', p, reason)
     )
 
     server.run().then(() => {
-      logger.info(`Server with pid ${process.pid} started listening`)
+      server.app.logger.info(`Server with pid ${process.pid} started listening`)
     })
   }
 }

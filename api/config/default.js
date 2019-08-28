@@ -1,5 +1,6 @@
 var path = require('path')
 var fs = require('fs')
+var winston = require('winston')
 const express = require('@feathersjs/express')
 var containerized = require('containerized')()
 
@@ -238,19 +239,15 @@ module.exports = {
   },
   logs: {
     Console: {
-      colorize: true,
+      format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
       level: (process.env.NODE_ENV === 'development' ? 'verbose' : 'info')
     },
     DailyRotateFile: {
+      format: winston.format.json(),
       dirname: path.join(__dirname, '..', 'logs'),
-      filename: 'aktnmap-',
-      datePattern: 'yyyy-MM-dd.log',
-      maxDays: 30
-      /* Possible in next version of the logger : see https://github.com/winstonjs/winston-daily-rotate-file/pull/45
-      filename: path.join(__dirname, '..', 'logs'),
-      datePattern: '/yyyy/MM/dd.log',
-      createTree: true
-      */
+      filename: 'aktnmap-%DATE%.log',
+      datePattern: 'YYYY-MM-DD',
+      maxFiles: '30d'
     }
   },
   db: {

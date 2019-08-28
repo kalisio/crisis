@@ -22,9 +22,9 @@ export async function preventRemovingCustomer (hook) {
     const org = (resource.billing ? resource : await getOrgWithBilling(hook, resource._id))
     const customer = _.get(org, 'billing.customer.email')
     // Check if we try to remove customer from the list of owners
-    let subjects = hook.params.subjects.filter(subject => subject.email === customer)
+    const subjects = hook.params.subjects.filter(subject => subject.email === customer)
     if ((subjects.length > 0) && (grantedRole < permissions.Roles.owner)) {
-      let resourceName = org.name ? org.name : org._id.toString()
+      const resourceName = org.name ? org.name : org._id.toString()
       throw new Forbidden('You are not allowed to remove the customer of resource ' + resourceName, {
         translation: {
           key: 'CANNOT_REMOVE_CUSTOMER',

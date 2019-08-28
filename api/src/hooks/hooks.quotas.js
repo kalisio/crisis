@@ -6,7 +6,7 @@ async function countItems (hook, service, org) {
   // Retrieve the target service
   const orgItemsService = (typeof service === 'object' ? service : hook.app.getService(service, org))
   // Indicate we'd only like to count
-  let items = await orgItemsService.find({ query: { $limit: 0 } })
+  const items = await orgItemsService.find({ query: { $limit: 0 } })
   return items.total + (hook.method === 'create' ? 1 : 0) // Take new item into account when required
 }
 
@@ -100,7 +100,7 @@ export const checkTemplatesQuotas = coreHooks.countLimit({
 
 export const checkPlanQuotas = async (hook) => {
   const services = ['members', 'groups', 'events', 'event-templates']
-  let quotaHooks = []
+  const quotaHooks = []
   services.forEach(service => {
     quotaHooks.push(coreHooks.countLimit({
       service,

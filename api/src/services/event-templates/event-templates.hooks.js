@@ -5,7 +5,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ checkTemplatesQuotas ],
+    create: [checkTemplatesQuotas],
     update: [],
     patch: [],
     remove: []
@@ -15,7 +15,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ ],
+    create: [],
     update: [],
     patch: [],
     remove: []

@@ -5,7 +5,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ checkEventsQuotas ],
+    create: [checkEventsQuotas],
     update: [],
     patch: [],
     remove: []
@@ -15,7 +15,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ ],
+    create: [],
     update: [],
     patch: [],
     remove: []

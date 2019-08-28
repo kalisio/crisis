@@ -5,7 +5,7 @@ const gmail = google.gmail('v1')
 
 export const createGmailClient = (gmailApiConfig) => {
   return new Promise((resolve, reject) => {
-    let jwtClient = new google.auth.JWT(
+    const jwtClient = new google.auth.JWT(
       gmailApiConfig.clientEmail,
       null,
       gmailApiConfig.privateKey,

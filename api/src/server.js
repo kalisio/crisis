@@ -1,4 +1,3 @@
-import logger from 'winston'
 import distribution from '@kalisio/feathers-distributed'
 import { kalisio } from '@kalisio/kdk-core'
 
@@ -15,7 +14,7 @@ import channels from './app.channels'
 
 export class Server {
   constructor () {
-    let app = kalisio()
+    const app = kalisio()
     this.app = app
 
     // Listen to distributed services
@@ -48,7 +47,7 @@ export class Server {
   }
 
   async run () {
-    let app = this.app
+    const app = this.app
     // First try to connect to DB
     await app.db.connect()
 
@@ -65,15 +64,15 @@ export class Server {
     const httpsConfig = app.get('https')
     if (httpsConfig) {
       const port = httpsConfig.port
-      let server = https.createServer({
+      const server = https.createServer({
         key: fs.readFileSync(httpsConfig.key),
         cert: fs.readFileSync(httpsConfig.cert)
       }, app)
-      logger.info(`Configuring HTTPS server with pid ${process.pid} at port ${port}`)
+      app.logger.info(`Configuring HTTPS server with pid ${process.pid} at port ${port}`)
       await server.listen(port)
     } else {
       const port = app.get('port')
-      logger.info(`Configuring HTTP server with pid ${process.pid} at port ${port}`)
+      app.logger.info(`Configuring HTTP server with pid ${process.pid} at port ${port}`)
       await app.listen(port)
     }
   }

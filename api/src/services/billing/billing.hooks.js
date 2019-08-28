@@ -7,10 +7,10 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ when(hook => hook.params.provider, billingHooks.preventUnverifiedUser) ],
-    update: [ when(hook => hook.params.provider, billingHooks.preventUnverifiedUser) ],
+    create: [when(hook => hook.params.provider, billingHooks.preventUnverifiedUser)],
+    update: [when(hook => hook.params.provider, billingHooks.preventUnverifiedUser)],
     patch: [],
-    remove: [ when(hook => hook.params.provider, billingHooks.preventUnverifiedUser) ]
+    remove: [when(hook => hook.params.provider, billingHooks.preventUnverifiedUser)]
   },
 
   after: {
@@ -18,10 +18,10 @@ module.exports = {
     find: [],
     get: [],
     // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
-    create: [ billingHooks.unpopulateBillingObject ],
-    update: [ billingHooks.unpopulateBillingObject ],
+    create: [billingHooks.unpopulateBillingObject],
+    update: [billingHooks.unpopulateBillingObject],
     patch: [],
-    remove: [ billingHooks.unpopulateBillingObject ]
+    remove: [billingHooks.unpopulateBillingObject]
   },
 
   error: {

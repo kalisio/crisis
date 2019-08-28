@@ -8,7 +8,7 @@ module.exports = {
     get: [],
     create: [],
     update: [],
-    patch: [  // Required to update subscriptions correctly
+    patch: [ // Required to update subscriptions correctly
       coreHooks.populatePreviousObject,
       coreHooks.updateTags, // Before subscriptions to have topics already created on tags before it
       notifyHooks.updateSubjectSubscriptions({
@@ -28,7 +28,7 @@ module.exports = {
     update: [],
     // Adding/Removing tags changes abilities, the subject is the item of the hook
     // to update we also need to fetch the user because on patch we might only have the tags available and not permissions
-    patch: [ coreHooks.updateAbilities({ subjectAsItem: true }) ],
+    patch: [coreHooks.updateAbilities({ subjectAsItem: true })],
     remove: []
   },
 

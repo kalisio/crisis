@@ -7,7 +7,7 @@ const util = require('util')
 const randomScenario = require('./scenarios')
 
 const level = process.env.LOG_LEVEL || 'info'
-const logger = new winston.Logger({ level, transports: [ new winston.transports.Console({ colorize: true }) ] })
+const logger = new winston.createLogger({ level, transports: [ new winston.transports.Console({ colorize: true }) ] })
 const authenticate = true
 let accessToken
 

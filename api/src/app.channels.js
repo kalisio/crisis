@@ -29,7 +29,7 @@ export default function (app) {
   app.publish((data, hook) => {
     // Publish service events to authenticated users only
     // and take permissions into account
-    let authorisationService = app.getService('authorisations')
+    const authorisationService = app.getService('authorisations')
     return app.channel('authenticated').filter(connection => {
       // We filter built-in Feathers services like authentication
       if (typeof hook.service.getPath !== 'function') {

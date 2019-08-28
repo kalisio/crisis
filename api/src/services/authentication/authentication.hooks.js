@@ -15,7 +15,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ notifyHooks.verifyGuest, notifyHooks.consentGuest ],
+    create: [notifyHooks.verifyGuest, notifyHooks.consentGuest],
     update: [],
     patch: [],
     remove: []

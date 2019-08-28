@@ -9,24 +9,24 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ when(hook => hook.data.sponsor, checkInvitationsQuotas),
-      notifyHooks.addVerification ],
+    create: [when(hook => hook.data.sponsor, checkInvitationsQuotas),
+      notifyHooks.addVerification],
     update: [],
     patch: [],
-    remove: [ teamHooks.preventRemoveUser ]
+    remove: [teamHooks.preventRemoveUser]
   },
 
   after: {
     all: [],
-    find: [ notifyHooks.removeVerification ],
-    get: [ notifyHooks.removeVerification ],
+    find: [notifyHooks.removeVerification],
+    get: [notifyHooks.removeVerification],
     create: [
       iff(hook => !hook.result.sponsor, notifyHooks.sendVerificationEmail),
       iffElse(hook => hook.result.sponsor, teamHooks.joinOrganisation, teamHooks.createPrivateOrganisation),
       notifyHooks.removeVerification
     ],
-    update: [ notifyHooks.removeVerification ],
-    patch: [ notifyHooks.removeVerification ],
+    update: [notifyHooks.removeVerification],
+    patch: [notifyHooks.removeVerification],
     remove: [
       coreHooks.setAsDeleted,
       coreHooks.removeAttachments('avatar'),

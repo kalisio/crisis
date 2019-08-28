@@ -42,34 +42,34 @@ corePermissions.defineAbilities.registerHook((subject, can, cannot) => {
 
 module.exports = {
   before: {
-    all: [ coreHooks.log,
-            // We skip authentication in some cases
+    all: [coreHooks.log,
+      // We skip authentication in some cases
       commonHooks.when(hook => {
-              // First built-in Feathers services like authentication
+        // First built-in Feathers services like authentication
         if (typeof hook.service.getPath !== 'function') return false
-              // Then user creation
+        // Then user creation
         if ((hook.service.name === 'users') && (hook.method === 'create')) return false
-              // Password reset, verify sign in, etc.
+        // Password reset, verify sign in, etc.
         if ((hook.service.name === 'account') && (hook.data.action !== 'passwordChange') && (hook.data.action !== 'identityChange')) return false
-              // If not exception perform authentication
+        // If not exception perform authentication
         return true
       }, authenticate('jwt')),
       coreHooks.processObjectIDs,
-      coreHooks.authorise ],
-    find: [ fuzzySearch(), coreHooks.marshallCollationQuery ],
+      coreHooks.authorise],
+    find: [fuzzySearch(), coreHooks.marshallCollationQuery],
     get: [],
     // This one cannot be registered on the user service directly because it should run before password hashing, etc.
-    create: [ commonHooks.when(hook => hook.service.name === 'users' && hook.data.sponsor,
-                coreHooks.setExpireAfter(48 * 60 * 60), // 48h in seconds
-                coreHooks.generatePassword,
-                notifyHooks.sendInvitationEmail) ],
-    update: [ coreHooks.preventUpdatePerspectives ],
+    create: [commonHooks.when(hook => hook.service.name === 'users' && hook.data.sponsor,
+      coreHooks.setExpireAfter(48 * 60 * 60), // 48h in seconds
+      coreHooks.generatePassword,
+      notifyHooks.sendInvitationEmail)],
+    update: [coreHooks.preventUpdatePerspectives],
     patch: [],
     remove: []
   },
 
   after: {
-    all: [ coreHooks.log, coreHooks.processPerspectives ],
+    all: [coreHooks.log, coreHooks.processPerspectives],
     find: [],
     get: [],
     create: [],
@@ -79,7 +79,7 @@ module.exports = {
   },
 
   error: {
-    all: [ coreHooks.log ],
+    all: [coreHooks.log],
     find: [],
     get: [],
     create: [],

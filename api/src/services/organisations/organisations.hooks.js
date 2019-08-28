@@ -12,26 +12,26 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ checkOrganisationsQuotas ],
+    create: [checkOrganisationsQuotas],
     update: [],
     // When changing billing plan check for quotas
-    patch: [ when(hook => _.get(hook, 'data.billing'), checkOrganisationsQuotas, checkPlanQuotas) ],
-    remove: [ teamHooks.preventRemoveOrganisation ]
+    patch: [when(hook => _.get(hook, 'data.billing'), checkOrganisationsQuotas, checkPlanQuotas)],
+    remove: [teamHooks.preventRemoveOrganisation]
   },
 
   after: {
     all: [],
     find: [],
     get: [],
-    create: [ teamHooks.createOrganisationServices,
+    create: [teamHooks.createOrganisationServices,
       eventHooks.createOrganisationServices,
       createOrganisationServices,
       notifyHooks.createTopic,
       teamHooks.createOrganisationAuthorisations,
-      billingHooks.subscribeDefaultPlan ],
+      billingHooks.subscribeDefaultPlan],
     update: [],
     patch: [],
-    remove: [ coreHooks.setAsDeleted,
+    remove: [coreHooks.setAsDeleted,
       billingHooks.removeBilling,
       teamHooks.removeOrganisationGroups,
       teamHooks.removeOrganisationTags,
@@ -39,7 +39,7 @@ module.exports = {
       notifyHooks.removeTopic,
       removeOrganisationServices,
       eventHooks.removeOrganisationServices,
-      teamHooks.removeOrganisationServices ]
+      teamHooks.removeOrganisationServices]
   },
 
   error: {

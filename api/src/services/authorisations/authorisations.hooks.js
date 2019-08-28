@@ -10,16 +10,16 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ coreHooks.preventEscalation,
+    create: [coreHooks.preventEscalation,
       when(hook => hook.params.resource,
         teamHooks.preventRemovingLastOwner('organisations'),
         teamHooks.preventRemovingLastOwner('groups')),
       when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations',
         checkMembersQuotas,
-        preventRemovingCustomer) ],
+        preventRemovingCustomer)],
     update: [],
     patch: [],
-    remove: [ coreHooks.preventEscalation,
+    remove: [coreHooks.preventEscalation,
       // Except when the resource is deleted by a owner check to keep at least one
       when(hook => hook.params.resource && !hook.params.resource.deleted,
         teamHooks.preventRemovingLastOwner('organisations'),
@@ -30,7 +30,7 @@ module.exports = {
       when(hook => _.get(hook.params, 'query.scope') === 'organisations',
         preventRemovingCustomer,
         teamHooks.removeOrganisationTagsAuthorisations,
-        teamHooks.removeOrganisationGroupsAuthorisations) ]
+        teamHooks.removeOrganisationGroupsAuthorisations)]
   },
 
   after: {
@@ -38,11 +38,11 @@ module.exports = {
     find: [],
     get: [],
     // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
-    create: [ notifyHooks.subscribeSubjectsToResourceTopic, coreHooks.unpopulateSubjects, coreHooks.unpopulateResource ],
+    create: [notifyHooks.subscribeSubjectsToResourceTopic, coreHooks.unpopulateSubjects, coreHooks.unpopulateResource],
     update: [],
     patch: [],
     // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
-    remove: [ notifyHooks.unsubscribeSubjectsFromResourceTopic, coreHooks.unpopulateSubjects, coreHooks.unpopulateResource ]
+    remove: [notifyHooks.unsubscribeSubjectsFromResourceTopic, coreHooks.unpopulateSubjects, coreHooks.unpopulateResource]
   },
 
   error: {

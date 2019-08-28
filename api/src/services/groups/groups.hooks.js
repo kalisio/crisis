@@ -8,7 +8,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ checkGroupsQuotas ],
+    create: [checkGroupsQuotas],
     update: [],
     patch: [],
     remove: []
@@ -18,13 +18,13 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [ notifyHooks.createTopic,
-      teamHooks.createGroupAuthorisations ],
+    create: [notifyHooks.createTopic,
+      teamHooks.createGroupAuthorisations],
     update: [],
     patch: [],
-    remove: [ coreHooks.setAsDeleted,
+    remove: [coreHooks.setAsDeleted,
       teamHooks.removeGroupAuthorisations,
-      notifyHooks.removeTopic ]
+      notifyHooks.removeTopic]
   },
 
   error: {
