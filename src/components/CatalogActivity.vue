@@ -20,19 +20,10 @@
         <q-btn round color="secondary" :icon="action.icon" @click="onFeatureActionClicked(action)" />
       </k-radial-fab-item>
     </k-radial-fab>
-    <q-btn 
-      id="map-panel-toggle"
-      color="secondary"
-      class="fixed"
-      style="right: 18px; top: 72px"
-      small
-      round 
-      icon="layers"
-      @click="klayout.toggleRightDrawer()" />
-
-    <div class="fixed" style="left: 18px; top: 70px">
-      <k-location-bar @location-changed="onLocationChanged" />
-    </div>
+   
+    <q-page-sticky position="top" :offset="[0, 18]">
+      <k-navigation-bar @location-changed="onLocationChanged" />
+    </q-page-sticky>
 
     <k-color-legend v-if="colorLegend.visible"
       class="fixed"
@@ -45,7 +36,7 @@
       :unitValues="colorLegend.unitValues"
       :showGradient="colorLegend.showGradient"
       @click="onColorLegendClick" />
-    />
+
     <k-modal ref="templateModal"
       :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
       :toolbar="getTemplateModalToolbar()"
@@ -86,7 +77,6 @@ export default {
     kMapMixins.map.popup,
     kMapMixins.map.activity,
   ],
-  inject: ['klayout'],
   props: {
     contextId: {
       type: String,
@@ -107,10 +97,17 @@ export default {
   methods: {
     async refreshActivity () {
       this.clearActivity()
+      this.clearNavigationBar()
       // Title
       this.setTitle(this.$store.get('context.name'))
       // Setup the right drawer
       this.setRightDrawer('KCatalogPanel', this.$data)
+      // Actions
+      this.setNavigationBar( [], true, [
+        { name: 'fullscreen-toggle', label: this.$t('mixins.activity.TOGGLE_FULLSCREEN'), icon: 'fullscreen', handler: this.onToggleFullscreen },
+        { name: 'separator' },
+        { name: 'catalog-toggle', label: this.$t('mixins.activity.TOGGLE_CATALOG'), icon: 'layers', handler: this.toggleCatalogLayers }
+      ])
       this.registerActivityActions()
       // Wait until map is ready
       await this.initializeMap()
@@ -209,7 +206,7 @@ export default {
   },
   created () {
     // Load the required components
-    this.$options.components['k-location-bar'] = this.$load('KLocationBar')
+    this.$options.components['k-navigation-bar'] = this.$load('KNavigationBar')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-list'] = this.$load('collection/KList')
   },

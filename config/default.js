@@ -188,7 +188,8 @@ module.exports = {
   catalog: defaultMapOptions,
   catalogPanel: defaultMapPanel,
   catalogActivity: {
-    actions: ['fullscreen', 'geolocate', 'geocode', 'track-location', 'create-layer'],
+    tools: ['track-location', 'location-bar', 'fullscreen', 'catalog'],
+    actions: ['create-layer'],
     layerActions: ['zoom-to', 'save', 'edit', 'edit-data', 'remove']
   },
   event: defaultMapOptions,
