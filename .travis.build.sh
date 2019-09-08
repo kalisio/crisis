@@ -39,7 +39,7 @@ travis_fold start "backup"
 # get some explanation on the container name
 docker-compose -f deploy/app.yml up -d
 APP_CONTAINER_NAME=`docker ps --format '{{.Names}}' | grep $APP`
-docker cp ${APP_CONTAINER_NAME}:/opt/$APP/dist www
+docker cp ${APP_CONTAINER_NAME}:/opt/$APP/dist dist
 
 # Backup the artifact to S3
 aws s3 sync dist s3://$BUILDS_BUCKET/$BUILD_NUMBER/www > /dev/null
