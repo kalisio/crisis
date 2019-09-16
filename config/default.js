@@ -89,6 +89,7 @@ module.exports = {
   version: require('../package.json').version,
   buildNumber: process.env.BUILD_NUMBER,
   apiPath: API_PREFIX,
+  apiJwt: 'aktnmap-jwt',
   apiTimeout: 20000,
   transport: 'websocket', // Could be 'http' or 'websocket',
   stripe: {
