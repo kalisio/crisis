@@ -62,7 +62,7 @@ let defaultMapOptions = {
   }
 }
 
-let defaultMapPanel = {
+let defaultMapCatalog = {
   categories: [
     { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'fas fa-map',
       options: { exclusive: true, filter: { type: 'BaseLayer' } } },
@@ -187,16 +187,17 @@ module.exports = {
     */
   },
   catalog: defaultMapOptions,
-  catalogPanel: defaultMapPanel,
+  catalogCatalog: defaultMapCatalog,
   catalogActivity: {
     tools: ['track-location', 'location-bar', 'fullscreen', 'catalog'],
     actions: ['create-layer'],
     layerActions: ['zoom-to', 'save', 'edit', 'edit-data', 'remove']
   },
   event: defaultMapOptions,
-  eventPanel: defaultMapPanel,
+  eventCatalog: defaultMapCatalog,
   eventActivity: {
-    actions: ['fullscreen', 'track-location', 'probe-location'],
+    tools: ['track-location', 'location-bar', 'fullscreen', 'catalog'],
+    actions: ['probe-location'],
     layerActions: ['zoom-to'],
     timeline: { end: 2*60*60*24 } // T0 + 48H forecast
   },

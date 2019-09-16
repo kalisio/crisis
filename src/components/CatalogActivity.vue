@@ -4,38 +4,19 @@
       <q-resize-observer @resize="onMapResized" />
     </div>
 
-    <k-radial-fab ref="radialFab" 
-      :style="radialFabStyle"
-      :start-angle="0"
-      :end-angle="-180"
-      :radius="80"
-      @close="unselectFeatureForAction">
-      <!--q-btn slot="closed-menu-container"
-        round color="secondary" icon="keyboard_arrow_up" /-->
-      <q-btn slot="open-menu-container"
-        round color="secondary" icon="close" />
-      <k-radial-fab-item
-        v-for="(action, index) in featureActions" 
-        :key="index">
-        <q-btn round color="secondary" :icon="action.icon" @click="onFeatureActionClicked(action)" />
-      </k-radial-fab-item>
-    </k-radial-fab>
+    <k-feature-action-button />
    
     <q-page-sticky position="top" :offset="[0, 18]">
       <k-navigation-bar @location-changed="onLocationChanged" />
     </q-page-sticky>
 
-    <k-color-legend v-if="colorLegend.visible"
-      class="fixed"
-      :style="colorLegendStyle"
-      :unit="colorLegend.unit"
-      :hint="colorLegend.hint"
-      :colorMap="colorLegend.colorMap"
-      :colors="colorLegend.colors"
-      :values="colorLegend.values"
-      :unitValues="colorLegend.unitValues"
-      :showGradient="colorLegend.showGradient"
-      @click="onColorLegendClick" />
+    <q-page-sticky position="left" :offset="[18, 0]">
+      <k-feature-info-box style="min-width: 150px; width: 15vw; max-height: 40vh" />
+    </q-page-sticky>
+
+    <q-page-sticky position="left" :offset="[18, 0]">
+      <k-color-legend/>
+    </q-page-sticky>
 
     <k-modal ref="templateModal"
       :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
@@ -64,9 +45,7 @@ export default {
     kMapMixins.weacast,
     kMapMixins.time,
     activityMixin,
-    kMapMixins.legend,
     kMapMixins.locationIndicator,
-    kMapMixins.map.actionButtons,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
     kMapMixins.map.forecastLayers,
@@ -77,6 +56,12 @@ export default {
     kMapMixins.map.popup,
     kMapMixins.map.activity,
   ],
+  provide () {
+    return {
+      kActivity: this,
+      kMap: this
+    }
+  },
   props: {
     contextId: {
       type: String,
@@ -103,11 +88,6 @@ export default {
       // Setup the right drawer
       this.setRightDrawer('KCatalogPanel', this.$data)
       // Actions
-      this.setNavigationBar( [], true, [
-        { name: 'fullscreen-toggle', label: this.$t('mixins.activity.TOGGLE_FULLSCREEN'), icon: 'fullscreen', handler: this.onToggleFullscreen },
-        { name: 'separator' },
-        { name: 'catalog-toggle', label: this.$t('mixins.activity.TOGGLE_CATALOG'), icon: 'layers', handler: this.toggleCatalogLayers }
-      ])
       this.registerActivityActions()
       // Wait until map is ready
       await this.initializeMap()
@@ -122,39 +102,40 @@ export default {
       layers = layers.concat(response)
       return layers
     },
-    refreshFeatureActions (feature, layer) {
-      this.clearFeatureActions()
+    getFeatureActions (feature, layer) {
+      let featureActions = []
       // Only on saved features and not in edition mode
-      if (!feature._id || this.isLayerEdited(layer.name)) return
-      this.featureActions.push({
+      if (!feature._id || this.isLayerEdited(layer.name)) featureActions
+      featureActions.push({
         name: 'create-event',
         icon: 'whatshot',
         handler: this.onCreateEventAction
       })
       if (_.get(layer, 'schema._id')) {
-        this.featureActions.push({
+        featureActions.push({
           name: 'edit-feature-properties',
           icon: 'edit',
           handler: this.onUpdateFeaturePropertiesAction
         })
       }
-      this.featureActions.push({
+      featureActions.push({
         name: 'remove-feature',
         icon: 'remove_circle',
         handler: this.onRemoveFeatureAction
       })
+      return featureActions
     },
     onCreateEventAction (feature) {
       this.eventFeature = feature
       this.openTemplateModal()
     },
-    async onUpdateFeaturePropertiesAction (feature, layer, leafletLayer) {
+    async onUpdateFeaturePropertiesAction (feature, layer, target) {
       await this.editLayer(layer.name)
-      await this.updateFeatureProperties(feature, layer, leafletLayer)
+      await this.updateFeatureProperties(feature, layer, target)
       await this.editLayer(layer.name)
     },
-    onRemoveFeatureAction (feature, layer, leafletLayer) {
-      this.onRemoveFeature(feature, layer, leafletLayer)
+    onRemoveFeatureAction (feature, layer, target) {
+      this.onRemoveFeature(feature, layer, target)
     },
     getTemplateModalToolbar () {
       return [
@@ -207,6 +188,9 @@ export default {
   created () {
     // Load the required components
     this.$options.components['k-navigation-bar'] = this.$load('KNavigationBar')
+    this.$options.components['k-color-legend'] = this.$load('KColorLegend')
+    this.$options.components['k-feature-info-box'] = this.$load('KFeatureInfoBox')
+    this.$options.components['k-feature-action-button'] = this.$load('KFeatureActionButton')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-list'] = this.$load('collection/KList')
   },
