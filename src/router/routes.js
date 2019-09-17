@@ -106,7 +106,7 @@ module.exports = {
                 component: 'KEventsActivity',
                 props: true,
                 children: {
-                  'create/:templateId/:featureId?': { name: 'create-event', component: 'KEventEditor', props: true },
+                  'create/:templateId/:layerId?/:featureId?': { name: 'create-event', component: 'KEventEditor', props: true },
                   'edit/:objectId': { name: 'edit-event', component: 'KEventEditor', props: true },
                 }
               },

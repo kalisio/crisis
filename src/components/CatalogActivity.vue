@@ -155,6 +155,7 @@ export default {
         params: {
           contextId: this.contextId,
           templateId: template._id,
+          layerId: this.eventFeature.layer,
           featureId: this.eventFeature._id
         }
       })
