@@ -7,7 +7,7 @@
     <k-feature-action-button />
    
     <q-page-sticky position="top" :offset="[0, 18]">
-      <k-navigation-bar @location-changed="onLocationChanged" />
+      <k-navigation-bar />
     </q-page-sticky>
 
     <q-page-sticky position="left" :offset="[18, 0]">
@@ -23,7 +23,7 @@
       :toolbar="getTemplateModalToolbar()"
       :buttons="getTemplateModalButtons()"
       :options="getTemplateModalOptions()" :route="false">
-      <k-list ref="templates" slot="modal-content" service="event-templates" :base-query="baseQuery" :renderer="renderer" :contextId="contextId" :list-strategy="'smart'" @selection-changed="onEventTemplateSelected" />
+      <k-list ref="templates" slot="modal-content" service="event-templates" :base-query="baseQuery" :contextId="contextId" :list-strategy="'smart'" @selection-changed="onEventTemplateSelected" />
     </k-modal>
   </q-page>
 </template>
@@ -72,10 +72,6 @@ export default {
     return {
       baseQuery: {
         $sort: { name: 1 }
-      },
-      renderer: {
-        component: 'KEventTemplateItem',
-        props: { options: { } }
       }
     }
   },
@@ -111,7 +107,7 @@ export default {
         icon: 'whatshot',
         handler: this.onCreateEventAction
       })
-      if (_.get(layer, 'schema._id')) {
+      if (_.get(layer, 'schema.content')) {
         featureActions.push({
           name: 'edit-feature-properties',
           icon: 'edit',
@@ -127,7 +123,7 @@ export default {
     },
     onCreateEventAction (feature) {
       this.eventFeature = feature
-      this.openTemplateModal()
+      this.$refs.templateModal.open()
     },
     async onUpdateFeaturePropertiesAction (feature, layer, target) {
       await this.editLayer(layer.name)
@@ -139,7 +135,7 @@ export default {
     },
     getTemplateModalToolbar () {
       return [
-        { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.closeTemplateModal() }
+        { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.templateModal.close() }
       ]
     },
     getTemplateModalButtons () {
@@ -153,24 +149,6 @@ export default {
         minHeight: '20vh'
       }
     },
-    openTemplateModal () {
-      if (this.$refs.templates.items.length === 1) {
-        // When we have a single template simply use it
-        this.$router.push({
-          name: 'create-event',
-          params: {
-            contextId: this.contextId,
-            templateId: this.$refs.templates.items[0]._id,
-            featureId: this.eventFeature._id
-          }
-        })
-      } else {
-        this.$refs.templateModal.open()
-      }
-    },
-    closeTemplateModal () {
-      this.$refs.templateModal.close()
-    },
     onEventTemplateSelected (template) {
       this.$router.push({
         name: 'create-event',
@@ -180,9 +158,6 @@ export default {
           featureId: this.eventFeature._id
         }
       })
-    },
-    onLocationChanged (location) {
-      if (location) this.center(location.longitude, location.latitude)
     }
   },
   created () {
