@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { Loading } from 'quasar'
+import { Loading, Dialog } from 'quasar'
 import { mixins, beforeGuard } from '@kalisio/kdk-core/client'
 import config from 'config'
 import utils from '../utils'
@@ -48,7 +48,7 @@ export default {
       this.$api.socket.on('reconnect_error', () => {
         // Display it only the first time the error appears because multiple attempts will be tried
         if (!this.pendingReconnection) {
-          this.pendingReconnection = Alert.create({ html: this.$t('Index.DISCONNECT') })
+          this.pendingReconnection = this.$toast({ message: this.$t('Index.DISCONNECT') })
         }
       })
       // Handle reconnection correctly, otherwise auth seems to be lost
@@ -69,13 +69,13 @@ export default {
       })
       // Display error message if we have been banned from the server
       this.$api.socket.on('rate-limit', (error) => {
-        Alert.create({
-          html: this.$t('Index.REFUSED'),
-          actions: [{
-            label: this.$t('Index.RETRY'),
-            handler () { window.location.reload() }
-          }]
-        })
+        Dialog.create({
+          title: this.$t('Index.REFUSED'),
+          html: true,
+          ok: {
+            label: this.$t('Index.RETRY')
+          }
+        }).onOk(() => window.location.reload())
       })
     }
     // Check for API version, this one is not a service but a basic route so we don't use Feathers client

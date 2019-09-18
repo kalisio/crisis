@@ -21,9 +21,9 @@
     <k-modal ref="templateModal"
       :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
       :toolbar="getTemplateModalToolbar()"
-      :buttons="getTemplateModalButtons()"
-      :options="getTemplateModalOptions()" :route="false">
-      <k-list ref="templates" slot="modal-content" service="event-templates" :base-query="baseQuery" :contextId="contextId" :list-strategy="'smart'" @selection-changed="onEventTemplateSelected" />
+      :buttons="[]"
+      :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }" :route="false">
+      <k-list ref="templates" slot="modal-content" service="event-templates" :base-query="baseTemplateQuery" :contextId="contextId" :list-strategy="'smart'" @selection-changed="onEventTemplateSelected" />
     </k-modal>
   </q-page>
 </template>
@@ -70,7 +70,7 @@ export default {
   },
   data () {
     return {
-      baseQuery: {
+      baseTemplateQuery: {
         $sort: { name: 1 }
       }
     }
@@ -121,8 +121,9 @@ export default {
       })
       return featureActions
     },
-    onCreateEventAction (feature) {
+    onCreateEventAction (feature, layer) {
       this.eventFeature = feature
+      this.baseTemplateQuery['layer._id'] = layer._id
       this.$refs.templateModal.open()
     },
     async onUpdateFeaturePropertiesAction (feature, layer, target) {
@@ -137,17 +138,6 @@ export default {
       return [
         { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.templateModal.close() }
       ]
-    },
-    getTemplateModalButtons () {
-      return []
-    },
-    getTemplateModalOptions () {
-      return {
-        padding: '4px',
-        minWidth: '40vw',
-        maxWidth: '60vw',
-        minHeight: '20vh'
-      }
     },
     onEventTemplateSelected (template) {
       this.$router.push({
