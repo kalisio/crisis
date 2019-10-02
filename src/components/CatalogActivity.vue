@@ -25,6 +25,20 @@
       :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }" :route="false">
       <k-list ref="templates" slot="modal-content" service="event-templates" :base-query="baseTemplateQuery" :contextId="contextId" :list-strategy="'smart'" @selection-changed="onEventTemplateSelected" />
     </k-modal>
+
+    <k-modal ref="geoalertModal"
+      :title="$t('CatalogActivity.CREATE_GEOALERT_TITLE')"
+      :toolbar="getGeoAlertModalToolbar()"
+      :buttons="[]"
+      :options="{}" :route="false">
+      <div slot="modal-content">
+        <k-geoalert-form :class="{ 'light-dimmed': inProgress }" ref="geoalertForm" :layer="geoAlertLayer" :feature="geoAlertFeature"/>
+        <div class="row justify-end" style="padding: 12px">
+          <q-btn id="apply-button" color="primary" flat :label="$t('CREATE')" @click="onCreateGeoAlert"/>
+        </div>
+        <q-spinner-cube color="primary" class="fixed-center" v-if="inProgress" size="4em"/>
+      </div>
+    </k-modal>
   </q-page>
 </template>
 
@@ -72,7 +86,10 @@ export default {
     return {
       baseTemplateQuery: {
         $sort: { name: 1 }
-      }
+      },
+      geoAlertLayer: null,
+      geoAlertFeature: null,
+      inProgress: false
     }
   },
   methods: {
@@ -96,29 +113,71 @@ export default {
       // Then merge layers coming from contextual catalog by calling super
       response = await activityMixin.methods.getCatalogLayers.call(this)
       layers = layers.concat(response)
+      // Check for any defined alerts
+      response = await this.$api.getService('geoalerts').find({ query: { $limit: 0 } })
+      if (response.total > 0) {
+        // Add a "virtual" layer for geoalerts
+        layers.push({
+          name: this.$t('CatalogActivity.GEOALERTS_LAYER'),
+          type: 'OverlayLayer',
+          icon: 'fas fa-bell',
+          service: 'geoalerts',
+          // TODO: filter alerts related to org only
+          baseQuery: { geoJson: true },
+          isStorable: false,
+          isEditable: false,
+          leaflet: {
+            type: 'geoJson',
+            isVisible: false,
+            source: '/api/geoalerts',
+            //realtime: true,
+            'marker-color': `green`,
+            'icon-classes': `fas fa-bell`,
+            'icon-color': '#FFF',
+            template: ['marker-color', 'icon-classes'],
+            popup: { pick: [] }
+          },
+          cesium: {
+            type: 'geoJson',
+            isVisible: false,
+            source: '/api/geoalerts',
+            //realtime: true,
+            popup: { pick: [] }
+          }
+        })
+      }
       return layers
     },
     getFeatureActions (feature, layer) {
       let featureActions = []
       // Only on saved features and not in edition mode
-      if (!feature._id || this.isLayerEdited(layer.name)) featureActions
-      featureActions.push({
-        name: 'create-event',
-        icon: 'whatshot',
-        handler: this.onCreateEventAction
-      })
-      if (_.get(layer, 'schema.content')) {
+      if (!feature._id || this.isLayerEdited(layer.name)) return
+      // Only on feature services targeting non-user data
+      if (layer.variables) {
         featureActions.push({
-          name: 'edit-feature-properties',
-          icon: 'edit',
-          handler: this.onUpdateFeaturePropertiesAction
+          name: 'create-geoalert',
+          icon: 'fas fa-bell',
+          handler: this.onCreateGeoAlertAction
+        })
+      } else {
+        featureActions.push({
+          name: 'create-event',
+          icon: 'whatshot',
+          handler: this.onCreateEventAction
+        })
+        if (_.get(layer, 'schema.content')) {
+          featureActions.push({
+            name: 'edit-feature-properties',
+            icon: 'edit',
+            handler: this.onUpdateFeaturePropertiesAction
+          })
+        }
+        featureActions.push({
+          name: 'remove-feature',
+          icon: 'remove_circle',
+          handler: this.onRemoveFeatureAction
         })
       }
-      featureActions.push({
-        name: 'remove-feature',
-        icon: 'remove_circle',
-        handler: this.onRemoveFeatureAction
-      })
       return featureActions
     },
     onCreateEventAction (feature, layer) {
@@ -133,6 +192,22 @@ export default {
     },
     onRemoveFeatureAction (feature, layer, target) {
       this.onRemoveFeature(feature, layer, target)
+    },
+    onCreateGeoAlertAction (feature, layer) {
+      this.geoAlertFeature = feature
+      this.geoAlertLayer = layer
+      this.$refs.geoalertModal.open()
+    },
+    async onCreateGeoAlert () {
+      const result = this.$refs.geoalertForm.validate()
+      if (!result.isValid) return
+      this.inProgress = true
+      try {
+        const alert = await this.$api.getService('geoalerts').create(result.values)
+      } catch (_) {
+      }
+      this.inProgress = false
+      this.$refs.geoalertModal.close()
     },
     getTemplateModalToolbar () {
       return [
@@ -149,6 +224,11 @@ export default {
           featureId: this.eventFeature._id
         }
       })
+    },
+    getGeoAlertModalToolbar () {
+      return [
+        { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.geoalertModal.close() }
+      ]
     }
   },
   created () {
@@ -159,6 +239,7 @@ export default {
     this.$options.components['k-feature-action-button'] = this.$load('KFeatureActionButton')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-list'] = this.$load('collection/KList')
+    this.$options.components['k-geoalert-form'] = this.$load('KGeoAlertForm')
   },
   mounted () {
   },

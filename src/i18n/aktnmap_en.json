@@ -69,7 +69,9 @@
     "DANGER_ZONE_LABEL": "Danger Zone"
   },
   "CatalogActivity": {
-    "CREATE_EVENT_TITLE": "Select an event template"
+    "CREATE_EVENT_TITLE": "Select an event template",
+    "CREATE_GEOALERT_TITLE": "Create a new alert ?",
+    "GEOALERTS_LAYER": "My alerts"
   },
   "Index": {
     "VERSION_MISMATCH": "Application version mismatch, please install the latest available version or check your end point",
