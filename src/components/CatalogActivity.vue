@@ -32,7 +32,8 @@
       :buttons="[]"
       :options="{}" :route="false">
       <div slot="modal-content">
-        <k-geoalert-form :class="{ 'light-dimmed': inProgress }" ref="geoalertForm" :layer="geoAlertLayer" :feature="geoAlertFeature"/>
+        <k-geoalert-form :class="{ 'light-dimmed': inProgress }" ref="geoalertForm"
+          :layer="geoAlertLayer" :feature="geoAlertFeature" :forecastModel="forecastModel"/>
         <div class="row justify-end" style="padding: 12px">
           <q-btn id="apply-button" color="primary" flat :label="$t('CREATE')" @click="onCreateGeoAlert"/>
         </div>
@@ -44,6 +45,7 @@
 
 <script>
 import moment from 'moment'
+import { Dialog } from 'quasar'
 import { mixins as kMapMixins } from '@kalisio/kdk-map/client.map'
 import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
 
@@ -54,6 +56,7 @@ export default {
   mixins: [
     kCoreMixins.refsResolver(['map']),
     kCoreMixins.baseActivity,
+    kCoreMixins.baseCollection,
     kMapMixins.geolocation,
     kMapMixins.featureService,
     kMapMixins.weacast,
@@ -93,6 +96,13 @@ export default {
     }
   },
   methods: {
+    loadService () {
+      return this.$api.getService('geoalerts')
+    },
+    getCollectionBaseQuery () {
+      // TODO: filter alerts related to org only
+      return { geoJson: true }
+    },
     async refreshActivity () {
       this.clearActivity()
       this.clearNavigationBar()
@@ -105,6 +115,8 @@ export default {
       // Wait until map is ready
       await this.initializeMap()
       this.setCurrentTime(moment.utc())
+      // Then update geo alerts
+      this.refreshCollection()
     },
     async getCatalogLayers () {
       // We get layers coming from global catalog first
@@ -113,45 +125,31 @@ export default {
       // Then merge layers coming from contextual catalog by calling super
       response = await activityMixin.methods.getCatalogLayers.call(this)
       layers = layers.concat(response)
-      // Check for any defined alerts
-      response = await this.$api.getService('geoalerts').find({ query: { $limit: 0 } })
-      if (response.total > 0) {
-        // Add a "virtual" layer for geoalerts
-        layers.push({
-          name: this.$t('CatalogActivity.GEOALERTS_LAYER'),
-          type: 'OverlayLayer',
-          icon: 'fas fa-bell',
-          service: 'geoalerts',
-          // TODO: filter alerts related to org only
-          baseQuery: { geoJson: true },
-          isStorable: false,
-          isEditable: false,
-          leaflet: {
-            type: 'geoJson',
-            isVisible: false,
-            source: '/api/geoalerts',
-            //realtime: true,
-            'marker-color': `green`,
-            'icon-classes': `fas fa-bell`,
-            'icon-color': '#FFF',
-            template: ['marker-color', 'icon-classes'],
-            popup: { pick: [] }
-          },
-          cesium: {
-            type: 'geoJson',
-            isVisible: false,
-            source: '/api/geoalerts',
-            //realtime: true,
-            popup: { pick: [] }
-          }
-        })
-      }
+      // Add a "virtual" layer for geoalerts
+      layers.push({
+        name: this.$t('CatalogActivity.GEOALERTS_LAYER'),
+        type: 'OverlayLayer',
+        icon: 'fas fa-bell',
+        isStorable: false,
+        isEditable: false,
+        featureId: '_id',
+        leaflet: {
+          type: 'geoJson',
+          isVisible: true,
+          realtime: true,
+          'marker-color': `<% if (properties.active) { %>red<% } else { %>green<% } %>`,
+          'icon-classes': `fas fa-bell`,
+          'icon-color': 'white',
+          template: ['marker-color'],
+          popup: { pick: [] }
+        }
+      })
       return layers
     },
     getFeatureActions (feature, layer) {
-      let featureActions = []
       // Only on saved features and not in edition mode
-      if (!feature._id || this.isLayerEdited(layer.name)) return
+      if (!feature._id || this.isLayerEdited(layer.name)) []
+      let featureActions = []
       // Only on feature services targeting non-user data
       if (layer.variables) {
         featureActions.push({
@@ -160,11 +158,13 @@ export default {
           handler: this.onCreateGeoAlertAction
         })
       } else {
-        featureActions.push({
-          name: 'create-event',
-          icon: 'whatshot',
-          handler: this.onCreateEventAction
-        })
+        if (layer.name !== this.$t('CatalogActivity.GEOALERTS_LAYER')) {
+          featureActions.push({
+            name: 'create-event',
+            icon: 'whatshot',
+            handler: this.onCreateEventAction
+          })
+        }
         if (_.get(layer, 'schema.content')) {
           featureActions.push({
             name: 'edit-feature-properties',
@@ -180,6 +180,22 @@ export default {
       }
       return featureActions
     },
+    refreshGeoAlertsLayer () {
+      this.updateLayer(this.$t('CatalogActivity.GEOALERTS_LAYER'), { type: 'FeatureCollection', features: this.items })
+    },
+    onGeoAlertCollectionRefreshed () {
+      this.refreshGeoAlertsLayer()
+      // We do not manage pagination now
+      if (this.items.length < this.nbTotalItems) {
+        this.$events.$emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
+      }
+    },
+    getGeoAlertTooltip (feature, layer) {
+      if (!_.has(feature, 'properties.active')) return null
+      let html = (_.get(feature, 'properties.active') ?
+        this.$t('CatalogActivity.GEOALERT_ACTIVE') : this.$t('CatalogActivity.GEOALERT_INACTIVE'))
+      return L.tooltip({ permanent: false }, layer).setContent(`<b>${html}</b>`)
+    },
     onCreateEventAction (feature, layer) {
       this.eventFeature = feature
       this.baseTemplateQuery['layer._id'] = layer._id
@@ -191,7 +207,22 @@ export default {
       await this.editLayer(layer.name)
     },
     onRemoveFeatureAction (feature, layer, target) {
-      this.onRemoveFeature(feature, layer, target)
+      if (layer.name === this.$t('CatalogActivity.GEOALERTS_LAYER')) { // Geoalert deletion
+        Dialog.create({
+          title: this.$t('CatalogActivity.REMOVE_GEOALERT_DIALOG_TITLE'),
+          message: this.$t('CatalogActivity.REMOVE_GEOALERT_DIALOG_MESSAGE'),
+          html: true,
+          ok: {
+            label: this.$t('OK')
+          },
+          cancel: {
+            label: this.$t('CANCEL')
+          }
+        }).onOk(async () => {
+          await this.$api.getService('geoalerts').remove(feature._id)
+        })
+      } // User feature deletion
+      else this.onRemoveFeature(feature, layer, target)
     },
     onCreateGeoAlertAction (feature, layer) {
       this.geoAlertFeature = feature
@@ -240,10 +271,14 @@ export default {
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-list'] = this.$load('collection/KList')
     this.$options.components['k-geoalert-form'] = this.$load('KGeoAlertForm')
+
+    this.registerLeafletStyle('tooltip', this.getGeoAlertTooltip)
   },
   mounted () {
+    this.$on('collection-refreshed', this.onGeoAlertCollectionRefreshed)
   },
   beforeDestroy () {
+    this.$off('collection-refreshed', this.onGeoAlertCollectionRefreshed)
   }
 }
 </script>
