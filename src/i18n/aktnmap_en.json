@@ -25,7 +25,16 @@
     "WIND_SPEED": "Speed",
     "WIND_DIRECTION": "Direction",
     "WIND_GUST": "Gust",
-    "PRECIPITATIONS": "Precipitations"
+    "PRECIPITATIONS": "Precipitations",
+    "TEMPERATURE": "Temperature",
+    "GAMMA_DOSE_RATE": "Ambient gamma dose rate",
+    "PM10": "Particculater matter (< 10µm, PM10)",
+    "PM25": "Particulate matter (< 2.5µm, PM2.5)",
+    "SO2": "Sulfur dioxide (SO2)",
+    "CO": "Carbon monoxide (CO)",
+    "NO2": "Nitrogen dioxide (NO2)",
+    "O3": "Ozone (O3)",
+    "BC": "Black carbon (BC)"
   },
   "screen": {
     "ABOUT_KALISIO": "About",
@@ -60,14 +69,21 @@
     "DANGER_ZONE_LABEL": "Danger Zone"
   },
   "CatalogActivity": {
-    "CREATE_EVENT_TITLE": "Select an event template"
+    "CREATE_EVENT_TITLE": "Select an event template",
+    "CREATE_GEOALERT_TITLE": "Create a new alert ?",
+    "GEOALERTS_LAYER": "My alerts",
+    "GEOALERT_ACTIVE": "Active",
+    "GEOALERT_INACTIVE": "Inactive",
+    "REMOVE_GEOALERT_DIALOG_TITLE": "Remove this alert ?",
+    "REMOVE_GEOALERT_DIALOG_MESSAGE": "Are you sure you want to remove this alert from your workspace ?"
   },
   "Index": {
     "VERSION_MISMATCH": "Application version mismatch, please install the latest available version or check your end point",
     "DISCONNECT": "The server connection has been lost, please wait until reconnection...",
     "RECONNECT": "We are trying to reconnect...",
     "REFUSED": "Your connection have been refused by the server, you have been disconnected...",
-    "RETRY": "Retry"
+    "RETRY": "Retry",
+    "ALERT": "Alert"
   },
   "plans": {
     "bronze_LABEL": "Bronze",

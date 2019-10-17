@@ -25,7 +25,16 @@
     "WIND_SPEED": "Vitesse",
     "WIND_DIRECTION": "Direction",
     "WIND_GUST": "Rafales",
-    "PRECIPITATIONS": "Précipitations"
+    "PRECIPITATIONS": "Précipitations",
+    "TEMPERATURE": "Température",
+    "GAMMA_DOSE_RATE": "Débit de dose gamma ambiant",
+    "PM10": "Particules fines (< 10µm, PM10)",
+    "PM25": "Particules fines (< 2.5µm, PM2.5)",
+    "SO2": "Dioxyde de soufre (SO2)",
+    "CO": "Monoxyde de carbone (CO)s",
+    "NO2": "Dioxyde d'azote (NO2)",
+    "O3": "Ozone (O3)",
+    "BC": "Noir de carbone (BC)"
   },
   "screen": {
     "ABOUT_KALISIO": "A propos",
@@ -60,14 +69,21 @@
     "DANGER_ZONE_LABEL": "Zone de danger"
   },
   "CatalogActivity": {
-    "CREATE_EVENT_TITLE": "Sélectectionner un modèle d'événement"
+    "CREATE_EVENT_TITLE": "Sélectectionner un modèle d'événement",
+    "CREATE_GEOALERT_TITLE": "Créer une nouvelle alerte ?",
+    "GEOALERTS_LAYER": "Mes alertes",
+    "GEOALERT_ACTIVE": "Active",
+    "GEOALERT_INACTIVE": "Inactive",
+    "REMOVE_GEOALERT_DIALOG_TITLE": "Supprimer l'alerte ?",
+    "REMOVE_GEOALERT_DIALOG_MESSAGE": "Etes vous sûr de vouloir supprimer l'alerte de votre espace de travail ?"
   },
   "Index": {
     "VERSION_MISMATCH": "Discordance de version, merci d'installer la dernière version disponible ou de vérifier votre point d'accès",
     "DISCONNECT": "La connexion au serveur a été interrompue, merci de patienter jusqu'à la reconnexion...",
     "RECONNECT": "Tentative de reconnexion en cours...",
     "REFUSED": "Votre connexion a été refusée par le serveur, vous avez été déconnecté...",
-    "RETRY": "Rééssayer"
+    "RETRY": "Rééssayer",
+    "ALERT": "Alerte"
   },
   "plans": {
     "bronze_LABEL": "Bronze",

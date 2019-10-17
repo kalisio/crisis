@@ -254,16 +254,16 @@
     lodash "^4.17.10"
     radix-router "^3.0.1"
 
-"@kalisio/feathers-distributed@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@kalisio/feathers-distributed/-/feathers-distributed-0.4.0.tgz#f1e005560546a8711a8c036f214bdfc1e79afbc6"
-  integrity sha512-pPNulOFACNnSho9jAsLhwtEL9nWu3TylMfGawrJrrn3DAdqm0ZT01pXLyS/c5Q+6u2RYHMwF0OCoNcUgBBIk/g==
+"@kalisio/feathers-distributed@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@kalisio/feathers-distributed/-/feathers-distributed-0.5.2.tgz#3c6e36726ee49a75e6da85d6d3d24d4382e90879"
+  integrity sha512-Y1AR5WWNe3iVJyEPsC/BF8jgKnJdHP/Y5jKLlpfi5TarMnLVSpSDmh305LIihJka9eqD3XqtMpwlSLqGvtJLMA==
   dependencies:
     "@feathersjs/commons" "^1.4.0"
     "@feathersjs/errors" "^3.3.0"
     "@feathersjs/feathers" "^3.1.3"
     cote "^0.20.0"
-    debug "^3.1.0"
+    debug "^4.1.0"
 
 abbrev@1, abbrev@1.0.x:
   version "1.0.9"

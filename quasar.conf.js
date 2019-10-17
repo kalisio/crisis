@@ -93,7 +93,8 @@ module.exports = function (ctx) {
       plugins: [
         'Notify',
         'Dialog',
-        'Platform'
+        'Platform',
+        'AppFullscreen'
       ]
     },
 
@@ -153,9 +154,9 @@ module.exports = function (ctx) {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {}, // only for NON InjectManifest
       manifest: {
-        name: 'Kano',
-        short_name: 'Kano',
-        description: 'A Geospatial Data Explorer',
+        name: 'Aktnmap',
+        short_name: 'Aktnmap',
+        description: 'Monitor real-time events on the field',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

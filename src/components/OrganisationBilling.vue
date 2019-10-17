@@ -92,7 +92,7 @@ export default {
       this.customer = customer
     }
   },
-  created () {
+  async created () {
     // Load the required components
     this.$options.components['k-block'] = this.$load('frame/KBlock')
     this.$options.components['k-customer-editor'] = this.$load('KCustomerEditor')
@@ -101,10 +101,9 @@ export default {
     this.refreshPlans()
     this.$events.$on('capabilities-api-changed', this.refreshPlans)
     // Load underlying billing perspective
-    this.loadObject().then(perspective => {
-      this.currentPlan = perspective.billing.subscription.plan
-      this.customer = perspective.billing.customer
-    })
+    const perspective = await this.loadObject()
+    this.currentPlan = perspective.billing.subscription.plan
+    this.customer = perspective.billing.customer
   },
   beforeDestroy () {
     this.$events.$off('capabilities-api-changed', this.refreshPlans)

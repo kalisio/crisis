@@ -19,10 +19,8 @@ corePermissions.defineAbilities.registerHook(teamPermissions.defineGroupAbilitie
 corePermissions.defineAbilities.registerHook(eventPermissions.defineEventAbilities)
 // Then rules for billing
 corePermissions.defineAbilities.registerHook(billingPermissions.defineBillingAbilities)
-// FIXME: Then rules for catalog
+// Then rules for contextual catalog, features, etc.
 corePermissions.defineAbilities.registerHook((subject, can, cannot) => {
-  can('service', 'catalog')
-  can('all', 'catalog')
   if (subject && subject._id) {
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {
