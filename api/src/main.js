@@ -6,13 +6,7 @@ import { Server } from './server'
 const N = parseInt(process.env.NODE_APP_NB_INSTANCES)
 let server
 
-if (cluster.isMaster && (N > 1)) {
-  console.log(`Launching master with pid ${process.pid}`)
-
-  for (let i = 0; i < N; i++) {
-    cluster.fork()
-  }
-} else {
+function createServer () {
   server = new Server()
 
   const config = server.app.get('logs')
@@ -22,15 +16,35 @@ if (cluster.isMaster && (N > 1)) {
     fs.ensureDirSync(logPath)
   }
 
-  if (require.main === module) {
-    process.on('unhandledRejection', (reason, p) =>
-      server.app.logger.error('Unhandled Rejection at: Promise ', p, reason)
-    )
+  process.on('unhandledRejection', (reason, p) =>
+    server.app.logger.error('Unhandled Rejection: ', reason)
+  )
+}
 
-    server.run().then(() => {
-      server.app.logger.info(`Server with pid ${process.pid} started listening`)
-    })
+async function runServer () {
+  await server.run()
+  server.app.logger.info(`Server with pid ${process.pid} started listening`)
+}
+
+if (cluster.isMaster && (N > 1)) {
+  console.log(`Launching master with pid ${process.pid}`)
+
+  for (let i = 0; i < N; i++) {
+    cluster.fork()
   }
+} else if (require.main === module) {
+  if (process.env.LAUNCH_DELAY) {
+    console.log(`Waiting ${process.env.LAUNCH_DELAY/1000}s for server with pid ${process.pid} to start`)
+    setTimeout(() => {
+      createServer()
+      runServer()
+    }, process.env.LAUNCH_DELAY)
+  } else {
+    createServer()
+    runServer()
+  }
+} else {
+  createServer()
 }
 
 export default server
