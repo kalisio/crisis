@@ -16,6 +16,7 @@ WORKDIR /opt/$APP
 COPY . /opt/$APP
 
 WORKDIR /opt/$APP/modules
+RUN git clone https://github.com/kalisio/feathers-distributed.git -b master --single-branch && cd feathers-distributed && yarn install && yarn link && cd .. 
 RUN git clone https://github.com/kalisio/kCore.git -b ${BRANCH} --single-branch && cd kCore && yarn install  && yarn link && cd ..
 RUN git clone https://github.com/kalisio/kTeam.git -b ${BRANCH} --single-branch && cd kTeam && yarn install  && yarn link @kalisio/kdk-core && yarn link && cd ..
 RUN git clone https://github.com/kalisio/kNotify.git -b ${BRANCH} --single-branch && cd kNotify && yarn install  && yarn link @kalisio/kdk-core && yarn link && cd ..
@@ -26,6 +27,7 @@ RUN git clone https://github.com/kalisio/kBilling.git -b ${BRANCH} --single-bran
 WORKDIR /opt/$APP/api
 
 RUN yarn install 
+RUN yarn link @kalisio/feathers-distributed
 RUN yarn link @kalisio/kdk-core
 RUN yarn link @kalisio/kdk-team
 RUN yarn link @kalisio/kdk-notify
