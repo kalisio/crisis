@@ -18,7 +18,7 @@ else
 
 	# Copy the ssh config file
 	cp workspace/$FLAVOR/ssh.config ~/.ssh/config
-	service sshd reload
+	#service sshd reload
 
   # Create app directory if needed 
 	ssh REMOTE_SERVER mkdir -p $APP
