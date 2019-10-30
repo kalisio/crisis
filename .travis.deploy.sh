@@ -10,15 +10,15 @@ else
 	#
 	travis_fold start "deploy"
 
-# Copy the required keys and update the mode
+	# Copy the required keys and update the mode
 	cp workspace/$FLAVOR/*.pem ~/.ssh/.
 	for KEY in `ls ~/.ssh/*.pem`; do
   	chmod 600 $KEY
 	done
 
 	# Copy the ssh config file
+		# Note: it does not seem necessary to restart the service (service sshd reload)
 	cp workspace/$FLAVOR/ssh.config ~/.ssh/config
-	service sshd reload
 
   # Create app directory if needed 
 	ssh REMOTE_SERVER mkdir -p $APP
