@@ -10,6 +10,8 @@ services:
       - NODE_APP_NB_INSTANCES=1
       - DB_URL=mongodb://mongodb:27017/${APP}
     working_dir: /opt/${APP}
+    depends_on:
+      - mongodb       
     volumes:
       - ./server-coverage:/opt/${APP}/api/coverage
     command: [ "npm", "run", "test:server" ]

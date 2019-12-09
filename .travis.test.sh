@@ -16,30 +16,18 @@ else
 	# Output directory for server coverage
 	mkdir server-coverage
 	chmod -R 777 server-coverage
-
-  # Run the app
-	docker-compose -f deploy/app.yml -f deploy/mongodb.yml up -d mongodb
-	ERROR_CODE=$?
-	if [ $ERROR_CODE -eq 1 ]; then
-		echo "Running MongoDB failed [error: $ERROR_CODE]"
-		exit 1
-	fi
  
   # Run the API tests
-	docker-compose -f deploy/app.yml -f deploy/mongodb.yml -f deploy/app.test.server.yml up app
+	docker-compose -f deploy/mongodb.yml -f deploy/app.yml -f deploy/mongodb.yml -f deploy/app.test.server.yml up app
   ERROR_CODE=$?
-	if [ $ERROR_CODE -eq 1 ]; then
-		echo "Testing ${APP} API failed [error: $ERROR_CODE]"
-		exit 1
-	fi
-
-  # Backup the server coverages
-	codeclimate-test-reporter < server-coverage/lcov.info
+	# Backup the server coverages whateverthe result
+	codeclimate-test-reporter < ./server-coverage/lcov.info
 	aws s3 cp server-coverage dist s3://$BUILDS_BUCKET/$BUILD_NUMBER/server-coverage > /dev/null
-	if [ $? -eq 1 ]; then
+	if [ $ERROR_CODE -eq 1 ]; then
+	  echo "Testing ${APP} API failed [error: $ERROR_CODE]"
 		exit 1
 	fi
-
+	
   travis_fold end "api"
 
   #
@@ -51,21 +39,13 @@ else
 	mkdir client-screenshots
 	chmod -R 777 client-screenshots
   
-	# Run the app
-	docker-compose -f deploy/app.yml -f deploy/mongodb.yml -f deploy/app.test.client.yml up -d app
-  ERROR_CODE=$?
-	if [ $ERROR_CODE -eq 1 ]; then
-		echo "Running ${App} failed [error: $ERROR_CODE]"
-		exit 1
-	fi
-
-	# Run client tests
-	docker-compose -f deploy/app.yml -f deploy/mongodb.yml -f deploy/app.test.client.yml up testcafe
-	ERROR_CODE=$?
-	# Copy the screenshots whatever the result
-	aws s3 sync client-screenshots s3://$BUILDS_BUCKET/$BUILD_NUMBER/client-screenshots > /dev/null
-	if [ $ERROR_CODE -eq 1 ]; then
-		echo "Testing ${App} frontend failed [error: $ERROR_CODE]"
+  # Run the client tests
+	docker-compose -f deploy/mongodb.yml -f deploy/app.yml -f deploy/app.test.client.yml up testcafe
+	RROR_CODE=$?
+	# Backup the client screenshots
+	aws s3 cp client-screenshots dist s3://$BUILDS_BUCKET/$BUILD_NUMBER/client-screenshots > /dev/null
+	if [ $? -eq 1 ]; then
+	  echo "Testing ${App} client failed [error: $ERROR_CODE]"
 		exit 1
 	fi
 
