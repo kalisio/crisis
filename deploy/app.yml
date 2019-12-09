@@ -26,11 +26,9 @@ services:
       - DB_URL
       - DEBUG
     networks:
-      - app
-      - cluster
+      - app-network
 
 networks:
-  app:
-  cluster:
+  app-network:
     external:
       name: ${DOCKER_NETWORK}
