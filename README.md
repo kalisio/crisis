@@ -9,6 +9,7 @@
 [![Documentation](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://kalisio.github.io/kdk/)
 [![Known Vulnerabilities](https://snyk.io/test/github/kalisio/aktnmap/badge.svg)](https://snyk.io/test/github/kalisio/aktnmap)
 [![Docker Pulls](https://img.shields.io/docker/pulls/kalisio/aktnmap.svg?style=plastic)](https://hub.docker.com/r/kalisio/aktnmap/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkalisio%2Faktnmap.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkalisio%2Faktnmap?ref=badge_shield)
 
 For more information please visit our websites:
 * [Kalisio Company](https://kalisio.com/)
@@ -19,3 +20,6 @@ This application is based on the [Kalisio Development Kit](https://kalisio.githu
 ### License
 
 Copyright (c) 2018 Kalisio
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkalisio%2Faktnmap.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkalisio%2Faktnmap?ref=badge_large)
