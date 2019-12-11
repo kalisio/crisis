@@ -98,7 +98,9 @@ module.exports = {
   },
   appName: 'Akt\'n\'Map',
   appLogo: 'aktnmap-logo.png',
+  appWebsite: 'https://aktnmap.com',
   publisher: 'Kalisio',
+  publisherWebsite: website,
   logs: {
     level: (process.env.NODE_ENV === 'development' ? 'debug' : 'info')
   },
@@ -160,6 +162,7 @@ module.exports = {
       user_dashboard: 'layout/KLinksPanel',
       user_organisation: 'KOrganisationsPanel',
       user_settings: 'Settings',
+      app_about: 'layout/KAbout',
       user_actions: 'layout/KLinksPanel'
     }
   },
