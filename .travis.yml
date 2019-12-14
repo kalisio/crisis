@@ -82,7 +82,7 @@ jobs:
     # AWS cli
     - pip install --user awscli
     # Fastlane
-    - gem install fastlane -v '~> 2.119.0'
+    - gem install fastlane -v '~> 2.137.0'
     # Quasar cli
     - npm install -g @quasar/cli  
     install:
