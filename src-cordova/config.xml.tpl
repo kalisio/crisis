@@ -44,7 +44,7 @@
     <splash density="mdpi" src="res/screens/android/screen-mdpi-portrait.png"/>
     <splash density="xhdpi" src="res/screens/android/screen-xhdpi-portrait.png"/>
     <splash density="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png"/>
-    <splash density="port-xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>    
+    <splash density="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>    
     <splash density="land-hdpi" src="res/screens/android/screen-hdpi-landscape.png"/>
     <splash density="land-ldpi" src="res/screens/android/screen-ldpi-landscape.png"/>
     <splash density="land-mdpi" src="res/screens/android/screen-mdpi-landscape.png"/>
