@@ -8,10 +8,15 @@ notifications:
 
 stages:
 - name: BUILD
+  if: commit_message !~ /(skip[ _-]build)/
 - name: TEST
+  if: commit_message !~ /(skip[ _-]test)/
 - name: DEPLOY
+  if: commit_message !~ /(skip[ _-]deploy)/
 - name: ANDROID
+  if: commit_message !~ /(skip[ _-]android)/
 - name: IOS
+  if: commit_message !~ /(skip[ _-]ios)/
 
 jobs:
   include:
@@ -23,8 +28,6 @@ jobs:
     - '8'
     services:
     - docker
-    before_script:
-    - export -f travis_fold
     script:
     - bash .travis.build.sh
 
@@ -54,8 +57,6 @@ jobs:
     services:
     - docker
     install: true
-    before_script:
-    - export -f travis_fold 
     script:
     - bash .travis.deploy.sh
 
