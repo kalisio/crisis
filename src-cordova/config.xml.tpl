@@ -122,5 +122,5 @@
   </plugin>
   <plugin name="phonegap-plugin-push" spec="~2.1.2"/>
   <engine name="android" spec="~8.0.0" />
-  <engine name="ios" spec="~5.0.1" />
+  <!--engine name="ios" spec="~5.0.1" /-->
 </widget>
