@@ -39,6 +39,12 @@
     <icon density="xhdpi" src="res/icons/android/icon-96-xhdpi.png"/>
     <icon density="xxhdpi" src="res/icons/android/icon-144-xxhdpi.png"/>
     <icon density="xxxhdpi" src="res/icons/android/icon-192-xxxhdpi.png"/>
+    <splash density="hdpi" src="res/screens/android/screen-hdpi-portrait.png"/>
+    <splash density="ldpi" src="res/screens/android/screen-ldpi-portrait.png"/>
+    <splash density="mdpi" src="res/screens/android/screen-mdpi-portrait.png"/>
+    <splash density="xhdpi" src="res/screens/android/screen-xhdpi-portrait.png"/>
+    <splash density="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png"/>
+    <splash density="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>    
     <splash density="land-hdpi" src="res/screens/android/screen-hdpi-landscape.png"/>
     <splash density="land-ldpi" src="res/screens/android/screen-ldpi-landscape.png"/>
     <splash density="land-mdpi" src="res/screens/android/screen-mdpi-landscape.png"/>
@@ -115,4 +121,6 @@
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
   <plugin name="phonegap-plugin-push" spec="~2.1.2"/>
+  <engine name="android" spec="~8.0.0" />
+  <engine name="ios" spec="~5.0.0" />  
 </widget>
