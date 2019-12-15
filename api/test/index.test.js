@@ -174,7 +174,7 @@ describe('aktnmap', () => {
       name: 'test-user'
     }, { checkAuthorisation: true })
       .catch(() => {
-        const log = 'duplicate key error collection: kalisio-test.users'
+        const log = 'duplicate key error collection: aktnmap-test.users'
         // FIXME: need to let some time to proceed with log file
         // Didn't find a better way since fs.watch() does not seem to work...
         setTimeout(() => {
