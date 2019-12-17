@@ -178,25 +178,29 @@ module.exports = {
       // Setup some default quotas in dev so that we can perform testing more easily
       groups: (process.env.NODE_ENV === 'development' ? 5 : 1),
       events: -1,
-      'event-templates': (process.env.NODE_ENV === 'development' ? 5 : 1)
+      'event-templates': (process.env.NODE_ENV === 'development' ? 5 : 1),
+      alerts: (process.env.NODE_ENV === 'development' ? 5 : 1)
     },
     silver: {
       members: 25,
       groups: 5,
       events: -1,
-      'event-templates': 5
+      'event-templates': 5,
+      alerts: 5
     },
     gold: {
       members: 250,
       groups: -1,
       events: -1,
-      'event-templates': -1
+      'event-templates': -1,
+      alerts: 50
     },
     diamond: {
       members: -1,
       groups: -1,
       events: -1,
-      'event-templates': -1
+      'event-templates': -1,
+      alerts: -1
     }
   },
   mailer: {
@@ -272,7 +276,7 @@ module.exports = {
   services: {
     // Let Kano instance manage these ones
     catalog: { disabled: true },
-    geoalerts: { disabled: true }
+    alerts: { disabled: true }
   }
 }
 

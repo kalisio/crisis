@@ -70,12 +70,12 @@
   },
   "CatalogActivity": {
     "CREATE_EVENT_TITLE": "Sélectectionner un modèle d'événement",
-    "CREATE_GEOALERT_TITLE": "Créer une nouvelle alerte ?",
-    "GEOALERTS_LAYER": "Mes alertes",
-    "GEOALERT_ACTIVE": "Active",
-    "GEOALERT_INACTIVE": "Inactive",
-    "REMOVE_GEOALERT_DIALOG_TITLE": "Supprimer l'alerte ?",
-    "REMOVE_GEOALERT_DIALOG_MESSAGE": "Etes vous sûr de vouloir supprimer l'alerte de votre espace de travail ?"
+    "CREATE_ALERT_TITLE": "Créer une nouvelle alerte ?",
+    "ALERTS_LAYER": "Mes alertes",
+    "ALERT_ACTIVE": "Active",
+    "ALERT_INACTIVE": "Inactive",
+    "REMOVE_ALERT_DIALOG_TITLE": "Supprimer l'alerte ?",
+    "REMOVE_ALERT_DIALOG_MESSAGE": "Etes vous sûr de vouloir supprimer l'alerte de votre espace de travail ?"
   },
   "Index": {
     "VERSION_MISMATCH": "Discordance de version, merci d'installer la dernière version disponible ou de vérifier votre point d'accès",

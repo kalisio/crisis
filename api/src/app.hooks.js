@@ -22,18 +22,25 @@ corePermissions.defineAbilities.registerHook(teamPermissions.defineGroupAbilitie
 corePermissions.defineAbilities.registerHook(eventPermissions.defineEventAbilities)
 // Then rules for billing
 corePermissions.defineAbilities.registerHook(billingPermissions.defineBillingAbilities)
-// FIXME: Then rules for catalog
+// Then rules for contextual catalog, features, etc.
 corePermissions.defineAbilities.registerHook((subject, can, cannot) => {
-  can('service', 'catalog')
-  can('all', 'catalog')
   if (subject && subject._id) {
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {
         if (organisation._id) {
+          // Specific rules for organisations
+          const role = corePermissions.Roles[organisation.permissions]
+          // The unique identifier of a service is its path not its name.
+          // Indeed we have for instance a 'groups' service in each organisation.
           can('service', organisation._id.toString() + '/catalog')
-          can('all', 'catalog', { context: organisation._id })
+          can('all', organisation._id.toString() + '/catalog')
           can('service', organisation._id.toString() + '/features')
-          can('all', 'features', { context: organisation._id })
+          can('all', organisation._id.toString() + '/features')
+          can('service', organisation._id.toString() + '/alerts')
+          can('read', 'alerts', { context: organisation._id })
+          if (role >= corePermissions.Roles.manager) {
+            can(['create', 'remove'], 'alerts', { context: organisation._id })
+          }
         }
       })
     }

@@ -70,12 +70,12 @@
   },
   "CatalogActivity": {
     "CREATE_EVENT_TITLE": "Select an event template",
-    "CREATE_GEOALERT_TITLE": "Create a new alert ?",
-    "GEOALERTS_LAYER": "My alerts",
-    "GEOALERT_ACTIVE": "Active",
-    "GEOALERT_INACTIVE": "Inactive",
-    "REMOVE_GEOALERT_DIALOG_TITLE": "Remove this alert ?",
-    "REMOVE_GEOALERT_DIALOG_MESSAGE": "Are you sure you want to remove this alert from your workspace ?"
+    "CREATE_ALERT_TITLE": "Create a new alert ?",
+    "ALERTS_LAYER": "My alerts",
+    "ALERT_ACTIVE": "Active",
+    "ALERT_INACTIVE": "Inactive",
+    "REMOVE_ALERT_DIALOG_TITLE": "Remove this alert ?",
+    "REMOVE_ALERT_DIALOG_MESSAGE": "Are you sure you want to remove this alert from your workspace ?"
   },
   "Index": {
     "VERSION_MISMATCH": "Application version mismatch, please install the latest available version or check your end point",

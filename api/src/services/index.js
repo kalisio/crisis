@@ -1,5 +1,6 @@
 import path from 'path'
 import _ from 'lodash'
+import makeDebug from 'debug'
 import kCore from '@kalisio/kdk-core'
 import kTeam from '@kalisio/kdk-team'
 import kMap, { createFeaturesService, createCatalogService } from '@kalisio/kdk-map'
@@ -9,6 +10,8 @@ import kEvent, { hooks as eventHooks } from '@kalisio/kdk-event'
 import { createOrganisationServices, removeOrganisationServices } from '../hooks'
 import packageInfo from '../../package.json'
 
+const debug = makeDebug('kalisio:aktnmap:hooks')
+const modelsPath = path.join(__dirname, '..', 'models')
 const servicesPath = path.join(__dirname, '..', 'services')
 
 module.exports = async function () {
@@ -45,6 +48,7 @@ module.exports = async function () {
           service.name === 'tags' ||
           service.name === 'storage' ||
           service.name === 'features' ||
+          service.name === 'alerts' ||
           service.name === 'events' ||
           service.name === 'event-templates') {
         app.configureService(service.name, service, servicesPath)
@@ -98,8 +102,8 @@ module.exports = async function () {
     organisations.forEach(organisation => {
       // Get org DB
       const db = app.db.instance.db(organisation._id.toString())
-      createCatalogService.call(app, { context: organisation, db })
-      createFeaturesService.call(app, { collection: 'features', context: organisation, db })
+      // We fake a hook call
+      createOrganisationServices({ app, result: organisation })
     })
   } catch (error) {
     app.logger.error(error.message)
