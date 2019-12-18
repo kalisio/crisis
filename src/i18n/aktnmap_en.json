@@ -74,6 +74,10 @@
     "ALERTS_LAYER": "My alerts",
     "ALERT_ACTIVE": "Active",
     "ALERT_INACTIVE": "Inactive",
+    "ALERT_CHECKED_AT": "Checked on",
+    "ALERT_TRIGGERED_AT": "Verified on",
+    "ALERT_GTE": "greater than",
+    "ALERT_LTE": "lower than",
     "REMOVE_ALERT_DIALOG_TITLE": "Remove this alert ?",
     "REMOVE_ALERT_DIALOG_MESSAGE": "Are you sure you want to remove this alert from your workspace ?"
   },

@@ -74,6 +74,10 @@
     "ALERTS_LAYER": "Mes alertes",
     "ALERT_ACTIVE": "Active",
     "ALERT_INACTIVE": "Inactive",
+    "ALERT_CHECKED_AT": "Vérifiée le",
+    "ALERT_TRIGGERED_AT": "Déclenchée le",
+    "ALERT_GTE": "supérieur à",
+    "ALERT_LTE": "inférieur à",
     "REMOVE_ALERT_DIALOG_TITLE": "Supprimer l'alerte ?",
     "REMOVE_ALERT_DIALOG_MESSAGE": "Etes vous sûr de vouloir supprimer l'alerte de votre espace de travail ?"
   },

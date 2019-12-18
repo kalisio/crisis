@@ -45,6 +45,7 @@
 
 <script>
 import moment from 'moment'
+import sift from 'sift'
 import { Dialog } from 'quasar'
 import { mixins as kMapMixins } from '@kalisio/kdk-map/client.map'
 import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
@@ -140,7 +141,7 @@ export default {
           type: 'geoJson',
           isVisible: true,
           realtime: true,
-          'marker-color': `<% if (status.active) { %>red<% } else { %>green<% } %>`,
+          'marker-color': `<% if (feature.status.active) { %>red<% } else { %>green<% } %>`,
           'icon-classes': `fas fa-bell`,
           'icon-color': 'white',
           template: ['marker-color'],
@@ -150,36 +151,49 @@ export default {
       return layers
     },
     getFeatureActions (feature, layer) {
-      // Only on saved features and not in edition mode
-      if (!feature._id || this.isLayerEdited(layer.name)) []
       let featureActions = []
-      // Only on feature services targeting non-user data
-      if (layer.variables) {
-        featureActions.push({
+      // When clicked on map
+      if (!feature) {
+        // Check if weather layer activated
+        const selectedLayer = _.values(this.layers).filter(sift({
+          isVisible: true, type: 'OverlayLayer', tags: { $in: ['weather'] }
+        }))
+        if (selectedLayer.length > 0) featureActions.push({
           name: 'create-alert',
           icon: 'fas fa-bell',
-          handler: this.onCreateAlertAction
+          handler: this.onCreateWeatherAlertAction
         })
       } else {
-        if (layer.name !== this.$t('CatalogActivity.ALERTS_LAYER')) {
+        // Only on saved features and not in edition mode
+        if (!feature._id || this.isLayerEdited(layer.name)) []
+        // Only on feature services targeting non-user data
+        if (layer.variables) {
           featureActions.push({
-            name: 'create-event',
-            icon: 'whatshot',
-            handler: this.onCreateEventAction
+            name: 'create-alert',
+            icon: 'fas fa-bell',
+            handler: this.onCreateMeasureAlertAction
+          })
+        } else {
+          if (layer.name !== this.$t('CatalogActivity.ALERTS_LAYER')) {
+            featureActions.push({
+              name: 'create-event',
+              icon: 'whatshot',
+              handler: this.onCreateEventAction
+            })
+          }
+          if (_.get(layer, 'schema.content')) {
+            featureActions.push({
+              name: 'edit-feature-properties',
+              icon: 'edit',
+              handler: this.onUpdateFeaturePropertiesAction
+            })
+          }
+          featureActions.push({
+            name: 'remove-feature',
+            icon: 'remove_circle',
+            handler: this.onRemoveFeatureAction
           })
         }
-        if (_.get(layer, 'schema.content')) {
-          featureActions.push({
-            name: 'edit-feature-properties',
-            icon: 'edit',
-            handler: this.onUpdateFeaturePropertiesAction
-          })
-        }
-        featureActions.push({
-          name: 'remove-feature',
-          icon: 'remove_circle',
-          handler: this.onRemoveFeatureAction
-        })
       }
       return featureActions
     },
@@ -195,8 +209,31 @@ export default {
     },
     getAlertTooltip (feature, layer) {
       if (!_.has(feature, 'status.active')) return null
-      let html = (_.get(feature, 'status.active') ?
-        this.$t('CatalogActivity.ALERT_ACTIVE') : this.$t('CatalogActivity.ALERT_INACTIVE'))
+
+      const isActive = _.get(feature, 'status.active')
+      const checkedAt = new Date(_.get(feature, 'status.checkedAt'))
+      const triggeredAt = new Date(_.get(feature, 'status.triggeredAt'))
+      let html = ''
+      if (_.has(feature, 'feature')) html += `${feature.feature} - `
+      if (isActive) html += this.$t('CatalogActivity.ALERT_ACTIVE') + '</br>'
+      else html += this.$t('CatalogActivity.ALERT_INACTIVE') + '</br>'
+      _.forOwn(feature.conditions, (value, key) => {
+        // Get corresponding variable
+        const variable = _.find(this.currentVariables, { name: key })
+        const label = this.$t(variable.label) || variable.label
+        const unit = variable.units[0]
+        if (_.has(value, '$gte')) html += isActive ?
+          `${label} ` + this.$t('CatalogActivity.ALERT_GTE') + ` ${value.$gte} ${unit}</br>` :
+          `${label} ` + this.$t('CatalogActivity.ALERT_LTE') + ` ${value.$gte} ${unit}</br>`
+        if (_.has(value, '$lte')) html += isActive ?
+          `${label} ` + this.$t('CatalogActivity.ALERT_LTE') + ` ${value.$lte} ${unit}</br>` :
+          `${label} ` + this.$t('CatalogActivity.ALERT_GTE') + ` ${value.$lte} ${unit}</br>`
+      })
+      if (isActive) html += this.$t('CatalogActivity.ALERT_TRIGGERED_AT') +
+        ` ${this.formatTime('date.short', triggeredAt)} - ${this.formatTime('time.short', triggeredAt)}`
+      else html += this.$t('CatalogActivity.ALERT_CHECKED_AT') +
+        ` ${this.formatTime('date.short', checkedAt)} - ${this.formatTime('time.short', checkedAt)}`
+
       return L.tooltip({ permanent: false }, layer).setContent(`<b>${html}</b>`)
     },
     onCreateEventAction (feature, layer) {
@@ -209,8 +246,8 @@ export default {
       await this.updateFeatureProperties(feature, layer, target)
       await this.editLayer(layer.name)
     },
-    onRemoveFeatureAction (feature, layer, target) {
-      if (layer.name === this.$t('CatalogActivity.ALERTS_LAYER')) { // Alert deletion
+    onRemoveFeatureAction (data) {
+      if (data.layer.name === this.$t('CatalogActivity.ALERTS_LAYER')) { // Alert deletion
         Dialog.create({
           title: this.$t('CatalogActivity.REMOVE_ALERT_DIALOG_TITLE'),
           message: this.$t('CatalogActivity.REMOVE_ALERT_DIALOG_MESSAGE'),
@@ -222,14 +259,14 @@ export default {
             label: this.$t('CANCEL')
           }
         }).onOk(async () => {
-          await this.$api.getService('alerts').remove(feature._id)
+          await this.$api.getService('alerts').remove(data.feature._id)
         })
       } // User feature deletion
-      else this.onRemoveFeature(feature, layer, target)
+      else this.onRemoveFeature(data.feature, data.layer, data.target)
     },
-    onCreateAlertAction (feature, layer) {
-      this.alertFeature = feature
-      this.alertLayer = layer
+    onCreateMeasureAlertAction (data) {
+      this.alertFeature = data.feature
+      this.alertLayer = data.layer
       this.$refs.alertModal.open()
     },
     async onCreateAlert () {
@@ -243,18 +280,23 @@ export default {
       this.inProgress = false
       this.$refs.alertModal.close()
     },
-    onProbeLocation () {
-      const probe = async (options, event) => {
-        this.unsetCursor('probe-cursor')
+    onCreateWeatherAlertAction (data) {
+      // Retrieve weather layer activated
+      const selectedLayer = _.values(this.layers).filter(sift({
+        isVisible: true, type: 'OverlayLayer', tags: { $in: ['weather'] }
+      }))
+      if (selectedLayer.length > 0) {
         this.alertFeature = {
           geometry: {
-            type: 'Point', coordinates: [event.latlng.lng, event.latlng.lat]
+            type: 'Point', coordinates: [
+              data.latlng.lng,
+              data.latlng.lat
+            ]
           }
         }
-        this.onCreateAlert()
+        this.alertLayer = selectedLayer[0]
+        this.$refs.alertModal.open()
       }
-      this.setCursor('probe-cursor')
-      this.$once('click', probe)
     },
     getTemplateModalToolbar () {
       return [

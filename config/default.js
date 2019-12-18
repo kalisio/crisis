@@ -193,7 +193,7 @@ module.exports = {
   catalogCatalog: defaultMapCatalog,
   catalogActivity: {
     tools: ['track-location', 'location-bar', 'fullscreen', 'catalog'],
-    actions: ['create-layer', 'probe-location'],
+    actions: ['create-layer'],
     layerActions: ['zoom-to', 'save', 'edit', 'edit-data', 'remove']
   },
   event: defaultMapOptions,
