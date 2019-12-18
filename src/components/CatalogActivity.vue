@@ -32,7 +32,7 @@
       :buttons="[]"
       :options="{}" :route="false">
       <div slot="modal-content">
-        <k-alert-form :class="{ 'light-dimmed': inProgress }" ref="alertForm"
+        <alert-form :class="{ 'light-dimmed': inProgress }" ref="alertForm"
           :layer="alertLayer" :feature="alertFeature" :forecastModel="forecastModel"/>
         <div class="row justify-end" style="padding: 12px">
           <q-btn id="apply-button" color="primary" flat :label="$t('CREATE')" @click="onCreateAlert"/>
@@ -328,7 +328,7 @@ export default {
     this.$options.components['k-feature-action-button'] = this.$load('KFeatureActionButton')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-list'] = this.$load('collection/KList')
-    this.$options.components['k-alert-form'] = this.$load('KAlertForm')
+    this.$options.components['alert-form'] = this.$load('AlertForm')
 
     this.registerLeafletStyle('tooltip', this.getAlertTooltip)
   },

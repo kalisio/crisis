@@ -66,6 +66,24 @@ module.exports = async function () {
           service.name === 'events' ||
           service.name === 'event-templates') {
         app.configureService(service.name, service, servicesPath)
+        if (service.name === 'alerts') {
+          // Create related event whenever an alert is activated
+          service.on('patched', async alert => {
+            const isActive = _.get(alert, 'status.active')
+            const checkedAt = _.get(alert, 'status.checkedAt')
+            const triggeredAt = _.get(alert, 'status.triggeredAt')
+            const templateId = _.get(alert, 'eventTemplate._id')
+            // Only on first activation
+            if (isActive && templateId && (checkedAt === triggeredAt)) {
+              const eventTemplatesService = app.getService('event-templates', service.getContextId())
+              // Remove id so that event has its own
+              let template = await eventTemplatesService.get(templateId)
+              template = _.omit(template, ['_id'])
+              const eventsService = app.getService('events', service.getContextId())
+              await eventsService.create(template)
+            }
+          })
+        }
       }
     })
     await app.configure(kCore)
