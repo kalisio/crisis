@@ -3,16 +3,33 @@ import _ from 'lodash'
 import makeDebug from 'debug'
 import kCore from '@kalisio/kdk-core'
 import kTeam from '@kalisio/kdk-team'
-import kMap, { createFeaturesService, createCatalogService } from '@kalisio/kdk-map'
+import kMap, {
+  createFeaturesService, removeFeaturesService,
+  createCatalogService, removeCatalogService,
+  createAlertsService, removeAlertsService
+} from '@kalisio/kdk-map'
 import kNotify from '@kalisio/kdk-notify'
 import kBilling from '@kalisio/kdk-billing'
 import kEvent, { hooks as eventHooks } from '@kalisio/kdk-event'
-import { createOrganisationServices, removeOrganisationServices } from '../hooks'
 import packageInfo from '../../package.json'
 
 const debug = makeDebug('kalisio:aktnmap:hooks')
 const modelsPath = path.join(__dirname, '..', 'models')
 const servicesPath = path.join(__dirname, '..', 'services')
+
+export function createOrganisationServices (organisation, db) {
+  const app = this
+  createCatalogService.call(app, { context: organisation, db })
+  createFeaturesService.call(app, { collection: 'features', context: organisation, db })
+  createAlertsService.call(app, { context: organisation, db })
+}
+
+export function removeOrganisationServices (organisation) {
+  const app = this
+  removeFeaturesService.call(app, { collection: 'features', context: organisation })
+  removeCatalogService.call(app, { context: organisation })
+  removeAlertsService.call(app, { context: organisation })
+}
 
 module.exports = async function () {
   const app = this
@@ -32,79 +49,39 @@ module.exports = async function () {
       }
       res.json(response)
     })
-    await app.configure(kCore)
-    // Add hook to automatically create a new organisation, add verification, send verification email,
-    // register devices, etc. when creating a new user or authenticating
-    app.configureService('users', app.getService('users'), servicesPath)
-    app.configureService('authentication', app.getService('authentication'), servicesPath)
-    // Add hooks for topic (un)subscription on (un)authorisation
-    app.configureService('authorisations', app.getService('authorisations'), servicesPath)
-
-    // Add hooks for topic creation/removal on org/group/tag object creation/removal,
-    // event notifications on attachment upload, etc.
+    // Add app-specific hooks to required services
     app.on('service', service => {
-      if (service.name === 'groups' ||
+      if (service.name === 'users' ||
+          service.name === 'authentication' ||
+          service.name === 'authorisations' ||
+          service.name === 'organisations' ||
+          service.name === 'groups' ||
           service.name === 'members' ||
           service.name === 'tags' ||
           service.name === 'storage' ||
+          service.name === 'devices' ||
           service.name === 'features' ||
           service.name === 'alerts' ||
+          service.name === 'billing' ||
           service.name === 'events' ||
           service.name === 'event-templates') {
         app.configureService(service.name, service, servicesPath)
       }
     })
+    await app.configure(kCore)
     await app.configure(kTeam)
-    app.configureService('organisations', app.getService('organisations'), servicesPath)
-    // Replication management
-    const orgsService = app.getService('organisations')
-    const usersService = app.getService('users')
-    const authorisationsService = app.getService('authorisations')
-    // Ensure permissions are correctly distributed when replicated
-    usersService.on('patched', user => {
-      // Patching profile should not trigger abilities update since
-      // it is a perspective and permissions are not available in this case
-      if (user.organisations || user.groups) authorisationsService.updateAbilities(user)
-    })
-    // Ensure org services are correctly distributed when replicated
-    orgsService.on('created', organisation => {
-      // Check if already done (initiator)
-      const orgMembersService = app.getService('members', organisation)
-      if (!orgMembersService) {
-        // Jump from infos/stats to real DB object
-        const db = app.db.instance.db(organisation._id.toString())
-        orgsService.createOrganisationServices(organisation, db)
-        // We fake a hook call
-        eventHooks.createOrganisationServices({ app, result: organisation })
-        createOrganisationServices({ app, result: organisation })
-      }
-    })
-    orgsService.on('removed', organisation => {
-      // Check if already done (initiator)
-      const orgMembersService = app.getService('members', organisation)
-      if (orgMembersService) return
-      // We fake a hook call
-      removeOrganisationServices({ app, result: organisation })
-      eventHooks.removeOrganisationServices({ app, result: organisation })
-      orgsService.removeOrganisationServices(organisation)
-    })
-
     await app.configure(kNotify)
-    app.configureService('devices', app.getService('devices'), servicesPath)
     await app.configure(kMap)
     await app.configure(kBilling)
-    app.configureService('billing', app.getService('billing'), servicesPath)
     await app.configure(kEvent)
 
-    // Reinstanciated app services for all organisations
-    const organisations = await app.getService('organisations').find({ paginate: false })
-
-    organisations.forEach(organisation => {
-      // Get org DB
-      const db = app.db.instance.db(organisation._id.toString())
-      // We fake a hook call
-      createOrganisationServices({ app, result: organisation })
+    const orgsService = app.getService('organisations')
+    // Register services hook for organisations
+    orgsService.registerOrganisationServicesHook({
+      createOrganisationServices, removeOrganisationServices
     })
+    // Reinstanciated app services for all axisting organisations
+    await orgsService.configureOrganisations()
   } catch (error) {
     app.logger.error(error.message)
   }
