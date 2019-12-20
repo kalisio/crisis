@@ -15,7 +15,7 @@ fixture`Events`// declare the fixture
     await pages.checkNoClientError(test)
   })
 
-const app = new pages.Applications()
+const app = new pages.Application()
 const account = new pages.Account()
 const organisations = new pages.Organisations()
 const users = new pages.Users(auth, account, organisations)
