@@ -13,7 +13,7 @@ fixture`Organisations`// declare the fixture
   // })
 
 const app = new pages.Application()
-const account = new pages.Account(auth)
+const account = new pages.Account(app)
 const organisations = new pages.Organisations()
 
 const data = {
