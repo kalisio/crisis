@@ -72,8 +72,8 @@
     "CREATE_EVENT_TITLE": "Select an event template",
     "CREATE_ALERT_TITLE": "Create a new alert ?",
     "ALERTS_LAYER": "My alerts",
-    "ALERT_ACTIVE": "Active",
-    "ALERT_INACTIVE": "Inactive",
+    "ALERT_ACTIVE": "Active alert",
+    "ALERT_INACTIVE": "Inactive alert",
     "ALERT_CHECKED_AT": "Checked on",
     "ALERT_TRIGGERED_AT": "Verified on",
     "ALERT_GTE": "greater than",
@@ -89,6 +89,7 @@
     "CONDITIONS_REQUIRED": "At least one condition is required",
     "GREATER_THAN": "greater than",
     "LOWER_THAN": "lower than",
+    "RANGE": "between",
     "EVENT": "Event to be triggered",
     "EVENT_TEMPLATE": "Select event template to be triggered",
     "EVENT_TEMPLATE_REQUIRED": "Event template is required"

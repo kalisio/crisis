@@ -30,17 +30,21 @@
     </q-expansion-item>
     <q-expansion-item ref="conditions" default-opened icon="fab fa-cloudversify" :label="$t('AlertForm.CONDITIONS')" group="group">
       <q-list dense class="q-pa-md">
-        <q-item class="row items-center justify-around" v-for="(variable, index) in variables" :key="variable.name">
+        <q-item class="row items-center justify-around" v-for="(condition, index) in conditions" :key="variables[index].name">
           <q-item-section avatar>
-            <q-toggle v-model="conditions[index].isActive"/>{{$t(variable.label)}}
+            <q-toggle v-model="conditions[index].isActive"/>{{$t(variables[index].label)}}
           </q-item-section>
           <q-item-section avatar>
-            <q-select v-model="conditions[index].operator" :disable="!conditions[index].isActive" :options="operators" emit-value map-options/>
+            <q-select v-model="conditions[index].operator" :disable="!conditions[index].isActive" :options="getOperators(variables[index])" emit-value map-options/>
           </q-item-section>
           <q-item-section>
-            <q-slider v-model="conditions[index].threshold" :disable="!conditions[index].isActive"
-              :min="conditions[index].min" :max="conditions[index].max" :step="conditions[index].step"
-              label label-always :label-value="conditions[index].threshold + ' ' + getUnits(variable)"/>
+            <q-slider v-if="!isRange(variables[index])" v-model="condition.threshold" :disable="!condition.isActive"
+              :min="condition.min" :max="condition.max" :step="condition.step"
+              label label-always :label-value="condition.threshold + ' ' + getUnits(variables[index])"/>
+            <q-range v-if="isRange(variables[index])" v-model="condition.threshold" :disable="!condition.isActive"
+              :min="condition.min" :max="condition.max" :step="condition.step"
+              label label-always :left-label-value="condition.threshold.min + ' ' + getUnits(variables[index])"
+              :right-label-value="condition.threshold.max + ' ' + getUnits(variables[index])"/>
           </q-item-section>
         </q-item>
       </q-list>
@@ -74,12 +78,12 @@
 import _ from 'lodash'
 import logger from 'loglevel'
 import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
-import { QSlider } from 'quasar'
+import { QSlider, QRange } from 'quasar'
 
 export default {
   name: 'k-alert-form',
   components: {
-    QSlider
+    QSlider, QRange
   },
   mixins: [
     kCoreMixins.schemaProxy,
@@ -106,13 +110,6 @@ export default {
         end: 24
       },
       frequency: 6,
-      operators: [{
-        label: this.$i18n.t('AlertForm.GREATER_THAN'),
-        value: '$gte'
-      }, {
-        label: this.$i18n.t('AlertForm.LOWER_THAN'),
-        value: '$lte'
-      }],
       conditions: [],
       eventTemplatesService: {
         service: 'event-templates',
@@ -128,6 +125,22 @@ export default {
     generateTimeOptions (values) {
       return values.map(value => ({ label: `${value}H`, value }))
     },
+    getOperators (variable) {
+      return this.isRange(variable) ? [{
+        label: this.$i18n.t('AlertForm.RANGE'),
+        value: '$range'
+      }] : [{
+        label: this.$i18n.t('AlertForm.GREATER_THAN'),
+        value: '$gte'
+      }, {
+        label: this.$i18n.t('AlertForm.LOWER_THAN'),
+        value: '$lte'
+      }]
+    },
+    isRange (variable) {
+      const unitsWithRange = ['deg']
+      return unitsWithRange.includes(this.getUnits(variable))
+    },
     getUnits (variable) {
       return _.get(variable, 'units[0]', '')
     },
@@ -139,11 +152,14 @@ export default {
       const max = _.get(variable, 'range[1]', 100)
       return {
         isActive: false,
-        operator: '$gte',
-        threshold: (max - min) * 0.5, // Mean value
+        operator: this.isRange(variable) ? '$range' : '$gte',
+        threshold: this.isRange(variable) ? {
+          min: (max - min) * 0.25, // Quartiles
+          max: (max - min) * 0.75
+        } : (max - min) * 0.5, // Mean value
         min,
         max,
-        step: ((max - min) * 0.05).toFixed(1) // 5%
+        step: _.toNumber(((max - min) * 0.05).toFixed(1)) // 5%
       }
     },
     frequencyToCron (frequency) {
@@ -220,20 +236,33 @@ export default {
         const conditions = this.conditions[index]
         // Check if there is an active condition on this variable
         if (conditions.isActive) {
-          _.set(values, `conditions.${variable.name}`, {
-            [conditions.operator]: conditions.threshold
-          })
+          if (this.isRange(variable)) {
+            _.set(values, `conditions.${variable.name}`, {
+              '$gte': conditions.threshold.min,
+              '$lte': conditions.threshold.max
+            })
+          } else {
+            _.set(values, `conditions.${variable.name}`, {
+              [conditions.operator]: conditions.threshold
+            })
+          }
         }
       })
       // No expiration date for now
       values.expireAt = undefined
       _.set(values, 'geometry', this.feature.geometry)
+      _.set(values, 'layer', this.layer.name)
       // Add reference to feature service whenever required
       if (this.layer.service) {
         _.set(values, 'service', this.layer.service)
         if (this.layer.featureId) _.set(values, 'featureId', this.layer.featureId)
         _.set(values, 'feature', this.layer.featureId ?
           _.get(this.feature, 'properties.' + this.layer.featureId) : this.feature._id)
+        // Try with default labels and override if provided by layer
+        let featureLabel = _.get(this.feature, 'properties.name', _.get(this.feature, 'properties.NAME'))
+        // Override if provided by layer
+        if (this.layer.featureLabel) featureLabel = _.get(this.feature, 'properties.' + this.layer.featureLabel)
+        if (featureLabel) _.set(values, 'featureLabel', featureLabel)
       }
       // Setup style if any provided
       if (_.has(this.layer, 'leaflet.icon-classes')) {
