@@ -1,6 +1,6 @@
 import { Selector } from 'testcafe'
 import VueSelector from 'testcafe-vue-selectors'
-import Application from './aplication'
+import Application from './application'
 
 export default class Members extends Application {
   constructor () {
