@@ -1,7 +1,7 @@
 // Page models
 import * as pages from './page-models'
 
-fixture`appentication`// declare the fixture
+fixture`authentication`// declare the fixture
   .page`${pages.getUrl()}`  // specify the start page
   // test.before/test.after overrides fixture.beforeEach/fixture.afterEach hook,
   // so implement one in your test if you'd like another behaviour
@@ -38,9 +38,9 @@ test('Local login', async test => {
   await test.expect(user).ok('User should be populated')
   await test.expect(signupAlert.props.isVerified).notOk('User should not be verified')
 
-  await app.logOut(test)
+  await app.logout(test)
 
-  let screen = await app.logOutScreen.getVue()
+  let screen = await app.logoutScreen.getVue()
   // We should have at least an unpopulated user
   user = await pages.getFromStore('user')
   await test.expect(user).notOk('User should not be populated')
@@ -55,7 +55,7 @@ test('Cleanup local user', async test => {
   await pages.api.remove('organisations', user._id)
   await pages.api.remove('users', user._id)
 
-  await app.logOut(test)
+  await app.logout(test)
 })
 
 test.skip('Google login', async test => {
@@ -67,7 +67,7 @@ test.skip('Google login', async test => {
   await test.expect(user).ok('User should be populated')
   await test.expect(signupAlert.props.isVerified).ok('User should be verified')
 
-  await app.logOut(test)
+  await app.logout(test)
 })
 
 test.skip('Cleanup Google user', async test => {
@@ -77,7 +77,7 @@ test.skip('Cleanup Google user', async test => {
   await pages.api.remove('organisations', user._id)
   await pages.api.remove('users', user._id)
 
-  await app.logOut(test)
+  await app.logout(test)
 })
 
 test.skip('GitHub login', async test => {
@@ -89,7 +89,7 @@ test.skip('GitHub login', async test => {
   await test.expect(user).ok('User should be populated')
   await test.expect(signupAlert.props.isVerified).ok('User should be verified')
 
-  await app.logOut(test)
+  await app.logout(test)
 })
 
 test.skip('Cleanup GitHub user', async test => {
@@ -99,5 +99,5 @@ test.skip('Cleanup GitHub user', async test => {
   await pages.api.remove('organisations', user._id)
   await pages.api.remove('users', user._id)
 
-  await app.logOut(test)
+  await app.logout(test)
 })

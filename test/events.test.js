@@ -2,7 +2,7 @@
 import { Selector } from 'testcafe'
 import * as pages from './page-models'
 
-fixture`Events`// declare the fixture
+fixture`events`// declare the fixture
   .page`${pages.getUrl()}`  // specify the start page
   // test.before/test.after overrides fixture.beforeEach/fixture.afterEach hook,
   // so implement one in your test if you'd like another behaviour
