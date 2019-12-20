@@ -1,6 +1,6 @@
 import path from 'path'
 import _ from 'lodash'
-import makeDebug from 'debug'
+//import makeDebug from 'debug'
 import kCore from '@kalisio/kdk-core'
 import kTeam from '@kalisio/kdk-team'
 import kMap, {
@@ -11,6 +11,7 @@ import kMap, {
 import kNotify from '@kalisio/kdk-notify'
 import kBilling from '@kalisio/kdk-billing'
 //import kEvent, { hooks as eventHooks } from '@kalisio/kdk-event'
+import kEvent from '@kalisio/kdk-event'
 import packageInfo from '../../package.json'
 
 //const debug = makeDebug('kalisio:aktnmap:hooks')
