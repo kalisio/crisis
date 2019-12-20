@@ -10,11 +10,11 @@ import kMap, {
 } from '@kalisio/kdk-map'
 import kNotify from '@kalisio/kdk-notify'
 import kBilling from '@kalisio/kdk-billing'
-import kEvent, { hooks as eventHooks } from '@kalisio/kdk-event'
+//import kEvent, { hooks as eventHooks } from '@kalisio/kdk-event'
 import packageInfo from '../../package.json'
 
-const debug = makeDebug('kalisio:aktnmap:hooks')
-const modelsPath = path.join(__dirname, '..', 'models')
+//const debug = makeDebug('kalisio:aktnmap:hooks')
+//const modelsPath = path.join(__dirname, '..', 'models')
 const servicesPath = path.join(__dirname, '..', 'services')
 
 export function createOrganisationServices (organisation, db) {
