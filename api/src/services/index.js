@@ -73,6 +73,7 @@ module.exports = async function () {
             const isActive = _.get(alert, 'status.active')
             const checkedAt = _.get(alert, 'status.checkedAt')
             const triggeredAt = _.get(alert, 'status.triggeredAt')
+            const label = _.get(alert, 'featureLabel', _.get(alert, 'feature'))
             const templateId = _.get(alert, 'eventTemplate._id')
             // Only on first activation
             if (isActive && templateId && (checkedAt === triggeredAt)) {
@@ -80,6 +81,9 @@ module.exports = async function () {
               // Remove id so that event has its own
               let template = await eventTemplatesService.get(templateId)
               template = _.omit(template, ['_id'])
+              _.set(template, 'location.name', label ? `${alert.layer} - ${label}` : `${alert.layer}`)
+              _.set(template, 'location.longitude', _.get(alert, 'geometry.coordinates[0]'))
+              _.set(template, 'location.latitude', _.get(alert, 'geometry.coordinates[1]'))
               const eventsService = app.getService('events', service.getContextId())
               await eventsService.create(template)
             }

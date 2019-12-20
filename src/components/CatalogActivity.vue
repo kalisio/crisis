@@ -207,17 +207,18 @@ export default {
         this.$events.$emit('error', new Error(this.$t('errors.ALERTS_LIMIT')))
       }
     },
-    getAlertTooltip (feature, layer) {
-      if (!_.has(feature, 'status.active')) return null
+    getAlertTooltip (alert, layer) {
+      if (!_.has(alert, 'status.active')) return null
 
-      const isActive = _.get(feature, 'status.active')
-      const checkedAt = new Date(_.get(feature, 'status.checkedAt'))
-      const triggeredAt = new Date(_.get(feature, 'status.triggeredAt'))
+      const isActive = _.get(alert, 'status.active')
+      const checkedAt = new Date(_.get(alert, 'status.checkedAt'))
+      const triggeredAt = new Date(_.get(alert, 'status.triggeredAt'))
       let html = ''
-      if (_.has(feature, 'feature')) html += `${feature.feature} - `
+      if (_.has(alert, 'feature')) html += `${alert.featureLabel || alert.feature}</br>`
+      if (_.has(alert, 'layer')) html += `${alert.layer} - `
       if (isActive) html += this.$t('CatalogActivity.ALERT_ACTIVE') + '</br>'
       else html += this.$t('CatalogActivity.ALERT_INACTIVE') + '</br>'
-      _.forOwn(feature.conditions, (value, key) => {
+      _.forOwn(alert.conditions, (value, key) => {
         // Get corresponding variable
         const variable = _.find(this.currentVariables, { name: key })
         const label = this.$t(variable.label) || variable.label
@@ -236,15 +237,15 @@ export default {
 
       return L.tooltip({ permanent: false }, layer).setContent(`<b>${html}</b>`)
     },
-    onCreateEventAction (feature, layer) {
-      this.eventFeature = feature
-      this.baseTemplateQuery['layer._id'] = layer._id
+    onCreateEventAction (data) {
+      this.eventFeature = data.feature
+      this.baseTemplateQuery['layer._id'] = data.layer._id
       this.$refs.templateModal.open()
     },
-    async onUpdateFeaturePropertiesAction (feature, layer, target) {
-      await this.editLayer(layer.name)
-      await this.updateFeatureProperties(feature, layer, target)
-      await this.editLayer(layer.name)
+    async onUpdateFeaturePropertiesAction (data) {
+      await this.editLayer(data.layer.name)
+      await this.updateFeatureProperties(data.feature, data.layer, data.target)
+      await this.editLayer(data.layer.name)
     },
     onRemoveFeatureAction (data) {
       if (data.layer.name === this.$t('CatalogActivity.ALERTS_LAYER')) { // Alert deletion
