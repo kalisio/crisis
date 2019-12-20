@@ -82,7 +82,7 @@ test('Remove members from organisation', async test => {
 })
 
 test('Clean registrated users', async test => {
-  // await auth.logIn(test, data.users[0])
+  // await app.login(test, data.users[0])
   // await account.removeAccount(test, data.users[0].name)
   // FIXME: for (let i in data.users) await organisations.deleteOrganisation(test, data.users[i].name)
   await users.unregisterUsers(test, data.users)

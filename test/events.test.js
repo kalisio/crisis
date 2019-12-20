@@ -78,7 +78,7 @@ test('Clear context', async test => {
   await members.clickToolbar(test, members.getToolbarEntry())
   await groups.clickTabBar(test, groups.getTabBarEntry())
   await groups.deleteGroup(test, data.group.name)
-  await auth.logOut(test)
+  await app.logout(test)
   await test.click(Selector('#login-link'))
   // Unregister the users
   await users.unregisterUsers(test, data.users)

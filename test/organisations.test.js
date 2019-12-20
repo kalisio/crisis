@@ -23,12 +23,12 @@ const data = {
 
 test.page`${pages.getUrl('register')}`
 ('Registration', async test => {
-  await auth.signIn(test, data.user)
+  await app.register(test, data.user)
   await pages.checkNoClientError(test)
 })
 
 test('Default organisation', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   // We should have at least the private organisation
   const panel = await organisations.panel.getVue()
   await test.wait(1000)
@@ -37,7 +37,7 @@ test('Default organisation', async test => {
 })
 
 test('Forbid additional free org creation', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   // Cannot remove the account because the user is still owning an organisation
   await organisations.createOrganisation(test, data.organisation)
   await test.expect(organisations.isErrorVisible()).ok('Forbidden error should be displayed')
@@ -45,7 +45,7 @@ test('Forbid additional free org creation', async test => {
 })
 
 test('Delete default organisation', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   await organisations.deleteOrganisation(test, data.user.name)
   // We should have the deleted organisation removed from the organisations panel
   const panel = await organisations.panel.getVue()
@@ -55,7 +55,7 @@ test('Delete default organisation', async test => {
 })
 
 test('Create organisation', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   await organisations.createOrganisation(test, data.organisation)
   // We should have the created organisation in the organisations panel
   // FIXME: innerText contains an additionnal \n which makes the test fail
@@ -67,7 +67,7 @@ test('Create organisation', async test => {
 })
 
 test('Forbid account deletion', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   // Cannot remove the account because the user is still owning an organisation
   await account.removeAccount(test, data.user.name)
   await test.expect(organisations.isErrorVisible()).ok('Forbidden error should be displayed')
@@ -75,7 +75,7 @@ test('Forbid account deletion', async test => {
 })
 
 test('Delete created organisation', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   await organisations.deleteOrganisation(test, data.organisation.name)
   // We should have the deleted organisation removed from the organisations panel
   const panel = await organisations.panel.getVue()
@@ -85,7 +85,7 @@ test('Delete created organisation', async test => {
 })
 
 test('Delete account', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   await account.removeAccount(test, data.user.name)
   await pages.checkNoClientError(test)
 })
