@@ -15,7 +15,7 @@ fixture`Groups`// declare the fixture
 const app = new pages.Application()
 const account = new pages.Account()
 const organisations = new pages.Organisations()
-const users = new pages.Users(auth, account, organisations)
+const users = new pages.Users(app, account, organisations)
 const members = new pages.Members()
 const groups = new pages.Groups()
 
