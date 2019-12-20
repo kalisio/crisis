@@ -14,8 +14,8 @@ node_js:
 env:
   matrix:
   - TEST_SCOPE=api TEST_BROWSER=none
-  - TEST_SCOPE=basic TEST_BROWSER=chromium
-  - TEST_SCOPE=basic TEST_BROWSER=firefox
+  - TEST_SCOPE=account TEST_BROWSER=chromium
+  - TEST_SCOPE=account TEST_BROWSER=firefox
 before_install:
 - pip install --user awscli
 script:

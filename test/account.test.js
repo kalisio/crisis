@@ -24,7 +24,7 @@ const newEmail = 'kalisio@kalisio.com'
 
 test.page`${pages.getUrl('register')}`
 ('Registration', async test => {
-  await app.signIn(test)
+  await app.register(test)
 })
 
 test('Edit profile', async test => {
