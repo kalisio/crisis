@@ -1,9 +1,9 @@
 import { Selector } from 'testcafe'
 import VueSelector from 'testcafe-vue-selectors'
-import ApplicationLayout from './layout'
+import Application from './application'
 import _ from 'lodash'
 
-export default class Organisations extends ApplicationLayout {
+export default class Organisations extends Application {
   constructor () {
     super()
     // Organisation panel

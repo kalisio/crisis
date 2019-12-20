@@ -14,7 +14,7 @@ fixture`EventTemplates`// declare the fixture
     await pages.checkNoClientError(test)
   })
 
-const auth = new pages.Authentication()
+const app = new pages.Application()
 const account = new pages.Account()
 const organisations = new pages.Organisations()
 const templates = new pages.EventTemplates()
@@ -29,11 +29,11 @@ const data = {
 
 test.page`${pages.getUrl('register')}`
 ('Users registration', async test => {
-  await auth.signIn(test, data.user)
+  await app.register(test, data.user)
 })
 
 test('Create template', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   await organisations.selectOrganisation(test, data.user.name)
   await templates.clickToolbar(test, templates.getToolbarEntry())
   await templates.clickTabBar(test, templates.getTabBarEntry())
@@ -42,7 +42,7 @@ test('Create template', async test => {
 })
 
 test('Copy template', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   await organisations.selectOrganisation(test, data.user.name)
   await templates.clickToolbar(test, templates.getToolbarEntry())
   await templates.clickTabBar(test, templates.getTabBarEntry())
@@ -51,7 +51,7 @@ test('Copy template', async test => {
 })
 
 test('Update template description', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   await organisations.selectOrganisation(test, data.user.name)
   await templates.clickToolbar(test, templates.getToolbarEntry())
   await templates.clickTabBar(test, templates.getTabBarEntry())
@@ -59,7 +59,7 @@ test('Update template description', async test => {
 })
 
 test('Delete template', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   await organisations.selectOrganisation(test, data.user.name)
   await templates.clickToolbar(test, templates.getToolbarEntry())
   await templates.clickTabBar(test, templates.getTabBarEntry())
@@ -68,7 +68,7 @@ test('Delete template', async test => {
 })
 
 test('Clean registrated users', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   await organisations.deleteOrganisation(test, data.user.name)
   await account.removeAccount(test, data.user.name)
 })

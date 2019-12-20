@@ -1,8 +1,8 @@
 import { Selector } from 'testcafe'
 import VueSelector from 'testcafe-vue-selectors'
-import ApplicationLayout from './layout'
+import Application from './aplication'
 
-export default class Members extends ApplicationLayout {
+export default class Members extends Application {
   constructor () {
     super()
     this.addMemberModal = VueSelector('k-members-activity k-add-member')

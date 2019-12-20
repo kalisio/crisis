@@ -1,7 +1,7 @@
 // Page models
 import * as pages from './page-models'
 
-fixture`Authentication`// declare the fixture
+fixture`appentication`// declare the fixture
   .page`${pages.getUrl()}`  // specify the start page
   // test.before/test.after overrides fixture.beforeEach/fixture.afterEach hook,
   // so implement one in your test if you'd like another behaviour
@@ -14,11 +14,10 @@ fixture`Authentication`// declare the fixture
     await pages.checkNoClientError(test)
   })
 
-const app = new pages.ApplicationLayout()
-const auth = new pages.Authentication()
+const app = new pages.Application()
 
 test('Invalid login', async test => {
-  await auth.logIn(test)
+  await app.login(test)
   let user = await pages.getFromStore('user')
   await test.expect(user).notOk('User should not be populated')
   await test.expect(app.isErrorVisible()).ok('Error should be displayed')
@@ -26,11 +25,11 @@ test('Invalid login', async test => {
 
 test.page`${pages.getUrl('register')}`
 ('Registration', async test => {
-  await auth.signIn(test)
+  await app.register(test)
 })
 
 test('Local login', async test => {
-  await auth.logIn(test)
+  await app.login(test)
 
   const signupAlert = await app.signupAlert.getVue()
   await test.wait(1000)
@@ -39,9 +38,9 @@ test('Local login', async test => {
   await test.expect(user).ok('User should be populated')
   await test.expect(signupAlert.props.isVerified).notOk('User should not be verified')
 
-  await auth.logOut(test)
+  await app.logOut(test)
 
-  let screen = await auth.logoutScreen.getVue()
+  let screen = await app.logOutScreen.getVue()
   // We should have at least an unpopulated user
   user = await pages.getFromStore('user')
   await test.expect(user).notOk('User should not be populated')
@@ -50,17 +49,17 @@ test('Local login', async test => {
 })
 
 test('Cleanup local user', async test => {
-  await auth.logIn(test)
+  await app.login(test)
 
   let user = await pages.getFromStore('user')
   await pages.api.remove('organisations', user._id)
   await pages.api.remove('users', user._id)
 
-  await auth.logOut(test)
+  await app.logOut(test)
 })
 
 test.skip('Google login', async test => {
-  await auth.logInGoogle(test)
+  await app.loginGoogle(test)
 
   const signupAlert = await app.signupAlert.getVue()
   let user = await pages.getFromStore('user')
@@ -68,21 +67,21 @@ test.skip('Google login', async test => {
   await test.expect(user).ok('User should be populated')
   await test.expect(signupAlert.props.isVerified).ok('User should be verified')
 
-  await auth.logOut(test)
+  await app.logOut(test)
 })
 
 test.skip('Cleanup Google user', async test => {
-  await auth.logInGoogle(test)
+  await app.loginGoogle(test)
 
   let user = await pages.getFromStore('user')
   await pages.api.remove('organisations', user._id)
   await pages.api.remove('users', user._id)
 
-  await auth.logOut(test)
+  await app.logOut(test)
 })
 
 test.skip('GitHub login', async test => {
-  await auth.logInGitHub(test)
+  await app.loginGitHub(test)
 
   const signupAlert = await app.signupAlert.getVue()
   let user = await pages.getFromStore('user')
@@ -90,15 +89,15 @@ test.skip('GitHub login', async test => {
   await test.expect(user).ok('User should be populated')
   await test.expect(signupAlert.props.isVerified).ok('User should be verified')
 
-  await auth.logOut(test)
+  await app.logOut(test)
 })
 
 test.skip('Cleanup GitHub user', async test => {
-  await auth.logInGitHub(test)
+  await app.loginGitHub(test)
 
   let user = await pages.getFromStore('user')
   await pages.api.remove('organisations', user._id)
   await pages.api.remove('users', user._id)
 
-  await auth.logOut(test)
+  await app.logOut(test)
 })

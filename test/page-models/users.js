@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe'
-import ApplicationLayout from './layout'
+import Application from './application'
 
-export default class Users extends ApplicationLayout {
+export default class Users extends Application {
   constructor (authentication, account, organisations) {
     super()
     this.auth = authentication

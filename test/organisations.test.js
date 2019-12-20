@@ -12,7 +12,7 @@ fixture`Organisations`// declare the fixture
   // .afterEach(async test => {
   // })
 
-const auth = new pages.Authentication()
+const app = new pages.Application()
 const account = new pages.Account(auth)
 const organisations = new pages.Organisations()
 

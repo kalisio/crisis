@@ -15,7 +15,7 @@ fixture`Events`// declare the fixture
     await pages.checkNoClientError(test)
   })
 
-const auth = new pages.Authentication()
+const app = new pages.Applications()
 const account = new pages.Account()
 const organisations = new pages.Organisations()
 const users = new pages.Users(auth, account, organisations)
@@ -42,7 +42,7 @@ const data = {
 test.page`${pages.getUrl('login')}`
 ('Setup context', async test => {
   await users.registerUsers(test, data.users)
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await members.clickToolbar(test, members.getToolbarEntry())
   await members.addMember(test, data.users[1].name, pages.Roles.manager)
@@ -56,7 +56,7 @@ test.page`${pages.getUrl('login')}`
 })
 
 test('Create events', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await events.clickToolbar(test, events.getToolbarEntry())
   for (let i in data.events) await events.createEvent(test, data.template.name, data.events[i])
@@ -64,7 +64,7 @@ test('Create events', async test => {
 })
 
 test('Delete event', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await events.clickToolbar(test, events.getToolbarEntry())
   for (let i in data.events) await events.deleteEvent(test, data.events[i].name)
@@ -73,7 +73,7 @@ test('Delete event', async test => {
 
 test('Clear context', async test => {
   // Remove the created group
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await members.clickToolbar(test, members.getToolbarEntry())
   await groups.clickTabBar(test, groups.getTabBarEntry())

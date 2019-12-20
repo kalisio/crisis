@@ -1,6 +1,6 @@
 import { Selector } from 'testcafe'
 import VueSelector from 'testcafe-vue-selectors'
-import ApplicationLayout from './layout'
+import Application from './application'
 
 const defaultTestUser = {
   name: 'Kalisio',
@@ -8,7 +8,7 @@ const defaultTestUser = {
   password: 'Pass;word1'
 }
 
-export default class Authentication extends ApplicationLayout {
+export default class Authentication extends Application {
   constructor () {
     super()
     // Local login

@@ -14,10 +14,10 @@ fixture`Members`// declare the fixture
     await pages.checkNoClientError(test)
   })
 
-const auth = new pages.Authentication()
+const app = new pages.Application()
 const account = new pages.Account()
 const organisations = new pages.Organisations()
-const users = new pages.Users(auth, account, organisations)
+const users = new pages.Users(app, account, organisations)
 const members = new pages.Members()
 
 const data = {
@@ -35,7 +35,7 @@ test.page`${pages.getUrl('login')}`
 })
 
 test('Add users to organisation', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await members.clickToolbar(test, members.getToolbarEntry())
   await members.checkMembersCount(test, 1)
@@ -46,7 +46,7 @@ test('Add users to organisation', async test => {
 })
 
 test('Invite guest to join the organisation', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await members.clickToolbar(test, members.getToolbarEntry())
   await members.inviteMember(test, data.guest, pages.Roles.manager)
@@ -54,7 +54,7 @@ test('Invite guest to join the organisation', async test => {
 })
 
 test('tag member', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await members.clickToolbar(test, members.getToolbarEntry())
   await members.tagMember(test, data.users[1].name, 'tag')
@@ -62,7 +62,7 @@ test('tag member', async test => {
 })
 
 test('Change guest role', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await members.clickToolbar(test, members.getToolbarEntry())
   await members.changeMemberRole(test, data.guest.name, pages.Roles.manager)
@@ -70,7 +70,7 @@ test('Change guest role', async test => {
 })
 
 test('Remove members from organisation', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await members.clickToolbar(test, members.getToolbarEntry())
   await members.removeMember(test, data.users[1].name)

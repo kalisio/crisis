@@ -1,8 +1,8 @@
 import { Selector } from 'testcafe'
 import VueSelector from 'testcafe-vue-selectors'
-import ApplicationLayout from './layout'
+import Application from './application'
 
-export default class Groups extends ApplicationLayout {
+export default class Groups extends Application {
   constructor () {
     super()
     this.createGroupModal = VueSelector('k-groups-activity k-modal-editor')

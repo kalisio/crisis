@@ -13,8 +13,8 @@ fixture`Billing`// declare the fixture
   // .afterEach(async test => {
   // })
 
-const auth = new pages.Authentication()
-const account = new pages.Account(auth)
+const app = new pages.Application()
+const account = new pages.Account()
 const organisations = new pages.Organisations()
 
 const data = {
@@ -27,12 +27,12 @@ const data = {
 
 test.page`${pages.getUrl('register')}`
 ('Registration', async test => {
-  await auth.signIn(test, data.user)
+  await app.register(test, data.user)
   await pages.checkNoClientError(test)
 })
 
 test('Check billing state for unverified user', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.user)
+  await app.loginAndCloseSignupAlert(test, data.user)
   await organisations.selectOrganisationSettingsTab(test, data.user.name, '#billing')
   const billingState = await organisations.getOrganisationBillingState(test)
   await test.expect(billingState.isUserVerified).eql(false)
@@ -57,7 +57,7 @@ test('Check billing state for verified user', async test => {
     const users = db.collection('users')
     await users.updateOne({ email: data.user.email }, { $set: { isVerified: true } })
     await dbClient.close()
-    await auth.logIn(test, data.user)
+    await app.login(test, data.user)
     await organisations.selectOrganisationSettingsTab(test, data.user.name, '#billing')
     const billingState = await organisations.getOrganisationBillingState(test)
     await test.expect(billingState.isUserVerified).eql(true)
@@ -71,7 +71,7 @@ test('Check billing state for verified user', async test => {
 
 test('Add payment information', async test => {
   if (dbUrl) {
-    await auth.logIn(test, data.user)
+    await app.login(test, data.user)
     await organisations.updateOrganisationCustomer(test, data.user.name, data.customers[0])
     const billingState = await organisations.getOrganisationBillingState(test)
     await test.expect(billingState.customer.stripeId).contains('cus_')
@@ -90,7 +90,7 @@ test('Add payment information', async test => {
 
 test('Change plan to silver', async test => {
   if (dbUrl) {
-    await auth.logIn(test, data.user)
+    await app.login(test, data.user)
     await organisations.selectOrganisationPlan(test, data.user.name, 'silver')
     const billingState = await organisations.getOrganisationBillingState(test)
     await test.expect(billingState.customer.stripeId).contains('cus_')
@@ -106,7 +106,7 @@ test('Change plan to silver', async test => {
 
 test('Add payment card', async test => {
   if (dbUrl) {
-    await auth.logIn(test, data.user)
+    await app.login(test, data.user)
     await organisations.updateOrganisationCustomer(test, data.user.name, data.customers[1])
     const billingState = await organisations.getOrganisationBillingState(test)
     await test.expect(billingState.customer.stripeId).contains('cus_')
@@ -125,7 +125,7 @@ test('Add payment card', async test => {
 
 test('Change plan to gold', async test => {
   if (dbUrl) {
-    await auth.logIn(test, data.user)
+    await app.login(test, data.user)
     await organisations.selectOrganisationPlan(test, data.user.name, 'gold')
     const billingState = await organisations.getOrganisationBillingState(test)
     await test.expect(billingState.customer.stripeId).contains('cus_')
@@ -144,7 +144,7 @@ test('Change plan to gold', async test => {
 
 test('Remove payment card', async test => {
   if (dbUrl) {
-    await auth.logIn(test, data.user)
+    await app.login(test, data.user)
     await organisations.clearOrganisationCustomerCard(test, data.user.name)
     const billingState = await organisations.getOrganisationBillingState(test)
     await test.expect(billingState.customer.stripeId).contains('cus_')
@@ -163,7 +163,7 @@ test('Remove payment card', async test => {
 
 test('Change plan to bronze', async test => {
   if (dbUrl) {
-    await auth.logIn(test, data.user)
+    await app.login(test, data.user)
     await organisations.selectOrganisationPlan(test, data.user.name, 'bronze')
     const billingState = await organisations.getOrganisationBillingState(test)
     await test.expect(billingState.currentPlan).eql('bronze')
@@ -176,8 +176,8 @@ test('Change plan to bronze', async test => {
 })
 
 test('Delete default organisation', async test => {
-  if (dbUrl) await auth.logIn(test, data.user)
-  else await auth.logInAndCloseSignupAlert(test, data.user)
+  if (dbUrl) await app.login(test, data.user)
+  else await app.loginAndCloseSignupAlert(test, data.user)
   await organisations.deleteOrganisation(test, data.user.name)
   // We should have the deleted organisation removed from the organisations panel
   const panel = await organisations.panel.getVue()
@@ -187,8 +187,8 @@ test('Delete default organisation', async test => {
 })
 
 test('Delete account', async test => {
-  if (dbUrl) await auth.logIn(test, data.user)
-  else await auth.logInAndCloseSignupAlert(test, data.user)
+  if (dbUrl) await app.login(test, data.user)
+  else await app.loginAndCloseSignupAlert(test, data.user)
   await account.removeAccount(test, data.user.name)
   await pages.checkNoClientError(test)
 })

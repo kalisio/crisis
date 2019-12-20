@@ -1,8 +1,8 @@
 import { Selector } from 'testcafe'
 import VueSelector from 'testcafe-vue-selectors'
-import ApplicationLayout from './layout'
+import Application from './application'
 
-export default class EventTemplates extends ApplicationLayout {
+export default class EventTemplates extends Application {
   constructor () {
     super()
     this.createTemplateModal = VueSelector('k-event-templates-activity k-event-template-editor')

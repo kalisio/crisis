@@ -1,9 +1,9 @@
 import { Selector } from 'testcafe'
 import VueSelector from 'testcafe-vue-selectors'
-import ApplicationLayout from './layout'
+import Application from './application'
 import _ from 'lodash'
 
-export default class Events extends ApplicationLayout {
+export default class Events extends Application {
   constructor () {
     super()
     this.createEventModal = VueSelector('k-events-activity k-event-editor')

@@ -1,8 +1,8 @@
 import { Role } from 'testcafe'
-import Authentication from './authentication'
+import Application from './application'
 
-const auth = new Authentication()
+const app = new Application()
 
 Role('http://localhost:8080/#/login', async test => {
-  await auth.logIn(test)
+  await app.login(test)
 })

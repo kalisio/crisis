@@ -12,7 +12,7 @@ fixture`Groups`// declare the fixture
   .afterEach(async test => {
   })
 
-const auth = new pages.Authentication()
+const app = new pages.Application()
 const account = new pages.Account()
 const organisations = new pages.Organisations()
 const users = new pages.Users(auth, account, organisations)
@@ -35,7 +35,7 @@ const data = {
 test.page`${pages.getUrl('login')}`
 ('Setup context', async test => {
   await users.registerUsers(test, data.users)
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await members.clickToolbar(test, members.getToolbarEntry())
   await members.addMember(test, data.users[1].name, pages.Roles.member)
@@ -45,7 +45,7 @@ test.page`${pages.getUrl('login')}`
 })
 
 test('Create groups', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await groups.clickToolbar(test, groups.getToolbarEntry())
   await groups.clickTabBar(test, groups.getTabBarEntry())
@@ -55,7 +55,7 @@ test('Create groups', async test => {
 })
 
 test('Edit group', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await groups.clickToolbar(test, members.getToolbarEntry())
   await groups.clickTabBar(test, groups.getTabBarEntry())
@@ -64,7 +64,7 @@ test('Edit group', async test => {
 })
 
 test('Add members to groups', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await members.clickToolbar(test, members.getToolbarEntry())
   await members.joinGroup(test, data.users[1].name, data.groups[0].name, pages.Roles.manager)
@@ -75,7 +75,7 @@ test('Add members to groups', async test => {
 })
 
 test('Check group count', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[2])
+  await app.loginAndCloseSignupAlert(test, data.users[2])
   await organisations.selectOrganisation(test, data.users[0].name)
   await members.clickToolbar(test, members.getToolbarEntry())
   await groups.clickTabBar(test, groups.getTabBarEntry())
@@ -84,7 +84,7 @@ test('Check group count', async test => {
 })
 
 test('Remove member from group', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await members.clickToolbar(test, members.getToolbarEntry())
   await members.leaveGroup(test, data.users[1].name, data.groups[0].name)
@@ -95,7 +95,7 @@ test('Remove member from group', async test => {
 })
 
 test('Delete group', async test => {
-  await auth.logInAndCloseSignupAlert(test, data.users[0])
+  await app.loginAndCloseSignupAlert(test, data.users[0])
   await organisations.selectOrganisation(test, data.users[0].name)
   await groups.clickToolbar(test, groups.getToolbarEntry())
   await groups.clickTabBar(test, groups.getTabBarEntry())

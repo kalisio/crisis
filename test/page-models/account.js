@@ -1,8 +1,8 @@
 import { Selector } from 'testcafe'
 import VueSelector from 'testcafe-vue-selectors'
-import ApplicationLayout from './layout'
+import Application from './application'
 
-export default class Account extends ApplicationLayout {
+export default class Account extends Application {
   constructor () {
     super()
     // Profile Zone
