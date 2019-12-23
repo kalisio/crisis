@@ -7,20 +7,16 @@ services:
       - mongodb
       - app
     environment:
-      - GOOGLE_USER
-      - GOOGLE_PASSWORD
-      - GITHUB_USER
-      - GITHUB_PASSWORD
       - NODE_ENV=production
       - DB_URL=mongodb://mongodb:27017/${APP}
       - APP_URL=app:${PORT}
     volumes:
       - ../test:/tests
       - ../screenshots:/screenshots
-    command: ${TEST_BROWSER}:headless /tests/*.test.js -S -s /screenshots --speed ${TEST_SPEED:-0.5} -f $FIXTURE
+    command: ${TEST_BROWSER}:headless /tests/*.test.js -S -s /screenshots --speed ${TEST_SPEED:-0.5} -f $FIXTURE 
     networks:
       - app-network
-
+      
 networks:
   app-network:
     external:

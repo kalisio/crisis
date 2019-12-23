@@ -9,13 +9,17 @@ travis_fold start "provision"
 # Install the kdk if required
 if [ $FLAVOR != "prod" ]
 then
-	source .travis.kdk.sh
+  git clone https://github.com/kalisio/kdk.git && cd kdk && yarn 
+  node . $TRAVIS_BUILD_DIR/workspace/${APP}.js --clone --branch ${FLAVOR}
+  node . $TRAVIS_BUILD_DIR/workspace/${APP}.js --install
+  node . $TRAVIS_BUILD_DIR/workspace/${APP}.js --link
+  cd $APP
 fi
 
 # Install the required secret files requied to sign the app
-cp workspace/common/android/*.json src-cordova/
-cp workspace/$FLAVOR/android/*.json src-cordova/
-cp workspace/common/android/$GOOGLE_KEYSTORE src-cordova/	
+cp $TRAVIS_BUILD_DIR/workspace/common/android/*.json src-cordova/
+cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/android/*.json src-cordova/
+cp $TRAVIS_BUILD_DIR/workspace/common/android/$GOOGLE_KEYSTORE src-cordova/	
 
 travis_fold end "provision"
 
@@ -32,17 +36,19 @@ fi
 
 # Build and deploy the mobile app	
 npm run cordova:build:android > android.build.log 2>&1
-# Capture the build result
-BUILD_CODE=$?
+EXIT_CODE=$?
 # Copy the log whatever the result
 aws s3 cp android.build.log s3://$BUILDS_BUCKET/$BUILD_NUMBER/android.build.log
-if [ $BUILD_CODE -ne 0 ]; then
+if [ $EXIT_CODE -ne 0 ]; then
+	echo "Building the app failed [error: $EXIT_CODE]"
 	exit 1
 fi
 
 # Backup the android build to S3
 aws s3 sync src-cordova/platforms/android/app/build/outputs/apk s3://$BUILDS_BUCKET/$BUILD_NUMBER/android > /dev/null
-if [ $? -eq 1 ]; then
+EXIT_CODE=$?
+if [ $EXIT_CODE -eq 1 ]; then
+	echo "Copying the artefact to s3 failed [error: $EXIT_CODE]"
 	exit 1
 fi
 
@@ -59,12 +65,12 @@ echo "package_name(\"$PACKAGE_ID\")" >> src-cordova/fastlane/Appfile
 
 # Deploy the APK to GooglePlay
 cd src-cordova
-fastlane android $FLAVOR > android.deploy.log 2>&1
-DEPLOY_CODE=$?
-cd ..
+fastlane android $NODE_APP_INSTANCE > android.deploy.log 2>&1
+EXIT_CODE=$?
 # Copy the log whatever the result
-aws s3 cp src-cordova/android.deploy.log s3://$BUILDS_BUCKET/$BUILD_NUMBER/android.deploy.log
-if [ $DEPLOY_CODE -ne 0 ]; then
+aws s3 cp android.deploy.log s3://$BUILDS_BUCKET/$BUILD_NUMBER/android.deploy.log
+if [ $EXIT_CODE -ne 0 ]; then
+	echo "Deploying the app failed [error: $EXIT_CODE]"
 	exit 1
 fi
 

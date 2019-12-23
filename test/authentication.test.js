@@ -16,19 +16,19 @@ fixture`authentication`// declare the fixture
 
 const app = new pages.Application()
 
-test('Invalid login', async test => {
+test.skip('Invalid login', async test => {
   await app.login(test)
   let user = await pages.getFromStore('user')
   await test.expect(user).notOk('User should not be populated')
   await test.expect(app.isErrorVisible()).ok('Error should be displayed')
 })
 
-test.page`${pages.getUrl('register')}`
+/*test.page`${pages.getUrl('register')}`
 ('Registration', async test => {
   await app.register(test)
-})
+})*/
 
-test('Local login', async test => {
+test.skip('Local login', async test => {
   await app.login(test)
 
   const signupAlert = await app.signupAlert.getVue()
@@ -48,7 +48,7 @@ test('Local login', async test => {
   await test.expect(screen.props.title).ok('Your are now logged out')
 })
 
-test('Cleanup local user', async test => {
+test.skip('Cleanup local user', async test => {
   await app.login(test)
 
   let user = await pages.getFromStore('user')

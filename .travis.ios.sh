@@ -1,7 +1,7 @@
 #!/bin/bash
 source .travis.env.sh
 
-	#
+#
 # Provision the required files
 #
 travis_fold start "provision"
@@ -9,14 +9,18 @@ travis_fold start "provision"
 # Install the kdk if required
 if [ $FLAVOR != "prod" ]
 then
-	source .travis.kdk.sh
+  git clone https://github.com/kalisio/kdk.git && cd kdk && yarn 
+  node . $TRAVIS_BUILD_DIR/workspace/${APP}.js --clone --branch ${FLAVOR}
+  node . $TRAVIS_BUILD_DIR/workspace/${APP}.js --install
+  node . $TRAVIS_BUILD_DIR/workspace/${APP}.js --link
+	cd $APP
 fi
 
 # Copy the certificates
-cp workspace/common/ios/*.cer .
-cp workspace/common/ios/*.p12 .
-cp workspace/$FLAVOR/ios/*.cer .
-cp workspace/$FLAVOR/ios/*.p12 .
+cp $TRAVIS_BUILD_DIR/workspace/common/ios/*.cer .
+cp $TRAVIS_BUILD_DIR/workspace/common/ios/*.p12 .
+cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/ios/*.cer .
+cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/ios/*.p12 .
 
 # Create a custom keychain
 security create-keychain -p travis ios-build.keychain
@@ -35,9 +39,9 @@ done
 security set-key-partition-list -S apple-tool:,apple: -s -k travis ios-build.keychain
 
 # Install the required secret files requied to sign the app
-cp workspace/$FLAVOR/ios/build.json src-cordova/.
+cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/ios/build.json src-cordova/.
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-cp workspace/$FLAVOR/ios/*.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/ios/*.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
 travis_fold end "provision"
 
@@ -55,36 +59,38 @@ fi
 # Build the app
 npm run cordova:build:ios > ios.build.log 2>&1
 # Capture the build result
-BUILD_CODE=$?
+EXIT_CODE=$?
 # Copy the log whatever the result
 aws s3 cp ios.build.log s3://$BUILDS_BUCKET/$BUILD_NUMBER/ios.build.log
-# Exit if an error has occured
-if [ $BUILD_CODE -ne 0 ]; then
+if [ $EXIT_CODE -ne 0 ]; then
+	echo "Building the app failed [error: $EXIT_CODE]"
 	exit 1
 fi
 
-	# Backup the ios build to S3
-aws s3 sync src-cordova/platforms/ios/build/device s3://$BUILDS_BUCKET/$BUILD_NUMBER/ios > /dev/null
-if [ $? -eq 1 ]; then
+# Backup the ios build to S3
+aws s3 sync src-cordova/platforms/ios/build s3://$BUILDS_BUCKET/$BUILD_NUMBER/ios > /dev/null
+EXIT_CODE=$?
+if [ $EXIT_CODE -eq 1 ]; then 
+	echo "Copying the artefact to s3 failed [error: $EXIT_CODE]"
 	exit 1
 fi
 
 travis_fold end "build"
 
 #
-	# Deploy the app
+# Deploy the app
 #
 travis_fold start "deploy"
 
-	# Deploy the IPA to the AppleStore
+# Deploy the IPA to the AppleStore
 ALTOOL="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Support/altool"
 "$ALTOOL" --upload-app -f "./src-cordova/platforms/ios/build/device/$TITLE.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log 2>&1
 # Capture the deploy result
-DEPLOY_CODE=$?
+EXIT_CODE=$?
 # Copy the log whatever the result
 aws s3 cp ios.deploy.log s3://$BUILDS_BUCKET/$BUILD_NUMBER/ios.deploy.log
-# Exit if an error has occured
-if [ $DEPLOY_CODE -ne 0 ]; then
+if [ $EXIT_CODE -ne 0 ]; then
+	echo "Deploying the app failed [error: $EXIT_CODE]"
 	exit 1
 fi
 

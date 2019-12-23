@@ -3,15 +3,11 @@ version: '3.3'
 services:
   app:
     environment:
-      - GMAIL_API_USER
-      - GMAIL_API_CLIENT_EMAIL
-      - GMAIL_API_PRIVATE_KEY
       - DEBUG=
-      - NODE_APP_NB_INSTANCES=1
       - DB_URL=mongodb://mongodb:27017/${APP}
-    working_dir: /opt/${APP}
+    working_dir: /opt/kdk/${APP}
     depends_on:
-      - mongodb       
+      - mongodb
     volumes:
-      - ../coverage:/opt/${APP}/api/coverage
+      - ../coverage:/opt/kdk/${APP}/api/coverage
     command: [ "npm", "run", "test:server" ]

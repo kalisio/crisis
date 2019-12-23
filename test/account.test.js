@@ -22,18 +22,18 @@ const account = new pages.Account()
 const newPassword = 'Pass;word1-new1'
 const newEmail = 'kalisio@kalisio.com'
 
-test.page`${pages.getUrl('register')}`
+/*test.page`${pages.getUrl('register')}`
 ('Registration', async test => {
   await app.register(test)
-})
+})*/
 
-test('Edit profile', async test => {
+test.skip('Edit profile', async test => {
   await app.login(test)
   await account.editProfile(test, { name: 'toto', avatar: path.join(__dirname, 'assets', 'avatar.png') })
   await account.checkIdentity(test, 'toto')
 })
 
-test('Edit password', async test => {
+test.skip('Edit password', async test => {
   await app.login(test)
   await account.updatePassword(test, { password: 'Pass;word1', newPassword })
   await pages.goBack()
@@ -43,7 +43,7 @@ test('Edit password', async test => {
   await app.login(test, { password: newPassword })
 })
 
-test('Edit email', async test => {
+test.skip('Edit email', async test => {
   await app.login(test, { password: newPassword })
   await account.updateEmail(test, { password: newPassword, newEmail })
   await pages.goBack()
@@ -55,7 +55,7 @@ test('Edit email', async test => {
   // FIXME: how could we validate the change ?
 })
 
-test('Delete account', async test => {
+test.skip('Delete account', async test => {
   await app.login(test, { password: newPassword })
   await organisations.deleteOrganisation(test, 'Kalisio')
   await account.removeAccount(test, 'toto')
