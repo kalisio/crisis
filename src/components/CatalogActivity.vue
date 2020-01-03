@@ -40,6 +40,21 @@
         <q-spinner-cube color="primary" class="fixed-center" v-if="inProgress" size="4em"/>
       </div>
     </k-modal>
+
+    <k-modal ref="layerStyleModal"
+      :title="$t('CatalogActivity.EDIT_LAYER_STYLE_TITLE')"
+      :toolbar="getLayerStyleModalToolbar()"
+      :buttons="[]"
+      :options="{}" :route="false">
+      <div slot="modal-content">
+        <layer-style-form :class="{ 'light-dimmed': inProgress }" ref="layerStyleForm"
+          :layer="styledLayer"/>
+        <div class="row justify-end" style="padding: 12px">
+          <q-btn id="apply-button" color="primary" flat :label="$t('APPLY')" @click="onEditLayerStyle"/>
+        </div>
+        <q-spinner-cube color="primary" class="fixed-center" v-if="inProgress" size="4em"/>
+      </div>
+    </k-modal>
   </q-page>
 </template>
 
@@ -93,6 +108,7 @@ export default {
       },
       alertLayer: null,
       alertFeature: null,
+      styledLayer: null,
       inProgress: false
     }
   },
@@ -150,6 +166,25 @@ export default {
       })
       return layers
     },
+    isLayerStyleEditable (layer) {
+      if (_.has(layer, 'isStyleEditable')) return _.get(layer, 'isStyleEditable')
+      // Only possible on user-defined and saved layers by default
+      else return (layer._id && (layer.service === 'features'))
+    },
+    registerLayerActions (layer) {
+      let actions = activityMixin.methods.registerLayerActions.call(this, layer)
+      if (this.isLayerStyleEditable(layer)) {
+        const index = _.findIndex(actions, action => action.name === 'edit-data')
+        actions.splice(index, 0, {
+          name: 'edit-style',
+          label: this.$t('CatalogActivity.EDIT_LAYER_STYLE'),
+          icon: 'fas fa-border-style',
+          handler: () => this.onEditLayerStyle(layer)
+        })
+        this.$set(layer, 'actions', actions)
+        return actions
+      }
+    },
     getFeatureActions (feature, layer) {
       let featureActions = []
       // When clicked on map
@@ -161,37 +196,40 @@ export default {
         if (selectedLayer.length > 0) featureActions.push({
           name: 'create-alert',
           icon: 'fas fa-bell',
-          handler: this.onCreateWeatherAlertAction
+          handler: this.onCreateWeatherAlertAction,
+          label: this.$t('CatalogActivity.CREATE_WEATHER_ALERT_ACTION')
         })
-      } else {
-        // Only on saved features and not in edition mode
-        if (!feature._id || this.isLayerEdited(layer.name)) []
+      } else if (feature._id && !this.isLayerEdited(layer.name)) { // Only on saved features and not in edition mode
         // Only on feature services targeting non-user data
         if (layer.variables) {
           featureActions.push({
             name: 'create-alert',
             icon: 'fas fa-bell',
-            handler: this.onCreateMeasureAlertAction
+            handler: this.onCreateMeasureAlertAction,
+            label: this.$t('CatalogActivity.CREATE_MEASURE_ALERT_ACTION')
           })
         } else {
           if (layer.name !== this.$t('CatalogActivity.ALERTS_LAYER')) {
             featureActions.push({
               name: 'create-event',
               icon: 'whatshot',
-              handler: this.onCreateEventAction
+              handler: this.onCreateEventAction,
+              label: this.$t('CatalogActivity.CREATE_EVENT_ACTION')
             })
           }
           if (_.get(layer, 'schema.content')) {
             featureActions.push({
               name: 'edit-feature-properties',
               icon: 'edit',
-              handler: this.onUpdateFeaturePropertiesAction
+              handler: this.onUpdateFeaturePropertiesAction,
+              label: this.$t('CatalogActivity.EDIT_FEATURE_PROPERTIES_ACTION')
             })
           }
           featureActions.push({
             name: 'remove-feature',
             icon: 'remove_circle',
-            handler: this.onRemoveFeatureAction
+            handler: this.onRemoveFeatureAction,
+            label: this.$t('CatalogActivity.REMOVE_FEATURE_ACTION')
           })
         }
       }
@@ -265,6 +303,11 @@ export default {
       } // User feature deletion
       else this.onRemoveFeature(data.feature, data.layer, data.target)
     },
+    getAlertModalToolbar () {
+      return [
+        { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.alertModal.close() }
+      ]
+    },
     onCreateMeasureAlertAction (data) {
       this.alertFeature = data.feature
       this.alertLayer = data.layer
@@ -299,6 +342,26 @@ export default {
         this.$refs.alertModal.open()
       }
     },
+    getLayerStyleModalToolbar () {
+      return [
+        { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.layerStyleModal.close() }
+      ]
+    },
+    onEditLayerStyle (layer) {
+      this.styledLayer = layer
+      this.$refs.layerStyleModal.open()
+    },
+    async onLayerStyleEdited (layer) {
+      const result = this.$refs.layerStyleForm.validate()
+      if (!result.isValid) return
+      this.inProgress = true
+      try {
+        await this.$api.getService('catalog').patch(layer._id, result.values)
+      } catch (_) {
+      }
+      this.inProgress = false
+      this.$refs.layerStyleModal.close()
+    },
     getTemplateModalToolbar () {
       return [
         { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.templateModal.close() }
@@ -314,11 +377,6 @@ export default {
           featureId: this.eventFeature._id
         }
       })
-    },
-    getAlertModalToolbar () {
-      return [
-        { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.alertModal.close() }
-      ]
     }
   },
   created () {
@@ -330,6 +388,7 @@ export default {
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-list'] = this.$load('collection/KList')
     this.$options.components['alert-form'] = this.$load('AlertForm')
+    this.$options.components['layer-style-form'] = this.$load('LayerStyleForm')
 
     this.registerLeafletStyle('tooltip', this.getAlertTooltip)
   },

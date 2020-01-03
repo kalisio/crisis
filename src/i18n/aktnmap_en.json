@@ -69,6 +69,13 @@
     "DANGER_ZONE_LABEL": "Danger Zone"
   },
   "CatalogActivity": {
+    "CREATE_MEASURE_ALERT_ACTION": "Create an alert on this sensor",
+    "CREATE_WEATHER_ALERT_ACTION": "Create a weather alert",
+    "CREATE_EVENT_ACTION": "Create an event on this object",
+    "EDIT_FEATURE_PROPERTIES_ACTION": "Edit feature properties",
+    "REMOVE_FEATURE_ACTION": "Remove feature",
+    "EDIT_LAYER_STYLE": "Edit style",
+    "EDIT_LAYER_STYLE_TITLE": "Edit layer style",
     "CREATE_EVENT_TITLE": "Select an event template",
     "CREATE_ALERT_TITLE": "Create a new alert ?",
     "ALERTS_LAYER": "My alerts",
@@ -93,6 +100,15 @@
     "EVENT": "Event to be triggered",
     "EVENT_TEMPLATE": "Select event template to be triggered",
     "EVENT_TEMPLATE_REQUIRED": "Event template is required"
+  },
+  "LayerStyleForm": {
+    "POINTS": "Markers",
+    "LINES": "Lines",
+    "POLYGONS": "Polygons",
+    "ADD_PROPERTY": "Select a target property to add to the style",
+    "IF": "If",
+    "EQUALS": "is",
+    "THEN": "then icon is"
   },
   "Index": {
     "VERSION_MISMATCH": "Application version mismatch, please install the latest available version or check your end point",

@@ -28,7 +28,7 @@
         </q-item>
       </q-list>
     </q-expansion-item>
-    <q-expansion-item ref="conditions" default-opened icon="fab fa-cloudversify" :label="$t('AlertForm.CONDITIONS')" group="group">
+    <q-expansion-item ref="conditions" icon="fab fa-cloudversify" :label="$t('AlertForm.CONDITIONS')" group="group">
       <q-list dense class="q-pa-md">
         <q-item class="row items-center justify-around" v-for="(condition, index) in conditions" :key="variables[index].name">
           <q-item-section avatar>
@@ -49,7 +49,7 @@
         </q-item>
       </q-list>
     </q-expansion-item>
-    <q-expansion-item ref="event" default-opened icon="fas fa-bell" :label="$t('AlertForm.EVENT')" group="group">
+    <q-expansion-item ref="event" icon="fas fa-bell" :label="$t('AlertForm.EVENT')" group="group">
       <q-list dense class="row items-center justify-around q-pa-md">
         <q-item class="col-12">
           <q-item-section class="col-6">

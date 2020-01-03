@@ -30,12 +30,13 @@ corePermissions.defineAbilities.registerHook((subject, can, cannot) => {
           // The unique identifier of a service is its path not its name.
           // Indeed we have for instance a 'groups' service in each organisation.
           can('service', organisation._id.toString() + '/catalog')
-          can('read', organisation._id.toString() + '/catalog')
+          can('read', 'catalog', { context: organisation._id })
           can('service', organisation._id.toString() + '/features')
-          can('all', organisation._id.toString() + '/features')
+          can('all', 'features', { context: organisation._id })
           can('service', organisation._id.toString() + '/alerts')
           can('read', 'alerts', { context: organisation._id })
           if (role >= corePermissions.Roles.manager) {
+            can(['create', 'update', 'remove'], 'catalog', { context: organisation._id })
             can(['create', 'remove'], 'alerts', { context: organisation._id })
           }
         }

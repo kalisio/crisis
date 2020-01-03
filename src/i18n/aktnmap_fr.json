@@ -69,6 +69,13 @@
     "DANGER_ZONE_LABEL": "Zone de danger"
   },
   "CatalogActivity": {
+    "CREATE_MEASURE_ALERT_ACTION": "Créer une alerte sur la sonde",
+    "CREATE_WEATHER_ALERT_ACTION": "Créer une alerte météorologique",
+    "CREATE_EVENT_ACTION": "Créer un évènement ciblant l'objet",
+    "EDIT_FEATURE_PROPERTIES_ACTION": "Editer les propriétés de l'objet",
+    "REMOVE_FEATURE_ACTION": "Supprimer l'objet",
+    "EDIT_LAYER_STYLE": "Editer le style",
+    "EDIT_LAYER_STYLE_TITLE": "Editer le style de la couche",
     "CREATE_EVENT_TITLE": "Sélectectionner un modèle d'événement",
     "CREATE_ALERT_TITLE": "Créer une nouvelle alerte ?",
     "ALERTS_LAYER": "Mes alertes",
@@ -93,6 +100,15 @@
     "EVENT": "Evénement à déclencher",
     "EVENT_TEMPLATE": "Saisissez le modèle d'événement à déclencher",
     "EVENT_TEMPLATE_REQUIRED": "Le modèle d'événement est requis"
+  },
+  "LayerStyleForm": {
+    "POINTS": "Icônes",
+    "LINES": "Lignes",
+    "POLYGONS": "Polygones",
+    "ADD_PROPERTY": "Sélectionnez une propriété cible à ajouter au style",
+    "IF": "Si",
+    "EQUALS": "vaut",
+    "THEN": "alors l'icône est"
   },
   "Index": {
     "VERSION_MISMATCH": "Discordance de version, merci d'installer la dernière version disponible ou de vérifier votre point d'accès",
