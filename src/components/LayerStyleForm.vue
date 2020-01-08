@@ -1,40 +1,138 @@
 <template>
   <div>
     <k-icon-chooser ref="iconChooser" @icon-choosed="onIconChanged" />
+    <k-color-chooser ref="colorChooser" @color-choosed="onColorChanged" />
     <q-expansion-item ref="points" default-opened icon="fas fa-map-marker-alt" :label="$t('LayerStyleForm.POINTS')" group="group">
       <q-list dense class="row items-center justify-around q-pa-md">
         <q-item class="col-12">
+          <q-item-section class="col-1">
+            <q-toggle v-model="clustering"/>
+          </q-item-section>
+          <q-item-section class="col-6">
+          {{$t('LayerStyleForm.POINT_CLUSTERING')}}
+          </q-item-section>
+          <q-item-section class="col-4">
+            <q-slider v-model="disableClusteringAtZoom" :disable="!clustering"
+              :min="1" :max="18" :step="1"
+              label label-always :label-value="disableClusteringAtZoom"/>
+          </q-item-section>
+        </q-item>
+        <q-item class="col-12">
+          <q-item-section avatar>
+            <q-chip clickable v-ripple text-color="white"
+              :icon="defaultIcon.name" :color="defaultIcon.color" @click="onIconClicked({ icon: defaultIcon })"/>
+          </q-item-section>
+          <q-item-section>
+            {{$t('LayerStyleForm.DEFAULT_POINT_STYLE')}}
+          </q-item-section>
+        </q-item>
+        <q-item v-for="iconStyle in iconStyles" :key="iconStyle.key" class="col-12">
+          <q-item-section avatar>
+            <q-chip clickable v-ripple text-color="white"
+              :icon="iconStyle.icon.name" :color="iconStyle.icon.color" @click="onIconClicked(iconStyle)"/>
+          </q-item-section>
+          <q-item-section>
+            <component
+              :is="iconStyle.componentKey"
+              :ref="iconStyle.key"
+              :properties="iconStyle.properties"
+              :display="{ icon: true, label: true, labelWidth: 3 }"
+              @field-changed="iconStyle.onValueChanged"
+            />
+          </q-item-section>
+          <q-item-section avatar>
+            <q-btn flat color="primary" icon="delete" @click="onRemoveIconStyle(iconStyle)">
+              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                {{$t('LayerStyleForm.REMOVE_POINT_STYLE')}}
+              </q-tooltip>
+            </q-btn>
+          </q-item-section>
+        </q-item>
+        <q-item class="col-12">
           <q-item-section avatar class="col-6">
-            {{$t('LayerStyleForm.ADD_PROPERTY')}}
+            {{$t('LayerStyleForm.ADD_POINT_STYLE')}}
           </q-item-section>
           <q-item-section class="col-6">
             <q-select v-model="property" :options="properties">
               <template v-slot:after>
-                <q-btn v-if="property" round dense flat icon="add" @click="onAddStyle(property)"/>
+                <q-btn v-if="property" round dense flat icon="add" @click="onAddIconStyle(property)"/>
               </template>
             </q-select>
           </q-item-section>
         </q-item>
-        <q-item v-for="style in styles" :key="style.key" class="col-12">
-          <q-item-section avatar>
-            <q-chip clickable v-ripple text-color="white"
-              :icon="style.icon.name" :color="style.icon.color" @click="onIconClicked(style)"/>
+      </q-list>
+    </q-expansion-item>
+    <q-expansion-item ref="lines" icon="fas fa-grip-lines" :label="$t('LayerStyleForm.LINES')" group="group">
+      <q-list dense class="row items-center justify-around q-pa-md">
+        <q-item class="col-12">
+          <q-item-section class="col-4">
+            {{$t('LayerStyleForm.DEFAULT_LINE_STYLE')}}
           </q-item-section>
-          <q-item-section>
-            <component
-              :is="style.componentKey"
-              :properties="style.properties"
-              :display="{ icon: true, label: true, labelWidth: 3 }"
-              @field-changed="onValueChanged"
-            />
+          <q-item-section class="col-1">
+            <q-btn round small :color="defaultLine['stroke-color']" @click="onColorClicked(defaultLine, 'stroke-color')">
+            </q-btn>
+          </q-item-section>
+          <q-item-section class="col-3">
+            <q-slider v-model="defaultLine['stroke-width']"
+              :min="1" :max="20" :step="1"
+              label label-always :label-value="$t('LayerStyleForm.LINE_WIDTH') + defaultLine['stroke-width'] + 'px'"/>
+          </q-item-section>
+          <q-item-section class="col-3">
+            <q-slider v-model="defaultLine['stroke-opacity']"
+              :min="0" :max="1" :step="0.1"
+              label label-always :label-value="$t('LayerStyleForm.LINE_OPACITY') + defaultLine['stroke-opacity']"/>
           </q-item-section>
         </q-item>
       </q-list>
     </q-expansion-item>
-    <!--q-expansion-item ref="lines" icon="fas fa-grip-lines" :label="$t('LayerStyleForm.LINES')" group="group">
-    </q-expansion-item>
     <q-expansion-item ref="polygons" icon="fas fa-draw-polygon" :label="$t('LayerStyleForm.POLYGONS')" group="group">
-    </q-expansion-item-->
+      <q-list dense class="row items-center justify-around q-pa-md">
+        <q-item class="col-12">
+          <q-item-section class="col-4">
+            {{$t('LayerStyleForm.DEFAULT_POLYGON_FILL_STYLE')}}
+          </q-item-section>
+          <q-item-section class="col-1">
+            <q-btn round small :color="defaultPolygon['fill-color']" @click="onColorClicked(defaultPolygon, 'fill-color')">
+            </q-btn>
+          </q-item-section>
+          <q-item-section class="col-3">
+            <q-slider v-model="defaultPolygon['fill-opacity']"
+              :min="0" :max="1" :step="0.1"
+              label label-always :label-value="$t('LayerStyleForm.POLYGON_FILL_OPACITY') + defaultPolygon['fill-opacity']"/>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-expansion-item>
+    <q-expansion-item ref="popup" icon="fas fa-comment-alt" :label="$t('LayerStyleForm.POPUP')" group="group">
+      <q-list dense class="row items-center justify-around q-pa-md">
+        <q-item class="col-12">
+          <q-item-section class="col-1">
+            <q-toggle v-model="popup"/>
+          </q-item-section>
+          <q-item-section avatar class="col-5">
+            {{$t('LayerStyleForm.ADD_POPUP')}}
+          </q-item-section>
+          <q-item-section class="col-6">
+            <q-select :disable="!popup" v-model="popupProperties" multiple :options="properties"></q-select>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-expansion-item>
+    <q-expansion-item ref="tooltip" icon="fas fa-mouse-pointer" :label="$t('LayerStyleForm.TOOLTIP')" group="group">
+      <q-list dense class="row items-center justify-around q-pa-md">
+        <q-item class="col-12">
+          <q-item-section class="col-1">
+            <q-toggle v-model="tooltip"/>
+          </q-item-section>
+          <q-item-section avatar class="col-5">
+            {{$t('LayerStyleForm.ADD_TOOLTIP')}}
+          </q-item-section>
+          <q-item-section class="col-6">
+            <q-select :disable="!tooltip" v-model="tooltipProperty" :options="properties"></q-select>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-expansion-item>
     <q-list v-show="hasError" dense class="row items-center justify-around q-pa-md">
       <q-item>
         <q-item-section side>
@@ -51,19 +149,21 @@
 <script>
 import _ from 'lodash'
 import logger from 'loglevel'
-import { uid } from 'quasar'
-import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
+import { QSlider, uid } from 'quasar'
+import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk-core/client'
 
 export default {
   name: 'k-layer-style-form',
   components: {
+    QSlider
   },
   mixins: [
     kCoreMixins.schemaProxy,
     kCoreMixins.refsResolver()
   ],
   props: {
-    layer: { type: Object, default: () => null }
+    layer: { type: Object, default: () => null },
+    options: { type: Object, required: true }, // Contains default style options
   },
   computed: {
     fields () {
@@ -79,12 +179,26 @@ export default {
         })
       })
       return properties
+    },
+    hasIconStyles () {
+      return this.iconStyles.length > 0
     }
   },
   data () {
     return {
       property: null,
-      styles: [],
+      popup: false,
+      popupProperties: [],
+      tooltip: false,
+      tooltipProperty: null,
+      clustering: true,
+      disableClusteringAtZoom: 18,
+      defaultIcon: {},
+      iconStyles: [],
+      defaultLine: {},
+      lineStyles: [],
+      defaultPolygon: {},
+      polygonStyles: [],
       hasError: false,
       error: ''
     }
@@ -97,8 +211,112 @@ export default {
       await this.$nextTick()
       this.hasError = false
     },
+    async fillClusteringStyle(values) {
+      this.clustering = (_.get(values, 'leaflet.cluster', _.get(this.options, 'cluster')) ? true : false)
+      this.disableClusteringAtZoom = _.get(values, 'leaflet.cluster.disableClusteringAtZoom',
+        _.get(this.options, 'cluster.disableClusteringAtZoom', 18))
+    },
+    async fillIconStyles(values) {
+      const templates = _.get(values, 'leaflet.template', [])
+      // When no template we have a single default icon
+      if (!templates.includes('marker-color') && !templates.includes('icon-classes')) {
+        // Conversion from palette to RGB color is required for markers
+        this.defaultIcon.color = kCoreUtils.getPaletteFromColor(_.get(values, 'leaflet.marker-color',
+          _.get(this.options, 'pointStyle.icon.options.markerColor', 'blue')))
+        this.defaultIcon.name = _.get(values, 'leaflet.icon-classes',
+          _.get(this.options, 'pointStyle.icon.options.iconClasses', 'fas fa-circle'))
+      } else {
+        // Otherwise we have icons for a set of values templated using if statements
+        // Split after else statement to get default icon color/name
+        const templateColors = _.get(values, 'leaflet.marker-color').split('} else {')
+        const templateNames = _.get(values, 'leaflet.icon-classes').split('} else {')
+        // Conversion from palette to RGB color is required for markers
+        this.defaultIcon.color = kCoreUtils.getPaletteFromColor(templateColors[1].match(/%>([^<%]+)<%/)[1])
+        this.defaultIcon.name = templateNames[1].match(/%>([^<%]+)<%/)[1]
+        // Match properties equality to get property names
+        const propertyNameRegex = /properties.([^===]+)===/g
+        // Match quotes to get property values and %> <% to get icon colors/names
+        const propertyValueRegex = /"([^"]+)"/g
+        const colorRegex = /%>([^<%]+)<%/g
+        const nameRegex = /%>([^<%]+)<%/g
+        this.iconStyles = []
+        let propertyValue
+        while ((propertyValue = propertyValueRegex.exec(templateColors[0])) !== null) {
+          const propertyName = propertyNameRegex.exec(templateColors[0])
+          const color = colorRegex.exec(templateColors[0])
+          const name = nameRegex.exec(templateNames[0])
+          this.iconStyles.push(this.createStyle(propertyName[1].trim(), {
+            icon: { name: name[1].trim(), color: kCoreUtils.getPaletteFromColor(color[1].trim()) },
+            value: propertyValue[1].replace('"', '').trim()
+          }))
+        }
+        // Since we use dynamic component loading we need to make sure Vue.js has loaded them
+        // Set the refs to be resolved
+        this.setRefs(this.iconStyles.map(style => style.key))
+        await this.loadRefs()
+        this.iconStyles.forEach(style => {
+          this.$refs[style.key].fill(style.value)
+        })
+      }
+    },
+    async fillLineStyles(values) {
+      const templates = _.get(values, 'leaflet.template', [])
+      // When no template we have a single default style
+      if (!templates.includes('stroke-color') && !templates.includes('stroke-width') && !templates.includes('stroke-opacity')) {
+        // Conversion from palette to RGB color is required for path style
+        this.defaultLine['stroke-color'] = kCoreUtils.getPaletteFromColor(_.get(values, 'leaflet.stroke-color',
+          kCoreUtils.getColorFromPalette(_.get(this.options, 'featureStyle.color'), 'red')))
+        this.defaultLine['stroke-width'] = _.get(values, 'leaflet.stroke-width',
+          _.get(this.options, 'featureStyle.weight', 1))
+        this.defaultLine['stroke-opacity'] = _.get(values, 'leaflet.stroke-opacity',
+          _.get(this.options, 'featureStyle.opacity', 1))
+      } else {
+        // TODO
+      }
+    },
+    async fillPolygonStyles(values) {
+      const templates = _.get(values, 'leaflet.template', [])
+      // When no template we have a single default style
+      if (!templates.includes('fill-color') && !templates.includes('fill-opacity')) {
+        // Conversion from palette to RGB color is required for path style
+        this.defaultPolygon['fill-color'] = kCoreUtils.getPaletteFromColor(_.get(values, 'leaflet.fill-color',
+          kCoreUtils.getColorFromPalette(_.get(this.options, 'featureStyle.fillColor', 'green'))))
+        this.defaultPolygon['fill-opacity'] = _.get(values, 'leaflet.fill-opacity',
+          _.get(this.options, 'featureStyle.fillOpacity', 1))
+      } else {
+        // TODO
+      }
+    },
+    async fillPopupStyles(values) {
+      this.popup = (_.get(values, 'leaflet.popup') ? true : false)
+      this.popupProperties = _.get(values, 'leaflet.popup.pick',
+        _.get(this.options, 'popup.pick', this.properties.map(property => property.value)))
+      // Jump to select data model
+      if (this.popupProperties) this.popupProperties = this.popupProperties.map(property =>
+        _.find(this.properties, { value: property })
+      )
+    },
+    async fillTooltipStyles(values) {
+      this.tooltip = (_.get(values, 'leaflet.tooltip') ? true : false)
+      this.tooltipProperty = _.get(values, 'leaflet.tooltip.property',
+        _.get(this.options, 'tooltip.property', null))
+      // Jump to select data model
+      if (this.tooltipProperty) this.tooltipProperty = _.find(this.properties, { value: this.tooltipProperty })
+    },
     async fill (values) {
       logger.debug('Filling layer style form', values)
+      // Clustering
+      this.fillClusteringStyle(values)
+      // Points
+      await this.fillIconStyles(values)
+      // Lines
+      await this.fillLineStyles(values)
+      // Polygons
+      await this.fillPolygonStyles(values)
+      // Popup
+      await this.fillPopupStyles(values)
+      // Tooltip
+      await this.fillTooltipStyles(values)
     },
     validate () {
       logger.debug('Validating layer style form')
@@ -108,38 +326,120 @@ export default {
         values: this.values()
       }
     },
-    values () {
-      const values = {  }
+    clusteringValues () {
+      return {
+        'leaflet.cluster': (this.clustering ? { disableClusteringAtZoom: this.disableClusteringAtZoom } : false)
+      }
+    },
+    iconStylesValues() {
+      let values = {}
+      values['leaflet.icon-color'] = '#FFFFFF'
+      values['leaflet.template'] = (this.hasIconStyles ? ['marker-color', 'icon-classes'] : [])
+      let colorTemplate = '', iconTemplate = ''
+      this.iconStyles.forEach(style => {
+        // Conversion from palette to RGB color is required for markers
+        const color = kCoreUtils.getColorFromPalette(style.icon.color)
+        const name = style.icon.name
+        const property = style.property
+        const value = style.value
+        colorTemplate += `if (properties.${property} === "${value}") { %>${color}<% } else `
+        iconTemplate += `if (properties.${property} === "${value}") { %>${name}<% } else `
+      })
+      // Conversion from palette to RGB color is required for markers
+      const color = kCoreUtils.getColorFromPalette(this.defaultIcon.color)
+      const name = this.defaultIcon.name
+      colorTemplate += (this.hasIconStyles ? `{ %>${color}<% }` : `${color}`)
+      iconTemplate +=  (this.hasIconStyles ? `{ %>${name}<% }` : `${name}`)
+      values['leaflet.marker-color'] = (this.hasIconStyles ? `<% ${colorTemplate} %>` : `${colorTemplate}`)
+      values['leaflet.icon-classes'] = (this.hasIconStyles ? `<% ${iconTemplate} %>` : `${iconTemplate}`)
       return values
     },
-    onAddStyle (property) {
-      let properties = this.fields[property.value]
+    lineStylesValues() {
+      let values = {}
+      // Conversion from palette to RGB color is required for markers
+      values['leaflet.stroke-color'] = kCoreUtils.getColorFromPalette(this.defaultLine['stroke-color'])
+      values['leaflet.stroke-width'] = this.defaultLine['stroke-width']
+      values['leaflet.stroke-opacity'] = this.defaultLine['stroke-opacity']
+      return values
+    },
+    polygonStylesValues() {
+      let values = {}
+      // Conversion from palette to RGB color is required for markers
+      values['leaflet.fill-color'] = kCoreUtils.getColorFromPalette(this.defaultPolygon['fill-color'])
+      values['leaflet.fill-opacity'] = this.defaultPolygon['fill-opacity']
+      return values
+    },
+    popupStylesValues() {
+      return {
+        'leaflet.popup': (this.popup ? { pick: this.popupProperties.map(property => property.value) } : undefined)
+      }
+    },
+    tooltipStylesValues() {
+      return {
+        'leaflet.tooltip': (this.tooltip ? { property: this.tooltipProperty.value } : undefined)
+      }
+    },
+    values () {
+      let values = {}
+      // Clustering
+      _.merge(values, this.clusteringValues())
+      // Point style
+      _.merge(values, this.iconStylesValues())
+      // Line style
+      _.merge(values, this.lineStylesValues())
+      // Polygon style
+      _.merge(values, this.polygonStylesValues())
+      // Popup style
+      _.merge(values, this.popupStylesValues())
+      // Tooltip style
+      _.merge(values, this.tooltipStylesValues())
+      return values
+    },
+    createStyle (property, options = {}) {
+      // Retrieve schema descriptor
+      const properties = this.fields[property]
       const componentKey = _.kebabCase(properties.field.component)
-      // Load the component if not previously loaded
+      // Load the required component if not previously loaded
       if (!this.$options.components[componentKey]) {
         this.$options.components[componentKey] = this.$load(properties.field.component)
       }
-      // We generate a UID so that we can identify each style uniquely
-      this.styles.push({
-        key: uid().toString(), componentKey, property, properties, icon: { name: 'edit', color: 'blue' }
-      })
+      let style = {
+        key: uid().toString(), componentKey, property, properties,
+        icon: { name: 'fas fa-circle', color: 'blue' }, // Default icon
+        onValueChanged: (field, value) => style.value = value
+      }
+      return Object.assign(style, options)
+    },
+    onAddIconStyle (property) {
+      this.iconStyles.push(this.createStyle(property.value))
+    },
+    onRemoveIconStyle (style) {
+      // Required to update the array to make it reactive
+      this.iconStyles = this.iconStyles.filter(item => item.key !== style.key)
     },
     onIconClicked (style) {
       this.editedStyle = style
       this.$refs.iconChooser.open(style.icon.name, style.icon.color)
     },
-    onValueChanged (field, value) {
-      this.editedStyle.value = value
-    },
     onIconChanged (icon) {
       Object.assign(this.editedStyle.icon, icon)
+    },
+    onColorClicked (style, color) {
+      this.editedStyle = style
+      this.editedColor = color
+      this.$refs.colorChooser.open(_.get(style, color))
+    },
+    onColorChanged (color) {
+      _.set(this.editedStyle, this.editedColor, color)
     }
   },
   async created () {
     // Load the required components
     this.$options.components['k-icon-chooser'] = this.$load('input/KIconChooser')
+    this.$options.components['k-color-chooser'] = this.$load('input/KColorChooser')
 
     await this.build()
+    this.property = this.properties[0]
     this.$emit('form-ready', this)
   }
 }

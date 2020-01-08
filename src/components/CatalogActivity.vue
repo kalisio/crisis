@@ -48,9 +48,9 @@
       :options="{}" :route="false">
       <div slot="modal-content">
         <layer-style-form :class="{ 'light-dimmed': inProgress }" ref="layerStyleForm"
-          :layer="styledLayer"/>
+          :options="options" :layer="styledLayer"/>
         <div class="row justify-end" style="padding: 12px">
-          <q-btn id="apply-button" color="primary" flat :label="$t('APPLY')" @click="onEditLayerStyle"/>
+          <q-btn id="apply-button" color="primary" flat :label="$t('APPLY')" @click="onLayerStyleEdited"/>
         </div>
         <q-spinner-cube color="primary" class="fixed-center" v-if="inProgress" size="4em"/>
       </div>
@@ -347,18 +347,25 @@ export default {
         { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.layerStyleModal.close() }
       ]
     },
-    onEditLayerStyle (layer) {
+    async onEditLayerStyle (layer) {
       this.styledLayer = layer
-      this.$refs.layerStyleModal.open()
+      await this.$refs.layerStyleModal.open()
+      this.$refs.layerStyleForm.fill(_.pick(layer, ['leaflet']))
     },
-    async onLayerStyleEdited (layer) {
+    async onLayerStyleEdited () {
       const result = this.$refs.layerStyleForm.validate()
       if (!result.isValid) return
       this.inProgress = true
       try {
-        await this.$api.getService('catalog').patch(layer._id, result.values)
+        await this.$api.getService('catalog').patch(this.styledLayer._id, result.values)
       } catch (_) {
       }
+      _.forOwn(result.values, (value, key) => _.set(this.styledLayer, key, value))
+      // Reset layer with new setup
+      await this.removeLayer(this.styledLayer.name)
+      await this.addLayer(this.styledLayer)
+      // FIXME: simply updating data does not update style as the old layer setup is still kept in a closure
+      //this.updateLayer(this.styledLayer.name)
       this.inProgress = false
       this.$refs.layerStyleModal.close()
     },

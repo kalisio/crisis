@@ -44,8 +44,21 @@ let defaultMapOptions = {
     'fill-opacity': 0.5,
     'fill-color': 'green'
   },
+  // Default GeoJSON layer style for polygons/lines edition
+  editFeatureStyle: {
+    opacity: 1,
+    color: 'red',
+    'fill-opacity': 0.5,
+    'fill-color': 'green'
+  },
   // Default GeoJSON layer style for points
   pointStyle: {
+    'icon-color': '#FFFFFF',
+    'marker-color': '#2196f3',
+    'icon-classes': 'fas fa-circle'
+  },
+  // Default GeoJSON layer style for points edition
+  editPointStyle: {
     'marker-type': 'circleMarker',
     radius: 6,
     stroke: 'red',
