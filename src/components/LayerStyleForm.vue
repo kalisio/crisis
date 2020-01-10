@@ -20,7 +20,7 @@
         <q-item class="col-12">
           <q-item-section avatar>
             <q-chip clickable v-ripple text-color="white"
-              :icon="defaultIcon.name" :color="defaultIcon.color" @click="onIconClicked({ icon: defaultIcon })"/>
+              :icon="defaultIcon['icon-classes']" :color="defaultIcon['marker-color']" @click="onIconClicked(defaultIcon)"/>
           </q-item-section>
           <q-item-section>
             {{$t('LayerStyleForm.DEFAULT_POINT_STYLE')}}
@@ -29,7 +29,7 @@
         <q-item v-for="iconStyle in iconStyles" :key="iconStyle.key" class="col-12">
           <q-item-section avatar>
             <q-chip clickable v-ripple text-color="white"
-              :icon="iconStyle.icon.name" :color="iconStyle.icon.color" @click="onIconClicked(iconStyle)"/>
+              :icon="iconStyle['icon-classes']" :color="iconStyle['marker-color']" @click="onIconClicked(iconStyle)"/>
           </q-item-section>
           <q-item-section>
             <component
@@ -307,6 +307,39 @@ export default {
       await this.loadRefs()
       styles.forEach(style => this.$refs[style.key][0].fill(style.value))
     },
+    processTemplates(values, properties, defaultStyle, styles) {
+      // We have styles for a set of values templated using if statements
+      // Split after else statement to get default style values
+      const templates = properties.map(property => _.get(values, `leaflet.${property}`).split('} else {'))
+      properties.forEach((property, index) => {
+        // Conversion from palette to RGB color is required
+        const value = (property.includes('color') ?
+          kCoreUtils.getPaletteFromColor(templates[index][1].match(/%>([^<%]+)<%/)[1]) :
+          templates[index][1].match(/%>([^<%]+)<%/)[1])
+        defaultStyle[property] = value
+      })
+      // Match properties equality to get property names
+      const propertyNameRegex = /properties.([^===]+)===/g
+      // Match quotes to get property values and %> <% to get icon colors/names
+      const propertyValueRegex = /"([^"]+)"/g
+      // Match %> <% block to get style values
+      const regexs = properties.map(property => /%>([^<%]+)<%/g)
+      let propertyValue
+      // As all templates have the same conditional structure use the first template to extract property values
+      while ((propertyValue = propertyValueRegex.exec(templates[0][0])) !== null) {
+        const propertyName = propertyNameRegex.exec(templates[0][0])[1].trim()
+        let style = {}
+        properties.forEach((property, index) => {
+          const value = regexs[index].exec(templates[index][0])[1].trim()
+          // Conversion from palette to RGB color is required
+          style[property] = (property.includes('color') ?
+            kCoreUtils.getPaletteFromColor(value) :
+            (_.isNumber(value) ? Number(value) : value))
+        })
+        style.value = propertyValue[1].replace('"', '').trim()
+        styles.push(this.createStyle(propertyName, style))
+      }
+    },
     async fillClusteringStyle(values) {
       this.clustering = (_.get(values, 'leaflet.cluster', _.get(this.options, 'cluster')) ? true : false)
       this.disableClusteringAtZoom = _.get(values, 'leaflet.cluster.disableClusteringAtZoom',
@@ -323,29 +356,7 @@ export default {
         this.defaultIcon.name = _.get(values, 'leaflet.icon-classes',
           _.get(this.options, 'pointStyle.icon.options.iconClasses', 'fas fa-circle'))
       } else {
-        // Otherwise we have icons for a set of values templated using if statements
-        // Split after else statement to get default icon color/name
-        const templateColors = _.get(values, 'leaflet.marker-color').split('} else {')
-        const templateNames = _.get(values, 'leaflet.icon-classes').split('} else {')
-        // Conversion from palette to RGB color is required for markers
-        this.defaultIcon.color = kCoreUtils.getPaletteFromColor(templateColors[1].match(/%>([^<%]+)<%/)[1])
-        this.defaultIcon.name = templateNames[1].match(/%>([^<%]+)<%/)[1]
-        // Match properties equality to get property names
-        const propertyNameRegex = /properties.([^===]+)===/g
-        // Match quotes to get property values and %> <% to get icon colors/names
-        const propertyValueRegex = /"([^"]+)"/g
-        const colorRegex = /%>([^<%]+)<%/g
-        const nameRegex = /%>([^<%]+)<%/g
-        let propertyValue
-        while ((propertyValue = propertyValueRegex.exec(templateColors[0])) !== null) {
-          const propertyName = propertyNameRegex.exec(templateColors[0])
-          const color = colorRegex.exec(templateColors[0])
-          const name = nameRegex.exec(templateNames[0])
-          this.iconStyles.push(this.createStyle(propertyName[1].trim(), {
-            icon: { name: name[1].trim(), color: kCoreUtils.getPaletteFromColor(color[1].trim()) },
-            value: propertyValue[1].replace('"', '').trim()
-          }))
-        }
+        this.processTemplates(values, ['marker-color', 'icon-classes'], this.defaultIcon, this.iconStyles)
         await this.loadStyleComponents(this.iconStyles)
       }
     },
@@ -362,35 +373,7 @@ export default {
         this.defaultLine['stroke-opacity'] = _.get(values, 'leaflet.stroke-opacity',
           _.get(this.options, 'featureStyle.opacity', 1))
       } else {
-        // Otherwise we have line styles for a set of values templated using if statements
-        // Split after else statement to get default line style
-        const templateColors = _.get(values, 'leaflet.stroke-color').split('} else {')
-        const templateWidths = _.get(values, 'leaflet.stroke-width').split('} else {')
-        const templateOpacities = _.get(values, 'leaflet.stroke-opacity').split('} else {')
-        // Conversion from palette to RGB color is required for markers
-        this.defaultLine['stroke-color'] = kCoreUtils.getPaletteFromColor(templateColors[1].match(/%>([^<%]+)<%/)[1])
-        this.defaultLine['stroke-width'] = templateWidths[1].match(/%>([^<%]+)<%/)[1]
-        this.defaultLine['stroke-opacity'] = templateOpacities[1].match(/%>([^<%]+)<%/)[1]
-        // Match properties equality to get property names
-        const propertyNameRegex = /properties.([^===]+)===/g
-        // Match quotes to get property values and %> <% to get icon colors/names
-        const propertyValueRegex = /"([^"]+)"/g
-        const colorRegex = /%>([^<%]+)<%/g
-        const widthRegex = /%>([^<%]+)<%/g
-        const opacityRegex = /%>([^<%]+)<%/g
-        let propertyValue
-        while ((propertyValue = propertyValueRegex.exec(templateColors[0])) !== null) {
-          const propertyName = propertyNameRegex.exec(templateColors[0])
-          const color = colorRegex.exec(templateColors[0])
-          const width = widthRegex.exec(templateWidths[0])
-          const opacity = opacityRegex.exec(templateOpacities[0])
-          this.lineStyles.push(this.createStyle(propertyName[1].trim(), {
-            'stroke-color': kCoreUtils.getPaletteFromColor(color[1].trim()),
-            'stroke-width': Number(width[1].trim()),
-            'stroke-opacity': Number(opacity[1].trim()),
-            value: propertyValue[1].replace('"', '').trim()
-          }))
-        }
+        this.processTemplates(values, ['stroke-color', 'stroke-width', 'stroke-opacity'], this.defaultLine, this.lineStyles)
         await this.loadStyleComponents(this.lineStyles)
       }
     },
@@ -405,30 +388,7 @@ export default {
         this.defaultPolygon['fill-opacity'] = _.get(values, 'leaflet.fill-opacity',
           _.get(this.options, 'featureStyle.fillOpacity', 1))
       } else {
-        // Otherwise we have polygon styles for a set of values templated using if statements
-        // Split after else statement to get default polygon style
-        const templateColors = _.get(values, 'leaflet.fill-color').split('} else {')
-        const templateOpacities = _.get(values, 'leaflet.fill-opacity').split('} else {')
-        // Conversion from palette to RGB color is required for markers
-        this.defaultPolygon['fill-color'] = kCoreUtils.getPaletteFromColor(templateColors[1].match(/%>([^<%]+)<%/)[1])
-        this.defaultPolygon['fill-opacity'] = templateOpacities[1].match(/%>([^<%]+)<%/)[1]
-        // Match properties equality to get property names
-        const propertyNameRegex = /properties.([^===]+)===/g
-        // Match quotes to get property values and %> <% to get icon colors/names
-        const propertyValueRegex = /"([^"]+)"/g
-        const colorRegex = /%>([^<%]+)<%/g
-        const opacityRegex = /%>([^<%]+)<%/g
-        let propertyValue
-        while ((propertyValue = propertyValueRegex.exec(templateColors[0])) !== null) {
-          const propertyName = propertyNameRegex.exec(templateColors[0])
-          const color = colorRegex.exec(templateColors[0])
-          const opacity = opacityRegex.exec(templateOpacities[0])
-          this.polygonStyles.push(this.createStyle(propertyName[1].trim(), {
-            'fill-color': kCoreUtils.getPaletteFromColor(color[1].trim()),
-            'fill-opacity': Number(opacity[1].trim()),
-            value: propertyValue[1].replace('"', '').trim()
-          }))
-        }
+        this.processTemplates(values, ['fill-color', 'fill-opacity'], this.defaultPolygon, this.polygonStyles)
         await this.loadStyleComponents(this.polygonStyles)
       }
     },
@@ -472,82 +432,53 @@ export default {
         values: this.values()
       }
     },
+    generateTemplates(properties, defaultStyle, styles) {
+      const hasStyles = (styles.length > 0)
+      let values = {}
+      let templates = properties.map(property => '')
+      // Process all styles
+      styles.forEach(style => {
+        properties.forEach((property, index) => {
+          // Conversion from palette to RGB color is required
+          const value = (property.includes('color') ?
+            kCoreUtils.getColorFromPalette(style[property]) :
+            style[property])
+          const propertyName = style.property
+          const propertyValue = style.value
+          // Generate style value for given property value
+          templates[index] += `if (properties.${propertyName} === "${propertyValue}") { %>${value}<% } else `
+        })
+      })
+      // Process default style
+      properties.forEach((property, index) => {
+        // Conversion from palette to RGB color is required
+        const value = (property.includes('color') ?
+          kCoreUtils.getColorFromPalette(defaultStyle[property]) :
+          defaultStyle[property])
+        templates[index] += (hasStyles ? `{ %>${value}<% }` : `${value}`)
+      })
+      // Set all templates
+      properties.forEach((property, index) => {
+        values[`leaflet.${property}`] = (hasStyles ? `<% ${templates[index]} %>` : `${templates[index]}`)
+      })
+      values['leaflet.template'] = (hasStyles ? properties : [])
+      return values
+    },
     clusteringValues () {
       return {
         'leaflet.cluster': (this.clustering ? { disableClusteringAtZoom: this.disableClusteringAtZoom } : false)
       }
     },
     iconStylesValues() {
-      let values = {}
+      let values = this.generateTemplates(['marker-color', 'icon-classes'], this.defaultIcon, this.iconStyles)
       values['leaflet.icon-color'] = '#FFFFFF'
-      values['leaflet.template'] = (this.hasIconStyles ? ['marker-color', 'icon-classes'] : [])
-      let colorTemplate = '', iconTemplate = ''
-      this.iconStyles.forEach(style => {
-        // Conversion from palette to RGB color is required for markers
-        const color = kCoreUtils.getColorFromPalette(style.icon.color)
-        const name = style.icon.name
-        const property = style.property
-        const value = style.value
-        colorTemplate += `if (properties.${property} === "${value}") { %>${color}<% } else `
-        iconTemplate += `if (properties.${property} === "${value}") { %>${name}<% } else `
-      })
-      // Conversion from palette to RGB color is required for markers
-      const color = kCoreUtils.getColorFromPalette(this.defaultIcon.color)
-      const name = this.defaultIcon.name
-      colorTemplate += (this.hasIconStyles ? `{ %>${color}<% }` : `${color}`)
-      iconTemplate +=  (this.hasIconStyles ? `{ %>${name}<% }` : `${name}`)
-      values['leaflet.marker-color'] = (this.hasIconStyles ? `<% ${colorTemplate} %>` : `${colorTemplate}`)
-      values['leaflet.icon-classes'] = (this.hasIconStyles ? `<% ${iconTemplate} %>` : `${iconTemplate}`)
       return values
     },
     lineStylesValues() {
-      let values = {}
-      let colorTemplate = '', widthTemplate = '', opacityTemplate = ''
-      this.lineStyles.forEach(style => {
-        // Conversion from palette to RGB color is required for styles
-        const color = kCoreUtils.getColorFromPalette(style['stroke-color'])
-        const width = style['stroke-width']
-        const opacity = style['stroke-opacity']
-        const property = style.property
-        const value = style.value
-        colorTemplate += `if (properties.${property} === "${value}") { %>${color}<% } else `
-        widthTemplate += `if (properties.${property} === "${value}") { %>${width}<% } else `
-        opacityTemplate += `if (properties.${property} === "${value}") { %>${opacity}<% } else `
-      })
-      // Conversion from palette to RGB color is required for styles
-      const color = kCoreUtils.getColorFromPalette(this.defaultLine['stroke-color'])
-      const width = this.defaultLine['stroke-width']
-      const opacity = this.defaultLine['stroke-opacity']
-      colorTemplate += (this.hasLineStyles ? `{ %>${color}<% }` : `${color}`)
-      widthTemplate +=  (this.hasLineStyles ? `{ %>${width}<% }` : `${width}`)
-      opacityTemplate +=  (this.hasLineStyles ? `{ %>${opacity}<% }` : `${opacity}`)
-      values['leaflet.stroke-color'] = (this.hasLineStyles ? `<% ${colorTemplate} %>` : `${colorTemplate}`)
-      values['leaflet.stroke-width'] = (this.hasLineStyles ? `<% ${widthTemplate} %>` : `${widthTemplate}`)
-      values['leaflet.stroke-opacity'] = (this.hasLineStyles ? `<% ${opacityTemplate} %>` : `${opacityTemplate}`)
-      values['leaflet.template'] = (this.hasLineStyles ? ['stroke-color', 'stroke-width', 'stroke-opacity'] : [])
-      return values
+      return this.generateTemplates(['stroke-color', 'stroke-width', 'stroke-opacity'], this.defaultLine, this.lineStyles)
     },
     polygonStylesValues() {
-      let values = {}
-      let colorTemplate = '', opacityTemplate = ''
-      this.polygonStyles.forEach(style => {
-        // Conversion from palette to RGB color is required for styles
-        const color = kCoreUtils.getColorFromPalette(style['fill-color'])
-        const opacity = style['fill-opacity']
-        const property = style.property
-        const value = style.value
-        colorTemplate += `if (properties.${property} === "${value}") { %>${color}<% } else `
-        opacityTemplate += `if (properties.${property} === "${value}") { %>${opacity}<% } else `
-      })
-      // Conversion from palette to RGB color is required for styles
-      const color = kCoreUtils.getColorFromPalette(this.defaultPolygon['fill-color'])
-      const opacity = this.defaultPolygon['fill-opacity']
-      colorTemplate += (this.hasPolygonStyles ? `{ %>${color}<% }` : `${color}`)
-      opacityTemplate +=  (this.hasPolygonStyles ? `{ %>${opacity}<% }` : `${opacity}`)
-      values['leaflet.fill-color'] = (this.hasPolygonStyles ? `<% ${colorTemplate} %>` : `${colorTemplate}`)
-      values['leaflet.fill-opacity'] = (this.hasPolygonStyles ? `<% ${opacityTemplate} %>` : `${opacityTemplate}`)
-      values['leaflet.template'] = (this.hasPolygonStyles ? ['fill-color', 'fill-opacity'] : [])
-      return values
+      return this.generateTemplates(['fill-color', 'fill-opacity'], this.defaultPolygon, this.polygonStyles)
     },
     popupStylesValues() {
       return {
@@ -597,10 +528,8 @@ export default {
     onAddIconStyle (property) {
       this.iconStyles.push(this.createStyle(property.value, {
         // Default icon
-        icon: {
-          name: _.get(this.options, 'pointStyle.icon.options.iconClasses', 'fas fa-circle'),
-          color: _.get(this.options, 'pointStyle.icon.options.markerColor', 'blue')
-        },
+        name: _.get(this.options, 'pointStyle.icon.options.iconClasses', 'fas fa-circle'),
+        color: _.get(this.options, 'pointStyle.icon.options.markerColor', 'blue')
       }))
     },
     onRemoveIconStyle (style) {
@@ -609,10 +538,13 @@ export default {
     },
     onIconClicked (style) {
       this.editedStyle = style
-      this.$refs.iconChooser.open(style.icon.name, style.icon.color)
+      this.$refs.iconChooser.open(style['icon-classes'], style['marker-color'])
     },
     onIconChanged (icon) {
-      Object.assign(this.editedStyle.icon, icon)
+      Object.assign(this.editedStyle, {
+        'marker-color': icon.color,
+        'icon-classes': icon.name
+      })
     },
     onColorClicked (style, color) {
       this.editedStyle = style
