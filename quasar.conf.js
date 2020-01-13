@@ -94,6 +94,7 @@ module.exports = function (ctx) {
         'Notify',
         'Dialog',
         'Platform',
+        'Loading',
         'AppFullscreen'
       ]
     },
