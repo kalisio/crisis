@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@feathersjs/client": "^3.5.3",
+    "@slack/webhook": "^5.0.2",
     "babel-cli": "^6.24.0",
     "babel-core": "^6.24.1",
     "babel-eslint": "^10.0.3",
@@ -55,6 +56,7 @@
     "chai": "^4.2.0",
     "chai-lint": "^0.1.1",
     "colors": "^1.1.2",
+    "concat-stream": "^2.0.0",
     "cross-env": "^5.2.0",
     "eslint": "^6.1.0",
     "googleapis": "^21.3.0",

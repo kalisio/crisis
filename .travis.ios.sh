@@ -53,18 +53,11 @@ npm run cordova:build:ios > ios.build.log 2>&1
 EXIT_CODE=$?
 # Copy the log whatever the result
 aws s3 cp ios.build.log s3://${BUILD_BUCKET}/ios.build.log
-if [ $EXIT_CODE -ne 0 ]; then
-	echo "Building the app failed [error: $EXIT_CODE]"
-	exit 1
-fi
+check_code $EXIT_CODE "Building the app"
 
 # Backup the ios build to S3
 aws s3 sync src-cordova/platforms/ios/build s3://${BUILD_BUCKET}/ios > /dev/null
-EXIT_CODE=$?
-if [ $EXIT_CODE -eq 1 ]; then 
-	echo "Copying the artefact to s3 failed [error: $EXIT_CODE]"
-	exit 1
-fi
+check_code $? "Copying the artefact to s3"
 
 travis_fold end "build"
 
@@ -76,14 +69,10 @@ travis_fold start "deploy"
 # Deploy the IPA to the AppleStore
 ALTOOL="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Support/altool"
 "$ALTOOL" --upload-app -f "./src-cordova/platforms/ios/build/device/$TITLE.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log 2>&1
-# Capture the deploy result
 EXIT_CODE=$?
 # Copy the log whatever the result
 aws s3 cp ios.deploy.log s3://${BUILD_BUCKET}/ios.deploy.log
-if [ $EXIT_CODE -ne 0 ]; then
-	echo "Deploying the app failed [error: $EXIT_CODE]"
-	exit 1
-fi
+check_code $? "Deploying the app"
 
 travis_fold end "deploy"
 

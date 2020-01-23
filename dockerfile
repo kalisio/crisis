@@ -13,7 +13,6 @@ ENV NODE_APP_INSTANCE=$FLAVOR
 # We could do ADD and let Docker uncompress automatically the archive but we reach log limit in Travis.
 # So we copy the archive and uncompress it usin tar without the verbose mode
 COPY kdk.tgz /opt/.
-COPY kdk.tgz /opt/.
 WORKDIR /opt
 RUN tar zxf kdk.tgz && rm kdk.tgz
 

@@ -30,18 +30,11 @@ npm run cordova:build:android > android.build.log 2>&1
 EXIT_CODE=$?
 # Copy the log whatever the result
 aws s3 cp android.build.log s3://${BUILD_BUCKET}/android.build.log
-if [ $EXIT_CODE -ne 0 ]; then
-	echo "Building the app failed [error: $EXIT_CODE]"
-	exit 1
-fi
+check_code $EXIT_CODE "Building the app"
 
 # Backup the android build to S3
 aws s3 sync src-cordova/platforms/android/app/build/outputs/apk s3://${BUILD_BUCKET}/android > /dev/null
-EXIT_CODE=$?
-if [ $EXIT_CODE -eq 1 ]; then
-	echo "Copying the artefact to s3 failed [error: $EXIT_CODE]"
-	exit 1
-fi
+check_code $? "Copying the artefact to s3"
 
 travis_fold end "build"
 
@@ -60,10 +53,7 @@ fastlane android $NODE_APP_INSTANCE > android.deploy.log 2>&1
 EXIT_CODE=$?
 # Copy the log whatever the result
 aws s3 cp android.deploy.log s3://${BUILD_BUCKET}/android.deploy.log
-if [ $EXIT_CODE -ne 0 ]; then
-	echo "Deploying the app failed [error: $EXIT_CODE]"
-	exit 1
-fi
+check_code $? "Deploying the app"
 
 travis_fold end "deploy"
 
