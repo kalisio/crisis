@@ -110,6 +110,11 @@ module.exports = {
                   'edit/:objectId': { name: 'edit-event', component: 'KEventEditor', props: true },
                 }
               },
+              'archived-events': {
+                name: 'archived-events-activity',
+                component: 'KArchivedEventsActivity',
+                props: true
+              },
               'events/:objectId': {
                 name: 'event-activity',
                 component: 'KEventActivity',

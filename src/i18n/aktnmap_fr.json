@@ -49,6 +49,7 @@
   },
   "Context": {
     "EVENTS": "Evénements & modèles",
+    "ARCHIVED_EVENTS": "Evénements archivés",
     "MEMBERS": "Membres & groupes",
     "CATALOG": "Contexte géographique",
     "SEARCH": "Rechercher",    

@@ -31,6 +31,9 @@ export default {
       }
       actions.toolbar.push({ name: 'search', icon: 'search', label: this.$t('Context.SEARCH'), handler: this.search })
       actions.toolbar.push({ name: 'refresh', icon: 'refresh', label: this.$t('Context.REFRESH'), handler: this.refresh })
+      if (this.$can('service', 'archived-events', context._id)) {
+        actions.menu.push({ name: 'archived-events', icon: 'archive', label: this.$t('Context.ARCHIVED_EVENTS'), route: { name: 'archived-events-activity', params: { operation: 'archived-events', contextId: context._id } } })
+      }
       if (this.$can('update', 'organisations', context._id, { _id: context._id })) {
         actions.menu.push({ name: 'settings', icon: 'settings', label: this.$t('Context.SETTINGS'), route: { name: 'organisation-settings-activity', params: { perspective: 'properties', contextId: context._id } } })
       }

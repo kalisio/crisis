@@ -49,6 +49,7 @@
   },
   "Context": {
     "EVENTS": "Events & Templates",
+    "ARCHIVED_EVENTS": "Archived Events",
     "MEMBERS": "Members & Groups",
     "CATALOG": "Geographic Context",
     "SEARCH": "Search",

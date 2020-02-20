@@ -75,18 +75,24 @@ let defaultMapOptions = {
   }
 }
 
+const baseLayers = { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'fas fa-map',
+  options: { exclusive: true, filter: { type: 'BaseLayer' } } }
+const businessLayers = { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'layers',
+  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } } }
+const overlayLayers = { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'fas fa-map-marker',
+  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } }
+const measureLayers = { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fas fa-map-pin',
+  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } } }
+const meteoLayers = { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'wb_sunny',
+  options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } }
+
 let defaultMapCatalog = {
   categories: [
-    { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'fas fa-map',
-      options: { exclusive: true, filter: { type: 'BaseLayer' } } },
-    { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'layers',
-      options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } } },
-    { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'fas fa-map-marker',
-      options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } },
-    { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fas fa-map-pin',
-      options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } } },
-    { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'wb_sunny',
-      options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } }
+    baseLayers,
+    businessLayers,
+    overlayLayers,
+    measureLayers,
+    meteoLayers
   ]
 }
 
@@ -216,6 +222,14 @@ module.exports = {
     actions: ['probe-location'],
     layerActions: ['zoom-to'],
     timeline: { end: 2*60*60*24 } // T0 + 48H forecast
+  },
+  archivedEvents: defaultMapOptions,
+  archivedEventsCatalog: { categories: [baseLayers, overlayLayers] },
+  archivedEventsActivity: {
+    tools: ['fullscreen', 'catalog'],
+    actions: [],
+    layerActions: ['zoom-to'],
+    restore: { view: false }
   },
   routes: require('../src/router/routes')
 }
