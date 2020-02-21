@@ -120,7 +120,8 @@ module.exports = function (ctx) {
           ...cfg.resolve.alias, // This adds the existing aliases
           '@': path.resolve(__dirname, './src/components'),
           config: path.resolve(__dirname, './config/client-config.json')
-        }
+        },
+        cfg.optimization.minimize = process.env.DEBUG ? false : cfg.optimization.minimize
       }
     },
 
