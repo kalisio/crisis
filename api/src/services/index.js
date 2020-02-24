@@ -78,14 +78,19 @@ module.exports = async function () {
             // Only on first activation
             if (isActive && templateId && (checkedAt === triggeredAt)) {
               const eventTemplatesService = app.getService('event-templates', service.getContextId())
+              // Get template to be used, which will become the new event
+              const template = await eventTemplatesService.get(templateId)
               // Remove id so that event has its own
-              let template = await eventTemplatesService.get(templateId)
-              template = _.omit(template, ['_id'])
-              _.set(template, 'location.name', label ? `${alert.layer} - ${label}` : `${alert.layer}`)
-              _.set(template, 'location.longitude', _.get(alert, 'geometry.coordinates[0]'))
-              _.set(template, 'location.latitude', _.get(alert, 'geometry.coordinates[1]'))
+              let event = _.omit(template, ['_id'])
+              // Keep track of template based on its name for statistics
+              // We don't keep ref/link for simplicity and making archived events will be self-consistent
+              // No need to keep track of templates that have been removed, etc.
+              event.template = template.name
+              _.set(event, 'location.name', label ? `${alert.layer} - ${label}` : `${alert.layer}`)
+              _.set(event, 'location.longitude', _.get(alert, 'geometry.coordinates[0]'))
+              _.set(event, 'location.latitude', _.get(alert, 'geometry.coordinates[1]'))
               const eventsService = app.getService('events', service.getContextId())
-              await eventsService.create(template)
+              await eventsService.create(event)
             }
           })
         }
