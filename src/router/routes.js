@@ -113,7 +113,10 @@ module.exports = {
               'archived-events': {
                 name: 'archived-events-activity',
                 component: 'KArchivedEventsActivity',
-                props: true
+                props: true,
+                children: {
+                  'view/:objectId': { name: 'view-event', component: 'viewer/KModalViewer', props: true },
+                }
               },
               'events/:objectId': {
                 name: 'event-activity',
