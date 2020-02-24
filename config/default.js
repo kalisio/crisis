@@ -27,6 +27,8 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
 if (process.env.SUBDOMAIN) {
   domain = 'https://aktnmap.' + process.env.SUBDOMAIN
 }
+// On a developer machine will do domain = gateway = localhost
+const gateway = domain.replace('kano', 'api')
 
 let defaultMapOptions = {
   viewer: {
@@ -111,10 +113,9 @@ module.exports = {
   apiJwt: 'aktnmap-jwt',
   apiTimeout: 20000,
   transport: 'websocket', // Could be 'http' or 'websocket',
-  stripe: {
-    secretKey: process.env.STRIPE_PUBLIC_KEY,
-    options: {}
-  },
+  gateway: 'https://api.',
+  gatewayJwtField: 'jwt',
+  gatewayJwt: 'kano-gateway-jwt',
   appName: 'Akt\'n\'Map',
   appLogo: 'aktnmap-logo.png',
   appWebsite: 'https://aktnmap.com',
@@ -122,6 +123,10 @@ module.exports = {
   publisherWebsite: website,
   logs: {
     level: (process.env.NODE_ENV === 'development' ? 'debug' : 'info')
+  },
+  stripe: {
+    secretKey: process.env.STRIPE_PUBLIC_KEY,
+    options: {}
   },
   roles: {
     // Member/Manager/Owner
