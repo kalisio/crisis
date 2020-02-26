@@ -218,7 +218,7 @@ module.exports = {
   catalogActivity: {
     tools: ['track-location', 'location-bar', 'fullscreen', 'catalog'],
     actions: ['create-layer'],
-    layerActions: ['zoom-to', 'save', 'edit', 'edit-data', 'remove']
+    layerActions: ['zoom-to', 'save', 'edit', 'view-data', 'chart-data', 'edit-data', 'remove']
   },
   event: defaultMapOptions,
   eventCatalog: defaultMapCatalog,
