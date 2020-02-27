@@ -351,9 +351,9 @@ export default {
       // When no template we have a single default icon
       if (!templates.includes('marker-color') && !templates.includes('icon-classes')) {
         // Conversion from palette to RGB color is required for markers
-        this.defaultIcon.color = kCoreUtils.getPaletteFromColor(_.get(values, 'leaflet.marker-color',
+        this.defaultIcon['marker-color'] = kCoreUtils.getPaletteFromColor(_.get(values, 'leaflet.marker-color',
           _.get(this.options, 'pointStyle.icon.options.markerColor', 'blue')))
-        this.defaultIcon.name = _.get(values, 'leaflet.icon-classes',
+        this.defaultIcon['icon-classes'] = _.get(values, 'leaflet.icon-classes',
           _.get(this.options, 'pointStyle.icon.options.iconClasses', 'fas fa-circle'))
       } else {
         this.processTemplates(values, ['marker-color', 'icon-classes'], this.defaultIcon, this.iconStyles)
