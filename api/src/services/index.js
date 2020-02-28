@@ -53,7 +53,6 @@ module.exports = async function () {
     // Add app-specific hooks to required services
     app.on('service', service => {
       if (service.name === 'users' ||
-          service.name === 'authentication' ||
           service.name === 'authorisations' ||
           service.name === 'organisations' ||
           service.name === 'groups' ||
@@ -121,6 +120,9 @@ module.exports = async function () {
       }
     })
     await app.configure(kCore)
+    // This one is created by feathers under the hood so we cannot configure using the previous event listener,
+    // which will only emit our own services
+    app.configureService('authentication', app.getService('authentication'), servicesPath)
     await app.configure(kTeam)
     await app.configure(kNotify)
     await app.configure(kMap)
