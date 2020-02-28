@@ -93,6 +93,30 @@ module.exports = async function () {
               await eventsService.create(event)
             }
           })
+        } else if ((service.name === 'events') || (service.name === 'event-logs')) {
+          // This is only in dev mode in preprod/prod this feature is managed by MongoDB Stitch
+          if ((process.env.NODE_APP_INSTANCE !== 'test') && (process.env.NODE_APP_INSTANCE !== 'prod')) {
+            service.on('created', async object => {
+              try {
+                app.getService(`archived-${service.name}`, service.context).create(object)
+              } catch (error) { app.logger.error(error.message) }
+            })
+            service.on('updated', async object => {
+              try {
+                app.getService(`archived-${service.name}`, service.context).update(object._id, object)
+              } catch (error) { app.logger.error(error.message) }
+            })
+            service.on('patched', async object => {
+              try {
+                app.getService(`archived-${service.name}`, service.context).update(object._id, object)
+              } catch (error) { app.logger.error(error.message) }
+            })
+            service.on('deleted', async object => {
+              try {
+                app.getService(`archived-${service.name}`, service.context).patch(object._id, { deletedAt: new Date() })
+              } catch (error) { app.logger.error(error.message) }
+            })
+          }
         }
       }
     })
