@@ -7,7 +7,17 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [iff(hook => process.env.API_GATEWAY, async hook => {
+    create: [],
+    update: [],
+    patch: [],
+    remove: []
+  },
+
+  after: {
+    all: [],
+    find: [],
+    get: [],
+    create: [notifyHooks.verifyGuest, notifyHooks.consentGuest, iff(hook => process.env.API_GATEWAY, async hook => {
       const config = hook.app.get('authentication')
       if (!config) return hook
       // Default appId for Akt'n'Map used to access the gateway
@@ -19,16 +29,6 @@ module.exports = {
       })(hook)
       return hook
     })],
-    update: [],
-    patch: [],
-    remove: []
-  },
-
-  after: {
-    all: [],
-    find: [],
-    get: [],
-    create: [notifyHooks.verifyGuest, notifyHooks.consentGuest],
     update: [],
     patch: [],
     remove: []
