@@ -240,17 +240,12 @@ export default {
         this.$events.$emit('error', new Error(this.$t('errors.ALERTS_LIMIT')))
       }
     },
-    getAlertTooltip (alert, layer) {
-      if (!_.has(alert, 'status.active')) return null
+    getAlertPopup (alert, layer, options) {
+      if (!layer.name === this.$t('CatalogActivity.ALERTS_LAYER')) return null
 
       const isActive = _.get(alert, 'status.active')
       const checkedAt = new Date(_.get(alert, 'status.checkedAt'))
-      const triggeredAt = new Date(_.get(alert, 'status.triggeredAt'))
       let html = ''
-      if (_.has(alert, 'feature')) html += `${alert.featureLabel || alert.feature}</br>`
-      if (_.has(alert, 'layer')) html += `${alert.layer} - `
-      if (isActive) html += this.$t('CatalogActivity.ALERT_ACTIVE') + '</br>'
-      else html += this.$t('CatalogActivity.ALERT_INACTIVE') + '</br>'
       _.forOwn(alert.conditions, (value, key) => {
         // Get corresponding variable
         const variable = _.find(this.currentVariables, { name: key })
@@ -263,10 +258,27 @@ export default {
           `${label} ` + this.$t('CatalogActivity.ALERT_LTE') + ` ${value.$lte} ${unit}</br>` :
           `${label} ` + this.$t('CatalogActivity.ALERT_GTE') + ` ${value.$lte} ${unit}</br>`
       })
-      if (isActive) html += this.$t('CatalogActivity.ALERT_TRIGGERED_AT') +
-        ` ${this.formatTime('date.short', triggeredAt)} - ${this.formatTime('time.short', triggeredAt)}`
-      else html += this.$t('CatalogActivity.ALERT_CHECKED_AT') +
-        ` ${this.formatTime('date.short', checkedAt)} - ${this.formatTime('time.short', checkedAt)}`
+      html += (isActive ? this.$t('CatalogActivity.ALERT_TRIGGERED_AT') : this.$t('CatalogActivity.ALERT_CHECKED_AT')) +
+        ` ${this.formatTime('date.short', checkedAt)} - ${this.formatTime('time.long', checkedAt)}</br>`
+      if (isActive) {
+        // Order triggers by time to get last one
+        const triggers = _.sortBy(_.get(alert, 'status.triggers', [trigger => new Date(trigger.time).getTime()]))
+        const triggeredAt = new Date(_.last(triggers).time)
+        html += this.$t('CatalogActivity.ALERT_THRESHOLD_AT') +
+        ` ${this.formatTime('date.short', triggeredAt)} - ${this.formatTime('time.long', triggeredAt)}`
+      }
+
+      return L.popup({ autoPan: false }, layer).setContent(`<b>${html}</b>`)
+    },
+    getAlertTooltip (alert, layer, options) {
+      if (!layer.name === this.$t('CatalogActivity.ALERTS_LAYER')) return null
+
+      const isActive = _.get(alert, 'status.active')
+      let html = ''
+      if (isActive) html += this.$t('CatalogActivity.ALERT_ACTIVE') + '</br>'
+      else html += this.$t('CatalogActivity.ALERT_INACTIVE') + '</br>'
+      if (_.has(alert, 'layer')) html += `${alert.layer}`
+      if (_.has(alert, 'feature')) html += ` - ${alert.featureLabel || alert.feature}</br>`
 
       return L.tooltip({ permanent: false }, layer).setContent(`<b>${html}</b>`)
     },
@@ -393,6 +405,7 @@ export default {
     this.$options.components['layer-style-form'] = this.$load('LayerStyleForm')
 
     this.registerLeafletStyle('tooltip', this.getAlertTooltip)
+    this.registerLeafletStyle('popup', this.getAlertPopup)
   },
   mounted () {
     this.$on('collection-refreshed', this.onAlertCollectionRefreshed)

@@ -264,9 +264,13 @@ export default {
         if (this.layer.featureLabel) featureLabel = _.get(this.feature, 'properties.' + this.layer.featureLabel)
         if (featureLabel) _.set(values, 'featureLabel', featureLabel)
       }
-      // Setup style if any provided
-      if (_.has(this.layer, 'leaflet.icon-classes')) {
+      // Setup style if any provided, except if templated as it would require
+      // a complex mapping with the underlying feature
+      if (_.has(this.layer, 'leaflet.icon-classes') &&
+          !_.find(_.get(this.layer, 'leaflet.template', []), { property: 'icon-classes' })) {
         _.set(values, 'style.icon-classes', _.get(this.layer, 'leaflet.icon-classes'))
+      } else {
+        _.set(values, 'style.icon-classes', 'fas fa-bell')
       }
       _.set(values, 'eventTemplate', this.eventTemplate[0])
       return values

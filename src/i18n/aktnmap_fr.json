@@ -84,6 +84,7 @@
     "ALERT_INACTIVE": "Alerte inactive",
     "ALERT_CHECKED_AT": "Vérifiée le",
     "ALERT_TRIGGERED_AT": "Déclenchée le",
+    "ALERT_THRESHOLD_AT": "Dernier franchissement le",
     "ALERT_GTE": "supérieur à",
     "ALERT_LTE": "inférieur à",
     "REMOVE_ALERT_DIALOG_TITLE": "Supprimer l'alerte ?",

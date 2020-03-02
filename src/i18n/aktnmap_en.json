@@ -84,6 +84,7 @@
     "ALERT_INACTIVE": "Inactive alert",
     "ALERT_CHECKED_AT": "Checked on",
     "ALERT_TRIGGERED_AT": "Verified on",
+    "ALERT_THRESHOLD_AT": "Last crossing on",
     "ALERT_GTE": "greater than",
     "ALERT_LTE": "lower than",
     "REMOVE_ALERT_DIALOG_TITLE": "Remove this alert ?",
