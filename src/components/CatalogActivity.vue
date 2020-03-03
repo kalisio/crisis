@@ -11,7 +11,7 @@
     </q-page-sticky>
 
     <q-page-sticky position="left" :offset="[18, 0]">
-      <k-feature-info-box style="min-width: 150px; width: 15vw; max-height: 40vh" />
+      <k-feature-info-box style="min-width: 250px; width: 25vw;" />
     </q-page-sticky>
 
     <q-page-sticky position="left" :offset="[18, 0]">
@@ -241,7 +241,7 @@ export default {
       }
     },
     getAlertPopup (alert, layer, options) {
-      if (!layer.name === this.$t('CatalogActivity.ALERTS_LAYER')) return null
+      if (options.name !== this.$t('CatalogActivity.ALERTS_LAYER')) return null
 
       const isActive = _.get(alert, 'status.active')
       const checkedAt = new Date(_.get(alert, 'status.checkedAt'))
@@ -271,7 +271,7 @@ export default {
       return L.popup({ autoPan: false }, layer).setContent(`<b>${html}</b>`)
     },
     getAlertTooltip (alert, layer, options) {
-      if (!layer.name === this.$t('CatalogActivity.ALERTS_LAYER')) return null
+      if (options.name !== this.$t('CatalogActivity.ALERTS_LAYER')) return null
 
       const isActive = _.get(alert, 'status.active')
       let html = ''

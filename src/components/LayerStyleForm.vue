@@ -13,7 +13,7 @@
           </q-item-section>
           <q-item-section class="col-4">
             <q-slider v-model="disableClusteringAtZoom" :disable="!clustering"
-              :min="1" :max="18" :step="1"
+              :min="minZoom" :max="maxZoom" :step="1"
               label label-always :label-value="disableClusteringAtZoom"/>
           </q-item-section>
         </q-item>
@@ -275,6 +275,8 @@ export default {
   },
   data () {
     return {
+      minZoom: null,
+      maxZoom: null,
       property: null,
       popup: false,
       popupProperties: [],
@@ -446,7 +448,9 @@ export default {
           const propertyName = style.property
           const propertyValue = style.value
           // Generate style value for given property value
-          templates[index] += `if (properties.${propertyName} === "${propertyValue}") { %>${value}<% } else `
+          templates[index] += (typeof propertyValue === 'number' ?
+            `if (properties.${propertyName}.toString() === "${propertyValue}") { %>${value}<% } else ` :
+            `if (properties.${propertyName} === "${propertyValue}") { %>${value}<% } else `)
         })
       })
       // Process default style
@@ -582,7 +586,8 @@ export default {
     // Load the required components
     this.$options.components['k-icon-chooser'] = this.$load('input/KIconChooser')
     this.$options.components['k-color-chooser'] = this.$load('input/KColorChooser')
-
+    this.minZoom = _.get(this.options, 'viewer.minZoom', 1)
+    this.maxZoom = _.get(this.options, 'viewer.maxZoom', 18)
     await this.build()
     this.property = this.properties[0]
     this.$emit('form-ready', this)

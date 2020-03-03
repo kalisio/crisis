@@ -33,7 +33,7 @@ const gateway = domain.replace('kano', 'api')
 let defaultMapOptions = {
   viewer: {
     minZoom: 3,
-    maxZoom: 18,
+    maxZoom: 19,
     center: [47, 3],
     zoom: 6,
     maxBounds: [ [-90, -180], [90, 180] ],
