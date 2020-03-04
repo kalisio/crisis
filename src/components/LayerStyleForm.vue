@@ -2,7 +2,17 @@
   <div>
     <k-icon-chooser ref="iconChooser" @icon-choosed="onIconChanged" />
     <k-color-chooser ref="colorChooser" @color-choosed="onColorChanged" />
-    <q-expansion-item ref="points" default-opened icon="fas fa-map-marker-alt" :label="$t('LayerStyleForm.POINTS')" group="group">
+    <q-list dense class="row">
+      <q-item>
+        <q-item-section>
+          <q-toggle v-model="isVisible"/>
+        </q-item-section>
+        <q-item-section avatar>
+          {{$t('LayerStyleForm.DEFAULT_VISIBILITY')}}
+        </q-item-section>
+      </q-item>
+    </q-list>
+    <q-expansion-item ref="points" icon="fas fa-map-marker-alt" :label="$t('LayerStyleForm.POINTS')" group="group">
       <q-list dense class="row items-center justify-around q-pa-md">
         <q-item class="col-12">
           <q-item-section class="col-1">
@@ -216,6 +226,21 @@
         </q-item>
       </q-list>
     </q-expansion-item>
+    <q-expansion-item ref="infobox" icon="fas fa-th-list" :label="$t('LayerStyleForm.INFOBOX')" group="group">
+      <q-list dense class="row items-center justify-around q-pa-md">
+        <q-item class="col-12">
+          <q-item-section class="col-1">
+            <q-toggle v-model="infobox"/>
+          </q-item-section>
+          <q-item-section avatar class="col-5">
+            {{$t('LayerStyleForm.ADD_POPUP')}}
+          </q-item-section>
+          <q-item-section class="col-6">
+            <q-select :disable="!infobox" v-model="infoboxProperties" multiple :options="properties"></q-select>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-expansion-item>
     <q-list v-show="hasError" dense class="row items-center justify-around q-pa-md">
       <q-item>
         <q-item-section side>
@@ -278,10 +303,13 @@ export default {
       minZoom: null,
       maxZoom: null,
       property: null,
+      isVisible: true,
       popup: false,
       popupProperties: [],
       tooltip: false,
       tooltipProperty: null,
+      infobox: false,
+      infoboxProperties: [],
       clustering: true,
       disableClusteringAtZoom: 18,
       defaultIcon: {},
@@ -329,7 +357,10 @@ export default {
       let propertyValue
       // As all templates have the same conditional structure use the first template to extract property values
       while ((propertyValue = propertyValueRegex.exec(templates[0][0])) !== null) {
-        const propertyName = propertyNameRegex.exec(templates[0][0])[1].trim()
+        let propertyName = propertyNameRegex.exec(templates[0][0])[1].trim()
+        // Take care that toString() is used to convert numbers to strings in templates
+        const isNumber = propertyName.includes('.toString()')
+        propertyName = propertyName.replace('.toString()', '')
         let style = {}
         properties.forEach((property, index) => {
           const value = regexs[index].exec(templates[index][0])[1].trim()
@@ -339,6 +370,7 @@ export default {
             (_.isNumber(value) ? Number(value) : value))
         })
         style.value = propertyValue[1].replace('"', '').trim()
+        if (isNumber) style.value = _.toNumber(style.value)
         styles.push(this.createStyle(propertyName, style))
       }
     },
@@ -410,6 +442,15 @@ export default {
       // Jump to select data model
       if (this.tooltipProperty) this.tooltipProperty = _.find(this.properties, { value: this.tooltipProperty })
     },
+    async fillInfoBoxStyles(values) {
+      this.infobox = (_.get(values, 'leaflet.infobox') ? true : false)
+      this.infoboxProperties = _.get(values, 'leaflet.infobox.pick',
+        _.get(this.options, 'infobox.pick', this.properties.map(property => property.value)))
+      // Jump to select data model
+      if (this.infoboxProperties) this.infoboxProperties = this.infoboxProperties.map(property =>
+        _.find(this.properties, { value: property })
+      )
+    },
     async fill (values) {
       logger.debug('Filling layer style form', values)
       // Clustering
@@ -424,7 +465,8 @@ export default {
       await this.fillPopupStyles(values)
       // Tooltip
       await this.fillTooltipStyles(values)
-      
+      // Infobox
+      await this.fillInfoBoxStyles(values)
     },
     validate () {
       logger.debug('Validating layer style form')
@@ -468,6 +510,11 @@ export default {
       values['leaflet.template'] = (hasStyles ? properties : [])
       return values
     },
+    generalValues () {
+      return {
+        'leaflet.isVisible': this.isVisible
+      }
+    },
     clusteringValues () {
       return {
         'leaflet.cluster': (this.clustering ? { disableClusteringAtZoom: this.disableClusteringAtZoom } : false)
@@ -494,6 +541,11 @@ export default {
         'leaflet.tooltip': (this.tooltip ? { property: this.tooltipProperty.value } : undefined)
       }
     },
+    infoBoxStylesValues() {
+      return {
+        'leaflet.infobox': (this.infobox ? { pick: this.popupProperties.map(property => property.value) } : undefined)
+      }
+    },
     values () {
       let values = {}
       // Be default lodash merges objects only not arrays
@@ -501,6 +553,8 @@ export default {
       const customizer = (objValue, srcValue) => {
         if (_.isArray(objValue)) return objValue.concat(srcValue)
       }
+      // General properties
+      _.merge(values, this.generalValues())
       // Clustering
       _.merge(values, this.clusteringValues())
       // Point style
@@ -513,6 +567,8 @@ export default {
       _.merge(values, this.popupStylesValues())
       // Tooltip style
       _.merge(values, this.tooltipStylesValues())
+      // Infobox style
+      _.merge(values, this.infoBoxStylesValues())
       return values
     },
     createStyle (property, options = {}) {

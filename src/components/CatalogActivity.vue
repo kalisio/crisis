@@ -87,6 +87,7 @@ export default {
     kMapMixins.map.style,
     kMapMixins.map.tooltip,
     kMapMixins.map.popup,
+    kMapMixins.map.infobox,
     kMapMixins.map.activity,
   ],
   provide () {
@@ -164,7 +165,9 @@ export default {
     isLayerStyleEditable (layer) {
       if (_.has(layer, 'isStyleEditable')) return _.get(layer, 'isStyleEditable')
       // Only possible on user-defined and saved layers by default
-      else return (layer._id && (layer.service === 'features'))
+      //else return (layer._id && (layer.service === 'features'))
+      // Only possible when GeoJson by default
+      return ((_.get(layer, `${this.engine}.type`) === 'geoJson'))
     },
     registerLayerActions (layer) {
       let actions = activityMixin.methods.registerLayerActions.call(this, layer)
@@ -363,14 +366,25 @@ export default {
       const result = this.$refs.layerStyleForm.validate()
       if (!result.isValid) return
       this.inProgress = true
-      try {
-        await this.$api.getService('catalog').patch(this.styledLayer._id, result.values)
-      } catch (_) {
+      let geoJson
+      // If saved layer update it in DB
+      if (this.styledLayer._id) {
+        try {
+          await this.$api.getService('catalog').patch(this.styledLayer._id, result.values)
+        } catch (_) {
+        }
+      } else {
+        geoJson = this.toGeoJson(this.styledLayer.name)
       }
+      // Update in memory
       _.forOwn(result.values, (value, key) => _.set(this.styledLayer, key, value))
       // Reset layer with new setup
       await this.removeLayer(this.styledLayer.name)
       await this.addLayer(this.styledLayer)
+      // Update data as well when in memory
+      if (!this.styledLayer._id) {
+        this.updateLayer(this.styledLayer.name, geoJson)
+      }
       // FIXME: simply updating data does not update style as the old layer setup is still kept in a closure
       //this.updateLayer(this.styledLayer.name)
       this.inProgress = false

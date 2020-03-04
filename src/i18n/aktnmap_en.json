@@ -104,6 +104,7 @@
     "EVENT_TEMPLATE_REQUIRED": "Event template is required"
   },
   "LayerStyleForm": {
+    "DEFAULT_VISIBILITY": "Visibilité par défaut",
     "POINTS": "Markers",
     "LINES": "Lines",
     "POLYGONS": "Polygons",
@@ -127,6 +128,8 @@
     "ADD_POPUP": "Select target properties to use as popup",
     "TOOLTIP": "Tooltip",
     "ADD_TOOLTIP": "Select a target property to use as tooltip",
+    "INFOBOX": "Information box",
+    "ADD_INFOBOX": "Select target properties to use as information box",
     "IF": "If",
     "EQUALS": "is",
     "THEN": "then icon is"

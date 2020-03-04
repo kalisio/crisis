@@ -104,6 +104,7 @@
     "EVENT_TEMPLATE_REQUIRED": "Le modèle d'événement est requis"
   },
   "LayerStyleForm": {
+    "DEFAULT_VISIBILITY": "Visibilité par défaut",
     "POINTS": "Icônes",
     "LINES": "Lignes",
     "POLYGONS": "Polygones",
@@ -127,6 +128,8 @@
     "ADD_POPUP": "Sélectionnez des propriétés à afficher dans la bulle",
     "TOOLTIP": "Bulle d'information",
     "ADD_TOOLTIP": "Sélectionnez une propriété à afficher dans la bulle",
+    "INFOBOX": "Boîte d'information",
+    "ADD_INFOBOX": "Sélectionnez des propriétés à afficher dans la boîte",
     "IF": "Si",
     "EQUALS": "vaut",
     "THEN": "alors l'icône est"
