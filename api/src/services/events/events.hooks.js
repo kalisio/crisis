@@ -1,24 +1,33 @@
-import { checkEventsQuotas } from '../../hooks'
+import _ from 'lodash'
+import { hooks as coreHooks } from '@kalisio/kdk-core'
+import { hooks as mapHooks } from '@kalisio/kdk-map'
+import { setNow, discard } from 'feathers-hooks-common'
+import { addCreatorAsCoordinator, processNotification, sendEventNotifications, checkEventsQuotas } from '../../hooks'
 
 module.exports = {
   before: {
-    all: [],
-    find: [],
+    all: [coreHooks.convertObjectIDs(['layer', 'feature'])],
+    find: [mapHooks.marshallSpatialQuery],
     get: [],
-    create: [checkEventsQuotas],
-    update: [],
-    patch: [],
-    remove: []
+    // Because expireAt comes from client convert it to Date object
+    create: [checkEventsQuotas, processNotification, addCreatorAsCoordinator, setNow('createdAt', 'updatedAt'), coreHooks.convertDates(['expireAt'])],
+    update: [processNotification, discard('createdAt', 'updatedAt'), setNow('updatedAt'), coreHooks.convertDates(['expireAt'])],
+    patch: [processNotification, discard('createdAt', 'updatedAt'), setNow('updatedAt'), coreHooks.convertDates(['expireAt'])],
+    remove: [processNotification]
   },
 
   after: {
     all: [],
-    find: [],
+    find: [mapHooks.asGeoJson({
+      longitudeProperty: 'location.longitude',
+      latitudeProperty: 'location.latitude'
+    })],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
+    create: [sendEventNotifications],
+    update: [sendEventNotifications],
+    patch: [sendEventNotifications],
+    // Because the notification ID is based on created/updated time we need to update it even on remove
+    remove: [setNow('updatedAt'), sendEventNotifications, coreHooks.removeAttachments('attachments')]
   },
 
   error: {

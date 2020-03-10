@@ -1,5 +1,12 @@
 {
+  "EVENTS_LABEL": "Evénements",
+  "EVENT_TEMPLATES_LABEL": "Modèles",
+  "REMOVE_LABEL": "Supprimer",
+  "EDIT_LABEL": "Editer",
+  "CLOSE_LABEL": "Fermer",
+  "SAVE_LABEL": "Enregistrer",
   "errors": {
+    "EVENT_LOG_LIMIT": "Trop de participants pour afficher l'ensemble des informations",
     "CANNOT_REMOVE_CUSTOMER": "Vous n'êtes pas autorisé à supprimer le client de <b>{{resource}}</b>, modifiez préalablement les informations de paiement."
   },
   "schemas": {
@@ -17,7 +24,44 @@
     "TIME_FORMAT_LONG_YEAR_FIELD_HELPER": "Format d'année complet <a target='_blank' href='https://momentjs.com/docs/#/displaying/format/'>&#x1F6C8;</a>",
     "TIME_FORMAT_UTC_FIELD_HELPER": "Mode d'affichage temporel UTC",
     "RESTORE_VIEW_FIELD_HELPER": "Sauvegarder la vue courante",
-    "LOCATION_FORMAT": "Format de coordonnées <a target='_blank' href='https://github.com/nerik/formatcoords#formatting'>&#x1F6C8;</a>"
+    "LOCATION_FORMAT": "Format de coordonnées <a target='_blank' href='https://github.com/nerik/formatcoords#formatting'>&#x1F6C8;</a>",
+    "EVENT_TEMPLATES_CREATE_TITLE": "Créer un nouveau modèle d'évènement ?",
+    "EVENT_TEMPLATES_NAME_FIELD_HELPER": "Saisissez le nom du modèle",
+    "EVENT_TEMPLATES_ICON_FIELD_HELPER": "Selectionnez une icone pour représenter le modèle",
+    "EVENT_TEMPLATES_DESCRIPTION_FIELD_HELPER": "Saisissez une description du modèle",
+    "EVENTS_TEMPLATES_PARTICIPANTS_FIELD_HELPER": "Saisissez les participants par défaut de l'événement",
+    "EVENTS_TEMPLATES_COORDINATORS_FIELD_CREATE_HELPER": "Saisissez les coordinateurs par défaut de l'événement (autres que le créateur)",
+    "EVENTS_TEMPLATES_COORDINATORS_FIELD_UPDATE_HELPER": "Saisissez les coordinateurs par défaut de l'événement (autres que le créateur)",
+    "EVENTS_TEMPLATES_LAYER_FIELD_HELPER": "Sélectionnez une couche de données cible",
+    "EVENT_WORKFLOW_TITLE_FIELD_HELPER": "Saisissez le nom de cette étape",
+    "EVENT_WORKFLOW_ICON_FIELD_HELPER": "Selectionnez une icone pour représenter cette étape",
+    "EVENT_WORKFLOW_DESCRIPTION_FIELD_HELPER": "Saisissez la description de cette étape",
+    "EVENT_WORKFLOW_FEATURE_INTERACTION_FIELD_HELPER": "Interaction avec les éléments géographiques",
+    "EVENT_WORKFLOW_INTERACTION_FIELD_HELPER": "Saisissez les interactions de cette étape",
+    "EVENT_WORKFLOW_END_FIELD_HELPER": "Sélectionnez l'interaction qui donne lieu à la fin du processus",
+    "EVENT_WORKFLOW_STAKEHOLDER_FIELD_HELPER": "Sélectionnez la partie prenante",
+    "EVENT_WORKFLOW_PARTICIPANT_LABEL": "Participant",
+    "EVENT_WORKFLOW_COORDINATOR_LABEL": "Coordinateur",
+    "EVENTS_ADVANCED_SETTINGS": "Paramètres avancés",
+    "EVENTS_CREATE_TITLE": "Créer un nouvel événement ?",
+    "EVENTS_NAME_FIELD_HELPER": "Saisissez le nom de l'événement",
+    "EVENTS_NAME_FIELD_LABEL": "Nom de l'événement",
+    "EVENTS_DESCRIPTION_FIELD_HELPER": "Saisissez une description de l'événement",
+    "EVENTS_DESCRIPTION_FIELD_LABEL": "Description de l'événement",
+    "EVENTS_LOCATION_FIELD_HELPER": "Saisissez le lieu de l'événement",
+    "EVENTS_EXPIRE_AT_FIELD_HELPER": "Saisissez la date d'expiration de l'événement",
+    "EVENTS_PARTICIPANTS_FIELD_HELPER": "Saisissez les participants à l'événement",
+    "EVENTS_PARTICIPANTS_FIELD_LABEL": "Participants à l'événement",
+    "EVENTS_COORDINATORS_FIELD_CREATE_HELPER": "Saisissez les coordinateurs de l'événement (autres que vous)",
+    "EVENTS_COORDINATORS_FIELD_UPDATE_HELPER": "Saisissez les coordinateurs de l'événement",
+    "EVENTS_COORDINATORS_FIELD_LABEL": "Coordinateurs de l'événement",
+    "EVENTS_ATTACHMENTS_FIELD_HELPER": "Selectionnez des médias à attacher à l'événement",
+    "EVENTS_HAS_WORKFLOW_FIELD_HELPER": "Associer un processus à l'événement",
+    "EVENTS_NOTIFICATION_FIELD_CREATE_HELPER": "Notifier les participants de la création",
+    "EVENTS_NOTIFICATION_FIELD_UPDATE_HELPER": "Notifier les participants de la mise à jour",
+    "EVENTS_LOG_TITLE": "Entrez votre choix",
+    "EVENTS_LOG_COMMENT_FIELD_LABEL": "Commentaire",
+    "EVENTS_LOG_COMMENT_FIELD_HELPER": "Saisissez votre commentaire pour cette étape"
   },
   "Variables": {
     "H": "Niveau d'eau",
@@ -182,5 +226,144 @@
     "MEMBERS_ADD": "Ajouter un membre",
     "GROUPS_MANAGEMENT": "Gestion des groupes",
     "GROUP_MEMBERS_MANAGEMENT": "Gestion des membres d’un groupe"
+  },
+  "EventActivity": {
+    "ADD_MEDIA_LABEL": "Ajouter un média",
+    "BROWSE_MEDIA_LABEL": "Parcourir les médias",
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "SHOW_PANE_LABEL": "Afficher le volet participants",
+    "HIDE_PANE_LABEL": "Cacher le volet participants",
+    "ACTION_REQUIRED": "Action requise",
+    "AWAITING_INFORMATION": "En attente d'information",
+    "UNAMED": "Sans nom",
+    "PARTICIPANTS_LAYER_NAME": "Participants",
+    "UPLOADER_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "VIGICRUES_LEVEL_1": "Pas de vigilance particulière requise",
+    "VIGICRUES_LEVEL_2": "Risque de crue génératrice de débordements",
+    "VIGICRUES_LEVEL_3": "Risque de crue génératrice de débordements importants",
+    "VIGICRUES_LEVEL_4": "Risque de crue majeure"
+  },
+  "EventActivityPanel": {
+    "PARTICIPANTS_LABEL": "Participants"
+  },
+  "EventsActivity": {
+    "EVENTS_LABEL": "$t(EVENTS_LABEL)",
+    "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)"
+  },
+  "EventCard": {
+    "CREATED_AT_LABEL": "Créé le",
+    "UPDATED_AT_LABEL": "Mis à jour le",
+    "REMOVE_LABEL": "$t(REMOVE_LABEL)",
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "FOLLOW_UP_LABEL": "Suivre",
+    "ADD_MEDIA_LABEL": "$t(EventActivity.ADD_MEDIA_LABEL)",
+    "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)",
+    "UPLOADER_MODAL_CLOSE_ACTION": "$t(EventActivity.UPLOADER_MODAL_CLOSE_ACTION)",
+    "LOCATION_MAP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "NAVIGATE_LABEL": "Naviguer",
+    "LOCATE_LABEL": "Localiser",    
+    "REMOVE_DIALOG_TITLE": "Supprimer l'événement {{event}} ?",
+    "REMOVE_DIALOG_MESSAGE": "Etes vous sûr de vouloir supprimer l'événement <b>{{event}}</b> ?",
+    "ACTION_REQUIRED_WARNING": "Action requise",
+    "WAITING_COORDINATION_WARNING": "En attente du coordinateur",
+    "WAITING_FOR_PARTICIPANT_LABEL": "Le coordinateur est en attente de votre action",
+    "WAITING_FOR_COORDINATOR_LABEL": "En attente du coordinateur",
+    "PARTICPANTS_AWAITING_LABEL": "{{number}} participants en attente de coordination",
+    "NO_PARTICPANTS_AWAITING_LABEL": "Aucun participant en attente de coordination",
+    "FOLLOWUP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "FOLLOWUP_MODAL_SAVE_BUTTON": "$t(SAVE_LABEL)"
+  },
+  "ArchivedEventsActivity": {
+    "FROM_DATE": "Depuis le",
+    "TO_DATE": "Jusqu'au",
+    "ASCENDING_SORT": "Plus vieux d'abord",
+    "DESCENDING_SORT": "Plus récent d'abord",
+    "SORT_BY_LABEL": "par date de",
+    "SORT_BY_CREATED_DATE_LABEL": "création",
+    "SORT_BY_UPDATED_DATE_LABEL": "mise à jour",
+    "SORT_BY_DELETED_DATE_LABEL": "effacemment",
+    "SORT_BY_EXPIRED_DATE_LABEL": "expiration",
+    "SHOW_MAP_LABEL": "Afficher la carte",
+    "SHOW_HISTORY_LABEL": "Afficher l'historique",
+    "SHOW_CHART_LABEL": "Afficher le graphique",
+    "SHOW_MARKERS_LABEL": "Afficher les positions",
+    "SHOW_HEATMAP_LABEL": "Afficher la distribution",
+    "HEATMAP_RADIUS_LABEL": "Empreinte",
+    "CHART_MODAL_TITLE": "Graphiques des événements",
+    "CHART_LABEL": "Type de graphique",
+    "PAGINATION_LABEL": "Nombre de valeurs",
+    "NULL_VALUE_LABEL": "Aucune",
+    "ALL_VALUES": "Toutes",
+    "RENDER_LABEL": "Type d'affichage",
+    "VALUE_LABEL": "Nombre",
+    "PERCENTAGE_LABEL": "Pourcentage",
+    "CHART_TITLE": "Type d'événement",
+    "CHART_LABEL_PIE": "Camembert",
+    "CHART_LABEL_POLARAREA": "Polaire",
+    "CHART_LABEL_RADAR": "Traceur",
+    "CHART_LABEL_BAR": "Histogramme",
+    "CHART_VALUE_LABEL": "Type",
+    "CHART_COUNT_LABEL": "Nombre",
+    "CHART_EXPORT_FILE": "Evenements.cvs",
+    "MAP_EXPORT_FILE": "Evenements.geojson",
+    "EVENTS_EXPORT_FILE": "Evenements.cvs",
+    "SHOW_BY_TEMPLATE_LABEL": "Par type",
+    "SHOW_ALL_LABEL": "Globalement",
+    "EVENTS_LAYER_NAME": "Mes événements",
+    "MATCHING_RESULTS": "{{total}} événements trouvés.",
+    "MAXIMUM_RESULTS": "Raffinez vos paramètres de recherches car certains résultats sont omis au-delà de {{max}} événements."
+  },
+  "ArchivedEventEntry": {
+    "LOCATE_LABEL": "Localisation",
+    "VIEW_LABEL": "Détails",
+    "MAP_LABEL": "Carte",
+    "BROWSE_MEDIA_LABEL": "$t(EventCard.BROWSE_MEDIA_LABEL)",
+    "CREATED_AT_LABEL": "$t(EventCard.CREATED_AT_LABEL)",
+    "UPDATED_AT_LABEL": "$t(EventCard.UPDATED_AT_LABEL)",
+    "DELETED_AT_LABEL": "Clôturé le",
+    "EXPIRED_AT_LABEL": "Expiré le"
+  },
+  "EventTemplatesActivity": {
+    "EVENTS_LABEL": "$t(EVENTS_LABEL)",
+    "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)",
+    "CREATE_TEMPLATE_LABEL": "Créer un modèle"
+  },
+  "EventTemplateCard": {
+    "REMOVE_LABEL": "$t(REMOVE_LABEL)",
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "COPY_LABEL": "Copier",
+    "REMOVE_DIALOG_TITLE": "Supprimer le modèle {{template}} ?",
+    "REMOVE_DIALOG_MESSAGE": "Etes vous sûr de vouloir supprimer le modèle <b>{{template}}</b> ?"
+  },
+  "EventWorkflowForm": {
+    "ADD_STEP_BUTTON": "Ajouter une étape",
+    "REMOVE_STEP_BUTTON": "Supprimer l'étape courante",
+    "PREVIOUS_STEP_BUTTON": "Etape précédente",
+    "NEXT_STEP_BUTTON": "Etape suivante",
+    "PREVIEW_WORKFLOW_BUTTON": "Prévisualiser le processus",
+    "EDIT_WORKFLOW_BUTTON": "Editer le processus"
+  },
+  "EventTemplateEditor": {
+    "ADD_WORKFLOW_LABEL": "Ajouter un processus ?",
+    "WORKFLOW_HELPER_LABEL": "Processus actif",
+    "WORKFLOW_MANAGE_HELPER_LABEL": "cliquez pour modifier",
+    "WORKFLOW_TITLE": "Gérez les différentes étapes du processus",
+    "CLOSE_ACTION":  "$t(CLOSE_LABEL)"
+  },
+  "EventNotifications": {
+    "CREATE": "Nouveau",
+    "UPDATE": "Mis à jour",
+    "UPDATE_MEDIA": "Medias mis à jour",
+    "REMOVE": "Clôturé"
+  },
+  "EventEditor": {
+    "CLOSE_ACTION": "$t(CLOSE_LABEL)"
+  },
+  "EventLogEditor": {
+    "CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "SAVE_BUTTON": "$t(SAVE_LABEL)"
+  },
+  "EventDashboard": {
+    "DASHBOARD": "Tableau de bord"
   }
 }

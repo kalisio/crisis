@@ -114,11 +114,13 @@ module.exports = function (ctx) {
       extendWebpack (cfg) {
         cfg.resolve.modules = [
           path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'api/dist/common'),
           path.resolve(__dirname, 'node_modules')
         ],
         cfg.resolve.alias = {
           ...cfg.resolve.alias, // This adds the existing aliases
           '@': path.resolve(__dirname, './src/components'),
+          common: path.resolve(__dirname, 'api/dist/common'),
           config: path.resolve(__dirname, './config/client-config.json')
         },
         cfg.optimization.minimize = process.env.DEBUG ? false : cfg.optimization.minimize

@@ -8,6 +8,11 @@ import { kalisio, beforeGuard, authenticationGuard } from '@kalisio/kdk-core/cli
 export default async ({ app, router, Vue }) => {
   let api = kalisio()
 
+  api.declareService('events', { context: true })
+  api.declareService('event-logs', { context: true })
+  api.declareService('event-templates', { context: true })
+  api.declareService('archived-events', { context: true })
+  api.declareService('archived-event-logs', { context: true })
   api.declareService('alerts', { context: true })
 
   // Setup app hooks

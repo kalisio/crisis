@@ -3,7 +3,6 @@ import kCore, { LocalSettingsService } from '@kalisio/kdk-core/client'
 import kTeam from '@kalisio/kdk-team/client'
 import kNotify from '@kalisio/kdk-notify/client'
 import kMap from '@kalisio/kdk-map/client.map'
-import kEvent from '@kalisio/kdk-event/client'
 import kBilling from '@kalisio/kdk-billing/client'
 import usersHooks from './users.hooks'
 
@@ -18,7 +17,6 @@ export default function () {
     api.configure(kTeam)
     api.configure(kNotify)
     api.configure(kMap)
-    api.configure(kEvent)
     api.configure(kBilling)
     api.declareService('catalog', { context: true })
     api.declareService('features', { context: true })

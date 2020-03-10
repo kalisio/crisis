@@ -50,7 +50,7 @@ module.exports = {
           },
           'dashboard': {
             path: 'dashboard',
-            component: 'KEventDashboard'
+            component: 'EventDashboard'
           },
           'help': 'Help',
           'account/:perspective': {
@@ -103,16 +103,16 @@ module.exports = {
               },
               'events': {
                 name: 'events-activity',
-                component: 'KEventsActivity',
+                component: 'EventsActivity',
                 props: true,
                 children: {
-                  'create/:templateId/:layerId?/:featureId?': { name: 'create-event', component: 'KEventEditor', props: true },
-                  'edit/:objectId': { name: 'edit-event', component: 'KEventEditor', props: true },
+                  'create/:templateId/:layerId?/:featureId?': { name: 'create-event', component: 'EventEditor', props: true },
+                  'edit/:objectId': { name: 'edit-event', component: 'EventEditor', props: true },
                 }
               },
               'archived-events': {
                 name: 'archived-events-activity',
-                component: 'KArchivedEventsActivity',
+                component: 'ArchivedEventsActivity',
                 props: true,
                 children: {
                   'view/:objectId': { name: 'view-event', component: 'viewer/KModalViewer', props: true },
@@ -120,19 +120,19 @@ module.exports = {
               },
               'events/:objectId': {
                 name: 'event-activity',
-                component: 'KEventActivity',
+                component: 'EventActivity',
                 props: true,
                 children: {
-                  'log/:logId': { name: 'event-log', component: 'KEventLogEditor', props: true }
+                  'log/:logId': { name: 'event-log', component: 'EventLogEditor', props: true }
                 }
               },
               'event-templates': {
                 name: 'event-templates-activity',
-                component: 'KEventTemplatesActivity',
+                component: 'EventTemplatesActivity',
                 props: true,
                 children: {
-                  'create/:templateId?': { name: 'create-event-template', component: 'KEventTemplateEditor', props: true },
-                  'edit/:objectId/:perspective?': { name: 'edit-event-template', component: 'KEventTemplateEditor', props: true }
+                  'create/:templateId?': { name: 'create-event-template', component: 'EventTemplateEditor', props: true },
+                  'edit/:objectId/:perspective?': { name: 'edit-event-template', component: 'EventTemplateEditor', props: true }
                 }
               },
               ':perspective': {

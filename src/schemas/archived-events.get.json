@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://www.kalisio.xyz/schemas/archived-events.get.json#",
+  "title": "schemas.OBJECT_NAME",
+  "description": "Archived event get schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string", 
+      "field": {
+        "component": "form/KTextField",
+        "label": "schemas.EVENTS_NAME_FIELD_LABEL"
+      }
+    },
+    "description": {
+      "type": "string", 
+      "field": {
+        "component": "form/KTextareaField",
+        "label": "schemas.EVENTS_DESCRIPTION_FIELD_LABEL"
+      }
+    },
+    "participants": { 
+      "type": "array",
+      "field": {
+        "component": "form/KChipsField",
+        "label": "schemas.EVENTS_PARTICIPANTS_FIELD_LABEL"
+      }
+    },
+    "coordinators": { 
+      "type": "array",
+      "field": {
+        "component": "form/KChipsField",
+        "label": "schemas.EVENTS_COORDINATORS_FIELD_LABEL"
+      }
+    }
+  }
+}
+

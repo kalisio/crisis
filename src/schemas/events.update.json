@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://www.kalisio.xyz/schemas/events.update.json#",
+  "title": "schemas.OBJECT_NAME",
+  "description": "Event update schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string", 
+      "minLength": 3,
+      "field": {
+        "component": "form/KTextField",
+        "helper": "schemas.EVENTS_NAME_FIELD_HELPER"
+      }
+    },
+    "description": {
+      "type": "string", 
+      "field": {
+        "component": "form/KTextareaField",
+        "helper": "schemas.EVENTS_DESCRIPTION_FIELD_HELPER"
+      }
+    },
+    "location": {
+      "type": "object", 
+      "draggable": true,
+      "field": {
+        "component": "KLocationField",
+        "helper": "schemas.EVENTS_LOCATION_FIELD_HELPER"
+      }
+    },
+    "expireAt": {
+      "type": "string", 
+      "group": "schemas.EVENTS_ADVANCED_SETTINGS",
+      "format": "date-time",
+      "field": {
+        "component": "form/KDatetimeField",
+        "helper": "schemas.EVENTS_EXPIRE_AT_FIELD_HELPER",
+        "type": "datetime",
+        "defaultOffset": 604800
+      }
+    },
+    "participants": { 
+      "type": "array",
+      "multiselect": true,
+      "uniqueItems": true,
+      "minItems": 1,
+      "services": [{
+        "service": "members",
+        "field": "profile.name",
+        "subfield": "email",
+        "baseQuery": {
+          "$select": ["_id", "profile.name", "email"]
+        },
+        "icon": {
+          "name": "person"
+        }
+      },
+      {
+        "service": "groups",
+        "field": "name",
+        "subfield": "description",
+        "baseQuery": {
+          "$select": ["_id", "name", "description"]
+        },
+        "icon": {
+          "name": "group_work"
+        }
+      },
+      {
+        "service": "tags",
+        "field": "value",
+        "baseQuery": {
+          "scope": "members"
+        },
+        "icon": {
+          "name": "label"
+        }
+      }],
+      "field": {
+        "component": "form/KItemField",
+        "helper": "schemas.EVENTS_PARTICIPANTS_FIELD_HELPER"
+      }
+    },
+    "coordinators": { 
+      "type": "array",
+      "multiselect": true,
+      "uniqueItems": true,
+      "minItems": 1,
+      "services": [{
+        "service": "members",
+        "field": "profile.name",
+        "subfield": "email",
+        "baseQuery": {
+          "$select": ["_id", "email", "profile.name"]
+        },
+        "icon": {
+          "name": "person"
+        } 
+      },
+      {
+        "service": "groups",
+        "field": "name",
+        "baseQuery": {
+          "$select": ["_id", "name"]
+        },
+        "icon": { 
+          "name": "group_work"
+        }
+      },
+      {
+        "service": "tags",
+        "field": "value",
+        "baseQuery": {
+          "scope": "members"
+        },
+        "icon": {
+          "name": "label"
+        }
+      }],
+      "field": {
+        "component": "form/KItemField",
+        "helper": "schemas.EVENTS_COORDINATORS_FIELD_UPDATE_HELPER"
+      }
+    },
+    "notification": {
+      "type": "boolean",
+      "group": "schemas.EVENTS_ADVANCED_SETTINGS",
+      "default": true,
+      "field": {
+        "component": "form/KToggleField",
+        "helper": "schemas.EVENTS_NOTIFICATION_FIELD_UPDATE_HELPER",
+        "checked-icon": "notifications",
+        "unchecked-icon": "notifications_off"
+      }
+    }
+  },
+  "required": ["name", "expireAt", "participants", "coordinators", "notification"]
+}
+
