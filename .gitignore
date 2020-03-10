@@ -1,8 +1,9 @@
 # IDE
 .vscode
 
-# Quasar build
+# Quasar/Cordova build
 .quasar
+cordova
 
 # Logs
 logs

@@ -1,5 +1,12 @@
 {
+  "EVENTS_LABEL": "Events",
+  "EVENT_TEMPLATES_LABEL": "Templates",
+  "REMOVE_LABEL": "Remove",
+  "EDIT_LABEL": "Edit",
+  "CLOSE_LABEL": "Close",
+  "SAVE_LABEL": "Save",
   "errors": {
+    "EVENT_LOG_LIMIT": "Too much participants to display all of them",
     "CANNOT_REMOVE_CUSTOMER": "You are not allowed to remove the customer of <b>{{resource}}</b>, change the payment information first."
   },
   "schemas": {
@@ -17,7 +24,40 @@
     "TIME_FORMAT_LONG_YEAR_FIELD_HELPER": "Long year format <a target='_blank' href='https://momentjs.com/docs/#/displaying/format/'>&#x1F6C8;</a>",
     "TIME_FORMAT_UTC_FIELD_HELPER": "UTC time display mode",
     "RESTORE_VIEW_FIELD_HELPER": "Save current view",
-    "LOCATION_FORMAT": "Location format <a target='_blank' href='https://github.com/nerik/formatcoords#formatting'>&#x1F6C8;</a>"
+    "LOCATION_FORMAT": "Location format <a target='_blank' href='https://github.com/nerik/formatcoords#formatting'>&#x1F6C8;</a>",
+    "EVENT_TEMPLATES_CREATE_TITLE": "Create a new event template ?",
+    "EVENT_TEMPLATES_NAME_FIELD_HELPER": "Enter the name of this template",
+    "EVENT_TEMPLATES_ICON_FIELD_HELPER": "Select an icon to represent this template",
+    "EVENT_TEMPLATES_DESCRIPTION_FIELD_HELPER": "Enter a description of this template",
+    "EVENTS_TEMPLATES_PARTICIPANTS_FIELD_HELPER": "Select event participants",
+    "EVENTS_TEMPLATES_COORDINATORS_FIELD_CREATE_HELPER": "Select event coordinators (other than yourself)",
+    "EVENTS_TEMPLATES_COORDINATORS_FIELD_UPDATE_HELPER": "Select event coordinators",
+    "EVENTS_TEMPLATES_LAYER_FIELD_HELPER": "Select a target data layer",
+    "EVENT_WORKFLOW_TITLE_FIELD_HELPER": "Enter the title for this step",
+    "EVENT_WORKFLOW_ICON_FIELD_HELPER": "Select the step icon",
+    "EVENT_WORKFLOW_DESCRIPTION_FIELD_HELPER": "Enter the step description",
+    "EVENT_WORKFLOW_INTERACTION_FIELD_HELPER": "Enter the step interaction values",
+    "EVENT_WORKFLOW_FEATURE_INTERACTION_FIELD_HELPER": "Interaction with geographical feature",
+    "EVENT_WORKFLOW_END_FIELD_HELPER": "Enter the interaction values ending the workflow",
+    "EVENT_WORKFLOW_STAKEHOLDER_FIELD_HELPER": "Select the stakeholder",
+    "EVENT_WORKFLOW_PARTICIPANT_LABEL": "Participant",
+    "EVENT_WORKFLOW_COORDINATOR_LABEL": "Coordinator",
+    "EVENTS_ADVANCED_SETTINGS": "Advanced settings",
+    "EVENTS_CREATE_TITLE": "Create a new event ?",
+    "EVENTS_NAME_FIELD_HELPER": "Enter the name of this event",
+    "EVENTS_DESCRIPTION_FIELD_HELPER": "Enter a description of this event",
+    "EVENTS_LOCATION_FIELD_HELPER": "Enter the location of this event",
+    "EVENTS_EXPIRE_AT_FIELD_HELPER": "Enter the expiration date for this event",
+    "EVENTS_PARTICIPANTS_FIELD_HELPER": "Select event participants",
+    "EVENTS_COORDINATORS_FIELD_CREATE_HELPER": "Select event coordinators (other than yourself)",
+    "EVENTS_COORDINATORS_FIELD_UPDATE_HELPER": "Select event coordinators",
+    "EVENTS_ATTACHMENTS_FIELD_HELPER": "Select media to attach",
+    "EVENTS_HAS_WORKFLOW_FIELD_HELPER": "Activate workflow for this event",
+    "EVENTS_NOTIFICATION_FIELD_CREATE_HELPER": "Notify participants when creating",
+    "EVENTS_NOTIFICATION_FIELD_UPDATE_HELPER": "Notify participants when updating",
+    "EVENTS_LOG_TITLE": "Enter your choice",
+    "EVENTS_LOG_COMMENT_FIELD_LABEL": "Comment",
+    "EVENTS_LOG_COMMENT_FIELD_HELPER": "Enter your comment for this step"
   },
   "Variables": {
     "H": "Water level",
@@ -182,5 +222,148 @@
     "MEMBERS_ADD": "Add a member",
     "GROUPS_MANAGEMENT": "Groups management",
     "GROUP_MEMBERS_MANAGEMENT": "Group members management"
+  },
+  "EventActivity": {
+    "ADD_MEDIA_LABEL": "Add media",
+    "BROWSE_MEDIA_LABEL": "Browse media",
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "SHOW_PANE_LABEL": "View participants pane",
+    "HIDE_PANE_LABEL": "Hide participants pane",
+    "ACTION_REQUIRED": "Action required",
+    "AWAITING_INFORMATION": "Awaiting information",
+    "UNAMED": "Unamed",
+    "PARTICIPANTS_LAYER_NAME": "Participants",
+    "UPLOADER_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "VIGICRUES_LEVEL_1": "No flood risk",
+    "VIGICRUES_LEVEL_2": "Flood risk",
+    "VIGICRUES_LEVEL_3": "Important flood risk",
+    "VIGICRUES_LEVEL_4": "Major flood risk"
+  },
+  "EventActivityPanel": {
+    "PARTICIPANTS_LABEL": "Participants"
+  },
+  "EventsActivity": {
+    "EVENTS_LABEL": "$t(EVENTS_LABEL)",
+    "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)"
+  },
+  "EventCard": {
+    "CREATED_AT_LABEL": "Created at",
+    "UPDATED_AT_LABEL": "Updated at",
+    "REMOVE_LABEL": "$t(REMOVE_LABEL)",
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "FOLLOW_UP_LABEL": "Follow up",
+    "ADD_MEDIA_LABEL": "$t(EventActivity.ADD_MEDIA_LABEL)",
+    "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)",
+    "UPLOADER_MODAL_CLOSE_ACTION": "$t(EventActivity.UPLOADER_MODAL_CLOSE_ACTION)",
+    "LOCATION_MAP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "NAVIGATE_LABEL": "Navigate",
+    "LOCATE_LABEL": "Locate",
+    "REMOVE_DIALOG_TITLE": "Remove the event {{event}} ?",
+    "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove the event <b>{{event}}</b> ?",
+    "ACTION_REQUIRED_WARNING": "Action required",
+    "WAITING_COORDINATION_WARNING": "Waiting coordination",
+    "WAITING_FOR_PARTICIPANT_LABEL": "Coordinator is waiting for your input",
+    "WAITING_FOR_COORDINATOR_LABEL": "Waiting for coordinator feedback",
+    "PARTICPANTS_AWAITING_LABEL": "{{number}} participants awaiting coordination",
+    "NO_PARTICPANTS_AWAITING_LABEL": "No participants awaiting coordination",
+    "FOLLOWUP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "FOLLOWUP_MODAL_SAVE_BUTTON": "$t(SAVE_LABEL)"
+  },
+  "ArchivedEventsActivity": {
+    "FROM_DATE": "From",
+    "TO_DATE": " To",
+    "MAP_LABEL": "Map",
+    "ASCENDING_SORT": "Oldest first",
+    "DESCENDING_SORT": "Most recent first",
+    "SORT_BY_LABEL": "by date",
+    "SORT_BY_CREATED_DATE_LABEL": "creation",
+    "SORT_BY_UPDATED_DATE_LABEL": "update",
+    "SORT_BY_DELETED_DATE_LABEL": "removal",
+    "SORT_BY_EXPIRED_DATE_LABEL": "expiry",
+    "SHOW_MAP_LABEL": "View map",
+    "SHOW_HISTORY_LABEL": "View history",
+    "SHOW_CHART_LABEL": "View graph",
+    "SHOW_MARKERS_LABEL": "View positions",
+    "SHOW_HEATMAP_LABEL": "View distribution",
+    "HEATMAP_RADIUS_LABEL": "Footprint",
+    "CHART_MODAL_TITLE": "Graph for events",
+    "CHART_LABEL": "Chart type",
+    "PAGINATION_LABEL": "Number of values",
+    "CHART_LABEL_PIE": "Pie",
+    "CHART_LABEL_POLARAREA": "Polar",
+    "CHART_LABEL_RADAR": "Radar",
+    "CHART_LABEL_BAR": "Bar",
+    "NULL_VALUE_LABEL": "None",
+    "ALL_VALUES": "All",
+    "RENDER_LABEL": "Display type",
+    "VALUE_LABEL": "Count",
+    "PERCENTAGE_LABEL": "Percentage",
+    "CHART_TITLE": "Event type",
+    "CHART_LABEL_PIE": "Pie",
+    "CHART_LABEL_POLARAREA": "Polar",
+    "CHART_LABEL_RADAR": "Radar",
+    "CHART_LABEL_BAR": "Bar",
+    "CHART_VALUE_LABEL": "Type",
+    "CHART_COUNT_LABEL": "Count",
+    "CHART_EXPORT_FILE": "Events.csv",
+    "MAP_EXPORT_FILE": "Events.geojson",
+    "EVENTS_EXPORT_FILE": "Events.cvs",
+    "SHOW_BY_TEMPLATE_LABEL": "By type",
+    "SHOW_ALL_LABEL": "Globally",
+    "EVENTS_LAYER_NAME": "My events",
+    "MATCHING_RESULTS": "{{total}} events found.",
+    "MAXIMUM_RESULTS": "Please refine your search parameters because you miss some results beyond {{max}} events."
+  },
+  "ArchivedEventEntry": {
+    "LOCATE_LABEL": "Location",
+    "VIEW_LABEL": "Details",
+    "BROWSE_MEDIA_LABEL": "$t(EventCard.BROWSE_MEDIA_LABEL)",
+    "CREATED_AT_LABEL": "$t(EventCard.CREATED_AT_LABEL)",
+    "UPDATED_AT_LABEL": "$t(EventCard.UPDATED_AT_LABEL)",
+    "DELETED_AT_LABEL": "Closed at",
+    "EXPIRED_AT_LABEL": "Expired at"
+  },
+  "EventTemplatesActivity": {
+    "EVENTS_LABEL": "$t(EVENTS_LABEL)",
+    "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)",
+    "CREATE_TEMPLATE_LABEL": "Create a template"
+  },
+  "EventTemplateCard": {
+    "REMOVE_LABEL": "$t(REMOVE_LABEL)",
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "COPY_LABEL": "Copy",
+    "REMOVE_DIALOG_TITLE": "Remove the template {{template}} ?",
+    "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove the template <b>{{template}}</b> ?"
+  },
+  "EventWorkflowForm": {
+    "ADD_STEP_BUTTON": "Add a step",
+    "REMOVE_STEP_BUTTON": "Remove current step",
+    "PREVIOUS_STEP_BUTTON": "Previous step",
+    "NEXT_STEP_BUTTON": "Next step",
+    "PREVIEW_WORKFLOW_BUTTON": "Preview workflow",
+    "EDIT_WORKFLOW_BUTTON": "Edit workflow"
+  },
+  "EventTemplateEditor": {
+    "ADD_WORKFLOW_LABEL": "Add a workflow ?",
+    "WORKFLOW_HELPER_LABEL": "Workflow activated",
+    "WORKFLOW_MANAGE_HELPER_LABEL": "click to update",
+    "WORKFLOW_TITLE": "Manage the different steps of the workflow",
+    "CLOSE_ACTION":  "$t(CLOSE_LABEL)"
+  },
+  "EventNotifications": {
+    "CREATE": "New",
+    "UPDATE": "Updated",
+    "UPDATE_MEDIA": "Media updated",
+    "REMOVE": "Closed"
+  },
+  "EventEditor": {
+    "CLOSE_ACTION": "$t(CLOSE_LABEL)"
+  },
+  "EventLogEditor": {
+    "CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "SAVE_BUTTON": "$t(SAVE_LABEL)"
+  },
+  "EventDashboard": {
+    "DASHBOARD": "Dashboard"
   }
 }
