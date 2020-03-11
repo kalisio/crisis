@@ -1,16 +1,15 @@
-
 import { when } from 'feathers-hooks-common'
-import { hooks as billingHooks } from '@kalisio/kdk-billing'
+import { preventUnverifiedUser, populateBillingObject, unpopulateBillingObject } from '../../hooks'
 
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [when(hook => hook.params.provider, billingHooks.preventUnverifiedUser)],
-    update: [when(hook => hook.params.provider, billingHooks.preventUnverifiedUser)],
+    create: [when(hook => hook.params.provider, preventUnverifiedUser), populateBillingObject],
+    update: [when(hook => hook.params.provider, preventUnverifiedUser), populateBillingObject],
     patch: [],
-    remove: [when(hook => hook.params.provider, billingHooks.preventUnverifiedUser)]
+    remove: [when(hook => hook.params.provider, preventUnverifiedUser), populateBillingObject]
   },
 
   after: {
@@ -18,10 +17,10 @@ module.exports = {
     find: [],
     get: [],
     // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
-    create: [billingHooks.unpopulateBillingObject],
-    update: [billingHooks.unpopulateBillingObject],
+    create: [unpopulateBillingObject],
+    update: [unpopulateBillingObject],
     patch: [],
-    remove: [billingHooks.unpopulateBillingObject]
+    remove: [unpopulateBillingObject]
   },
 
   error: {

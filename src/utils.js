@@ -13,13 +13,10 @@ function loadComponent (component) {
               .catch(errorNotify => {
                 return import(`@kalisio/kdk-map/lib/client/components/${component}.vue`)
                   .catch(errorMap => {
-                    return import(`@kalisio/kdk-billing/lib/client/components/${component}.vue`)
-                      .catch(errorBilling => {
-                        // Otherwise this should be app component
-                        return import(`@/${component}.vue`)
-                          .catch(errorApp => {
-                            console.log(errorCore, errorTeam, errorNotify, errorMap, errorEvent, errorBilling, errorApp)
-                          })
+                    // Otherwise this should be app component
+                    return import(`@/${component}.vue`)
+                      .catch(errorApp => {
+                        console.log(errorCore, errorTeam, errorNotify, errorMap, errorEvent, errorBilling, errorApp)
                       })
                   })
               })
@@ -55,12 +52,9 @@ function loadTranslation (module, locale) {
             .catch(errorNotify => {
               return import(`@kalisio/kdk-map/lib/client/i18n/${translation}`)
                 .catch(errorMap => {
-                  return import(`@kalisio/kdk-billing/lib/client/i18n/${translation}`)
-                    .catch(errorBilling => {
-                      return import(`./i18n/${translation}`)
-                        .catch(errorApp => {
-                          console.log(errorCore, errorTeam, errorNotify, errorMap, errorEvent, errorBilling, errorApp)
-                        })
+                  return import(`./i18n/${translation}`)
+                    .catch(errorApp => {
+                      console.log(errorCore, errorTeam, errorNotify, errorMap, errorEvent, errorBilling, errorApp)
                     })
                 })
             })

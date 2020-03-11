@@ -365,5 +365,24 @@
   },
   "EventDashboard": {
     "DASHBOARD": "Dashboard"
+  },
+  "CustomerEditor": {
+    "TITLE": "Enter your billing information",
+    "CUSTOMER_EMAIL_FIELD_HELPER": "Select the invoice recipient",
+    "CUSTOMER_DESCRIPTION_FIELD_HELPER": "Enter a mention to add to your invoice",
+    "CUSTOMER_VAT_NUMBER_FIELD_HELPER": "Enter your VAT number",
+    "BILLING_METHOD_MESSAGE": "Enter a credit card if you like to be charged automatically",
+    "CLOSE_ACTION": "Close",
+    "UPDATE_BUTTON": "Update"
+  },
+  "PlanChooser": {
+    "CLICK": "Contact us",
+    "SELECT": "Select",
+    "CURRENT_PLAN": "Your plan",
+    "BLOCK_NO_BILLING_TITLE": "You cannot change your plan",
+    "BLOCK_NO_BILLING_TEXT": "The feature is not available on this version, to change your plan please contact us using this address: <a href='mailto:support@kalisio.com'>support@kalisio.com</a>.",
+    "CONFIRM_DIALOG_TITLE": "Are you sure you want to update your plan ?",
+    "CONFIRM_DIALOG_MESSAGE": "Please confirm to subscribe to the <b>$t({{plan}})</b> plan",
+    "PLAN_DISABLED_TOOLTIP": "Please provide the payment information to subscribe to this plan"
   }
 }

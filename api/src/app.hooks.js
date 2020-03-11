@@ -5,7 +5,6 @@ import { permissions as corePermissions, hooks as coreHooks } from '@kalisio/kdk
 import { permissions as teamPermissions } from '@kalisio/kdk-team'
 import { permissions as notifyPermissions, hooks as notifyHooks } from '@kalisio/kdk-notify'
 import { permissions as mapPermissions } from '@kalisio/kdk-map'
-import { permissions as billingPermissions } from '@kalisio/kdk-billing/common'
 import * as permissions from './permissions'
 console.log(permissions)
 const { authenticate } = require('@feathersjs/authentication').hooks
@@ -19,8 +18,6 @@ corePermissions.defineAbilities.registerHook(mapPermissions.defineUserAbilities)
 corePermissions.defineAbilities.registerHook(teamPermissions.defineOrganisationAbilities)
 // Then rules for groups
 corePermissions.defineAbilities.registerHook(teamPermissions.defineGroupAbilities)
-// Then rules for billing
-corePermissions.defineAbilities.registerHook(billingPermissions.defineBillingAbilities)
 // Then rules for app
 corePermissions.defineAbilities.registerHook(permissions.defineUserAbilities)
 

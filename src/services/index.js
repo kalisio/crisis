@@ -3,7 +3,6 @@ import kCore, { LocalSettingsService } from '@kalisio/kdk-core/client'
 import kTeam from '@kalisio/kdk-team/client'
 import kNotify from '@kalisio/kdk-notify/client'
 import kMap from '@kalisio/kdk-map/client.map'
-import kBilling from '@kalisio/kdk-billing/client'
 import usersHooks from './users.hooks'
 
 export default function () {
@@ -17,9 +16,15 @@ export default function () {
     api.configure(kTeam)
     api.configure(kNotify)
     api.configure(kMap)
-    api.configure(kBilling)
     api.declareService('catalog', { context: true })
     api.declareService('features', { context: true })
+    api.declareService('alerts', { context: true })
+    api.declareService('events', { context: true })
+    api.declareService('event-logs', { context: true })
+    api.declareService('event-templates', { context: true })
+    api.declareService('archived-events', { context: true })
+    api.declareService('archived-event-logs', { context: true })
+    api.declareService('billing')
     // Setup service for settings edition
     const settingsService = api.createService('settings', {
       service: LocalSettingsService,

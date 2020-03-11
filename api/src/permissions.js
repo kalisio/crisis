@@ -1,7 +1,6 @@
 import { permissions } from '@kalisio/kdk-core/common'
 
-// Hook computing contextual catalog, features, events, etc. abilities for a given user
-export function defineUserAbilities (subject, can, cannot) {
+function defineEventAbilities (subject, can, cannot) {
   if (subject && subject._id) {
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {
@@ -50,16 +49,6 @@ export function defineUserAbilities (subject, can, cannot) {
             // FIXME: hard to express this with the permission system
             // can(['read', 'create'], 'event-logs', { context: organisation._id, 'participant': subject._id })
             can(['read', 'create'], 'event-logs', { context: organisation._id })
-            can('service', organisation._id.toString() + '/catalog')
-            can('read', 'catalog', { context: organisation._id })
-            can('service', organisation._id.toString() + '/features')
-            can('all', 'features', { context: organisation._id })
-            can('service', organisation._id.toString() + '/alerts')
-            can('read', 'alerts', { context: organisation._id })
-            if (role >= permissions.Roles.manager) {
-              can(['create', 'update', 'remove'], 'catalog', { context: organisation._id })
-              can(['create', 'remove'], 'alerts', { context: organisation._id })
-            }
           }
         }
         if (role >= permissions.Roles.manager) {
@@ -69,6 +58,52 @@ export function defineUserAbilities (subject, can, cannot) {
             can('all', 'event-templates', { context: organisation._id })
             can('all', 'archived-events', { context: organisation._id })
             can('all', 'archived-event-logs', { context: organisation._id })
+          }
+        }
+      })
+    }
+  }
+}
+
+function defineBillingAbilities (subject, can, cannot) {
+  if (subject && subject._id) {
+    if (subject.organisations) {
+      subject.organisations.forEach(organisation => {
+        const role = permissions.Roles[organisation.permissions]
+        if (role >= permissions.Roles.owner) {
+          if (organisation._id) {
+            can('service', 'billing')
+            can('all', 'billing', { billingObject: organisation._id })
+          }
+        }
+      })
+    }
+  }
+}
+
+// Hook computing contextual catalog, features, events, etc. abilities for a given user
+export function defineUserAbilities (subject, can, cannot) {
+
+  defineEventAbilities(subject, can, cannot)
+
+  defineBillingAbilities(subject, can, cannot)
+
+  if (subject && subject._id) {
+    if (subject.organisations) {
+      subject.organisations.forEach(organisation => {
+        if (organisation._id) {
+          const role = permissions.Roles[organisation.permissions]
+          if (role >= permissions.Roles.member) {
+            can('service', organisation._id.toString() + '/catalog')
+            can('read', 'catalog', { context: organisation._id })
+            can('service', organisation._id.toString() + '/features')
+            can('all', 'features', { context: organisation._id })
+            can('service', organisation._id.toString() + '/alerts')
+            can('read', 'alerts', { context: organisation._id })
+          }
+          if (role >= permissions.Roles.manager) {
+            can(['create', 'update', 'remove'], 'catalog', { context: organisation._id })
+            can(['create', 'remove'], 'alerts', { context: organisation._id })
           }
         }
       })

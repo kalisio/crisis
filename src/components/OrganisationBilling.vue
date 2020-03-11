@@ -10,7 +10,7 @@
       :action="$t('OrganisationBilling.CUSTOMER_BLOCK_ACTION')"
       :disabled="!isUserVerified"
       @action-triggered="onUpdateCustomer" />
-    <k-customer-editor 
+    <customer-editor 
       ref="customerEditor" 
       @customer-updated="onCustomerUpdated" 
       :billingObjectId="objectId" 
@@ -18,7 +18,7 @@
     <!-- 
       Plan subscription section 
     -->
-    <k-plan-chooser 
+    <plan-chooser 
       :billingObjectId="objectId" 
       billingObjectService="organisations" 
       :quotas="quotas" 
@@ -95,8 +95,8 @@ export default {
   async created () {
     // Load the required components
     this.$options.components['k-block'] = this.$load('frame/KBlock')
-    this.$options.components['k-customer-editor'] = this.$load('KCustomerEditor')
-    this.$options.components['k-plan-chooser'] = this.$load('KPlanChooser')
+    this.$options.components['customer-editor'] = this.$load('CustomerEditor')
+    this.$options.components['plan-chooser'] = this.$load('PlanChooser')
     // Load available plans and Whenever the cabilities are updated, update plans as well
     this.refreshPlans()
     this.$events.$on('capabilities-api-changed', this.refreshPlans)

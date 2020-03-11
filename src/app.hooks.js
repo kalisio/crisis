@@ -3,7 +3,6 @@ import { permissions as corePermissions, hooks as coreHooks } from '@kalisio/kdk
 import { permissions as teamPermissions } from '@kalisio/kdk-team/common'
 import { permissions as notifyPermissions } from '@kalisio/kdk-notify/common'
 import { permissions as mapPermissions } from '@kalisio/kdk-map/common'
-import { permissions as billingPermissions } from '@kalisio/kdk-billing/common'
 import * as permissions from './permissions'
 
 // Register all default hooks for authorisation
@@ -15,8 +14,6 @@ corePermissions.defineAbilities.registerHook(mapPermissions.defineUserAbilities)
 corePermissions.defineAbilities.registerHook(teamPermissions.defineOrganisationAbilities)
 // Then rules for groups
 corePermissions.defineAbilities.registerHook(teamPermissions.defineGroupAbilities)
-// Then rules for billing
-corePermissions.defineAbilities.registerHook(billingPermissions.defineBillingAbilities)
 // Then rules for app
 corePermissions.defineAbilities.registerHook(permissions.defineUserAbilities)
 

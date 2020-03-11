@@ -365,5 +365,24 @@
   },
   "EventDashboard": {
     "DASHBOARD": "Tableau de bord"
+  },
+  "CustomerEditor": {
+    "TITLE": "Saisissez vos informations de paiement",
+    "CUSTOMER_EMAIL_FIELD_HELPER": "Sélectionnez le destinataire des factures",
+    "CUSTOMER_DESCRIPTION_FIELD_HELPER": "Saisissez une mention à ajouter à votre facture",
+    "CUSTOMER_VAT_NUMBER_FIELD_HELPER": "Saisissez votre numéro de TVA",
+    "BILLING_METHOD_MESSAGE": "Saisissez une carte bancaire si vous voulez payer de façon automatique",
+    "CLOSE_ACTION": "Fermer",
+    "UPDATE_BUTTON": "mettre à jour"
+  },
+  "PlanChooser": {
+    "CLICK": "Nous contacter",
+    "SELECT": "Sélectionner",
+    "CURRENT_PLAN": "Votre offre",
+    "BLOCK_NO_BILLING_TITLE": "Vous ne pouvez pas modifier votre offre",
+    "BLOCK_NO_BILLING_TEXT": "La fonctionnalité n'est pas disponible sur cette version, pour changer d'offre merci de nous contacter à cette adresse: <a href='mailto:support@kalisio.com'>support@kalisio.com</a>.",
+    "CONFIRM_DIALOG_TITLE": "Êtes vous sur de vouloir mettre à jour votre plan ?",
+    "CONFIRM_DIALOG_MESSAGE": "Merci de confirmer la souscription au plan <b>$t({{plan}})</b>",
+    "PLAN_DISABLED_TOOLTIP": "Merci de renseigner les informations de paiement pour souscrire à ce plan"
   }
 }

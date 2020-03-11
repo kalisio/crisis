@@ -9,7 +9,6 @@ import kMap, {
   createAlertsService, removeAlertsService
 } from '@kalisio/kdk-map'
 import kNotify from '@kalisio/kdk-notify'
-import kBilling from '@kalisio/kdk-billing'
 import packageInfo from '../../package.json'
 
 const modelsPath = path.join(__dirname, '..', 'models')
@@ -207,7 +206,7 @@ module.exports = async function () {
     await app.configure(kTeam)
     await app.configure(kNotify)
     await app.configure(kMap)
-    await app.configure(kBilling)
+    app.createService('billing', { servicesPath })
     
     const orgsService = app.getService('organisations')
     // Register services hook for organisations
