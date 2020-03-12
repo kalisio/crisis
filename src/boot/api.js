@@ -3,7 +3,7 @@ import config from 'config'
 import appHooks from '../app.hooks'
 import services from '../services'
 import plugin from '../vue-kdk'
-import { kalisio, beforeGuard, authenticationGuard } from '@kalisio/kdk-core/client'
+import { kalisio, beforeGuard, authenticationGuard } from '@kalisio/kdk/core.client'
 
 export default async ({ app, router, Vue }) => {
   let api = kalisio()

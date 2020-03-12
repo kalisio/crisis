@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
+import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
 
 export default {

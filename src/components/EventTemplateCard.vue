@@ -6,7 +6,7 @@
 
 <script>
 import _ from 'lodash'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk-core/client'
+import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { Dialog, QIcon } from 'quasar'
 
 export default {

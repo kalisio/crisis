@@ -68,8 +68,10 @@ git clone https://github.com/kalisio/kli.git kalisio && cd kalisio && yarn
 # Clone the project and install the dependencies
 if [ -f $TRAVIS_BUILD_DIR/workspace/$FLAVOR/$APP.js ]
 then
+  echo Found specific project file in $FLAVOR
   cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/$APP.js ${APP}.js  
 else
+  echo use common project file
   cp $TRAVIS_BUILD_DIR/workspace/$APP.js ${APP}.js
 fi
 node . ${APP}.js --clone ${TRAVIS_BRANCH}
@@ -77,4 +79,3 @@ node . ${APP}.js --install
 node . ${APP}.js --link
 
 cd $APP
-

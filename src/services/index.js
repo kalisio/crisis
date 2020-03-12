@@ -1,8 +1,6 @@
 import logger from 'loglevel'
-import kCore, { LocalSettingsService } from '@kalisio/kdk-core/client'
-import kTeam from '@kalisio/kdk-team/client'
-import kNotify from '@kalisio/kdk-notify/client'
-import kMap from '@kalisio/kdk-map/client.map'
+import kCore, { LocalSettingsService } from '@kalisio/kdk/core.client'
+import kMap from '@kalisio/kdk/map.client.map'
 import usersHooks from './users.hooks'
 
 export default function () {
@@ -13,8 +11,6 @@ export default function () {
     api.configure(kCore)
     // Add hooks to automatically check uniqueness when creating a new user
     api.getService('users').hooks(usersHooks)
-    api.configure(kTeam)
-    api.configure(kNotify)
     api.configure(kMap)
     api.declareService('catalog', { context: true })
     api.declareService('features', { context: true })

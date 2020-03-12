@@ -77,7 +77,7 @@
 <script>
 import _ from 'lodash'
 import logger from 'loglevel'
-import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
+import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { QSlider, QRange } from 'quasar'
 
 export default {

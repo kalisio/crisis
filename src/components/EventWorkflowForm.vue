@@ -42,7 +42,7 @@
 
 <script>
 import _ from 'lodash'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk-core/client'
+import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
 import { QStepper, QStep, QStepperNavigation, uid } from 'quasar'
 

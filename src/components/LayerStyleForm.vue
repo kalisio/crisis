@@ -258,7 +258,7 @@
 import _ from 'lodash'
 import logger from 'loglevel'
 import { QSlider, uid } from 'quasar'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk-core/client'
+import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 
 export default {
   name: 'k-layer-style-form',

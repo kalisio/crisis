@@ -62,8 +62,8 @@
 import moment from 'moment'
 import sift from 'sift'
 import { Dialog } from 'quasar'
-import { mixins as kMapMixins } from '@kalisio/kdk-map/client.map'
-import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
+import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
+import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 const activityMixin = kMapMixins.activity('catalog')
 

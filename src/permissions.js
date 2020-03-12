@@ -1,4 +1,4 @@
-import { permissions } from '@kalisio/kdk-core/common'
+import { permissions } from '@kalisio/kdk/core.common'
 
 function defineEventAbilities (subject, can, cannot) {
   if (subject && subject._id) {

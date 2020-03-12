@@ -1,11 +1,11 @@
-import { hooks as notifyHooks } from '@kalisio/kdk-notify/client'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api'
 
 export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [ notifyHooks.checkUnique ],
+    create: [ coreHooks.checkUnique ],
     update: [],
     patch: [],
     remove: []

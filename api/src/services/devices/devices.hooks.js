@@ -1,4 +1,4 @@
-import { hooks as coreHooks } from '@kalisio/kdk-core.api'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api'
 
 module.exports = {
   before: {

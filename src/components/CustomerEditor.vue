@@ -42,7 +42,7 @@
 import _ from 'lodash'
 import { QCard, QBtn, QIcon, QSpinner } from 'quasar'
 import { Card, createToken } from 'vue-stripe-elements-plus'
-import { mixins as kCoreMixins } from '@kalisio/kdk-core/client'
+import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
   name: 'customer-editor',

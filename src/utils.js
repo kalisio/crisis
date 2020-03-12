@@ -5,20 +5,14 @@ import VueI18next from '@panter/vue-i18next'
 
 function loadComponent (component) {
   return () => {
-    return import(`@kalisio/kdk-core/lib/client/components/${component}.vue`)
+    return import(`@kalisio/kdk/lib/core/client/components/${component}.vue`)
       .catch(errorCore => {
-        return import(`@kalisio/kdk-team/lib/client/components/${component}.vue`)
-          .catch(errorTeam => {
-            return import(`@kalisio/kdk-notify/lib/client/components/${component}.vue`)
-              .catch(errorNotify => {
-                return import(`@kalisio/kdk-map/lib/client/components/${component}.vue`)
-                  .catch(errorMap => {
-                    // Otherwise this should be app component
-                    return import(`@/${component}.vue`)
-                      .catch(errorApp => {
-                        console.log(errorCore, errorTeam, errorNotify, errorMap, errorEvent, errorBilling, errorApp)
-                      })
-                  })
+        return import(`@kalisio/kdk/lib/map/client/components/${component}.vue`)
+          .catch(errorMap => {
+            // Otherwise this should be app component
+            return import(`@/${component}.vue`)
+              .catch(errorApp => {
+                console.log(errorCore, errorMap, errorApp)
               })
           })
       })
@@ -26,17 +20,14 @@ function loadComponent (component) {
 }
 
 function loadSchema (schema) {
-  return import(`@kalisio/kdk-core/lib/common/schemas/${schema}.json`)
+  return import(`@kalisio/kdk/lib/core/common/schemas/${schema}.json`)
     .catch(errorCore => {
-      return import(`@kalisio/kdk-team/lib/common/schemas/${schema}.json`)
-        .catch(errorTeam => {
-          return import(`@kalisio/kdk-map/lib/common/schemas/${schema}.json`)
-            .catch(errorMap => {
-              // Otherwise this should be app component
-              return import(`./schemas/${schema}.json`)
-                .catch(errorApp => {
-                  console.log(errorCore, errorTeam, errorMap, errorEvent, errorApp)
-                })
+      return import(`@kalisio/kdk/lib/map/common/schemas/${schema}.json`)
+        .catch(errorMap => {
+          // Otherwise this should be app component
+          return import(`./schemas/${schema}.json`)
+            .catch(errorApp => {
+              console.log(errorCore, errorMap, errorApp)
             })
         })
     })
@@ -44,26 +35,23 @@ function loadSchema (schema) {
 
 function loadTranslation (module, locale) {
   let translation = module + '_' + locale + '.json'
-  return import(`@kalisio/kdk-core/lib/client/i18n/${translation}`)
+  return import(`@kalisio/kdk/lib/core/client/i18n/${translation}`)
     .catch(errorCore => {
-      return import(`@kalisio/kdk-team/lib/client/i18n/${translation}`)
-        .catch(errorTeam => {
-          return import(`@kalisio/kdk-notify/lib/client/i18n/${translation}`)
-            .catch(errorNotify => {
-              return import(`@kalisio/kdk-map/lib/client/i18n/${translation}`)
-                .catch(errorMap => {
-                  return import(`./i18n/${translation}`)
-                    .catch(errorApp => {
-                      console.log(errorCore, errorTeam, errorNotify, errorMap, errorEvent, errorBilling, errorApp)
-                    })
-                })
+      return import(`@kalisio/kdk/lib/map/client/i18n/${translation}`)
+        .catch(errorMap => {
+          return import(`./i18n/${translation}`)
+            .catch(errorApp => {
+              console.log(errorCore, errorMap, errorApp)
             })
         })
     })
 }
 
 function resolveAsset (asset) {
-  return require('./assets/' + asset)
+  // If external URL simply use it
+  if (asset.startsWith('http://') || asset.startsWith('https://')) return asset
+  // Otherwise let webpack resolve asset
+  else return require('./assets/' + asset)
 }
 
 // We need this so that we can dynamically load the components
