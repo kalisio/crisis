@@ -1,6 +1,6 @@
 import _ from 'lodash'
-import { hooks as coreHooks } from '@kalisio/kdk-core'
-import { hooks as mapHooks } from '@kalisio/kdk-map'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api'
+import { hooks as mapHooks } from '@kalisio/kdk/map.api'
 import { setNow, discard } from 'feathers-hooks-common'
 import { addCreatorAsCoordinator, processNotification, sendEventNotifications, checkEventsQuotas } from '../../hooks'
 

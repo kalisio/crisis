@@ -1,6 +1,6 @@
 import { iff, iffElse, when } from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kdk-core'
-import { hooks as teamHooks } from '@kalisio/kdk-team'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api'
+import { hooks as teamHooks } from '@kalisio/kdk/core.api'
 import { hooks as notifyHooks } from '@kalisio/kdk-notify'
 import { checkInvitationsQuotas } from '../../hooks'
 
@@ -10,35 +10,35 @@ module.exports = {
     find: [],
     get: [],
     create: [when(hook => hook.data.sponsor, checkInvitationsQuotas),
-      notifyHooks.addVerification],
+      coreHooks.addVerification],
     update: [],
     patch: [],
-    remove: [teamHooks.preventRemoveUser]
+    remove: [coreHooks.preventRemoveUser]
   },
 
   after: {
     all: [],
-    find: [notifyHooks.removeVerification],
-    get: [notifyHooks.removeVerification],
+    find: [coreHooks.removeVerification],
+    get: [coreHooks.removeVerification],
     create: [
-      iff(hook => !hook.result.sponsor, notifyHooks.sendVerificationEmail),
-      iffElse(hook => hook.result.sponsor, teamHooks.joinOrganisation, teamHooks.createPrivateOrganisation),
-      notifyHooks.removeVerification
+      iff(hook => !hook.result.sponsor, coreHooks.sendVerificationEmail),
+      iffElse(hook => hook.result.sponsor, coreHooks.joinOrganisation, coreHooks.createPrivateOrganisation),
+      coreHooks.removeVerification
     ],
-    update: [notifyHooks.removeVerification],
-    patch: [notifyHooks.removeVerification],
+    update: [coreHooks.removeVerification],
+    patch: [coreHooks.removeVerification],
     remove: [
       coreHooks.setAsDeleted,
       coreHooks.removeAttachments('avatar'),
-      notifyHooks.updateSubjectSubscriptions({
+      coreHooks.updateSubjectSubscriptions({
         field: 'tags',
         service: 'tags',
         subjectAsItem: true
       }),
       coreHooks.updateTags, // After unsubscriptions otherwise will remove topic of unused tags before it
-      teamHooks.leaveOrganisations(),
-      notifyHooks.unregisterDevices,
-      notifyHooks.removeVerification
+      coreHooks.leaveOrganisations(),
+      coreHooks.unregisterDevices,
+      coreHooks.removeVerification
     ]
   },
 

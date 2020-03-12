@@ -1,6 +1,5 @@
-import { hooks as notifyHooks } from '@kalisio/kdk-notify'
 import { iff } from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kdk-core'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api'
 
 module.exports = {
   before: {
@@ -17,7 +16,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [notifyHooks.verifyGuest, notifyHooks.consentGuest, iff(hook => process.env.API_GATEWAY, async hook => {
+    create: [coreHooks.verifyGuest, coreHooks.consentGuest, iff(hook => process.env.API_GATEWAY, async hook => {
       const config = hook.app.get('authentication')
       if (!config) return hook
       // Default appId for Akt'n'Map used to access the gateway

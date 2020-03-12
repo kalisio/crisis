@@ -1,5 +1,4 @@
-import { hooks as coreHooks } from '@kalisio/kdk-core'
-import { hooks as notifyHooks } from '@kalisio/kdk-notify'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api'
 
 module.exports = {
   before: {
@@ -11,7 +10,7 @@ module.exports = {
     patch: [ // Required to update subscriptions correctly
       coreHooks.populatePreviousObject,
       coreHooks.updateTags, // Before subscriptions to have topics already created on tags before it
-      notifyHooks.updateSubjectSubscriptions({
+      coreHooks.updateSubjectSubscriptions({
         field: 'tags',
         service: 'tags',
         subjectAsItem: true

@@ -1,5 +1,5 @@
 import distribution from '@kalisio/feathers-distributed'
-import { kalisio } from '@kalisio/kdk-core'
+import { kalisio } from '@kalisio/kdk/core.api'
 
 import fs from 'fs-extra'
 import https from 'https'

@@ -1,23 +1,21 @@
 // Application hooks that run for every service
 import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import commonHooks from 'feathers-hooks-common'
-import { permissions as corePermissions, hooks as coreHooks } from '@kalisio/kdk-core'
-import { permissions as teamPermissions } from '@kalisio/kdk-team'
-import { permissions as notifyPermissions, hooks as notifyHooks } from '@kalisio/kdk-notify'
-import { permissions as mapPermissions } from '@kalisio/kdk-map'
+import { permissions as corePermissions, hooks as coreHooks } from '@kalisio/kdk/core.api'
+import { permissions as mapPermissions } from '@kalisio/kdk/map.api'
 import * as permissions from './permissions'
-console.log(permissions)
+
 const { authenticate } = require('@feathersjs/authentication').hooks
 
 // Register all default hooks for authorisation
 // Default rules for all users
 corePermissions.defineAbilities.registerHook(corePermissions.defineUserAbilities)
-corePermissions.defineAbilities.registerHook(notifyPermissions.defineUserAbilities)
-corePermissions.defineAbilities.registerHook(mapPermissions.defineUserAbilities)
 // Then rules for organisations
-corePermissions.defineAbilities.registerHook(teamPermissions.defineOrganisationAbilities)
+corePermissions.defineAbilities.registerHook(corePermissions.defineOrganisationAbilities)
 // Then rules for groups
-corePermissions.defineAbilities.registerHook(teamPermissions.defineGroupAbilities)
+corePermissions.defineAbilities.registerHook(corePermissions.defineGroupAbilities)
+// Then rules for mapping
+corePermissions.defineAbilities.registerHook(mapPermissions.defineUserAbilities)
 // Then rules for app
 corePermissions.defineAbilities.registerHook(permissions.defineUserAbilities)
 
@@ -49,7 +47,7 @@ module.exports = {
     create: [commonHooks.when(hook => hook.service.name === 'users' && hook.data.sponsor,
       coreHooks.setExpireAfter(48 * 60 * 60), // 48h in seconds
       coreHooks.generatePassword,
-      notifyHooks.sendInvitationEmail)],
+      coreHooks.sendInvitationEmail)],
     update: [coreHooks.preventUpdatePerspectives],
     patch: [],
     remove: []

@@ -1,8 +1,8 @@
 import _ from 'lodash'
 import makeDebug from 'debug'
 import { Forbidden } from '@feathersjs/errors'
-import { hooks } from '@kalisio/kdk-core'
-import { permissions } from '@kalisio/kdk-core/common'
+import { hooks } from '@kalisio/kdk/core.api'
+import { permissions } from '@kalisio/kdk/core.common'
 
 const debug = makeDebug('aktnmap:billing:hooks')
 

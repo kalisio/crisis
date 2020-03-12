@@ -1,6 +1,6 @@
 import { disallow } from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kdk-core'
-import { hooks as mapHooks } from '@kalisio/kdk-map'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api'
+import { hooks as mapHooks } from '@kalisio/kdk/map.api'
 
 module.exports = {
   before: {

@@ -1,5 +1,5 @@
 import { disallow, populate } from 'feathers-hooks-common'
-import { hooks } from '@kalisio/kdk-core'
+import { hooks } from '@kalisio/kdk/core.api'
 
 const populatePreviousLog = populate({
   schema: hook => {

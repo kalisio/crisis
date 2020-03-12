@@ -1,4 +1,4 @@
-import { hooks as notifyHooks } from '@kalisio/kdk-notify'
+import { hooks as coreHooks } from '@kalisio/kdk-core.api'
 
 module.exports = {
   before: {
@@ -17,9 +17,9 @@ module.exports = {
       return hook
     },
     // Unsubscribe the device to all possible topics
-    notifyHooks.updateSubjectSubscriptions({ field: 'organisations', service: 'organisations' }),
-    notifyHooks.updateSubjectSubscriptions({ field: 'groups', service: 'groups' }),
-    notifyHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' }),
+    coreHooks.updateSubjectSubscriptions({ field: 'organisations', service: 'organisations' }),
+    coreHooks.updateSubjectSubscriptions({ field: 'groups', service: 'groups' }),
+    coreHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' }),
     hook => {
       // Restore previous devices
       hook.params.user.devices = hook.params.devices

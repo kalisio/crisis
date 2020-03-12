@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { createObjectID } from '@kalisio/kdk-core'
+import { createObjectID } from '@kalisio/kdk/core.api'
 import makeDebug from 'debug'
 const debug = makeDebug('aktnmap:events:hooks')
 

@@ -1,6 +1,4 @@
-import { hooks as coreHooks } from '@kalisio/kdk-core'
-import { hooks as teamHooks } from '@kalisio/kdk-team'
-import { hooks as notifyHooks } from '@kalisio/kdk-notify'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api'
 import { checkGroupsQuotas } from '../../hooks'
 
 module.exports = {
@@ -18,13 +16,13 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [notifyHooks.createTopic,
-      teamHooks.createGroupAuthorisations],
+    create: [coreHooks.createTopic,
+      coreHooks.createGroupAuthorisations],
     update: [],
     patch: [],
     remove: [coreHooks.setAsDeleted,
-      teamHooks.removeGroupAuthorisations,
-      notifyHooks.removeTopic]
+      coreHooks.removeGroupAuthorisations,
+      coreHooks.removeTopic]
   },
 
   error: {

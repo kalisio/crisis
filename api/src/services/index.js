@@ -1,14 +1,12 @@
 import path from 'path'
 import _ from 'lodash'
 import makeDebug from 'debug'
-import kCore from '@kalisio/kdk-core'
-import kTeam from '@kalisio/kdk-team'
+import kCore from '@kalisio/kdk/core.api'
 import kMap, {
   createFeaturesService, removeFeaturesService,
   createCatalogService, removeCatalogService,
   createAlertsService, removeAlertsService
-} from '@kalisio/kdk-map'
-import kNotify from '@kalisio/kdk-notify'
+} from '@kalisio/kdk/map.api'
 import packageInfo from '../../package.json'
 
 const modelsPath = path.join(__dirname, '..', 'models')
@@ -203,8 +201,6 @@ module.exports = async function () {
     // This one is created by feathers under the hood so we cannot configure using the previous event listener,
     // which will only emit our own services
     app.configureService('authentication', app.getService('authentication'), servicesPath)
-    await app.configure(kTeam)
-    await app.configure(kNotify)
     await app.configure(kMap)
     app.createService('billing', { servicesPath })
     

@@ -90,7 +90,8 @@ module.exports = {
   apiPath: API_PREFIX,
   distribution: { // Distribute no services simply use remote ones
     services: (service) => false,
-    middlewares: { after: express.errorHandler() }
+    middlewares: { after: express.errorHandler() },
+    key: 'aktnmap'
   },
   paginate: {
     default: 20,
@@ -169,6 +170,9 @@ module.exports = {
     cache: {
       maxUsers: 1000
     }
+  },
+  organisations: {
+    // nothing for now
   },
   quotas: {
     global: {
