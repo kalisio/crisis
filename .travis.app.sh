@@ -27,12 +27,13 @@ cd api && yarn build
 check_code $? "Building the api"
 
 # Build the client
-cd .. && yarn build > build.log 2>&1 && tail -n 24 build.log 
+cd .. && yarn build > build.log
 check_code $? "Builing the client"
+tail -n 24 build.log 
 
 # Create an archive to speed docker build process
 cd ../..
-tar -zcf kdk.tgz kdk
+tar -zcf kalisio.tgz kalisio
 docker build --build-arg APP=$APP --build-arg FLAVOR=$FLAVOR --build-arg BUILD_NUMBER=$BUILD_NUMBER -f dockerfile -t kalisio/$APP:$TAG . 
 check_code $? "Building the app docker image"
 

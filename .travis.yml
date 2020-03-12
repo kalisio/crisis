@@ -21,7 +21,7 @@ jobs:
     os: linux
     language: node_js
     node_js:
-    - '8'
+    - '12'
     services:
     - docker
     before_script:
@@ -44,7 +44,7 @@ jobs:
       - '.+'
     before_install:
     # NVM
-    - nvm install 8
+    - nvm install 12
     # AndroidDK Licence Mangager
     - yes | sdkmanager "platforms;android-28"
     # Yarn
@@ -68,7 +68,7 @@ jobs:
     osx_image: xcode10.1
     before_install:
     # NVM
-    - nvm install 8
+    - nvm install 12
     # Yarn
     - npm install -g yarn
     # AWS cli
