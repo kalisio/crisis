@@ -33,7 +33,7 @@ module.exports = {
     find: [],
     get: [],
     // When a new device is coming update user device list so that we will only subscribe to it
-    create: [notifyHooks.sendNewDeviceEmail,
+    create: [coreHooks.sendNewDeviceEmail,
       hook => {
         // Keep track of previous devices
         hook.params.devices = hook.params.user.devices
@@ -41,9 +41,9 @@ module.exports = {
         return hook
       },
       // Subscribe the device to all possible topics
-      notifyHooks.updateSubjectSubscriptions({ field: 'organisations', service: 'organisations' }),
-      notifyHooks.updateSubjectSubscriptions({ field: 'groups', service: 'groups' }),
-      notifyHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' }),
+      coreHooks.updateSubjectSubscriptions({ field: 'organisations', service: 'organisations' }),
+      coreHooks.updateSubjectSubscriptions({ field: 'groups', service: 'groups' }),
+      coreHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' }),
       hook => {
         // Restore previous devices
         hook.params.user.devices = hook.params.devices
@@ -52,9 +52,9 @@ module.exports = {
     ],
     update: [
       // Resubscribe the device to all possible topics in case some have been lost
-      notifyHooks.updateSubjectSubscriptions({ field: 'organisations', service: 'organisations' }),
-      notifyHooks.updateSubjectSubscriptions({ field: 'groups', service: 'groups' }),
-      notifyHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' })
+      coreHooks.updateSubjectSubscriptions({ field: 'organisations', service: 'organisations' }),
+      coreHooks.updateSubjectSubscriptions({ field: 'groups', service: 'groups' }),
+      coreHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' })
     ],
     patch: [],
     remove: []
