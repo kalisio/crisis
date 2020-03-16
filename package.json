@@ -130,7 +130,7 @@
     "xml2js": "^0.4.22"
   },
   "devDependencies": {
-    "@quasar/app": "^1.6.0",
+    "@quasar/app": "1.1.4",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "clui": "^0.3.6",
