@@ -277,11 +277,6 @@ module.exports = {
   },
   sync: {
     collection: 'events'
-  },
-  services: {
-    // Let Kano instance manage these ones
-    catalog: { disabled: true },
-    alerts: { disabled: true }
   }
 }
 
