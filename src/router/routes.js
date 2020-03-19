@@ -77,14 +77,14 @@ module.exports = {
               },
               'members': {
                 name: 'members-activity', 
-                component: 'KMembersActivity', 
+                component: 'team/KMembersActivity', 
                 props: true,
                 children: {
-                  'invite': { name: 'invite-member', component: 'KInviteMember', props: true },
-                  'add': { name: 'add-member', component: 'KAddMember', props: true },
+                  'invite': { name: 'invite-member', component: 'team/KInviteMember', props: true },
+                  'add': { name: 'add-member', component: 'team/KAddMember', props: true },
                   ':objectId/tag': { name: 'tag-member', component: 'editor/KModalEditor', props: true },
-                  ':objectId/join-group': { name: 'join-group', component: 'KJoinGroup', props: true },
-                  ':objectId/change-role': { name: 'change-role', component: 'KChangeRole', props: true },
+                  ':objectId/join-group': { name: 'join-group', component: 'team/KJoinGroup', props: true },
+                  ':objectId/change-role': { name: 'change-role', component: 'team/KChangeRole', props: true },
                 }
               },
               'groups': {
@@ -96,7 +96,7 @@ module.exports = {
                   'edit/:objectId': { name: 'edit-group', component: 'editor/KModalEditor', props: true }
                 }
               },
-              'catalog': {
+              'catalog/:south?/:west?/:north?/:east?': {
                 name: 'catalog-activity',
                 component: 'CatalogActivity',
                 props: true

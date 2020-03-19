@@ -184,7 +184,7 @@ module.exports = {
     components: {
       user_identity: 'account/KIdentityPanel',
       user_dashboard: 'layout/KLinksPanel',
-      user_organisation: 'KOrganisationsPanel',
+      user_organisation: 'team/KOrganisationsPanel',
       user_settings: 'Settings',
       app_about: 'layout/KAbout',
       user_actions: 'layout/KLinksPanel'
