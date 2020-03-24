@@ -1,22 +1,24 @@
 <template>
-  <q-page padding>
-    <div v-if="perspective === 'properties'">
-      <k-editor service="organisations" :objectId="contextId" />
+  <k-page padding>
+    <div slot="page-content">
+      <div v-if="perspective === 'properties'">
+        <k-editor service="organisations" :objectId="contextId" />
+      </div>
+      <div v-else-if="perspective === 'billing'">
+        <organisation-billing :objectId="contextId" perspective="billing" />
+      </div>
+      <div v-else-if="perspective === 'danger-zone'">
+        <k-organisation-dz :objectId="contextId" />
+      </div>
+      <div v-else>
+        <!-- Error -->
+      </div>
+      <!-- 
+        Router view to enable routing to modals
+      -->
+      <router-view :router="router()"></router-view>
     </div>
-    <div v-else-if="perspective === 'billing'">
-      <organisation-billing :objectId="contextId" perspective="billing" />
-    </div>
-    <div v-else-if="perspective === 'danger-zone'">
-      <k-organisation-dz :objectId="contextId" />
-    </div>
-    <div v-else>
-      <!-- Error -->
-    </div>
-    <!-- 
-      Router view to enable routing to modals
-    -->
-    <router-view :router="router()"></router-view>
-  </q-page>
+  </k-page>
 </template>
 
 <script>
@@ -80,6 +82,7 @@ export default {
   },
   created () {
     // Load the required components
+    this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-editor'] = this.$load('editor/KEditor')
     this.$options.components['organisation-billing'] = this.$load('OrganisationBilling')
     this.$options.components['k-organisation-dz'] = this.$load('KOrganisationDZ')

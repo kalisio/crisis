@@ -1,14 +1,16 @@
 <template>
-  <q-page padding>
-    <!--
-      Templates collection
-     -->
-    <k-grid service="event-templates" :base-query="baseQuery" :filter-query="searchQuery" :renderer="renderer" :contextId="contextId" :list-strategy="'smart'" />
-    <!--
-      Router view to enable routing to modals
-     -->
-    <router-view service="event-templates" router="router()"></router-view>
-  </q-page>
+  <k-page padding>
+    <div slot="page-content">
+      <!--
+        Templates collection
+      -->
+      <k-grid service="event-templates" :base-query="baseQuery" :filter-query="searchQuery" :renderer="renderer" :contextId="contextId" :list-strategy="'smart'" />
+      <!--
+        Router view to enable routing to modals
+      -->
+      <router-view service="event-templates" router="router()"></router-view>
+    </div>
+  </k-page>
 </template>
 
 <script>
@@ -78,6 +80,7 @@ export default {
   },
   created () {
     // Load the required components
+    this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
   }
 }

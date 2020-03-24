@@ -1,115 +1,117 @@
 <template>
-  <q-page>
-    <!-- Invisible link used to download data -->
-    <a ref="downloadLink" v-show="false" :href="currentDownloadLink" :download="currentDownloadName"></a>
-    <!--
-      Time range selector
-     -->
-    <q-page-sticky position="top" :offset="[0, 4]" style="z-index: 1">
-      <div class="row justify-center text-center text-subtitle1">
-        <div class="row items-center time-range-bar">
-          <q-btn v-show="!showHistory" flat round color="primary" icon="timelapse" @click="onShowHistory">
-            <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_HISTORY_LABEL') }}</q-tooltip>
-          </q-btn>
-          <q-btn v-show="!showMap" flat round color="primary" icon="scatter_plot" @click="onShowMap">
-            <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_MAP_LABEL') }}</q-tooltip>
-          </q-btn>
-          <q-btn v-show="!showChart" flat round color="primary" icon="pie_chart" @click="onShowChart">
-            <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_CHART_LABEL') }}</q-tooltip>
-          </q-btn>
-          <q-separator vertical />
-          &nbsp;{{minDateTimeSelected}}
-          <q-icon name="event" color="primary" class="cursor-pointer">
-            <q-tooltip>{{ $t('ArchivedEventsActivity.FROM_DATE') }}</q-tooltip>
-            <q-popup-proxy ref="minDatePopup" transition-show="scale" transition-hide="scale">
-              <q-date v-model="minDateTimeSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
-            </q-popup-proxy>
-          </q-icon>
-          &nbsp;-&nbsp;{{maxDateTimeSelected}}&nbsp;
-          <q-icon name="event" color="primary" class="cursor-pointer">
-            <q-tooltip>{{ $t('ArchivedEventsActivity.TO_DATE') }}</q-tooltip>
-            <q-popup-proxy ref="maxDatePopup" transition-show="scale" transition-hide="scale">
-              <q-date v-model="maxDateTimeSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
-            </q-popup-proxy>
-          </q-icon>
-          &nbsp;<q-separator vertical />
-          <q-btn v-show="showHistory && ascendingSort" flat round color="primary" icon="arrow_upward" @click="onSortOrder">
-            <q-tooltip>{{ $t('ArchivedEventsActivity.DESCENDING_SORT') }}</q-tooltip>
-          </q-btn>
-          <q-btn v-show="showHistory && !ascendingSort" flat round color="primary" icon="arrow_downward" @click="onSortOrder">
-            <q-tooltip>{{ $t('ArchivedEventsActivity.ASCENDING_SORT') }}</q-tooltip>
-          </q-btn>
-          <!--span v-show="showHistory" >&nbsp;{{$t('ArchivedEventsActivity.SORT_BY_LABEL')}}&nbsp;</span>
-          <q-select v-show="showHistory" v-model="sortBy" class="text-h5" :options="sortOptions" @input="updateBaseQuery()"/-->
-          <q-btn v-show="showMap && heatmap" flat round color="primary" icon="scatter_plot" @click="onHeatmap">
-            <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_MARKERS_LABEL') }}</q-tooltip>
-          </q-btn>
-          <q-btn v-show="showMap && !heatmap" flat round color="primary" icon="fas fa-bowling-ball" @click="onHeatmap">
-            <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_HEATMAP_LABEL') }}</q-tooltip>
-          </q-btn>
-          <q-btn v-show="showMap && byTemplate" flat round color="primary" icon="fas fa-object-group" @click="onByTemplate">
-            <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_ALL_LABEL') }}</q-tooltip>
-          </q-btn>
-          <q-btn v-show="showMap && !byTemplate" flat round color="primary" icon="fas fa-layer-group" @click="onByTemplate">
-            <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL') }}</q-tooltip>
-          </q-btn>
-          <q-btn v-show="!byTemplate" flat round color="primary" icon="cloud_download" @click="downloadEventsData"/>
+  <k-page>
+    <div slot="page-content">
+      <!-- Invisible link used to download data -->
+      <a ref="downloadLink" v-show="false" :href="currentDownloadLink" :download="currentDownloadName"></a>
+      <!--
+        Time range selector
+      -->
+      <q-page-sticky position="top" :offset="[0, 4]" style="z-index: 1">
+        <div class="row justify-center text-center text-subtitle1">
+          <div class="row items-center time-range-bar">
+            <q-btn v-show="!showHistory" flat round color="primary" icon="timelapse" @click="onShowHistory">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_HISTORY_LABEL') }}</q-tooltip>
+            </q-btn>
+            <q-btn v-show="!showMap" flat round color="primary" icon="scatter_plot" @click="onShowMap">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_MAP_LABEL') }}</q-tooltip>
+            </q-btn>
+            <q-btn v-show="!showChart" flat round color="primary" icon="pie_chart" @click="onShowChart">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_CHART_LABEL') }}</q-tooltip>
+            </q-btn>
+            <q-separator vertical />
+            &nbsp;{{minDateTimeSelected}}
+            <q-icon name="event" color="primary" class="cursor-pointer">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.FROM_DATE') }}</q-tooltip>
+              <q-popup-proxy ref="minDatePopup" transition-show="scale" transition-hide="scale">
+                <q-date v-model="minDateTimeSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
+              </q-popup-proxy>
+            </q-icon>
+            &nbsp;-&nbsp;{{maxDateTimeSelected}}&nbsp;
+            <q-icon name="event" color="primary" class="cursor-pointer">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.TO_DATE') }}</q-tooltip>
+              <q-popup-proxy ref="maxDatePopup" transition-show="scale" transition-hide="scale">
+                <q-date v-model="maxDateTimeSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
+              </q-popup-proxy>
+            </q-icon>
+            &nbsp;<q-separator vertical />
+            <q-btn v-show="showHistory && ascendingSort" flat round color="primary" icon="arrow_upward" @click="onSortOrder">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.DESCENDING_SORT') }}</q-tooltip>
+            </q-btn>
+            <q-btn v-show="showHistory && !ascendingSort" flat round color="primary" icon="arrow_downward" @click="onSortOrder">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.ASCENDING_SORT') }}</q-tooltip>
+            </q-btn>
+            <!--span v-show="showHistory" >&nbsp;{{$t('ArchivedEventsActivity.SORT_BY_LABEL')}}&nbsp;</span>
+            <q-select v-show="showHistory" v-model="sortBy" class="text-h5" :options="sortOptions" @input="updateBaseQuery()"/-->
+            <q-btn v-show="showMap && heatmap" flat round color="primary" icon="scatter_plot" @click="onHeatmap">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_MARKERS_LABEL') }}</q-tooltip>
+            </q-btn>
+            <q-btn v-show="showMap && !heatmap" flat round color="primary" icon="fas fa-bowling-ball" @click="onHeatmap">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_HEATMAP_LABEL') }}</q-tooltip>
+            </q-btn>
+            <q-btn v-show="showMap && byTemplate" flat round color="primary" icon="fas fa-object-group" @click="onByTemplate">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_ALL_LABEL') }}</q-tooltip>
+            </q-btn>
+            <q-btn v-show="showMap && !byTemplate" flat round color="primary" icon="fas fa-layer-group" @click="onByTemplate">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL') }}</q-tooltip>
+            </q-btn>
+            <q-btn v-show="!byTemplate" flat round color="primary" icon="cloud_download" @click="downloadEventsData"/>
+          </div>
         </div>
-      </div>
-    </q-page-sticky>
-    <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
-      <div class="row">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <div class="col-12">
-      <q-slider v-model="heatmapRadius" :min="1" :max="100" :step="1"
-        label-always :label-value="$t('ArchivedEventsActivity.HEATMAP_RADIUS_LABEL') + ': ' + heatmapRadius + ' Kms'" @change="onHeatmapRadius"></q-slider>
-      </div>
-      </div>
-    </q-page-sticky>
-    <!--
-      Events history: switch append-items on to activate infinite scroll
-     -->
-    <k-history class="q-mt-lg" v-show="showHistory" service="archived-events" :nb-items-per-page="4" :append-items="false" :base-query="baseQuery" :filter-query="searchQuery" :renderer="renderer" :contextId="contextId" :list-strategy="'smart'">
-    </k-history>
-    <!--
-      Events map
-     -->
-    <div v-show="showMap">
-      <div ref="map" :style="viewStyle">
-        <q-resize-observer @resize="onMapResized" />
-      </div>
-
-      <q-page-sticky position="top-right" :offset="[4, 4]">
-        <k-navigation-bar />
       </q-page-sticky>
-    </div>
-    <!--
-      Events graph
-     -->
-    <k-modal ref="chartModal" :title="$t('ArchivedEventsActivity.CHART_MODAL_TITLE')" :toolbar="toolbar" :buttons="[]" >
-      <div slot="modal-content">
-        <div class="row justify-center text-center">
-          <q-select class="col-1" v-model="chartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')" stack-label
-          :options="chartOptions" @input="refreshChart"/>
-          <q-select class="col-1" v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')" stack-label
-            :options="paginationOptions" @input="refreshChartAndPagination"/>
-          <q-select class="col-1" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')" stack-label
-            :options="renderOptions" @input="refreshChart"/>
-          <q-pagination v-if="nbCharts > 1" v-model="currentChart" :max="nbCharts" @input="refreshChart" :input="true"/>
-          <q-btn flat round color="primary" icon="cloud_download" @click="downloadChartData" />
+      <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
+        <div class="row">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="col-12">
+        <q-slider v-model="heatmapRadius" :min="1" :max="100" :step="1"
+          label-always :label-value="$t('ArchivedEventsActivity.HEATMAP_RADIUS_LABEL') + ': ' + heatmapRadius + ' Kms'" @change="onHeatmapRadius"></q-slider>
         </div>
-        <div class="row justify-center text-center">
-          <canvas class="chart q-ma-lg" ref="chart"></canvas>
         </div>
+      </q-page-sticky>
+      <!--
+        Events history: switch append-items on to activate infinite scroll
+      -->
+      <k-history class="q-mt-lg" v-show="showHistory" service="archived-events" :nb-items-per-page="4" :append-items="false" :base-query="baseQuery" :filter-query="searchQuery" :renderer="renderer" :contextId="contextId" :list-strategy="'smart'">
+      </k-history>
+      <!--
+        Events map
+      -->
+      <div v-show="showMap">
+        <div ref="map" :style="viewStyle">
+          <q-resize-observer @resize="onMapResized" />
+        </div>
+
+        <q-page-sticky position="top-right" :offset="[4, 4]">
+          <k-navigation-bar />
+        </q-page-sticky>
       </div>
-    </k-modal>
-    <!--
-      Router view to enable routing to modals
-     -->
-    <router-view service="archived-events" :router="router()"></router-view>
-  </q-page>
+      <!--
+        Events graph
+      -->
+      <k-modal ref="chartModal" :title="$t('ArchivedEventsActivity.CHART_MODAL_TITLE')" :toolbar="toolbar" :buttons="[]" >
+        <div slot="modal-content">
+          <div class="row justify-center text-center">
+            <q-select class="col-1" v-model="chartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')" stack-label
+            :options="chartOptions" @input="refreshChart"/>
+            <q-select class="col-1" v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')" stack-label
+              :options="paginationOptions" @input="refreshChartAndPagination"/>
+            <q-select class="col-1" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')" stack-label
+              :options="renderOptions" @input="refreshChart"/>
+            <q-pagination v-if="nbCharts > 1" v-model="currentChart" :max="nbCharts" @input="refreshChart" :input="true"/>
+            <q-btn flat round color="primary" icon="cloud_download" @click="downloadChartData" />
+          </div>
+          <div class="row justify-center text-center">
+            <canvas class="chart q-ma-lg" ref="chart"></canvas>
+          </div>
+        </div>
+      </k-modal>
+      <!--
+        Router view to enable routing to modals
+      -->
+      <router-view service="archived-events" :router="router()"></router-view>
+    </div>
+  </k-page>
 </template>
 
 <script>
@@ -630,6 +632,7 @@ export default {
   },
   created () {
     // Load the required components
+    this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-history'] = this.$load('collection/KHistory')
     this.$options.components['k-navigation-bar'] = this.$load('KNavigationBar')

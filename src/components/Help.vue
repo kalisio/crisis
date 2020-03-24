@@ -1,36 +1,38 @@
 <template>
-  <q-page padding>
-    <div class="col items-center">
-      <div class="row justify-center">
-        <q-select
-          style="width:1180px"
-          v-model="currentSection"
-          outlined
-          :options="toc"
-          @input="onSelectionChanged"
-        />
-      </div>
-      <div class="row  justify-center">
-        <q-carousel 
-          ref="carousel" 
-          style="width:1180px; height: 640px"
-          animated
-          v-model="currentSlide"
-          arrows
-          infinite
-          control-color="primary"
-          @transition="onSlideChanged"
-        >
-          <template v-for="(slide,index) in toc">
-            <q-carousel-slide 
-              :key="index"
-              :name="slide.value"
-              :img-src="slide.content" />
-          </template>
-        </q-carousel>
+  <k-page padding>
+    <div slot="page-content">
+      <div class="col items-center">
+        <div class="row justify-center">
+          <q-select
+            style="width:1180px"
+            v-model="currentSection"
+            outlined
+            :options="toc"
+            @input="onSelectionChanged"
+          />
+        </div>
+        <div class="row  justify-center">
+          <q-carousel 
+            ref="carousel" 
+            style="width:1180px; height: 640px"
+            animated
+            v-model="currentSlide"
+            arrows
+            infinite
+            control-color="primary"
+            @transition="onSlideChanged"
+          >
+            <template v-for="(slide,index) in toc">
+              <q-carousel-slide 
+                :key="index"
+                :name="slide.value"
+                :img-src="slide.content" />
+            </template>
+          </q-carousel>
+        </div>
       </div>
     </div>
-  </q-page>
+  </k-page>
 </template>
 
 <script>
@@ -59,6 +61,10 @@ export default {
     onSlideChanged (slide) {
       this.currentSection = this.toc.find(entry => entry.value === slide)
     }
+  },
+  created () {
+    // Load the required components
+    this.$options.components['k-page'] = this.$load('layout/KPage')
   },
   mounted () {
     // Setup the TOC

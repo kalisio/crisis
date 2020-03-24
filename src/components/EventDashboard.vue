@@ -1,19 +1,21 @@
 <template>
-  <q-page padding>
-    <template v-for="org in items">
-      <q-list :key="org._id" separator>
-        <q-item>
-          <q-item-section><q-avatar color="primary" text-color="white" size="40px">{{getInitials(org)}}</q-avatar></q-item-section>
-          <q-item-section>{{org.name}}</q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <k-grid service="events" :renderer="renderer" :contextId="org._id" :base-query="baseQuery" :filter-query="searchQuery" :list-strategy="'smart'" />
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </template>
-  </q-page>
+  <k-page padding>
+    <div slot="page-model">
+      <template v-for="org in items">
+        <q-list :key="org._id" separator>
+          <q-item>
+            <q-item-section><q-avatar color="primary" text-color="white" size="40px">{{getInitials(org)}}</q-avatar></q-item-section>
+            <q-item-section>{{org.name}}</q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section>
+              <k-grid service="events" :renderer="renderer" :contextId="org._id" :base-query="baseQuery" :filter-query="searchQuery" :list-strategy="'smart'" />
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </template>
+    </div>
+  </k-page>
 </template>
 
 <script>
@@ -68,6 +70,7 @@ export default {
   },
   created () {
     // Load the required components
+    this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
     // Used to chec kfor single organisation layout at startup or refresh
     this.$on('collection-refreshed', this.checkSingleOrganisation)

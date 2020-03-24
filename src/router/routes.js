@@ -89,7 +89,7 @@ module.exports = {
               },
               'groups': {
                 name: 'groups-activity',
-                component: 'KGroupsActivity',
+                component: 'team/KGroupsActivity',
                 props: true,
                 children: {
                   'create': { name: 'create-group', component: 'editor/KModalEditor', props: true },

@@ -1,14 +1,16 @@
 <template>
-  <q-page padding>
-    <!--
-      Events collection
-     -->
-    <k-grid service="events" :base-query="baseQuery" :filter-query="searchQuery" :renderer="renderer" :contextId="contextId" :list-strategy="'smart'" />
-    <!--
-      Router view to enable routing to modals
-     -->
-    <router-view service="events" :router="router()"></router-view>
-  </q-page>
+  <k-page padding>
+    <div slot="page-content">
+      <!--
+        Events collection
+      -->
+      <k-grid service="events" :base-query="baseQuery" :filter-query="searchQuery" :renderer="renderer" :contextId="contextId" :list-strategy="'smart'" />
+      <!--
+        Router view to enable routing to modals
+      -->
+      <router-view service="events" :router="router()"></router-view>
+    </div>
+  </k-page>
 </template>
 
 <script>
@@ -103,6 +105,7 @@ export default {
   },
   created () {
     // Load the required components
+    this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
     // Performs geolocation
     this.updatePosition()
