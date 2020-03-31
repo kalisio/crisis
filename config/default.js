@@ -118,7 +118,7 @@ module.exports = {
   gatewayJwt: 'kano-gateway-jwt',
   appName: 'Akt\'n\'Map',
   appLogo: 'aktnmap-logo.png',
-  appWebsite: 'https://aktnmap.com',
+  appWebsite: 'https://kalisio.com/solutions#aktnmap',
   publisher: 'Kalisio',
   publisherWebsite: website,
   logs: {
