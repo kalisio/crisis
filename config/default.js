@@ -68,8 +68,9 @@ let defaultMapOptions = {
     'fill-opacity': 0.5,
     'fill-color': 'green'
   },
-  // Default GeoJSON popup will display all properties
-  popup: {},
+  // Default GeoJSON infobox will display all properties
+  popup: { pick: [] },
+  infobox: {},
   cluster: { disableClusteringAtZoom: 18 },
   fileLayers: {
     fileSizeLimit : 1024 * 1024,
