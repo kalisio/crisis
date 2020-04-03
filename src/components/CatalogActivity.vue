@@ -40,21 +40,6 @@
         <q-spinner-cube color="primary" class="fixed-center" v-if="inProgress" size="4em"/>
       </div>
     </k-modal>
-
-    <k-modal ref="layerStyleModal"
-      :title="$t('CatalogActivity.EDIT_LAYER_STYLE_TITLE')"
-      :toolbar="getLayerStyleModalToolbar()"
-      :buttons="[]"
-      :options="{}" :route="false">
-      <div slot="modal-content">
-        <layer-style-form :class="{ 'light-dimmed': inProgress }" ref="layerStyleForm"
-          :options="options" :layer="styledLayer"/>
-        <div class="row justify-end" style="padding: 12px">
-          <q-btn id="apply-button" color="primary" flat :label="$t('APPLY')" @click="onLayerStyleEdited"/>
-        </div>
-        <q-spinner-cube color="primary" class="fixed-center" v-if="inProgress" size="4em"/>
-      </div>
-    </k-modal>
   </q-page>
 </template>
 
@@ -109,7 +94,6 @@ export default {
       },
       alertLayer: null,
       alertFeature: null,
-      styledLayer: null,
       inProgress: false
     }
   },
@@ -161,27 +145,6 @@ export default {
         }
       })
       return layers
-    },
-    isLayerStyleEditable (layer) {
-      if (_.has(layer, 'isStyleEditable')) return _.get(layer, 'isStyleEditable')
-      // Only possible on user-defined and saved layers by default
-      //else return (layer._id && (layer.service === 'features'))
-      // Only possible when GeoJson by default
-      return ((_.get(layer, `${this.engine}.type`) === 'geoJson'))
-    },
-    registerLayerActions (layer) {
-      let actions = activityMixin.methods.registerLayerActions.call(this, layer)
-      if (this.isLayerStyleEditable(layer)) {
-        const index = _.findIndex(actions, action => action.name === 'edit-data')
-        actions.splice(index, 0, {
-          name: 'edit-style',
-          label: this.$t('CatalogActivity.EDIT_LAYER_STYLE'),
-          icon: 'fas fa-border-style',
-          handler: () => this.onEditLayerStyle(layer)
-        })
-        this.$set(layer, 'actions', actions)
-        return actions
-      }
     },
     getFeatureActions (feature, layer) {
       let featureActions = []
@@ -352,44 +315,6 @@ export default {
         this.$refs.alertModal.open()
       }
     },
-    getLayerStyleModalToolbar () {
-      return [
-        { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.layerStyleModal.close() }
-      ]
-    },
-    async onEditLayerStyle (layer) {
-      this.styledLayer = layer
-      await this.$refs.layerStyleModal.open()
-      this.$refs.layerStyleForm.fill(_.pick(layer, ['leaflet']))
-    },
-    async onLayerStyleEdited () {
-      const result = this.$refs.layerStyleForm.validate()
-      if (!result.isValid) return
-      this.inProgress = true
-      let geoJson
-      // If saved layer update it in DB
-      if (this.styledLayer._id) {
-        try {
-          await this.$api.getService('catalog').patch(this.styledLayer._id, result.values)
-        } catch (_) {
-        }
-      } else {
-        geoJson = this.toGeoJson(this.styledLayer.name)
-      }
-      // Update in memory
-      _.forOwn(result.values, (value, key) => _.set(this.styledLayer, key, value))
-      // Reset layer with new setup
-      await this.removeLayer(this.styledLayer.name)
-      await this.addLayer(this.styledLayer)
-      // Update data as well when in memory
-      if (!this.styledLayer._id) {
-        this.updateLayer(this.styledLayer.name, geoJson)
-      }
-      // FIXME: simply updating data does not update style as the old layer setup is still kept in a closure
-      //this.updateLayer(this.styledLayer.name)
-      this.inProgress = false
-      this.$refs.layerStyleModal.close()
-    },
     getTemplateModalToolbar () {
       return [
         { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.templateModal.close() }
@@ -416,7 +341,6 @@ export default {
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-list'] = this.$load('collection/KList')
     this.$options.components['alert-form'] = this.$load('AlertForm')
-    this.$options.components['layer-style-form'] = this.$load('LayerStyleForm')
 
     this.registerLeafletStyle('tooltip', this.getAlertTooltip)
     this.registerLeafletStyle('popup', this.getAlertPopup)
