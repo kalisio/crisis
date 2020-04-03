@@ -114,7 +114,7 @@ export default {
       // Title
       this.setTitle(this.$store.get('context.name'))
       // Setup the right drawer
-      this.setRightDrawer('KCatalogPanel', this.$data)
+      this.setRightDrawer('catalog/KCatalogPanel', this.$data)
       // Actions
       this.registerActivityActions()
       // Wait until map is ready

@@ -279,7 +279,7 @@ export default {
       // Search bar
       this.setSearchBar('name')
       // Setup the right drawer
-      this.setRightDrawer('KCatalogPanel', this.$data)
+      this.setRightDrawer('catalog/KCatalogPanel', this.$data)
       // Wait until map is ready
       await this.initializeMap()
       this.registerActivityActions()
