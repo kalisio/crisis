@@ -219,7 +219,8 @@ module.exports = {
   catalogActivity: {
     tools: ['track-location', 'location-bar', 'fullscreen', 'catalog'],
     actions: ['create-layer'],
-    layerActions: ['zoom-to', 'save', 'edit', 'edit-style', 'view-data', 'chart-data', 'edit-data', 'remove']
+    layerActions: ['zoom-to', 'save', 'edit', 'edit-style', 'view-data', 'chart-data', 'edit-data', 'remove'],
+    featuresChunkSize: 5000
   },
   event: defaultMapOptions,
   eventCatalog: defaultMapCatalog,
