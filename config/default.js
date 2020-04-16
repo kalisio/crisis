@@ -41,15 +41,17 @@ let defaultMapOptions = {
   },
   // Default GeoJSON layer style for polygons/lines
   featureStyle: {
-    opacity: 1,
-    color: 'red',
+    'stroke-opacity': 1,
+    'stroke-color': 'red',
+    'stroke-width': 3,
     'fill-opacity': 0.5,
     'fill-color': 'green'
   },
   // Default GeoJSON layer style for polygons/lines edition
   editFeatureStyle: {
-    opacity: 1,
-    color: 'red',
+    'stroke-opacity': 1,
+    'stroke-color': 'red',
+    'stroke-width': 3,
     'fill-opacity': 0.5,
     'fill-color': 'green'
   },
@@ -63,7 +65,7 @@ let defaultMapOptions = {
   editPointStyle: {
     'marker-type': 'circleMarker',
     radius: 6,
-    stroke: 'red',
+    'stroke-color': 'red',
     'stroke-opacity': 1,
     'fill-opacity': 0.5,
     'fill-color': 'green'
