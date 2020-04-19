@@ -1,6 +1,6 @@
 <template>
   <k-page padding>
-    <div slot="page-model">
+    <template v-slot:page-content>
       <template v-for="org in items">
         <q-list :key="org._id" separator>
           <q-item>
@@ -14,7 +14,7 @@
           </q-item>
         </q-list>
       </template>
-    </div>
+    </template>
   </k-page>
 </template>
 

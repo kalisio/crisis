@@ -1,6 +1,6 @@
 <template>
   <k-page padding>
-    <div slot="page-content">
+    <template v-slot:page-content>
       <div class="col items-center">
         <div class="row justify-center">
           <q-select
@@ -31,7 +31,7 @@
           </q-carousel>
         </div>
       </div>
-    </div>
+    </template>
   </k-page>
 </template>
 

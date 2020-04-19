@@ -1,7 +1,7 @@
 <template>
   <k-layers-panel :layers="layers" :layerHandlers="layerHandlers" :categories="layerCategories" >
     <div slot="panel-footer" >
-      <q-expansion-item v-if="forecastModels.length > 0" icon="fas fa-globe" :label="$t('KCatalogPanel.FORECASTS_LABEL')">
+      <q-expansion-item v-if="forecastModels.length > 0" icon="fas fa-globe" :label="$t('KWeatherLayersSelector.FORECASTS_LABEL')">
         <k-forecast-models-selector :forecastModels="forecastModels" :forecastModelHandlers="forecastModelHandlers" :forecastModel="forecastModel" />
       </q-expansion-item>
       <q-expansion-item v-if="participants.length > 0" icon="fas fa-user" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">

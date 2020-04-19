@@ -1,46 +1,55 @@
 <template>
-  <q-page>
-    <div ref="map" :style="viewStyle">
-      <q-resize-observer @resize="onMapResized" />
-    </div>
-
-    <k-feature-action-button />
-   
-    <q-page-sticky position="top" :offset="[0, 18]">
-      <k-navigation-bar />
-    </q-page-sticky>
-
-    <q-page-sticky position="left" :offset="[18, 0]">
-      <k-feature-info-box style="min-width: 250px; width: 25vw;" />
-    </q-page-sticky>
-
-    <q-page-sticky position="left" :offset="[18, 0]">
-      <k-color-legend/>
-    </q-page-sticky>
-
-    <k-modal ref="templateModal"
-      :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
-      :toolbar="getTemplateModalToolbar()"
-      :buttons="[]"
-      :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }" :route="false">
-      <k-list ref="templates" slot="modal-content" service="event-templates" :base-query="baseTemplateQuery" :contextId="contextId" :list-strategy="'smart'" @selection-changed="onEventTemplateSelected" />
-    </k-modal>
-
-    <k-modal ref="alertModal"
-      :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
-      :toolbar="getAlertModalToolbar()"
-      :buttons="[]"
-      :options="{}" :route="false">
-      <div slot="modal-content">
-        <alert-form :class="{ 'light-dimmed': inProgress }" ref="alertForm"
-          :layer="alertLayer" :feature="alertFeature" :forecastModel="forecastModel"/>
-        <div class="row justify-end" style="padding: 12px">
-          <q-btn id="apply-button" color="primary" flat :label="$t('CREATE')" @click="onCreateAlert"/>
-        </div>
-        <q-spinner-cube color="primary" class="fixed-center" v-if="inProgress" size="4em"/>
+  <k-page :padding="false">
+    <template v-slot:page-content>
+      <!--
+        Map
+       -->
+      <div ref="map" :style="viewStyle">
+        <q-resize-observer @resize="onMapResized" />
       </div>
-    </k-modal>
-  </q-page>
+      <!--
+        NavigationBar
+       -->
+      <q-page-sticky position="top">
+        <k-opener-proxy position="top" component="KNavigationBar" :opened="true" />
+      </q-page-sticky>
+      <!--
+        TimeLine
+       -->
+      <q-page-sticky position="bottom">
+        <k-opener-proxy position="bottom" component="KTimeline" />
+      </q-page-sticky>
+      <!--
+        ColorLegend
+       -->
+      <q-page-sticky position="left" :offset="[18, 0]">
+        <k-color-legend />
+      </q-page-sticky>
+
+      <k-modal ref="templateModal"
+        :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
+        :toolbar="getTemplateModalToolbar()"
+        :buttons="[]"
+        :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }" :route="false">
+        <k-list ref="templates" slot="modal-content" service="event-templates" :base-query="baseTemplateQuery" :contextId="contextId" :list-strategy="'smart'" @selection-changed="onEventTemplateSelected" />
+      </k-modal>
+
+      <k-modal ref="alertModal"
+        :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
+        :toolbar="getAlertModalToolbar()"
+        :buttons="[]"
+        :options="{}" :route="false">
+        <div slot="modal-content">
+          <alert-form :class="{ 'light-dimmed': inProgress }" ref="alertForm"
+            :layer="alertLayer" :feature="alertFeature" :forecastModel="forecastModel"/>
+          <div class="row justify-end" style="padding: 12px">
+            <q-btn id="apply-button" color="primary" flat :label="$t('CREATE')" @click="onCreateAlert"/>
+          </div>
+          <q-spinner-cube color="primary" class="fixed-center" v-if="inProgress" size="4em"/>
+        </div>
+      </k-modal>
+    </template>
+  </k-page>
 </template>
 
 <script>
@@ -60,8 +69,10 @@ export default {
     kCoreMixins.baseCollection,
     kMapMixins.geolocation,
     kMapMixins.featureService,
+    kMapMixins.featureSelection,
     kMapMixins.weacast,
     kMapMixins.time,
+    kMapMixins.timeSeries,
     activityMixin,
     kMapMixins.locationIndicator,
     kMapMixins.map.baseMap,
@@ -73,7 +84,7 @@ export default {
     kMapMixins.map.tooltip,
     kMapMixins.map.popup,
     kMapMixins.map.infobox,
-    kMapMixins.map.activity,
+    kMapMixins.map.activity
   ],
   provide () {
     return {
@@ -115,6 +126,9 @@ export default {
       this.setTitle(this.$store.get('context.name'))
       // Setup the right drawer
       this.setRightDrawer('catalog/KCatalogPanel', this.$data)
+       // Setup the widgets
+      this.registerWidget('feature', 'las la-digital-tachograph', 'widgets/KFeatureWidget', this.selection)
+      this.registerWidget('time-series', 'las la-chart-line', 'widgets/KTimeSeriesWidget', this.$data)
       // Actions
       this.registerActivityActions()
       // Wait until map is ready
@@ -334,9 +348,12 @@ export default {
   },
   created () {
     // Load the required components
+    this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-navigation-bar'] = this.$load('KNavigationBar')
+    this.$options.components['k-opener-proxy'] = this.$load('frame/KOpenerProxy')
+    this.$options.components['k-navigation-bar'] = this.$load('KNavigationBar')
+    this.$options.components['k-timeline'] = this.$load('KTimeline')
     this.$options.components['k-color-legend'] = this.$load('KColorLegend')
-    this.$options.components['k-feature-info-box'] = this.$load('KFeatureInfoBox')
     this.$options.components['k-feature-action-button'] = this.$load('KFeatureActionButton')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-list'] = this.$load('collection/KList')

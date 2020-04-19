@@ -28,6 +28,7 @@ module.exports = function (ctx) {
     extras: [
       'roboto-font', 
       'material-icons',
+      'line-awesome',
       'fontawesome-v5'
     ],
 
@@ -84,12 +85,10 @@ module.exports = function (ctx) {
         'QTooltip'
       ],
 
-      animations: [
-      ],
-
       directives: [
         'Ripple',
-        'ClosePopup'
+        'ClosePopup',
+        'TouchSwipe'
       ],
 
       // Quasar plugins
@@ -102,6 +101,8 @@ module.exports = function (ctx) {
       ]
     },
 
+    animations: [],
+    
     supportIE: false,
 
     build: {

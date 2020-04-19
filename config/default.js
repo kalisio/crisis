@@ -80,15 +80,15 @@ let defaultMapOptions = {
   }
 }
 
-const baseLayers = { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'fas fa-map',
+const baseLayers = { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'las la-layer-group',
   options: { exclusive: true, filter: { type: 'BaseLayer' } } }
-const businessLayers = { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'layers',
+const businessLayers = { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'las la-layer-group',
   options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } } }
-const overlayLayers = { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'fas fa-map-marker',
+const overlayLayers = { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'las la-home',
   options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } }
-const measureLayers = { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fas fa-map-pin',
+const measureLayers = { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fas la-map-pin',
   options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } } }
-const meteoLayers = { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'wb_sunny',
+const meteoLayers = { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'las la-cloud-sun-rain', component: 'catalog/KWeatherLayersSelector',
   options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } }
 
 let defaultMapCatalog = {
@@ -173,11 +173,13 @@ module.exports = {
       behavior: 'mobile',
       component: {
         name: 'layout/KSideNav'
-      }
+      },
+      opener: true
     },
     rightDrawer: {
       behavior: 'mobile'
-    }
+    },
+    opener: true
   }, 
   appBar: {
     title: 'Akt\'n\'Map'

@@ -1,6 +1,6 @@
 <template>
   <k-page padding>
-    <div slot="page-content">
+    <template v-slot:page-content>
       <div v-if="perspective === 'properties'">
         <k-editor service="organisations" :objectId="contextId" />
       </div>
@@ -17,7 +17,7 @@
         Router view to enable routing to modals
       -->
       <router-view :router="router()"></router-view>
-    </div>
+    </template>
   </k-page>
 </template>
 
