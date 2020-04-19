@@ -177,9 +177,9 @@ module.exports = {
       opener: true
     },
     rightDrawer: {
-      behavior: 'mobile'
-    },
-    opener: true
+      behavior: 'mobile',
+      opener: true
+    }
   }, 
   appBar: {
     title: 'Akt\'n\'Map'
