@@ -6,10 +6,7 @@
         <div class="column">
           <div v-if="item.location">
             <q-toolbar class="q-pa-none">
-              <span class="ellipsis">
-                {{ item.location.name }}
-              </span>
-              <q-space />
+              <k-text-area class="light-paragraph" :length="40" :text="item.location.name" />
               <q-btn icon="place" color="grey-7" flat dense round>
                 <q-tooltip>
                   {{ $t('EventCard.LOCATE_LABEL') }}

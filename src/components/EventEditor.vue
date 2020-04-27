@@ -53,29 +53,29 @@ export default {
     async loadObject () {
       // When a template is provided use it as reference for object
       if (this.template) {
-        this._object = Object.assign({}, this.template)
+        this.object = Object.assign({}, this.template)
         // Keep track of template based on its name for statistics
         // We don't keep ref/link for simplicity and making archived events will be self-consistent
         // No need to keep track of templates that have been removed, etc.
-        this._object.template = this.template.name
+        this.object.template = this.template.name
         // Remove id so that event has its own
-        delete this._object._id
+        delete this.object._id
         // Setup hasWorkflow tag
-        this._object.hasWorkflow = !_.isNil(this.template.workflow)
+        this.object.hasWorkflow = !_.isNil(this.template.workflow)
         if (this.layerId) {
           const layer = await this.$api.getService('catalog').get(this.layerId)
-          this._object.layer = this.layerId
+          this.object.layer = this.layerId
           // Perform reverse geocoding if we target a feature
           if (this.featureId) {
             const feature = await this.$api.getService('features').get(this.featureId)
-            this._object.feature = this.featureId
+            this.object.feature = this.featureId
             let description = _.get(feature, 'name', _.get(feature, 'NAME'))
             if (!description && layer.featureId) description = _.get(feature, `properties.${layer.featureId}`)
-            if (description) this._object.description = description
+            if (description) this.object.description = description
             const results = await this.$api.getService('geocoder').create(feature)
             if (results.length > 0) {
               const element = results[0]
-              this._object.location = Object.assign(element, { name: utils.formatGeocodingResult(element) })
+              this.object.location = Object.assign(element, { name: utils.formatGeocodingResult(element) })
             }
           } else {
             // TODO: manage a set of features
@@ -127,9 +127,9 @@ export default {
       // Setup workflow depending on field state
       if (field === 'hasWorkflow') {
         if (value) {
-          this._object.workflow = this.template.workflow
+          this.object.workflow = this.template.workflow
         } else {
-          delete this._object.workflow
+          delete this.object.workflow
         }
       }
     },

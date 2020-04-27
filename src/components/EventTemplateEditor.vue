@@ -65,12 +65,12 @@ export default {
     loadObject () {
       // When a template is provided use it as reference for object
       if (this.template) {
-        this._object = Object.assign({}, this.template)
+        this.object = Object.assign({}, this.template)
         // Remove id so that event has its own
-        delete this._object._id
+        delete this.object._id
         // Setup hasWorkflow tag
-        this._object.hasWorkflow = !_.isNil(this.template.workflow)
-        return Promise.resolve(this._object)
+        this.object.hasWorkflow = !_.isNil(this.template.workflow)
+        return Promise.resolve(this.object)
       } else if (this.objectId) {
         // Otherwise proceed as usual to load the event object
         return mixins.objectProxy.methods.loadObject.call(this)
@@ -84,8 +84,8 @@ export default {
     },
     async onWorkflow (hasWorkflow) {
       if (this.templateId) {
-        if (hasWorkflow) this._object.workflow = this.template.workflow
-        else delete this._object.workflow
+        if (hasWorkflow) this.object.workflow = this.template.workflow
+        else delete this.object.workflow
       }
       // Activate workflow form accordingly
       this.setFormDisabled('workflowForm', !hasWorkflow)

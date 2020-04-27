@@ -110,7 +110,7 @@ module.exports = {
                   'edit/:objectId': { name: 'edit-event', component: 'EventEditor', props: true },
                 }
               },
-              'archived-events': {
+              'archived-events/:south?/:west?/:north?/:east?': {
                 name: 'archived-events-activity',
                 component: 'ArchivedEventsActivity',
                 props: true,
@@ -118,7 +118,7 @@ module.exports = {
                   'view/:objectId': { name: 'view-event', component: 'viewer/KModalViewer', props: true },
                 }
               },
-              'events/:objectId': {
+              'events/:objectId/:south?/:west?/:north?/:east?': {
                 name: 'event-activity',
                 component: 'EventActivity',
                 props: true,
