@@ -84,6 +84,8 @@ const baseLayers = { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', ico
   options: { exclusive: true, filter: { type: 'BaseLayer' } } }
 const businessLayers = { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'las la-layer-group',
   options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } } }
+const capturedLayers = { name: 'CapturedLayers', label: 'KCatalogPanel.CAPTURED_LAYERS', icon: 'las la-street-view',
+  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['captured'] } } } }
 const overlayLayers = { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'las la-home',
   options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } }
 const measureLayers = { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fas la-map-pin',
@@ -95,6 +97,7 @@ let defaultMapCatalog = {
   categories: [
     baseLayers,
     businessLayers,
+    capturedLayers,
     overlayLayers,
     measureLayers,
     meteoLayers

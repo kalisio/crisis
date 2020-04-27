@@ -65,7 +65,6 @@ export default {
     kMapMixins.weacast,
     kMapMixins.time,
     activityMixin,
-    kMapMixins.locationIndicator,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
     kMapMixins.map.forecastLayers,
@@ -73,6 +72,7 @@ export default {
     kMapMixins.map.tooltip,
     kMapMixins.map.popup,
     kMapMixins.map.activity,
+    kMapMixins.map.mapillary,
     mixins.eventLogs
   ],
   props: {
@@ -126,6 +126,10 @@ export default {
       this.setTitle(this.event.name)
       // Setup the right drawer
       this.setRightDrawer('EventActivityPanel', this.$data)
+      // Setup the widgets
+      this.registerWidget('feature', 'las la-digital-tachograph', 'widgets/KFeatureWidget', this.selection)
+      this.registerWidget('time-series', 'las la-chart-line', 'widgets/KTimeSeriesWidget', this.$data)
+      this.registerWidget('mapillary', 'img:statics/mapillary-icon.svg', 'widgets/KMapillaryWidget', this.mapillary)
       // Wait until map is ready
       await this.initializeMap()
       // If we'd like to only work in real-time

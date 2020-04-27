@@ -1,9 +1,6 @@
 <template>
-  <k-layers-panel :layers="layers" :layerHandlers="layerHandlers" :categories="layerCategories" >
-    <div slot="panel-footer" >
-      <q-expansion-item v-if="forecastModels.length > 0" icon="fas fa-globe" :label="$t('KWeatherLayersSelector.FORECASTS_LABEL')">
-        <k-forecast-models-selector :forecastModels="forecastModels" :forecastModelHandlers="forecastModelHandlers" :forecastModel="forecastModel" />
-      </q-expansion-item>
+  <k-catalog-panel :layers="layers" :layerHandlers="layerHandlers" :categories="layerCategories" >
+    <div slot="footer" >
       <q-expansion-item v-if="participants.length > 0" icon="fas fa-user" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">
         <template v-for="participant in participants">
           <div class="row justify-between no-wrap" style="overflow: auto" :key="participant._id">
@@ -26,7 +23,7 @@
         </template>
       </q-expansion-item>
     </div>
-  </k-layers-panel>
+  </k-catalog-panel>
 </template>
 
 <script>
@@ -95,8 +92,7 @@ export default {
   },
   created () {
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
-    this.$options.components['k-layers-panel'] = this.$load('KLayersPanel')
-    this.$options.components['k-forecast-models-selector'] = this.$load('KForecastModelsSelector')
+    this.$options.components['k-catalog-panel'] = this.$load('catalog/KCatalogPanel')
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
   }

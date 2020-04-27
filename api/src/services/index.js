@@ -121,7 +121,8 @@ module.exports = async function () {
         domain: app.get('domain'),
         version: packageInfo.version,
         plans: _.get(app.get('billing'), 'plans'),
-        quotas: app.get('quotas')
+        quotas: app.get('quotas'),
+        mapillary: app.get('mapillary')
       }
       if (process.env.BUILD_NUMBER) {
         response.buildNumber = process.env.BUILD_NUMBER

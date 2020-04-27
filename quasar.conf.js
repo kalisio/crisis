@@ -68,6 +68,7 @@ module.exports = function (ctx) {
         'QPopupProxy',
         'QResizeObserver',
         'QRouteTab',
+        'QScrollArea',
         'QSelect',
         'QSeparator',
         'QSpace',

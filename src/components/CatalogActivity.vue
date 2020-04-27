@@ -74,7 +74,6 @@ export default {
     kMapMixins.time,
     kMapMixins.timeSeries,
     activityMixin,
-    kMapMixins.locationIndicator,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
     kMapMixins.map.forecastLayers,
@@ -84,7 +83,8 @@ export default {
     kMapMixins.map.tooltip,
     kMapMixins.map.popup,
     kMapMixins.map.infobox,
-    kMapMixins.map.activity
+    kMapMixins.map.activity,
+    kMapMixins.map.mapillary
   ],
   provide () {
     return {
@@ -129,6 +129,7 @@ export default {
        // Setup the widgets
       this.registerWidget('feature', 'las la-digital-tachograph', 'widgets/KFeatureWidget', this.selection)
       this.registerWidget('time-series', 'las la-chart-line', 'widgets/KTimeSeriesWidget', this.$data)
+      this.registerWidget('mapillary', 'img:statics/mapillary-icon.svg', 'widgets/KMapillaryWidget', this.mapillary)
       // Actions
       this.registerActivityActions()
       // Wait until map is ready
