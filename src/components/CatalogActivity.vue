@@ -8,6 +8,10 @@
         <q-resize-observer @resize="onMapResized" />
       </div>
       <!--
+        Feature actions
+       -->
+      <k-feature-action-button />
+      <!--
         NavigationBar
        -->
       <q-page-sticky position="top">
@@ -126,7 +130,7 @@ export default {
       this.setTitle(this.$store.get('context.name'))
       // Setup the right drawer
       this.setRightDrawer('catalog/KCatalogPanel', this.$data)
-       // Setup the widgets
+      // Setup the widgets
       this.registerWidget('feature', 'las la-digital-tachograph', 'widgets/KFeatureWidget', this.selection)
       this.registerWidget('time-series', 'las la-chart-line', 'widgets/KTimeSeriesWidget', this.$data)
       this.registerWidget('mapillary', 'img:statics/mapillary-icon.svg', 'widgets/KMapillaryWidget', this.mapillary)

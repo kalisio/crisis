@@ -240,7 +240,7 @@ module.exports = {
   archivedEvents: defaultMapOptions,
   archivedEventsCatalog: { categories: [baseLayers, overlayLayers] },
   archivedEventsActivity: {
-    tools: ['fullscreen', 'catalog'],
+    tools: ['fullscreen'],
     actions: [],
     layerActions: ['zoom-to'],
     restore: { view: false }
