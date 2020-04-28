@@ -126,6 +126,8 @@ export default {
     async refreshActivity () {
       this.clearActivity()
       this.clearNavigationBar()
+      // Wait until map is ready
+      await this.initializeMap()
       // Title
       this.setTitle(this.$store.get('context.name'))
       // Setup the right drawer
@@ -136,8 +138,6 @@ export default {
       this.registerWidget('mapillary', 'img:statics/mapillary-icon.svg', 'widgets/KMapillaryWidget', this.mapillary)
       // Actions
       this.registerActivityActions()
-      // Wait until map is ready
-      await this.initializeMap()
       this.setCurrentTime(moment.utc())
       // Then update geo alerts
       this.refreshCollection()
@@ -151,6 +151,7 @@ export default {
         icon: 'fas fa-bell',
         isStorable: false,
         isEditable: false,
+        isSelectable: false,
         featureId: '_id',
         leaflet: {
           type: 'geoJson',
@@ -246,9 +247,11 @@ export default {
       html += (isActive ? this.$t('CatalogActivity.ALERT_TRIGGERED_AT') : this.$t('CatalogActivity.ALERT_CHECKED_AT')) +
         ` ${this.formatTime('date.short', checkedAt)} - ${this.formatTime('time.long', checkedAt)}</br>`
       if (isActive) {
-        // Order triggers by time to get last one
-        const triggers = _.sortBy(_.get(alert, 'status.triggers', [trigger => new Date(trigger.time).getTime()]))
-        const triggeredAt = new Date(_.last(triggers).time)
+        // Order triggers by time to get last one, take care to unify weather/measure triggers
+        let triggers = _.sortBy(_.get(alert, 'status.triggers',
+          [trigger => new moment.utc(trigger.time || trigger.forecastTime).valueOf()]))
+        triggers = _.last(triggers)
+        const triggeredAt = new Date(triggers.time || triggers.forecastTime)
         html += this.$t('CatalogActivity.ALERT_THRESHOLD_AT') +
         ` ${this.formatTime('date.short', triggeredAt)} - ${this.formatTime('time.long', triggeredAt)}`
       }
@@ -365,6 +368,8 @@ export default {
 
     this.registerLeafletStyle('tooltip', this.getAlertTooltip)
     this.registerLeafletStyle('popup', this.getAlertPopup)
+    this.registerLeafletStyle('tooltip', this.getProbedLocationForecastTooltip)
+    this.registerLeafletStyle('markerStyle', this.getProbedLocationForecastMarker)
   },
   mounted () {
     this.$on('collection-refreshed', this.onAlertCollectionRefreshed)

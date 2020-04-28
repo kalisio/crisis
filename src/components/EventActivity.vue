@@ -122,6 +122,9 @@ export default {
       // Archived mode ?
       this.archived = _.get(this.$route, 'query.archived')
       this.clearActivity()
+      this.clearNavigationBar()
+      // Wait until map is ready
+      await this.initializeMap()
       this.event = await this.$api.getService(this.archived ? 'archived-events' : 'events', this.contextId).get(this.objectId)
       this.setTitle(this.event.name)
       // Setup the right drawer
@@ -130,8 +133,6 @@ export default {
       this.registerWidget('feature', 'las la-digital-tachograph', 'widgets/KFeatureWidget', this.selection)
       this.registerWidget('time-series', 'las la-chart-line', 'widgets/KTimeSeriesWidget', this.$data)
       this.registerWidget('mapillary', 'img:statics/mapillary-icon.svg', 'widgets/KMapillaryWidget', this.mapillary)
-      // Wait until map is ready
-      await this.initializeMap()
       // If we'd like to only work in real-time
       // this.setCurrentTime(moment.utc())
       this.registerActivityActions()

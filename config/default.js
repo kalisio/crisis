@@ -224,18 +224,17 @@ module.exports = {
   catalog: defaultMapOptions,
   catalogCatalog: defaultMapCatalog,
   catalogActivity: {
-    tools: ['track-location', 'location-bar', 'fullscreen', 'catalog'],
+    tools: ['track-location', 'location-bar', 'fullscreen'],
     actions: ['create-layer', 'probe-location'],
-    layerActions: ['zoom-to', 'save', 'edit', 'edit-style', 'view-data', 'chart-data', 'edit-data', 'remove'],
+    layerActions: ['zoom-to', 'save', 'edit', 'edit-style', 'filter-data', 'view-data', 'chart-data', 'edit-data', 'remove'],
     featuresChunkSize: 5000
   },
   event: defaultMapOptions,
   eventCatalog: defaultMapCatalog,
   eventActivity: {
-    tools: ['track-location', 'location-bar', 'fullscreen', 'catalog'],
+    tools: ['track-location', 'location-bar', 'fullscreen'],
     actions: ['probe-location'],
-    layerActions: ['zoom-to'],
-    timeline: { end: 2*60*60*24 } // T0 + 48H forecast
+    layerActions: ['zoom-to']
   },
   archivedEvents: defaultMapOptions,
   archivedEventsCatalog: { categories: [baseLayers, overlayLayers] },

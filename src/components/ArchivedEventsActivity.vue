@@ -1,5 +1,5 @@
 <template>
-  <k-page>
+  <k-page :padding="false">
     <div slot="page-content">
       <!-- Invisible link used to download data -->
       <a ref="downloadLink" v-show="false" :href="currentDownloadLink" :download="currentDownloadName"></a>
@@ -275,13 +275,14 @@ export default {
     },
     async refreshActivity () {
       this.clearActivity()
+      this.clearNavigationBar()
+      // Wait until map is ready
+      await this.initializeMap()
       this.setTitle(this.$store.get('context.name'))
       // Search bar
       this.setSearchBar('name')
       // Setup the right drawer
       this.setRightDrawer('catalog/KCatalogPanel', this.$data)
-      // Wait until map is ready
-      await this.initializeMap()
       this.registerActivityActions()
     },
     async getCatalogLayers () {
