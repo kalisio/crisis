@@ -95,6 +95,9 @@ module.exports = {
     // Used to avoid DoS by limiting max message size
     maxHttpBufferSize: 10 * 1024 * 1024 // 10MB
   },
+  bodyParser: {
+    json: { limit: 10 * 1024 * 1024 } // 10MB
+  },
   distribution: { // Distribute no services simply use remote ones
     services: (service) => false,
     middlewares: { after: express.errorHandler() },
