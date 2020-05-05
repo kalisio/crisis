@@ -637,9 +637,9 @@ export default {
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-history'] = this.$load('collection/KHistory')
     this.$options.components['k-navigation-bar'] = this.$load('KNavigationBar')
-    this.registerLeafletStyle('tooltip', this.getEventTooltip)
-    this.registerLeafletStyle('popup', this.getEventPopup)
-    this.registerLeafletStyle('markerStyle', this.getEventMarker)
+    this.registerStyle('tooltip', this.getEventTooltip)
+    this.registerStyle('popup', this.getEventPopup)
+    this.registerStyle('markerStyle', this.getEventMarker)
     // Initialize private properties
     this.templates = []
   },

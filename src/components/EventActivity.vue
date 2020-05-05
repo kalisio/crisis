@@ -338,12 +338,12 @@ export default {
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-uploader'] = this.$load('input/KUploader')
     this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
-    this.registerLeafletStyle('tooltip', this.getParticipantTooltip)
-    this.registerLeafletStyle('popup', this.getParticipantPopup)
-    this.registerLeafletStyle('markerStyle', this.getParticipantMarker)
-    this.registerLeafletStyle('tooltip', this.getVigicruesTooltip)
-    this.registerLeafletStyle('tooltip', this.getProbedLocationForecastTooltip)
-    this.registerLeafletStyle('markerStyle', this.getProbedLocationForecastMarker)
+    this.registerStyle('tooltip', this.getParticipantTooltip)
+    this.registerStyle('popup', this.getParticipantPopup)
+    this.registerStyle('markerStyle', this.getParticipantMarker)
+    this.registerStyle('tooltip', this.getVigicruesTooltip)
+    this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
+    this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
   },

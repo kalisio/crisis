@@ -366,10 +366,10 @@ export default {
     this.$options.components['k-list'] = this.$load('collection/KList')
     this.$options.components['alert-form'] = this.$load('AlertForm')
 
-    this.registerLeafletStyle('tooltip', this.getAlertTooltip)
-    this.registerLeafletStyle('popup', this.getAlertPopup)
-    this.registerLeafletStyle('tooltip', this.getProbedLocationForecastTooltip)
-    this.registerLeafletStyle('markerStyle', this.getProbedLocationForecastMarker)
+    this.registerStyle('tooltip', this.getAlertTooltip)
+    this.registerStyle('popup', this.getAlertPopup)
+    this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
+    this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
   },
   mounted () {
     this.$on('collection-refreshed', this.onAlertCollectionRefreshed)
