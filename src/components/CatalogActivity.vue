@@ -72,11 +72,12 @@ export default {
     kCoreMixins.baseActivity,
     kCoreMixins.baseCollection,
     kMapMixins.geolocation,
+    kMapMixins.style,
     kMapMixins.featureService,
     kMapMixins.featureSelection,
+    kMapMixins.infobox,
     kMapMixins.weacast,
     kMapMixins.time,
-    kMapMixins.timeSeries,
     activityMixin,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
@@ -86,9 +87,8 @@ export default {
     kMapMixins.map.style,
     kMapMixins.map.tooltip,
     kMapMixins.map.popup,
-    kMapMixins.map.infobox,
     kMapMixins.map.activity,
-    kMapMixins.map.mapillary
+    kMapMixins.map.mapillaryLayers
   ],
   provide () {
     return {

@@ -87,6 +87,11 @@ module.exports = {
                   ':objectId/change-role': { name: 'change-role', component: 'team/KChangeRole', props: true },
                 }
               },
+              'subscribers': {
+                name: 'subscribers-activity', 
+                component: 'team/KSubscribersActivity', 
+                props: true
+              },
               'groups': {
                 name: 'groups-activity',
                 component: 'team/KGroupsActivity',
