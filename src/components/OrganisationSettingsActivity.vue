@@ -2,7 +2,7 @@
   <k-page padding>
     <template v-slot:page-content>
       <div v-if="perspective === 'properties'">
-        <k-editor service="organisations" :objectId="contextId" />
+        <organisation-properties :organisationId="contextId" />
       </div>
       <div v-else-if="perspective === 'billing'">
         <organisation-billing :objectId="contextId" perspective="billing" />
@@ -52,7 +52,7 @@ export default {
         this.registerTabAction({
           name: 'properties',
           label: this.$t('OrganisationSettingsActivity.PROPERTIES_LABEL'),
-          icon: 'description',
+          icon: 'las la-file-alt',
           route: { name: 'organisation-settings-activity',
             params: { contextId: this.contextId, perspective: 'properties' },
             default: this.perspective === 'properties' }
@@ -62,7 +62,7 @@ export default {
         this.registerTabAction({
           name: 'billing',
           label: this.$t('OrganisationSettingsActivity.BILLING_LABEL'),
-          icon: 'credit_card',
+          icon: 'las la-credit-card',
           route: { name: 'organisation-settings-activity',
             params: { contextId: this.contextId, perspective: 'billing' },
             default: this.perspective === 'billing' }
@@ -72,7 +72,7 @@ export default {
         this.registerTabAction({
           name: 'danger-zone',
           label: this.$t('OrganisationSettingsActivity.DANGER_ZONE_LABEL'),
-          icon: 'warning',
+          icon: 'las la-exclamation-triangle',
           route: { name: 'organisation-settings-activity',
             params: { contextId: this.contextId, perspective: 'danger-zone' },
             default: this.perspective === 'danger-zone' }
@@ -83,7 +83,7 @@ export default {
   created () {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-editor'] = this.$load('editor/KEditor')
+    this.$options.components['organisation-properties'] = this.$load('OrganisationProperties')
     this.$options.components['organisation-billing'] = this.$load('OrganisationBilling')
     this.$options.components['k-organisation-dz'] = this.$load('KOrganisationDZ')
   }
