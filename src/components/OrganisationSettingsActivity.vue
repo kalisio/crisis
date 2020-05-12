@@ -85,7 +85,7 @@ export default {
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['organisation-properties'] = this.$load('OrganisationProperties')
     this.$options.components['organisation-billing'] = this.$load('OrganisationBilling')
-    this.$options.components['k-organisation-dz'] = this.$load('KOrganisationDZ')
+    this.$options.components['k-organisation-dz'] = this.$load('team/KOrganisationDZ')
   }
 }
 </script>
