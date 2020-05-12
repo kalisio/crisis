@@ -159,7 +159,7 @@ module.exports = async function () {
               // Get template to be used, which will become the new event
               const template = await eventTemplatesService.get(templateId)
               // Remove id so that event has its own
-              let event = _.omit(template, ['_id'])
+              const event = _.omit(template, ['_id'])
               // Keep track of template based on its name for statistics
               // We don't keep ref/link for simplicity and making archived events will be self-consistent
               // No need to keep track of templates that have been removed, etc.
@@ -204,7 +204,7 @@ module.exports = async function () {
     app.configureService('authentication', app.getService('authentication'), servicesPath)
     await app.configure(kMap)
     app.createService('billing', { servicesPath })
-    
+
     const orgsService = app.getService('organisations')
     // Register services hook for organisations
     orgsService.registerOrganisationServicesHook({

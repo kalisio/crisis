@@ -34,7 +34,7 @@ if (cluster.isMaster && (N > 1)) {
   }
 } else if (require.main === module) {
   if (process.env.LAUNCH_DELAY) {
-    console.log(`Waiting ${process.env.LAUNCH_DELAY/1000}s for server with pid ${process.pid} to start`)
+    console.log(`Waiting ${process.env.LAUNCH_DELAY / 1000}s for server with pid ${process.pid} to start`)
     setTimeout(() => {
       createServer()
       runServer()

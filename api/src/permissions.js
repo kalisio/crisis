@@ -28,6 +28,14 @@ function defineEventAbilities (subject, can, cannot) {
             // can('read', 'events', { context: organisation._id, 'participants._id': organisation._id })
             // can('all', 'events', { context: organisation._id, 'coordinators._id': organisation._id })
           }
+          if (subject.subscribers) {
+            subject.subscribers.forEach(subscriber => {
+              if (subscriber._id && subscriber.context && (subscriber.context.toString() === organisation._id.toString())) {
+                can('read', 'events', { context: organisation._id, 'participants._id': subscriber._id })
+                can('all', 'events', { context: organisation._id, 'coordinators._id': subscriber._id })
+              }
+            })
+          }
           if (subject.groups) {
             subject.groups.forEach(group => {
               if (group._id && group.context && (group.context.toString() === organisation._id.toString())) {
@@ -83,7 +91,6 @@ function defineBillingAbilities (subject, can, cannot) {
 
 // Hook computing contextual catalog, features, events, etc. abilities for a given user
 export function defineUserAbilities (subject, can, cannot) {
-
   defineEventAbilities(subject, can, cannot)
 
   defineBillingAbilities(subject, can, cannot)

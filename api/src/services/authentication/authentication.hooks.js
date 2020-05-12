@@ -21,11 +21,13 @@ module.exports = {
       if (!config) return hook
       // Default appId for Akt'n'Map used to access the gateway
       const appId = config.appId
-      if (appId) await coreHooks.createJWT({
-        name: 'gatewayToken',
-        jwt: user => ({ subject: appId }),
-        payload: user => ({ userId: (user ? user._id : undefined) })
-      })(hook)
+      if (appId) {
+        await coreHooks.createJWT({
+          name: 'gatewayToken',
+          jwt: user => ({ subject: appId }),
+          payload: user => ({ userId: (user ? user._id : undefined) })
+        })(hook)
+      }
       return hook
     })],
     update: [],

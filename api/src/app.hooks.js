@@ -28,6 +28,8 @@ module.exports = {
         if (typeof hook.service.getPath !== 'function') return false
         // Then user creation
         if ((hook.service.name === 'users') && (hook.method === 'create')) return false
+        // Subscribers creation/deletion
+        if ((hook.service.name === 'subscribers') && ((hook.method === 'create') || (hook.method === 'remove'))) return false
         // Password reset, verify sign in, etc.
         if ((hook.service.name === 'account') && (hook.data.action !== 'passwordChange') && (hook.data.action !== 'identityChange')) return false
         // If not exception perform authentication

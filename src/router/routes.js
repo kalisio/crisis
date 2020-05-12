@@ -36,6 +36,16 @@ module.exports = {
         component: 'account/KChangeIdentity',
         meta: { authenticated: true }
       },
+      'subscribe/:contextId/:contextData': {
+        component: 'team/KSubscribe',
+        props: true,
+        meta: { authenticated: false, unauthenticated: true }
+      },
+      'unsubscribe/:contextId/:contextData': {
+        component: 'team/KUnsubscribe',
+        props: true,
+        meta: { authenticated: false, unauthenticated: true }
+      },
       'home': {
         // The name of the route has to be set the default child
         name: '',
