@@ -158,7 +158,7 @@
     "shelljs": "^0.8.1",
     "sns-mobile": "https://github.com/kalisio/sns-mobile#protocol",
     "standard": "^14.0.0",
-    "testcafe": "^1.7.1",
+    "testcafe": "^1.8.5",
     "testcafe-vue-selectors": "^3.1.0",
     "winston": "^3.2.1",
     "worker-farm": "^1.6.0"
