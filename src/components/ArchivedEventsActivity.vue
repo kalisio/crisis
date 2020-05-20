@@ -136,6 +136,7 @@ export default {
     kCoreMixins.refsResolver(['map']),
     kCoreMixins.baseActivity,
     kCoreMixins.baseCollection,
+    kMapMixins.style,
     activityMixin,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,

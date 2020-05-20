@@ -110,7 +110,9 @@
   "Context": {
     "EVENTS": "Events & Templates",
     "ARCHIVED_EVENTS": "Logbook",
-    "MEMBERS": "Members, Subscribers & Groups",
+    "MEMBERS": "Members",
+    "SUBSCRIBERS": "Subscribers",
+    "GROUPS": "Groups",
     "CATALOG": "Geographic Context",
     "SEARCH": "Search",
     "REFRESH": "Refresh",

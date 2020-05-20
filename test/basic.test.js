@@ -15,12 +15,13 @@ fixture`basic`// declare the fixture
   })
 
 const app = new pages.Application()
+const members = new pages.Members()
 const org = new pages.Organisations()
 
-test.skip('Login as default user', async test => {
+test('Login as default user', async test => {
   await app.loginAndCloseSignupAlert(test, { email: 'kalisio@kalisio.xyz', password: 'Pass;word1' })
   await org.selectOrganisation(test, 'kalisio')
-  await app.clickToolbar(test, '#members')
+  await app.clickOverflowMenu(test, '#members')
   await app.clickTabBar(test, '#groups')
   await app.clickFab(test, '#create-group')
 })

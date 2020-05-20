@@ -10,6 +10,7 @@ import { mixins } from '@kalisio/kdk/core.client'
 export default {
   name: 'context',
   mixins: [mixins.baseContext],
+  inject: ['klayout'],
   methods: {
     refresh () {
       window.location.reload()
@@ -19,7 +20,7 @@ export default {
     },
     getActionsForContext (context) {
       let actions = { leading: null, toolbar: [], menu: [] }
-      actions.leading = { name: 'dashboard', icon: 'las la-home', label: this.$t('Context.DASHBOARD'), route: { name: 'dashboard', params: { contextId: context._id } } }
+      actions.leading = { name: 'dashboard', icon: 'las la-bars', label: this.$t('Context.PROFILE'), handler: this.klayout.toggleLeftDrawer }
       if (this.$can('service', 'events', context._id)) {
         actions.toolbar.push({ name: 'events', icon: 'las la-fire-alt', label: this.$t('Context.EVENTS'), route: { name: 'events-activity', params: { operation: 'current-events', contextId: context._id } } })
       }
@@ -34,6 +35,12 @@ export default {
       }
       if (this.$can('service', 'members', context._id)) {
         actions.menu.push({ name: 'members', icon: 'las la-user-friends', label: this.$t('Context.MEMBERS'), route: { name: 'members-activity', params: { contextId: context._id } } })
+      }
+      if (this.$can('service', 'subscribers', context._id)) {
+        actions.menu.push({ name: 'subscribers', icon: 'las la-address-book', label: this.$t('Context.SUBSCRIBERS'), route: { name: 'subscribers-activity', params: { contextId: context._id } } })
+      }
+      if (this.$can('service', 'groups', context._id)) {
+        actions.menu.push({ name: 'groups', icon: 'las la-sitemap', label: this.$t('Context.GROUPS'), route: { name: 'groups-activity', params: { contextId: context._id } } })
       }
       if (this.$can('update', 'organisations', context._id, { _id: context._id })) {
         actions.menu.push({ name: 'settings', icon: 'las la-cog', label: this.$t('Context.SETTINGS'), route: { name: 'organisation-settings-activity', params: { perspective: 'properties', contextId: context._id } } })

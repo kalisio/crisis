@@ -43,14 +43,13 @@ export default class Application {
     this.appBarTitle = this.appBar.find('#app-bar-title')
     this.appBarOverflowMenu = Selector('#overflow-menu')
     this.appBarOverflowMenuEntry = this.appBar.find('#overflow-menu-entry')
-    this.sideNavToggle = this.appBar.find('#left-drawer-toggle')
+    this.sideNavToggle = this.appBar.find('#app-bar-leading')
     this.sideNav = VueSelector('k-side-nav')
     this.identityPanel = VueSelector('k-identity-panel')
     this.identityLink = Selector('#account')
     this.logoutLink = VueSelector('k-links-panel').find('.q-icon').withText('exit_to_app')
     this.tabBar = VueSelector('k-tab-bar')
-    this.fab = Selector('#fab')
-    this.signupAlert = VueSelector('k-signup-alert')    
+    this.fab = Selector('#fab')  
   }
   
   async isErrorVisible () {
@@ -151,7 +150,7 @@ export default class Application {
   }
   async closeSignupAlert (test) {
     await test
-      .click(this.signupAlert.find('.q-alert-close').find('.cursor-pointer'))
+      .click(Selector('#close-signup-alert'))
       .wait(1000)
   }
   async clickToolbar (test, entry) {

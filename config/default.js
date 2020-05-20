@@ -176,8 +176,7 @@ module.exports = {
       behavior: 'mobile',
       component: {
         name: 'layout/KSideNav'
-      },
-      opener: true
+      }
     },
     rightDrawer: {
       behavior: 'mobile',
