@@ -9,7 +9,7 @@ const defaultUser = {
 
 export default class Application {
   constructor () {
-    this.error = VueSelector('q-toast')
+    this.error = Selector('.q-notification__wrapper')
     this.idSelector = Selector((id) => { return document.getElementById(id) })
     // Login Screen
     this.loginScreen = VueSelector('k-login k-screen')
@@ -52,8 +52,9 @@ export default class Application {
     this.fab = Selector('#fab')  
   }
   
-  async isErrorVisible () {
-    await this.error.visible
+  isErrorVisible () {
+    // Fixme: enhance erreur detection
+    return this.error.visible
   }
   // Login functions
   async goToLoginScreen (test) {

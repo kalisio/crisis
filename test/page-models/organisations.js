@@ -9,11 +9,20 @@ export default class Organisations extends Application {
     // Organisation panel
     this.panel = VueSelector('k-organisations-panel')
     this.newLink = this.panel.find('#new-organisation')
-    this.createModal = VueSelector('k-organisations-panel k-modal-editor')
+    this.editorNameField = VueSelector('k-text-field').nth(0)
+    this.editoDescriptionField = VueSelector('k-text-field').nth(1)
+    this.editorCancelButton = Selector('.q-card button[type=button]').nth(0)
+    this.editorCreateButton = Selector('.q-card button[type=button]').nth(1)
+    this.registerConfirmPasswordInput = VueSelector('k-register k-password-field').nth(1)
     this.customerEditor = VueSelector('organisation-billing k-customer-editor')
     this.cardFieldNumber = Selector('organisation-billing k-customer-editor .Cardfield-number')
     this.cardFieldExpiry = VueSelector('organisation-billing k-customer-editor .Cardfield-expiry')
     this.cardFieldCVC = VueSelector('organisation-billing k-customer-editor .Cardfield-cvc')
+  }
+  async checkOrganisationCount (test, count) {
+    await this.openSideNav(test)
+    const organisations = this.panel.find('.q-item') // create organisation item
+    await test.expect(organisations.count).eql(count + 1, 'Private organisation should be created')
   }
   async selectOrganisation (test, orgName) {
     await this.openSideNav(test)
@@ -33,9 +42,9 @@ export default class Organisations extends Application {
       .click(this.newLink)
       .wait(250)
     await test
-      .typeText(this.createModal.find('#name-field'), org.name, { replace: true })
-      .typeText(this.createModal.find('#description-field'), org.description, { replace: true })
-      .click(this.createModal.find('#apply-button'))
+      .typeText(this.editorNameField, org.name, { replace: true })
+      .typeText(this.editoDescriptionField, org.description, { replace: true })
+      .click(this.editorCreateButton)
       .wait(2000)
   }
   async getOrganisationBillingState (test) {
@@ -100,11 +109,11 @@ export default class Organisations extends Application {
   async deleteOrganisation (test, orgName) {
     await this.selectOrganisationSettingsTab(test, orgName, '#danger-zone')
     await test
-      .click(VueSelector('k-organisation-dz k-block q-btn'))
+      .click(Selector('.q-card button'))
       .wait(250)
     await test
-      .typeText(Selector('.modal input[type=text]'), orgName)
-      .click(Selector('.modal-buttons button').nth(0))
-      .wait(2000)
+      .typeText(Selector('.q-dialog-plugin input[type=text]'), orgName)
+      .click(Selector('.q-dialog-plugin button').nth(1))
+      .wait(5000)
   }
 }

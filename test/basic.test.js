@@ -22,6 +22,7 @@ test('Login as default user', async test => {
   await app.loginAndCloseSignupAlert(test, { email: 'kalisio@kalisio.xyz', password: 'Pass;word1' })
   await org.selectOrganisation(test, 'kalisio')
   await app.clickOverflowMenu(test, '#members')
+  await members.checkMembersCount(test, 1)
   await app.clickTabBar(test, '#groups')
   await app.clickFab(test, '#create-group')
 })

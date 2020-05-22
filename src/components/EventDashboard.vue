@@ -5,7 +5,9 @@
         <q-list :key="org._id" separator>
           <q-item>
             <q-item-section><q-avatar color="primary" text-color="white" size="40px">{{getInitials(org)}}</q-avatar></q-item-section>
-            <q-item-section>{{org.name}}</q-item-section>
+            <q-item-section>
+              {{ org.name }}
+            </q-item-section>
           </q-item>
           <q-item>
             <q-item-section>
@@ -29,6 +31,7 @@ export default {
     kCoreMixins.baseCollection,
     kMapMixins.geolocation
   ],
+  inject: ['klayout'],
   data () {
     return {
       baseQuery: {
@@ -60,6 +63,7 @@ export default {
       this.setTitle(this.$t('EventDashboard.DASHBOARD'))
       this.setSearchBar('name')
       this.refreshCollection()
+      this.updatePosition()
     },
     checkSingleOrganisation () {
       // When there is a single organisation directly go to the event activity, no need for the dashboard
@@ -72,11 +76,14 @@ export default {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
+    // Set the leading action
+    const toggleSideNav = { name: 'dashboard', icon: 'las la-bars', label: this.$t('Context.PROFILE'), handler: this.klayout.toggleLeftDrawer }
+    this.$store.patch('appBar', { leading: toggleSideNav, toolbar: [], menu: [] })
     // Used to chec kfor single organisation layout at startup or refresh
     this.$on('collection-refreshed', this.checkSingleOrganisation)
     this.checkSingleOrganisation()
     // Performs geolocation
-    this.updatePosition()
+    this.refreshActivity()
   },
   beforeDestroy () {
     this.$off('collection-refreshed', this.checkSingleOrganisation)

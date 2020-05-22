@@ -58,9 +58,10 @@ export default class Account extends Application {
     await this.clickIdentity(test)
     await this.clickTabBar(test, '#danger-zone')
     await test
-      .click(VueSelector('k-account-dz k-block q-btn'))
-      .typeText(Selector('.modal input[type=text]'), name)
-      .click(Selector('.modal-buttons button').nth(0))
+      .click(Selector('.q-card button'))
+      .wait(250)
+      .typeText(Selector('.q-dialog-plugin input[type=text]'), name)
+      .click(Selector('.q-dialog-plugin button').nth(1))
       .wait(10000)
   }
 }
