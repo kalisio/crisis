@@ -81,7 +81,7 @@
     "chart.js": "^2.8.0",
     "chartjs-plugin-annotation": "^0.5.7",
     "chartjs-plugin-labels": "^1.1.0",
-    "chroma-js": "^2.0.2",
+    "chroma-js": "^2.1.0",
     "cross-env": "^5.2.0",
     "fastclick": "^1.0.6",
     "feathers-authentication-management": "^1.0.0",
