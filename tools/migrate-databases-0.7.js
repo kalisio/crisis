@@ -68,7 +68,7 @@ async function filterDatabases() {
   console.log(`Found ${nbOrgDatabases} existing organisation databases, filtered ${nbNoOrgDatabase} non organisation databases`)
 }
 // Get items from a given collection then
-// ppply update operation on the list of items
+// apply update operation on the list of items
 async function updateItems(collectionName, filter, updater, orgId) {
   let migratedDb = (orgId ? client.db(orgId) : db)
   let collection = migratedDb.collection(collectionName)

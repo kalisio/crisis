@@ -34,7 +34,7 @@ describe('aktnmap', () => {
     chailint(chai, util)
   })
 
-  it('is CommonJS compatible', () => {
+  it('is ES6 compatible', () => {
     expect(typeof server).to.equal('object')
   })
 
