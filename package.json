@@ -116,7 +116,7 @@
     "node-fetch": "^2.6.0",
     "papaparse": "^4.6.1",
     "password-generator": "^2.2.0",
-    "pixi.js": "5.0.4",
+    "pixi.js": "5.2.4",
     "quasar": "^1.9.9",
     "showdown": "^1.8.6",
     "sift": "^8.0.0",
