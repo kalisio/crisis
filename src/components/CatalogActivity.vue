@@ -208,7 +208,7 @@ export default {
           }
           featureActions.push({
             name: 'remove-feature',
-            icon: 'remove_circle',
+            icon: 'las la-minus-circle',
             handler: this.onRemoveFeatureAction,
             label: this.$t('CatalogActivity.REMOVE_FEATURE_ACTION')
           })
@@ -300,7 +300,7 @@ export default {
     },
     getAlertModalToolbar () {
       return [
-        { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.alertModal.close() }
+        { name: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.alertModal.close() }
       ]
     },
     onCreateMeasureAlertAction (data) {
@@ -339,7 +339,7 @@ export default {
     },
     getTemplateModalToolbar () {
       return [
-        { name: 'close-action', label: this.$t('CLOSE'), icon: 'close', handler: () => this.$refs.templateModal.close() }
+        { name: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.templateModal.close() }
       ]
     },
     onEventTemplateSelected (template) {

@@ -47,7 +47,7 @@ export default {
       return [{
         name: 'close-action',
         label: this.$t('EventLogEditor.CLOSE_ACTION'),
-        icon: 'close',
+        icon: 'las la-times',
         handler: () => {
           this.$refs.modal.close()
           if (this.router) this.$router.push(this.router.onDismiss)

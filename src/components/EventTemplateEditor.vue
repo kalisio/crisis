@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     toolbar () {
-      let action = { name: 'close-action', label: this.$t('EventTemplateEditor.CLOSE_ACTION'), icon: 'close' }
+      let action = { name: 'close-action', label: this.$t('EventTemplateEditor.CLOSE_ACTION'), icon: 'las la-times' }
       if (this.workflowEdition) action.handler = () => { this.workflowEdition = false }
       else action.handler = () => this.doClose()
       return [action]

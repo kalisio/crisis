@@ -109,7 +109,7 @@ export default {
     },
     getToolbar () {
       return [
-        { name: 'close-action', label: this.$t('CustomerEditor.CLOSE_ACTION'), icon: 'close', handler: () => this.close() }
+        { name: 'close-action', label: this.$t('CustomerEditor.CLOSE_ACTION'), icon: 'las la-times', handler: () => this.close() }
       ]
     },
     getButtons () {

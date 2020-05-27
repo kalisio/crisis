@@ -50,7 +50,6 @@ const activityMixin = kMapMixins.activity('event')
 
 export default {
   name: 'event-activity',
-  inject: ['klayout'],
   provide () {
     return {
       kActivity: this,
@@ -97,7 +96,7 @@ export default {
       return [{
         name: 'close-action',
         label: this.$t('EventActivity.UPLOADER_MODAL_CLOSE_ACTION'),
-        icon: 'close',
+        icon: 'las la-times',
         handler: () => this.$refs.uploaderModal.close()
       }]
     },
@@ -151,7 +150,7 @@ export default {
         this.registerFabAction({
           name: 'edit-event',
           label: this.$t('EventActivity.EDIT_LABEL'),
-          icon: 'description',
+          icon: 'las la-file-alt',
           route: { name: 'edit-event', params: { contextId: this.contextId, service: 'events', objectId: this.objectId } }
         })
       }

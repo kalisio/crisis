@@ -37,7 +37,7 @@ export const api = {
   remove: ClientFunction((service, id) => window.$api.getService(service).remove(id))
 }
 // Access routes
-const baseUrl = process.env.APP_URL || (process.env.NODE_ENV === 'production' ? `http://localhost:8081` : `http://localhost:8080`)
+const baseUrl = process.env.APP_URL || (process.env.NODE_ENV === 'production' ? `http://localhost:8081` : `http://localhost:8086`)
 export const getUrl = (path) => path ? baseUrl + '/#/' + path : baseUrl
 export const goBack = ClientFunction(() => window.history.back())
 // Access console errors

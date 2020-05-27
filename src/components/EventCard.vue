@@ -109,7 +109,7 @@ export default {
       return [{
         name: 'close-action',
         label: this.$t('EventCard.FOLLOWUP_MODAL_CLOSE_ACTION'),
-        icon: 'close',
+        icon: 'las la-times',
         handler: () => this.$refs.followUpModal.close()
       }]
     },
@@ -124,7 +124,7 @@ export default {
       return [{
         name: 'close-action',
         label: this.$t('EventCard.UPLOADER_MODAL_CLOSE_ACTION'),
-        icon: 'close',
+        icon: 'las la-times',
         handler: () => this.$refs.uploaderModal.close()
       }]
     },
@@ -132,7 +132,7 @@ export default {
       return [{
         name: 'close-action',
         label: this.$t('EventCard.LOCATION_MAP_MODAL_CLOSE_ACTION'),
-        icon: 'close',
+        icon: 'las la-times',
         handler: () => this.$refs.locationModal.close()
       }]
     },
@@ -153,14 +153,14 @@ export default {
       this.clearActions()
       if (this.$can('remove', 'events', this.contextId, this.item)) {
         this.registerMenuAction({
-          name: 'remove-event', label: this.$t('EventCard.REMOVE_LABEL'), icon: 'remove_circle', handler: this.removeEvent
+          name: 'remove-event', label: this.$t('EventCard.REMOVE_LABEL'), icon: 'las la-minus-circle', handler: this.removeEvent
         })
       }
       if (this.$can('update', 'events', this.contextId, this.item)) {
         this.registerPaneAction({
           name: 'edit-event',
           label: this.$t('EventCard.EDIT_LABEL'),
-          icon: 'description',
+          icon: 'las la-file-alt',
           route: { name: 'edit-event', params: { contextId: this.contextId, objectId: this.item._id } }
         })
       }
@@ -192,21 +192,21 @@ export default {
             }
           }
           this.registerPaneAction({
-            name: 'follow-up', label: this.$t('EventCard.FOLLOW_UP_LABEL'), icon: 'message', handler: this.followUp, warning
+            name: 'follow-up', label: this.$t('EventCard.FOLLOW_UP_LABEL'), icon: 'las la-comments', handler: this.followUp, warning
           })
         }
       }
       if (this.$can('read', 'events', this.contextId, this.item)) {
         this.registerPaneAction({
-          name: 'add-media', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'add_a_photo', handler: this.uploadMedia
+          name: 'add-media', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-camera', handler: this.uploadMedia
         })
         if (this.hasMedias()) this.registerPaneAction({
-          name: 'browse-media', label: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'photo_library', handler: this.browseMedia
+          name: 'browse-media', label: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-videos', handler: this.browseMedia
         })
       }
       if (this.hasLocation() && this.canNavigate()) {
         this.registerPaneAction({
-          name: 'navigate', label: this.$t('EventCard.NAVIGATE_LABEL'), icon: 'navigation', handler: this.launchNavigation
+          name: 'navigate', label: this.$t('EventCard.NAVIGATE_LABEL'), icon: 'las la-location-arrow', handler: this.launchNavigation
         })
       }
     },

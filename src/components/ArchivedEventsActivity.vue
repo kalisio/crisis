@@ -206,7 +206,7 @@ export default {
     const maxDateTimeSelected = nextMonth.format('YYYY[/]MM[/]DD')
 
     return {
-      toolbar: [{ name: 'close', icon: 'close', handler: () => this.$refs.chartModal.close() }],
+      toolbar: [{ name: 'close', icon: 'las la-times', handler: () => this.$refs.chartModal.close() }],
       baseQuery: {
         $sort: {
           createdAt: -1

@@ -57,13 +57,13 @@ export default {
       this.registerTabAction({
         name: 'events',
         label: this.$t('EventTemplatesActivity.EVENTS_LABEL'),
-        icon: 'whatshot',
+        icon: 'las la-fire',
         route: { name: 'events-activity', params: { contextId: this.contextId } }
       })
       this.registerTabAction({
         name: 'event-templates',
         label: this.$t('EventTemplatesActivity.EVENT_TEMPLATES_LABEL'),
-        icon: 'widgets',
+        icon: 'las la-project-diagram',
         route: { name: 'event-templates-activity', params: { contextId: this.contextId } },
         default: true
       })

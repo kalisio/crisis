@@ -31,7 +31,6 @@ export default {
     kCoreMixins.baseCollection,
     kMapMixins.geolocation
   ],
-  inject: ['klayout'],
   data () {
     return {
       baseQuery: {
@@ -76,9 +75,6 @@ export default {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
-    // Set the leading action
-    const toggleSideNav = { name: 'dashboard', icon: 'las la-bars', label: this.$t('Context.PROFILE'), handler: this.klayout.toggleLeftDrawer }
-    this.$store.patch('appBar', { leading: toggleSideNav, toolbar: [], menu: [] })
     // Used to chec kfor single organisation layout at startup or refresh
     this.$on('collection-refreshed', this.checkSingleOrganisation)
     this.checkSingleOrganisation()

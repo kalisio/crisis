@@ -31,7 +31,7 @@ export default {
         this.registerPaneAction({
           name: 'edit-event-template',
           label: this.$t('EventTemplateCard.EDIT_LABEL'),
-          icon: 'description',
+          icon: 'las la-file-alt',
           route: { name: 'edit-event-template', params: { contextId: this.contextId, objectId: this.item._id } }
         })
       }
@@ -39,13 +39,13 @@ export default {
         this.registerPaneAction({
           name: 'copy-event-template',
           label: this.$t('EventTemplateCard.COPY_LABEL'),
-          icon: 'content_copy',
+          icon: 'las la-copy',
           route: { name: 'create-event-template', params: { contextId: this.contextId, templateId: this.item._id } }
         })
       }
       if (this.$can('remove', 'event-templates', this.contextId, this.item)) {
         this.registerMenuAction({
-          name: 'remove-event-template', label: this.$t('EventTemplateCard.REMOVE_LABEL'), icon: 'remove_circle', handler: this.removeEventTemplate
+          name: 'remove-event-template', label: this.$t('EventTemplateCard.REMOVE_LABEL'), icon: 'las la-minus-circle', handler: this.removeEventTemplate
         })
       }
     },

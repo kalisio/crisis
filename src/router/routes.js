@@ -49,7 +49,7 @@ module.exports = {
       'home': {
         // The name of the route has to be set the default child
         name: '',
-        component: 'layout/KHome',
+        component: 'Home',
         meta: { authenticated: true, unauthenticated: false },
         children: {
           'default-home-view': {

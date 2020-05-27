@@ -60,7 +60,7 @@ export default {
           name: 'locate', label: this.$t('ArchivedEventEntry.LOCATE_LABEL'), icon: 'place', handler: this.locate
         })
         this.registerPaneAction({
-          name: 'view-event', label: this.$t('ArchivedEventEntry.VIEW_LABEL'), icon: 'description',
+          name: 'view-event', label: this.$t('ArchivedEventEntry.VIEW_LABEL'), icon: 'las la-file-alt',
           route: { name: 'view-event', params: { contextId: this.contextId, objectId: this.item._id } }
         })
         this.registerPaneAction({

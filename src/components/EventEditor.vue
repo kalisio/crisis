@@ -47,7 +47,7 @@ export default {
   methods: {
     toolbar () {
       return [
-        { name: 'close-action', label: this.$t('EventEditor.CLOSE_ACTION'), icon: 'close', handler: () => this.doClose() }
+        { name: 'close-action', label: this.$t('EventEditor.CLOSE_ACTION'), icon: 'las la-times', handler: () => this.doClose() }
       ]
     },
     async loadObject () {
