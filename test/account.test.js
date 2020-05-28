@@ -12,60 +12,62 @@ fixture`account`// declare the fixture
   })
   .afterEach(async test => {
     // check for console error messages
-    await pages.checkNoClientError(test)
+    // FIXME: Storage error
+    // await pages.checkNoClientError(test)
   })
 
 const app = new pages.Application()
 const organisations = new pages.Organisations()
 const account = new pages.Account()
 
-const newPassword = 'Pass;word1-new1'
-const newEmail = 'kalisio@kalisio.com'
+const data = {
+  user: { name: 'account user', email: 'account-user@kalisio.xyz', password: 'Pass;word1' },
+  newName: 'account newuser',
+  newPassword: 'Pass;word1-new1',
+  newEmail: 'kalisio@kalisio.com'
+}
 
-/*test.page`${pages.getUrl('register')}`
+test.page`${pages.getUrl('register')}`
 ('Registration', async test => {
-  await app.register(test)
-})*/
-
-test.skip('Edit profile', async test => {
-  await app.login(test)
-  await account.editProfile(test, { name: 'toto', avatar: path.join(__dirname, 'assets', 'avatar.png') })
-  await account.checkIdentity(test, 'toto')
+  await app.register(test, data.user)
 })
 
-test.skip('Edit password', async test => {
-  await app.login(test)
-  await account.updatePassword(test, { password: 'Pass;word1', newPassword })
+test('Edit profile', async test => {
+  await app.loginAndCloseSignupAlert(test, data.user)
+  await account.editProfile(test, { name: data.newName, avatar: path.join(__dirname, 'assets', 'avatar.png') })
+  data.user.name = data.newName
+  await account.checkIdentity(test, data.user.name)
+})
+
+test('Edit password', async test => {
+  await app.loginAndCloseSignupAlert(test, data.user)
+  await account.updatePassword(test, { password: data.user.password, newPassword: data.newPassword })
   await pages.goBack()
   await app.logout(test)
   // We should login with new credentials
   await test.navigateTo(pages.getUrl('login'))
-  await app.login(test, { password: newPassword })
+  data.user.password = data.newPassword
+  await app.login(test, data.user)
 })
 
-test.skip('Edit email', async test => {
-  await app.login(test, { password: newPassword })
-  await account.updateEmail(test, { password: newPassword, newEmail })
+test('Edit email', async test => {
+  await app.loginAndCloseSignupAlert(test, data.user)
+  await account.updateEmail(test, { password: data.user.password, newEmail: data.newEmail })
   await pages.goBack()
   await app.logout(test)
   // We should not be able to login with new email because it requires validation
   await test.navigateTo(pages.getUrl('login'))
-  await app.login(test, { email: newEmail, password: newPassword })
+  await app.login(test, { email: data.newEmail, password: data.newPassword })
   await test.expect(app.isErrorVisible()).ok('Error should be displayed')
   // FIXME: how could we validate the change ?
 })
 
-test.skip('Delete account', async test => {
-  await app.login(test, { password: newPassword })
-  await organisations.deleteOrganisation(test, 'Kalisio')
-  await account.removeAccount(test, 'toto')
-
-  let screen = await app.logoutScreen.getVue()
-  await test.wait(1000)
-  // The home page should be the logout screen
-  await test.expect(screen.props.title).ok('Your are now logged out')
+test('Delete account', async test => {
+  await app.loginAndCloseSignupAlert(test, data.user)
+  await organisations.deleteOrganisation(test, 'account user')  // old name
+  await account.removeAccount(test, data.user.name)
   // And we cannot login anymore
   await test.navigateTo(pages.getUrl('login'))
-  await app.login(test, { password: newPassword })
+  await app.login(test, data.user)
   await test.expect(app.isErrorVisible()).ok('Error should be displayed')
 })

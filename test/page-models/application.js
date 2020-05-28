@@ -41,8 +41,8 @@ export default class Application {
     // Layout
     this.appBar = VueSelector('k-app-bar')
     this.appBarTitle = this.appBar.find('#app-bar-title')
-    this.appBarOverflowMenu = Selector('#overflow-menu')
-    this.appBarOverflowMenuEntry = this.appBar.find('#overflow-menu-entry')
+    this.appBarOverflowMenu = this.appBar.find('#overflow-menu')
+    this.appBarOverflowMenuEntry = Selector('#overflow-menu-entry')
     this.sideNavToggle = this.appBar.find('#app-bar-leading')
     this.sideNav = VueSelector('k-side-nav')
     this.identityPanel = VueSelector('k-identity-panel')
@@ -130,14 +130,14 @@ export default class Application {
     if (!isSideNavVisible) {
       await test
         .click(this.sideNavToggle) 
-        .wait(500)
+        .wait(1000)
     }
   }
   async logout (test) {
     await this.openSideNav(test)
     await test
       .click(this.logoutLink)
-      .wait(500)
+      .wait(1000)
   }
   async clickIdentity (test) {
     await this.openSideNav(test)
@@ -157,18 +157,19 @@ export default class Application {
   async clickToolbar (test, entry) {
     await test
       .click(this.appBar.find(entry))
-      .wait(3000)
+      .wait(1000)
   }
   async clickOverflowMenu (test, entry) {
     await test
-      .click(this.appBarOverflowMenuEntry)
-      .click(this.appBarOverflowMenu.find(entry))
+      .click(this.appBar.find('#overflow-menu-entry'))
+      .wait(1000)
+      .click(Selector('#overflow-menu').find(entry))
       .wait(1000)
   }
   async clickTabBar (test, tab) {
     await test
       .click(this.tabBar.find(tab))
-      .wait(3000)
+      .wait(1000)
   }
   async openAndClickFab (test, entry) {
     await test

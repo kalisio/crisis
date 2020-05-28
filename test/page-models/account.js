@@ -24,10 +24,9 @@ export default class Account extends Application {
     await test
       .click(this.profileEditor.find('#avatar-field'))
       .setFilesToUpload(this.fileInput, profile.avatar)
-      .click(VueSelector('k-uploader').find('#done-button'))
       .wait(1000)
     await test
-      .typeText(this.profileEditor.find('#name-field'), profile.name, { replace: true })
+      .typeText(VueSelector('k-text-field'), profile.name, { replace: true })
       .click(this.profileEditor.find('#apply-button'))
       .wait(5000)
   }
@@ -35,12 +34,12 @@ export default class Account extends Application {
     await this.clickIdentity(test)
     await this.clickTabBar(test, '#security')
     await test
-      .click(this.changePasswordButton)
-      .wait(2000)
+      .click(Selector('.q-card button'))
+      .wait(250)
     await test
-      .typeText(this.changePasswordScreen.find('#oldPassword-field'), identity.password, { replace: true })
-      .typeText(this.changePasswordScreen.find('#password-field'), identity.newPassword, { replace: true })
-      .typeText(this.changePasswordScreen.find('#confirmPassword-field'), identity.newPassword, { replace: true })
+      .typeText(VueSelector('k-password-field').nth(0), identity.password, { replace: true })
+      .typeText(VueSelector('k-password-field').nth(1), identity.newPassword, { replace: true })
+      .typeText(VueSelector('k-password-field').nth(2), identity.newPassword, { replace: true })
       .click(this.changePasswordScreen.find('#change-password'))
       .wait(5000)
   }
@@ -48,9 +47,11 @@ export default class Account extends Application {
     await this.clickIdentity(test)
     await this.clickTabBar(test, '#security')
     await test
-      .click(this.changeEmailButton)
-      .typeText(this.changeEmailScreen.find('#password-field'), identity.password, { replace: true })
-      .typeText(this.changeEmailScreen.find('#email-field'), identity.newEmail, { replace: true })
+      .click(Selector('.q-card').nth(1).find('button'))
+      .wait(250)
+    await test
+      .typeText(VueSelector('k-password-field'), identity.password, { replace: true })
+      .typeText(VueSelector('k-email-field'), identity.newEmail, { replace: true })
       .click(this.changeEmailScreen.find('#change-identity'))
       .wait(5000)
   }
@@ -60,6 +61,7 @@ export default class Account extends Application {
     await test
       .click(Selector('.q-card button'))
       .wait(250)
+    await test
       .typeText(Selector('.q-dialog-plugin input[type=text]'), name)
       .click(Selector('.q-dialog-plugin button').nth(1))
       .wait(10000)
