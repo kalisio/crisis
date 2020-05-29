@@ -1,5 +1,5 @@
 <template>
-  <div class="column q-gutter-md">
+  <div class="q-pa-md column q-gutter-md">
     <!-- 
       Customer information secion
      -->    

@@ -122,6 +122,13 @@
     "REFRESH": "Rafraîchir",
     "SETTINGS": "Paramètres"
   },
+  "OrganisationProperties": {
+    "SUBSCRIPTION_PAGES": "Pages d'abonnements",
+    "SUBSCRIPTION_PAGE_LINK": "Lien vers la page d'abonnement",
+    "UNSUBSCRIPTION_PAGE_LINK": "Lien vers la page de désabonnement",
+    "PAGE_LINK_COPIED": "Lien vers la page copiée",
+    "CANNOT_COPY_PAGE_LINK": "Impossible de copié le lien vers la page"
+  },
   "OrganisationBilling": {
     "CUSTOMER_BLOCK_TITLE": "Information de paiement",
     "CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER": "Vous devez être vérifié pour renseigner vos informations de paiement",
