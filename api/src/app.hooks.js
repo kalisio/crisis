@@ -42,7 +42,11 @@ module.exports = {
         // If not exception process IDs
         return true
       }, coreHooks.processObjectIDs),
-      coreHooks.authorise],
+      commonHooks.when(hook => {
+        if ((hook.service.name === 'subscribers') && ((hook.method === 'create') || (hook.method === 'remove'))) return false
+        return true
+      }, coreHooks.authorise)
+    ],
     find: [fuzzySearch(), coreHooks.marshallCollationQuery],
     get: [],
     // This one cannot be registered on the user service directly because it should run before password hashing, etc.
