@@ -77,6 +77,7 @@ export async function removeBilling (hook) {
   }
   return hook
 }
+
 export async function preventUnverifiedUser (hook) {
   if (hook.type !== 'before') {
     throw new Error('The \'preventUnverifiedUser\' hook should only be used as a \'before\' hook.')

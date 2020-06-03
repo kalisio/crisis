@@ -1,41 +1,54 @@
 <template>
   <div>
     <k-card v-bind="$props" :itemActions="actions">
-      <q-icon slot="card-icon" :name="iconName" :color="iconColor"></q-icon>
-      <div slot="card-content">
-        <div class="column">
-          <div v-if="item.location">
-            <q-toolbar class="q-pa-none">
-              <k-text-area class="light-paragraph" :length="40" :text="item.location.name" />
-              <q-btn icon="place" color="grey-7" flat dense round>
-                <q-tooltip>
-                  {{ $t('EventCard.LOCATE_LABEL') }}
-                </q-tooltip>
-                <q-popup-proxy transition-show="scale" transition-hide="scale">
-                  <k-location-map v-model="item.location" :editable="false" />
-                </q-popup-proxy>
-              </q-btn>
-            </q-toolbar>
-            <q-separator class="card-separator" />
+      <template v-slot:card-content>
+        <q-separator />
+        <!--
+          Location section
+         -->
+        <div v-if="item.location">
+          <div class="q-pa-sm row items-center">
+            <k-text-area class="light-paragraph" :length="40" :text="item.location.name" />
+            <q-btn icon="place" color="grey-7" flat dense round>
+              <q-tooltip>
+                {{ $t('EventCard.LOCATE_LABEL') }}
+              </q-tooltip>
+              <q-popup-proxy transition-show="scale" transition-hide="scale">
+                <k-location-map v-model="item.location" :editable="false" />
+              </q-popup-proxy>
+            </q-btn>
           </div>
-          <div v-if="participantLabel">
-            {{ participantLabel }}
-            <q-separator class="card-separator" />
-          </div>
-          <span v-if="comment">
-            <k-text-area class="light-paragraph" :length="20" :text="comment" />
-            <q-separator class="card-separator" />
-          </span>
-          <div v-if="coordinatorLabel">
-            {{ coordinatorLabel }}
-            <q-separator class="card-separator" />
-          </div>
-          <div v-if="createdAt || updatedAt">
-            <cite v-if="createdAt"><small>{{$t('EventCard.CREATED_AT_LABEL')}} {{createdAt.toLocaleString()}}</small></cite><br />
-            <cite v-if="updatedAt"><small>{{$t('EventCard.UPDATED_AT_LABEL')}} {{updatedAt.toLocaleString()}}</small></cite>
-          </div>
+          <q-separator />
         </div>
-      </div>
+        <!--
+          Parcitipant section
+         -->
+        <div v-if="participantLabel">
+          <div class="q-pa-sm">{{ participantLabel }}</div>
+          <q-separator />
+        </div>
+        <!--
+          Comment section
+         -->
+        <div v-if="comment">
+          <k-text-area class="q-pa-sm light-paragraph" :length="20" :text="comment" />
+          <q-separator />
+        </div>
+        <!--
+          Coordinator section
+         -->
+        <div v-if="coordinatorLabel">
+          <div class="q-pa-sm">{{ coordinatorLabel }}</div>
+          <q-separator />
+        </div>
+        <!--
+          Timestamps section
+         -->
+        <div v-if="createdAt || updatedAt" class="q-pa-sm">
+          <cite v-if="createdAt"><small>{{$t('EventCard.CREATED_AT_LABEL')}} {{createdAt.toLocaleString()}}</small></cite><br />
+          <cite v-if="updatedAt"><small>{{$t('EventCard.UPDATED_AT_LABEL')}} {{updatedAt.toLocaleString()}}</small></cite>
+        </div>
+      </template>
     </k-card>
     <k-modal ref="followUpModal" v-if="hasParticipantInteraction" :title="followUpTitle" :toolbar="getFollowUpToolbar()" :buttons="getFollowUpButtons()" :route="false" >
       <div slot="modal-content">

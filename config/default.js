@@ -136,7 +136,7 @@ module.exports = {
   },
   roles: {
     // Member/Manager/Owner
-    labels: ['MEMBER_LABEL', 'MANAGER_LABEL', 'OWNER_LABEL'],
+    labels: ['MEMBER', 'MANAGER', 'OWNER'],
     icons: ['person', 'work', 'verified_user']
   },
   screens: {

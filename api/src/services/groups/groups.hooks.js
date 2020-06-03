@@ -16,11 +16,13 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [coreHooks.createTopic(),
+    create: [
+      coreHooks.createTopic(),
       coreHooks.createGroupAuthorisations],
     update: [],
     patch: [],
-    remove: [coreHooks.setAsDeleted,
+    remove: [
+      coreHooks.setAsDeleted,
       coreHooks.removeGroupAuthorisations,
       coreHooks.removeTopic()]
   },

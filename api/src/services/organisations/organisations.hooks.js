@@ -19,21 +19,24 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [coreHooks.createOrganisationServices,
+    create: [
+      coreHooks.createOrganisationServices,
       coreHooks.createTopic(),
-      coreHooks.createTopic({ topicField: 'subscribersTopics' }),
       coreHooks.createOrganisationAuthorisations,
-      subscribeDefaultPlan],
+      coreHooks.createSubscribersGroup,
+      subscribeDefaultPlan
+    ],
     update: [],
     patch: [],
-    remove: [coreHooks.setAsDeleted,
+    remove: [
+      coreHooks.setAsDeleted,
       removeBilling,
       coreHooks.removeOrganisationGroups,
       coreHooks.removeOrganisationTags,
       coreHooks.removeOrganisationAuthorisations,
-      coreHooks.removeTopic({ topicField: 'subscribersTopics' }),
       coreHooks.removeTopic(),
-      coreHooks.removeOrganisationServices]
+      coreHooks.removeOrganisationServices
+    ]
   },
 
   error: {

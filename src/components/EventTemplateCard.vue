@@ -1,7 +1,5 @@
 <template>
-  <k-card v-bind="$props" :itemActions="actions">
-    <q-icon slot="card-icon" :name="iconName" :color="iconColor"></q-icon>
-  </k-card>
+  <k-card v-bind="$props" :itemActions="actions" />
 </template>
 
 <script>
