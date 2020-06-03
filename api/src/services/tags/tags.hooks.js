@@ -23,7 +23,7 @@ module.exports = {
     update: [],
     patch: [],
     // We remove topics for members tag only, check if tag is really removed or just its count decreased
-    remove: [when(hook => hook.result && hook.result.scope === 'members' && hook.result.count <= 0, coreHooks.removeTopic),
+    remove: [when(hook => hook.result && hook.result.scope === 'members' && hook.result.count <= 0, coreHooks.removeTopic()),
       // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
       coreHooks.unpopulateTagResource]
   },
