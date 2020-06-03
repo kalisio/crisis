@@ -20,7 +20,8 @@ module.exports = {
     find: [],
     get: [],
     create: [coreHooks.createOrganisationServices,
-      coreHooks.createTopic,
+      coreHooks.createTopic(),
+      coreHooks.createTopic({ topicField: 'subscribersTopics' }),
       coreHooks.createOrganisationAuthorisations,
       subscribeDefaultPlan],
     update: [],
@@ -30,7 +31,8 @@ module.exports = {
       coreHooks.removeOrganisationGroups,
       coreHooks.removeOrganisationTags,
       coreHooks.removeOrganisationAuthorisations,
-      coreHooks.removeTopic,
+      coreHooks.removeTopic({ topicField: 'subscribersTopics' }),
+      coreHooks.removeTopic(),
       coreHooks.removeOrganisationServices]
   },
 
