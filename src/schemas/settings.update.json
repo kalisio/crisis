@@ -73,7 +73,49 @@
         "component": "form/KTextField",
         "helper": "schemas.LOCATION_FORMAT"
       }
+    },
+    "timelineStep": {
+      "type": "number",
+      "group": "schemas.TIMELINE_SETTINGS",
+      "field": {
+        "component": "form/KSelectField",
+        "helper": "schemas.TIMELINE_STEP",
+        "options": [
+          { "label": "5m", "value": 5  },
+          { "label": "10m", "value": 10 },
+          { "label": "12m", "value": 12 },
+          { "label": "15m", "value": 15 },
+          { "label": "20m", "value": 20 },
+          { "label": "30m", "value": 30 },
+          { "label": "1h", "value": 60, "selected": true }
+        ]
+      }
+    },
+    "timeseriesSpan": {
+      "type": "number",
+      "group": "schemas.TIMESERIES_SETTINGS",
+      "field": {
+        "component": "form/KSelectField",
+        "helper": "schemas.TIMESERIES_SPAN",
+        "options": [
+          { "label": "3H", "value": 180 },
+          { "label": "6H", "value": 360 },
+          { "label": "12H", "value": 720 },
+          { "label": "24H", "value": 1440, "selected": true },
+          { "label": "48H", "value": 2880 },
+          { "label": "72H", "value": 4320 },
+          { "label": "96H", "value": 5760 }
+        ]
+      }
     }
   },
-  "required": ["shortTime", "longTime", "shortDate", "longDate", "shortYear", "longYear", "utc", "location", "restoreView"]
+  "required": [
+    "shortTime",
+    "longTime",
+    "shortDate",
+    "longDate",
+    "shortYear",
+    "longYear",
+    "location"
+  ]
 }

@@ -129,9 +129,9 @@ export default {
       // Setup the right drawer
       this.setRightDrawer('EventActivityPanel', this.$data)
       // Setup the widgets
-      this.registerWidget('feature', 'las la-digital-tachograph', 'widgets/KFeatureWidget', this.selection)
-      this.registerWidget('time-series', 'las la-chart-line', 'widgets/KTimeSeriesWidget', this.$data)
-      this.registerWidget('mapillary', 'img:statics/mapillary-icon.svg', 'widgets/KMapillaryWidget', this.mapillary)
+      this.registerWidget('information-box', 'las la-digital-tachograph', 'widgets/KInformationBox', this.selection)
+      this.registerWidget('time-series', 'las la-chart-line', 'widgets/KTimeSeries', this.$data)
+      if (this.mapillaryClientID) this.registerWidget('mapillary-viewer', 'img:statics/mapillary-icon.svg', 'widgets/KMapillaryViewer')
       // If we'd like to only work in real-time
       // this.setCurrentTime(moment.utc())
       this.registerActivityActions()

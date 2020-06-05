@@ -33,7 +33,9 @@ export default function () {
         longYear: 'timeFormat.year.long',
         utc: 'timeFormat.utc',
         location: 'locationFormat',
-        restoreView: 'restore.view'
+        restoreView: 'restore.view',
+        timelineStep: 'timeline.step',
+        timeseriesSpan: 'timeseries.span'
       }
     })
     // Restore previous settings if any
