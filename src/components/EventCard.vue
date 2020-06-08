@@ -179,7 +179,9 @@ export default {
       }
       if (this.$can('read', 'events', this.contextId, this.item)) {
         let hasFollowUp = false
-        let warning = ''
+        let label = this.$t('EventCard.FOLLOW_UP_LABEL')
+        let icon = 'las la-map-marked-alt'
+        let warning = false
         if (this.isParticipant) {
           hasFollowUp = this.item.hasWorkflow &&
                         (this.waitingInteraction(this.participantStep, this.participantState, 'participant') ||
@@ -192,21 +194,31 @@ export default {
         }
         if (hasFollowUp) {
           if (this.isParticipant) {
+            icon = 'las la-comment'
             if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
-              warning = this.$t('EventCard.ACTION_REQUIRED_WARNING')
+              label = this.$t('EventCard.ACTION_REQUIRED_WARNING')
+              warning = true
             } else if (this.waitingInteraction(this.participantStep, this.participantState, 'coordinator')) {
-              warning = this.$t('EventCard.WAITING_COORDINATION_WARNING')
+              label = this.$t('EventCard.WAITING_COORDINATION_WARNING')
+              warning = true
             }
-          }
+          } 
           // Participant warning if any overrides coordinator warning
           if (!warning && this.isCoordinator) {
             if (this.nbParticipantsWaitingCoordination > 0) {
-              warning = this.$t('EventCard.ACTION_REQUIRED_WARNING')
+              label = this.$t('EventCard.ACTION_REQUIRED_WARNING')
+              warning = true
             }
           }
-          this.registerPaneAction({
-            name: 'follow-up', label: this.$t('EventCard.FOLLOW_UP_LABEL'), icon: 'las la-comments', handler: this.followUp, warning
-          })
+          if (!warning) {
+            this.registerPaneAction({
+              name: 'follow-up', label: label, icon, handler: this.followUp
+            })
+          } else {
+            this.registerPaneAction({
+              name: 'follow-up', label: label, icon, badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } }, handler: this.followUp 
+            })
+          }
         }
       }
       if (this.$can('read', 'events', this.contextId, this.item)) {
@@ -258,6 +270,7 @@ export default {
       })
     },
     async followUp () {
+      console.log('follow up')
       if (this.hasParticipantInteraction) {
         this.$refs.followUpModal.open()
         // We can then load the schema and local refs in parallel
@@ -266,7 +279,7 @@ export default {
           this.loadRefs()
         ])
         await this.$refs.form.build()
-        const properties = await this.loadFeatureProperties(this.event.feature)
+        // const properties = await this.loadFeatureProperties(this.event.feature)
         if (properties) this.$refs.form.fill(properties)
       } else if (this.isCoordinator) {
         this.$router.push({ name: 'event-activity', params: { objectId: this.item._id, contextId: this.contextId } })
