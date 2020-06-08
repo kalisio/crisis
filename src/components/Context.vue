@@ -19,6 +19,7 @@ export default {
     },
     getActionsForContext (context) {
       let actions = { toolbar: [], menu: [] }
+      // Flag required features as "beta"
       if (this.$can('service', 'events', context._id)) {
         actions.toolbar.push({ name: 'events', icon: 'las la-fire', label: this.$t('Context.EVENTS'), route: { name: 'events-activity', params: { operation: 'current-events', contextId: context._id } } })
       }
@@ -40,7 +41,7 @@ export default {
         actions.menu.push({name: 'event-templates', icon: 'las la-project-diagram', label: this.$t('EventsActivity.EVENT_TEMPLATES_LABEL'), route: { name: 'event-templates-activity', params: { contextId: this.contextId } } })
       }
       if (this.$can('update', 'catalog', context._id)) {
-        actions.menu.push({ name: 'catalog', icon: 'las la-map', label: this.$t('Context.CATALOG'), route: { name: 'catalog-activity', params: { contextId: context._id } } })
+        actions.menu.push({ name: 'catalog', icon: 'las la-map', label: this.$t('Context.CATALOG'), badge: { color: 'primary', transparent: true, label: 'beta' }, route: { name: 'catalog-activity', params: { contextId: context._id } } })
       }
       if (this.$can('update', 'organisations', context._id, { _id: context._id })) {
         actions.menu.push({ name: 'settings', icon: 'las la-cog', label: this.$t('Context.SETTINGS'), route: { name: 'organisation-settings-activity', params: { perspective: 'properties', contextId: context._id } } })

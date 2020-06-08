@@ -164,6 +164,13 @@ export default {
           popup: { pick: [] }
         }
       })
+      // Flag required layers as "beta"
+      layers.forEach(layer => {
+        if (layer.type !== 'BaseLayer') {
+          layer.badge = { color: 'primary', transparent: true, label: 'beta' }
+        }
+      })
+      
       return layers
     },
     getFeatureActions (feature, layer) {
