@@ -8,9 +8,10 @@ module.exports = {
     find: [],
     get: [],
     create: [when(hook => hook.data.sponsor, checkInvitationsQuotas),
-      coreHooks.addVerification],
-    update: [],
-    patch: [],
+      coreHooks.addVerification,
+      coreHooks.convertDates(['expireAt'])],
+    update: [coreHooks.convertDates(['expireAt'])],
+    patch: [coreHooks.convertDates(['expireAt'])],
     remove: [coreHooks.preventRemoveUser]
   },
 
