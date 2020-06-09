@@ -20,8 +20,10 @@ export default {
       return _.get(config, path, defaultValue)
     }
     Vue.prototype.$checkBillingOption = async function (option) {
-      const options = await this.$api.getService('organisations')
-        .get(this.contextId, { query: { $select: ['billing.options'] } })
+      if (this.$config('flavor') === 'dev') return
+      const perspective = await this.$api.getService('organisations')
+        .get(this.contextId, { query: { $select: ['billing'] } })
+      const options = _.get(perspective, 'billing.options', [])
       if (!_.find(options, { plan: 'archiving' })) {
         Dialog.create({
           title: this.$t('OOPS'),

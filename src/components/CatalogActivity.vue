@@ -379,7 +379,7 @@ export default {
     this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
 
     // Check if option has been subscribed
-    this.$checkBillingOption('archiving')
+    this.$checkBillingOption('catalog')
   },
   mounted () {
     this.$on('collection-refreshed', this.onAlertCollectionRefreshed)
