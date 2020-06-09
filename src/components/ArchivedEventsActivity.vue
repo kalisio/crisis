@@ -632,17 +632,22 @@ export default {
       }
     }
   },
-  created () {
+  async created () {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-history'] = this.$load('collection/KHistory')
     this.$options.components['k-navigation-bar'] = this.$load('KNavigationBar')
+
     this.registerStyle('tooltip', this.getEventTooltip)
     this.registerStyle('popup', this.getEventPopup)
     this.registerStyle('markerStyle', this.getEventMarker)
+    
     // Initialize private properties
     this.templates = []
+
+    // Check if option has been subscribed
+    this.$checkBillingOption('archiving')
   },
   mounted () {
     this.$on('collection-refreshed', this.onCollectionRefreshed)

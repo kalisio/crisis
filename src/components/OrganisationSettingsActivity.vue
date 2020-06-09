@@ -61,7 +61,7 @@ export default {
       if (this.$can('update', 'billing', null, { billingObject: this.contextId })) {
         this.registerTabAction({
           name: 'billing',
-          label: this.$t('OrganisationSettingsActivity.BILLING_LABEL'),
+          label: this.$t('OrganisationSettingsActivity.BILLING_OPTIONS_LABEL'),
           icon: 'las la-credit-card',
           route: { name: 'organisation-settings-activity',
             params: { contextId: this.contextId, perspective: 'billing' },

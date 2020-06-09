@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md column q-gutter-md">
     <!-- 
-      Customer information secion
+      Customer information section
      -->    
     <k-block
       :color="customerBlockColor" 
@@ -15,16 +15,35 @@
       @customer-updated="onCustomerUpdated" 
       :billingObjectId="objectId" 
       billingObjectService="organisations" />
-    <!-- 
-      Plan subscription section 
-    -->
-    <plan-chooser 
-      :billingObjectId="objectId" 
-      billingObjectService="organisations" 
-      :quotas="quotas" 
-      :plans="plans" 
-      v-model="currentPlan" 
-      :hasCustomer="customer !== undefined" />
+    <q-card>
+      <q-card-section class="text-grey bg-grey-2">
+        {{$t('OrganisationBilling.OPTIONS_BLOCK_TITLE')}}
+      </q-card-section>
+      <!-- 
+        Plan subscription section 
+      -->
+      <q-expansion-item header-class="text-primary" group="billing" :label="$t('OrganisationBilling.PLAN_TITLE')" default-opened>
+        <plan-chooser 
+          :billingObjectId="objectId" 
+          billingObjectService="organisations" 
+          :quotas="quotas" 
+          :plans="plans" 
+          v-model="currentPlan" 
+          :hasCustomer="customer !== undefined" />
+      </q-expansion-item>
+      <!-- 
+        Options information secion
+       -->    
+      <q-expansion-item header-class="text-primary" group="billing" :label="$t('OrganisationBilling.OPTIONS_TITLE')">
+        <options-chooser 
+        :billingObjectId="objectId" 
+        billingObjectService="organisations" 
+        :quotas="quotas" 
+        :options="options" 
+        v-model="currentOptions" 
+        :hasCustomer="customer !== undefined" />
+      </q-expansion-item>
+    </q-card>
   </div>
 </template>
 
@@ -53,7 +72,10 @@ export default {
   data () {
     return {
       isUserVerified: this.$store.get('user.isVerified'),
+      plans: {},
+      quotas: {},
       currentPlan: '',
+      currentOptions: [],
       customer: undefined
     }
   },
@@ -63,6 +85,7 @@ export default {
     },
     refreshPlans () {
       this.plans = this.$store.get('capabilities.api.plans', {})
+      this.options = this.$store.get('capabilities.api.options', {})
       this.quotas = this.$store.get('capabilities.api.quotas', {})
     },
     async getAvailablePurchasers () {
@@ -97,13 +120,15 @@ export default {
     this.$options.components['k-block'] = this.$load('frame/KBlock')
     this.$options.components['customer-editor'] = this.$load('CustomerEditor')
     this.$options.components['plan-chooser'] = this.$load('PlanChooser')
+    this.$options.components['options-chooser'] = this.$load('OptionsChooser')
     // Load available plans and Whenever the cabilities are updated, update plans as well
     this.refreshPlans()
     this.$events.$on('capabilities-api-changed', this.refreshPlans)
     // Load underlying billing perspective
     const perspective = await this.loadObject()
-    this.currentPlan = perspective.billing.subscription.plan
-    this.customer = perspective.billing.customer
+    this.currentPlan = _.get(perspective, 'billing.subscription.plan')
+    this.currentOptions = _.get(perspective, 'billing.options', []).map(option => option.plan)
+    this.customer = _.get(perspective, 'billing.customer')
   },
   beforeDestroy () {
     this.$events.$off('capabilities-api-changed', this.refreshPlans)

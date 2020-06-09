@@ -23,7 +23,7 @@ module.exports = {
       coreHooks.createOrganisationServices,
       coreHooks.createTopic(),
       coreHooks.createOrganisationAuthorisations,
-      coreHooks.createSubscribersGroup,
+      //coreHooks.createSubscribersGroup,
       subscribeDefaultPlan
     ],
     update: [],

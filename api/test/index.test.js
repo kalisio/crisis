@@ -247,6 +247,54 @@ describe('aktnmap', () => {
     })
       .timeout(10000)
 
+    it('subscribe to the catalog option', () => {
+      return billingService.create({
+        action: 'subscription',
+        plan: 'catalog',
+        billing: 'send_invoice',
+        billingObject: orgObject._id,
+        billingObjectService: 'organisations',
+        billingPerspective: 'billing'
+      }, {
+        user: userObject, checkAuthorisation: true
+      })
+        .then(subscription => {
+          subscriptionObject = subscription
+          expect(subscriptionObject.stripeId).toExist()
+          return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
+        })
+        .then(result => {
+          const billingPerspective = result.data[0].billing
+          expect(billingPerspective.options).toExist()
+          expect(billingPerspective.options.length).to.equal(1)
+          expect(billingPerspective.options[0].plan).to.equal('catalog')
+          expect(billingPerspective.options[0].stripeId).to.equal(subscriptionObject.stripeId)
+        })
+    })
+      .timeout(10000)
+
+    it('unsubscribe the paying option', () => {
+      return billingService.remove(orgObject._id, {
+        query: {
+          action: 'subscription',
+          plan: 'catalog',
+          billingObjectService: 'organisations',
+          billingPerspective: 'billing'
+        },
+        user: userObject,
+        checkAuthorisation: true
+      })
+        .then(() => {
+          return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
+        })
+        .then(result => {
+          const billingPerspective = result.data[0].billing
+          expect(billingPerspective.options).toExist()
+          expect(billingPerspective.options.length).to.equal(0)
+        })
+    })
+      .timeout(10000)
+
     it('unsubscribe the paying plan', () => {
       return billingService.remove(orgObject._id, {
         query: {

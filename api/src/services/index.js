@@ -121,6 +121,7 @@ module.exports = async function () {
         domain: app.get('domain'),
         version: packageInfo.version,
         plans: _.get(app.get('billing'), 'plans'),
+        options: _.get(app.get('billing'), 'options'),
         quotas: app.get('quotas'),
         mapillary: app.get('mapillary')
       }

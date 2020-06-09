@@ -7,7 +7,8 @@
   "SAVE_LABEL": "Enregistrer",
   "errors": {
     "EVENT_LOG_LIMIT": "Trop de participants pour afficher l'ensemble des informations",
-    "CANNOT_REMOVE_CUSTOMER": "Vous n'êtes pas autorisé à supprimer le client de <b>{{resource}}</b>, modifiez préalablement les informations de paiement."
+    "CANNOT_REMOVE_CUSTOMER": "Vous n'êtes pas autorisé à supprimer le client de <b>{{resource}}</b>, modifiez préalablement les informations de paiement.",
+    "UNSUBSCRIBED_OPTION": "Désolé, il semble que vous n'ayez pas souscrit à cette option. Merci de modifier votre abonnement avant de revenir ici."
   },
   "schemas": {
     "ORGANISATIONS_BILLING_PLAN_NAME": "Plan de paiement pour {{ object.name }}",
@@ -139,11 +140,14 @@
     "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "Vous n'avez renseigné aucune information de paiement",
     "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "Vous avez choisi une méthode paiement par facturation mensuelle.<br/>Les factures seront envoyées à <b>{{email}}</b>",
     "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisi une méthode paiement par débit bancaire mensuel.<br/>Vous utilisez une carte <b>{{brand}}</b> dont le numéro se termine par <b>{{last4}}</b>",
-    "CUSTOMER_BLOCK_ACTION": "Mettre à jour"
+    "CUSTOMER_BLOCK_ACTION": "Mettre à jour",
+    "OPTIONS_BLOCK_TITLE": "Vos options",
+    "PLAN_TITLE": "Votre offre de base",
+    "OPTIONS_TITLE": "Vos offres supplémentaires"
   },
   "OrganisationSettingsActivity": {
     "PROPERTIES_LABEL": "Propriétés",
-    "BILLING_LABEL": "Plan de paiement",
+    "BILLING_OPTIONS_LABEL": "Paiement & options",
     "DANGER_ZONE_LABEL": "Zone de danger"
   },
   "CatalogActivity": {
@@ -203,6 +207,16 @@
     "diamond_PRICE": "Parlons-en !",
     "diamond_DESCRIPTION": "Définissons une solution adaptée à vos besoins, avec un contrôle accru et plus d’assistance",
     "diamond_DETAILS": "Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Membres illimités</br>Hébergement sur vos serveurs</br>Produit personnalisé</br>"
+  },
+  "options": {
+    "catalog_LABEL": "Catalogue géographique",
+    "catalog_PRICE": "99€ par mois",
+    "catalog_DESCRIPTION": "Intégrez vos propres données géographiques",
+    "catalog_DETAILS": "</br>Import GeoJson</br>Méta-données personnalisées</br>Edition ergonomique</br>Stylisation personnalisée</br></br>",
+    "archiving_LABEL": "Main courante",
+    "archiving_PRICE": "99€ par mois",
+    "archiving_DESCRIPTION": "Archivage long-terme de vos événements",
+    "archiving_DETAILS": "</br>Recherche temporelle</br>Statistiques</br>Cartes de densité</br></br></br>"
   },
   "help": {
     "SECTION": "Choisissez une partie de l'aide",
@@ -379,10 +393,17 @@
     "CLICK": "Nous contacter",
     "SELECT": "Sélectionner",
     "CURRENT_PLAN": "Votre offre",
-    "BLOCK_NO_BILLING_TITLE": "Vous ne pouvez pas modifier votre offre",
-    "BLOCK_NO_BILLING_TEXT": "La fonctionnalité n'est pas disponible sur cette version, pour changer d'offre merci de nous contacter à cette adresse: <a href='mailto:support@kalisio.com'>support@kalisio.com</a>.",
     "CONFIRM_DIALOG_TITLE": "Êtes vous sur de vouloir mettre à jour votre plan ?",
     "CONFIRM_DIALOG_MESSAGE": "Merci de confirmer la souscription au plan <b>$t({{plan}})</b>",
     "PLAN_DISABLED_TOOLTIP": "Merci de renseigner les informations de paiement pour souscrire à ce plan"
+  },
+  "OptionsChooser": {
+    "CLICK": "Nous contacter",
+    "SELECT": "Sélectionner",
+    "SUBSCRIBED": "Souscrite",
+    "CONFIRM_DIALOG_TITLE": "Êtes vous sur de vouloir mettre à jour votre option ?",
+    "CONFIRM_DIALOG_SUBSCRIBE_MESSAGE": "Merci de confirmer la souscription à l'option <b>$t({{option}})</b>",
+    "CONFIRM_DIALOG_UNSUBSCRIBE_MESSAGE": "Merci de confirmer la résiliation de l'option <b>$t({{option}})</b>",
+    "OPTION_DISABLED_TOOLTIP": "Merci de renseigner les informations de paiement pour souscrire aux options"
   }
 }

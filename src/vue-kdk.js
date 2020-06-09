@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { Dialog } from 'quasar'
 import config from 'config'
 import { utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import utils from './utils'
@@ -17,6 +18,20 @@ export default {
     Vue.prototype.$createComponentVNode = utils.createComponentVNode
     Vue.prototype.$config = function (path, defaultValue) {
       return _.get(config, path, defaultValue)
+    }
+    Vue.prototype.$checkBillingOption = async function (option) {
+      const options = await this.$api.getService('organisations')
+        .get(this.contextId, { query: { $select: ['billing.options'] } })
+      if (!_.find(options, { plan: 'archiving' })) {
+        Dialog.create({
+          title: this.$t('OOPS'),
+          message: this.$t('errors.UNSUBSCRIBED_OPTION'),
+          persistent: true
+        }).onOk(() => {
+          this.$router.push({ name: 'organisation-settings-activity',
+            params: { perspective: 'billing', contextId: this.contextId } })
+        })
+      }
     }
     // FIXME: This is used for testing purpose, don't know how to access this from testcafe otherwise
     global.$store = Vue.prototype.$store

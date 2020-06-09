@@ -66,6 +66,7 @@ export async function removeBilling (hook) {
     const billingObjectService = hook.service.path
     debug('Removing billing from object ' + billingObjectId + ' of service ' + billingObjectService)
     const billingService = hook.app.getService('billing')
+    // Removing customer should remove any subscription
     await billingService.remove(billingObjectId, {
       query: {
         action: 'customer'

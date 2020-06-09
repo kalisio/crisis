@@ -255,15 +255,25 @@ module.exports = {
       },
       silver: {
         color: 'light-green-6',
-        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'plan_D9lRPmBX3N4MzO' : 'plan_DHd5HGwsl31NoC'),
+        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'plan_D9lRPmBX3N4MzO' : 'plan_DHd5HGwsl31NoC')
       },
       gold: {
         color: 'light-green-8',
-        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'plan_D9lSeSigaoIck3' : 'plan_DHd5RMLMSlpUmQ'),
+        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'plan_D9lSeSigaoIck3' : 'plan_DHd5RMLMSlpUmQ')
       },
       diamond: {
         color: 'light-green-10',
-        url: 'https://aktnmap.com/#footer'
+        url: 'https://kalisio.com/contact'
+      }
+    },
+    options: {
+      archiving: {
+        color: 'light-green-6',
+        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'price_1Gs1lWDSpJUNa66oZRWs98Lq' : 'price_1Gs1p7DSpJUNa66ohJbWnsos')
+      },
+      catalog: {
+        color: 'light-green-6',
+        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'price_1Gs1lWDSpJUNa66obhxqjSph' : 'price_1Gs1p7DSpJUNa66oHtX9IDzG')
       }
     }
   },

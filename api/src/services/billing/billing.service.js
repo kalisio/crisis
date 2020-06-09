@@ -115,31 +115,46 @@ export default function (name, app, options) {
       await customerService.remove(customerId)
       if (patch) {
         const billingObjectService = app.getService(query.billingObjectService)
-        await billingObjectService.patch(billingObjectId, { 'billing.customer': null, 'billing.subscription': null })
+        await billingObjectService.patch(billingObjectId, {
+          'billing.customer': null,
+          'billing.subscription': null,
+          'billing.options': [] })
       }
     },
     async createSubscription (billingObject, data) {
       const billingObjectId = billingObject._id
+      // Subscribing a plan/option is similar for stripe
       const plan = _.get(data, 'plan')
       if (_.isNil(plan)) throw new BadRequest('createSubscription: missing \'plan\' parameter')
-      debug('create subscripton for ' + billingObjectId + ' to plan ' + plan)
-      const subscription = { plan: data.plan }
-      if (!_.isNil(config.plans[data.plan].stripeId)) {
+      const optionConfig = _.get(config, `options.${plan}`)
+      const planConfig = _.get(config, `plans.${plan}`, optionConfig)
+      debug('create subscripton for ' + billingObjectId + ' to plan/option ' + plan)
+      const subscription = { plan }
+      if (!_.isNil(planConfig.stripeId)) {
         const customerId = _.get(billingObject, 'billing.customer.stripeId')
         const customerCard = _.get(billingObject, 'billing.customer.card')
         if (_.isNil(customerId)) throw new BadRequest('updateSubscription: you must create a customer before subscribing to a product')
         let billingMethod = 'send_invoice'
         if (!_.isNil(customerCard)) billingMethod = 'charge_automatically'
-        subscription.stripeId = await this.createStripeSubscription(customerId, config.plans[plan].stripeId, billingMethod)
+        subscription.stripeId = await this.createStripeSubscription(customerId, planConfig.stripeId, billingMethod)
       }
       const billingObjectService = app.getService(data.billingObjectService)
-      await billingObjectService.patch(billingObjectId, { 'billing.subscription': subscription })
+      if (optionConfig) {
+        let options = _.get(billingObject, 'billing.options', [])
+        if (!_.find(options, { plan })) {
+          options.push(subscription)
+          await billingObjectService.patch(billingObjectId, { 'billing.options': options })
+        }
+      } else {
+        await billingObjectService.patch(billingObjectId, { 'billing.subscription': subscription })
+      }
       return subscription
     },
     async updateSubscription (billingObject, data) {
       const billingObjectId = billingObject._id
       const plan = _.get(data, 'plan')
       if (_.isNil(plan)) throw new BadRequest('updateSubscription: missing \'plan\' parameter')
+      const planConfig = _.get(config, `plans.${plan}`)
       debug('update subscripton for ' + billingObjectId + ' to plan ' + plan)
       const customerId = _.get(billingObject, 'billing.customer.stripeId')
       const customerCard = _.get(billingObject, 'billing.customer.card')
@@ -148,12 +163,12 @@ export default function (name, app, options) {
         if (_.isNil(customerId)) throw new BadRequest('updateSubscription: inconsistent billing perspective')
         await this.removeStripeSubscription(customerId, subscriptionId)
       }
-      const subscription = { plan: plan }
-      if (!_.isNil(config.plans[plan].stripeId)) {
+      const subscription = { plan }
+      if (!_.isNil(planConfig.stripeId)) {
         if (_.isNil(customerId)) throw new BadRequest('updateSubscription: you must create a customer before subscribing to a product')
         let billingMethod = 'send_invoice'
         if (!_.isNil(customerCard)) billingMethod = 'charge_automatically'
-        subscription.stripeId = await this.createStripeSubscription(customerId, config.plans[plan].stripeId, billingMethod)
+        subscription.stripeId = await this.createStripeSubscription(customerId, planConfig.stripeId, billingMethod)
       }
       const billingObjectService = app.getService(data.billingObjectService)
       await billingObjectService.patch(billingObjectId, { 'billing.subscription': subscription })
@@ -161,16 +176,37 @@ export default function (name, app, options) {
     },
     async removeSubscription (billingObject, query, patch) {
       const billingObjectId = billingObject._id
-      debug('remove subscription from ' + billingObjectId)
       const customerId = _.get(billingObject, 'billing.customer.stripeId')
-      const subscriptionId = _.get(billingObject, 'billing.subscription.stripeId')
-      if (!_.isNil(subscriptionId)) {
-        if (_.isNil(customerId)) throw new BadRequest('removeSubscription: inconsistent billing perspective')
-        await this.removeStripeSubscription(customerId, subscriptionId)
-      }
-      if (patch) {
-        const billingObjectService = app.getService(query.billingObjectService)
-        await billingObjectService.patch(billingObjectId, { 'billing.subscription': null })
+      // If no plan given then with unsubscribe from the base plan
+      const plan = _.get(query, 'plan')
+      if (!plan) {
+        debug('remove plan subscription from ' + billingObjectId)
+        const subscriptionId = _.get(billingObject, 'billing.subscription.stripeId')
+        if (!_.isNil(subscriptionId)) {
+          if (_.isNil(customerId)) throw new BadRequest('removeSubscription: inconsistent billing perspective')
+          await this.removeStripeSubscription(customerId, subscriptionId)
+        }
+        if (patch) {
+          const billingObjectService = app.getService(query.billingObjectService)
+          await billingObjectService.patch(billingObjectId, { 'billing.subscription': null })
+        }
+      } else {
+        debug(`remove ${plan} option subscription from ` + billingObjectId)
+        let options = _.get(billingObject, 'billing.options')
+        const subscribedOption = _.find(options, { plan })
+        let subscriptionId
+        if (subscribedOption) {
+          subscriptionId = _.get(subscribedOption, 'stripeId')
+        }
+        if (!_.isNil(subscriptionId)) {
+          if (_.isNil(customerId)) throw new BadRequest('removeSubscription: inconsistent billing perspective')
+          await this.removeStripeSubscription(customerId, subscriptionId)
+        }
+        if (patch) {
+          const billingObjectService = app.getService(query.billingObjectService)
+          _.remove(options, item => item.plan === plan)
+          await billingObjectService.patch(billingObjectId, { 'billing.options': options })
+        }
       }
     },
     setup (app) {

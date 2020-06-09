@@ -377,6 +377,9 @@ export default {
     this.registerStyle('popup', this.getAlertPopup)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
     this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
+
+    // Check if option has been subscribed
+    this.$checkBillingOption('archiving')
   },
   mounted () {
     this.$on('collection-refreshed', this.onAlertCollectionRefreshed)
