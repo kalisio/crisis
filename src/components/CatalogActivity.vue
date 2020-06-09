@@ -173,6 +173,16 @@ export default {
       
       return layers
     },
+    registerActivityActions () {
+      activityMixin.methods.registerActivityActions.call(this)
+      // Flag required actions as "beta"
+      let actions = this.$store.get('fab.actions')
+      actions.forEach(action => {
+        if ((action.name === 'probe') || (action.name === 'create-layer')) {
+          action.badge = { color: 'primary', floating: true, transparent: true, label: 'beta' }
+        }
+      })
+    },
     getFeatureActions (feature, layer) {
       let featureActions = []
       // When clicked on map

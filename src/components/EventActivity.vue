@@ -192,6 +192,27 @@ export default {
       // Then update it
       this.refreshCollection()
     },
+    async getCatalogLayers () {
+      let layers = await activityMixin.methods.getCatalogLayers.call(this)
+      // Flag required layers as "beta"
+      layers.forEach(layer => {
+        if (layer.type !== 'BaseLayer') {
+          layer.badge = { color: 'primary', transparent: true, label: 'beta' }
+        }
+      })
+      
+      return layers
+    },
+    registerActivityActions () {
+      activityMixin.methods.registerActivityActions.call(this)
+      // Flag required actions as "beta"
+      let actions = this.$store.get('fab.actions')
+      actions.forEach(action => {
+        if (action.name === 'probe') {
+          action.badge = { color: 'primary', floating: true, transparent: true, label: 'beta' }
+        }
+      })
+    },
     uploadMedia () {
       this.$refs.uploaderModal.open()
       // If the modal has already been created the uploader is ready otherwise wait for event

@@ -24,7 +24,7 @@ export default {
         actions.toolbar.push({ name: 'events', icon: 'las la-fire', label: this.$t('Context.EVENTS'), route: { name: 'events-activity', params: { operation: 'current-events', contextId: context._id } } })
       }
       if (this.$can('read', 'archived-events', context._id)) {
-        actions.toolbar.push({ name: 'archived-events', icon: 'las la-clipboard-list', label: this.$t('Context.ARCHIVED_EVENTS'), route: { name: 'archived-events-activity', params: { operation: 'archived-events', contextId: context._id } } })
+        actions.toolbar.push({ name: 'archived-events', icon: 'las la-clipboard-list', label: this.$t('Context.ARCHIVED_EVENTS'), badge: { color: 'secondary', floating: true, transparent: true, label: 'beta' }, route: { name: 'archived-events-activity', params: { operation: 'archived-events', contextId: context._id } } })
       }
       actions.toolbar.push({ name: 'search', icon: 'las la-search', label: this.$t('Context.SEARCH'), handler: this.search })
       actions.toolbar.push({ name: 'refresh', icon: 'las la-sync', label: this.$t('Context.REFRESH'), handler: this.refresh })
