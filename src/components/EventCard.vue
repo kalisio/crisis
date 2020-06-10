@@ -226,7 +226,7 @@ export default {
           name: 'add-media', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-camera', handler: this.uploadMedia
         })
         if (this.hasMedias()) this.registerPaneAction({
-          name: 'browse-media', label: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-videos', handler: this.browseMedia
+          name: 'browse-media', label: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', handler: this.browseMedia
         })
       }
       if (this.hasLocation() && this.canNavigate()) {
