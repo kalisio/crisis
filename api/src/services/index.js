@@ -110,7 +110,7 @@ export function removeOrganisationServices (organisation) {
   removeArchivedEventLogService.call(app, { context: organisation })
 }
 
-module.exports = async function () {
+export default async function () {
   const app = this
 
   // Set up our plugin services
