@@ -1,7 +1,7 @@
 {
   "name": "aktnmap",
   "description": "Kalisio Akt'n'Map Application",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/kalisio/aktnmap",
   "keywords": [
     "kalisio"
@@ -20,7 +20,7 @@
     "url": "https://github.com/kalisio/aktnmap/issues"
   },
   "scripts": {
-    "version": "cordova-set-version cordova/config.xml.tpl",
+    "version": "cordova-set-version src-cordova/config.xml.tpl",
     "release:patch": "cd api && npm run release:patch && cd .. && npm version --no-git-tag-version --force patch",
     "release:minor": "cd api && npm run release:minor && cd .. && npm version --no-git-tag-version --force minor",
     "release:major": "cd api && npm run release:major && cd .. && npm version --no-git-tag-version --force major",
