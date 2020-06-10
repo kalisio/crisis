@@ -72,8 +72,17 @@
       <!--
         Events history: switch append-items on to activate infinite scroll
       -->
-      <k-history class="q-mt-lg" v-show="showHistory" service="archived-events" :nb-items-per-page="4" :append-items="false" :base-query="baseQuery" :filter-query="searchQuery" :renderer="renderer" :contextId="contextId" :list-strategy="'smart'">
-      </k-history>
+      <k-history 
+        v-show="showHistory"
+        style="padding-top: 50px" 
+        service="archived-events" 
+        :nb-items-per-page="2" 
+        :append-items="true" 
+        :base-query="baseQuery" 
+        :filter-query="searchQuery" 
+        :renderer="renderer" 
+        :contextId="contextId" 
+        :list-strategy="'smart'" />
       <!--
         Events map
       -->

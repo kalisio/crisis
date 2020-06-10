@@ -56,18 +56,18 @@ export default {
       // Item actions
       this.clearActions()
       if (this.$can('read', 'events', this.contextId, this.item)) {
-        if (this.hasLocation()) this.registerPaneAction({
-          name: 'locate', label: this.$t('ArchivedEventEntry.LOCATE_LABEL'), icon: 'place', handler: this.locate
-        })
         this.registerPaneAction({
           name: 'view-event', label: this.$t('ArchivedEventEntry.VIEW_LABEL'), icon: 'las la-file-alt',
           route: { name: 'view-event', params: { contextId: this.contextId, objectId: this.item._id } }
         })
+        if (this.hasLocation()) this.registerPaneAction({
+          name: 'locate', label: this.$t('ArchivedEventEntry.LOCATE_LABEL'), icon: 'las la-map-marker', handler: this.locate
+        })
         this.registerPaneAction({
-          name: 'map', label: this.$t('ArchivedEventEntry.MAP_LABEL'), icon: 'scatter_plot', handler: this.followUp
+          name: 'map', label: this.$t('ArchivedEventEntry.MAP_LABEL'), icon: 'las la-map-marked-alt', handler: this.followUp
         })
         if (this.hasMedias()) this.registerPaneAction({
-          name: 'browse-media', label: this.$t('ArchivedEventEntry.BROWSE_MEDIA_LABEL'), icon: 'photo_library', handler: this.browseMedia
+          name: 'browse-media', label: this.$t('ArchivedEventEntry.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-videos', handler: this.browseMedia
         })
       }
     },
