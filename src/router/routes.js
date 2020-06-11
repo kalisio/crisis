@@ -97,6 +97,14 @@ module.exports = {
                   ':objectId/change-role': { name: 'change-role', component: 'team/KChangeRole', props: true },
                 }
               },
+              'tags': {
+                name: 'tags-activity',
+                component: 'team/KTagsActivity',
+                props: true,
+                children: {
+                  'edit/:objectId': { name: 'edit-tag', component: 'editor/KModalEditor', props: true }
+                }
+              },
               'subscribers': {
                 name: 'subscribers-activity', 
                 component: 'team/KSubscribersActivity', 

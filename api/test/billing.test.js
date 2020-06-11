@@ -112,315 +112,318 @@ describe('billing', () => {
   })
   // Let enough time to process
     .timeout(10000)
-
-  it('create a customer without card', async () => {
-    customerObject = await billingService.create({
-      action: 'customer',
-      email: 'customer@kalisio.xyz',
-      description: 'A customer',
-      billingObject: userObject._id,
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.customer.stripeId === customerObject.stripeId)
-    expect(userObject.billing.customer.email === customerObject.email)
-    expect(userObject.billing.customer.description = customerObject.description)
-    // Check Stripe
-    stripeCustomer = await customerService.get(userObject.billing.customer.stripeId)
-    expect(stripeCustomer).toExist()
-    const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
-    expect(stripeCards.data.length).to.equals(0)
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('update a customer with a visa card', async () => {
-    customerObject = await billingService.update(userObject._id, {
-      action: 'customer',
-      email: 'visa@kalisio.xyz',
-      description: 'A visa purchaser',
-      token: 'tok_visa',
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.customer.email).to.equal('visa@kalisio.xyz')
-    expect(userObject.billing.customer.card.stripeId === customerObject.card.stripeId)
-    expect(userObject.billing.customer.card.last4 === customerObject.card.last4)
-    // Check Stripe
-    stripeCard = await cardService.get(userObject.billing.customer.card.stripeId, { customer: userObject.billing.customer.stripeId })
-    expect(stripeCard).toExist()
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('remove the card from the customer', async () => {
-    customerObject = await billingService.update(userObject._id, {
-      action: 'customer',
-      email: 'no-card@kalisio.xyz',
-      description: 'A no card purchaser',
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.customer.email).to.equal('no-card@kalisio.xyz')
-    assert.isUndefined(userObject.billing.customer.card)
-    // Check Stripe
-    const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
-    expect(stripeCards.data.length).to.equals(0)
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('update a customer with a mastercard', async () => {
-    customerObject = await billingService.update(userObject._id, {
-      action: 'customer',
-      email: 'mastercard@kalisio.xyz',
-      description: 'A mastercard purchaser',
-      token: 'tok_mastercard',
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.customer.email).to.equal('mastercard@kalisio.xyz')
-    expect(userObject.billing.customer.card.stripeId === customerObject.card.stripeId)
-    expect(userObject.billing.customer.card.last4 === customerObject.card.last4)
-    // Check Stripe
-    const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
-    expect(stripeCards.data.length).to.equals(1)
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('subscribe to the silver plan', async () => {
-    subscriptionObject = await billingService.create({
-      action: 'subscription',
-      plan: 'silver',
-      billingObject: userObject._id,
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.subscription.stripeId === subscriptionObject.stripeId)
-    expect(userObject.billing.subscription.plan).to.equal('silver')
-    // Check Stripe
-    stripeSubscription = await subscriptionService.get(userObject.billing.subscription.stripeId)
-    expect(stripeSubscription).toExist()
-    expect(stripeSubscription.billing).to.equal('charge_automatically')
-    expect(stripeSubscription.plan.id).to.equal('plan_DHd5HGwsl31NoC')
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('update the subscription to the gold plan', async () => {
-    subscriptionObject = await billingService.update(userObject._id, {
-      action: 'subscription',
-      plan: 'gold',
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.subscription.plan).to.equal('gold')
-    expect(userObject.billing.subscription.stripeId === subscriptionObject.stripeId)
-    // Check Stripe
-    stripeSubscription = await subscriptionService.get(userObject.billing.subscription.stripeId)
-    expect(stripeSubscription).toExist()
-    expect(stripeSubscription.billing).to.equal('charge_automatically')
-    expect(stripeSubscription.plan.id).to.equal('plan_DHd5RMLMSlpUmQ')
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('update the subscription to the bronze plan', async () => {
-    subscriptionObject = await billingService.update(userObject._id, {
-      action: 'subscription',
-      plan: 'bronze',
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.subscription.plan).to.equal('bronze')
-    expect(userObject.billing.subscription.stripeId).to.equal(undefined)
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('unsubscribe a customer from the plan', async () => {
-    await billingService.remove(userObject._id, {
-      query: {
-        action: 'subscription',
-        billingObjectService: 'users',
-        billingPerspective: 'billing'
-      }
-    })
-    userObject = await userService.get(userObject._id)
-    assert.isNull(userObject.billing.subscription)
-    // Check Stripe
-    const stripeSubscriptions = await subscriptionService.find({ query: { customer: userObject.billing.customer.stripeId } })
-    expect(stripeSubscriptions.data.length).to.equals(0)
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('remove the card from the customer', async () => {
-    customerObject = await billingService.update(userObject._id, {
-      action: 'customer',
-      email: 'no-card@kalisio.xyz',
-      description: 'A no card purchaser',
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.customer.email).to.equal('no-card@kalisio.xyz')
-    assert.isUndefined(userObject.billing.customer.card)
-    // Check Stripe
-    const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
-    expect(stripeCards.data.length).to.equals(0)
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('subscribe a customer to a plan', async () => {
-    subscriptionObject = await billingService.create({
-      action: 'subscription',
-      plan: 'gold',
-      billing: 'send_invoice',
-      billingObject: userObject._id,
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    userObject = await userService.get(userObject._id)
-    expect(subscriptionObject.stripeId === userObject.billing.subscription.stripeId)
-    expect(userObject.billing.subscription.plan).to.equal('gold')
-    // Check Stripe
-    const stripeSubscriptions = await subscriptionService.find({ query: { customer: userObject.billing.customer.stripeId } })
-    expect(stripeSubscriptions.data.length).to.equals(1)
-    expect(stripeSubscriptions.data[0].billing).to.equal('send_invoice')
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('update a customer with an american express', async () => {
-    customerObject = await billingService.update(userObject._id, {
-      action: 'customer',
-      email: 'amex@kalisio.xyz',
-      description: 'A anmerican express purchaser',
-      token: 'tok_amex',
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.customer.email).to.equal('amex@kalisio.xyz')
-    expect(userObject.billing.customer.card.stripeId === customerObject.card.stripeId)
-    expect(userObject.billing.customer.card.last4 === customerObject.card.last4)
-    // Check Stripe
-    const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
-    expect(stripeCards.data.length).to.equals(1)
-    const stripeSubscriptions = await subscriptionService.find({ query: { customer: userObject.billing.customer.stripeId } })
-    expect(stripeSubscriptions.data.length).to.equals(1)
-    expect(stripeSubscriptions.data[0].billing).to.equal('charge_automatically')
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('update a customer with a mastercard', async () => {
-    customerObject = await billingService.update(userObject._id, {
-      action: 'customer',
-      email: 'mastercard@kalisio.xyz',
-      description: 'A mastercard purchaser',
-      token: 'tok_mastercard',
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.customer.email).to.equal('mastercard@kalisio.xyz')
-    expect(userObject.billing.customer.card.stripeId === customerObject.card.stripeId)
-    expect(userObject.billing.customer.card.last4 === customerObject.card.last4)
-    // Check Stripe
-    const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
-    expect(stripeCards.data.length).to.equals(1)
-    const stripeSubscriptions = await subscriptionService.find({ query: { customer: userObject.billing.customer.stripeId } })
-    expect(stripeSubscriptions.data.length).to.equals(1)
-    expect(stripeSubscriptions.data[0].billing).to.equal('charge_automatically')
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('remove the card from the customer', async () => {
-    customerObject = await billingService.update(userObject._id, {
-      action: 'customer',
-      email: 'no-card@kalisio.xyz',
-      description: 'A no card purchaser',
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
-    })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.customer.email).to.equal('no-card@kalisio.xyz')
-    assert.isUndefined(userObject.billing.customer.card)
-    // Check Stripe
-    const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
-    expect(stripeCards.data.length).to.equals(0)
-    const stripeSubscriptions = await subscriptionService.find({ query: { customer: userObject.billing.customer.stripeId } })
-    expect(stripeSubscriptions.data.length).to.equals(1)
-    expect(stripeSubscriptions.data[0].billing).to.equal('send_invoice')
-  })
-  // Let enough time to process
-    .timeout(10000)
-
-  it('removes the customer', async () => {
-    await billingService.remove(userObject._id, {
-      query: {
+  // We cannot test billing in prod because we have our prod stripe config,
+  // which requirs valid card numbers and will transfer money
+  if (process.env.NODE_APP_INSTANCE !== 'prod') {
+    it('create a customer without card', async () => {
+      customerObject = await billingService.create({
         action: 'customer',
+        email: 'customer@kalisio.xyz',
+        description: 'A customer',
+        billingObject: userObject._id,
         billingObjectService: 'users',
         billingPerspective: 'billing'
-      }
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.customer.stripeId === customerObject.stripeId)
+      expect(userObject.billing.customer.email === customerObject.email)
+      expect(userObject.billing.customer.description = customerObject.description)
+      // Check Stripe
+      stripeCustomer = await customerService.get(userObject.billing.customer.stripeId)
+      expect(stripeCustomer).toExist()
+      const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
+      expect(stripeCards.data.length).to.equals(0)
     })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    assert.isNull(userObject.billing.subscription)
-    assert.isNull(userObject.billing.customer)
-    // Check Stripe
-    const stripeCustomers = await customerService.find({ query: { email: customerObject.email } })
-    expect(stripeCustomers.data.length).to.equals(0)
-  })
-  // Let enough time to process
-    .timeout(10000)
+    // Let enough time to process
+      .timeout(10000)
 
-  it('create a new customer with card', async () => {
-    customerObject = await billingService.create({
-      action: 'customer',
-      email: 'new-customer@kalisio.xyz',
-      token: 'tok_visa_debit',
-      description: 'A new customer',
-      billingObject: userObject._id,
-      billingObjectService: 'users',
-      billingPerspective: 'billing'
+    it('update a customer with a visa card', async () => {
+      customerObject = await billingService.update(userObject._id, {
+        action: 'customer',
+        email: 'visa@kalisio.xyz',
+        description: 'A visa purchaser',
+        token: 'tok_visa',
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.customer.email).to.equal('visa@kalisio.xyz')
+      expect(userObject.billing.customer.card.stripeId === customerObject.card.stripeId)
+      expect(userObject.billing.customer.card.last4 === customerObject.card.last4)
+      // Check Stripe
+      stripeCard = await cardService.get(userObject.billing.customer.card.stripeId, { customer: userObject.billing.customer.stripeId })
+      expect(stripeCard).toExist()
     })
-    // Check user
-    userObject = await userService.get(userObject._id)
-    expect(userObject.billing.customer.stripeId === customerObject.stripeId)
-    expect(userObject.billing.customer.email === customerObject.email)
-    expect(userObject.billing.customer.description = customerObject.description)
-    // Check Stripe
-    stripeCustomer = await customerService.get(userObject.billing.customer.stripeId)
-    expect(stripeCustomer).toExist()
-    stripeCard = await cardService.get(userObject.billing.customer.card.stripeId, { customer: userObject.billing.customer.stripeId })
-    expect(stripeCard).toExist()
-  })
-  // Let enough time to process
-    .timeout(10000)
+    // Let enough time to process
+      .timeout(10000)
+
+    it('remove the card from the customer', async () => {
+      customerObject = await billingService.update(userObject._id, {
+        action: 'customer',
+        email: 'no-card@kalisio.xyz',
+        description: 'A no card purchaser',
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.customer.email).to.equal('no-card@kalisio.xyz')
+      assert.isUndefined(userObject.billing.customer.card)
+      // Check Stripe
+      const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
+      expect(stripeCards.data.length).to.equals(0)
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('update a customer with a mastercard', async () => {
+      customerObject = await billingService.update(userObject._id, {
+        action: 'customer',
+        email: 'mastercard@kalisio.xyz',
+        description: 'A mastercard purchaser',
+        token: 'tok_mastercard',
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.customer.email).to.equal('mastercard@kalisio.xyz')
+      expect(userObject.billing.customer.card.stripeId === customerObject.card.stripeId)
+      expect(userObject.billing.customer.card.last4 === customerObject.card.last4)
+      // Check Stripe
+      const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
+      expect(stripeCards.data.length).to.equals(1)
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('subscribe to the silver plan', async () => {
+      subscriptionObject = await billingService.create({
+        action: 'subscription',
+        plan: 'silver',
+        billingObject: userObject._id,
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.subscription.stripeId === subscriptionObject.stripeId)
+      expect(userObject.billing.subscription.plan).to.equal('silver')
+      // Check Stripe
+      stripeSubscription = await subscriptionService.get(userObject.billing.subscription.stripeId)
+      expect(stripeSubscription).toExist()
+      expect(stripeSubscription.billing).to.equal('charge_automatically')
+      expect(stripeSubscription.plan.id).to.equal('plan_DHd5HGwsl31NoC')
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('update the subscription to the gold plan', async () => {
+      subscriptionObject = await billingService.update(userObject._id, {
+        action: 'subscription',
+        plan: 'gold',
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.subscription.plan).to.equal('gold')
+      expect(userObject.billing.subscription.stripeId === subscriptionObject.stripeId)
+      // Check Stripe
+      stripeSubscription = await subscriptionService.get(userObject.billing.subscription.stripeId)
+      expect(stripeSubscription).toExist()
+      expect(stripeSubscription.billing).to.equal('charge_automatically')
+      expect(stripeSubscription.plan.id).to.equal('plan_DHd5RMLMSlpUmQ')
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('update the subscription to the bronze plan', async () => {
+      subscriptionObject = await billingService.update(userObject._id, {
+        action: 'subscription',
+        plan: 'bronze',
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.subscription.plan).to.equal('bronze')
+      expect(userObject.billing.subscription.stripeId).to.equal(undefined)
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('unsubscribe a customer from the plan', async () => {
+      await billingService.remove(userObject._id, {
+        query: {
+          action: 'subscription',
+          billingObjectService: 'users',
+          billingPerspective: 'billing'
+        }
+      })
+      userObject = await userService.get(userObject._id)
+      assert.isNull(userObject.billing.subscription)
+      // Check Stripe
+      const stripeSubscriptions = await subscriptionService.find({ query: { customer: userObject.billing.customer.stripeId } })
+      expect(stripeSubscriptions.data.length).to.equals(0)
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('remove the card from the customer', async () => {
+      customerObject = await billingService.update(userObject._id, {
+        action: 'customer',
+        email: 'no-card@kalisio.xyz',
+        description: 'A no card purchaser',
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.customer.email).to.equal('no-card@kalisio.xyz')
+      assert.isUndefined(userObject.billing.customer.card)
+      // Check Stripe
+      const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
+      expect(stripeCards.data.length).to.equals(0)
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('subscribe a customer to a plan', async () => {
+      subscriptionObject = await billingService.create({
+        action: 'subscription',
+        plan: 'gold',
+        billing: 'send_invoice',
+        billingObject: userObject._id,
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      userObject = await userService.get(userObject._id)
+      expect(subscriptionObject.stripeId === userObject.billing.subscription.stripeId)
+      expect(userObject.billing.subscription.plan).to.equal('gold')
+      // Check Stripe
+      const stripeSubscriptions = await subscriptionService.find({ query: { customer: userObject.billing.customer.stripeId } })
+      expect(stripeSubscriptions.data.length).to.equals(1)
+      expect(stripeSubscriptions.data[0].billing).to.equal('send_invoice')
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('update a customer with an american express', async () => {
+      customerObject = await billingService.update(userObject._id, {
+        action: 'customer',
+        email: 'amex@kalisio.xyz',
+        description: 'A anmerican express purchaser',
+        token: 'tok_amex',
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.customer.email).to.equal('amex@kalisio.xyz')
+      expect(userObject.billing.customer.card.stripeId === customerObject.card.stripeId)
+      expect(userObject.billing.customer.card.last4 === customerObject.card.last4)
+      // Check Stripe
+      const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
+      expect(stripeCards.data.length).to.equals(1)
+      const stripeSubscriptions = await subscriptionService.find({ query: { customer: userObject.billing.customer.stripeId } })
+      expect(stripeSubscriptions.data.length).to.equals(1)
+      expect(stripeSubscriptions.data[0].billing).to.equal('charge_automatically')
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('update a customer with a mastercard', async () => {
+      customerObject = await billingService.update(userObject._id, {
+        action: 'customer',
+        email: 'mastercard@kalisio.xyz',
+        description: 'A mastercard purchaser',
+        token: 'tok_mastercard',
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.customer.email).to.equal('mastercard@kalisio.xyz')
+      expect(userObject.billing.customer.card.stripeId === customerObject.card.stripeId)
+      expect(userObject.billing.customer.card.last4 === customerObject.card.last4)
+      // Check Stripe
+      const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
+      expect(stripeCards.data.length).to.equals(1)
+      const stripeSubscriptions = await subscriptionService.find({ query: { customer: userObject.billing.customer.stripeId } })
+      expect(stripeSubscriptions.data.length).to.equals(1)
+      expect(stripeSubscriptions.data[0].billing).to.equal('charge_automatically')
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('remove the card from the customer', async () => {
+      customerObject = await billingService.update(userObject._id, {
+        action: 'customer',
+        email: 'no-card@kalisio.xyz',
+        description: 'A no card purchaser',
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.customer.email).to.equal('no-card@kalisio.xyz')
+      assert.isUndefined(userObject.billing.customer.card)
+      // Check Stripe
+      const stripeCards = await cardService.find({ customer: userObject.billing.customer.stripeId })
+      expect(stripeCards.data.length).to.equals(0)
+      const stripeSubscriptions = await subscriptionService.find({ query: { customer: userObject.billing.customer.stripeId } })
+      expect(stripeSubscriptions.data.length).to.equals(1)
+      expect(stripeSubscriptions.data[0].billing).to.equal('send_invoice')
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('removes the customer', async () => {
+      await billingService.remove(userObject._id, {
+        query: {
+          action: 'customer',
+          billingObjectService: 'users',
+          billingPerspective: 'billing'
+        }
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      assert.isNull(userObject.billing.subscription)
+      assert.isNull(userObject.billing.customer)
+      // Check Stripe
+      const stripeCustomers = await customerService.find({ query: { email: customerObject.email } })
+      expect(stripeCustomers.data.length).to.equals(0)
+    })
+    // Let enough time to process
+      .timeout(10000)
+
+    it('create a new customer with card', async () => {
+      customerObject = await billingService.create({
+        action: 'customer',
+        email: 'new-customer@kalisio.xyz',
+        token: 'tok_visa_debit',
+        description: 'A new customer',
+        billingObject: userObject._id,
+        billingObjectService: 'users',
+        billingPerspective: 'billing'
+      })
+      // Check user
+      userObject = await userService.get(userObject._id)
+      expect(userObject.billing.customer.stripeId === customerObject.stripeId)
+      expect(userObject.billing.customer.email === customerObject.email)
+      expect(userObject.billing.customer.description = customerObject.description)
+      // Check Stripe
+      stripeCustomer = await customerService.get(userObject.billing.customer.stripeId)
+      expect(stripeCustomer).toExist()
+      stripeCard = await cardService.get(userObject.billing.customer.card.stripeId, { customer: userObject.billing.customer.stripeId })
+      expect(stripeCard).toExist()
+    })
+    // Let enough time to process
+      .timeout(10000)
+  }
 
   it('removes the test user', async () => {
     await userService.remove(userObject._id, {
