@@ -292,7 +292,7 @@ export default {
       // Search bar
       this.setSearchBar('name')
       // Setup the right drawer
-      this.setRightDrawer('catalog/KCatalogPanel', this.$data)
+      this.clearRightDrawer()
       this.registerActivityActions()
     },
     async getCatalogLayers () {
@@ -461,9 +461,11 @@ export default {
       // Cleanup
       this.clearEventsLayers()
       this.templates = []
+      this.clearRightDrawer()
     },
     onShowMap () {
       this.mode = 'map'
+      this.setRightDrawer('catalog/KCatalogPanel', this.$data)
       // Refresh layer data
       this.refreshCollection()
     },
