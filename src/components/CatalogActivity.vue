@@ -195,7 +195,8 @@ export default {
           name: 'create-alert',
           icon: 'fas fa-bell',
           handler: this.onCreateWeatherAlertAction,
-          label: this.$t('CatalogActivity.CREATE_WEATHER_ALERT_ACTION')
+          label: this.$t('CatalogActivity.CREATE_WEATHER_ALERT_ACTION'),
+          badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
         })
       } else if (feature._id && !this.isLayerEdited(layer.name)) { // Only on saved features and not in edition mode
         // Only on feature services targeting non-user data
@@ -204,7 +205,8 @@ export default {
             name: 'create-alert',
             icon: 'fas fa-bell',
             handler: this.onCreateMeasureAlertAction,
-            label: this.$t('CatalogActivity.CREATE_MEASURE_ALERT_ACTION')
+            label: this.$t('CatalogActivity.CREATE_MEASURE_ALERT_ACTION'),
+            badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
           })
         } else {
           if (layer.name !== this.$t('CatalogActivity.ALERTS_LAYER')) {
@@ -212,7 +214,8 @@ export default {
               name: 'create-event',
               icon: 'whatshot',
               handler: this.onCreateEventAction,
-              label: this.$t('CatalogActivity.CREATE_EVENT_ACTION')
+              label: this.$t('CatalogActivity.CREATE_EVENT_ACTION'),
+              badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
             })
           }
           if (_.get(layer, 'schema.content')) {
@@ -220,14 +223,16 @@ export default {
               name: 'edit-feature-properties',
               icon: 'edit',
               handler: this.onUpdateFeaturePropertiesAction,
-              label: this.$t('CatalogActivity.EDIT_FEATURE_PROPERTIES_ACTION')
+              label: this.$t('CatalogActivity.EDIT_FEATURE_PROPERTIES_ACTION'),
+              badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
             })
           }
           featureActions.push({
             name: 'remove-feature',
             icon: 'las la-minus-circle',
             handler: this.onRemoveFeatureAction,
-            label: this.$t('CatalogActivity.REMOVE_FEATURE_ACTION')
+            label: this.$t('CatalogActivity.REMOVE_FEATURE_ACTION'),
+            badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
           })
         }
       }
