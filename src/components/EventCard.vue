@@ -270,7 +270,6 @@ export default {
       })
     },
     async followUp () {
-      console.log('follow up')
       if (this.hasParticipantInteraction) {
         this.$refs.followUpModal.open()
         // We can then load the schema and local refs in parallel
@@ -279,7 +278,7 @@ export default {
           this.loadRefs()
         ])
         await this.$refs.form.build()
-        // const properties = await this.loadFeatureProperties(this.event.feature)
+        const properties = await this.loadFeatureProperties(this.event.feature)
         if (properties) this.$refs.form.fill(properties)
       } else if (this.isCoordinator) {
         this.$router.push({ name: 'event-activity', params: { objectId: this.item._id, contextId: this.contextId } })
