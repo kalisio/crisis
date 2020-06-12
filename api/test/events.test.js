@@ -465,7 +465,7 @@ describe('events', () => {
   after(async () => {
     await userService.Model.drop()
     await orgService.Model.drop()
-    await app.db.instance.dropDatabase()
+    //await app.db.instance.dropDatabase()
     await app.db.disconnect()
   })
 })
