@@ -1,19 +1,19 @@
 <template>
   <div>
-    <q-expansion-item ref="timePeriod" default-opened icon="fas fa-clock" :label="$t('AlertForm.TIME_PERIOD')" group="group">
+    <q-expansion-item ref="timePeriod" default-opened icon="las la-clock" :label="$t('AlertForm.TIME_PERIOD')" group="group">
       <q-list dense class="row items-center justify-around q-pa-md">
         <q-item>
           <q-item-section>
           {{$t('AlertForm.TIME_PERIOD_RANGE')}}
           </q-item-section>
           <q-item-section v-if="isMeasure" avatar>
-            <q-select v-model="period.start" :options="generateTimeOptions([1, 3, 6, 12, 24, 48, 72, 96])" emit-value map-options>
-              <template v-slot:prepend><q-icon name="fas fa-minus" /></template>
+            <q-select v-model="period.start" :options="generatePeriodOptions([15, 30, 60, 3*60, 6*60, 12*60, 24*60, 48*60, 72*60, 96*60])" emit-value map-options>
+              <template v-slot:prepend><q-icon name="las la-minus" /></template>
             </q-select>
           </q-item-section>
           <q-item-section v-if="isWeather" avatar>
-            <q-select v-model="period.end" :options="generateTimeOptions([1, 3, 6, 12, 24, 48, 72, 96])" emit-value map-options>
-              <template v-slot:prepend><q-icon name="fas fa-plus" /></template>
+            <q-select v-model="period.end" :options="generatePeriodOptions([60, 3*60, 6*60, 12*60, 24*60, 48*60, 72*60, 96*60])" emit-value map-options>
+              <template v-slot:prepend><q-icon name="las la-plus" /></template>
             </q-select>
           </q-item-section>
         </q-item>
@@ -22,13 +22,13 @@
             {{$t('AlertForm.FREQUENCY')}}
           </q-item-section>
           <q-item-section avatar>
-            <q-select v-model="frequency" :options="generateTimeOptions([1, 2, 3, 6, 12, 24])" emit-value map-options>
+            <q-select v-model="frequency" :options="generateFrequencyOptions([15, 30, 60, 2*60, 3*60, 6*60, 12*60, 24*60])" emit-value map-options>
             </q-select>
           </q-item-section>
         </q-item>
       </q-list>
     </q-expansion-item>
-    <q-expansion-item ref="conditions" icon="fab fa-cloudversify" :label="$t('AlertForm.CONDITIONS')" group="group">
+    <q-expansion-item ref="conditions" icon="lab la-cloudversify" :label="$t('AlertForm.CONDITIONS')" group="group">
       <q-list dense class="q-pa-md">
         <q-item class="row items-center justify-around" v-for="(condition, index) in conditions" :key="variables[index].name">
           <q-item-section avatar>
@@ -49,7 +49,7 @@
         </q-item>
       </q-list>
     </q-expansion-item>
-    <q-expansion-item ref="event" icon="fas fa-bell" :label="$t('AlertForm.EVENT')" group="group">
+    <q-expansion-item ref="event" icon="las la-bell" :label="$t('AlertForm.EVENT')" group="group">
       <q-list dense class="row items-center justify-around q-pa-md">
         <q-item class="col-12">
           <q-item-section class="col-6">
@@ -76,6 +76,7 @@
 
 <script>
 import _ from 'lodash'
+import moment from 'moment'
 import logger from 'loglevel'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { QSlider, QRange } from 'quasar'
@@ -107,9 +108,9 @@ export default {
     return {
       period: {
         start: 0,
-        end: 24
+        end: 24 * 60
       },
-      frequency: 6,
+      frequency: 6 * 60,
       conditions: [],
       eventTemplatesService: {
         service: 'event-templates',
@@ -123,7 +124,45 @@ export default {
   },
   methods: {
     generateTimeOptions (values) {
-      return values.map(value => ({ label: `${value}H`, value }))
+      return values.map(value => ({
+        label: value >= 60 ? `${value / 60}H` : `${value}m`, value
+      }))
+    },
+    generatePeriodOptions (values) {
+      // First extract bounds from layer/forecast model
+      let from, to, every
+      if (this.isWeather) {
+        every = moment.duration(this.forecastModel.interval, 's')
+        from = moment.duration(this.forecastModel.lowerLimit, 's')
+        to = moment.duration(this.forecastModel.upperLimit, 's')
+      } else {
+        every = moment.duration(this.layer.every)
+        from = moment.duration(this.layer.from)
+        to = moment.duration(this.layer.to)
+      }
+      // Take care that we have forecast data in the future and observed data in the past
+      if (from.asMinutes() < to.asMinutes()) [from, to] = [to, from]
+      // Filter values outside bounds or lower than update frequency
+      let options = this.generateTimeOptions(values)
+      options = options.filter(option => (
+        (option.value >= Math.abs(from.asMinutes())) &&
+        (option.value <= Math.abs(to.asMinutes())) &&
+        (option.value >= Math.abs(every.asMinutes())))
+      )
+      return options
+    },
+    generateFrequencyOptions (values) {
+      // First extract update interval from layer/forecast model
+      let every
+      if (this.isWeather) {
+        every = moment.duration(this.forecastModel.interval, 's')
+      } else {
+        every = moment.duration(this.layer.every)
+      }
+      // Filter values outside bounds or lower than update frequency
+      let options = this.generateTimeOptions(values)
+      options = options.filter(option => (option.value >= every.asMinutes()))
+      return options
     },
     getOperators (variable) {
       return this.isRange(variable) ? [{
@@ -163,14 +202,19 @@ export default {
       }
     },
     frequencyToCron (frequency) {
-      if (frequency === 0) return '0 * * * *'
-      if (frequency === 24) return '0 0 * * *'
-      else return `0 */${frequency} * * *`
+      if (frequency < 60) return `*/${frequency} * * * *`
+      if (frequency === 60) return '0 * * * *'
+      if (frequency < 24 * 60) return `0 */${frequency / 60} * * *`
+      else return '0 0 * * *'
     },
     cronToFrequency (cron) {
-      if (cron === '0 * * * *') return 0
-      else if (cron === '0 0 * * *') return 24
-      else return parseInt(cron.split(' ')[1])
+      if (cron === '0 * * * *') return 60
+      else if (cron === '0 0 * * *') return 24 * 60
+      else {
+        // Less than 1H
+        if (cron.startsWith('/*')) return parseInt(cron.replace('*/', '').split(' ')[0]) * 60
+        else return parseInt(cron.replace('*/', '').split(' ')[1]) * 60
+      }
     },
     async build () {
       // Since some properties are injected in form we need to make sure Vue.js has processed props
@@ -178,7 +222,7 @@ export default {
       await this.$nextTick()
       // For weather we can only go in the future while for measure it's in the past
       this.period.start = (this.isWeather ? 0 : 1)
-      this.period.end = (this.isWeather ? 24 : 0)
+      this.period.end = (this.isWeather ? 24 * 60 : 0)
       // Initialize conditions object matching variables
       this.conditions = this.variables.map(variable => this.generateDefaultConditions(variable))
       this.eventTemplate = null
@@ -187,8 +231,10 @@ export default {
     async fill (values) {
       logger.debug('Filling alert form', values)
       // Future for forecast, past for measure
-      this.period.start = this.isWeather ? _.get(values, 'period.start.hours') : -_.get(values, 'period.start.hours')
-      this.period.end = _.get(values, 'period.end.hours')
+      this.period.start = this.isWeather ?
+        _.get(values, 'period.start.minutes') :
+        -_.get(values, 'period.start.minutes')
+      this.period.end = _.get(values, 'period.end.minutes')
       this.frequency = this.cronToFrequency(values.cron)
       this.conditions = new Array(this.variables.length)
       const variablesWithConditions = _.keys(values.conditions)
@@ -225,8 +271,8 @@ export default {
     values () {
       const values = { type: 'Feature' } // We store alerts as GeoJson features
       // Future for forecast, past for measure
-      _.set(values, 'period.start.hours', this.isWeather ? this.period.start : -this.period.start)
-      _.set(values, 'period.end.hours', this.period.end)
+      _.set(values, 'period.start.minutes', this.isWeather ? this.period.start : -this.period.start)
+      _.set(values, 'period.end.minutes', this.period.end)
       _.set(values, 'cron', this.frequencyToCron(this.frequency))
       if (this.isWeather) {
         values.forecast = this.forecastModel.name
