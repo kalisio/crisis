@@ -404,3 +404,15 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+  .probe-cursor {
+    cursor: crosshair;
+  }
+  .processing-cursor {
+    cursor: wait;
+  }
+  .position-cursor {
+    cursor: url('../statics/position-cursor.png'), auto; 
+  }
+</style>
