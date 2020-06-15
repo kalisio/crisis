@@ -216,7 +216,9 @@ export default {
             })
           } else {
             this.registerPaneAction({
-              name: 'follow-up', label: label, icon, badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } }, handler: this.followUp 
+              name: 'follow-up', label: label, icon, 
+              badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } }, 
+              handler: this.followUp 
             })
           }
         }
@@ -226,7 +228,9 @@ export default {
           name: 'add-media', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-camera', handler: this.uploadMedia
         })
         if (this.hasMedias()) this.registerPaneAction({
-          name: 'browse-media', label: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', handler: this.browseMedia
+          name: 'browse-media', label: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', 
+          badge: { label: this.getMediasCount(), floating: true },
+          handler: this.browseMedia
         })
       }
       if (this.hasLocation() && this.canNavigate()) {

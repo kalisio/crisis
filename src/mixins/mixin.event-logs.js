@@ -16,6 +16,9 @@ const eventsMixin = {
     hasMedias () {
       return this.event.attachments && this.event.attachments.length
     },
+    getMediasCount () {
+      return this.event.attachments ? this.event.attachments.length : 0
+    },
     hasStepUserInteraction (step) {
       if (_.isEmpty(step)) return false
       else return !_.isEmpty(step.interaction)
