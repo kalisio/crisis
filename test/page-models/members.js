@@ -119,6 +119,8 @@ export default class Members extends Application {
       .wait(5000)
   }
   async checkMembersCount (test, count) {
+    await test.wait(5000)
+    console.log(await this.membersGrid.getVue())
     await this.checkCollectionCount(test, this.membersGrid, count)
   }
 }

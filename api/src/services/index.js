@@ -137,7 +137,6 @@ export default async function () {
           service.name === 'organisations' ||
           service.name === 'groups' ||
           service.name === 'members' ||
-          service.name === 'subscribers' ||
           service.name === 'tags' ||
           service.name === 'storage' ||
           service.name === 'devices' ||

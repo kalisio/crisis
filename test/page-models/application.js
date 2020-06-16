@@ -186,8 +186,10 @@ export default class Application {
   }
   // Colection helpers
   async getItem (test, collectionSelector, name) {
-    const collection = await collectionSelector.getVue()
-    return _.find(collection.state.items, { name: name })
+    const collection = collectionSelector
+    await test.wait(1000)
+    const vueCollection = await collection.getVue()
+    return _.find(vueCollection.state.items, { name: name })
   }
   async getItemId (test, collectionSelector, name) {
     const item = await this.getItem(test, collectionSelector, name)
@@ -195,7 +197,9 @@ export default class Application {
     return undefined
   }
   async checkCollectionCount (test, collectionSelector, count) {
-    const collection = await collectionSelector.getVue()
-    await test.expect(collection.state.items.length).eql(count, 'Invalid collection length')
+    const collection = collectionSelector
+    await test.wait(1000)
+    const vueCollection = await collection.getVue()
+    await test.expect(vueCollection.state.items.length).eql(count, 'Invalid collection length')
   }
 }

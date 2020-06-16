@@ -34,9 +34,6 @@ export default {
       if (this.$can('service', 'tags', context._id)) {
         actions.menu.push({ name: 'tags', icon: 'las la-tags', label: this.$t('Context.TAGS'), route: { name: 'tags-activity', params: { contextId: context._id } } })
       }
-      if (this.$can('service', 'subscribers', context._id)) {
-        actions.menu.push({ name: 'subscribers', icon: 'las la-address-book', label: this.$t('Context.SUBSCRIBERS'), route: { name: 'subscribers-activity', params: { contextId: context._id } } })
-      }
       if (this.$can('service', 'groups', context._id)) {
         actions.menu.push({ name: 'groups', icon: 'las la-sitemap', label: this.$t('Context.GROUPS'), route: { name: 'groups-activity', params: { contextId: context._id } } })
       }

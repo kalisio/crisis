@@ -105,11 +105,6 @@ module.exports = {
                   'edit/:objectId': { name: 'edit-tag', component: 'editor/KModalEditor', props: true }
                 }
               },
-              'subscribers': {
-                name: 'subscribers-activity', 
-                component: 'team/KSubscribersActivity', 
-                props: true
-              },
               'groups': {
                 name: 'groups-activity',
                 component: 'team/KGroupsActivity',
