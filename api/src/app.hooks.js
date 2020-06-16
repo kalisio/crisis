@@ -50,7 +50,10 @@ module.exports = {
       coreHooks.generatePassword,
       coreHooks.sendInvitationEmail)],
     update: [coreHooks.preventUpdatePerspectives],
-    patch: [],
+    patch: [commonHooks.when(hook => hook.service.name === 'users' && hook.data.expireAt,
+      coreHooks.setExpireAfter(48 * 60 * 60), // 48h in seconds
+      coreHooks.generatePassword,
+      coreHooks.sendInvitationEmail)],
     remove: []
   },
 
