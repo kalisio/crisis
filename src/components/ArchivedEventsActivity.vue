@@ -9,35 +9,35 @@
       <q-page-sticky position="top" :offset="[0, 4]" style="z-index: 1">
         <div class="row justify-center text-center text-subtitle1">
           <div class="row items-center time-range-bar">
-            <q-btn v-show="!showHistory" flat round color="primary" icon="timelapse" @click="onShowHistory">
+            <q-btn v-show="!showHistory" flat round color="primary" icon="las la-history" @click="onShowHistory">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_HISTORY_LABEL') }}</q-tooltip>
             </q-btn>
             <q-btn v-show="!showMap" flat round color="primary" icon="scatter_plot" @click="onShowMap">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_MAP_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="!showChart" flat round color="primary" icon="pie_chart" @click="onShowChart">
+            <q-btn v-show="!showChart" flat round color="primary" icon="las la-chart-pie" @click="onShowChart">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_CHART_LABEL') }}</q-tooltip>
             </q-btn>
             <q-separator vertical />
             &nbsp;{{minDateTimeSelected}}
-            <q-icon name="event" color="primary" class="cursor-pointer">
+            <q-icon name="las la-calendar" color="primary" class="cursor-pointer">
               <q-tooltip>{{ $t('ArchivedEventsActivity.FROM_DATE') }}</q-tooltip>
               <q-popup-proxy ref="minDatePopup" transition-show="scale" transition-hide="scale">
                 <q-date v-model="minDateTimeSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
               </q-popup-proxy>
             </q-icon>
             &nbsp;-&nbsp;{{maxDateTimeSelected}}&nbsp;
-            <q-icon name="event" color="primary" class="cursor-pointer">
+            <q-icon name="las la-calendar" color="primary" class="cursor-pointer">
               <q-tooltip>{{ $t('ArchivedEventsActivity.TO_DATE') }}</q-tooltip>
               <q-popup-proxy ref="maxDatePopup" transition-show="scale" transition-hide="scale">
                 <q-date v-model="maxDateTimeSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
               </q-popup-proxy>
             </q-icon>
             &nbsp;<q-separator vertical />
-            <q-btn v-show="showHistory && ascendingSort" flat round color="primary" icon="arrow_upward" @click="onSortOrder">
+            <q-btn v-show="showHistory && ascendingSort" flat round color="primary" icon="las la-sort-amount-up" @click="onSortOrder">
               <q-tooltip>{{ $t('ArchivedEventsActivity.DESCENDING_SORT') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="showHistory && !ascendingSort" flat round color="primary" icon="arrow_downward" @click="onSortOrder">
+            <q-btn v-show="showHistory && !ascendingSort" flat round color="primary" icon="las la-sort-amount-down" @click="onSortOrder">
               <q-tooltip>{{ $t('ArchivedEventsActivity.ASCENDING_SORT') }}</q-tooltip>
             </q-btn>
             <!--span v-show="showHistory" >&nbsp;{{$t('ArchivedEventsActivity.SORT_BY_LABEL')}}&nbsp;</span>
@@ -45,16 +45,16 @@
             <q-btn v-show="showMap && heatmap" flat round color="primary" icon="scatter_plot" @click="onHeatmap">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_MARKERS_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="showMap && !heatmap" flat round color="primary" icon="fas fa-bowling-ball" @click="onHeatmap">
+            <q-btn v-show="showMap && !heatmap" flat round color="primary" icon="las la-bowling-ball" @click="onHeatmap">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_HEATMAP_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="showMap && byTemplate" flat round color="primary" icon="fas fa-object-group" @click="onByTemplate">
+            <q-btn v-show="showMap && byTemplate" flat round color="primary" icon="las la-object-group" @click="onByTemplate">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_ALL_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="showMap && !byTemplate" flat round color="primary" icon="fas fa-layer-group" @click="onByTemplate">
+            <q-btn v-show="showMap && !byTemplate" flat round color="primary" icon="las la-layer-group" @click="onByTemplate">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="!byTemplate" flat round color="primary" icon="cloud_download" @click="downloadEventsData"/>
+            <q-btn v-show="!byTemplate" flat round color="primary" icon="las la-file-download" @click="downloadEventsData"/>
           </div>
         </div>
       </q-page-sticky>
@@ -108,7 +108,7 @@
             <q-select class="col-1" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')" stack-label
               :options="renderOptions" @input="refreshChart"/>
             <q-pagination v-if="nbCharts > 1" v-model="currentChart" :max="nbCharts" @input="refreshChart" :input="true"/>
-            <q-btn flat round color="primary" icon="cloud_download" @click="downloadChartData" />
+            <q-btn flat round color="primary" icon="las la-file-download" @click="downloadChartData" />
           </div>
           <div class="row justify-center text-center">
             <canvas class="chart q-ma-lg" ref="chart"></canvas>

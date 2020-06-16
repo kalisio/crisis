@@ -5,7 +5,7 @@
         <div v-show="!workflowEdition">
           <k-form :class="{ 'light-dimmed': applyInProgress }" ref="templateForm" :schema="schema"  @field-changed="onFieldChanged"/>
           <p :class="{ 'light-dimmed': applyInProgress }" class="col-10 caption pull-left">
-            <q-toggle icon="fas fa-retweet" v-model="hasWorkflow" @input="onWorkflow">
+            <q-toggle icon="las la-retweet" v-model="hasWorkflow" @input="onWorkflow">
             </q-toggle>
             <strong v-show="!hasWorkflow">{{$t('EventTemplateEditor.ADD_WORKFLOW_LABEL')}}</strong>
             <strong v-show="hasWorkflow">{{$t('EventTemplateEditor.WORKFLOW_HELPER_LABEL')}}</strong>

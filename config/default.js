@@ -82,11 +82,11 @@ let defaultMapOptions = {
 
 const baseLayers = { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'las la-layer-group',
   options: { exclusive: true, filter: { type: 'BaseLayer' } } }
-const businessLayers = { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'las la-layer-group',
+const businessLayers = { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'las la-briefcase',
   options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } } }
 const capturedLayers = { name: 'CapturedLayers', label: 'KCatalogPanel.CAPTURED_LAYERS', icon: 'las la-street-view',
   options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['captured'] } } } }
-const overlayLayers = { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'las la-home',
+const overlayLayers = { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'las la-map-marker',
   options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } }
 const measureLayers = { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fas la-map-pin',
   options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } } }
@@ -137,7 +137,7 @@ module.exports = {
   roles: {
     // Member/Manager/Owner
     labels: ['MEMBER', 'MANAGER', 'OWNER'],
-    icons: ['person', 'work', 'verified_user']
+    icons: ['las la-user', 'las la-briefwase', 'las la-certificate']
   },
   screens: {
     banner: 'aktnmap-banner.png',
@@ -209,9 +209,9 @@ module.exports = {
   },
   user_actions: {
     links: [
-      { label: 'sideNav.HELP', icon: 'help', route: { name: 'help'} },
+      { label: 'sideNav.HELP', icon: 'las la-question', route: { name: 'help'} },
       { }, // separator
-      { label: 'sideNav.LOGOUT', icon: 'exit_to_app', route: { name: 'logout' } }
+      { label: 'sideNav.LOGOUT', icon: 'las la-sign-out-alt', route: { name: 'logout' } }
     ]
   },
   context: {

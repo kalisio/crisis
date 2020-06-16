@@ -9,7 +9,7 @@
         <div v-if="item.location">
           <div class="q-pa-sm row items-center">
             <k-text-area class="light-paragraph" :length="40" :text="item.location.name" />
-            <q-btn icon="place" color="grey-7" flat dense round>
+            <q-btn icon="las la-map-marker" color="grey-7" flat dense round>
               <q-tooltip>
                 {{ $t('EventCard.LOCATE_LABEL') }}
               </q-tooltip>

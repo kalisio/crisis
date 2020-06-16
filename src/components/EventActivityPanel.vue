@@ -1,7 +1,7 @@
 <template>
   <k-catalog-panel :layers="layers" :layerHandlers="layerHandlers" :categories="layerCategories" >
     <div slot="footer" >
-      <q-expansion-item v-if="participants.length > 0" icon="fas fa-user" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">
+      <q-expansion-item v-if="participants.length > 0" icon="las la-user" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">
         <template v-for="participant in participants">
           <div class="row justify-between no-wrap" style="overflow: auto" :key="participant._id">
             <div class="col-auto self-center">
@@ -13,10 +13,10 @@
             <k-text-area style="flex-shrink: 0" class="col-auto light-paragraph self-center" :length="20" :text="participantComment(participant)" />
             <div class="col-auto self-center">
               <q-btn v-if="!archived && canFollowUp(participant)" flat round small color="primary" @click="doFollowUp(participant._id)">
-                <q-icon name="message" color="red" />
+                <q-icon name="las la-sms" color="red" />
               </q-btn>
               <q-btn flat round small color="primary" @click="onZoomClicked(participant)">
-                <q-icon name="remove_red_eye" />
+                <q-icon name="las la-search-location" />
               </q-btn>
             </div>
           </div>

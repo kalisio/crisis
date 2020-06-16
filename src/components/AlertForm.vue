@@ -64,7 +64,7 @@
     <q-list v-show="hasError" dense class="row items-center justify-around q-pa-md">
       <q-item>
         <q-item-section side>
-          <q-icon name="warning" color="negative" />
+          <q-icon name="las la-exclamation-circle" color="negative" />
         </q-item-section>
         <q-item-section class="text-negative">
         {{error}}

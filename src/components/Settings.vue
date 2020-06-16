@@ -5,7 +5,7 @@
         Edit link
       -->
       <q-item id="edit-settings" @click="editSettings" clickable v-ripple>
-        <q-item-section avatar><q-icon name="settings"/></q-item-section>
+        <q-item-section avatar><q-icon name="las la-cog"/></q-item-section>
         <q-item-section>{{$t('sideNav.SETTINGS')}}</q-item-section>
       </q-item>
     </q-list>

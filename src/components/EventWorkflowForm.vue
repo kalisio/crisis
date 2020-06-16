@@ -10,27 +10,27 @@
     </q-step>
     <template v-slot:navigation>
       <q-stepper-navigation class="row justify-end">
-        <q-btn class="col-1" :disabled="currentStep === steps[0].name" flat color="primary" icon="navigate_before" @click="onPreviousStep()">
+        <q-btn class="col-1" :disabled="currentStep === steps[0].name" flat color="primary" icon="las la-step-backward" @click="onPreviousStep()">
           <q-tooltip v-if="currentStep !== steps[0].name" anchor="top middle" self="bottom middle" :offset="[10, 10]">
             {{$t('EventWorkflowForm.PREVIOUS_STEP_BUTTON')}}
           </q-tooltip>
         </q-btn>
-        <q-btn class="col-1" v-show="!preview" flat color="primary" icon="playlist_add" @click="onAddStep()">
+        <q-btn class="col-1" v-show="!preview" flat color="primary" icon="las la-plus-circle" @click="onAddStep()">
           <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
             {{$t('EventWorkflowForm.ADD_STEP_BUTTON')}}
           </q-tooltip>
         </q-btn>
-        <q-btn class="col-1" v-show="!preview && (steps.length > 1)" flat color="primary" icon="delete_sweep" @click="onRemoveStep()">
+        <q-btn class="col-1" v-show="!preview && (steps.length > 1)" flat color="primary" icon="las la-trash" @click="onRemoveStep()">
           <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
             {{$t('EventWorkflowForm.REMOVE_STEP_BUTTON')}}
           </q-tooltip>
         </q-btn>
-        <q-btn class="col-1" flat color="primary" :icon="preview ? 'edit' : 'play_arrow'" @click="onPreviewOrEdit">
+        <q-btn class="col-1" flat color="primary" :icon="preview ? 'las la-edit' : 'las la-play'" @click="onPreviewOrEdit">
           <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
             {{$t(!preview ? 'EventWorkflowForm.PREVIEW_WORKFLOW_BUTTON': 'EventWorkflowForm.EDIT_WORKFLOW_BUTTON')}}
           </q-tooltip>
         </q-btn>
-        <q-btn class="col-1" :disabled="currentStep === steps[steps.length - 1].name" flat color="primary" icon="navigate_next" @click="onNextStep()">
+        <q-btn class="col-1" :disabled="currentStep === steps[steps.length - 1].name" flat color="primary" icon="las la-step-forward" @click="onNextStep()">
           <q-tooltip v-if="currentStep !== steps[steps.length - 1].name" anchor="top middle" self="bottom middle" :offset="[10, 10]">
             {{$t('EventWorkflowForm.NEXT_STEP_BUTTON')}}
           </q-tooltip>

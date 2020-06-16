@@ -11,13 +11,13 @@
           <div v-if="hasCard" class="row no-margin">
             <div class="col-11 self-center">
               <span>&nbsp;</span>
-              <q-icon name="credit_card" />
+              <q-icon name="las la-credit-card" />
               <span>&nbsp;{{customer.card.brand}}</span>
               <span>&nbsp;XXXX-{{customer.card.last4}}</span>
             </div>
             <div class="col-1">
               <q-btn id="clear-card-button" flat round color="grey-7" @click="onCardCleared">
-                <q-icon name="cancel" />
+                <q-icon name="las la-times-circle" />
               </q-btn>
             </div>
           </div>
