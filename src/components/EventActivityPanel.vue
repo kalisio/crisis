@@ -1,7 +1,7 @@
 <template>
-  <k-catalog-panel :layers="layers" :layerHandlers="layerHandlers" :categories="layerCategories" >
+  <k-catalog-panel :layers="layers" :layerHandlers="layerHandlers" :layerCategories="layerCategories" >
     <div slot="footer" >
-      <q-expansion-item v-if="participants.length > 0" icon="las la-user" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">
+      <q-expansion-item v-if="participants.length > 0" icon="las la-user" header-class="text-primary" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">
         <template v-for="participant in participants">
           <div class="row justify-between no-wrap" style="overflow: auto" :key="participant._id">
             <div class="col-auto self-center">
