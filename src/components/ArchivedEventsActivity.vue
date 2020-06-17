@@ -98,20 +98,29 @@
       <!--
         Events graph
       -->
-      <k-modal ref="chartModal" :title="$t('ArchivedEventsActivity.CHART_MODAL_TITLE')" :toolbar="toolbar" :buttons="[]" >
+      <k-modal ref="chartModal" :title="$t('ArchivedEventsActivity.CHART_MODAL_TITLE')"
+        :toolbar="toolbar" :buttons="[]" >
         <div slot="modal-content">
-          <div class="row justify-center text-center">
-            <q-select class="col-1" v-model="chartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')" stack-label
-            :options="chartOptions" @input="refreshChart"/>
-            <q-select class="col-1" v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')" stack-label
-              :options="paginationOptions" @input="refreshChartAndPagination"/>
-            <q-select class="col-1" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')" stack-label
-              :options="renderOptions" @input="refreshChart"/>
-            <q-pagination v-if="nbCharts > 1" v-model="currentChart" :max="nbCharts" @input="refreshChart" :input="true"/>
-            <q-btn flat round color="primary" icon="las la-file-download" @click="downloadChartData" />
-          </div>
-          <div class="row justify-center text-center">
-            <canvas class="chart q-ma-lg" ref="chart"></canvas>
+          <!-- Used as target for popup as we cannot reference the button in the modal -->
+          <span ref="chartSettingsTarget" class="float-right"/>
+          <q-popup-proxy ref="chartSettings" :target="$refs.chartSettingsTarget">
+            <div class="q-pa-md" style="min-width: 300px">
+              <q-select v-model="chartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')"
+              :options="chartOptions" @input="refreshChart"/>
+              <q-select v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')"
+                :options="paginationOptions" @input="refreshChartAndPagination"/>
+              <q-select v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')"
+                :options="renderOptions" @input="refreshChart"/>
+            </div>
+          </q-popup-proxy>
+          <div class="row justify-center text-center q-ma-none q-pa-none" >
+            <div style="width: 90vw">
+              <canvas class="chart" ref="chart"></canvas>
+            </div>
+            <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
+              icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
+            <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
+              icon="las la-chevron-right" class="absolute-right" @click="onNextChart" />
           </div>
         </div>
       </k-modal>
@@ -215,7 +224,12 @@ export default {
     const maxDateTimeSelected = nextMonth.format('YYYY[/]MM[/]DD')
 
     return {
-      toolbar: [{ name: 'close', icon: 'las la-times', handler: () => this.$refs.chartModal.close() }],
+      toolbar: [
+        { name: 'settings', icon: 'las la-cog', label: this.$i18n.t('ArchivedEventsActivity.CHART_SETTINGS_LABEL'),
+          handler: () => this.$refs.chartSettings.show() },
+        { name: 'download', icon: 'las la-file-download', label: this.$i18n.t('ArchivedEventsActivity.CHART_EXPORT_LABEL'), handler: () => this.downloadChartData() },
+        { name: 'close', icon: 'las la-times', handler: () => this.$refs.chartModal.close() }
+      ],
       baseQuery: {
         $sort: {
           createdAt: -1
@@ -490,6 +504,9 @@ export default {
       const start = (this.currentChart - 1) * this.nbValuesPerChart.value
       const end = (this.nbValuesPerChart.value > 0 ? start + this.nbValuesPerChart.value : this.chartData.length)
       const colors = _.shuffle(chroma.scale('Spectral').colors(end - start))
+      //const title = this.$t('ArchivedEventsActivity.CHART_TITLE') + ' - ' + this.$t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`)
+      let title = this.$t('ArchivedEventsActivity.CHART_TITLE')
+      if (this.nbCharts > 1) title += ` (${this.currentChart}/${this.nbCharts})`
       let config = {
         type,
         data: {
@@ -502,8 +519,7 @@ export default {
           responsive: true,
           title:{
             display: true,
-            text: this.$t('ArchivedEventsActivity.CHART_TITLE') + ' - ' +
-                  this.$t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`)
+            text: title
           }
         }
       }
@@ -562,6 +578,14 @@ export default {
     async refreshChartAndPagination () {
       this.currentChart = 1
       await this.refreshChart()
+    },
+    onNextChart () {
+      this.currentChart++
+      this.refreshChart()
+    },
+    onPreviousChart () {
+      this.currentChart--
+      this.refreshChart()
     },
     downloadChartData () {
       const json = this.values.map((value, index) => ({
