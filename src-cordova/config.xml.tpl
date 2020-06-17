@@ -29,6 +29,7 @@
   <preference name="android-installLocation" value="auto"/>
   <preference name="loadUrlTimeoutValue" value="30000"/>
   <preference name="SplashScreen" value="screen"/>
+  <preference name="StatusBarOverlaysWebView" value="false" />
   <platform name="android">
     <hook src="hooks/android-before-build.js" type="before_build"/>
     <allow-intent href="market:*"/>
@@ -109,6 +110,7 @@
       <string>Need photo library access to save pictures there</string>
     </edit-config>
   </platform>
+  <plugin name="cordova-plugin-statusbar" spec="~2.4.3"/>
   <plugin name="cordova-plugin-android-permissions" spec="~1.0.0"/>
   <plugin name="cordova-plugin-device" spec="~2.0.2"/>
   <plugin name="cordova-plugin-geolocation" spec="~4.0.1"/>
