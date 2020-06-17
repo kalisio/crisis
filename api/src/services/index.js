@@ -110,6 +110,56 @@ export function removeOrganisationServices (organisation) {
   removeArchivedEventLogService.call(app, { context: organisation })
 }
 
+export async function createEventOnAlert (alert) {
+  const app = this
+  const isActive = _.get(alert, 'status.active')
+  const checkedAt = _.get(alert, 'status.checkedAt')
+  const triggeredAt = _.get(alert, 'status.triggeredAt')
+  const label = _.get(alert, 'featureLabel', _.get(alert, 'feature'))
+  const templateId = _.get(alert, 'eventTemplate._id')
+  // Only on first activation
+  if (isActive && templateId && (checkedAt === triggeredAt)) {
+    const eventTemplatesService = app.getService('event-templates', service.getContextId())
+    // Get template to be used, which will become the new event
+    const template = await eventTemplatesService.get(templateId)
+    // Remove id so that event has its own
+    const event = _.omit(template, ['_id'])
+    // Keep track of template based on its name for statistics
+    // We don't keep ref/link for simplicity and making archived events will be self-consistent
+    // No need to keep track of templates that have been removed, etc.
+    event.template = template.name
+    _.set(event, 'location.name', label ? `${alert.layer} - ${label}` : `${alert.layer}`)
+    _.set(event, 'location.longitude', _.get(alert, 'geometry.coordinates[0]'))
+    _.set(event, 'location.latitude', _.get(alert, 'geometry.coordinates[1]'))
+    const eventsService = app.getService('events', service.getContextId())
+    await eventsService.create(event)
+  }
+}
+
+export function setupArchiveListeners (service) {
+  const app = this
+  service.on('created', async object => {
+    try {
+      app.getService(`archived-${service.name}`, service.context).create(object)
+    } catch (error) { app.logger.error(error.message) }
+  })
+  service.on('updated', async object => {
+    try {
+      app.getService(`archived-${service.name}`, service.context).update(object._id, object)
+    } catch (error) { app.logger.error(error.message) }
+  })
+  service.on('patched', async object => {
+    try {
+      app.getService(`archived-${service.name}`, service.context).update(object._id, object)
+    } catch (error) { app.logger.error(error.message) }
+  })
+  service.on('deleted', async object => {
+    try {
+      app.getService(`archived-${service.name}`, service.context).patch(object._id, { deletedAt: new Date() })
+    } catch (error) { app.logger.error(error.message) }
+  })
+}
+
 export default async function () {
   const app = this
 
@@ -148,53 +198,11 @@ export default async function () {
         app.configureService(service.name, service, servicesPath)
         if (service.name === 'alerts') {
           // Create related event whenever an alert is activated
-          service.on('patched', async alert => {
-            const isActive = _.get(alert, 'status.active')
-            const checkedAt = _.get(alert, 'status.checkedAt')
-            const triggeredAt = _.get(alert, 'status.triggeredAt')
-            const label = _.get(alert, 'featureLabel', _.get(alert, 'feature'))
-            const templateId = _.get(alert, 'eventTemplate._id')
-            // Only on first activation
-            if (isActive && templateId && (checkedAt === triggeredAt)) {
-              const eventTemplatesService = app.getService('event-templates', service.getContextId())
-              // Get template to be used, which will become the new event
-              const template = await eventTemplatesService.get(templateId)
-              // Remove id so that event has its own
-              const event = _.omit(template, ['_id'])
-              // Keep track of template based on its name for statistics
-              // We don't keep ref/link for simplicity and making archived events will be self-consistent
-              // No need to keep track of templates that have been removed, etc.
-              event.template = template.name
-              _.set(event, 'location.name', label ? `${alert.layer} - ${label}` : `${alert.layer}`)
-              _.set(event, 'location.longitude', _.get(alert, 'geometry.coordinates[0]'))
-              _.set(event, 'location.latitude', _.get(alert, 'geometry.coordinates[1]'))
-              const eventsService = app.getService('events', service.getContextId())
-              await eventsService.create(event)
-            }
-          })
+          service.on('patched', createEventOnAlert.bind(app))
         } else if ((service.name === 'events') || (service.name === 'event-logs')) {
-          // This is only in dev mode in preprod/prod this feature is managed by MongoDB Stitch
-          if ((process.env.NODE_APP_INSTANCE !== 'test') && (process.env.NODE_APP_INSTANCE !== 'prod')) {
-            service.on('created', async object => {
-              try {
-                app.getService(`archived-${service.name}`, service.context).create(object)
-              } catch (error) { app.logger.error(error.message) }
-            })
-            service.on('updated', async object => {
-              try {
-                app.getService(`archived-${service.name}`, service.context).update(object._id, object)
-              } catch (error) { app.logger.error(error.message) }
-            })
-            service.on('patched', async object => {
-              try {
-                app.getService(`archived-${service.name}`, service.context).update(object._id, object)
-              } catch (error) { app.logger.error(error.message) }
-            })
-            service.on('deleted', async object => {
-              try {
-                app.getService(`archived-${service.name}`, service.context).patch(object._id, { deletedAt: new Date() })
-              } catch (error) { app.logger.error(error.message) }
-            })
+          // This is only in dev/preprod mode, in prod this feature is managed by MongoDB Stitch
+          if (process.env.NODE_APP_INSTANCE !== 'prod') {
+            setupArchiveListeners.call(app, service)
           }
         }
       }

@@ -1,5 +1,6 @@
 import makeDebug from 'debug'
 import _ from 'lodash'
+import { SKIP } from '@feathersjs/feathers'
 import { getItems } from 'feathers-hooks-common'
 const debug = makeDebug('aktnmap:event-logs:hooks')
 
@@ -123,6 +124,42 @@ export async function sendStateNotifications (hook) {
         hook.app.logger.error(error.message, error)
       }
     }
+  }
+  return hook
+}
+
+export async function countParticipants (hook) {
+  const query = hook.params.query
+  const service = hook.service
+  if (!query) return hook
+  // Perform aggregation
+  if (query.$aggregate) {
+    const collection = service.Model
+    // The query contains the match stage except options relevent to the aggregation pipeline
+    const match = _.omit(query, ['$aggregate', '$geoNear', '$sort'])
+    
+    const pipeline = []
+    // Check for geometry stage
+    if (query.$geoNear) {
+      pipeline.push({ $geoNear: query.$geoNear })
+    }
+    // Find matching features only
+    pipeline.push({ $match: match })
+    // Ensure they are ordered by increasing time by default
+    pipeline.push({ $sort: query.$sort || { createdAt: 1 } })
+    pipeline.push({ $group: { _id : '$event', count: { $sum: 1 } } })
+    debug(`Aggregating participants in logs`)
+    pipeline.forEach(stage => {
+      _.forOwn(stage, (value, key) => debug('Stage', key, value))
+    })
+    const results = await collection.aggregate(pipeline).toArray()
+    debug(`Aggregated ${results.length} events in logs`)
+    delete query.$aggregate
+    delete query.$geoNear
+    // Set result to avoid service DB call
+    hook.result = results
+    // Return skip to avoid executing remaining hooks as this is not relevent anymore
+    return SKIP
   }
   return hook
 }

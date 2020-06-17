@@ -3,12 +3,13 @@ import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import core, { kalisio, hooks as coreHooks, permissions as corePermissions } from '@kalisio/kdk/core.api'
 import * as permissions from '../src/permissions'
-import { createOrganisationServices, removeOrganisationServices } from '../src/services'
+import { createOrganisationServices, removeOrganisationServices, setupArchiveListeners } from '../src/services'
 
 describe('events', () => {
   let app, userService, userObject, orgManagerObject, orgObject, orgUserObject, orgService,
     authorisationService, devicesService, pusherService, sns,
-    storageService, storageObject, eventService, eventObject, eventTemplateService, eventLogService
+    storageService, storageObject, eventService, eventObject, eventTemplateService, eventLogService,
+    archivedEventService, archivedEventLogService
 
   const managerDevice = {
     registrationId: 'managerFakeId',
@@ -126,15 +127,21 @@ describe('events', () => {
     // This should create a service for organisation storage
     storageService = app.getService('storage', orgObject)
     expect(storageService).toExist()
-    // This should create a service for organisation events
+    // This should create services for organisation events
     eventService = app.getService('events', orgObject)
     expect(eventService).toExist()
+    setupArchiveListeners.call(app, eventService)
+    archivedEventService = app.getService('archived-events', orgObject)
+    expect(archivedEventService).toExist()
     // This should create a service for organisation event templates
     eventTemplateService = app.getService('event-templates', orgObject)
     expect(eventTemplateService).toExist()
-    // This should create a service for organisation event templates
+    // This should create services for organisation event templates
     eventLogService = app.getService('event-logs', orgObject)
     expect(eventLogService).toExist()
+    setupArchiveListeners.call(app, eventLogService)
+    archivedEventLogService = app.getService('archived-event-logs', orgObject)
+    expect(archivedEventLogService).toExist()
   })
   // Let enough time to process
     .timeout(5000)
@@ -411,6 +418,23 @@ describe('events', () => {
     return Promise.all([operation, event])
   })
 
+  it('events and logs are replicated in archive', async () => {
+    const events = await archivedEventService.find({ query: {}, user: orgManagerObject, checkAuthorisation: true })
+    expect(events.data.length).to.equal(2)
+    const logs = await archivedEventLogService.find({ query: {}, user: orgManagerObject, checkAuthorisation: true })
+    expect(logs.data.length).to.equal(2)
+    
+  })
+
+  it('participants can be counted on archived event logs', async () => {
+    const result = await archivedEventLogService.find({
+      query: { $aggregate: true, event: eventObject._id },
+      user: orgManagerObject, checkAuthorisation: true })
+    expect(result.length > 0).beTrue()
+    expect(result[0]._id.toString()).to.equal(eventObject._id.toString())
+    expect(result[0].count).to.equal(2)
+  })
+
   it('event coordinators can remove events', () => {
     const operation = eventService.remove(eventObject._id, {
       notification: 'event removed',
@@ -465,7 +489,7 @@ describe('events', () => {
   after(async () => {
     await userService.Model.drop()
     await orgService.Model.drop()
-    //await app.db.instance.dropDatabase()
+    await app.db.instance.dropDatabase()
     await app.db.disconnect()
   })
 })

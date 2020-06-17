@@ -444,7 +444,7 @@ describe('billing', () => {
   after(async () => {
     if (server) await server.close()
     await userService.Model.drop()
-    //await app.db.instance.dropDatabase()
+    await app.db.instance.dropDatabase()
     await app.db.disconnect()
   })
 })
