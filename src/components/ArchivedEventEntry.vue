@@ -5,12 +5,18 @@
         <div v-if="updatedAt"><small>{{$t('ArchivedEventEntry.UPDATED_AT_LABEL')}} {{formatDate(updatedAt)}}</small></div>
         <div v-if="deletedAt"><small>{{$t('ArchivedEventEntry.DELETED_AT_LABEL')}} {{formatDate(deletedAt)}}</small></div>
         <div v-if="expiredAt"><small>{{$t('ArchivedEventEntry.EXPIRED_AT_LABEL')}} {{formatDate(expiredAt)}}</small></div>
+        <q-btn v-if="count" flat rounded color="seconday" icon="las la-user" :label="count">
+          <q-tooltip>{{ $t('ArchivedEventEntry.PARTICIPANT_COUNT') }}</q-tooltip>
+        </q-btn>
       </div>
       <div slot="entry-title">
         {{ item.name }} - {{formatDate(createdAt)}}
         <q-popup-proxy ref="locationPopup" no-parent-event transition-show="scale" transition-hide="scale">
           <k-location-map v-model="item.location" :editable="false" />
         </q-popup-proxy>
+      </div>
+      <div slot="entry-content">
+        <k-text-area class="q-pa-xs" :length="50" :text="item.description" />
       </div>
     </k-history-entry>
     <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
@@ -43,6 +49,7 @@ export default {
   },
   data () {
     return {
+      count: null
     }
   },
   methods: {
@@ -67,7 +74,7 @@ export default {
           name: 'map', label: this.$t('ArchivedEventEntry.MAP_LABEL'), icon: 'las la-map-marked-alt', handler: this.followUp
         })
         if (this.hasMedias()) this.registerPaneAction({
-          name: 'browse-media', label: this.$t('ArchivedEventEntry.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-videos', handler: this.browseMedia
+          name: 'browse-media', label: this.$t('ArchivedEventEntry.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', handler: this.browseMedia
         })
       }
     },
@@ -88,13 +95,27 @@ export default {
     },
     browseMedia () {
       this.$refs.mediaBrowser.show(this.item.attachments)
+    },
+    async refreshParticipantCount () {
+      const eventLogsService = this.$api.getService('archived-event-logs', this.contextId)
+      const result = await eventLogsService.find({
+        query: {
+          $aggregate: true,
+          event: this.item._id,
+          lastInEvent: true
+        }
+      })
+      if (result.length > 0) this.count = result[0].count
     }
   },
-  created () {
+  async created () {
     // Load the required components
+    this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
     this.$options.components['k-history-entry'] = this.$load('collection/KHistoryEntry')
     this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
     this.$options.components['k-location-map'] = this.$load('KLocationMap')
+    // Get participant count
+    await this.refreshParticipantCount()
   },
   beforeDestroy () {
   }

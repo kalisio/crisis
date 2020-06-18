@@ -134,6 +134,9 @@ export async function countParticipants (hook) {
   if (!query) return hook
   // Perform aggregation
   if (query.$aggregate) {
+    // Check if we'd like to aggregate according to a property of events
+    // Indeed in that case we have to read it from events by a lookup
+    const eventProperty = (typeof query.$aggregate === 'string' ? query.$aggregate : null)
     const collection = service.Model
     // The query contains the match stage except options relevent to the aggregation pipeline
     const match = _.omit(query, ['$aggregate', '$geoNear', '$sort'])
@@ -143,19 +146,34 @@ export async function countParticipants (hook) {
     if (query.$geoNear) {
       pipeline.push({ $geoNear: query.$geoNear })
     }
-    // Find matching features only
+    // Find matching logs only
     pipeline.push({ $match: match })
     // Ensure they are ordered by increasing time by default
     pipeline.push({ $sort: query.$sort || { createdAt: 1 } })
-    pipeline.push({ $group: { _id : '$event', count: { $sum: 1 } } })
+    // If we aggregate according to a property stored in events
+    if (eventProperty) {
+      // Add a lookup to retrieve this property
+      pipeline.push({ $lookup:
+        { from: 'archived-events', localField: 'event', foreignField: '_id', as: 'eventLookup' }
+      })
+      // Then set it on result
+      pipeline.push({ $project:
+        { [`${eventProperty}`] : { $arrayElemAt: [`$eventLookup.${eventProperty}`, 0] }, participant: 1, event: 1 }
+      })
+      // Then group by accordingly
+      pipeline.push({ $group: { _id : `$${eventProperty}`, count: { $sum: 1 } } })
+    } else {
+      // Otherwise simply group by event
+      pipeline.push({ $group: { _id : '$event', count: { $sum: 1 } } })
+    }
+    // Add a filter to discard any null element
+    pipeline.push({ $match: { _id : { $ne : null } } })
     debug(`Aggregating participants in logs`)
     pipeline.forEach(stage => {
       _.forOwn(stage, (value, key) => debug('Stage', key, value))
     })
     const results = await collection.aggregate(pipeline).toArray()
     debug(`Aggregated ${results.length} events in logs`)
-    delete query.$aggregate
-    delete query.$geoNear
     // Set result to avoid service DB call
     hook.result = results
     // Return skip to avoid executing remaining hooks as this is not relevent anymore

@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { disallow, populate, iff } from 'feathers-hooks-common'
-import { hooks } from '@kalisio/kdk/core.api'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api'
+import { hooks as mapHooks } from '@kalisio/kdk/map.api'
 import { countParticipants } from '../../hooks'
 
 const populatePreviousLog = populate({
@@ -15,12 +16,12 @@ const populatePreviousLog = populate({
 
 module.exports = {
   before: {
-    all: [],
-    find: [countParticipants],
+    all: [coreHooks.convertObjectIDs(['participant', 'event'])],
+    find: [mapHooks.marshallSpatialQuery, coreHooks.marshallComparisonQuery, countParticipants],
     get: [],
-    create: [disallow('external'), hooks.convertDates(['createdAt', 'expireAt']), hooks.convertObjectIDs(['participant', 'event'])],
-    update: [disallow('external'), hooks.convertDates(['createdAt', 'expireAt']), hooks.convertObjectIDs(['participant', 'event'])],
-    patch: [disallow('external'), hooks.convertDates(['createdAt', 'expireAt']), hooks.convertObjectIDs(['participant', 'event'])],
+    create: [disallow('external'), coreHooks.convertDates(['createdAt', 'expireAt'])],
+    update: [disallow('external'), coreHooks.convertDates(['createdAt', 'expireAt'])],
+    patch: [disallow('external'), coreHooks.convertDates(['createdAt', 'expireAt'])],
     remove: [disallow('external')]
   },
 

@@ -309,8 +309,9 @@
     "NULL_VALUE_LABEL": "Aucune",
     "ALL_VALUES": "Toutes",
     "RENDER_LABEL": "Type d'affichage",
-    "VALUE_LABEL": "Nombre",
+    "COUNT_LABEL": "Nombre",
     "PERCENTAGE_LABEL": "Pourcentage",
+    "PARTICIPANT_COUNT_LABEL": "Participants",
     "CHART_TITLE": "Type d'événement",
     "CHART_LABEL_PIE": "Camembert",
     "CHART_LABEL_POLARAREA": "Polaire",
@@ -337,7 +338,8 @@
     "CREATED_AT_LABEL": "$t(EventCard.CREATED_AT_LABEL)",
     "UPDATED_AT_LABEL": "$t(EventCard.UPDATED_AT_LABEL)",
     "DELETED_AT_LABEL": "Clôturé le",
-    "EXPIRED_AT_LABEL": "Expiré le"
+    "EXPIRED_AT_LABEL": "Expiré le",
+    "PARTICIPANT_COUNT": "Nombre de participants"
   },
   "EventTemplatesActivity": {
     "EVENTS_LABEL": "$t(EVENTS_LABEL)",

@@ -306,8 +306,9 @@
     "NULL_VALUE_LABEL": "None",
     "ALL_VALUES": "All",
     "RENDER_LABEL": "Display type",
-    "VALUE_LABEL": "Count",
+    "COUNT_LABEL": "Count",
     "PERCENTAGE_LABEL": "Percentage",
+    "PARTICIPANT_COUNT_LABEL": "Participants",
     "CHART_TITLE": "Event type",
     "CHART_LABEL_PIE": "Pie",
     "CHART_LABEL_POLARAREA": "Polar",
@@ -333,7 +334,8 @@
     "CREATED_AT_LABEL": "$t(EventCard.CREATED_AT_LABEL)",
     "UPDATED_AT_LABEL": "$t(EventCard.UPDATED_AT_LABEL)",
     "DELETED_AT_LABEL": "Closed at",
-    "EXPIRED_AT_LABEL": "Expired at"
+    "EXPIRED_AT_LABEL": "Expired at",
+    "PARTICIPANT_COUNT": "Participants count"
   },
   "EventTemplatesActivity": {
     "EVENTS_LABEL": "$t(EVENTS_LABEL)",

@@ -214,6 +214,7 @@ describe('events', () => {
   it('org member can create event', () => {
     const operation = eventService.create({
       title: 'member event',
+      template: 'template1',
       participants: [{ _id: orgManagerObject._id, service: 'members' }]
     },
     {
@@ -278,6 +279,7 @@ describe('events', () => {
   it('org manager can create event', () => {
     const operation = eventService.create({
       title: 'event',
+      template: 'template2',
       participants: [{ _id: orgUserObject._id, service: 'members' }]
     },
     {
@@ -423,15 +425,22 @@ describe('events', () => {
     expect(events.data.length).to.equal(2)
     const logs = await archivedEventLogService.find({ query: {}, user: orgManagerObject, checkAuthorisation: true })
     expect(logs.data.length).to.equal(2)
-    
   })
 
   it('participants can be counted on archived event logs', async () => {
-    const result = await archivedEventLogService.find({
+    // Count by event
+    let result = await archivedEventLogService.find({
       query: { $aggregate: true, event: eventObject._id },
       user: orgManagerObject, checkAuthorisation: true })
-    expect(result.length > 0).beTrue()
+    expect(result.length).to.equal(1)
     expect(result[0]._id.toString()).to.equal(eventObject._id.toString())
+    expect(result[0].count).to.equal(2)
+    // Count by event template
+    result = await archivedEventLogService.find({
+      query: { $aggregate: 'template', event: eventObject._id },
+      user: orgManagerObject, checkAuthorisation: true })
+    expect(result.length).to.equal(1)
+    expect(result[0]._id).to.equal('template2')
     expect(result[0].count).to.equal(2)
   })
 

@@ -208,9 +208,11 @@ export default {
       value: 20, label: '20'
     }]
     const renderOptions = [{
-      value: 'value', label: this.$i18n.t('ArchivedEventsActivity.VALUE_LABEL')
+      value: 'count', label: this.$i18n.t('ArchivedEventsActivity.COUNT_LABEL')
     }, {
       value: 'percentage', label: this.$i18n.t('ArchivedEventsActivity.PERCENTAGE_LABEL')
+    }, {
+      value: 'participants', label: this.$i18n.t('ArchivedEventsActivity.PARTICIPANT_COUNT_LABEL')
     }]
 
     const now = moment()
@@ -237,8 +239,7 @@ export default {
         createdAt: {
           $gte: moment(minDateTimeSelected, 'YYYY[/]MM[/]DD').endOf('day').toISOString(),
           $lte: moment(maxDateTimeSelected, 'YYYY[/]MM[/]DD').endOf('day').toISOString()
-        },
-        $skip: 0, $limit: MAX_EVENTS
+        }
       },
       renderer: {
         component: 'ArchivedEventEntry',
@@ -284,7 +285,7 @@ export default {
       nbValuesPerChart: _.find(paginationOptions, { value: 10 }),
       paginationOptions,
       renderOptions,
-      render: _.find(renderOptions, { value: 'value' }),
+      render: _.find(renderOptions, { value: 'count' }),
       chartData: [],
       currentDownloadLink: null,
       currentDownloadName: null
@@ -363,6 +364,9 @@ export default {
     },
     loadService () {
       return this.$api.getService('archived-events')
+    },
+    loadLogsService () {
+      return this.$api.getService('archived-event-logs')
     },
     getCollectionBaseQuery () {
       // No pagination in this case (map) and filter required data
@@ -489,12 +493,19 @@ export default {
     async getChartData () {
       // Get possible values
       this.values = await this.loadService().find({ query: { $distinct: 'template' } })
-      // Then count events for each value
-      let data = await Promise.all(this.values.map(async value => {
-        const response = await this.loadService()
-          .find({ query: Object.assign({ $limit: 0, template: value }, this.baseQuery) })
-        return { value, count: response.total }
-      }))
+      // Then count events or participants for each value
+      let data
+      if (this.render.value === 'participants') {
+        const response = await this.loadLogsService()
+          .find({ query: Object.assign({ $aggregate: 'template', lastInEvent: true }, this.baseQuery) })
+        data = response.map(item => ({ value: item._id, count: item.count }))
+      } else {
+        data = await Promise.all(this.values.map(async value => {
+          const response = await this.loadService()
+            .find({ query: Object.assign({ $limit: 0, template: value }, this.baseQuery) })
+          return { value, count: response.total }
+        }))
+      }
       // Sort data so that we don't have charts mixin large and small numbers when paginating, go large first
       data = _.sortBy(data, item => -item.count)
       this.values = data.map(item => item.value)
@@ -535,7 +546,8 @@ export default {
         _.set(config, 'options.scale.ticks.precision', 0)
       } else {
         _.set(config, 'data.datasets[0].backgroundColor', colors)
-        _.set(config, 'options.plugins.labels.render', this.render.value)
+        _.set(config, 'options.plugins.labels.render',
+          this.render.value === 'percentage' ? 'percentage' : 'value')
         _.set(config, 'options.plugins.labels.position', 'border')
         _.set(config, 'options.plugins.labels.overlap', false)
         _.set(config, 'options.plugins.labels.showActualPercentages', true)
@@ -588,13 +600,14 @@ export default {
       this.refreshChart()
     },
     downloadChartData () {
+      const mimeType = 'text/csv;charset=utf-8;'
       const json = this.values.map((value, index) => ({
         [this.$t('ArchivedEventsActivity.CHART_VALUE_LABEL')]: value,
         [this.$t('ArchivedEventsActivity.CHART_COUNT_LABEL')]: this.chartData[index]
       }))
       const csv = Papa.unparse(json)
       // Need to convert to blob
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+      const blob = new Blob([csv], { type: mimeType })
       this.currentDownloadLink = URL.createObjectURL(blob)
       this.currentDownloadName = this.$t('ArchivedEventsActivity.CHART_EXPORT_FILE')
       if (Platform.is.cordova) {
@@ -612,9 +625,11 @@ export default {
       }
     },
     async downloadEventsData () {
+      let mimeType
       // Need to convert to blob
       let blob
       if (this.showMap) {
+        mimeType = 'application/json;charset=utf-8;'
         let geoJson = this.toGeoJson(this.$t('ArchivedEventsActivity.EVENTS_LAYER_NAME'))
         geoJson.features = geoJson.features.map(feature => {
           // Move required event information into properties
@@ -622,8 +637,9 @@ export default {
             'participants', 'coordinators', 'workflow', 'hasWorkflow'])
           return Object.assign({ properties }, _.pick(feature, ['type', 'geometry']))
         })
-        blob = new Blob([JSON.stringify(geoJson)], { type: 'application/json;charset=utf-8;' })
+        blob = new Blob([JSON.stringify(geoJson)], { type: mimeType })
       } else {
+        mimeType = 'text/csv;charset=utf-8;'
         // Make full request to avoid pagination and filter required data
         const response = await this.loadService().find({
           query: Object.assign({
@@ -645,7 +661,7 @@ export default {
           return item
         })
         const csv = Papa.unparse(json)
-        blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+        blob = new Blob([csv], { type: mimeType })
       }
       
       this.currentDownloadLink = URL.createObjectURL(blob)

@@ -110,29 +110,31 @@ export function removeOrganisationServices (organisation) {
   removeArchivedEventLogService.call(app, { context: organisation })
 }
 
-export async function createEventOnAlert (alert) {
-  const app = this
-  const isActive = _.get(alert, 'status.active')
-  const checkedAt = _.get(alert, 'status.checkedAt')
-  const triggeredAt = _.get(alert, 'status.triggeredAt')
-  const label = _.get(alert, 'featureLabel', _.get(alert, 'feature'))
-  const templateId = _.get(alert, 'eventTemplate._id')
-  // Only on first activation
-  if (isActive && templateId && (checkedAt === triggeredAt)) {
-    const eventTemplatesService = app.getService('event-templates', service.getContextId())
-    // Get template to be used, which will become the new event
-    const template = await eventTemplatesService.get(templateId)
-    // Remove id so that event has its own
-    const event = _.omit(template, ['_id'])
-    // Keep track of template based on its name for statistics
-    // We don't keep ref/link for simplicity and making archived events will be self-consistent
-    // No need to keep track of templates that have been removed, etc.
-    event.template = template.name
-    _.set(event, 'location.name', label ? `${alert.layer} - ${label}` : `${alert.layer}`)
-    _.set(event, 'location.longitude', _.get(alert, 'geometry.coordinates[0]'))
-    _.set(event, 'location.latitude', _.get(alert, 'geometry.coordinates[1]'))
-    const eventsService = app.getService('events', service.getContextId())
-    await eventsService.create(event)
+export function createEventOnAlert (organisation) {
+  return async function (alert) {
+    const app = this
+    const isActive = _.get(alert, 'status.active')
+    const checkedAt = _.get(alert, 'status.checkedAt')
+    const triggeredAt = _.get(alert, 'status.triggeredAt')
+    const label = _.get(alert, 'featureLabel', _.get(alert, 'feature'))
+    const templateId = _.get(alert, 'eventTemplate._id')
+    // Only on first activation
+    if (isActive && templateId && (checkedAt === triggeredAt)) {
+      const eventTemplatesService = app.getService('event-templates', organisation)
+      // Get template to be used, which will become the new event
+      const template = await eventTemplatesService.get(templateId)
+      // Remove id so that event has its own
+      const event = _.omit(template, ['_id'])
+      // Keep track of template based on its name for statistics
+      // We don't keep ref/link for simplicity and making archived events will be self-consistent
+      // No need to keep track of templates that have been removed, etc.
+      event.template = template.name
+      _.set(event, 'location.name', label ? `${alert.layer} - ${label}` : `${alert.layer}`)
+      _.set(event, 'location.longitude', _.get(alert, 'geometry.coordinates[0]'))
+      _.set(event, 'location.latitude', _.get(alert, 'geometry.coordinates[1]'))
+      const eventsService = app.getService('events', organisation)
+      await eventsService.create(event)
+    }
   }
 }
 
@@ -180,8 +182,8 @@ export default async function () {
       }
       res.json(response)
     })
-    // Add app-specific hooks to required services
     app.on('service', service => {
+      // Add app-specific hooks to required services initialized externally
       if (service.name === 'users' ||
           service.name === 'authorisations' ||
           service.name === 'organisations' ||
@@ -191,19 +193,18 @@ export default async function () {
           service.name === 'storage' ||
           service.name === 'devices' ||
           service.name === 'features' ||
-          service.name === 'alerts' ||
-          service.name === 'billing' ||
-          service.name === 'events' ||
-          service.name === 'event-templates') {
+          service.name === 'alerts') {
         app.configureService(service.name, service, servicesPath)
         if (service.name === 'alerts') {
           // Create related event whenever an alert is activated
-          service.on('patched', createEventOnAlert.bind(app))
-        } else if ((service.name === 'events') || (service.name === 'event-logs')) {
-          // This is only in dev/preprod mode, in prod this feature is managed by MongoDB Stitch
-          if (process.env.NODE_APP_INSTANCE !== 'prod') {
-            setupArchiveListeners.call(app, service)
-          }
+          service.on('patched', createEventOnAlert(service.getContextId()).bind(app))
+        }
+      }
+      // Add event/logs archiving feature
+      if ((service.name === 'events') || (service.name === 'event-logs')) {
+        // This is only in dev/preprod mode, in prod this feature is managed by MongoDB Stitch
+        if (process.env.NODE_APP_INSTANCE !== 'prod') {
+          setupArchiveListeners.call(app, service)
         }
       }
     })

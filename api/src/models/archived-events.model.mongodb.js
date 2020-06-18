@@ -5,6 +5,7 @@ module.exports = function (app, options) {
   options.Model.createIndex({ updatedAt: -1 })
   options.Model.createIndex({ deletedAt: -1 })
   options.Model.createIndex({ expiredAt: -1 })
+  options.Model.createIndex({ geometry: '2dsphere' })
   // These ones are useful for statistics
   options.Model.createIndex({ template: 1 })
 }
