@@ -138,7 +138,10 @@ export default {
         name: 'close-action',
         label: this.$t('EventCard.UPLOADER_MODAL_CLOSE_ACTION'),
         icon: 'las la-times',
-        handler: () => this.$refs.uploaderModal.close()
+        handler: () => {
+          this.$refs.uploaderModal.close()
+          this.refresh()
+        }
       }]
     },
     getLocationToolbar () {

@@ -19,7 +19,10 @@ import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 
 export default {
   name: 'events-activity',
-  mixins: [kCoreMixins.baseActivity, kMapMixins.geolocation],
+  mixins: [
+    kCoreMixins.baseActivity, 
+    kMapMixins.geolocation
+  ],
   props: {
     contextId: {
       type: String,
@@ -34,11 +37,7 @@ export default {
         }
       },
       renderer: {
-        component: 'EventCard',
-        props: {
-          options: {
-          }
-        }
+        component: 'EventCard'
       }
     }
   },
