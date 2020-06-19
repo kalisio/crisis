@@ -7,12 +7,12 @@
           {{$t('AlertForm.TIME_PERIOD_RANGE')}}
           </q-item-section>
           <q-item-section v-if="isMeasure" avatar>
-            <q-select v-model="period.start" :options="generatePeriodOptions([15, 30, 60, 3*60, 6*60, 12*60, 24*60, 48*60, 72*60, 96*60])" emit-value map-options>
+            <q-select v-model="period.start" :options="measurePeriodOptions" emit-value map-options>
               <template v-slot:prepend><q-icon name="las la-minus" /></template>
             </q-select>
           </q-item-section>
           <q-item-section v-if="isWeather" avatar>
-            <q-select v-model="period.end" :options="generatePeriodOptions([60, 3*60, 6*60, 12*60, 24*60, 48*60, 72*60, 96*60])" emit-value map-options>
+            <q-select v-model="period.end" :options="weatherPeriodOptions" emit-value map-options>
               <template v-slot:prepend><q-icon name="las la-plus" /></template>
             </q-select>
           </q-item-section>
@@ -22,7 +22,7 @@
             {{$t('AlertForm.FREQUENCY')}}
           </q-item-section>
           <q-item-section avatar>
-            <q-select v-model="frequency" :options="generateFrequencyOptions([15, 30, 60, 2*60, 3*60, 6*60, 12*60, 24*60])" emit-value map-options>
+            <q-select v-model="frequency" :options="frequencyOptions" emit-value map-options>
             </q-select>
           </q-item-section>
         </q-item>
@@ -102,7 +102,18 @@ export default {
     isMeasure () {
       return this.layer && this.layer.service
     },
-    variables () { return (this.layer ? this.layer.variables : []) }
+    variables () {
+      return (this.layer ? this.layer.variables : [])
+    },
+    weatherPeriodOptions () {
+      return this.generatePeriodOptions([60, 3*60, 6*60, 12*60, 24*60, 48*60, 72*60, 96*60])
+    },
+    measurePeriodOptions () {
+      return this.generatePeriodOptions([15, 30, 60, 3*60, 6*60, 12*60, 24*60, 48*60, 72*60, 96*60])
+    },
+    frequencyOptions () {
+      return this.generateFrequencyOptions([15, 30, 60, 2*60, 3*60, 6*60, 12*60, 24*60])
+    }
   },
   data () {
     return {
@@ -140,8 +151,9 @@ export default {
         from = moment.duration(this.layer.from)
         to = moment.duration(this.layer.to)
       }
+      console.log(from.asMinutes(), to.asMinutes())
       // Take care that we have forecast data in the future and observed data in the past
-      if (from.asMinutes() < to.asMinutes()) [from, to] = [to, from]
+      if (from.asMinutes() < 0) [from, to] = [to, from]
       // Filter values outside bounds or lower than update frequency
       let options = this.generateTimeOptions(values)
       options = options.filter(option => (
@@ -221,7 +233,7 @@ export default {
       // This could be done externally but adding it here we ensure no one will forget it
       await this.$nextTick()
       // For weather we can only go in the future while for measure it's in the past
-      this.period.start = (this.isWeather ? 0 : 1)
+      this.period.start = (this.isWeather ? 0 : 60)
       this.period.end = (this.isWeather ? 24 * 60 : 0)
       // Initialize conditions object matching variables
       this.conditions = this.variables.map(variable => this.generateDefaultConditions(variable))
