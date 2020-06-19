@@ -67,10 +67,25 @@
 
 <script>
 import _ from 'lodash'
+import moment from 'moment'
 import { Dialog } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
+
+function createThumbnail (id, imageDataUri, width, height, quality, callback) {
+    let img = document.createElement('img')
+    img.onload = function () {
+      let canvas = document.createElement('canvas')
+      let ctx = canvas.getContext('2d')
+      // set its dimension to target size
+      canvas.width = width
+      canvas.height = height
+      ctx.drawImage(this, 0, 0, width, height)
+      callback(id, canvas.toDataURL('image/jpeg', quality))
+    }
+    img.src=imageDataUri
+}
 
 export default {
   name: 'event-card',
@@ -118,6 +133,10 @@ export default {
     }
   },
   methods: {
+    canCapturePhoto () {
+      if (!this.$q.platform.is.cordova) return false
+      return true
+    },
     getFollowUpToolbar () {
       return [{
         name: 'close-action',
@@ -228,7 +247,10 @@ export default {
       }
       if (this.$can('read', 'events', this.contextId, this.item)) {
         this.registerPaneAction({
-          name: 'add-media', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-camera', handler: this.uploadMedia
+          name: 'capture-photo', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-camera', handler: this.capturePhoto
+        })
+        this.registerPaneAction({
+          name: 'add-media', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-paperclip', handler: this.uploadMedia
         })
         if (this.hasMedias()) this.registerPaneAction({
           name: 'browse-media', label: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', 
@@ -254,6 +276,27 @@ export default {
     },
     browseMedia () {
       this.$refs.mediaBrowser.show(this.item.attachments)
+    },
+    capturePhoto () {
+      navigator.camera.getPicture(this.onPhotoCaptured, null, {
+        correctOrientation: true,
+        quality: 75,
+        destinationType: navigator.camera.DestinationType.DATA_URL,
+        sourceType: navigator.camera.PictureSourceType.CAMERA
+      })
+    },
+    async onPhotoCaptured (photoUri) {
+      const storageService = this.$api.getService('storage')
+      const name = moment().format('YYYYMMDD_HHmmss.jpg')
+      const id = this.item._id + '/' + name
+      photoUri = 'data:image/jpg;base64,' + photoUri
+      createThumbnail(id, photoUri, 200, 200, 50, this.onThumbnailCreated)
+      await storageService.create({ id, uri: photoUri, name, resourcesService: 'events', resource: this.item._id, field: 'attachments' })
+      this.refresh()
+    },
+    async onThumbnailCreated (id, thumbnailUri) {
+      const storageService = this.$api.getService('storage')
+      await storageService.create({ id: id + '.thumbnail', uri: thumbnailUri })
     },
     launchNavigation () {
       const longitude = this.item.location.longitude

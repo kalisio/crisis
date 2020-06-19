@@ -34,6 +34,10 @@
     <hook src="hooks/android-before-build.js" type="before_build"/>
     <allow-intent href="market:*"/>
     <resource-file src="google-services.json" target="app/google-services.json"/>
+     <custom-config-file parent="/*" target="AndroidManifest.xml">
+        <uses-permission android:name="android.permission.CAMERA" />
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    </custom-config-file>
     <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png"/>
     <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png"/>
     <icon density="hdpi" src="res/icons/android/icon-72-hdpi.png"/>
@@ -110,10 +114,12 @@
       <string>Need photo library access to save pictures there</string>
     </edit-config>
   </platform>
+  <plugin name="cordova-custom-config" spec="~5.1.0"/>
   <plugin name="cordova-plugin-statusbar" spec="~2.4.3"/>
   <plugin name="cordova-plugin-android-permissions" spec="~1.0.0"/>
   <plugin name="cordova-plugin-device" spec="~2.0.2"/>
   <plugin name="cordova-plugin-geolocation" spec="~4.0.1"/>
+  <plugin name="cordova-plugin-camera" spec="~4.1.0"/>
   <plugin name="cordova-plugin-sim" spec="~1.3.3"/>
   <plugin name="cordova-plugin-whitelist" spec="~1.3.2"/>
   <plugin name="cordova-plugin-inappbrowser" spec="~3.0.0"/>
