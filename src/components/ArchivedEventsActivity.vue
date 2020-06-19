@@ -9,52 +9,49 @@
       <q-page-sticky position="top" :offset="[0, 4]" style="z-index: 1">
         <div class="row justify-center text-center text-subtitle1">
           <div class="row items-center time-range-bar">
-            <q-btn v-show="!showHistory" flat round color="primary" icon="las la-history" @click="onShowHistory">
+            <q-btn v-show="!showHistory" dense flat round color="primary" icon="las la-history" @click="onShowHistory">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_HISTORY_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="!showMap" flat round color="primary" icon="scatter_plot" @click="onShowMap">
+            <q-btn v-show="!showMap" dense flat round color="primary" icon="scatter_plot" @click="onShowMap">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_MAP_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="!showChart" flat round color="primary" icon="las la-chart-pie" @click="onShowChart">
+            <q-btn v-show="!showChart" dense flat round color="primary" icon="las la-chart-pie" @click="onShowChart">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_CHART_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-separator vertical />
-            &nbsp;{{minDateTimeSelected}}
-            <q-icon name="las la-calendar" color="primary" class="cursor-pointer">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.FROM_DATE') }}</q-tooltip>
+            <q-btn icon="las la-calendar" dense flat round color="primary" class="cursor-pointer">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.FROM_DATE') + ' ' + formatedMinDate}}</q-tooltip>
               <q-popup-proxy ref="minDatePopup" transition-show="scale" transition-hide="scale">
-                <q-date v-model="minDateTimeSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
+                <q-date v-model="minDateSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
               </q-popup-proxy>
-            </q-icon>
-            &nbsp;-&nbsp;{{maxDateTimeSelected}}&nbsp;
-            <q-icon name="las la-calendar" color="primary" class="cursor-pointer">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.TO_DATE') }}</q-tooltip>
+            </q-btn>
+            <q-icon name="las la-arrow-right" color="primary"/>
+            <q-btn icon="las la-calendar" dense flat round color="primary" class="cursor-pointer">
+              <q-tooltip>{{ $t('ArchivedEventsActivity.TO_DATE') + ' ' + formatedMaxDate }}</q-tooltip>
               <q-popup-proxy ref="maxDatePopup" transition-show="scale" transition-hide="scale">
-                <q-date v-model="maxDateTimeSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
+                <q-date v-model="maxDateSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
               </q-popup-proxy>
-            </q-icon>
-            &nbsp;<q-separator vertical />
-            <q-btn v-show="showHistory && ascendingSort" flat round color="primary" icon="las la-sort-amount-up" @click="onSortOrder">
+            </q-btn>
+            <q-btn v-show="showHistory && ascendingSort" dense flat round color="primary" icon="las la-sort-amount-up" @click="onSortOrder">
               <q-tooltip>{{ $t('ArchivedEventsActivity.DESCENDING_SORT') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="showHistory && !ascendingSort" flat round color="primary" icon="las la-sort-amount-down" @click="onSortOrder">
+            <q-btn v-show="showHistory && !ascendingSort" dense flat round color="primary" icon="las la-sort-amount-down" @click="onSortOrder">
               <q-tooltip>{{ $t('ArchivedEventsActivity.ASCENDING_SORT') }}</q-tooltip>
             </q-btn>
             <!--span v-show="showHistory" >&nbsp;{{$t('ArchivedEventsActivity.SORT_BY_LABEL')}}&nbsp;</span>
             <q-select v-show="showHistory" v-model="sortBy" class="text-h5" :options="sortOptions" @input="updateBaseQuery()"/-->
-            <q-btn v-show="showMap && heatmap" flat round color="primary" icon="scatter_plot" @click="onHeatmap">
+            <q-btn v-show="showMap && heatmap" dense flat round color="primary" icon="scatter_plot" @click="onHeatmap">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_MARKERS_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="showMap && !heatmap" flat round color="primary" icon="las la-bowling-ball" @click="onHeatmap">
+            <q-btn v-show="showMap && !heatmap" dense flat round color="primary" icon="las la-bowling-ball" @click="onHeatmap">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_HEATMAP_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="showMap && byTemplate" flat round color="primary" icon="las la-object-group" @click="onByTemplate">
+            <q-btn v-show="showMap && byTemplate" dense flat round color="primary" icon="las la-object-group" @click="onByTemplate">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_ALL_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="showMap && !byTemplate" flat round color="primary" icon="las la-layer-group" @click="onByTemplate">
+            <q-btn v-show="showMap && !byTemplate" dense flat round color="primary" icon="las la-layer-group" @click="onByTemplate">
               <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL') }}</q-tooltip>
             </q-btn>
-            <q-btn v-show="!byTemplate" flat round color="primary" icon="las la-file-download" @click="downloadEventsData"/>
+            <q-btn v-show="!byTemplate" dense flat round color="primary" icon="las la-file-download" @click="downloadEventsData"/>
           </div>
         </div>
       </q-page-sticky>
@@ -192,9 +189,26 @@ export default {
     nbCharts () {
       if (!this.chartData.length || (this.nbValuesPerChart.value === 0)) return 1
       else return Math.ceil(this.chartData.length / this.nbValuesPerChart.value)
+    },
+    minDate () {
+      return moment(this.minDateSelected, 'YYYY[/]MM[/]DD').startOf('day')
+    },
+    maxDate () {
+      return moment(this.maxDateSelected, 'YYYY[/]MM[/]DD').endOf('day')
+    },
+    formatedMinDate () {
+      return this.formatDate(this.minDate.toDate())
+    },
+    formatedMaxDate () {
+      return this.formatDate(this.maxDate.toDate())
     }
   },
   data () {
+    const now = moment()
+    // 1 month ago by default
+    const minDateSelected = now.clone().subtract(1, 'months').startOf('day')
+    const maxDateSelected = now.clone().endOf('day')
+
     const chartTypes = ['pie', 'polarArea', 'radar', 'bar']
     const chartOptions = chartTypes.map(
         type => ({ value: type, label: this.$i18n.t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`) }))
@@ -215,16 +229,6 @@ export default {
       value: 'participants', label: this.$i18n.t('ArchivedEventsActivity.PARTICIPANT_COUNT_LABEL')
     }]
 
-    const now = moment()
-    const lastMonth = now.clone().subtract(1, 'months')
-    const nextMonth = now.clone().add(1, 'months')
-    const lastYear = now.clone().subtract(1, 'years')
-    const nextYear = now.clone().add(1, 'years')
-    const minDateTime = lastYear.format('YYYY[/]MM[/]DD')
-    const maxDateTime = nextYear.format('YYYY[/]MM[/]DD')
-    const minDateTimeSelected = lastMonth.format('YYYY[/]MM[/]DD')
-    const maxDateTimeSelected = nextMonth.format('YYYY[/]MM[/]DD')
-
     return {
       toolbar: [
         { name: 'settings', icon: 'las la-cog', label: this.$i18n.t('ArchivedEventsActivity.CHART_SETTINGS_LABEL'),
@@ -237,8 +241,8 @@ export default {
           createdAt: -1
         },
         createdAt: {
-          $gte: moment(minDateTimeSelected, 'YYYY[/]MM[/]DD').endOf('day').toISOString(),
-          $lte: moment(maxDateTimeSelected, 'YYYY[/]MM[/]DD').endOf('day').toISOString()
+          $gte: minDateSelected.toISOString(),
+          $lte: maxDateSelected.toISOString()
         }
       },
       renderer: {
@@ -248,10 +252,8 @@ export default {
           }
         }
       },
-      minDateTime,
-      maxDateTime,
-      minDateTimeSelected,
-      maxDateTimeSelected,
+      minDateSelected: minDateSelected.format('YYYY[/]MM[/]DD'),
+      maxDateSelected: maxDateSelected.format('YYYY[/]MM[/]DD'),
       ascendingSort: false,
       mode: 'history',
       heatmap: false,
@@ -316,8 +318,7 @@ export default {
       return _.filter(layers, { type: 'BaseLayer' })
     },
     checkTimeRange (date) {
-      return moment(date).isSameOrAfter(this.minDateTime) &&
-             moment(date).isSameOrBefore(this.maxDateTime)
+      return moment(date).isSameOrBefore(moment())
     },
     formatDate (date) {
       return date.toLocaleString(kCoreUtils.getLocale(),
@@ -354,8 +355,8 @@ export default {
           [this.sortBy.value]: (this.ascendingSort ? 1 : -1)
         },
         [this.sortBy.value]: {
-          $gte: moment(this.minDateTimeSelected, 'YYYY[/]MM[/]DD').endOf('day').toISOString(),
-          $lte: moment(this.maxDateTimeSelected, 'YYYY[/]MM[/]DD').endOf('day').toISOString()
+          $gte: this.minDate.toISOString(),
+          $lte: this.maxDate.toISOString()
         }
       }
 
