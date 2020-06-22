@@ -73,7 +73,7 @@ import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.cl
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
-function createThumbnail (id, imageDataUri, width, height, quality, callback) {
+function createThumbnail (imageDataUri, width, height, quality, callback) {
     let img = document.createElement('img')
     img.onload = function () {
       let canvas = document.createElement('canvas')
@@ -82,7 +82,7 @@ function createThumbnail (id, imageDataUri, width, height, quality, callback) {
       canvas.width = width
       canvas.height = height
       ctx.drawImage(this, 0, 0, width, height)
-      callback(id, canvas.toDataURL('image/jpeg', quality))
+      callback(canvas.toDataURL('image/jpeg', quality))
     }
     img.src=imageDataUri
 }
@@ -285,18 +285,16 @@ export default {
         sourceType: navigator.camera.PictureSourceType.CAMERA
       })
     },
-    async onPhotoCaptured (photoUri) {
+    async onPhotoCaptured (photoDataUri) {
       const storageService = this.$api.getService('storage')
       const name = moment().format('YYYYMMDD_HHmmss.jpg')
       const id = this.item._id + '/' + name
-      photoUri = 'data:image/jpg;base64,' + photoUri
-      createThumbnail(id, photoUri, 200, 200, 50, this.onThumbnailCreated)
-      await storageService.create({ id, uri: photoUri, name, resourcesService: 'events', resource: this.item._id, field: 'attachments' })
+      photoDataUri = 'data:image/jpg;base64,' + photoDataUri
+      createThumbnail(photoDataUri, 200, 200, 50, async thumbnailDataUri => {
+        await storageService.create({ id: id + '.thumbnail', uri: thumbnailDataUri })
+      })
+      await storageService.create({ id, uri: photoDataUri, name, resourcesService: 'events', resource: this.item._id, field: 'attachments' })
       this.refresh()
-    },
-    async onThumbnailCreated (id, thumbnailUri) {
-      const storageService = this.$api.getService('storage')
-      await storageService.create({ id: id + '.thumbnail', uri: thumbnailUri })
     },
     launchNavigation () {
       const longitude = this.item.location.longitude

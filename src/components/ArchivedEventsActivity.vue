@@ -1,5 +1,5 @@
 <template>
-  <k-page :padding="false">
+  <k-page :padding="true">
     <div slot="page-content">
       <!-- Invisible link used to download data -->
       <a ref="downloadLink" v-show="false" :href="currentDownloadLink" :download="currentDownloadName"></a>
@@ -71,7 +71,7 @@
       -->
       <k-history 
         v-show="showHistory"
-        style="padding-top: 50px" 
+        style="padding-top: 25px" 
         service="archived-events" 
         :nb-items-per-page="2" 
         :append-items="true" 
