@@ -67,12 +67,11 @@ travis_fold end "build"
 travis_fold start "deploy"
 
 # Deploy the IPA to the AppleStore
-ALTOOL="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Support/altool"
-"$ALTOOL" --upload-app -f "./src-cordova/platforms/ios/build/device/$TITLE.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log 2>&1
+xcrun altool --upload-app -f "./src-cordova/platforms/ios/build/device/$TITLE.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log 2>&1
 EXIT_CODE=$?
 # Copy the log whatever the result
 aws s3 cp ios.deploy.log s3://${BUILD_BUCKET}/ios.deploy.log
-check_code $? "Deploying the app"
+check_code $EXIT_CODE "Deploying the app"
 
 travis_fold end "deploy"
 
