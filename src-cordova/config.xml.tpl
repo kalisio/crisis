@@ -35,8 +35,8 @@
     <allow-intent href="market:*"/>
     <resource-file src="google-services.json" target="app/google-services.json"/>
      <custom-config-file parent="/*" target="AndroidManifest.xml">
-        <uses-permission android:name="android.permission.CAMERA" />
-        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.CAMERA"/>
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     </custom-config-file>
     <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png"/>
     <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png"/>
@@ -116,8 +116,8 @@
       <string>Need photo library access to get pictures from there</string>
     </edit-config>
     <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-      <string>Need photo library access to save pictures there</string-->
-    </edit-config>
+      <string>Need photo library access to save pictures there</string>
+    </edit-config-->
   </platform>
   <plugin name="cordova-custom-config" spec="~5.1.0"/>
   <plugin name="cordova-plugin-statusbar" spec="~2.4.3"/>
@@ -129,12 +129,12 @@
   <plugin name="cordova-plugin-whitelist" spec="~1.3.4"/>
   <plugin name="cordova-plugin-inappbrowser" spec="~4.0.0"/>
   <plugin name="cordova-plugin-wkwebview-engine" spec="~1.2.1" />
-  <plugin name="cordova-plugin-file" spec="~6.0.2"/>
-  <plugin name="cordova-plugin-file-opener2" spec="~3.0.2"/>
+  <plugin name="cordova-plugin-file" spec="~6.0.2" />
+  <plugin name="cordova-plugin-file-opener2" spec="~3.0.2" />
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
   <plugin name="phonegap-plugin-push" spec="~2.1.2"/>
-  <engine name="android" spec="~8.0.0" />
+  <engine name="android" spec="~8.0.0"/>
   <engine name="ios" spec="~5.1.1" />
 </widget>
