@@ -109,7 +109,7 @@
     <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
       <string>Need to access your position to build meaningful events</string>
     </edit-config>
-    <!--edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
       <string>Need camera access to take pictures</string>
     </edit-config>
     <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
@@ -117,7 +117,7 @@
     </edit-config>
     <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
       <string>Need photo library access to save pictures there</string>
-    </edit-config-->
+    </edit-config>
   </platform>
   <plugin name="cordova-custom-config" spec="~5.1.0"/>
   <plugin name="cordova-plugin-statusbar" spec="~2.4.3"/>
