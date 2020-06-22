@@ -68,6 +68,11 @@
     <hook src="hooks/ios-run-pods.sh" type="after_platform_add"/>
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
+    <feature name="CDVWKWebViewEngine">
+        <param name="ios-package" value="CDVWKWebViewEngine" />
+    </feature>
+    <preference name="WKWebViewOnly" value="true" />    
+    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <icon height="29" src="res/icons/ios/icon-small.png" width="29"/>
     <icon height="58" src="res/icons/ios/icon-small-2x.png" width="58"/>
     <icon height="87" src="res/icons/ios/icon-small-3x.png" width="87"/>
@@ -118,17 +123,18 @@
   <plugin name="cordova-plugin-statusbar" spec="~2.4.3"/>
   <plugin name="cordova-plugin-android-permissions" spec="~1.0.0"/>
   <plugin name="cordova-plugin-device" spec="~2.0.2"/>
-  <plugin name="cordova-plugin-geolocation" spec="~4.0.1"/>
+  <plugin name="cordova-plugin-geolocation" spec="~4.0.2"/>
   <plugin name="cordova-plugin-camera" spec="~4.1.0"/>
   <plugin name="cordova-plugin-sim" spec="~1.3.3"/>
-  <plugin name="cordova-plugin-whitelist" spec="~1.3.2"/>
-  <plugin name="cordova-plugin-inappbrowser" spec="~3.0.0"/>
-  <plugin name="cordova-plugin-file" spec="~6.0.0"/>
-  <plugin name="cordova-plugin-file-opener2" spec="~2.2.0"/>
+  <plugin name="cordova-plugin-whitelist" spec="~1.3.4"/>
+  <plugin name="cordova-plugin-inappbrowser" spec="~4.0.0"/>
+  <plugin name="cordova-plugin-wkwebview-engine" spec="~1.2.1" />
+  <plugin name="cordova-plugin-file" spec="~6.0.2"/>
+  <plugin name="cordova-plugin-file-opener2" spec="~3.0.2"/>
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
   <plugin name="phonegap-plugin-push" spec="~2.1.2"/>
   <engine name="android" spec="~8.0.0" />
-  <!--engine name="ios" spec="~5.0.1" /-->
+  <engine name="ios" spec="~5.1.1" />
 </widget>
