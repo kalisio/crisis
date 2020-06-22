@@ -65,7 +65,7 @@ jobs:
   - stage: IOS
     os: osx
     language: objective-c
-    osx_image: xcode10.1
+    osx_image: xcode11.5
     before_install:
     # NVM
     - nvm install 12.16
