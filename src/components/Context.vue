@@ -36,8 +36,14 @@ export default {
           route: { name: 'archived-events-activity', params: { operation: 'archived-events', contextId: context._id } }
         })
       }
-      actions.toolbar.push({ name: 'search', icon: 'las la-search', label: this.$t('Context.SEARCH'), handler: this.search })
-      actions.toolbar.push({ name: 'refresh', icon: 'las la-sync', label: this.$t('Context.REFRESH'), handler: this.refresh })
+      if ((routeName !== 'catalog-activity') && (routeName !== 'organisation-settings-activity')) {
+        actions.toolbar.push({
+          name: 'search', icon: 'las la-search', label: this.$t('Context.SEARCH'), handler: this.search
+        })
+      }
+      actions.toolbar.push({
+        name: 'refresh', icon: 'las la-sync', label: this.$t('Context.REFRESH'), handler: this.refresh
+      })
       if ((routeName !== 'members-activity') &&
           this.$can('service', 'members', context._id)) {
         actions.menu.push({
