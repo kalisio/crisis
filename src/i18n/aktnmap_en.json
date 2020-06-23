@@ -73,8 +73,26 @@
       "PASSWORD_LABEL": "Then enter your password",
       "PASSWORD_VISIBILITY_LABEL": "Display you password clearly if there is any doubt about",
       "LOGIN_LABEL": "Now, finish by login",
-      "LOST_PASSWORD_LABEL": "If you have lost your password launch the <b>recovery procedure</b> here",
-      "REGISTER_LABEL": "If you don't yet have an account launch the <b>registration procedure</b> here"
+      "LOST_PASSWORD_LABEL": "If you have lost your password launch the <b><a href='/#/send-reset-password?tour=true'>recovery procedure</a></b>",
+      "REGISTER_LABEL": "If you don't yet have an account launch the <b><a href='/#/register?tour=true'>registration procedure</a></b>"
+    },
+    "reset-password": {
+      "RESET_PROCEDURE_LABEL": "If you have lost your password we will send you an email back containing a link to <b>define a new one</b>",
+      "EMAIL_LABEL": "First, enter the email address you have used to register or to get invited",
+      "RESET_LABEL": "Now finish by sending the email containing the link (<b>please check the email is not in your spam folder</b>)"
+    },
+    "register": {
+      "LOCAL_LABEL": "You can register to the system by defining your <b>personal identifiers</b>",
+      "NAME_LABEL": "Enter your name first",
+      "EMAIL_LABEL": "Enter the email address you will use to connect and receive security related messages",
+      "PASSWORD_LABEL": "Choose a password, if it does not comply our security policy an alert will inform you about the rules to follow",
+      "PASSWORD_VISIBILITY_LABEL": "Display you password clearly if there is any doubt about",
+      "CONFIRM_PASSWORD_LABEL": "Confirm your password to avoid any error",
+      "CONFIRM_PASSWORD_VISIBILITY_LABEL": "Display you password clearly for verification if there is any error",
+      "TERMS_LABEL": "Read and accept our <b><a href='/#/terms'>terms of service</a></b> in order to use the system",
+      "REGISTER_LABEL": "Last, create your account",
+      "EMAIL_VERIFICATION_LABEL": "We will send you an email back containing a link to <b>verify your address</b>.",
+      "LOGIN_LABEL": "You can now login whenever you want using your <b>personal identifiers</b>."
     }
   },
   "Variables": {

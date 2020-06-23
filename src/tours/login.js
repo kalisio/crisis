@@ -15,7 +15,8 @@ module.exports = [{
   target: '#password-field-visibility',
   content: 'tours.login.PASSWORD_VISIBILITY_LABEL',
   params: {
-    placement: 'top'
+    placement: 'top',
+    click: 1000
   }
 }, {
   target: '#local',

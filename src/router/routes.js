@@ -17,7 +17,10 @@ module.exports = {
         component: 'authentication/KLogout',
         meta: { authenticated: true }
       },
-      'register': 'authentication/KRegister',
+      'register': {
+        component: 'authentication/KRegister',
+        tour: tours.register
+      },
       'change-endpoint': 'authentication/KChangeEndpoint',
       'resend-verify-signup': {
         component: 'account/KResendVerifySignup',
@@ -27,7 +30,10 @@ module.exports = {
         component: 'account/KVerifySignup',
         meta: { authenticated: true }
       },
-      'send-reset-password': 'account/KSendResetPassword',
+      'send-reset-password': {
+        component: 'account/KSendResetPassword',
+        tour: tours['send-reset-password']
+      },
       'change-password': {
         component: 'account/KChangePassword',
         meta: { authenticated: true, unauthenticated: false }

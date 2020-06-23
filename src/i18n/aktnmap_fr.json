@@ -70,15 +70,33 @@
   },
   "tours": {
     "login": {
-      "SOCIAL_LABEL": "Vous pouvez aussi vous connecter avec <b>d'autres identifiants</b>",
-      "GOOGLE_LABEL": "Par exemple avec votre compte Google",
-      "LOCAL_LABEL": "Vous pouvez vous connecter au système avec <b>vos identifiants</b>",
-      "EMAIL_LABEL": "Saisissez tout d'abord votre adresse mail",
-      "PASSWORD_LABEL": "Saisissez ensuite votre mot de passe",
-      "PASSWORD_VISIBILITY_LABEL": "Affichez votre mot de passe en clair en cas de doute",
-      "LOGIN_LABEL": "Enfin, terminez en vous connectant",
-      "LOST_PASSWORD_LABEL": "Si vous avez oublié votre mot de passe initiez la <b>procédure de récupération</b> ici",
-      "REGISTER_LABEL": "Si vous n'avez pas encore de compte initiez la <b>procédure d'enregistrement</b> ici"
+      "SOCIAL_LABEL": "Vous pouvez aussi vous connecter avec <b>d'autres identifiants</b>.",
+      "GOOGLE_LABEL": "Par exemple avec votre compte Google.",
+      "LOCAL_LABEL": "Vous pouvez vous connecter au système avec <b>vos identifiants</b>.",
+      "EMAIL_LABEL": "Saisissez tout d'abord votre adresse mail.",
+      "PASSWORD_LABEL": "Saisissez ensuite votre mot de passe.",
+      "PASSWORD_VISIBILITY_LABEL": "Affichez votre mot de passe en clair en cas de doute.",
+      "LOGIN_LABEL": "Enfin, terminez en vous connectant.",
+      "LOST_PASSWORD_LABEL": "Si vous avez oublié votre mot de passe initiez la <b><a href='/#/send-reset-password?tour=true'>procédure de récupération</a></b>.",
+      "REGISTER_LABEL": "Si vous n'avez pas encore de compte initiez la <b><a href='/#/register?tour=true'>procédure d'enregistrement</a></b>."
+    },
+    "reset-password": {
+      "RESET_PROCEDURE_LABEL": "Si vous avez oublié votre mot de passe nous vous enverrons un email contenant un lien permettant <b>d'en définir un nouveau</b>.",
+      "EMAIL_LABEL": "Saisissez tout d'abord l'adresse que vous avez utilisé pour vous enregistrer ou par laquelle vous avez été invité.",
+      "RESET_LABEL": "Enfin, terminez en envoyant l'email contenant le lien (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirable</b>)."
+    },
+    "register": {
+      "LOCAL_LABEL": "Vous pouvez vous enregistrer sur le système en définissant <b>vos identifiants</b>.",
+      "NAME_LABEL": "Saisissez tout d'abord votre nom.",
+      "EMAIL_LABEL": "Saisissez ensuite l'adresse mail que vous utiliserez pour vous connecter et sur laquelle vous recevrez les messages liés à la sécurité.",
+      "PASSWORD_LABEL": "Choisissez ensuite votre mot de passe, s'il ne respecte pas nos dispositions de sécurité une alerte vous indiquera les règles à respecter.",
+      "PASSWORD_VISIBILITY_LABEL": "Affichez votre mot de passe en clair en cas de doute.",
+      "CONFIRM_PASSWORD_LABEL": "Confirmez votre mot de passe pour éviter les erreurs.",
+      "CONFIRM_PASSWORD_VISIBILITY_LABEL": "Affichez votre mot de passe pour vérification en cas d'erreur.",
+      "TERMS_LABEL": "Lisez et acceptez nos <b><a href='/#/terms'>conditions d'utilisation</a></b> pour pouvoir utiliser le système.",
+      "REGISTER_LABEL": "Enfin, terminez en créant votre compte.",
+      "EMAIL_VERIFICATION_LABEL": "Nous vous enverrons un email contenant un lien permettant <b>de vérifier votre adresse</b>.",
+      "LOGIN_LABEL": "Vous pouvez maintenant vous reconnecter au système grâce à <b>vos identifiants</b>."      
     }
   },
   "Variables": {
