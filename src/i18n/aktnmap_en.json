@@ -64,6 +64,19 @@
     "EVENTS_LOG_COMMENT_FIELD_LABEL": "Comment",
     "EVENTS_LOG_COMMENT_FIELD_HELPER": "Enter your comment for this step"
   },
+  "tours": {
+    "login": {
+      "SOCIAL_LABEL": "You can also login using <b>external identifiers</b>",
+      "GOOGLE_LABEL": "For instance using your Google account",
+      "LOCAL_LABEL": "You can login using your <b>personal identifiers</b>",
+      "EMAIL_LABEL": "Enter your email address first",
+      "PASSWORD_LABEL": "Then enter your password",
+      "PASSWORD_VISIBILITY_LABEL": "Display you password clearly if there is any doubt about",
+      "LOGIN_LABEL": "Now, finish by login",
+      "LOST_PASSWORD_LABEL": "If you have lost your password launch the <b>recovery procedure</b> here",
+      "REGISTER_LABEL": "If you don't yet have an account launch the <b>registration procedure</b> here"
+    }
+  },
   "Variables": {
     "H": "Water level",
     "Q": "Water rate",

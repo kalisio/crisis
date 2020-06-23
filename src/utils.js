@@ -135,6 +135,25 @@ function buildRoutes (config) {
   return routes
 }
 
+function buildTours (config) {
+  function buildToursRecursively (config, tours) {
+    _.forOwn(config, (value, key) => {
+      const name = _.get(value, 'name', _.get(value, 'path', key))
+      if (_.has(value, 'tour')) {
+        tours[name] = _.get(value, 'tour')
+      }
+      // Check for any children to recurse
+      if (value.children) {
+        buildToursRecursively(value.children, tours)
+      }
+    })
+  }
+
+  let tours = {}
+  buildToursRecursively(config, tours)
+  return tours
+}
+
 let utils = {
   loadComponent,
   loadSchema,
@@ -143,7 +162,8 @@ let utils = {
   load,
   createComponent,
   createComponentVNode,
-  buildRoutes
+  buildRoutes,
+  buildTours
 }
 
 export default utils

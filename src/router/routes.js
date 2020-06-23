@@ -1,3 +1,5 @@
+const tours = require('../tours')
+
 module.exports = {
   '/' : {
     name: 'index',
@@ -7,7 +9,10 @@ module.exports = {
     meta: { unauthenticated: true },
     children: {
       'terms': 'Terms',
-      'login': 'authentication/KLogin',
+      'login': {
+        component: 'authentication/KLogin',
+        tour: tours.login
+      },
       'logout': {
         component: 'authentication/KLogout',
         meta: { authenticated: true }
