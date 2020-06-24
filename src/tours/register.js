@@ -22,7 +22,7 @@ module.exports = [{
   content: 'tours.register.PASSWORD_VISIBILITY_LABEL',
   params: {
     placement: 'top',
-    click: 1000
+    clickDelay: 1000
   }
 }, {
   target: '#confirmPassword-field',
@@ -35,14 +35,14 @@ module.exports = [{
   content: 'tours.register.CONFIRM_PASSWORD_VISIBILITY_LABEL',
   params: {
     placement: 'top',
-    click: 1000
+    clickDelay: 1000
   }
 }, {
   target: '#consentTerms-field',
   content: 'tours.register.TERMS_LABEL',
   params: {
     placement: 'right',
-    click: 1000
+    clickDelay: 1000
   }
 }, {
   target: '#register',
@@ -56,7 +56,6 @@ module.exports = [{
   content: 'tours.register.LOGIN_LABEL',
   params: {
     placement: 'bottom',
-    route: { name: 'login', query: { tour: true } },
-    routeDelay: 3000
+    route: { name: 'login' }
   }
 }]

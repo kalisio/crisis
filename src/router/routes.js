@@ -36,12 +36,14 @@ module.exports = {
       },
       'change-password': {
         component: 'account/KChangePassword',
-        meta: { authenticated: true, unauthenticated: false }
+        meta: { authenticated: true, unauthenticated: false },
+        tour: tours['change-password']
       },
       'reset-password/:token': 'account/KResetPassword',
       'send-change-identity': {
         component: 'account/KSendChangeIdentity',
-        meta: { authenticated: true, unauthenticated: false }
+        meta: { authenticated: true, unauthenticated: false },
+        tour: tours['send-change-identity']
       },
       'change-identity/:token': {
         component: 'account/KChangeIdentity',
@@ -71,13 +73,15 @@ module.exports = {
           },
           'dashboard': {
             path: 'dashboard',
-            component: 'EventDashboard'
+            component: 'EventDashboard',
+            tour: tours.home
           },
           'help': 'Help',
           'account/:perspective': {
             name: 'account-activity',
             component: 'account/KAccountActivity',
-            props: true
+            props: true,
+            tour: tours.account
           },
           'create-organisation' : {
             name: 'create-organisation',
@@ -137,7 +141,8 @@ module.exports = {
                 children: {
                   'create/:templateId/:layerId?/:featureId?': { name: 'create-event', component: 'EventEditor', props: true },
                   'edit/:objectId': { name: 'edit-event', component: 'EventEditor', props: true },
-                }
+                },
+                tour: tours.home
               },
               'archived-events/:south?/:west?/:north?/:east?': {
                 name: 'archived-events-activity',

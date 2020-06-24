@@ -66,33 +66,66 @@
   },
   "tours": {
     "login": {
-      "SOCIAL_LABEL": "You can also login using <b>external identifiers</b>",
-      "GOOGLE_LABEL": "For instance using your Google account",
-      "LOCAL_LABEL": "You can login using your <b>personal identifiers</b>",
-      "EMAIL_LABEL": "Enter your email address first",
-      "PASSWORD_LABEL": "Then enter your password",
-      "PASSWORD_VISIBILITY_LABEL": "Display you password clearly if there is any doubt about",
-      "LOGIN_LABEL": "Now, finish by login",
-      "LOST_PASSWORD_LABEL": "If you have lost your password launch the <b><a href='/#/send-reset-password?tour=true'>recovery procedure</a></b>",
-      "REGISTER_LABEL": "If you don't yet have an account launch the <b><a href='/#/register?tour=true'>registration procedure</a></b>"
+      "SOCIAL_LABEL": "You can also login using <b>external identifiers</b>.",
+      "GOOGLE_LABEL": "For instance using your Google account.",
+      "LOCAL_LABEL": "You can login using your <b>personal identifiers</b>.",
+      "EMAIL_LABEL": "Enter your email address first.",
+      "PASSWORD_LABEL": "Then enter your password.",
+      "PASSWORD_VISIBILITY_LABEL": "Display you password clearly if there is any doubt about.",
+      "LOGIN_LABEL": "Now, finish by login.",
+      "LOST_PASSWORD_LABEL": "If you have lost your password launch the <b>recovery procedure</b>.",
+      "REGISTER_LABEL": "If you don't yet have an account launch the <b>registration procedure</b>."
     },
     "reset-password": {
-      "RESET_PROCEDURE_LABEL": "If you have lost your password we will send you an email back containing a link to <b>define a new one</b>",
-      "EMAIL_LABEL": "First, enter the email address you have used to register or to get invited",
-      "RESET_LABEL": "Now finish by sending the email containing the link (<b>please check the email is not in your spam folder</b>)"
+      "RESET_PROCEDURE_LABEL": "If you have lost your password we will send you an email back containing a link to <b>define a new one</b>.",
+      "EMAIL_LABEL": "First, enter the email address you have used to register or to get invited.",
+      "RESET_LABEL": "Now finish by sending the email containing the link (<b>please check the email is not in your spam folder</b>)."
     },
     "register": {
-      "LOCAL_LABEL": "You can register to the system by defining your <b>personal identifiers</b>",
-      "NAME_LABEL": "Enter your name first",
-      "EMAIL_LABEL": "Enter the email address you will use to connect and receive security related messages",
-      "PASSWORD_LABEL": "Choose a password, if it does not comply our security policy an alert will inform you about the rules to follow",
-      "PASSWORD_VISIBILITY_LABEL": "Display you password clearly if there is any doubt about",
-      "CONFIRM_PASSWORD_LABEL": "Confirm your password to avoid any error",
-      "CONFIRM_PASSWORD_VISIBILITY_LABEL": "Display you password clearly for verification if there is any error",
-      "TERMS_LABEL": "Read and accept our <b><a href='/#/terms'>terms of service</a></b> in order to use the system",
-      "REGISTER_LABEL": "Last, create your account",
+      "LOCAL_LABEL": "You can register to the system by defining your <b>personal identifiers</b>.",
+      "NAME_LABEL": "Enter your name first.",
+      "EMAIL_LABEL": "Enter the email address you will use to connect and receive security related messages.",
+      "PASSWORD_LABEL": "Choose a password, if it does not comply our security policy an alert will inform you about the rules to follow.",
+      "PASSWORD_VISIBILITY_LABEL": "Display you password clearly if there is any doubt about.",
+      "CONFIRM_PASSWORD_LABEL": "Confirm your password to avoid any error.",
+      "CONFIRM_PASSWORD_VISIBILITY_LABEL": "Display you password clearly for verification if there is any error.",
+      "TERMS_LABEL": "Read and accept our <b><a href='/#/terms'>terms of service</a></b> in order to use the system.",
+      "REGISTER_LABEL": "Last, create your account.",
       "EMAIL_VERIFICATION_LABEL": "We will send you an email back containing a link to <b>verify your address</b>.",
       "LOGIN_LABEL": "You can now login whenever you want using your <b>personal identifiers</b>."
+    },
+    "home": {
+      "LEADING_LABEL": "Open the side menu any time.",
+      "SIDENAV_LABEL": "You can manage different aspects linked to your account.",
+      "ACCOUNT_LABEL": "Manage here <b>your identifiers</b> and what is related to their security.",
+      "HELP_LABEL": "Access our <b><a href='/#/help'>online help</a></b> anytime.",
+      "ABOUT_LABEL": "Display detailed system information and send us bug reports.",
+      "BUG_LABEL": "Send us a bug report with a preformatted email containing required information.",
+      "SETTINGS_LABEL": "Update general settings of the system on your device.",
+      "LOGOUT_LABEL": "Logout in order to close your work session.",
+      "SESSION_LABEL": "Otherwise the session will remain active on your device for <b>24H</b>, you will not have to login again in this time frame."
+    },
+    "account": {
+      "PROFILE_LABEL": "This tab allow to update your profile information.",
+      "AVATAR_LABEL": "Your avatar visible in the side menu when an image file has been selected.",
+      "NAME_LABEL": "Your name as viewed by others users.",
+      "UPDATE_LABEL": "Confirm the update in order to apply the modifications to your profile information.",
+      "SECURITY_LABEL": "This tab allow to update your <b>personal identifiers</b> and your devices.",
+      "PASSWORD_LABEL": "Launch the <b>password change procedure</b>.",
+      "EMAIL_LABEL": "Launch the <b>email change procedure</b>.",
+      "DEVICES_LABEL": "This section list all the mobile devices you have used.",
+      "UNLINK_LABEL": "Check for any suspect activity and unlink outdated mobile devices.",
+      "DANGER_ZONE_LABEL": "This tab allow to remove your account.",
+      "DELETE_LABEL": "A manual confirmation will be required before final removal."
+    },
+    "change-password": {
+      "PASSWORD_PROCEDURE_LABEL": "Si vous souhaitez modifier votre mot de passe vous pouvez <b>en définir un nouveau</b>.",
+      "OLD_PASSWORD_LABEL": "Saisissez tout d'abord votre ancien mot de passe.",
+      "NEW_PASSWORD_LABEL": "Choisissez ensuite votre nouveau mot de passe, s'il ne respecte pas nos dispositions de sécurité une alerte vous indiquera les règles à respecter.",
+      "NEW_PASSWORD_VISIBILITY_LABEL": "Affichez votre mot de passe en clair en cas de doute.",
+      "CONFIRM_NEW_PASSWORD_LABEL": "Confirmez votre nouveau mot de passe pour éviter les erreurs.",
+      "CHANGE_LABEL": "Enfin, terminez en confirmant la modification.",
+      "CHANGE_EMAIL_LABEL": "Un email de confirmation vous serez envoyé (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirable</b>)."
     }
   },
   "Variables": {
@@ -151,6 +184,7 @@
     "GROUPS": "Groups",
     "CATALOG": "Geographic Context",
     "SEARCH": "Search",
+    "ONLINE_HELP": "Contextual help",    
     "REFRESH": "Refresh",
     "SETTINGS": "Settings"
   },

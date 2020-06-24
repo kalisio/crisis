@@ -77,8 +77,8 @@
       "PASSWORD_LABEL": "Saisissez ensuite votre mot de passe.",
       "PASSWORD_VISIBILITY_LABEL": "Affichez votre mot de passe en clair en cas de doute.",
       "LOGIN_LABEL": "Enfin, terminez en vous connectant.",
-      "LOST_PASSWORD_LABEL": "Si vous avez oublié votre mot de passe initiez la <b><a href='/#/send-reset-password?tour=true'>procédure de récupération</a></b>.",
-      "REGISTER_LABEL": "Si vous n'avez pas encore de compte initiez la <b><a href='/#/register?tour=true'>procédure d'enregistrement</a></b>."
+      "LOST_PASSWORD_LABEL": "Si vous avez oublié votre mot de passe initiez la <b>procédure de récupération</b>.",
+      "REGISTER_LABEL": "Si vous n'avez pas encore de compte initiez la <b>procédure d'enregistrement</b>."
     },
     "reset-password": {
       "RESET_PROCEDURE_LABEL": "Si vous avez oublié votre mot de passe nous vous enverrons un email contenant un lien permettant <b>d'en définir un nouveau</b>.",
@@ -97,6 +97,39 @@
       "REGISTER_LABEL": "Enfin, terminez en créant votre compte.",
       "EMAIL_VERIFICATION_LABEL": "Nous vous enverrons un email contenant un lien permettant <b>de vérifier votre adresse</b>.",
       "LOGIN_LABEL": "Vous pouvez maintenant vous reconnecter au système grâce à <b>vos identifiants</b>."      
+    },
+    "home": {
+      "LEADING_LABEL": "Ouvrez à tout moment le menu latéral.",
+      "SIDENAV_LABEL": "Il vous permettra d'accéder à la gestion des différents aspects lié à votre compte.",
+      "ACCOUNT_LABEL": "Gérez ici <b>vos identifiants</b> et ce qui a trait à leur sécurité.",
+      "HELP_LABEL": "Accédez à notre <b><a href='/#/help'>aide en ligne</a></b> à tout moment.",
+      "ABOUT_LABEL": "Affichez les informations détaillées du système et signalez-nous un boggue.",
+      "BUG_LABEL": "Signalez-nous un boggue via un email contenant automatiquement les informations nécessaires.",
+      "SETTINGS_LABEL": "Modifiez les paramètres généraux du système sur votre appareil.",
+      "LOGOUT_LABEL": "Déconnectez vous si vous souhaitez clôturer votre session de travail.",
+      "SESSION_LABEL": "Sinon la session reste active sur votre appareil pendant <b>24H</b> et vous n'aurez pas besoin de vous reconnecter durant ce laps de temps."
+    },
+    "account": {
+      "PROFILE_LABEL": "Cet onglet vous permet de modifier les informations liées à votre profil utilisateur.",
+      "AVATAR_LABEL": "Votre avatar personnalisé qui sera visible dans le menu latéral une fois un fichier image sélectionné.",
+      "NAME_LABEL": "Votre nom tel qu'il sera visible par les autres utilisateurs",
+      "UPDATE_LABEL": "Confirmez la mise à jour pour appliquer les modifications apportées à votre profil.",
+      "SECURITY_LABEL": "Cet onglet vous permet de modifier <b>vos identifiants</b> et vos appareils.",
+      "PASSWORD_LABEL": "Initiez la <b>procédure de changement de mot de passe</b>.",
+      "EMAIL_LABEL": "Initiez la <b>procédure de changement d'adresse mail</b>.",
+      "DEVICES_LABEL": "Cette section liste les différents appareils mobiles que vous avez utilisé.",
+      "UNLINK_LABEL": "Vérifiez ici toute activité suspecte et dissociez les appareils obsolètes de votre compte.",
+      "DANGER_ZONE_LABEL": "Cet onglet vous permet de supprimer votre compte du système.",
+      "DELETE_LABEL": "Un confirmation manuelle vous sera demandé avant la suppression définitive de votre compte."
+    },
+    "change-password": {
+      "PASSWORD_PROCEDURE_LABEL": "Si vous souhaitez modifier votre mot de passe vous pouvez <b>en définir un nouveau</b>.",
+      "OLD_PASSWORD_LABEL": "Saisissez tout d'abord votre ancien mot de passe.",
+      "NEW_PASSWORD_LABEL": "Choisissez ensuite votre nouveau mot de passe, s'il ne respecte pas nos dispositions de sécurité une alerte vous indiquera les règles à respecter.",
+      "NEW_PASSWORD_VISIBILITY_LABEL": "Affichez votre mot de passe en clair en cas de doute.",
+      "CONFIRM_NEW_PASSWORD_LABEL": "Confirmez votre nouveau mot de passe pour éviter les erreurs.",
+      "CHANGE_LABEL": "Enfin, terminez en confirmant la modification.",
+      "CHANGE_EMAIL_LABEL": "Un email de confirmation vous serez envoyé (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirable</b>)."
     }
   },
   "Variables": {
@@ -155,6 +188,7 @@
     "GROUPS": "Groupes",
     "CATALOG": "Contexte géographique",
     "SEARCH": "Rechercher",    
+    "ONLINE_HELP": "Aide contextuelle",    
     "REFRESH": "Rafraîchir",
     "SETTINGS": "Paramètres"
   },

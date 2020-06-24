@@ -17,6 +17,9 @@ export default {
     search () {
       this.$store.patch('searchBar', { isVisible: !this.$store.get('searchBar.isVisible') })
     },
+    launchTour (name) {
+      this.$store.patch('tours.current', { name })
+    },
     getActionsForContext (context) {
       const routeName = this.$route.name
       let actions = { toolbar: [], menu: [] }
@@ -42,7 +45,7 @@ export default {
         })
       }
       actions.toolbar.push({
-        name: 'refresh', icon: 'las la-sync', label: this.$t('Context.REFRESH'), handler: this.refresh
+        name: 'online-help', icon: 'las la-question-circle', label: this.$t('Context.ONLINE_HELP'), handler: () => this.launchTour(routeName)
       })
       if ((routeName !== 'members-activity') &&
           this.$can('service', 'members', context._id)) {
@@ -80,6 +83,9 @@ export default {
           route: { name: 'catalog-activity', params: { contextId: context._id } }
         })
       }
+      actions.toolbar.push({
+        name: 'refresh', icon: 'las la-sync', label: this.$t('Context.REFRESH'), handler: this.refresh
+      })
       if ((routeName !== 'organisation-settings-activity') &&
           this.$can('update', 'organisations', context._id, { _id: context._id })) {
         actions.menu.push({

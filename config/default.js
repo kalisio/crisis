@@ -200,7 +200,7 @@ module.exports = {
   user_dashboard: {
     links: [
       { },
-      { label: 'sideNav.DASHBOARD', icon: 'dashboard', route: { name: 'home' } }
+      { id: 'dashboard', label: 'sideNav.DASHBOARD', icon: 'dashboard', route: { name: 'home' } }
     ]
   },
   user_organisations: {
@@ -209,9 +209,9 @@ module.exports = {
   },
   user_actions: {
     links: [
-      { label: 'sideNav.HELP', icon: 'las la-question', route: { name: 'help'} },
+      { id: 'help', label: 'sideNav.HELP', icon: 'las la-question', route: { name: 'help'} },
       { }, // separator
-      { label: 'sideNav.LOGOUT', icon: 'las la-sign-out-alt', route: { name: 'logout' } }
+      { id: 'logout', label: 'sideNav.LOGOUT', icon: 'las la-sign-out-alt', route: { name: 'logout' } }
     ]
   },
   context: {

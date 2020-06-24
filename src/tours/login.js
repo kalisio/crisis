@@ -16,7 +16,7 @@ module.exports = [{
   content: 'tours.login.PASSWORD_VISIBILITY_LABEL',
   params: {
     placement: 'top',
-    click: 1000
+    clickDelay: 1000
   }
 }, {
   target: '#local',
@@ -28,13 +28,15 @@ module.exports = [{
   target: '#reset-password-link',
   content: 'tours.login.LOST_PASSWORD_LABEL',
   params: {
-    placement: 'bottom'
+    placement: 'bottom',
+    route: { name: 'send-reset-password' }
   }
 }, {
   target: '#register-link',
   content: 'tours.login.REGISTER_LABEL',
   params: {
-    placement: 'bottom'
+    placement: 'bottom',
+    route: { name: 'register' }
   }
 }, {
   target: '#google',
