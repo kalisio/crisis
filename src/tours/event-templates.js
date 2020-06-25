@@ -3,7 +3,8 @@ module.exports = [{
   content: 'tours.event-templates.NEW_TEMPLATE_LABEL',
   params: {
     placement: 'left',
-    clickOnNext: '#create-event-template'
+    clickOnNext: '#create-event-template',
+    nextDelay: 500
   }
 }, {
   target: '#name-field',
@@ -12,11 +13,12 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#icon-field',
+  target: '#icon-chooser',
   content: 'tours.event-templates.TEMPLATE_ICON_LABEL',
   params: {
     placement: 'bottom',
-    clickOnNext: '#icon-chooser'
+    clickOnNext: '#icon-chooser',
+    nextDelay: 500
   }
 }, {
   target: '#icons',
@@ -31,13 +33,15 @@ module.exports = [{
   content: 'tours.event-templates.SELECT_COLOR_LABEL',
   params: {
     placement: 'top',
-    clickOnNext: '#close-action',
+    clickOnNext: '#done-button',
     nextDelay: 500
   }
 }, {
   target: '#description-field',
   content: 'tours.event-templates.TEMPLATE_DESCRIPTION_LABEL',
   params: {
-    placement: 'bottom'
+    placement: 'bottom',
+    clickOnPrevious: '#icon-chooser',
+    previousDelay: 500
   }
 }]

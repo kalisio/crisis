@@ -145,7 +145,7 @@
       "TEMPLATE_LINK_LABEL": "Voir comment gérer les modèles"
     },
     "event-templates": {
-      "NEW_TEMPLATE_LABEL": "Créez un <b>nouveau modèle</b> requis via ce bouton.",
+      "NEW_TEMPLATE_LABEL": "Créez un <b>nouveau modèle</b> via ce bouton.",
       "TEMPLATE_NAME_LABEL": "Choisissez le nom de votre modèle.",
       "TEMPLATE_ICON_LABEL": "Choisissez une iconographie vous permettant d'identifier facilement le modèle.",
       "SELECT_ICON_LABEL": "Sélectionnez votre icône dans notre vaste librairie.",
