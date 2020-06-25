@@ -4,7 +4,9 @@
       <template v-for="org in items">
         <q-list :key="org._id" separator>
           <q-item>
-            <q-item-section><q-avatar color="primary" text-color="white" size="40px">{{getInitials(org)}}</q-avatar></q-item-section>
+            <q-item-section avatar>
+              <q-avatar color="primary" text-color="white" size="40px">{{getInitials(org)}}</q-avatar>
+            </q-item-section>
             <q-item-section>
               {{ org.name }}
             </q-item-section>

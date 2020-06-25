@@ -106,8 +106,16 @@
       "ABOUT_LABEL": "Affichez les informations détaillées du système et signalez-nous un boggue.",
       "BUG_LABEL": "Signalez-nous un boggue via un email contenant automatiquement les informations nécessaires.",
       "SETTINGS_LABEL": "Modifiez les paramètres généraux du système sur votre appareil.",
+      "DASHBOARD_LABEL": "Accéder au tableau de bord des événements de vos différentes organisations.",
+      "NEW_ORGANISATION_LABEL": "Créez une nouvelle organisation pour partager des événements.",
+      "ORGANISATION_NAME_LABEL": "Entrez le nom de l'organisation tel qu'il sera visible par les autres utilisateurs.",
+      "ORGANISATION_DESCRIPTION_LABEL": "Entrez une description détaillée.",
+      "CREATE_ORGANISATION_LABEL": "Confirmez la création de la nouvelle organisation.",
       "LOGOUT_LABEL": "Déconnectez vous si vous souhaitez clôturer votre session de travail.",
       "SESSION_LABEL": "Sinon la session reste active sur votre appareil pendant <b>24H</b> et vous n'aurez pas besoin de vous reconnecter durant ce laps de temps."
+    },
+    "dashboard": {
+      "DASHBOARD_LABEL": "Votre tableau de bord liste vos événements en cours dans chacune de vos organisations."
     },
     "account": {
       "PROFILE_LABEL": "Cet onglet vous permet de modifier les informations liées à votre profil utilisateur.",
@@ -130,6 +138,19 @@
       "CONFIRM_NEW_PASSWORD_LABEL": "Confirmez votre nouveau mot de passe pour éviter les erreurs.",
       "CHANGE_LABEL": "Enfin, terminez en confirmant la modification.",
       "CHANGE_EMAIL_LABEL": "Un email de confirmation vous serez envoyé (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirable</b>)."
+    },
+    "events": {
+      "TEMPLATE_TAB_LABEL": "Avant de créer un événement vous devez créer au moins un <b>modèle</b> via cet onglet.",
+      "SELECT_TEMPLATE_LABEL": "Lorsque vous souhaitez créer un événement sélectionnez simplement le <b>modèle</b> requis via le bouton.",
+      "TEMPLATE_LINK_LABEL": "Voir comment gérer les modèles"
+    },
+    "event-templates": {
+      "NEW_TEMPLATE_LABEL": "Créez un <b>nouveau modèle</b> requis via ce bouton.",
+      "TEMPLATE_NAME_LABEL": "Choisissez le nom de votre modèle.",
+      "TEMPLATE_ICON_LABEL": "Choisissez une iconographie vous permettant d'identifier facilement le modèle.",
+      "SELECT_ICON_LABEL": "Sélectionnez votre icône dans notre vaste librairie.",
+      "SELECT_COLOR_LABEL": "Sélectionnez sa couleur au sein de notre palette.",
+      "TEMPLATE_DESCRIPTION_LABEL": "Choisissez une description détaillée pour votre modèle."
     }
   },
   "Variables": {
@@ -177,7 +198,7 @@
   "sideNav": {
     "DASHBOARD": "Tableau de bord",
     "SETTINGS": "Paramètres",
-    "HELP": "Aide",
+    "HELP": "$t(HELP)",
     "LOGOUT": "Se déconnecter"
   },
   "Context": {
@@ -187,8 +208,8 @@
     "TAGS": "Etiquettes",
     "GROUPS": "Groupes",
     "CATALOG": "Contexte géographique",
-    "SEARCH": "Rechercher",    
-    "ONLINE_HELP": "Aide contextuelle",    
+    "SEARCH": "Rechercher",
+    "CONTEXTUAL_HELP": "$t(CONTEXTUAL_HELP)",    
     "REFRESH": "Rafraîchir",
     "SETTINGS": "Paramètres"
   },

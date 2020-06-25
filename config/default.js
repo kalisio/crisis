@@ -150,7 +150,8 @@ module.exports = {
       providers: ['google', 'github'],
       links: [
         { id: 'reset-password-link', label: 'KLogin.FORGOT_YOUR_PASSWORD_LINK', route: {name: 'send-reset-password' } },
-        { id: 'register-link', label: 'KLogin.DONT_HAVE_AN_ACCOUNT_LINK', route: { name: 'register' } }
+        { id: 'register-link', label: 'KLogin.DONT_HAVE_AN_ACCOUNT_LINK', route: { name: 'register' } },
+        { id: 'contextual-help', label: 'KLogin.CONTEXTUAL_HELP', route: { name: 'login', query: { tour: true } } }
       ]
     },
     logout: {
@@ -160,7 +161,8 @@ module.exports = {
     },
     register: {
       links: [
-        { id: 'login-link', label: 'KRegister.ALREADY_HAVE_AN_ACCOUNT_LINK', route: { name: 'login' } }
+        { id: 'login-link', label: 'KRegister.ALREADY_HAVE_AN_ACCOUNT_LINK', route: { name: 'login' } },
+        { id: 'contextual-help', label: 'KRegister.CONTEXTUAL_HELP', route: { name: 'register', query: { tour: true } } }
       ]
     },
     changeEndpoint: {
@@ -215,10 +217,7 @@ module.exports = {
     ]
   },
   context: {
-    service: 'organisations',
-    /* Due to complex authorisation management this is now done in the Context app component
-    actions: [ ... ]
-    */
+    service: 'organisations'
   },
   catalog: defaultMapOptions,
   catalogCatalog: defaultMapCatalog,

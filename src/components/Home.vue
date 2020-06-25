@@ -5,18 +5,39 @@
 <script>
 export default {
   name: 'home',
-  /* methods: {
-    openSideNav () {
-      this.$store.pach('leftDrawer', { visible: true })
+  watch: {
+    '$route' (to, from) {
+      // React to route changes but reusing the same component as this one is generic
+      this.refresh()
     }
-  }, */
+  },
+  methods: {
+    refresh () {
+      // When a context is set, context actions will be used
+      if (this.$store.get('context')) return
+      // Set the leading action
+      const toggleSideNav = {
+        name: 'sidenav', icon: 'las la-bars', label: this.$t('Context.PROFILE'),
+        handler: () => this.$store.patch('leftDrawer', { visible: !this.$store.get('leftDrawer.visible') })
+      }
+      let actions = { leading: toggleSideNav, toolbar: [], menu: [] }
+      // Then contextual help
+      const routeName = this.$route.name
+      actions.toolbar.push({
+        name: 'online-help', icon: 'las la-question-circle', label: this.$t('Context.CONTEXTUAL_HELP'),
+        handler: () => this.$store.patch('tours.current', { name: routeName })
+      })
+      this.$store.patch('appBar', actions)
+    }
+  },
   created () {
     // load the layout component
     this.$options.components['k-home'] = this.$load('layout/KHome')
-    // Initialize the user if any
-    // Set the leading action
-    const toggleSideNav = { name: 'dashboard', icon: 'las la-bars', label: this.$t('Context.PROFILE'), handler: () => this.$store.patch('leftDrawer', { visible: !this.$store.get('leftDrawer.visible') }) }
-    this.$store.patch('appBar', { leading: toggleSideNav, toolbar: [], menu: [] })
+    this.$events.$on('context-changed', this.refresh)
+    this.refresh()
+  },
+  beforeDestroy () {
+    this.$events.$off('context-changed', this.refresh)
   }
 }
 </script>

@@ -12,7 +12,9 @@ module.exports = [{
   title: 'tours.home.LOGOUT_LABEL',
   content: 'tours.home.SESSION_LABEL',
   params: {
-    placement: 'top'
+    placement: 'top',
+    clickOnPrevious: '#online-help',
+    previousDelay: 500
   }
 }, {
   target: '#help',
@@ -42,13 +44,51 @@ module.exports = [{
   target: '#edit-settings',
   content: 'tours.home.SETTINGS_LABEL',
   params: {
-    placement: 'top'
+    placement: 'top',
+    clickOnPrevious: '#about',
+    previousDelay: 500
   }
 }, {
   target: '#account',
-  content: 'tours.home.ACCOUNT_LABEL',
+  link: 'tours.home.ACCOUNT_LABEL',
   params: {
     placement: 'bottom',
     route: { name: 'account-activity', params: { perspective: 'profile' } }
+  }
+}, {
+  target: '#dashboard',
+  content: 'tours.home.DASHBOARD_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#new-organisation',
+  content: 'tours.home.NEW_ORGANISATION_LABEL',
+  params: {
+    placement: 'top',
+    clickOnNext: '#new-organisation',
+    nextDelay: 500
+  }
+}, {
+  target: '#name-field',
+  content: 'tours.home.ORGANISATION_NAME_LABEL',
+  params: {
+    placement: 'top',
+    clickOnPrevious: '#close',
+    previousDelay: 500
+  }
+}, {
+  target: '#description-field',
+  content: 'tours.home.ORGANISATION_DESCRIPTION_LABEL',
+  params: {
+    placement: 'top'
+  }
+}, {
+  target: '#apply-button',
+  content: 'tours.home.CREATE_ORGANISATION_LABEL',
+  params: {
+    placement: 'left',
+    clickOnNext: '#close',
+    nextDelay: 500
   }
 }]

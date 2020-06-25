@@ -26,14 +26,14 @@ module.exports = [{
   }
 }, {
   target: '#reset-password-link',
-  content: 'tours.login.LOST_PASSWORD_LABEL',
+  link: 'tours.login.LOST_PASSWORD_LABEL',
   params: {
     placement: 'bottom',
     route: { name: 'send-reset-password' }
   }
 }, {
   target: '#register-link',
-  content: 'tours.login.REGISTER_LABEL',
+  link: 'tours.login.REGISTER_LABEL',
   params: {
     placement: 'bottom',
     route: { name: 'register' }

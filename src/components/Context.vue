@@ -45,7 +45,8 @@ export default {
         })
       }
       actions.toolbar.push({
-        name: 'online-help', icon: 'las la-question-circle', label: this.$t('Context.ONLINE_HELP'), handler: () => this.launchTour(routeName)
+        name: 'online-help', icon: 'las la-question-circle', label: this.$t('Context.CONTEXTUAL_HELP'),
+        handler: () => this.launchTour(routeName)
       })
       if ((routeName !== 'members-activity') &&
           this.$can('service', 'members', context._id)) {
@@ -83,7 +84,7 @@ export default {
           route: { name: 'catalog-activity', params: { contextId: context._id } }
         })
       }
-      actions.toolbar.push({
+      actions.menu.push({
         name: 'refresh', icon: 'las la-sync', label: this.$t('Context.REFRESH'), handler: this.refresh
       })
       if ((routeName !== 'organisation-settings-activity') &&

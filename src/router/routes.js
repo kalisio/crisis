@@ -49,16 +49,6 @@ module.exports = {
         component: 'account/KChangeIdentity',
         meta: { authenticated: true }
       },
-      'subscribe/:contextId/:contextData': {
-        component: 'team/KSubscribe',
-        props: true,
-        meta: { authenticated: false, unauthenticated: true }
-      },
-      'unsubscribe/:contextId/:contextData': {
-        component: 'team/KUnsubscribe',
-        props: true,
-        meta: { authenticated: false, unauthenticated: true }
-      },
       'home': {
         // The name of the route has to be set the default child
         name: '',
@@ -69,12 +59,13 @@ module.exports = {
             // Because this child is the default one path is empty and name is the one of the parent route
             path: '',
             name: 'home',
-            redirect: { name: 'dashboard' }
+            redirect: { name: 'dashboard' },
+            tour: tours.home
           },
           'dashboard': {
             path: 'dashboard',
             component: 'EventDashboard',
-            tour: tours.home
+            tour: tours.dashboard
           },
           'help': 'Help',
           'account/:perspective': {
@@ -110,7 +101,8 @@ module.exports = {
                   ':objectId/tag': { name: 'tag-member', component: 'editor/KModalEditor', props: true },
                   ':objectId/join-group': { name: 'join-group', component: 'team/KJoinGroup', props: true },
                   ':objectId/change-role': { name: 'change-role', component: 'team/KChangeRole', props: true },
-                }
+                },
+                tour: tours.members
               },
               'tags': {
                 name: 'tags-activity',
@@ -118,7 +110,8 @@ module.exports = {
                 props: true,
                 children: {
                   'edit/:objectId': { name: 'edit-tag', component: 'editor/KModalEditor', props: true }
-                }
+                },
+                tour: tours.tags
               },
               'groups': {
                 name: 'groups-activity',
@@ -127,12 +120,14 @@ module.exports = {
                 children: {
                   'create': { name: 'create-group', component: 'editor/KModalEditor', props: true },
                   'edit/:objectId': { name: 'edit-group', component: 'editor/KModalEditor', props: true }
-                }
+                },
+                tour: tours.groups
               },
               'catalog/:south?/:west?/:north?/:east?': {
                 name: 'catalog-activity',
                 component: 'CatalogActivity',
-                props: true
+                props: true,
+                tour: tours.catalog
               },
               'events': {
                 name: 'events-activity',
@@ -142,7 +137,7 @@ module.exports = {
                   'create/:templateId/:layerId?/:featureId?': { name: 'create-event', component: 'EventEditor', props: true },
                   'edit/:objectId': { name: 'edit-event', component: 'EventEditor', props: true },
                 },
-                tour: tours.home
+                tour: tours.events
               },
               'archived-events/:south?/:west?/:north?/:east?': {
                 name: 'archived-events-activity',
@@ -150,7 +145,8 @@ module.exports = {
                 props: true,
                 children: {
                   'view/:objectId': { name: 'view-event', component: 'viewer/KModalViewer', props: true },
-                }
+                },
+                tour: tours['archived-events']
               },
               'events/:objectId/:south?/:west?/:north?/:east?': {
                 name: 'event-activity',
@@ -167,7 +163,8 @@ module.exports = {
                 children: {
                   'create/:templateId?': { name: 'create-event-template', component: 'EventTemplateEditor', props: true },
                   'edit/:objectId/:perspective?': { name: 'edit-event-template', component: 'EventTemplateEditor', props: true }
-                }
+                },
+                tour: tours['event-templates']
               },
               ':perspective': {
                 name: 'organisation-settings-activity',

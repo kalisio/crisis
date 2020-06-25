@@ -27,6 +27,7 @@ module.exports = [{
   content: 'tours.account.SECURITY_LABEL',
   params: {
     placement: 'bottom',
+    //routeOnNext: { name: 'account-activity', params: { perspective: 'security' } },
     clickOnNext: '#security',
     clickOnPrevious: '#profile',
     nextDelay: 500,
@@ -34,17 +35,17 @@ module.exports = [{
   }
 }, {
   target: '#password-block',
-  content: 'tours.account.PASSWORD_LABEL',
+  link: 'tours.account.PASSWORD_LABEL',
   params: {
     placement: 'top',
-    route: { name: 'change-password', params: { perspective: 'profile' } }
+    route: { name: 'change-password' }
   }
 }, {
   target: '#email-block',
-  content: 'tours.account.EMAIL_LABEL',
+  link: 'tours.account.EMAIL_LABEL',
   params: {
     placement: 'top',
-    route: { name: 'send-change-identity', params: { perspective: 'profile' } }
+    route: { name: 'send-change-identity' }
   }
 }, {
   target: '#devices-block',
@@ -58,6 +59,7 @@ module.exports = [{
   content: 'tours.account.DANGER_ZONE_LABEL',
   params: {
     placement: 'bottom',
+    //routeOnNext: { name: 'account-activity', params: { perspective: 'danger-zone' } },
     clickOnNext: '#danger-zone',
     clickOnPrevious: '#security',
     nextDelay: 500,
