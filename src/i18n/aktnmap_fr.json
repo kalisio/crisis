@@ -90,9 +90,9 @@
       "NAME_LABEL": "Saisissez tout d'abord votre nom.",
       "EMAIL_LABEL": "Saisissez ensuite l'adresse mail que vous utiliserez pour vous connecter et sur laquelle vous recevrez les messages liés à la sécurité.",
       "PASSWORD_LABEL": "Choisissez ensuite votre mot de passe, s'il ne respecte pas nos dispositions de sécurité une alerte vous indiquera les règles à respecter.",
-      "PASSWORD_VISIBILITY_LABEL": "Affichez votre mot de passe en clair en cas de doute.",
+      "PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
       "CONFIRM_PASSWORD_LABEL": "Confirmez votre mot de passe pour éviter les erreurs.",
-      "CONFIRM_PASSWORD_VISIBILITY_LABEL": "Affichez votre mot de passe pour vérification en cas d'erreur.",
+      "CONFIRM_PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
       "TERMS_LABEL": "Lisez et acceptez nos <b><a href='/#/terms'>conditions d'utilisation</a></b> pour pouvoir utiliser le système.",
       "REGISTER_LABEL": "Enfin, terminez en créant votre compte.",
       "EMAIL_VERIFICATION_LABEL": "Nous vous enverrons un email contenant un lien permettant <b>de vérifier votre adresse</b>.",
@@ -134,23 +134,56 @@
       "PASSWORD_PROCEDURE_LABEL": "Si vous souhaitez modifier votre mot de passe vous pouvez <b>en définir un nouveau</b>.",
       "OLD_PASSWORD_LABEL": "Saisissez tout d'abord votre ancien mot de passe.",
       "NEW_PASSWORD_LABEL": "Choisissez ensuite votre nouveau mot de passe, s'il ne respecte pas nos dispositions de sécurité une alerte vous indiquera les règles à respecter.",
-      "NEW_PASSWORD_VISIBILITY_LABEL": "Affichez votre mot de passe en clair en cas de doute.",
+      "NEW_PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
       "CONFIRM_NEW_PASSWORD_LABEL": "Confirmez votre nouveau mot de passe pour éviter les erreurs.",
       "CHANGE_LABEL": "Enfin, terminez en confirmant la modification.",
       "CHANGE_EMAIL_LABEL": "Un email de confirmation vous serez envoyé (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirable</b>)."
     },
+    "send-change-identity": {
+      "CHANGE_IDENTITY_PROCEDURE_LABEL": "Si vous souhaitez modifier l'adresse mail que vous utilisez pour vous connecter vous pouvez <b>en choisir une nouvelle</b>.",
+      "PASSWORD_LABEL": "Entrez tout d'abord votre mot de passe.",
+      "PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
+      "EMAIL_LABEL": "Entrez votre <b>nouvelle adresse mail</b>.",
+      "CHANGE_LABEL": "Enfin, terminez en confirmant la demande de modification.",
+      "CHANGE_EMAIL_LABEL": "Un email contenant un lien permettant de confirmer la modification vous serez envoyé sur votre nouvelle adresse (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirable</b>)."
+    },
     "events": {
-      "TEMPLATE_TAB_LABEL": "Avant de créer un événement vous devez créer au moins un <b>modèle</b> via cet onglet.",
+      "EVENTS_LABEL": "Cet onglet vous permet de gérer vos événements.",
+      "OVERFLOW_MENU_LABEL": "Lorsqu'il n'est pas visible, vous pourrez le retrouver dans ce menu déroulant.",
+      "TEMPLATES_LABEL": "Avant de créer un événement vous devez créer au moins un <b>modèle</b> via cet onglet.",
       "SELECT_TEMPLATE_LABEL": "Lorsque vous souhaitez créer un événement sélectionnez simplement le <b>modèle</b> requis via le bouton.",
-      "TEMPLATE_LINK_LABEL": "Voir comment gérer les modèles"
+      "TEMPLATE_LINK_LABEL": "Voir comment gérer les modèles",
+      "EVENT_CARD_LABEL": "Chaque événement est visible sous la forme d'une carte vous permettant d'accéder aux actions possibles.",
+      "UPDATE_EVENT_LABEL": "Modifier les propriétés de votre événement via cette action.",
+      "EVENT_OVERFLOW_MENU_LABEL": "Ouvrez le menu déroulant pour découvrir plus d'actions.",
+      "REMOVE_EVENT_LABEL": "Supprimez votre événement via cette action.",
+      "REMOVE_CONFIRMATION_LABEL": "Un confirmation vous sera demandé avant la suppression définitive, ceci provoquera l'envoi d'une <b>notification</b> à tous les participants."
     },
     "event-templates": {
+      "TEMPLATES_LABEL": "Cet onglet vous permet de gérer vos modèles d'événements.",
+      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
       "NEW_TEMPLATE_LABEL": "Créez un <b>nouveau modèle</b> via ce bouton.",
+      "CREATE_TEMPLATE_LINK_LABEL": "Voir comment créer un modèle",
+      "TEMPLATE_CARD_LABEL": "Chaque modèle est visible sous la forme d'une carte vous permettant d'accéder aux actions possibles.",
+      "UPDATE_TEMPLATE_LABEL": "Modifier les propriétés de votre modèle via cette action.",
+      "COPY_TEMPLATE_LABEL": "Gagnez du temps en créant un nouveau modèle à partir de celui-ci via cette action.",
+      "TEMPLATE_OVERFLOW_MENU_LABEL": "Ouvrez le menu déroulant pour découvrir plus d'actions.",
+      "REMOVE_TEMPLATE_LABEL": "Supprimez votre modèle via cette action.",
+      "REMOVE_CONFIRMATION_LABEL": "Un confirmation vous sera demandé avant la suppression définitive."
+    },
+    "create-event-template": {
       "TEMPLATE_NAME_LABEL": "Choisissez le nom de votre modèle.",
       "TEMPLATE_ICON_LABEL": "Choisissez une iconographie vous permettant d'identifier facilement le modèle.",
       "SELECT_ICON_LABEL": "Sélectionnez votre icône dans notre vaste librairie.",
       "SELECT_COLOR_LABEL": "Sélectionnez sa couleur au sein de notre palette.",
-      "TEMPLATE_DESCRIPTION_LABEL": "Choisissez une description détaillée pour votre modèle."
+      "TEMPLATE_DESCRIPTION_LABEL": "Choisissez une description détaillée pour votre modèle.",
+      "SELECT_PARTICIPANTS_LABEL": "Sélectionnez la liste des participants par défaut à l'événement.",
+      "PARTICIPANTS_LABEL": "Tapez <b>les premières lettres</b> du nom d'une personne, d'un groupe ou d'une étiquette pour l'ajouter à la liste. Une fois ajouté utilisez la croix pour supprimer le participant.",
+      "SELECT_COORDINATORS_LABEL": "Sélectionnez la liste des gestionnaires par défaut de l'événement.",
+      "COORDINATORS_LABEL": "Tapez <b>les premières lettres</b> du nom d'une personne, d'un groupe ou d'une étiquette pour l'ajouter à la liste. Une fois ajouté utilisez la croix pour supprimer le coordinateur.",
+      "SELECT_LAYER_LABEL": "Sélectionnez la couche d'éléments géographiques cible de l'événement.",
+      "LAYER_LABEL": "Tapez <b>les premières lettres</b> du nom de la couche pour l'ajouter à la liste. Une fois ajoutée utilisez la croix pour la supprimer.",
+      "CREATE_TEMPLATE_LABEL": "Confirmez la création du nouveau modèle."
     }
   },
   "Variables": {

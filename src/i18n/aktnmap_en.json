@@ -86,9 +86,9 @@
       "NAME_LABEL": "Enter your name first.",
       "EMAIL_LABEL": "Enter the email address you will use to connect and receive security related messages.",
       "PASSWORD_LABEL": "Choose a password, if it does not comply our security policy an alert will inform you about the rules to follow.",
-      "PASSWORD_VISIBILITY_LABEL": "Display you password clearly if there is any doubt about.",
+      "PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
       "CONFIRM_PASSWORD_LABEL": "Confirm your password to avoid any error.",
-      "CONFIRM_PASSWORD_VISIBILITY_LABEL": "Display you password clearly for verification if there is any error.",
+      "CONFIRM_PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
       "TERMS_LABEL": "Read and accept our <b><a href='/#/terms'>terms of service</a></b> in order to use the system.",
       "REGISTER_LABEL": "Last, create your account.",
       "EMAIL_VERIFICATION_LABEL": "We will send you an email back containing a link to <b>verify your address</b>.",
@@ -114,39 +114,72 @@
       "DASHBOARD_LABEL": "Your dashboard details the current events in each of your organisations."
     },
     "account": {
-      "PROFILE_LABEL": "This tab allow to update your profile information.",
+      "PROFILE_LABEL": "This tab allows to update your profile information.",
       "AVATAR_LABEL": "Your avatar visible in the side menu when an image file has been selected.",
       "NAME_LABEL": "Your name as viewed by others users.",
       "UPDATE_LABEL": "Confirm the update in order to apply the modifications to your profile information.",
-      "SECURITY_LABEL": "This tab allow to update your <b>personal identifiers</b> and your devices.",
+      "SECURITY_LABEL": "This tab allows to update your <b>personal identifiers</b> and your devices.",
       "PASSWORD_LABEL": "Launch the <b>password change procedure</b>.",
       "EMAIL_LABEL": "Launch the <b>email change procedure</b>.",
       "DEVICES_LABEL": "This section list all the mobile devices you have used.",
       "UNLINK_LABEL": "Check for any suspect activity and unlink outdated mobile devices.",
-      "DANGER_ZONE_LABEL": "This tab allow to remove your account.",
+      "DANGER_ZONE_LABEL": "This tab allows to remove your account.",
       "DELETE_LABEL": "A manual confirmation will be required before final removal."
     },
     "change-password": {
       "PASSWORD_PROCEDURE_LABEL": "If you want to modify your password you can <b>define a new one</b>.",
       "OLD_PASSWORD_LABEL": "First, enter your previous password.",
       "NEW_PASSWORD_LABEL": "Choose a new password, if it does not comply our security policy an alert will inform you about the rules to follow.",
-      "NEW_PASSWORD_VISIBILITY_LABEL": "Display you password clearly if there is any doubt about.",
+      "NEW_PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
       "CONFIRM_NEW_PASSWORD_LABEL": "Confirm your password to avoid any error.",
       "CHANGE_LABEL": "Enfin, terminez en confirmant la modification.",
-      "CHANGE_EMAIL_LABEL": "A cofirmation email will be sent to you (<b>please check the email is not in your spam folder</b>)."
+      "CHANGE_EMAIL_LABEL": "A confirmation email will be sent to you (<b>please check the email is not in your spam folder</b>)."
+    },
+    "send-change-identity": {
+      "CHANGE_IDENTITY_PROCEDURE_LABEL": "If you want to modify the email address you use to connect you can <b>select a new one</b>.",
+      "PASSWORD_LABEL": "First, enter your password.",
+      "PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
+      "EMAIL_LABEL": "Enter your <b>new email address</b>.",
+      "CHANGE_LABEL": "Last, confirm the modification request.",
+      "CHANGE_EMAIL_LABEL": "A email containing a link to confirm the modification will be sent to your new address (<b>please check the email is not in your spam folder</b>)."
     },
     "events": {
-      "TEMPLATE_TAB_LABEL": "Before creating an event you need to create at least one <b>model</b> using this tab.",
+      "EVENTS_LABEL": "This tab allows to manage your events.",
+      "OVERFLOW_MENU_LABEL": "When not visible, you can find it using the popup menu.",
+      "TEMPLATES_LABEL": "Before creating an event you need to create at least one <b>model</b> using this tab.",
       "SELECT_TEMPLATE_LABEL": "Whenever you want to create a new event simply pick the right <b>template</b> using the action button.",
-      "TEMPLATE_LINK_LABEL": "How to manage models"
+      "TEMPLATE_LINK_LABEL": "How to manage models",
+      "EVENT_CARD_LABEL": "Each event is viewed as a card providing available actions.",
+      "UPDATE_EVENT_LABEL": "Update properties of your event through this action.",
+      "EVENT_OVERFLOW_MENU_LABEL": "Open the popup menu to see more actions.",
+      "REMOVE_EVENT_LABEL": "Remove your event through this action.",
+      "REMOVE_CONFIRMATION_LABEL": "A confirmation will be required before final removal, this will send a <p>notification</b> to all participants."
     },
     "event-templates": {
+      "TEMPLATES_LABEL": "This tab allows to manage your event templates.",
+      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
       "NEW_TEMPLATE_LABEL": "Create a <b>new template</b> using this button.",
+      "CREATE_TEMPLATE_LINK_LABEL": "How to create a model",
+      "TEMPLATE_CARD_LABEL": "Each model is viewed as a card providing available actions.",
+      "UPDATE_TEMPLATE_LABEL": "Update properties of your model through this action.",
+      "COPY_TEMPLATE_LABEL": "Go fast by creatng a new model from this one through this action.",
+      "TEMPLATE_OVERFLOW_MENU_LABEL": "Open the popup menu to see more actions.",
+      "REMOVE_TEMPLATE_LABEL": "Remove your model through this action.",
+      "REMOVE_CONFIRMATION_LABEL": "A confirmation will be required before final removal."
+    },
+    "create-event-template": {
       "TEMPLATE_NAME_LABEL": "Choose a name for your model.",
       "TEMPLATE_ICON_LABEL": "Choose an icon to easily recognize your model.",
       "SELECT_ICON_LABEL": "Select the icon in our large library.",
       "SELECT_COLOR_LABEL": "Select its color in our palette.",
-      "TEMPLATE_DESCRIPTION_LABEL": "Enter a detailed description for your model."
+      "TEMPLATE_DESCRIPTION_LABEL": "Enter a detailed description for your model.",
+      "SELECT_PARTICIPANTS_LABEL": "Select the default participants of the event.",
+      "PARTICIPANTS_LABEL": "Typing <b>the first characters</b> of a user name, a group name or a tag name make it selectable. Once added remove it using the cross.",
+      "SELECT_COORDINATORS_LABEL": "Select the default participants of the event.",
+      "COORDINATORS_LABEL": "Typing <b>the first characters</b> of a user name, a group name or a tag name make it selectable. Once added remove it using the cross.",
+      "SELECT_LAYER_LABEL": "Select the target geographical elements layer of the event.",
+      "LAYER_LABEL": "Typing <b>the first characters</b> of the layer name make it selectable. Once added remove it using the cross.",
+      "CREATE_TEMPLTE_LABEL": "Confirm the creation of your new template."
     }
   },
   "Variables": {

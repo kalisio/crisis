@@ -96,11 +96,31 @@ module.exports = {
                 component: 'team/KMembersActivity', 
                 props: true,
                 children: {
-                  'invite': { name: 'invite-member', component: 'team/KInviteMember', props: true },
-                  'add': { name: 'add-member', component: 'team/KAddMember', props: true },
-                  ':objectId/tag': { name: 'tag-member', component: 'editor/KModalEditor', props: true },
-                  ':objectId/join-group': { name: 'join-group', component: 'team/KJoinGroup', props: true },
-                  ':objectId/change-role': { name: 'change-role', component: 'team/KChangeRole', props: true },
+                  'invite': {
+                    name: 'invite-member',
+                    component: 'team/KInviteMember',
+                    props: true
+                  },
+                  'add': {
+                    name: 'add-member',
+                    component: 'team/KAddMember',
+                    props: true
+                  },
+                  ':objectId/tag': {
+                    name: 'tag-member',
+                    component: 'editor/KModalEditor',
+                    props: true
+                  },
+                  ':objectId/join-group': {
+                    name: 'join-group',
+                    component: 'team/KJoinGroup',
+                    props: true
+                  },
+                  ':objectId/change-role': {
+                    name: 'change-role',
+                    component: 'team/KChangeRole',
+                    props: true
+                  },
                 },
                 tour: tours.members
               },
@@ -109,7 +129,11 @@ module.exports = {
                 component: 'team/KTagsActivity',
                 props: true,
                 children: {
-                  'edit/:objectId': { name: 'edit-tag', component: 'editor/KModalEditor', props: true }
+                  'edit/:objectId': {
+                    name: 'edit-tag',
+                    component: 'editor/KModalEditor',
+                    props: true
+                  }
                 },
                 tour: tours.tags
               },
@@ -118,8 +142,16 @@ module.exports = {
                 component: 'team/KGroupsActivity',
                 props: true,
                 children: {
-                  'create': { name: 'create-group', component: 'editor/KModalEditor', props: true },
-                  'edit/:objectId': { name: 'edit-group', component: 'editor/KModalEditor', props: true }
+                  'create': {
+                    name: 'create-group',
+                    component: 'editor/KModalEditor',
+                    props: true
+                  },
+                  'edit/:objectId': {
+                    name: 'edit-group',
+                    component: 'editor/KModalEditor',
+                    props: true
+                  }
                 },
                 tour: tours.groups
               },
@@ -134,8 +166,17 @@ module.exports = {
                 component: 'EventsActivity',
                 props: true,
                 children: {
-                  'create/:templateId/:layerId?/:featureId?': { name: 'create-event', component: 'EventEditor', props: true },
-                  'edit/:objectId': { name: 'edit-event', component: 'EventEditor', props: true },
+                  'create/:templateId/:layerId?/:featureId?': {
+                    name: 'create-event',
+                    component: 'EventEditor',
+                    props: true,
+                    tour: tours['create-event']
+                  },
+                  'edit/:objectId': {
+                    name: 'edit-event',
+                    component: 'EventEditor',
+                    props: true
+                  },
                 },
                 tour: tours.events
               },
@@ -144,7 +185,11 @@ module.exports = {
                 component: 'ArchivedEventsActivity',
                 props: true,
                 children: {
-                  'view/:objectId': { name: 'view-event', component: 'viewer/KModalViewer', props: true },
+                  'view/:objectId': {
+                    name: 'view-event',
+                    component: 'viewer/KModalViewer',
+                    props: true
+                  },
                 },
                 tour: tours['archived-events']
               },
@@ -153,7 +198,11 @@ module.exports = {
                 component: 'EventActivity',
                 props: true,
                 children: {
-                  'log/:logId': { name: 'event-log', component: 'EventLogEditor', props: true }
+                  'log/:logId': {
+                    name: 'event-log',
+                    component: 'EventLogEditor',
+                    props: true
+                  }
                 }
               },
               'event-templates': {
@@ -161,8 +210,17 @@ module.exports = {
                 component: 'EventTemplatesActivity',
                 props: true,
                 children: {
-                  'create/:templateId?': { name: 'create-event-template', component: 'EventTemplateEditor', props: true },
-                  'edit/:objectId/:perspective?': { name: 'edit-event-template', component: 'EventTemplateEditor', props: true }
+                  'create/:templateId?': {
+                    name: 'create-event-template',
+                    component: 'EventTemplateEditor',
+                    props: true,
+                    tour: tours['create-event-templates']
+                  },
+                  'edit/:objectId/:perspective?': {
+                    name: 'edit-event-template',
+                    component: 'EventTemplateEditor',
+                    props: true
+                  }
                 },
                 tour: tours['event-templates']
               },
