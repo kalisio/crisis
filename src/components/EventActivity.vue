@@ -179,6 +179,7 @@ export default {
       // Create an empty layer used as a container for participants
       this.addLayer({
         name: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
+        label: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
         type: 'OverlayLayer',
         icon: 'fas fa-user',
         featureId: 'participant._id',

@@ -62,7 +62,7 @@ export default {
       this.event = this.item
       // Item actions
       this.clearActions()
-      if (this.$can('read', 'events', this.contextId, this.item)) {
+      if (this.$can('read', 'archived-events', this.contextId)) {
         this.registerPaneAction({
           name: 'view-event', label: this.$t('ArchivedEventEntry.VIEW_LABEL'), icon: 'las la-file-alt',
           route: { name: 'view-event', params: { contextId: this.contextId, objectId: this.item._id } }

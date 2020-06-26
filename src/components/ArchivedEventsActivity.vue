@@ -392,6 +392,7 @@ export default {
           // Create an empty layer used as a container for events
           await this.addLayer({
             name: template,
+            label: template,
             type: 'OverlayLayer',
             icon: 'whatshot',
             leaflet: Object.assign({
@@ -406,6 +407,7 @@ export default {
           // Create an empty layer used as a container for events
           await this.addLayer({
             name: template,
+            label: template,
             type: 'OverlayLayer',
             icon: 'whatshot',
             leaflet: {
