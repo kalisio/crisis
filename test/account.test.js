@@ -1,11 +1,8 @@
 import path from 'path'
-// Page models
 import * as pages from './page-models'
 
 fixture`account`// declare the fixture
   .page`${pages.getUrl()}`  // specify the start page
-  // test.before/test.after overrides fixture.beforeEach/fixture.afterEach hook,
-  // so implement one in your test if you'd like another behaviour
   .beforeEach(async test => {
     // mock geolocation
     await pages.mockLocationAPI()
@@ -16,58 +13,87 @@ fixture`account`// declare the fixture
     // await pages.checkNoClientError(test)
   })
 
-const app = new pages.Application()
-const organisations = new pages.Organisations()
+const screens = new pages.Screens()
+const layout = new pages.Layout()
+const sideNav = new pages.SideNav()
+const organisationSettings = new pages.OrganisationSettings()
 const account = new pages.Account()
 
 const data = {
   user: { name: 'account user', email: 'account-user@kalisio.xyz', password: 'Pass;word1' },
   newName: 'account newuser',
   newPassword: 'Pass;word1-new1',
-  newEmail: 'kalisio@kalisio.com'
+  newEmail: 'account-other@kalisio.com',
+  avatar: 'avatar.png'
 }
 
-test.page`${pages.getUrl('register')}`
-('Registration', async test => {
-  await app.register(test, data.user)
+test('Create account', async test => {
+  await screens.goToRegisterScreen(test)
+  await screens.register(test, data.user)
 })
 
-test('Edit profile', async test => {
-  await app.loginAndCloseSignupAlert(test, data.user)
-  await account.editProfile(test, { name: data.newName, avatar: path.join(__dirname, 'assets', 'avatar.png') })
-  data.user.name = data.newName
-  await account.checkIdentity(test, data.user.name)
+test('Update profile', async test => {
+  await screens.login(test, data.user)
+  await layout.closeSignupAlert(test)
+  await layout.clickLeading(test)
+  await sideNav.clickIdentity(test)
+  await account.updateProfile(test, path.join(__dirname, 'assets', data.avatar), data.newName)
+  await layout.clickLeading(test)
+  await sideNav.logout(test)
 })
 
-test('Edit password', async test => {
-  await app.loginAndCloseSignupAlert(test, data.user)
-  await account.updatePassword(test, { password: data.user.password, newPassword: data.newPassword })
+test('Update password', async test => {
+  await screens.login(test, data.user)
+  await layout.closeSignupAlert(test)
+  await layout.clickLeading(test)
+  await sideNav.clickIdentity(test)
+  await layout.clickTabBar(test, pages.Account.SECURITY_TAB)
+  await account.updatePassword(test, data.user.password, data.newPassword)
   await pages.goBack()
-  await app.logout(test)
-  // We should login with new credentials
-  await test.navigateTo(pages.getUrl('login'))
+  await layout.clickLeading(test)
+  await sideNav.logout(test)
+})
+
+test('Ensure login with old password fails', async test => {
+  await screens.login(test, data.user)
+  const error = await screens.isErrorVisible()
+  await test.expect(error).ok('Error should be displayed')
   data.user.password = data.newPassword
-  await app.login(test, data.user)
 })
 
-test('Edit email', async test => {
-  await app.loginAndCloseSignupAlert(test, data.user)
-  await account.updateEmail(test, { password: data.user.password, newEmail: data.newEmail })
+test('Update email', async test => {
+  await screens.login(test, data.user)
+  await layout.closeSignupAlert(test)
+  await layout.clickLeading(test)
+  await sideNav.clickIdentity(test)
+  await layout.clickTabBar(test, pages.Account.SECURITY_TAB)
+  await account.updateEmail(test, data.newEmail, data.user.password)
   await pages.goBack()
-  await app.logout(test)
-  // We should not be able to login with new email because it requires validation
-  await test.navigateTo(pages.getUrl('login'))
-  await app.login(test, { email: data.newEmail, password: data.newPassword })
-  await test.expect(app.isErrorVisible()).ok('Error should be displayed')
-  // FIXME: how could we validate the change ?
+  await layout.clickLeading(test)  
+  await sideNav.logout(test)
+})
+
+test.skip('Ensure login with old email fails', async test => {
+  await screens.login(test, data.user)
+  const error = await screens.isErrorVisible()
+  await test.expect(error).ok('Error should be displayed')
+  data.user.email = data.newEmail
 })
 
 test('Delete account', async test => {
-  await app.loginAndCloseSignupAlert(test, data.user)
-  await organisations.deleteOrganisation(test, 'account user')  // old name
-  await account.removeAccount(test, data.user.name)
-  // And we cannot login anymore
-  await test.navigateTo(pages.getUrl('login'))
-  await app.login(test, data.user)
-  await test.expect(app.isErrorVisible()).ok('Error should be displayed')
+  await screens.login(test, data.user)
+  await layout.closeSignupAlert(test)
+  await layout.clickOverflowMenu(test, pages.OrganisationSettings.OVERFLOW_MENU_ENTRY)
+  await layout.clickTabBar(test, pages.OrganisationSettings.DANGER_ZONE_TAB)
+  await organisationSettings.delete(test, data.user.name)
+  await layout.clickLeading(test)
+  await sideNav.clickIdentity(test)
+  await layout.clickTabBar(test, pages.Account.DANGER_ZONE_TAB)
+  await account.delete(test, data.user.name)
+})
+
+test('Ensure login with deleted account fails', async test => {
+  await screens.login(test, data.user)
+  const error = await screens.isErrorVisible()
+  await test.expect(error).ok('Error should be displayed')
 })

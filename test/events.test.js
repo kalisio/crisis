@@ -17,7 +17,7 @@ fixture`events`// declare the fixture
 
 const app = new pages.Application()
 const account = new pages.Account()
-const organisations = new pages.Organisations()
+const organisations = new pages.OrganisationSettings()
 const users = new pages.Users(app, account, organisations)
 const members = new pages.Members()
 const groups = new pages.Groups()

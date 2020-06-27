@@ -15,7 +15,7 @@ fixture`billing`// declare the fixture
 
 const app = new pages.Application()
 const account = new pages.Account()
-const organisations = new pages.Organisations()
+const organisations = new pages.OrganisationSettings()
 
 const data = {
   user: { name: 'Customer', email: 'customer@kalisio.xyz', password: 'Pass;word1' },

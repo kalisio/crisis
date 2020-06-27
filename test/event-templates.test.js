@@ -16,7 +16,7 @@ fixture`event-templates`// declare the fixture
 
 const app = new pages.Application()
 const account = new pages.Account()
-const organisations = new pages.Organisations()
+const organisations = new pages.OrganisationSettings()
 const templates = new pages.EventTemplates()
 
 const data = {

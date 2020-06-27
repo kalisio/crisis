@@ -1,8 +1,7 @@
-import { ClientFunction } from 'testcafe'
 import Application from './application'
-import Account from './account'
-import Organisations from './organisations'
-import Members from './members'
+//import Account from './account'
+// import Organisations from './organisation-settings'
+// import Members from './members'
 import Groups from './groups'
 import EventTemplates from './event-templates'
 import Events from './events'
@@ -11,14 +10,18 @@ import Users from './users'
 // Export all models
 export {
   Application,
-  Account,
-  Organisations,
-  Members,
+  //Account,
+  //Organisations,
+  // Members,
   Groups,
   EventTemplates,
   Events,
   Users
 }
+
+export * from './core'
+export * from './map'
+
 
 // Then util constants
 export const Roles = {
@@ -28,9 +31,9 @@ export const Roles = {
 }
 
 // Access store
-export const getFromStore = ClientFunction((path) => window.$store.get(path))
+//export const getFromStore = ClientFunction((path) => window.$store.get(path))
 // Access Feathers services
-export const api = {
+/*export const api = {
   logout: ClientFunction(() => window.$api.logout()),
   get: ClientFunction((service, id) => window.$api.getService(service).get(id)),
   find: ClientFunction((service, params) => window.$api.getService(service).find(params)),
@@ -61,3 +64,4 @@ export const mockLocationAPI = ClientFunction(() => {
       timestamp: Date.now()
     })
 })
+*/
