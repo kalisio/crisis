@@ -73,6 +73,21 @@
     </feature>
     <preference name="WKWebViewOnly" value="true" />    
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+    <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Need to access your position to build meaningful events</string>
+    </edit-config>
+    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Need to access your position to build meaningful events</string>
+    </edit-config>
+    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Need camera access to take pictures</string>
+    </edit-config>
+    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Need photo library access to get pictures from there</string>
+    </edit-config>
+    <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Need photo library access to save pictures there</string>
+    </edit-config>
     <icon height="29" src="res/icons/ios/icon-small.png" width="29"/>
     <icon height="58" src="res/icons/ios/icon-small-2x.png" width="58"/>
     <icon height="87" src="res/icons/ios/icon-small-3x.png" width="87"/>
@@ -103,21 +118,6 @@
     <splash height="1536" src="res/screens/ios/screen-ipad-landscape-2x.png" width="2048"/>
     <splash height="2048" src="res/screens/ios/screen-ipad-landscape-ipadpro.png" width="2732"/>
     <splash height="2732" src="res/screens/ios/screen-ipad-portrait-ipadpro.png" width="2048"/>
-    <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
-      <string>Need to access your position to build meaningful events</string>
-    </edit-config>
-    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-      <string>Need to access your position to build meaningful events</string>
-    </edit-config>
-    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-      <string>Need camera access to take pictures</string>
-    </edit-config>
-    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-      <string>Need photo library access to get pictures from there</string>
-    </edit-config>
-    <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-      <string>Need photo library access to save pictures there</string>
-    </edit-config>
   </platform>
   <plugin name="cordova-custom-config" spec="~5.1.0"/>
   <plugin name="cordova-plugin-statusbar" spec="~2.4.3"/>

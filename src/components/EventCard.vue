@@ -73,20 +73,6 @@ import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.cl
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
-function createThumbnail (imageDataUri, width, height, quality, callback) {
-    let img = document.createElement('img')
-    img.onload = function () {
-      let canvas = document.createElement('canvas')
-      let ctx = canvas.getContext('2d')
-      // set its dimension to target size
-      canvas.width = width
-      canvas.height = height
-      ctx.drawImage(this, 0, 0, width, height)
-      callback(canvas.toDataURL('image/jpeg', quality))
-    }
-    img.src=imageDataUri
-}
-
 export default {
   name: 'event-card',
   mixins: [
@@ -246,7 +232,7 @@ export default {
         }
       }
       if (this.$can('read', 'events', this.contextId, this.item)) {
-        this.registerPaneAction({
+        if (this.canCapturePhoto()) this.registerPaneAction({
           name: 'capture-photo', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-camera', handler: this.capturePhoto
         })
         this.registerPaneAction({
@@ -290,7 +276,7 @@ export default {
       const name = moment().format('YYYYMMDD_HHmmss.jpg')
       const id = this.item._id + '/' + name
       photoDataUri = 'data:image/jpg;base64,' + photoDataUri
-      createThumbnail(photoDataUri, 200, 200, 50, async thumbnailDataUri => {
+      kCoreUtils.createThumbnail(photoDataUri, 200, 200, 50, async thumbnailDataUri => {
         await storageService.create({ id: id + '.thumbnail', uri: thumbnailDataUri })
       })
       await storageService.create({ id, uri: photoDataUri, name, resourcesService: 'events', resource: this.item._id, field: 'attachments' })
