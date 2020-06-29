@@ -137,7 +137,7 @@ module.exports = {
   roles: {
     // Member/Manager/Owner
     labels: ['MEMBER', 'MANAGER', 'OWNER'],
-    icons: ['las la-user', 'las la-briefwase', 'las la-certificate']
+    icons: ['las la-user', 'las la-briefcase', 'las la-certificate']
   },
   screens: {
     banner: 'aktnmap-banner.png',
