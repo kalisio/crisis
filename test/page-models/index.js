@@ -2,7 +2,7 @@ import Application from './application'
 //import Account from './account'
 // import Organisations from './organisation-settings'
 // import Members from './members'
-import Groups from './groups'
+// import Groups from './groups'
 import EventTemplates from './event-templates'
 import Events from './events'
 import Users from './users'
@@ -13,7 +13,7 @@ export {
   //Account,
   //Organisations,
   // Members,
-  Groups,
+  // Groups,
   EventTemplates,
   Events,
   Users

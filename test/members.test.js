@@ -78,24 +78,24 @@ test('Change member role', async test => {
   await pages.checkNoClientError(test)
 })
 
-test('Cannot remove owner', async test => {
+test('Cannot delete owner', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
-  await members.remove(test, data.users[0].name)
+  await members.delete(test, data.users[0].name)
   await test.wait(500)
   const error = await members.isErrorVisible()
   await test.expect(error).ok('Error should be displayed')
   await pages.checkClientError(test)
 })
 
-test('Remove members from organisation', async test => {
+test('Delete members from organisation', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
-  await members.remove(test, data.users[1].name)
+  await members.delete(test, data.users[1].name)
   await members.checkCount(test, 3)
-  await members.remove(test, data.users[2].name)
+  await members.delete(test, data.users[2].name)
   await members.checkCount(test, 2)
   await pages.checkNoClientError(test)
 })

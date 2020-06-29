@@ -12,12 +12,11 @@ fixture`groups`// declare the fixture
   .afterEach(async test => {
   })
 
-const app = new pages.Application()
-const account = new pages.Account()
-const organisations = new pages.OrganisationSettings()
-const users = new pages.Users(app, account, organisations)
-const members = new pages.Members()
-const groups = new pages.Groups()
+  const screens = new pages.Screens()
+  const layout = new pages.Layout()
+  const users = new pages.Users()
+  const members = new pages.Members()
+  const groups = new pages.Groups()
 
 const data = {
   users: [
@@ -35,38 +34,42 @@ const data = {
 test.page`${pages.getUrl('login')}`
 ('Setup context', async test => {
   await users.registerUsers(test, data.users)
-  await app.loginAndCloseSignupAlert(test, data.users[0])
-  await organisations.selectOrganisation(test, data.users[0].name)
-  await members.clickToolbar(test, members.getToolbarEntry())
-  await members.addMember(test, data.users[1].name, pages.Roles.member)
-  await members.addMember(test, data.users[2].name, pages.Roles.manager)
-  await members.addMember(test, data.users[3].name, pages.Roles.member)
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
+  await layout.openAndClickFab(test, pages.Members.ADD_MEMBER_FAB_ENTRY)
+  await members.add(test, data.users[1].name, pages.Roles.member)
+  await layout.openAndClickFab(test, pages.Members.ADD_MEMBER_FAB_ENTRY)
+  await members.add(test, data.users[2].name, pages.Roles.manager)
+  await layout.openAndClickFab(test, pages.Members.ADD_MEMBER_FAB_ENTRY)
+  await members.add(test, data.users[3].name, pages.Roles.member)
   await pages.checkNoClientError(test)
 })
 
 test('Create groups', async test => {
-  await app.loginAndCloseSignupAlert(test, data.users[0])
-  await organisations.selectOrganisation(test, data.users[0].name)
-  await groups.clickToolbar(test, groups.getToolbarEntry())
-  await groups.clickTabBar(test, groups.getTabBarEntry())
-  for (let i in data.groups) await groups.createGroup(test, data.groups[i])
-  await groups.checkGroupsCount(test, data.groups.length)
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
+  for (let i in data.groups) {
+    await layout.clickFab(test)
+    await groups.create(test, data.groups[i].name, data.groups[i].description)
+  }
+  await groups.checkCount(test, data.groups.length)
   await pages.checkNoClientError(test)
 })
 
 test('Edit group', async test => {
-  await app.loginAndCloseSignupAlert(test, data.users[0])
-  await organisations.selectOrganisation(test, data.users[0].name)
-  await groups.clickToolbar(test, members.getToolbarEntry())
-  await groups.clickTabBar(test, groups.getTabBarEntry())
-  await groups.editGroup(test, data.groups[0].name, 'A new description')
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
+  await groups.edit(test, data.groups[0].name, 'A new description')
   await pages.checkNoClientError(test)
 })
 
 test('Add members to groups', async test => {
-  await app.loginAndCloseSignupAlert(test, data.users[0])
-  await organisations.selectOrganisation(test, data.users[0].name)
-  await members.clickToolbar(test, members.getToolbarEntry())
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await members.joinGroup(test, data.users[1].name, data.groups[0].name, pages.Roles.manager)
   await members.joinGroup(test, data.users[2].name, data.groups[0].name, pages.Roles.member)
   await members.joinGroup(test, data.users[2].name, data.groups[1].name, pages.Roles.manager)
@@ -75,18 +78,17 @@ test('Add members to groups', async test => {
 })
 
 test('Check group count', async test => {
-  await app.loginAndCloseSignupAlert(test, data.users[2])
-  await organisations.selectOrganisation(test, data.users[0].name)
-  await members.clickToolbar(test, members.getToolbarEntry())
-  await groups.clickTabBar(test, groups.getTabBarEntry())
-  await groups.checkGroupsCount(test, 2)
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
+  await groups.checkCount(test, 2)
   await pages.checkNoClientError(test)
 })
 
 test('Remove member from group', async test => {
-  await app.loginAndCloseSignupAlert(test, data.users[0])
-  await organisations.selectOrganisation(test, data.users[0].name)
-  await members.clickToolbar(test, members.getToolbarEntry())
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await members.leaveGroup(test, data.users[1].name, data.groups[0].name)
   await members.leaveGroup(test, data.users[2].name, data.groups[0].name)
   await members.leaveGroup(test, data.users[2].name, data.groups[1].name)
@@ -95,11 +97,10 @@ test('Remove member from group', async test => {
 })
 
 test('Delete group', async test => {
-  await app.loginAndCloseSignupAlert(test, data.users[0])
-  await organisations.selectOrganisation(test, data.users[0].name)
-  await groups.clickToolbar(test, groups.getToolbarEntry())
-  await groups.clickTabBar(test, groups.getTabBarEntry())
-  await groups.deleteGroups(test, data.groups)
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
+  for (let i in data.groups) await groups.delete(test, data.groups[i].name)
   await pages.checkNoClientError(test)
 })
 
