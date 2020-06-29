@@ -287,7 +287,7 @@ export default {
       let html = ''
       if (isActive) html += this.$t('CatalogActivity.ALERT_ACTIVE') + '</br>'
       else html += this.$t('CatalogActivity.ALERT_INACTIVE') + '</br>'
-      if (_.has(alert, 'layer')) html += `${alert.layer}`
+      if (_.has(alert, 'layer')) html += (this.$t(`${alert.layer}`) ? this.$t(`${alert.layer}`) : `${alert.layer}`)
       if (_.has(alert, 'feature')) html += ` - ${alert.featureLabel || alert.feature}</br>`
 
       return L.tooltip({ permanent: false }, layer).setContent(`<b>${html}</b>`)

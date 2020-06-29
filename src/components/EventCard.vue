@@ -8,7 +8,7 @@
          -->
         <div v-if="item.location">
           <div class="q-pa-sm row items-center">
-            <k-text-area class="light-paragraph" :length="40" :text="item.location.name" />
+            <k-text-area class="light-paragraph" :length="40" :text="locationName" />
             <q-btn icon="las la-map-marker" color="grey-7" flat dense round>
               <q-tooltip>
                 {{ $t('EventCard.LOCATE_LABEL') }}
@@ -92,6 +92,11 @@ export default {
     },
     iconName () {
       return kCoreUtils.getIconName(this.item)
+    },
+    locationName () {
+      let name = _.get(this.item, 'location.name', '')
+      // Can be a layer name translation key in alert case
+      return (this.$t(name) ? this.$t(name) : name)
     },
     comment () {
       return this.getUserComment(this.participantState)

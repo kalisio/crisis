@@ -129,7 +129,7 @@ export function createEventOnAlert (organisation) {
       // We don't keep ref/link for simplicity and making archived events will be self-consistent
       // No need to keep track of templates that have been removed, etc.
       event.template = template.name
-      _.set(event, 'location.name', label ? `${alert.layer} - ${label}` : `${alert.layer}`)
+      _.set(event, 'location.name', label ? `${label}` : `${alert.layer}`)
       _.set(event, 'location.longitude', _.get(alert, 'geometry.coordinates[0]'))
       _.set(event, 'location.latitude', _.get(alert, 'geometry.coordinates[1]'))
       const eventsService = app.getService('events', organisation)
