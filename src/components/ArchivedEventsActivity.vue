@@ -1,5 +1,5 @@
 <template>
-  <k-page :padding="true">
+  <k-page :padding="false">
     <div slot="page-content">
       <!-- Invisible link used to download data -->
       <a ref="downloadLink" v-show="false" :href="currentDownloadLink" :download="currentDownloadName"></a>
@@ -69,7 +69,8 @@
       <!--
         Events history: switch append-items on to activate infinite scroll
       -->
-      <k-history 
+      <k-history
+        class="q-pa-md"
         v-show="showHistory"
         style="padding-top: 25px" 
         service="archived-events" 
