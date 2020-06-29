@@ -1,6 +1,7 @@
 module.exports = [{
   target: '#event-templates',
-  content: 'tours.event-templates.TEMPLATES_LABEL',
+  title: 'tours.event-templates.TEMPLATES_LABEL',
+  content: 'tours.event-templates.TEMPLATE_DEFINITION_LABEL',
   params: {
     placement: 'bottom'
   }
@@ -10,7 +11,9 @@ module.exports = [{
   params: {
     placement: 'left',
     clickOn: '#overflow-menu-entry',
-    clickDelay: 500
+    clickDelay: 500,
+    clickOnNext: '#overflow-menu-entry',
+    nextDelay: 500
   }
 }, {
   target: '#create-event-template',
@@ -42,7 +45,7 @@ module.exports = [{
   target: '#card-overflow-menu',
   content: 'tours.event-templates.TEMPLATE_OVERFLOW_MENU_LABEL',
   params: {
-    placement: 'left',
+    placement: 'top',
     clickOnNext: '#card-overflow-menu',
     nextDelay: 500
   }
@@ -51,6 +54,6 @@ module.exports = [{
   title: 'tours.event-templates.REMOVE_TEMPLATE_LABEL',
   content: 'tours.event-templates.REMOVE_CONFIRMATION_LABEL',
   params: {
-    placement: 'right'
+    placement: 'left'
   }
 }]

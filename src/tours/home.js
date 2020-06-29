@@ -63,7 +63,8 @@ module.exports = [{
   }
 }, {
   target: '#new-organisation',
-  content: 'tours.home.NEW_ORGANISATION_LABEL',
+  title: 'tours.home.NEW_ORGANISATION_LABEL',
+  content: 'tours.home.ORGANISATION_DEFINITION_LABEL',
   params: {
     placement: 'top',
     clickOnNext: '#new-organisation',

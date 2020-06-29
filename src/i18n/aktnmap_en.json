@@ -83,7 +83,7 @@
     },
     "register": {
       "LOCAL_LABEL": "You can register to the system by defining your <b>personal identifiers</b>.",
-      "NAME_LABEL": "Enter your name first.",
+      "NAME_LABEL": "Enter your name as viewed by others users first.",
       "EMAIL_LABEL": "Enter the email address you will use to connect and receive security related messages.",
       "PASSWORD_LABEL": "Choose a password, if it does not comply our security policy an alert will inform you about the rules to follow.",
       "PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
@@ -103,7 +103,8 @@
       "BUG_LABEL": "Send us a bug report with a preformatted email containing required information.",
       "SETTINGS_LABEL": "Update general settings of the system on your device.",
       "DASHBOARD_LABEL": "Open the events dashboard of all your organisations.",
-      "NEW_ORGANISATION_LABEL": "Create a new organisation to share your events.",
+      "NEW_ORGANISATION_LABEL": "Create a new <b>organisation</b> to share your events.",
+      "ORGANISATION_DEFINITION_LABEL": "An organisation is a shared workspace where you can invite people to join.",
       "ORGANISATION_NAME_LABEL": "Enter the organisation name as viewed by others users.",
       "ORGANISATION_DESCRIPTION_LABEL": "Enter a detailed description.",
       "CREATE_ORGANISATION_LABEL": "Confirm the creation of your new organisation.",
@@ -141,22 +142,43 @@
       "PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
       "EMAIL_LABEL": "Enter your <b>new email address</b>.",
       "CHANGE_LABEL": "Last, confirm the modification request.",
-      "CHANGE_EMAIL_LABEL": "A email containing a link to confirm the modification will be sent to your new address (<b>please check the email is not in your spam folder</b>)."
+      "CHANGE_EMAIL_LABEL": "An email containing a link to confirm the modification will be sent to your new address (<b>please check the email is not in your spam folder</b>)."
     },
     "events": {
-      "EVENTS_LABEL": "This tab allows to manage your events.",
+      "EVENTS_LABEL": "This tab allows to manage the <b>events</b> in your organisation.",
+      "EVENT_DEFINITION_LABEL": "An event allows you to share information and photos as well as interacting with participants on the field.",
       "OVERFLOW_MENU_LABEL": "When not visible, you can find it using the popup menu.",
       "TEMPLATES_LABEL": "Before creating an event you need to create at least one <b>model</b> using this tab.",
-      "SELECT_TEMPLATE_LABEL": "Whenever you want to create a new event simply pick the right <b>template</b> using the action button.",
       "TEMPLATE_LINK_LABEL": "How to manage models",
+      "SELECT_TEMPLATE_LABEL": "Whenever you want to create a new event simply pick the right <b>template</b> using the action button.",
+      "CREATE_EVENT_LINK_LABEL": "How to create an event",
       "EVENT_CARD_LABEL": "Each event is viewed as a card providing available actions.",
       "UPDATE_EVENT_LABEL": "Update properties of your event through this action.",
+      "FOLLOW_UP_EVENT_LABEL": "As a <b>coordinator</b> follow this event up on a cartographic view through this action.",
+      "FOLLOW_UP_ACTION_LABEL": "As a <b>participant</b> you can interact with your coordinator through this action.",
+      "ADD_PHOTO_LABEL": "Take a picture and associate it to your event through this action.",
+      "ADD_MEDIA_LABEL": "Join files to your event through this action.",
       "EVENT_OVERFLOW_MENU_LABEL": "Open the popup menu to see more actions.",
       "REMOVE_EVENT_LABEL": "Remove your event through this action.",
       "REMOVE_CONFIRMATION_LABEL": "A confirmation will be required before final removal, this will send a <p>notification</b> to all participants."
     },
+    "create-event": {
+      "EVENT_NAME_LABEL": "Choose a name for your event.",
+      "EVENT_DESCRIPTION_LABEL": "Enter a detailed description for your event.",
+      "LOCATION_LABEL": "Define the location of your event.",
+      "GEOLOCATE_LABEL": "Use your current position.",
+      "SHOW_MAP_LABEL": "Visualise the location of your event on a map.",
+      "SEARCH_LABEL": "Perform a search by address.",
+      "SEARCH_ADDRESS_LABEL": "Enter the whole adress or part of it and select among the different results.",
+      "SELECT_PARTICIPANTS_LABEL": "Select the participants of the event.",
+      "PARTICIPANTS_LABEL": "Typing <b>the first characters</b> of a user name, a group name or a tag name make it selectable. Once added remove it using the cross.",
+      "SELECT_COORDINATORS_LABEL": "Select the coordinators of the event.",
+      "COORDINATORS_LABEL": "Typing <b>the first characters</b> of a user name, a group name or a tag name make it selectable. Once added remove it using the cross.",
+      "CREATE_EVENT_LABEL": "Confirm the creation of your new event."
+    },
     "event-templates": {
-      "TEMPLATES_LABEL": "This tab allows to manage your event templates.",
+      "TEMPLATES_LABEL": "This tab allows to manage the event <b>templates</b> in your organisation.",
+      "TEMPLATE_DEFINITION_LABEL": "A template allows to define the recurrent content of a specific event type.",
       "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
       "NEW_TEMPLATE_LABEL": "Create a <b>new template</b> using this button.",
       "CREATE_TEMPLATE_LINK_LABEL": "How to create a model",
@@ -175,11 +197,86 @@
       "TEMPLATE_DESCRIPTION_LABEL": "Enter a detailed description for your model.",
       "SELECT_PARTICIPANTS_LABEL": "Select the default participants of the event.",
       "PARTICIPANTS_LABEL": "Typing <b>the first characters</b> of a user name, a group name or a tag name make it selectable. Once added remove it using the cross.",
-      "SELECT_COORDINATORS_LABEL": "Select the default participants of the event.",
+      "SELECT_COORDINATORS_LABEL": "Select the default coordinators of the event.",
       "COORDINATORS_LABEL": "Typing <b>the first characters</b> of a user name, a group name or a tag name make it selectable. Once added remove it using the cross.",
       "SELECT_LAYER_LABEL": "Select the target geographical elements layer of the event.",
       "LAYER_LABEL": "Typing <b>the first characters</b> of the layer name make it selectable. Once added remove it using the cross.",
-      "CREATE_TEMPLTE_LABEL": "Confirm the creation of your new template."
+      "CREATE_TEMPLATE_LABEL": "Confirm the creation of your new template."
+    },
+    "groups": {
+      "GROUPS_LABEL": "This tab allows to manage the <b>groups</b> in your organisation.",
+      "GROUP_DEFINITION_LABEL": "A group allows to delegate the management of a shared workspace limited to its members.",
+      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
+      "NEW_GROUP_LABEL": "Create a <b>new group</b> using this button.",
+      "CREATE_GROUP_LINK_LABEL": "How to create a group",
+      "GROUP_CARD_LABEL": "Each group is viewed as a card providing available actions.",
+      "GROUP_MEMBERS_LABEL": "This number shows you the <b>members</b> count of your group.",
+      "GROUP_MANAGERS_LABEL": "This number shows you the <b>managers</b> count of your group.",
+      "GROUP_OWNERS_LABEL": "This number shows you the <b>owners</b> count of your group.",
+      "UPDATE_GROUP_LABEL": "Update properties of your group through this action.",
+      "GROUP_OVERFLOW_MENU_LABEL": "Open the popup menu to see more actions.",
+      "REMOVE_GROUP_LABEL": "Remove your group through this action.",
+      "REMOVE_CONFIRMATION_LABEL": "A confirmation will be required before final removal."
+    },
+    "create-group": {
+      "GROUP_NAME_LABEL": "Choose a name for your group.",
+      "TEMPLATE_ICON_LABEL": "Choose an icon to easily recognize your group.",
+      "CREATE_GROUP_LABEL": "Confirm the creation of your new group."
+    },
+    "members": {
+      "MEMBERS_LABEL": "This tab allows to manage the <b>members</b> in your organisation.",
+      "MEMBER_DEFINITION_LABEL": "A <b>member</b> is a user able to access the shared workspace offered by your organisation.",
+      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
+      "ADD_INVITE_MEMBER_LABEL": "Add members to your organisation through this action.",
+      "ADD_MEMBER_LABEL": "If your future member <b>already has an account</b>, <b>add him</b> using this button.",
+      "ADD_MEMBER_LINK_LABEL": "How to add a member",
+      "INVITE_MEMBER_LABEL": "If your future member <b>does not yet have an account</b>, <b>invite him</b> using this button and we will create it .",
+      "INVITE_MEMBER_LINK_LABEL": "How to invite a member",
+      "MEMBER_CARD_LABEL": "Each member is viewed as a card providing available actions.",
+      "TAG_MEMBER_LABEL": "Update tags of your member through this action.",
+      "TAG_MEMBER_LINK_LABEL": "How to manage tags",
+      "JOIN_GROUP_LABEL": "Update groups of your member through this action.",
+      "JOIN_GROUP_LINK_LABEL": "How to manage groups",
+      "CHANGE_ROLE_LABEL": "Update the role of your member through this action.",
+      "CHANGE_ROLE_LINK_LABEL": "How to manage roles",
+      "MEMBER_OVERFLOW_MENU_LABEL": "Open the popup menu to see more actions.",
+      "REMOVE_MEMBER_LABEL": "Remove the member from your organisation through this action.",
+      "REMOVE_CONFIRMATION_LABEL": "A confirmation will be required before final removal."
+    },
+    "add-member": {
+      "MEMBER_NAME_LABEL": "Typing <b>the first characters</b> of a user name make it selectable.",
+      "MEMBER_ROLE_LABEL": "Select the user role in your organisation.",
+      "ROLES_LABEL": "A <b>member</b> has a read-only access to your organisation while a <b>manager</b> can edit it, and a <b>owner</b> has full control (removal, payment, etc.).",
+      "ADD_MEMBER_LABEL": "Confirm joining the user to your organisation."
+    },
+    "invite-member": {
+      "MEMBER_NAME_LABEL": "Typing <b>the first characters</b> of a user name make it selectable.",
+      "MEMBER_EMAIL_LABEL": "Entrez l'adresse mail de la personne.",
+      "INVITATION_EMAIL_LABEL": "An information email containing his temporary password to connect will be sent to your new member (<b>please ask him to check the email is not in his spam folder</b>).",
+      "MEMBER_ROLE_LABEL": "$t(tours.add-member.MEMBER_ROLE_LABEL)",
+      "ROLES_LABEL": "$t(tours.add-member.ROLES_LABEL)",
+      "INVITE_MEMBER_LABEL": "$t(tours.add-member.ADD_MEMBER_LABEL)"
+    },
+    "add-member": {
+      "GROUP_NAME_LABEL": "Typing <b>the first characters</b> of a group name make it selectable.",
+      "MEMBER_ROLE_LABEL": "Select the user role in the group.",
+      "ROLES_LABEL": "A <b>member</b> has a read-only access to your group while a <b>manager</b> can edit it, and a <b>owner</b> has full control (removal).",
+      "ADD_MEMBER_LABEL": "Confirm joining the user to the group."
+    },
+    "tag-member": {
+      "TAG_NAME_LABEL": "Typing <b>the first characters</b> of a tag name to make it selectable if it already exists or add it otherwise.",
+      "TAG_REMOVE_LABEL": "Once added select it to update its icon/color and remove it using the cross.",
+      "ADD_TAG_LABEL": "Confirm modifying the tags on your members."
+    },
+    "tags": {
+      "TAGS_LABEL": "This tab allows to manage the <b>tags</b> in your organisation.",
+      "TAG_DEFINITION_LABEL": "A tag allows to identify a subset of your organisation members (e.g. a skill or a service).",
+      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
+      "TAG_CARD_LABEL": "Each tag is viewed as a card providing available actions.",
+      "CREATE_TAG_LINK_LABEL": "How to create or remove tags on members",
+      "TAG_COUNT_LABEL": "This number shows you the number of <b>members</b> having your tag.",
+      "REMOVE_TAG_LABEL": "Whenever it is zero the tag is automatically removed.",
+      "UPDATE_TAG_LABEL": "Update properties of your tag through this action, this will update all members having this tag."
     }
   },
   "Variables": {

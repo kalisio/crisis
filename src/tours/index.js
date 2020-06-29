@@ -10,10 +10,15 @@ module.exports = {
   events: require('./events'),
   'create-event': require('./create-event'),
   'event-templates': require('./event-templates'),
-  'create-event-templates': require('./create-event-templates')/*,
-  members: require('./members'),
+  'create-event-templates': require('./create-event-templates'),
   groups: require('./groups'),
-  tags: require('./tags'),
+  'create-group': require('./create-group'),
+  members: require('./members'),
+  'add-member': require('./add-member'),
+  'invite-member': require('./invite-member'),
+  'join-group': require('./join-group'),
+  'tag-member': require('./tag-member'),
+  tags: require('./tags')/*,
   'archived-events': require('./archived-events'),
   catalog: require('./catalog')*/
 }

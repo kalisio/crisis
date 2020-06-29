@@ -99,27 +99,32 @@ module.exports = {
                   'invite': {
                     name: 'invite-member',
                     component: 'team/KInviteMember',
-                    props: true
+                    props: true,
+                    tour: tours['invite-member']
                   },
                   'add': {
                     name: 'add-member',
                     component: 'team/KAddMember',
-                    props: true
+                    props: true,
+                    tour: tours['add-member']
                   },
                   ':objectId/tag': {
                     name: 'tag-member',
                     component: 'editor/KModalEditor',
-                    props: true
+                    props: true,
+                    tour: tours['tag-member']
                   },
                   ':objectId/join-group': {
                     name: 'join-group',
                     component: 'team/KJoinGroup',
-                    props: true
+                    props: true,
+                    tour: tours['join-group']
                   },
                   ':objectId/change-role': {
                     name: 'change-role',
                     component: 'team/KChangeRole',
-                    props: true
+                    props: true,
+                    tour: tours['change-role']
                   },
                 },
                 tour: tours.members
@@ -145,7 +150,8 @@ module.exports = {
                   'create': {
                     name: 'create-group',
                     component: 'editor/KModalEditor',
-                    props: true
+                    props: true,
+                    tour: tours['create-group']
                   },
                   'edit/:objectId': {
                     name: 'edit-group',

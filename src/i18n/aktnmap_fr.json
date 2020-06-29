@@ -83,11 +83,11 @@
     "reset-password": {
       "RESET_PROCEDURE_LABEL": "Si vous avez oublié votre mot de passe nous vous enverrons un email contenant un lien permettant <b>d'en définir un nouveau</b>.",
       "EMAIL_LABEL": "Saisissez tout d'abord l'adresse que vous avez utilisé pour vous enregistrer ou par laquelle vous avez été invité.",
-      "RESET_LABEL": "Enfin, terminez en envoyant l'email contenant le lien (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirable</b>)."
+      "RESET_LABEL": "Enfin, terminez en envoyant l'email contenant le lien (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirables</b>)."
     },
     "register": {
       "LOCAL_LABEL": "Vous pouvez vous enregistrer sur le système en définissant <b>vos identifiants</b>.",
-      "NAME_LABEL": "Saisissez tout d'abord votre nom.",
+      "NAME_LABEL": "Saisissez tout d'abord votre nom tel qu'il sera visible par les autres utilisateurs.",
       "EMAIL_LABEL": "Saisissez ensuite l'adresse mail que vous utiliserez pour vous connecter et sur laquelle vous recevrez les messages liés à la sécurité.",
       "PASSWORD_LABEL": "Choisissez ensuite votre mot de passe, s'il ne respecte pas nos dispositions de sécurité une alerte vous indiquera les règles à respecter.",
       "PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
@@ -107,7 +107,8 @@
       "BUG_LABEL": "Signalez-nous un boggue via un email contenant automatiquement les informations nécessaires.",
       "SETTINGS_LABEL": "Modifiez les paramètres généraux du système sur votre appareil.",
       "DASHBOARD_LABEL": "Accéder au tableau de bord des événements de vos différentes organisations.",
-      "NEW_ORGANISATION_LABEL": "Créez une nouvelle organisation pour partager des événements.",
+      "NEW_ORGANISATION_LABEL": "Créez une nouvelle <b>organisation</b> pour partager des événements.",
+      "ORGANISATION_DEFINITION_LABEL": "Une organisation est un espace de travail partagé au sein duquel vous pouvez inviter des personnes.",
       "ORGANISATION_NAME_LABEL": "Entrez le nom de l'organisation tel qu'il sera visible par les autres utilisateurs.",
       "ORGANISATION_DESCRIPTION_LABEL": "Entrez une description détaillée.",
       "CREATE_ORGANISATION_LABEL": "Confirmez la création de la nouvelle organisation.",
@@ -120,7 +121,7 @@
     "account": {
       "PROFILE_LABEL": "Cet onglet vous permet de modifier les informations liées à votre profil utilisateur.",
       "AVATAR_LABEL": "Votre avatar personnalisé qui sera visible dans le menu latéral une fois un fichier image sélectionné.",
-      "NAME_LABEL": "Votre nom tel qu'il sera visible par les autres utilisateurs",
+      "NAME_LABEL": "Votre nom tel qu'il sera visible par les autres utilisateurs.",
       "UPDATE_LABEL": "Confirmez la mise à jour pour appliquer les modifications apportées à votre profil.",
       "SECURITY_LABEL": "Cet onglet vous permet de modifier <b>vos identifiants</b> et vos appareils.",
       "PASSWORD_LABEL": "Initiez la <b>procédure de changement de mot de passe</b>.",
@@ -137,7 +138,7 @@
       "NEW_PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
       "CONFIRM_NEW_PASSWORD_LABEL": "Confirmez votre nouveau mot de passe pour éviter les erreurs.",
       "CHANGE_LABEL": "Enfin, terminez en confirmant la modification.",
-      "CHANGE_EMAIL_LABEL": "Un email de confirmation vous serez envoyé (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirable</b>)."
+      "CHANGE_EMAIL_LABEL": "Un email de confirmation vous serez envoyé (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirables</b>)."
     },
     "send-change-identity": {
       "CHANGE_IDENTITY_PROCEDURE_LABEL": "Si vous souhaitez modifier l'adresse mail que vous utilisez pour vous connecter vous pouvez <b>en choisir une nouvelle</b>.",
@@ -145,27 +146,48 @@
       "PASSWORD_VISIBILITY_LABEL": "$t(tours.login.PASSWORD_VISIBILITY_LABEL)",
       "EMAIL_LABEL": "Entrez votre <b>nouvelle adresse mail</b>.",
       "CHANGE_LABEL": "Enfin, terminez en confirmant la demande de modification.",
-      "CHANGE_EMAIL_LABEL": "Un email contenant un lien permettant de confirmer la modification vous serez envoyé sur votre nouvelle adresse (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirable</b>)."
+      "CHANGE_EMAIL_LABEL": "Un email contenant un lien permettant de confirmer la modification vous serez envoyé sur votre nouvelle adresse (<b>vérifiez que l'email ne soit pas tombé dans vos courriers indésirables</b>)."
     },
     "events": {
-      "EVENTS_LABEL": "Cet onglet vous permet de gérer vos événements.",
+      "EVENTS_LABEL": "Cet onglet vous permet de gérer les <b>événements</b> au sein de votre organisation.",
+      "EVENT_DEFINITION_LABEL": "Un énénements vous permet de partager instantanément des informations et des photos, ainsi que d'interagir avec ses participants sur le terrain.",
       "OVERFLOW_MENU_LABEL": "Lorsqu'il n'est pas visible, vous pourrez le retrouver dans ce menu déroulant.",
       "TEMPLATES_LABEL": "Avant de créer un événement vous devez créer au moins un <b>modèle</b> via cet onglet.",
-      "SELECT_TEMPLATE_LABEL": "Lorsque vous souhaitez créer un événement sélectionnez simplement le <b>modèle</b> requis via le bouton.",
       "TEMPLATE_LINK_LABEL": "Voir comment gérer les modèles",
+      "SELECT_TEMPLATE_LABEL": "Lorsque vous souhaitez créer un événement sélectionnez simplement le <b>modèle</b> requis via le bouton.",
+      "CREATE_EVENT_LINK_LABEL": "Voir comment créer un événement",
       "EVENT_CARD_LABEL": "Chaque événement est visible sous la forme d'une carte vous permettant d'accéder aux actions possibles.",
-      "UPDATE_EVENT_LABEL": "Modifier les propriétés de votre événement via cette action.",
+      "UPDATE_EVENT_LABEL": "Modifiez les propriétés de votre événement via cette action.",
+      "FOLLOW_UP_EVENT_LABEL": "En tant que <b>coordinateur</b> suivez l'évolution de l'événement de façon cartographique via cette action.",
+      "FOLLOW_UP_ACTION_LABEL": "En tant que <b>participant</b> vous pouvez interagir avec votre coordinateur via cette action.",
+      "ADD_PHOTO_LABEL": "Prenez une photo sur votre appareil et associez-là à votre événement via cette action.",
+      "ADD_MEDIA_LABEL": "Joignez des fichiers à votre événement via cette action.",
       "EVENT_OVERFLOW_MENU_LABEL": "Ouvrez le menu déroulant pour découvrir plus d'actions.",
       "REMOVE_EVENT_LABEL": "Supprimez votre événement via cette action.",
       "REMOVE_CONFIRMATION_LABEL": "Un confirmation vous sera demandé avant la suppression définitive, ceci provoquera l'envoi d'une <b>notification</b> à tous les participants."
     },
+    "create-event": {
+      "EVENT_NAME_LABEL": "Choisissez le nom de votre événement.",
+      "EVENT_DESCRIPTION_LABEL": "Choisissez une description détaillée pour votre événement.",
+      "LOCATION_LABEL": "Déterminez la localisation de votre événement.",
+      "GEOLOCATE_LABEL": "Utilisez votre position actuelle.",
+      "SHOW_MAP_LABEL": "Visualisez la localisation de votre événement sur une carte.",
+      "SEARCH_LABEL": "Effectuez une recherche par adresse.",
+      "SEARCH_ADDRESS_LABEL": "Tapez tout ou partie de votre addresse et sélectionnez parmi les propositions.",
+      "SELECT_PARTICIPANTS_LABEL": "Sélectionnez la liste des participants à l'événement.",
+      "PARTICIPANTS_LABEL": "Tapez <b>les premières lettres</b> du nom d'une personne, d'un groupe ou d'une étiquette pour l'ajouter à la liste. Une fois ajouté utilisez la croix pour supprimer le participant.",
+      "SELECT_COORDINATORS_LABEL": "Sélectionnez la liste des coordinateurs de l'événement.",
+      "COORDINATORS_LABEL": "Tapez <b>les premières lettres</b> du nom d'une personne, d'un groupe ou d'une étiquette pour l'ajouter à la liste. Une fois ajouté utilisez la croix pour supprimer le coordinateur.",
+      "CREATE_EVENT_LABEL": "Confirmez la création de votre nouvel événement."
+    },
     "event-templates": {
-      "TEMPLATES_LABEL": "Cet onglet vous permet de gérer vos modèles d'événements.",
+      "TEMPLATES_LABEL": "Cet onglet vous permet de gérer les <b>modèles</b> d'événements au sein de votre organisation.",
+      "TEMPLATE_DEFINITION_LABEL": "Un modèle permet de définir le contenu récurrent d'un type d'événement particulier.",
       "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
       "NEW_TEMPLATE_LABEL": "Créez un <b>nouveau modèle</b> via ce bouton.",
       "CREATE_TEMPLATE_LINK_LABEL": "Voir comment créer un modèle",
       "TEMPLATE_CARD_LABEL": "Chaque modèle est visible sous la forme d'une carte vous permettant d'accéder aux actions possibles.",
-      "UPDATE_TEMPLATE_LABEL": "Modifier les propriétés de votre modèle via cette action.",
+      "UPDATE_TEMPLATE_LABEL": "Modifiez les propriétés de votre modèle via cette action.",
       "COPY_TEMPLATE_LABEL": "Gagnez du temps en créant un nouveau modèle à partir de celui-ci via cette action.",
       "TEMPLATE_OVERFLOW_MENU_LABEL": "Ouvrez le menu déroulant pour découvrir plus d'actions.",
       "REMOVE_TEMPLATE_LABEL": "Supprimez votre modèle via cette action.",
@@ -179,11 +201,86 @@
       "TEMPLATE_DESCRIPTION_LABEL": "Choisissez une description détaillée pour votre modèle.",
       "SELECT_PARTICIPANTS_LABEL": "Sélectionnez la liste des participants par défaut à l'événement.",
       "PARTICIPANTS_LABEL": "Tapez <b>les premières lettres</b> du nom d'une personne, d'un groupe ou d'une étiquette pour l'ajouter à la liste. Une fois ajouté utilisez la croix pour supprimer le participant.",
-      "SELECT_COORDINATORS_LABEL": "Sélectionnez la liste des gestionnaires par défaut de l'événement.",
+      "SELECT_COORDINATORS_LABEL": "Sélectionnez la liste des coordinateurs par défaut de l'événement.",
       "COORDINATORS_LABEL": "Tapez <b>les premières lettres</b> du nom d'une personne, d'un groupe ou d'une étiquette pour l'ajouter à la liste. Une fois ajouté utilisez la croix pour supprimer le coordinateur.",
-      "SELECT_LAYER_LABEL": "Sélectionnez la couche d'éléments géographiques cible de l'événement.",
+      "SELECT_LAYER_LABEL": "Sélectionnez la couche d'éléments géographiques cible de votre modèle.",
       "LAYER_LABEL": "Tapez <b>les premières lettres</b> du nom de la couche pour l'ajouter à la liste. Une fois ajoutée utilisez la croix pour la supprimer.",
-      "CREATE_TEMPLATE_LABEL": "Confirmez la création du nouveau modèle."
+      "CREATE_TEMPLATE_LABEL": "Confirmez la création de votre nouveau modèle."
+    },
+    "groups": {
+      "GROUPS_LABEL": "Cet onglet vous permet de gérer les <b>groupes</b> au sein de votre organisation.",
+      "GROUP_DEFINITION_LABEL": "Un groupe vous permet de déléguer la gestion d'un espace de travail restreint à ses membres.",
+      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
+      "NEW_GROUP_LABEL": "Créez un <b>nouveau groupe</b> via ce bouton.",
+      "CREATE_GROUP_LINK_LABEL": "Voir comment créer un groupe",
+      "GROUP_CARD_LABEL": "Chaque groupe est visible sous la forme d'une carte vous permettant d'accéder aux actions possibles.",
+      "GROUP_MEMBERS_LABEL": "Ce nombre vous indique le nombre de <b>membres</b> de votre groupe.",
+      "GROUP_MANAGERS_LABEL": "Ce nombre vous indique le nombre de <b>gestionnaires</b> de votre groupe.",
+      "GROUP_OWNERS_LABEL": "Ce nombre vous indique le nombre de <b>propriétaires</b> de votre groupe.",
+      "UPDATE_GROUP_LABEL": "Modifiez les propriétés de votre groupe via cette action.",
+      "GROUP_OVERFLOW_MENU_LABEL": "Ouvrez le menu déroulant pour découvrir plus d'actions.",
+      "REMOVE_GROUP_LABEL": "Supprimez votre groupe via cette action.",
+      "REMOVE_CONFIRMATION_LABEL": "Un confirmation vous sera demandé avant la suppression définitive."
+    },
+    "create-group": {
+      "GROUP_NAME_LABEL": "Choisissez le nom de votre groupe.",
+      "GROUP_DESCRIPTION_LABEL": "Choisissez une description détaillée pour votre groupe.",
+      "CREATE_GROUP_LABEL": "Confirmez la création de votre nouveau groupe."
+    },
+    "members": {
+      "MEMBERS_LABEL": "Cet onglet vous permet de gérer les <b>membres</b> au sein de votre organisation.",
+      "MEMBER_DEFINITION_LABEL": "Un membre est un utilisateur ayant accès à l'espace de travail partagé offert par votre organisation.",
+      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
+      "ADD_INVITE_MEMBER_LABEL": "Ajoutez des membres à votre organisation via ce bouton.",
+      "ADD_MEMBER_LABEL": "Si votre futur membre <b>dispose déjà d'un compte</b>, <b>ajoutez-le</b> via ce bouton.",
+      "ADD_MEMBER_LINK_LABEL": "Voir comment ajouter un membre",
+      "INVITE_MEMBER_LABEL": "Si votre futur membre <b>ne dispose pas encore d'un compte</b>, <b>invitez-le</b> via ce bouton et nous le créerons pour lui.",
+      "INVITE_MEMBER_LINK_LABEL": "Voir comment inviter un membre",
+      "MEMBER_CARD_LABEL": "Chaque membre est visible sous la forme d'une carte vous permettant d'accéder aux actions possibles.",
+      "TAG_MEMBER_LABEL": "Modifiez les <b>étiquettes</b> de votre membre via cette action.",
+      "TAG_MEMBER_LINK_LABEL": "Voir comment gérer les étiquettes",
+      "JOIN_GROUP_LABEL": "Modifiez les <b>groupes</b> de votre membre via cette action.",
+      "JOIN_GROUP_LINK_LABEL": "Voir comment gérer les groupes",
+      "CHANGE_ROLE_LABEL": "Modifiez le <b>rôle</b> de votre membre via cette action.",
+      "CHANGE_ROLE_LINK_LABEL": "Voir comment gérer les rôles",
+      "MEMBER_OVERFLOW_MENU_LABEL": "Ouvrez le menu déroulant pour découvrir plus d'actions.",
+      "REMOVE_MEMBER_LABEL": "Supprimez un membre de votre organisation via cette action.",
+      "REMOVE_CONFIRMATION_LABEL": "Un confirmation vous sera demandé avant la suppression définitive."
+    },
+    "add-member": {
+      "MEMBER_NAME_LABEL": "Tapez <b>les premières lettres</b> du nom d'une personne pour la sélectionner.",
+      "MEMBER_ROLE_LABEL": "Choisissez le rôle de la personne au sein de votre organisation.",
+      "ROLES_LABEL": "Un <b>membre</b> a un accès consultatif à votre organisation alors qu'un <b>gestionnaire</b> a un pouvoir d'édition et un <b>propriétaire</b> a un contrôle total (destruction, paiement, etc.).",
+      "ADD_MEMBER_LABEL": "Confirmez l'ajout du membre à votre organisation."
+    },
+    "invite-member": {
+      "MEMBER_NAME_LABEL": "Tapez le nom de la personne tel qu'il sera visible par les autres utilisateurs.",
+      "MEMBER_EMAIL_LABEL": "Entrez l'adresse mail de la personne.",
+      "INVITATION_EMAIL_LABEL": "Un email informant l'utilisateur de son invitation et contenant son mot de passe temporaire pour se connecter lui sera envoyé (<b>demandez-lui de vérifiez que l'email ne soit pas tombé dans ses courriers indésirables</b>).",
+      "MEMBER_ROLE_LABEL": "$t(tours.add-member.MEMBER_ROLE_LABEL)",
+      "ROLES_LABEL": "$t(tours.add-member.ROLES_LABEL)",
+      "INVITE_MEMBER_LABEL": "$t(tours.add-member.ADD_MEMBER_LABEL)"
+    },
+    "join-group": {
+      "GROUP_NAME_LABEL": "Tapez <b>les premières lettres</b> du nom d'un groupe pour le sélectionner.",
+      "MEMBER_ROLE_LABEL": "Choisissez le rôle de la personne au sein du groupe.",
+      "ROLES_LABEL": "Un <b>membre</b> a un accès consultatif au groupe alors qu'un <b>gestionnaire</b> a un pouvoir d'édition et un <b>propriétaire</b> a un contrôle total (destruction).",
+      "ADD_MEMBER_LABEL": "Confirmez l'ajout du membre au groupe."
+    },
+    "tag-member": {
+      "TAG_NAME_LABEL": "Tapez <b>les premières lettres</b> d'une étiquette pour la sélectionner si elle existe ou la créer sinon.",
+      "TAG_REMOVE_LABEL": "Une fois ajoutée sélectionnez-là pour modifier son icône et sa couleur ou utilisez la croix pour la supprimer.",
+      "ADD_TAG_LABEL": "Confirmez la modification des étiquettes sur votre membre."
+    },
+    "tags": {
+      "TAGS_LABEL": "Cet onglet vous permet de gérer les <b>étiquettes</b> au sein de votre organisation.",
+      "TAG_DEFINITION_LABEL": "Une étiquette vous permet d'identifier un sous-ensemble des membres de votre organisation (e.g. une compétence ou un service).",
+      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
+      "TAG_CARD_LABEL": "Chaque étiquette est visible sous la forme d'une carte vous permettant d'accéder aux actions possibles.",
+      "CREATE_TAG_LINK_LABEL": "Voir comment ajouter ou supprimer des étiquettes sur les membres",
+      "TAG_COUNT_LABEL": "Ce nombre vous indique le nombre de <b>membres</b> possédant cette étiquette.",
+      "REMOVE_TAG_LABEL": "Lorsqu'il atteint zéro l'étiquette est automatiquement supprimée.",
+      "UPDATE_TAG_LABEL": "Modifiez les propriétés de votre étiquette via cette action, ceci mettra à jour tous les membres possédant cette étiquette."
     }
   },
   "Variables": {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <k-signup-alert v-if="user" :isVerified="user.isVerified" :email="user.email" />
-    <k-tour />
+    <k-tour/>
     <router-view></router-view>
   </div>
 </template>
