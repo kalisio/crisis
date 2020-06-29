@@ -78,7 +78,12 @@ screenshots
 
 # Secrets
 secrets.tar
+
 # SSH key
 ssh.pem
 app.env.sh
 *.keystore
+
+# Testcafe page models
+test/page-models/core
+test/page-models/map
