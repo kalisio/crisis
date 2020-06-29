@@ -56,7 +56,7 @@ module.exports = [{
   link: 'tours.members.JOIN_GROUP_LINK_LABEL',
   params: {
     placement: 'bottom',
-    route: { name: 'join-group' }
+    clickOnLink: '#join-group'
   }
 }, {
   target: '#tag-member',
@@ -64,7 +64,7 @@ module.exports = [{
   link: 'tours.members.TAG_MEMBER_LINK_LABEL',
   params: {
     placement: 'bottom',
-    route: { name: 'tag-member' }
+    clickOnLink: '#tag-member'
   }
 }, {
   target: '#change-role',
@@ -72,7 +72,7 @@ module.exports = [{
   link: 'tours.members.CHANGE_ROLE_LINK_LABEL',
   params: {
     placement: 'bottom',
-    route: { name: 'change-role' }
+    clickOnLink: '#change-role'
   }
 }, {
   target: '#card-overflow-menu',

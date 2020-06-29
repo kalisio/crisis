@@ -101,7 +101,7 @@
     "home": {
       "LEADING_LABEL": "Ouvrez à tout moment le menu latéral.",
       "SIDENAV_LABEL": "Il vous permettra d'accéder à la gestion des différents aspects lié à votre compte.",
-      "ACCOUNT_LABEL": "Gérez ici <b>vos identifiants</b> et ce qui a trait à leur sécurité.",
+      "ACCOUNT_LABEL": "Gérez ici <b>vos identifiants</b> et leur sécurité",
       "HELP_LABEL": "Accédez à notre <b><a href='/#/help'>aide en ligne</a></b> à tout moment.",
       "ABOUT_LABEL": "Affichez les informations détaillées du système et signalez-nous un boggue.",
       "BUG_LABEL": "Signalez-nous un boggue via un email contenant automatiquement les informations nécessaires.",

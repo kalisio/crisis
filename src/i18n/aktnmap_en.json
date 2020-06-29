@@ -97,7 +97,7 @@
     "home": {
       "LEADING_LABEL": "Open the side menu any time.",
       "SIDENAV_LABEL": "You can manage different aspects linked to your account.",
-      "ACCOUNT_LABEL": "Manage here <b>your identifiers</b> and what is related to their security.",
+      "ACCOUNT_LABEL": "Manage <b>your identifiers</b> and their security",
       "HELP_LABEL": "Access our <b><a href='/#/help'>online help</a></b> anytime.",
       "ABOUT_LABEL": "Display detailed system information and send us bug reports.",
       "BUG_LABEL": "Send us a bug report with a preformatted email containing required information.",

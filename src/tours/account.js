@@ -27,7 +27,6 @@ module.exports = [{
   content: 'tours.account.SECURITY_LABEL',
   params: {
     placement: 'bottom',
-    //routeOnNext: { name: 'account-activity', params: { perspective: 'security' } },
     clickOnNext: '#security',
     clickOnPrevious: '#profile',
     nextDelay: 500,
@@ -59,7 +58,6 @@ module.exports = [{
   content: 'tours.account.DANGER_ZONE_LABEL',
   params: {
     placement: 'bottom',
-    //routeOnNext: { name: 'account-activity', params: { perspective: 'danger-zone' } },
     clickOnNext: '#danger-zone',
     clickOnPrevious: '#security',
     nextDelay: 500,
