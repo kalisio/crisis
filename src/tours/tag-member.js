@@ -2,13 +2,13 @@ module.exports = [{
   target: '#tags-field',
   content: 'tours.tag-member.TAG_NAME_LABEL',
   params: {
-    placement: 'top',
+    placement: 'right',
     clickOnPrevious: '#close-action',
     previousDelay: 500
   }
 }, {
   target: '#apply-button',
-  content: 'tours.tag-member.ADD_TAG_LABEL',
+  content: 'tours.tag-member.UPDATE_TAG_LABEL',
   params: {
     placement: 'left',
     clickOnNext: '#close-action',

@@ -37,11 +37,14 @@
 
 <script>
 import _ from 'lodash'
-import { utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { QCarousel, QCarouselSlide, QCarouselControl } from 'quasar'
 
 export default {
   name: 'Help',
+  mixins: [
+    kCoreMixins.baseActivity
+  ],
   components: {
     QCarousel,
     QCarouselSlide,
@@ -55,6 +58,11 @@ export default {
     }
   },
   methods: {
+    refreshActivity () {
+      this.clearActivity()
+      this.clearSearchBar()
+      this.setTitle(this.$t('HELP'))
+    },
     onSelectionChanged (selection) {
       this.currentSlide = selection.value
     },

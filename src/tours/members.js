@@ -79,8 +79,8 @@ module.exports = [{
   content: 'tours.members.MEMBER_OVERFLOW_MENU_LABEL',
   params: {
     placement: 'top',
-    clickOn: '#card-overflow-menu',
-    clickDelay: 500
+    clickOnNext: '#card-overflow-menu',
+    nextDelay: 500
   }
 }, {
   target: '#remove-member',

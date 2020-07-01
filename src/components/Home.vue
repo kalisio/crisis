@@ -21,12 +21,14 @@ export default {
         handler: () => this.$store.patch('leftDrawer', { visible: !this.$store.get('leftDrawer.visible') })
       }
       let actions = { leading: toggleSideNav, toolbar: [], menu: [] }
-      // Then contextual help
+      // Then contextual help if any
       const routeName = this.$route.name
-      actions.toolbar.push({
-        name: 'online-help', icon: 'las la-question-circle', label: this.$t('Context.CONTEXTUAL_HELP'),
-        handler: () => this.$store.patch('tours.current', { name: routeName })
-      })
+      if (this.$store.get(`tours.${routeName}`)) {
+        actions.toolbar.push({
+          name: 'online-help', icon: 'las la-question-circle', label: this.$t('Context.CONTEXTUAL_HELP'),
+          handler: () => this.$store.patch('tours.current', { name: routeName })
+        })
+      }
       this.$store.patch('appBar', actions)
     }
   },

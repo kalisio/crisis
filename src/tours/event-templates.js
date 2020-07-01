@@ -13,10 +13,12 @@ module.exports = [{
     clickOn: '#overflow-menu-entry',
     clickDelay: 500,
     clickOnNext: '#overflow-menu-entry',
-    nextDelay: 500
+    nextDelay: 500,
+    clickOnPrevious: '#overflow-menu-entry',
+    previousDelay: 500
   }
 }, {
-  target: '#create-event-template',
+  target: '#fab',
   content: 'tours.event-templates.NEW_TEMPLATE_LABEL',
   link: 'tours.event-templates.CREATE_TEMPLATE_LINK_LABEL',
   params: {

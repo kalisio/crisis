@@ -2,8 +2,8 @@
   <k-page padding>
     <template v-slot:page-content>
       <template v-for="org in items">
-        <q-list :key="org._id" separator>
-          <q-item>
+        <q-list :id="'organisation-' + org._id" :key="org._id" separator>
+          <q-item :id="'organisation-name-' + org._id" clickable @click="onSelectOrganisation(org)">
             <q-item-section avatar>
               <q-avatar color="primary" text-color="white" size="40px">{{getInitials(org)}}</q-avatar>
             </q-item-section>
@@ -11,7 +11,7 @@
               {{ org.name }}
             </q-item-section>
           </q-item>
-          <q-item>
+          <q-item :id="'organisation-grid-' + org._id">
             <q-item-section>
               <k-grid service="events" :renderer="renderer" :contextId="org._id" :base-query="baseQuery" :filter-query="searchQuery" :list-strategy="'smart'" />
             </q-item-section>
@@ -71,6 +71,9 @@ export default {
       if (this.items.length === 1) {
         this.$router.push({ name: 'events-activity', params: { contextId: this.items[0]._id } })
       }
+    },
+    onSelectOrganisation (org) {
+      this.$router.push({ name: 'events-activity', params: { contextId: org._id } })
     }
   },
   created () {

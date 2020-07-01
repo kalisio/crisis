@@ -56,10 +56,12 @@ module.exports = [{
     route: { name: 'account-activity', params: { perspective: 'profile' } }
   }
 }, {
-  target: '#dashboard',
-  content: 'tours.home.DASHBOARD_LABEL',
+  target: 'div[id^=link-]',
+  title: 'tours.home.ORGANISATION_LABEL',
+  link: 'tours.home.ORGANISATION_LINK_LABEL',
   params: {
-    placement: 'bottom'
+    placement: 'bottom',
+    clickOnLink: 'div[id^=link-]'
   }
 }, {
   target: '#new-organisation',
@@ -91,5 +93,15 @@ module.exports = [{
     placement: 'left',
     clickOnNext: '#close',
     nextDelay: 500
+  }
+}, {
+  target: '#dashboard',
+  content: 'tours.home.DASHBOARD_LABEL',
+  link: 'tours.home.DASHBOARD_LINK_LABEL',
+  params: {
+    placement: 'bottom',
+    clickOnPrevious: '#new-organisation',
+    previousDelay: 500,
+    route: { name: 'dashboard' }
   }
 }]

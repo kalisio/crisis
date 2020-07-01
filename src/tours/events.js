@@ -70,7 +70,7 @@ module.exports = [{
   params: {
     placement: 'top',
     clickOnNext: '#card-overflow-menu',
-    nextDelay: 1000
+    nextDelay: 500
   }
 }, {
   target: '#remove-event',

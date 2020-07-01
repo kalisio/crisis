@@ -18,7 +18,7 @@ module.exports = [{
     previousDelay: 500
   }
 }, {
-  target: '#create-group',
+  target: '#fab',
   content: 'tours.groups.NEW_GROUP_LABEL',
   link: 'tours.groups.CREATE_GROUP_LINK_LABEL',
   params: {
@@ -60,8 +60,8 @@ module.exports = [{
   content: 'tours.groups.GROUP_OVERFLOW_MENU_LABEL',
   params: {
     placement: 'top',
-    clickOn: '#card-overflow-menu',
-    clickDelay: 500
+    clickOnNext: '#card-overflow-menu',
+    nextDelay: 500
   }
 }, {
   target: '#remove-group',

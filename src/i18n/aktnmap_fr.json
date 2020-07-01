@@ -69,6 +69,15 @@
     "EVENTS_LOG_COMMENT_FIELD_HELPER": "Saisissez votre commentaire pour cette étape"
   },
   "tours": {
+    "welcome": {
+      "WELCOME_TITLE": "Bienvenue !",
+      "WELCOME_MESSAGE": "Cette prise en main rapide va vous permettre de balayer les principales fonctionnalités de l'application.",
+      "ONLINE_HELP": "Parcourez tout d'abord notre <b><a href='/#/home/help'>aide en ligne</b></a> pour vous familiariser avec les notions de base.",
+      "CONTEXTUAL_HELP": "Pour obtenir de l'aide contextuelle lorsque vous êtes perdu cliquez à tout moment sur l'icône",
+      "TOUR_MESSAGE": "Lancez un didacticiel détaillant le menu principal en cliquant sur l'icône",
+      "TOUR_LINK_MESSAGE": "A chaque fois qu'une étape d'un didacticiel contient cette icône elle permet d'en lancer un autre détaillant la fonctionnalité visée.",
+      "GOODBYE_MESSAGE": "Merci d'avoir parcouru ce didacticiel, vous êtes maintenant prêt à utiliser l'application !"
+    },
     "login": {
       "SOCIAL_LABEL": "Vous pouvez aussi vous connecter avec <b>d'autres identifiants</b>.",
       "GOOGLE_LABEL": "Par exemple avec votre compte Google.",
@@ -102,21 +111,27 @@
       "LEADING_LABEL": "Ouvrez à tout moment le menu latéral.",
       "SIDENAV_LABEL": "Il vous permettra d'accéder à la gestion des différents aspects lié à votre compte.",
       "ACCOUNT_LABEL": "Gérez ici <b>vos identifiants</b> et leur sécurité",
-      "HELP_LABEL": "Accédez à notre <b><a href='/#/help'>aide en ligne</a></b> à tout moment.",
+      "ORGANISATION_LABEL": "Basculez dans le contexte d'une organisation cible en sélectionnant son nom.",
+      "ORGANISATION_LINK_LABEL": "Entrez dans le contexte de cette organisation",
+      "HELP_LABEL": "Accédez à notre <b><a href='/#/home/help'>aide en ligne</a></b> à tout moment.",
       "ABOUT_LABEL": "Affichez les informations détaillées du système et signalez-nous un boggue.",
       "BUG_LABEL": "Signalez-nous un boggue via un email contenant automatiquement les informations nécessaires.",
       "SETTINGS_LABEL": "Modifiez les paramètres généraux du système sur votre appareil.",
       "DASHBOARD_LABEL": "Accéder au tableau de bord des événements de vos différentes organisations.",
       "NEW_ORGANISATION_LABEL": "Créez une nouvelle <b>organisation</b> pour partager des événements.",
-      "ORGANISATION_DEFINITION_LABEL": "Une organisation est un espace de travail partagé au sein duquel vous pouvez inviter des personnes.",
+      "ORGANISATION_DEFINITION_LABEL": "Une organisation est un espace de travail partagé au sein duquel vous pouvez inviter des personnes à collaborer.",
       "ORGANISATION_NAME_LABEL": "Entrez le nom de l'organisation tel qu'il sera visible par les autres utilisateurs.",
       "ORGANISATION_DESCRIPTION_LABEL": "Entrez une description détaillée.",
       "CREATE_ORGANISATION_LABEL": "Confirmez la création de la nouvelle organisation.",
+      "DASHBOARD_LINK_LABEL": "Voir votre tableau de bord",
       "LOGOUT_LABEL": "Déconnectez vous si vous souhaitez clôturer votre session de travail.",
       "SESSION_LABEL": "Sinon la session reste active sur votre appareil pendant <b>24H</b> et vous n'aurez pas besoin de vous reconnecter durant ce laps de temps."
     },
     "dashboard": {
-      "DASHBOARD_LABEL": "Votre tableau de bord liste vos événements en cours dans chacune de vos organisations."
+      "DASHBOARD_LABEL": "Votre tableau de bord liste vos événements en cours dans chacune de vos organisations.",
+      "GRID_LABEL": "Vous avez directement accès aux actions sur vos événements depuis chaque liste.",
+      "ORGANISATION_LABEL": "Basculez dans le contexte d'une organisation cible en sélectionnant son nom.",
+      "ORGANISATION_LINK_LABEL": "Entrez dans le contexte de cette organisation"
     },
     "account": {
       "PROFILE_LABEL": "Cet onglet vous permet de modifier les informations liées à votre profil utilisateur.",
@@ -270,7 +285,7 @@
     "tag-member": {
       "TAG_NAME_LABEL": "Tapez <b>les premières lettres</b> d'une étiquette pour la sélectionner si elle existe ou la créer sinon.",
       "TAG_REMOVE_LABEL": "Une fois ajoutée sélectionnez-là pour modifier son icône et sa couleur ou utilisez la croix pour la supprimer.",
-      "ADD_TAG_LABEL": "Confirmez la modification des étiquettes sur votre membre."
+      "UPDATE_TAG_LABEL": "Confirmez la modification des étiquettes sur votre membre."
     },
     "tags": {
       "TAGS_LABEL": "Cet onglet vous permet de gérer les <b>étiquettes</b> au sein de votre organisation.",
