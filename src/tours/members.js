@@ -22,7 +22,9 @@ module.exports = [{
   content: 'tours.members.ADD_INVITE_MEMBER_LABEL',
   params: {
     placement: 'left',
-    clickDelay: 1000
+    clickOn: 'div.q-fab__icon-holder',
+    clickDelay: 500,
+    nextDelay: 500
   }
 }, {
   target: '#add-member',
@@ -40,7 +42,7 @@ module.exports = [{
   link: 'tours.members.INVITE_MEMBER_LINK_LABEL',
   params: {
     placement: 'left',
-    clickOnNext: '#fab',
+    clickOnNext: 'div.q-fab__icon-holder',
     nextDelay: 500,
     route: { name: 'invite-member' }
   }
@@ -48,7 +50,9 @@ module.exports = [{
   target: 'div.q-card.q-card--bordered',
   content: 'tours.members.MEMBER_CARD_LABEL',
   params: {
-    placement: 'right'
+    placement: 'right',
+    clickOnPrevious: 'div.q-fab__icon-holder',
+    previousDelay: 500
   }
 }, {
   target: '#join-group',

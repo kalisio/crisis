@@ -25,16 +25,16 @@
               <div class="row q-mt-md" v-html="$t('tours.welcome.ONLINE_HELP')"></div>
             </q-carousel-slide>
             <q-carousel-slide name="tour" class="column no-wrap flex-center">
-              <div class="row q-mt-md"><span>
-                {{ $t('tours.welcome.CONTEXTUAL_HELP') }}
-                <q-icon size="1.5em" class="text-primary cursor-pointer" name="las la-question-circle"/>
-              </span></div>
               <div class="row q-mt-md text-center">{{ $t('tours.welcome.TOUR_MESSAGE') }}
                 <q-icon size="1.5em" class="text-primary cursor-pointer" name="las la-external-link-square-alt" @click="onTour()"/>
               </div>
               <div class="row q-mt-md text-center">{{ $t('tours.welcome.TOUR_LINK_MESSAGE') }}</div>
             </q-carousel-slide>
             <q-carousel-slide name="goodbye" class="column no-wrap flex-center">
+              <div class="row q-mt-md"><span>
+                {{ $t('tours.welcome.CONTEXTUAL_HELP') }}
+                <q-icon size="1.5em" class="text-primary cursor-pointer" name="las la-question-circle"/>
+              </span></div>
               <div class="row q-mt-md text-center">{{ $t('tours.welcome.GOODBYE_MESSAGE') }}</div>
             </q-carousel-slide>
             <template v-slot:control>
