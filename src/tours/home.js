@@ -50,7 +50,7 @@ module.exports = [{
   }
 }, {
   target: '#account',
-  link: 'tours.home.ACCOUNT_LABEL',
+  link: 'tours.home.ACCOUNT_LINK_LABEL',
   params: {
     placement: 'bottom',
     route: { name: 'account-activity', params: { perspective: 'profile' } }

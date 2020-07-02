@@ -7,8 +7,10 @@ notifications:
     on_failure: always
 
 stages:
-- name: BUILD
+- name: APP
   if: commit_message !~ /(skip[ _-]app)/
+- name: DOC
+  if: commit_message !~ /\[skip doc\]/
 - name: ANDROID
   if: commit_message !~ /(skip[ _-]android)/
 - name: IOS
@@ -17,7 +19,7 @@ stages:
 jobs:
   include:
 
-  - stage: BUILD
+  - stage: APP
     os: linux
     language: node_js
     node_js:
@@ -28,6 +30,20 @@ jobs:
     - export -f travis_fold     
     script:
     - bash .travis.app.sh
+
+  - stage: DOC
+    os: linux
+    language: node_js
+    node_js:
+    - '12.16'
+    install: true
+    script: cd docs && yarn install && yarn build 
+    deploy:
+      provider: pages
+      local-dir: docs/.vuepress/dist
+      skip-cleanup: true
+      github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+      keep-history: true
 
   - stage: ANDROID
     os: linux

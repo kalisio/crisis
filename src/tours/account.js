@@ -34,14 +34,14 @@ module.exports = [{
   }
 }, {
   target: '#password-block',
-  link: 'tours.account.PASSWORD_LABEL',
+  link: 'tours.account.PASSWORD_LINK_LABEL',
   params: {
     placement: 'top',
     route: { name: 'change-password' }
   }
 }, {
   target: '#email-block',
-  link: 'tours.account.EMAIL_LABEL',
+  link: 'tours.account.EMAIL_LINK_LABEL',
   params: {
     placement: 'top',
     route: { name: 'send-change-identity' }
