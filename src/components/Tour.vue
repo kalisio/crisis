@@ -5,7 +5,7 @@
         <q-toolbar>
           <div><img :src="banner"></div>
           <q-toolbar-title></q-toolbar-title>
-          <q-btn id="close-action" icon="las la-times" flat round dense @click="onClose"></q-btn>
+          <q-btn id="close-action" icon="las la-times" flat round dense @click="hide"></q-btn>
         </q-toolbar>
         <q-card-section>
           <q-carousel
@@ -77,19 +77,19 @@ export default {
     getIntroductionKey () {
       return this.$config('appName').toLowerCase() + '-introduction'
     },
-    refresh (user) {
+    show () {
       const show = window.localStorage.getItem(this.getIntroductionKey())
       // Introduction is only for logged users
-      this.showIntroduction = (_.isNil(show) ? (user ? true : false) : JSON.parse(show))
+      this.showIntroduction = (_.isNil(show) ? true : JSON.parse(show))
     },
-    onClose () {
+    hide () {
       this.showIntroduction = false
     },
     onToggleIntroduction (toggle) {
       window.localStorage.setItem(this.getIntroductionKey(), JSON.stringify(!toggle))
     },
     onTour () {
-      this.onClose()
+      this.hide()
       this.$store.patch('tours.current', { name: 'home' })
     }
   },
@@ -100,7 +100,12 @@ export default {
   },
   mounted () {
     // Introduction is only for logged users, listen for user login/logout
-    this.$events.$on('user-changed', this.refresh)
+    this.$api.on('authenticated', this.show)
+    this.$api.on('logout', this.hide)
+  },
+  beforeDestroy () {
+    this.$api.off('authenticated', this.show)
+    this.$api.off('logout', this.hide)
   }
 }
 </script>
