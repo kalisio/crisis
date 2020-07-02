@@ -1,0 +1,25 @@
+{
+  "name": "Akt'n'Map",
+  "short_name": "Akt'n'Map",
+  "icons": [
+    {
+      "src": "https://s3.eu-central-1.amazonaws.com/kalisioscope/aktnmap/aktnmap-logo-black-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "https://s3.eu-central-1.amazonaws.com/kalisioscope/aktnmap/aktnmap-logo-black-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://s3.eu-central-1.amazonaws.com/kalisioscope/kalisio/aktnmap-logo-black-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#3eaf7c"
+}
