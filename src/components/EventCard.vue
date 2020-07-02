@@ -10,7 +10,7 @@
           v-bind:class="{ 'event-card-description-zoomed': zoom === true }"
           @click="zoom=!zoom"
           @mouseover="if (!$q.platform.is.mobile) zoom=true"
-          @mouseleave="if (!$q.platform.is.mobile) zoom=true">
+          @mouseleave="if (!$q.platform.is.mobile) zoom=false">
           <k-text-area :text="description" ellipsis="3-lines" />
         </div>
         <q-separator />
