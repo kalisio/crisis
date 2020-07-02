@@ -79,7 +79,8 @@ export default {
     },
     refresh (user) {
       const show = window.localStorage.getItem(this.getIntroductionKey())
-      this.showIntroduction = (_.isNil(show) ? true : JSON.parse(show))
+      // Introduction is only for logged users
+      this.showIntroduction = (_.isNil(show) ? (user ? true : false) : JSON.parse(show))
     },
     onClose () {
       this.showIntroduction = false
@@ -98,7 +99,7 @@ export default {
     this.banner = this.$load(this.$config('screens.banner'), 'asset')
   },
   mounted () {
-    // Introduction is only for logged users
+    // Introduction is only for logged users, listen for user login/logout
     this.$events.$on('user-changed', this.refresh)
   }
 }
