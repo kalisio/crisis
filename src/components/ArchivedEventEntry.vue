@@ -16,7 +16,7 @@
         </q-popup-proxy>
       </div>
       <div slot="entry-content">
-        <k-text-area class="q-pa-xs" :length="50" :text="item.description" />
+        <k-text-area class="q-pa-sm" :text="item.description" />
       </div>
     </k-history-entry>
     <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />

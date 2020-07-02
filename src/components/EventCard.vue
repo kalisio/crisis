@@ -1,14 +1,25 @@
 <template>
   <div>
     <k-card v-bind="$props" :itemActions="actions">
+      <template v-slot:card-label>
+        <span class="text-subtitle1 text-weight-medium ellipsis">{{ name }}</span>
+      </template>
       <template v-slot:card-content>
+        <q-separator />
+        <div class="q-pa-sm event-card-description" 
+          v-bind:class="{ 'event-card-description-zoomed': zoom === true }"
+          @click="zoom=!zoom"
+          @mouseover="if (!$q.platform.is.mobile) zoom=true"
+          @mouseleave="if (!$q.platform.is.mobile) zoom=true">
+          <k-text-area :text="description" ellipsis="3-lines" />
+        </div>
         <q-separator />
         <!--
           Location section
          -->
         <div v-if="item.location">
-          <div class="q-pa-sm row items-center">
-            <k-text-area class="light-paragraph" :length="40" :text="locationName" />
+          <div class="q-pa-sm row items-center no-wrap">
+            <k-text-area class="light-paragraph" :text="locationName" />
             <q-btn icon="las la-map-marker" color="grey-7" flat dense round>
               <q-tooltip>
                 {{ $t('EventCard.LOCATE_LABEL') }}
@@ -31,7 +42,7 @@
           Comment section
          -->
         <div v-if="comment">
-          <k-text-area class="q-pa-sm light-paragraph" :length="20" :text="comment" />
+          <k-text-area class="q-pa-sm light-paragraph" :text="comment" />
           <q-separator />
         </div>
         <!--
@@ -120,7 +131,8 @@ export default {
       participantState: {},
       participantLabel: '',
       nbParticipantsWaitingCoordination: 0,
-      coordinatorLabel: ''
+      coordinatorLabel: '',
+      zoom: false
     }
   },
   methods: {
@@ -464,7 +476,10 @@ export default {
 </script>
 
 <style>
-  .card-separator {
-    margin: 8px
+  .event-card-description {
+    transition: font-size .2s;
+  }
+  .event-card-description-zoomed {
+    font-size: larger;
   }
 </style>

@@ -10,7 +10,7 @@
               </q-btn>
               {{participantName(participant)}}
             </div>
-            <k-text-area style="flex-shrink: 0" class="col-auto light-paragraph self-center" :length="20" :text="participantComment(participant)" />
+            <k-text-area style="flex-shrink: 0" class="col-auto light-paragraph self-center" :text="participantComment(participant)" />
             <div class="col-auto self-center">
               <q-btn v-if="!archived && canFollowUp(participant)" flat round small color="primary" @click="doFollowUp(participant._id)">
                 <q-icon name="las la-sms" color="red" />
