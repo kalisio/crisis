@@ -65,7 +65,7 @@ export default {
   },
   data () {
     return {
-      showIntroduction: true,
+      showIntroduction: false,
       slide: 'welcome',
       banner: null,
       toggle: false
@@ -75,7 +75,7 @@ export default {
     getIntroductionKey () {
       return this.$config('appName').toLowerCase() + '-introduction'
     },
-    refresh () {
+    refresh (user) {
       const show = window.localStorage.getItem(this.getIntroductionKey())
       this.showIntroduction = (_.isNil(show) ? true : JSON.parse(show))
     },
@@ -96,9 +96,8 @@ export default {
     this.banner = this.$load(this.$config('screens.banner'), 'asset')
   },
   mounted () {
-    this.refresh()
-  },
-  beforeDestroy () {
+    // Introduction is only for logged users
+    this.$events.$on('user-changed', this.refresh)
   }
 }
 </script>
