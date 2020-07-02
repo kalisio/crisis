@@ -67,7 +67,8 @@ function getQuickStartSidebar () {
   return [
     '',
     'features',
-    'benefits'
+    'benefits',
+    'concepts'
   ]
 }
 
