@@ -1,8 +1,14 @@
+---
+sidebarDepth: 3
+---
+
 # Basics
 
 ## <i class="las la-user"></i> User
 
-A *person* who has been **registered** to Akt'n'Map. 
+A *person* who has been **registered** to Akt'n'Map. This can be done through two ways:
+  * by creating his own **account** on the application,
+  * by being *invited* within an organisation by another user of the application.
 
 ## <i class="las la-user-friends"></i> Organisation
 
@@ -11,7 +17,7 @@ A *shared workspace* between users where you can invite people to join and colla
 A user can belong to *multiple* organisations and being assigned *different roles* in these organisations.
 
 A user can as well:
-  * create additional organisations,
+  * create organisations,
   * manage **members** of his organisations,
   * create **groups** within his organisations and manage members of these groups.
 
@@ -26,6 +32,14 @@ A **role** assign you different *rights* inside an organisation or a group:
 By creating an organisation or a group you become the owner by default but you can share this responsibility with others by assigning them new rights on this organisation or group.
 :::
 
+### <i class="las la-sitemap"></i> Group
+
+A **group** allows to *delegate* the management of a shared workspace limited to its members.
+
+### <i class="las la-tags"></i> Tag
+
+A **tag** allows to *classify* a subset of your organisation members according to a *business criterium* (e.g. a skill or a service).
+
 ## <i class="las la-fire"></i> Event
 
 An *information about a fact* to be shared between some members of an organisation. Typical events are interventions, crisis management actions, etc.
@@ -34,5 +48,5 @@ Events generate *notifications* on mobile devices of participants when created, 
 
 Akt'n'Map allows to attach to each event:
   * *pictures* or *documents* shared among participants,
-  * a **process** defining interactions between participants and coordinators,
+  * a **[processes](../gofurther/processes.md)** defining interactions between participants and coordinators,
   * a *cartographic view* summarizing the position and state of each participant according to the process steps.

@@ -289,7 +289,7 @@
     },
     "tags": {
       "TAGS_LABEL": "Cet onglet vous permet de gérer les <b>étiquettes</b> au sein de votre organisation.",
-      "TAG_DEFINITION_LABEL": "Une étiquette vous permet d'identifier un sous-ensemble des membres de votre organisation (e.g. une compétence ou un service).",
+      "TAG_DEFINITION_LABEL": "Une étiquette vous permet de catégoriser un sous-ensemble des membres de votre organisation (e.g. une compétence ou un service).",
       "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
       "TAG_CARD_LABEL": "Chaque étiquette est visible sous la forme d'une carte vous permettant d'accéder aux actions possibles.",
       "CREATE_TAG_LINK_LABEL": "Voir comment ajouter ou supprimer des étiquettes sur les membres",

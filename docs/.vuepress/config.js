@@ -74,7 +74,10 @@ function getQuickStartSidebar () {
 
 function getGoFurtherSidebar () {
   return [
-    ''
+    '',
+    'processes',
+    'archiving',
+    'catalog'
   ]
 }
 

@@ -284,7 +284,7 @@
     },
     "tags": {
       "TAGS_LABEL": "This tab allows to manage the <b>tags</b> in your organisation.",
-      "TAG_DEFINITION_LABEL": "A tag allows to identify a subset of your organisation members (e.g. a skill or a service).",
+      "TAG_DEFINITION_LABEL": "A tag allows to classify a subset of your organisation members (e.g. a skill or a service).",
       "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
       "TAG_CARD_LABEL": "Each tag is viewed as a card providing available actions.",
       "CREATE_TAG_LINK_LABEL": "How to create or remove tags on members",

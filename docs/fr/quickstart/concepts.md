@@ -1,8 +1,14 @@
+---
+sidebarDepth: 3
+---
+
 # Concepts de base
 
 ## <i class="las la-user"></i> Utilisateur
 
-Une *personne* qui est **enregistrée** sur Akt'n'Map. 
+Une *personne* qui est **enregistrée** sur Akt'n'Map. Cela peut se faire de deux manières:
+  * soit en créant elle-même son **compte** sur l'application,
+  * soit en étant *invitée* au sein d'une organisation par un autre utilisateur de l'application.
 
 ## <i class="las la-user-friends"></i> Organisation
 
@@ -11,7 +17,7 @@ Un *espace partagé* par plusieurs utilisateurs au sein duquel vous pouvez invit
 Un utilisateur peut appartenir à *plusieurs* organisations. Selon les organisations, un utilisateur possède des *rôles différents*.
 
 Un utilisateur peut également:
-  * créer des organisations supplémentaires,
+  * créer des organisations,
   * gérer les **membres** au sein de ces organisations,
   * créer des **groupes** et gérer leurs membres.
 
@@ -23,8 +29,16 @@ Un **rôle** défini les droits d'un utilisateur au sein d'une organisation ou d
   * en tant que <i class="las la-certificate"></i> *propriétaire* il peut supprimer l'organisation ou le groupe (contrôle total).
 
 ::: tip
-L'utilisateur qui crée une organisation ou un groupe en est par défaut le propriétaire mais il peut partager ou déléguer la gestion à d'autres.
+L'utilisateur qui créé une organisation ou un groupe en est par défaut le propriétaire mais il peut partager ou déléguer la gestion à d'autres.
 :::
+
+### <i class="las la-sitemap"></i> Groupe
+
+Un **groupe** vous permet de *déléguer* la gestion d'un espace de travail restreint à ses membres.
+
+### <i class="las la-tags"></i> Etiquette
+
+Une **étiquette** vous permet de *catégoriser* un sous-ensemble des membres de votre organisation selon un *critère métier* (e.g. une compétence ou un service).
 
 ## <i class="las la-fire"></i> Evénement
 
@@ -34,5 +48,5 @@ Un événement génère des *notifications* sur les mobiles des **participants**
 
 A un évènement, Akt'n'Map permet d’associer :
   * des *photos* ou des *documents* afin de les partager entre les acteurs,
-  * un **processus** définissant les interaction entre les participants et les coordinateurs,
+  * un **[processus](../gofurther/processes.md)** définissant les interaction entre les participants et les coordinateurs,
   * une *vue cartographique* synthétisant la position des acteurs et leur état d’avancement dans le processus.
