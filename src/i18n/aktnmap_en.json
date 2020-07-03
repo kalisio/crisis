@@ -65,15 +65,10 @@
     "EVENTS_LOG_COMMENT_FIELD_HELPER": "Enter your comment for this step"
   },
   "tours": {
-    "welcome": {
-      "WELCOME_TITLE": "Welcome !",
-      "WELCOME_MESSAGE": "This quick start guide covers the main application features.",
-      "ONLINE_HELP": "Read first our <b><a href='/#/home/help'>online help</b></a> to get an overview of the basic concepts.",
-      "CONTEXTUAL_HELP": "To get contextual help whenever your are lost simply click on the following icon",
-      "TOUR_MESSAGE": "Launch now a quick overview tutorial detailing the main menu by clicking on the following icon",
-      "TOUR_LINK_MESSAGE": "Each time a tutorial step exhibits this icon it allows to launch a new one detailing the target feature.",
-      "GOODBYE_MESSAGE": "Thanks for reading this tutorial, you are now ready to use the application !"
-    },
+    "APP_BAR_OVERFLOW_MENU_LABEL": "When not visible, you can find it using the popup menu.",
+    "APP_BAR_ACTIONS_LABEL": "When not visible, you can find it in the actions bar.",
+    "CARD_OVERFLOW_MENU_LABEL": "Open the popup menu to see more actions.",
+    "REMOVE_CONFIRMATION_LABEL": "A confirmation will be required before final removal.",
     "login": {
       "SOCIAL_LABEL": "You can also login using <b>external identifiers</b>.",
       "GOOGLE_LABEL": "For instance using your Google account.",
@@ -161,7 +156,8 @@
     "events": {
       "EVENTS_LABEL": "This tab allows to manage the <b>events</b> in your organisation.",
       "EVENT_DEFINITION_LABEL": "An event allows you to share information and photos as well as interacting with participants on the field.",
-      "OVERFLOW_MENU_LABEL": "When not visible, you can find it using the popup menu.",
+      "APP_BAR_ACTIONS_LABEL": "$t(tours.APP_BAR_ACTIONS_LABEL)",
+      "SEARCH_LABEL": "Type part of a word contained in the name of your events in the arising bar to perform a search.",
       "TEMPLATES_LABEL": "Before creating an event you need to create at least one <b>model</b> using this tab.",
       "TEMPLATE_LINK_LABEL": "How to manage models",
       "SELECT_TEMPLATE_LABEL": "Whenever you want to create a new event simply pick the right <b>template</b> using the action button.",
@@ -172,9 +168,9 @@
       "FOLLOW_UP_ACTION_LABEL": "As a <b>participant</b> you can interact with your coordinator through this action.",
       "ADD_PHOTO_LABEL": "Take a picture and associate it to your event through this action.",
       "ADD_MEDIA_LABEL": "Join files to your event through this action.",
-      "EVENT_OVERFLOW_MENU_LABEL": "Open the popup menu to see more actions.",
+      "EVENT_OVERFLOW_MENU_LABEL": "$t(tours.CARD_OVERFLOW_MENU_LABEL)",
       "REMOVE_EVENT_LABEL": "Remove your event through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "A confirmation will be required before final removal, this will send a <p>notification</b> to all participants."
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL), this will send a <p>notification</b> to all participants."
     },
     "create-event": {
       "EVENT_NAME_LABEL": "Choose a name for your event.",
@@ -193,15 +189,16 @@
     "event-templates": {
       "TEMPLATES_LABEL": "This tab allows to manage the event <b>templates</b> in your organisation.",
       "TEMPLATE_DEFINITION_LABEL": "A template allows to define the recurrent content of a specific event type.",
-      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
+      "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
+      "SEARCH_LABEL": "Type part of a word contained in the name of your models in the arising bar to perform a search.",
       "NEW_TEMPLATE_LABEL": "Create a <b>new template</b> using this button.",
       "CREATE_TEMPLATE_LINK_LABEL": "How to create a model",
       "TEMPLATE_CARD_LABEL": "Each model is viewed as a card providing available actions.",
       "UPDATE_TEMPLATE_LABEL": "Update properties of your model through this action.",
       "COPY_TEMPLATE_LABEL": "Go fast by creatng a new model from this one through this action.",
-      "TEMPLATE_OVERFLOW_MENU_LABEL": "Open the popup menu to see more actions.",
+      "TEMPLATE_OVERFLOW_MENU_LABEL": "$t(tours.CARD_OVERFLOW_MENU_LABEL)",
       "REMOVE_TEMPLATE_LABEL": "Remove your model through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "A confirmation will be required before final removal."
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)"
     },
     "create-event-template": {
       "TEMPLATE_NAME_LABEL": "Choose a name for your model.",
@@ -220,7 +217,8 @@
     "groups": {
       "GROUPS_LABEL": "This tab allows to manage the <b>groups</b> in your organisation.",
       "GROUP_DEFINITION_LABEL": "A group allows to delegate the management of a shared workspace limited to its members.",
-      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
+      "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
+      "SEARCH_LABEL": "Type part of a word contained in the name of your groups in the arising bar to perform a search.",
       "NEW_GROUP_LABEL": "Create a <b>new group</b> using this button.",
       "CREATE_GROUP_LINK_LABEL": "How to create a group",
       "GROUP_CARD_LABEL": "Each group is viewed as a card providing available actions.",
@@ -228,9 +226,9 @@
       "GROUP_MANAGERS_LABEL": "This number shows you the <b>managers</b> count of your group.",
       "GROUP_OWNERS_LABEL": "This number shows you the <b>owners</b> count of your group.",
       "UPDATE_GROUP_LABEL": "Update properties of your group through this action.",
-      "GROUP_OVERFLOW_MENU_LABEL": "Open the popup menu to see more actions.",
+      "GROUP_OVERFLOW_MENU_LABEL": "$t(tours.CARD_OVERFLOW_MENU_LABEL)",
       "REMOVE_GROUP_LABEL": "Remove your group through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "A confirmation will be required before final removal."
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)"
     },
     "create-group": {
       "GROUP_NAME_LABEL": "Choose a name for your group.",
@@ -240,22 +238,29 @@
     "members": {
       "MEMBERS_LABEL": "This tab allows to manage the <b>members</b> in your organisation.",
       "MEMBER_DEFINITION_LABEL": "A <b>member</b> is a user able to access the shared workspace offered by your organisation.",
-      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
+      "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
+      "SEARCH_LABEL": "Type part of a word contained in the name of your members in the arising bar to perform a search.",
+      "SEARCH_MORE_LABEL": "Type also a word contained in the name of a group or a tag associated to your members to filter accordingly.",
       "ADD_INVITE_MEMBER_LABEL": "Add members to your organisation through this action.",
       "ADD_MEMBER_LABEL": "If your future member <b>already has an account</b>, <b>add him</b> using this button.",
       "ADD_MEMBER_LINK_LABEL": "How to add a member",
       "INVITE_MEMBER_LABEL": "If your future member <b>does not yet have an account</b>, <b>invite him</b> using this button and we will create it .",
       "INVITE_MEMBER_LINK_LABEL": "How to invite a member",
       "MEMBER_CARD_LABEL": "Each member is viewed as a card providing available actions.",
+      "ROLE_LABEL": "Visualise the role of your member at a glance.",
+      "TAGS_LABEL": "Visualise his tags at a glance as well.",
+      "GROUP_LABEL": "Select one of the member groups to show available actions.",
+      "CHANGE_GROUP_ROLE_LABEL": "Modifiez le rôle du membre dans le groupe via cette action.",
+      "LEAVE_GROUP_LABEL": "Supprimez le membre du groupe via cette action.",
       "TAG_MEMBER_LABEL": "Update tags of your member through this action.",
       "TAG_MEMBER_LINK_LABEL": "How to manage tags",
-      "JOIN_GROUP_LABEL": "Update groups of your member through this action.",
+      "JOIN_GROUP_LABEL": "Add your member to a <b>group</b> through this action.",
       "JOIN_GROUP_LINK_LABEL": "How to manage groups",
       "CHANGE_ROLE_LABEL": "Update the role of your member through this action.",
       "CHANGE_ROLE_LINK_LABEL": "How to manage roles",
-      "MEMBER_OVERFLOW_MENU_LABEL": "Open the popup menu to see more actions.",
+      "MEMBER_OVERFLOW_MENU_LABEL": "$t(tours.CARD_OVERFLOW_MENU_LABEL)",
       "REMOVE_MEMBER_LABEL": "Remove the member from your organisation through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "A confirmation will be required before final removal."
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)"
     },
     "add-member": {
       "MEMBER_NAME_LABEL": "Typing <b>the first characters</b> of a user name make it selectable.",
@@ -285,7 +290,8 @@
     "tags": {
       "TAGS_LABEL": "This tab allows to manage the <b>tags</b> in your organisation.",
       "TAG_DEFINITION_LABEL": "A tag allows to classify a subset of your organisation members (e.g. a skill or a service).",
-      "OVERFLOW_MENU_LABEL": "$t(tours.events.OVERFLOW_MENU_LABEL)",
+      "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
+      "SEARCH_LABEL": "Type part of a word contained in the name of your tags in the arising bar to perform a search.",
       "TAG_CARD_LABEL": "Each tag is viewed as a card providing available actions.",
       "CREATE_TAG_LINK_LABEL": "How to create or remove tags on members",
       "TAG_COUNT_LABEL": "This number shows you the number of <b>members</b> having your tag.",

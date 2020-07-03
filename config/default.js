@@ -125,6 +125,7 @@ module.exports = {
   appName: 'Akt\'n\'Map',
   appLogo: 'aktnmap-logo.png',
   appWebsite: 'https://kalisio.com/solutions#aktnmap',
+  appOnlineHelp: 'https://kalisio.github.io/aktnmap',
   publisher: 'Kalisio',
   publisherWebsite: website,
   logs: {
