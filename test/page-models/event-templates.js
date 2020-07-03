@@ -1,54 +1,66 @@
 import { Selector } from 'testcafe'
 import VueSelector from 'testcafe-vue-selectors'
-import Application from './application'
+import BasePage from './core/base-page'
 
-export default class EventTemplates extends Application {
+export default class EventTemplates extends BasePage {
   constructor () {
     super()
-    this.createTemplateModal = VueSelector('k-event-templates-activity k-event-template-editor')
-    this.editTemplateModal = VueSelector('k-event-templates-activity k-event-template-editor')
-    this.copyTemplateModal = VueSelector('k-event-templates-activity k-event-template-editor')
-    this.templatesGrid = VueSelector('k-event-templates-activity k-grid')
+    this.eventTemplates = Selector('.q-page .q-card')
   }
-  getToolbarEntry () {
-    return '#events'
-  }
-  getTabBarEntry () {
+  
+  static get TOOL_BAR_ENTRY () {
     return '#event-templates'
   }
-  async createTemplate (test, template) {
-    await this.clickFab(test, '#create-event-template')
-    await test
-      .typeText(this.createTemplateModal.find('#name-field'), template.name, { replace: true })
-      .typeText(this.createTemplateModal.find('#description-field'), template.description, { replace: true })
-      .click(this.createTemplateModal.find('#apply-button'))
-      .wait(5000)
+
+  static get TAB_BAR_ENTRY () {
+    return '#event-templates'
   }
-  async updateTemplateDescription (test, templateName, newTemplateDescription) {
-    let templateId = await this.getItemId(test, this.templatesGrid, templateName)
+
+  async clickCardToolBar (test, name, action) {
     await test
-      .click(this.idSelector(templateId).find('#edit-event-template'))
-      .typeText(this.editTemplateModal.find('#description-field'), newTemplateDescription, { replace: true })
-      .click(this.editTemplateModal.find('#apply-button'))
-      .wait(5000)
+      .click(this.eventTemplates.withText(name).find(action))
   }
-  async copyTemplate (test, sourceTemplateName, destTemplateName) {
-    let templateId = await this.getItemId(test, this.templatesGrid, sourceTemplateName)
+
+  async clickCardOverflowMenu (test, name, entry) {
     await test
-      .click(this.idSelector(templateId).find('#copy-event-template'))
-      .typeText(this.copyTemplateModal.find('#name-field'), destTemplateName, { replace: true })
-      .click(this.copyTemplateModal.find('#apply-button'))
-      .wait(5000)
+      .click(this.eventTemplates.withText(name).find('#card-overflow-menu'))
+      .click(Selector('.q-menu').find(entry))
   }
-  async deleteTemplate (test, templateName) {
-    let templateId = await this.getItemId(test, this.templatesGrid, templateName)
+
+  async checkCount (test, count) {
+    const eventTemplatesCount = this.eventTemplates.count
+    await test.expect(eventTemplatesCount).eql(count, 'Invalid events count')
+  }
+
+  async create (test, data) {
     await test
-      .click(this.idSelector(templateId).find('#card-overflow-menu-entry'))
-      .click(Selector('.q-popover').find('#remove-event-template'))
-      .click(Selector('.modal-buttons button').nth(0))
-      .wait(5000)
+      .typeText(VueSelector('k-text-field'), data.name, { replace: true })
+      .typeText(VueSelector('k-textarea-field'), data.description, { replace: true })
+      .click(Selector('.q-dialog .q-card').find('#apply-button'))
+      .wait(2000)
   }
-  async checkTemplatesCount (test, count) {
-    await this.checkCollectionCount(test, this.templatesGrid, count)
+  
+  async edit (test, name, data) {
+    await this.clickCardToolBar(test, name, '#edit-event-template')
+    await test
+      .typeText(VueSelector('k-text-field'), data.name, { replace: true })
+      .typeText(VueSelector('k-textarea-field'), data.description, { replace: true })
+      .click(Selector('.q-dialog .q-card').find('#apply-button'))
+      .wait(2000)
+  }
+  
+  async copy (test, name, data) {
+    await this.clickCardToolBar(test, name, '#copy-event-template')
+    await test
+      .typeText(VueSelector('k-text-field'), data.name, { replace: true })
+      .click(Selector('.q-dialog .q-card').find('#apply-button'))
+      .wait(2000)
+  }
+  
+  async delete (test, name) {
+    await this.clickCardOverflowMenu(test, name, '#remove-event-template')
+    await test
+      .click(Selector('.q-dialog .q-btn').nth(1))
+      .wait(2000)
   }
 }

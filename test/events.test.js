@@ -1,6 +1,8 @@
 // Page models
 import { Selector } from 'testcafe'
 import * as pages from './page-models'
+import _ from 'lodash'
+import { SideNav } from './page-models'
 
 fixture`events`// declare the fixture
   .page`${pages.getUrl()}`  // specify the start page
@@ -15,14 +17,14 @@ fixture`events`// declare the fixture
     await pages.checkNoClientError(test)
   })
 
-const app = new pages.Application()
-const account = new pages.Account()
-const organisations = new pages.OrganisationSettings()
-const users = new pages.Users(app, account, organisations)
-const members = new pages.Members()
-const groups = new pages.Groups()
-const templates = new pages.EventTemplates()
-const events = new pages.Events()
+  const screens = new pages.Screens()
+  const layout = new pages.Layout()
+  const sideNav = new pages.SideNav()
+  const users = new pages.Users()
+  const members = new pages.Members()
+  const groups = new pages.Groups()
+  const eventTemplates = new pages.EventTemplates()
+  const events = new pages.Events()
 
 const data = {
   users: [
@@ -31,7 +33,7 @@ const data = {
     { name: 'Events member', email: 'events-member@kalisio.xyz', password: 'Pass;word1' }
   ],
   group: { name: 'Events group', description: 'A group' },
-  template: { name: 'Events template', description: 'An event template' },
+  eventTemplate: { name: 'Event template', description: 'An event template' },
   events: [
     { name: 'Events member', participants: 'Events manager' },
     { name: 'Events group', participants: 'Events group' },
@@ -39,47 +41,54 @@ const data = {
   ]
 }
 
-test.page`${pages.getUrl('login')}`
-('Setup context', async test => {
+test('Setup context', async test => {
   await users.registerUsers(test, data.users)
-  await app.loginAndCloseSignupAlert(test, data.users[0])
-  await organisations.selectOrganisation(test, data.users[0].name)
-  await members.clickToolbar(test, members.getToolbarEntry())
-  await members.addMember(test, data.users[1].name, pages.Roles.manager)
-  await members.tagMember(test, data.users[1].name, 'fireman')
-  await members.addMember(test, data.users[2].name, pages.Roles.member)
-  await groups.clickTabBar(test, groups.getTabBarEntry())
-  await groups.createGroup(test, data.group)
-  await templates.clickToolbar(test, templates.getToolbarEntry())
-  await templates.clickTabBar(test, templates.getTabBarEntry())
-  await templates.createTemplate(test, data.template)
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
+  await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
+  await layout.openAndClickFab(test, pages.Members.ADD_MEMBER_FAB_ENTRY)
+  await members.add(test, data.users[1].name, pages.Roles.manager)
+  await members.tag(test, data.users[1].name, 'fireman')
+  await layout.openAndClickFab(test, pages.Members.ADD_MEMBER_FAB_ENTRY)
+  await members.add(test, data.users[2].name, pages.Roles.member)
+  await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
+  await layout.clickFab(test)
+  await groups.create(test, data.group)
+  await layout.clickOverflowMenu(test, pages.EventTemplates.OVERFLOW_MENU_ENTRY)
+  await eventTemplates.create(test, data.eventTemplate)
 })
 
 test('Create events', async test => {
-  await app.loginAndCloseSignupAlert(test, data.users[0])
-  await organisations.selectOrganisation(test, data.users[0].name)
-  await events.clickToolbar(test, events.getToolbarEntry())
-  for (let i in data.events) await events.createEvent(test, data.template.name, data.events[i])
-  await events.checkEventsCount(test, data.events.length)
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
+  for (let i in data.events) {
+    const entry = '#' + _.kebabCase('create-' + data.eventTemplate.name)
+    await layout.openAndClickFab(test, entry)
+    await events.createEvent(test, data.template.name, data.events[i])
+  }
+  await events.checkCount(test, data.events.length)
 })
 
 test('Delete event', async test => {
-  await app.loginAndCloseSignupAlert(test, data.users[0])
-  await organisations.selectOrganisation(test, data.users[0].name)
-  await events.clickToolbar(test, events.getToolbarEntry())
-  for (let i in data.events) await events.deleteEvent(test, data.events[i].name)
-  await events.checkEventsCount(test, 0)
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
+  for (let i in data.events) await events.delete(test, data.events[i].name)
+  await events.checkCount(test, 0)
 })
 
 test('Clear context', async test => {
   // Remove the created group
-  await app.loginAndCloseSignupAlert(test, data.users[0])
-  await organisations.selectOrganisation(test, data.users[0].name)
-  await members.clickToolbar(test, members.getToolbarEntry())
-  await groups.clickTabBar(test, groups.getTabBarEntry())
-  await groups.deleteGroup(test, data.group.name)
-  await app.logout(test)
-  await test.click(Selector('#login-link'))
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
+  await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
+  await groups.delete(test, data.group.name)
+  await layout.clickLeading(test)
+  await sideNav.logout(test)
+  await screens.goToLoginScreen(test)
   // Unregister the users
   await users.unregisterUsers(test, data.users)
 })

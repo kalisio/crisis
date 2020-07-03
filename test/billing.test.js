@@ -13,9 +13,12 @@ fixture`billing`// declare the fixture
   // .afterEach(async test => {
   // })
 
-const app = new pages.Application()
-const account = new pages.Account()
-const organisations = new pages.OrganisationSettings()
+  const screens = new pages.Screens()
+  const layout = new pages.Layout()
+  const sideNav = new pages.SideNav()
+  const account = new pages.Account()
+  const organisationsPanel = new pages.OrganisationsPanel()
+  const organisationSettings = new pages.OrganisationSettings()
 
 const data = {
   user: { name: 'Customer', email: 'customer@kalisio.xyz', password: 'Pass;word1' },

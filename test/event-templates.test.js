@@ -14,61 +14,60 @@ fixture`event-templates`// declare the fixture
     await pages.checkNoClientError(test)
   })
 
-const app = new pages.Application()
-const account = new pages.Account()
-const organisations = new pages.OrganisationSettings()
-const templates = new pages.EventTemplates()
+const screens = new pages.Screens()
+const layout = new pages.Layout()
+const users = new pages.Users()
+const eventTemplates = new pages.EventTemplates()
 
 const data = {
   user: { name: 'Templates owner', email: 'templates-owner@kalisio.xyz', password: 'Pass;word1' },
   templates: [
-    { name: 'Templates one', description: 'A first template without a workflow' },
-    { name: 'Templates two', description: 'A second template with a workflow' }
+    { name: 'Template 1', description: 'A first template without a workflow' },
+    { name: 'Copy of Template 1', description: 'A copy of template one' },
+    { name: 'Template 2', description: 'A second template with a workflow' }
   ]
 }
 
-test.page`${pages.getUrl('register')}`
-('Users registration', async test => {
-  await app.register(test, data.user)
+test('Setup context', async test => {
+  await users.registerUsers(test, [data.user])
 })
 
 test('Create template', async test => {
-  await app.loginAndCloseSignupAlert(test, data.user)
-  await organisations.selectOrganisation(test, data.user.name)
-  await templates.clickToolbar(test, templates.getToolbarEntry())
-  await templates.clickTabBar(test, templates.getTabBarEntry())
-  await templates.createTemplate(test, data.templates[0])
-  await templates.checkTemplatesCount(test, 1)
+  await screens.login(test, data.user)
+  await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
+  await layout.clickTabBar(test, pages.EventTemplates.TAB_BAR_ENTRY)
+  await layout.clickFab(test)
+  await eventTemplates.create(test, data.templates[0])
+  await eventTemplates.checkCount(test, 1)
 })
 
 test('Copy template', async test => {
-  await app.loginAndCloseSignupAlert(test, data.user)
-  await organisations.selectOrganisation(test, data.user.name)
-  await templates.clickToolbar(test, templates.getToolbarEntry())
-  await templates.clickTabBar(test, templates.getTabBarEntry())
-  await templates.copyTemplate(test, data.templates[0].name, 'Copy of ' + data.templates[0].name)
-  await templates.checkTemplatesCount(test, 2)
+  await screens.login(test, data.user)
+  await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
+  await layout.clickTabBar(test, pages.EventTemplates.TAB_BAR_ENTRY)
+  await eventTemplates.copy(test, data.templates[0].name, data.templates[1])
+  await eventTemplates.checkCount(test, 2)
 })
 
-test('Update template description', async test => {
-  await app.loginAndCloseSignupAlert(test, data.user)
-  await organisations.selectOrganisation(test, data.user.name)
-  await templates.clickToolbar(test, templates.getToolbarEntry())
-  await templates.clickTabBar(test, templates.getTabBarEntry())
-  await templates.updateTemplateDescription(test, 'Copy of ' + data.templates[0].name, 'This is a copy of the template ' + data.templates[0].name)
+test('Edit template description', async test => {
+  await screens.login(test, data.user)
+  await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
+  await layout.clickTabBar(test, pages.EventTemplates.TAB_BAR_ENTRY)
+  await eventTemplates.edit(test, data.templates[1].name,  data.templates[2])
 })
 
 test('Delete template', async test => {
-  await app.loginAndCloseSignupAlert(test, data.user)
-  await organisations.selectOrganisation(test, data.user.name)
-  await templates.clickToolbar(test, templates.getToolbarEntry())
-  await templates.clickTabBar(test, templates.getTabBarEntry())
-  await templates.deleteTemplate(test, data.templates[0].name)
-  await templates.checkTemplatesCount(test, 1)
+  await screens.login(test, data.user)
+  await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
+  await layout.clickTabBar(test, pages.EventTemplates.TAB_BAR_ENTRY)
+  await eventTemplates.delete(test, data.templates[0].name)
+  await eventTemplates.checkCount(test, 1)
 })
 
-test('Clean registrated users', async test => {
-  await app.loginAndCloseSignupAlert(test, data.user)
-  await organisations.deleteOrganisation(test, data.user.name)
-  await account.removeAccount(test, data.user.name)
+test('Unregisters user', async test => {
+  await users.unregisterUsers(test, [data.user])
 })
