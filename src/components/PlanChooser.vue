@@ -82,10 +82,12 @@ export default {
         message: this.$t('PlanChooser.CONFIRM_DIALOG_MESSAGE', { plan: 'plans.' + plan + '_LABEL' }),
         html: true,
         ok: {
-          label: this.$t('OK')
+          label: this.$t('OK'),
+          flat: true
         },
         cancel: {
-          label: this.$t('CANCEL')
+          label: this.$t('CANCEL'),
+          flat: true
         }
       }).onOk(async () => {
         const billingService = this.$api.getService('billing')

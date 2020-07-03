@@ -83,10 +83,12 @@ export default {
           this.$t('OptionsChooser.CONFIRM_DIALOG_SUBSCRIBE_MESSAGE', { option: 'options.' + option + '_LABEL' }),
         html: true,
         ok: {
-          label: this.$t('OK')
+          label: this.$t('OK'),
+          flat: true
         },
         cancel: {
-          label: this.$t('CANCEL')
+          label: this.$t('CANCEL'),
+          flat: true
         }
       }).onOk(async () => {
         const billingService = this.$api.getService('billing')

@@ -53,10 +53,12 @@ export default {
         message: this.$t('EventTemplateCard.REMOVE_DIALOG_MESSAGE', { template: template.name }),
         html: true,
         ok: {
-          label: this.$t('OK')
+          label: this.$t('OK'),
+          flat: true
         },
         cancel: {
-          label: this.$t('CANCEL')
+          label: this.$t('CANCEL'),
+          flat: true
         }
       }).onOk(() => {
         const eventTemplatesService = this.$api.getService('event-templates')

@@ -87,7 +87,8 @@ export default {
           title: this.$t('Index.REFUSED'),
           html: true,
           ok: {
-            label: this.$t('Index.RETRY')
+            label: this.$t('Index.RETRY'),
+            flat: true
           }
         }).onOk(() => window.location.reload())
       })

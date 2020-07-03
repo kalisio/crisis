@@ -310,10 +310,12 @@ export default {
         message: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: event.name }),
         html: true,
         ok: {
-          label: this.$t('OK')
+          label: this.$t('OK'),
+          flat: true
         },
         cancel: {
-          label: this.$t('CANCEL')
+          label: this.$t('CANCEL'),
+          flat: true
         }
       }).onOk(() => {
         const eventsService = this.$api.getService('events', this.contextId)

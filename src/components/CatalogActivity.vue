@@ -309,10 +309,12 @@ export default {
           message: this.$t('CatalogActivity.REMOVE_ALERT_DIALOG_MESSAGE'),
           html: true,
           ok: {
-            label: this.$t('OK')
+            label: this.$t('OK'),
+            flat: true
           },
           cancel: {
-            label: this.$t('CANCEL')
+            label: this.$t('CANCEL'),
+            flat: true
           }
         }).onOk(async () => {
           await this.$api.getService('alerts').remove(data.feature._id)
