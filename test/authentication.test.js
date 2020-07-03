@@ -14,9 +14,9 @@ fixture`authentication`// declare the fixture
     await pages.checkNoClientError(test)
   })
 
-const app = new pages.Application()
+//const app = new pages.Application()
 
-test.skip('Invalid login', async test => {
+/*test.skip('Invalid login', async test => {
   await app.login(test)
   let user = await pages.getFromStore('user')
   await test.expect(user).notOk('User should not be populated')
@@ -28,7 +28,7 @@ test.skip('Invalid login', async test => {
   await app.register(test)
 })*/
 
-test.skip('Local login', async test => {
+/*test.skip('Local login', async test => {
   await app.login(test)
 
   const signupAlert = await app.signupAlert.getVue()
@@ -101,3 +101,4 @@ test.skip('Cleanup GitHub user', async test => {
 
   await app.logout(test)
 })
+*/
