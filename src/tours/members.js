@@ -6,16 +6,23 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#overflow-menu-entry',
+  target: '#app-bar-overflow-menu',
   content: 'tours.members.OVERFLOW_MENU_LABEL',
   params: {
     placement: 'left',
-    clickOn: '#overflow-menu-entry',
+    clickOn: '#app-bar-overflow-menu',
     clickDelay: 500,
-    clickOnNext: '#overflow-menu-entry',
+    clickOnNext: '#app-bar-overflow-menu',
     nextDelay: 500,
-    clickOnPrevious: '#overflow-menu-entry',
+    clickOnPrevious: '#app-bar-overflow-menu',
     previousDelay: 500
+  }
+}, {
+  target: '#search',
+  title: 'tours.members.SEARCH_LABEL',
+  content: 'tours.members.SEARCH_MORE_LABEL',
+  params: {
+    placement: 'left'
   }
 }, {
   target: '#fab',
@@ -55,12 +62,43 @@ module.exports = [{
     previousDelay: 500
   }
 }, {
+  target: '#role-badge',
+  content: 'tours.members.ROLE_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#tags-pane',
+  content: 'tours.members.TAGS_LABEL',
+  params: {
+    placement: 'right'
+  }
+}, {
   target: '#join-group',
   content: 'tours.members.JOIN_GROUP_LABEL',
   link: 'tours.members.JOIN_GROUP_LINK_LABEL',
   params: {
-    placement: 'bottom',
+    placement: 'right',
     clickOnLink: '#join-group'
+  }
+}, {
+  target: '#group-button',
+  content: 'tours.members.GROUP_LABEL',
+  params: {
+    placement: 'right',
+    clickOn: '#group-button'
+  }
+}, {
+  target: '#change-role-group',
+  content: 'tours.members.CHANGE_GROUP_ROLE_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#leave-group',
+  content: 'tours.members.LEAVE_GROUP_LABEL',
+  params: {
+    placement: 'bottom'
   }
 }, {
   target: '#tag-member',
@@ -91,6 +129,8 @@ module.exports = [{
   title: 'tours.members.REMOVE_MEMBER_LABEL',
   content: 'tours.members.REMOVE_CONFIRMATION_LABEL',
   params: {
-    placement: 'left'
+    placement: 'left',
+    clickOnPrevious: '#card-overflow-menu',
+    previousDelay: 500
   }
 }]

@@ -6,24 +6,31 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#overflow-menu-entry',
+  target: '#app-bar-overflow-menu',
   content: 'tours.tags.OVERFLOW_MENU_LABEL',
   params: {
     placement: 'left',
-    clickOn: '#overflow-menu-entry',
+    clickOn: '#app-bar-overflow-menu',
     clickDelay: 500,
-    clickOnNext: '#overflow-menu-entry',
+    clickOnNext: '#app-bar-overflow-menu',
     nextDelay: 500,
-    clickOnPrevious: '#overflow-menu-entry',
+    clickOnPrevious: '#app-bar-overflow-menu',
     previousDelay: 500
+  }
+}, {
+  target: '#search',
+  content: 'tours.tags.SEARCH_LABEL',
+  link: 'tours.tags.CREATE_TAG_LINK_LABEL',
+  params: {
+    placement: 'left',
+    blockOnMiss: 'div.q-card.q-card--bordered',
+    route: { name: 'members-activity' }
   }
 }, {
   target: 'div.q-card.q-card--bordered',
   content: 'tours.tags.TAG_CARD_LABEL',
-  link: 'tours.tags.CREATE_TAG_LINK_LABEL',
   params: {
-    placement: 'right',
-    route: { name: 'members-activity' }
+    placement: 'right'
   }
 }, {
   target: '#tag-count',

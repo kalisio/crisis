@@ -1,7 +1,8 @@
 <template>
   <div>
     <k-signup-alert v-if="user" :isVerified="user.isVerified" :email="user.email" />
-    <tour />
+    <k-tour />
+    <k-welcome />
     <router-view></router-view>
   </div>
 </template>
@@ -43,7 +44,8 @@ export default {
   },
   async created () {
     this.$options.components['k-signup-alert'] = utils.loadComponent('account/KSignupAlert')
-    this.$options.components['tour'] = utils.loadComponent('Tour')
+    this.$options.components['k-welcome'] = utils.loadComponent('layout/KWelcome')
+    this.$options.components['k-tour'] = utils.loadComponent('layout/KTour')
     // initialize the user
     this.user = this.$store.get('user')
     if (this.$api.socket) {
