@@ -8,7 +8,7 @@ export default class EventTemplates extends BasePage {
     this.eventTemplates = Selector('.q-page .q-card')
   }
   
-  static get TOOL_BAR_ENTRY () {
+  static get OVERFLOW_MENU_ENTRY () {
     return '#event-templates'
   }
 

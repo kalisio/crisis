@@ -33,11 +33,14 @@ const data = {
     { name: 'Events member', email: 'events-member@kalisio.xyz', password: 'Pass;word1' }
   ],
   group: { name: 'Events group', description: 'A group' },
-  eventTemplate: { name: 'Event template', description: 'An event template' },
+  eventTemplates: [
+    { name: 'Event template 1', description: 'A first event template' },
+    { name: 'Event template 2', description: 'A second event template' }
+  ],
   events: [
-    { name: 'Events member', participants: 'Events manager' },
-    { name: 'Events group', participants: 'Events group' },
-    { name: 'Events tag', participants: 'fireman' }
+    { template: 'Event template 1', name: 'Events member', participants: 'Events manager' },
+    { template: 'Event template 1', name: 'Events group', participants: 'Events group' },
+    { template: 'Event template 2', name: 'Events tag', participants: 'fireman' }
   ]
 }
 
@@ -56,7 +59,10 @@ test('Setup context', async test => {
   await layout.clickFab(test)
   await groups.create(test, data.group)
   await layout.clickOverflowMenu(test, pages.EventTemplates.OVERFLOW_MENU_ENTRY)
-  await eventTemplates.create(test, data.eventTemplate)
+  for (let i in data.eventTemplates) {
+    await layout.clickFab(test)
+    await eventTemplates.create(test, data.eventTemplates[i])
+  }
 })
 
 test('Create events', async test => {
@@ -64,9 +70,9 @@ test('Create events', async test => {
   await layout.closeSignupAlert(test)
   await layout.closeTour(test)
   for (let i in data.events) {
-    const entry = '#' + _.kebabCase('create-' + data.eventTemplate.name)
+    const entry = '#create-' + _.kebabCase(data.events[i].template)
     await layout.openAndClickFab(test, entry)
-    await events.createEvent(test, data.template.name, data.events[i])
+    await events.create(test, data.events[i])
   }
   await events.checkCount(test, data.events.length)
 })

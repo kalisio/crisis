@@ -33,20 +33,18 @@ export default class Events extends BasePage {
     await test.expect(eventsCount).eql(count, 'Invalid events count')
   }
 
-  async create (test, templateName, data) {
-    let actionId = '#' + _.kebabCase('create-' + templateName)
-    await this.clickFab(test, actionId)
+  async create (test, data) {
     await test
       .typeText(VueSelector('k-text-field'), data.name, { replace: true })
       .typeText(VueSelector('k-item-field'), data.participants, { replace: true })
-      .wait(500)
-      .click(Selector('.q-popover .q-item').nth(0))
-      click(Selector('.q-dialog .q-card').find('#apply-button'))
+      .wait(2000)
+      .click(Selector('.q-menu .q-item').nth(0))
+      .click(Selector('.q-dialog .q-card').find('#apply-button'))
       .wait(2000)
   }
 
   async delete (test, name) {
-    await this.clickOverflowMenu(test, name, '#remove-event')
+    await this.clickCardOverflowMenu(test, name, '#remove-event')
     await test
       .click(Selector('.q-dialog .q-btn').nth(1))
       .wait(2000)

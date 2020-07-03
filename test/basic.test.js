@@ -16,13 +16,18 @@ fixture`basic`// declare the fixture
 
 const screens = new pages.Screens()
 const layout = new pages.Layout()
-const members = new pages.Members()
+const sideNav = new pages.SideNav()
 
 test('Login as default user', async test => {
   await screens.login(test, { email: 'kalisio@kalisio.xyz', password: 'Pass;word1' })
   await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
+  console.log(pages.Members.OVERFLOW_MENU_ENTRY)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
-  await members.remove(test, 'Kalisio')
-  // await layout.clickFab(test)
+  await layout.clickOverflowMenu(test, pages.Tags.OVERFLOW_MENU_ENTRY)
+  await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
+  await layout.clickOverflowMenu(test, pages.EventTemplates.OVERFLOW_MENU_ENTRY)
+  await layout.clickLeading(test)
+  await sideNav.logout(test)
+  await screens.goToLoginScreen(test)
 })
-

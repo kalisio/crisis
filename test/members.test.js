@@ -29,14 +29,14 @@ const data = {
   guest: { name: 'Members guest', email: 'test-guest@kalisio.xyz' }
 }
 
-test.page`${pages.getUrl('login')}`
-('Users registration', async test => {
+test('Registers users', async test => {
   await users.registerUsers(test, data.users)
 })
 
 test('Add users to organisation', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await members.checkCount(test, 1)
   await layout.openAndClickFab(test, pages.Members.ADD_MEMBER_FAB_ENTRY)
@@ -51,6 +51,7 @@ test('Add users to organisation', async test => {
 test('Invite guest to join the organisation', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await layout.openAndClickFab(test, pages.Members.INVITE_MEMBER_FAB_ENTRY)
   await members.invite(test, data.guest.name, data.guest.email, pages.Roles.manager)
@@ -61,6 +62,7 @@ test('Invite guest to join the organisation', async test => {
 test('tag member', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await members.tag(test, data.users[1].name, 'skill')
   await members.checkCount(test, 4)
@@ -72,6 +74,7 @@ test('tag member', async test => {
 test('Change member role', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await members.changeRole(test, data.users[2].name, pages.Roles.manager)
   await members.checkCount(test, 4)
@@ -81,6 +84,7 @@ test('Change member role', async test => {
 test('Cannot delete owner', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await members.delete(test, data.users[0].name)
   await test.wait(500)
@@ -92,6 +96,7 @@ test('Cannot delete owner', async test => {
 test('Delete members from organisation', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
+  await layout.closeTour(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await members.delete(test, data.users[1].name)
   await members.checkCount(test, 3)
