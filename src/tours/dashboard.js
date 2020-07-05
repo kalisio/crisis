@@ -1,5 +1,3 @@
-const home = require('./home')
-
 module.exports = [{
   target: 'div[id^=organisation]',
   title: 'tours.dashboard.DASHBOARD_LABEL',

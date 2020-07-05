@@ -96,7 +96,7 @@
       "TERMS_LABEL": "Read and accept our <b><a href='/#/terms'>terms of service</a></b> in order to use the system.",
       "REGISTER_LABEL": "Last, create your account.",
       "EMAIL_VERIFICATION_LABEL": "We will send you an email back containing a link to <b>verify your address</b>.",
-      "LOGIN_LINK_LABEL": "You can now login whenever you want using your <b>personal identifiers</b>."
+      "LOGIN_LINK_LABEL": "You can now login whenever you want using your <b>personal identifiers</b>"
     },
     "home": {
       "LEADING_LABEL": "Open the side menu any time.",
@@ -129,8 +129,8 @@
       "NAME_LABEL": "Your name as viewed by others users.",
       "UPDATE_LABEL": "Confirm the update in order to apply the modifications to your profile information.",
       "SECURITY_LABEL": "This tab allows to update your <b>personal identifiers</b> and your devices.",
-      "PASSWORD_LINK_LABEL": "Launch the <b>password change procedure</b>.",
-      "EMAIL_LINK_LABEL": "Launch the <b>email change procedure</b>.",
+      "PASSWORD_LINK_LABEL": "Launch the <b>password change procedure</b>",
+      "EMAIL_LINK_LABEL": "Launch the <b>email change procedure</b>",
       "DEVICES_LABEL": "This section list all the mobile devices you have used.",
       "UNLINK_LABEL": "Check for any suspect activity and unlink outdated mobile devices.",
       "DANGER_ZONE_LABEL": "This tab allows to remove your account.",

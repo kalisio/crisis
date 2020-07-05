@@ -72,7 +72,11 @@ module.exports = {
             name: 'account-activity',
             component: 'account/KAccountActivity',
             props: true,
-            tour: tours.account
+            tour: {
+              'profile': tours['account-profile'],
+              'security': tours['account-security'],
+              'danger-zone': tours['account-dz']
+            }
           },
           'create-organisation' : {
             name: 'create-organisation',

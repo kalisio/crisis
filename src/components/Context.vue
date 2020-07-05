@@ -22,6 +22,11 @@ export default {
     },
     getActionsForContext (context) {
       const routeName = this.$route.name
+      let tourName = routeName
+      // Manage routes with different perspectives
+      if (_.has(this.$route, 'params.perspective')) {
+        tourName += '/' + _.get(this.$route, 'params.perspective')
+      }
       let actions = { toolbar: [], menu: [] }
       // Flag required features as "beta"
       if ((routeName !== 'events-activity') &&
@@ -46,7 +51,7 @@ export default {
       }
       actions.toolbar.push({
         name: 'online-help', icon: 'las la-question-circle', label: this.$t('Context.CONTEXTUAL_HELP'),
-        handler: () => this.launchTour(routeName)
+        handler: () => this.launchTour(tourName)
       })
       if ((routeName !== 'members-activity') &&
           this.$can('service', 'members', context._id)) {

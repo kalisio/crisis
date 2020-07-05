@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   name: 'home',
   watch: {
@@ -23,10 +25,15 @@ export default {
       let actions = { leading: toggleSideNav, toolbar: [], menu: [] }
       // Then contextual help if any
       const routeName = this.$route.name
-      if (this.$store.get(`tours.${routeName}`)) {
+      let tourName = routeName
+      // Manage routes with different perspectives
+      if (_.has(this.$route, 'params.perspective')) {
+        tourName += '/' + _.get(this.$route, 'params.perspective')
+      }
+      if (this.$store.get(`tours.${tourName}`)) {
         actions.toolbar.push({
           name: 'online-help', icon: 'las la-question-circle', label: this.$t('Context.CONTEXTUAL_HELP'),
-          handler: () => this.$store.patch('tours.current', { name: routeName })
+          handler: () => this.$store.patch('tours.current', { name: tourName })
         })
       }
       this.$store.patch('appBar', actions)

@@ -139,8 +139,17 @@ function buildTours (config) {
   function buildToursRecursively (config, tours) {
     _.forOwn(config, (value, key) => {
       const name = _.get(value, 'name', _.get(value, 'path', key))
-      if (_.has(value, 'tour')) {
-        tours[name] = _.get(value, 'tour')
+      const tour = _.get(value, 'tour')
+      if (tour) {
+        // If we directly have a tour as an array of steps
+        if (Array.isArray(tour)) tours[name] = tour
+        // Or a set of tours as key/value object when the route has a parameter
+        // and each value has its own tour
+        else if (typeof tour === 'object') {
+          _.forOwn(tour, (paramTour, paramValue) => {
+            tours[`${name}/${paramValue}`] = paramTour
+          })
+        }
       }
       // Check for any children to recurse
       if (value.children) {
