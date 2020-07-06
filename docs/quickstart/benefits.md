@@ -6,7 +6,7 @@ Reduce your reliance on various tools (papers, spreadsheets, mapping softwares, 
 
 ## <i class="las la-smile-beam"></i> User-friendly interface
 
-Start within minutes With no training required and a modern, intuitive set of screens, some of the world's largest organizations are up and running within minutes.
+Start within minutes with no training required and a modern, intuitive set of screens, some of the world's largest organizations are up and running within minutes.
 
 ## <i class="lab la-cloudversify"></i> Software as a Service
 

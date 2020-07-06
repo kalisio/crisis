@@ -17,10 +17,50 @@ module.exports = [{
     previousDelay: 500
   }
 }, {
+  target: '#account',
+  link: 'tours.home.ACCOUNT_LINK_LABEL',
+  params: {
+    placement: 'bottom',
+    route: { name: 'account-activity', params: { perspective: 'profile' } }
+  }
+}, {
+  target: '#new-organisation',
+  title: 'tours.home.ORGANISATION_DEFINITION_LABEL',
+  link: 'tours.home.NEW_ORGANISATION_LINK_LABEL',
+  params: {
+    placement: 'top',
+    clickOnLink: '#new-organisation',
+    tour: 'create-organisation'
+  }
+}, {
+  target: 'div[id^=link-]',
+  title: 'tours.home.ORGANISATION_LABEL',
+  link: 'tours.home.ORGANISATION_LINK_LABEL',
+  params: {
+    placement: 'bottom',
+    clickOnLink: 'div[id^=link-]'
+  }
+}, {
+  target: '#dashboard',
+  content: 'tours.home.DASHBOARD_LABEL',
+  link: 'tours.home.DASHBOARD_LINK_LABEL',
+  params: {
+    placement: 'bottom',
+    route: { name: 'dashboard' }
+  }
+}, {
   target: '#help',
   content: 'tours.home.HELP_LABEL',
   params: {
     placement: 'top'
+  }
+}, {
+  target: '#edit-settings',
+  content: 'tours.home.SETTINGS_LABEL',
+  params: {
+    placement: 'top',
+    clickOnPrevious: '#about',
+    previousDelay: 500
   }
 }, {
   target: '#about',
@@ -39,69 +79,5 @@ module.exports = [{
     clickOnPrevious: ['#close-action', '#app-bar-leading'],
     nextDelay: 500,
     previousDelay: 500
-  }
-}, {
-  target: '#edit-settings',
-  content: 'tours.home.SETTINGS_LABEL',
-  params: {
-    placement: 'top',
-    clickOnPrevious: '#about',
-    previousDelay: 500
-  }
-}, {
-  target: '#account',
-  link: 'tours.home.ACCOUNT_LINK_LABEL',
-  params: {
-    placement: 'bottom',
-    route: { name: 'account-activity', params: { perspective: 'profile' } }
-  }
-}, {
-  target: 'div[id^=link-]',
-  title: 'tours.home.ORGANISATION_LABEL',
-  link: 'tours.home.ORGANISATION_LINK_LABEL',
-  params: {
-    placement: 'bottom',
-    clickOnLink: 'div[id^=link-]'
-  }
-}, {
-  target: '#new-organisation',
-  title: 'tours.home.NEW_ORGANISATION_LABEL',
-  content: 'tours.home.ORGANISATION_DEFINITION_LABEL',
-  params: {
-    placement: 'top',
-    clickOnNext: '#new-organisation',
-    nextDelay: 500
-  }
-}, {
-  target: '#name-field',
-  content: 'tours.home.ORGANISATION_NAME_LABEL',
-  params: {
-    placement: 'top',
-    clickOnPrevious: '#close',
-    previousDelay: 500
-  }
-}, {
-  target: '#description-field',
-  content: 'tours.home.ORGANISATION_DESCRIPTION_LABEL',
-  params: {
-    placement: 'top'
-  }
-}, {
-  target: '#apply-button',
-  content: 'tours.home.CREATE_ORGANISATION_LABEL',
-  params: {
-    placement: 'left',
-    clickOnNext: '#close',
-    nextDelay: 500
-  }
-}, {
-  target: '#dashboard',
-  content: 'tours.home.DASHBOARD_LABEL',
-  link: 'tours.home.DASHBOARD_LINK_LABEL',
-  params: {
-    placement: 'bottom',
-    clickOnPrevious: '#new-organisation',
-    previousDelay: 500,
-    route: { name: 'dashboard' }
   }
 }]

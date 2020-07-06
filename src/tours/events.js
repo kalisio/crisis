@@ -20,7 +20,7 @@ module.exports = [{
 }, {
   target: '#event-templates',
   content: 'tours.events.TEMPLATES_LABEL',
-  link: 'tours.events.TEMPLATE_LINK_LABEL',
+  link: 'tours.events.TEMPLATES_LINK_LABEL',
   params: {
     placement: 'bottom',
     blockOnMiss: 'div.q-card.q-card--bordered',

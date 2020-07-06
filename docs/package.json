@@ -1,7 +1,7 @@
 {
   "name": "docs",
   "scripts": {
-    "dev": "vuepress dev .",
+    "dev": "vuepress dev --host localhost .",
     "build": "vuepress build ."
   },
   "devDependencies": {

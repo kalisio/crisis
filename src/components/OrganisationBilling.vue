@@ -23,7 +23,8 @@
       <!-- 
         Plan subscription section 
       -->
-      <q-expansion-item header-class="text-primary" group="billing" :label="$t('OrganisationBilling.PLAN_TITLE')" default-opened>
+      <q-expansion-item id="basic-plan" header-class="text-primary" group="billing"
+      :label="$t('OrganisationBilling.PLAN_TITLE')" default-opened>
         <plan-chooser 
           :billingObjectId="objectId" 
           billingObjectService="organisations" 
@@ -35,7 +36,8 @@
       <!-- 
         Options information secion
        -->    
-      <q-expansion-item header-class="text-primary" group="billing" :label="$t('OrganisationBilling.OPTIONS_TITLE')">
+      <q-expansion-item id="optional-plans" header-class="text-primary" group="billing"
+        :label="$t('OrganisationBilling.OPTIONS_TITLE')">
         <options-chooser 
         :billingObjectId="objectId" 
         billingObjectService="organisations" 

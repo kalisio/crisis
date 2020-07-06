@@ -10,7 +10,7 @@ Notifiez les membres de votre organisation en quelques secondes.
 
 Vous pouvez définir un ensemble de modèles de notifications incluant des informations sur vos événements, le lieu et la façon dont les participants vont interagir.
 
-Vous pouvez notifier des membres, des groupes ou encore des membres partageant des critères identiques.
+Vous pouvez notifier des membres de façon individuelle, des groupes ou des membres partageant des critères identiques (compétences, fonction, etc.).
 
 ## <i class="las la-comments"></i> Mobilisez et interagissez instantanément
 

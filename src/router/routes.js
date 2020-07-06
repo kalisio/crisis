@@ -81,7 +81,8 @@ module.exports = {
           'create-organisation' : {
             name: 'create-organisation',
             component: 'editor/KModalEditor',
-            props: true
+            props: true,
+            tour: tours['create-organisation']
           },
           ':contextId': {
             // The name of the route has to be set the default child
@@ -93,7 +94,8 @@ module.exports = {
                 // Because this child is the default one path is empty and name is the one of the parent route
                 path: '',
                 name: 'context',
-                redirect: { name: 'events-activity' }
+                redirect: { name: 'events-activity' },
+                tour: tours.context
               },
               'members': {
                 name: 'members-activity', 
@@ -237,7 +239,12 @@ module.exports = {
               ':perspective': {
                 name: 'organisation-settings-activity',
                 component: 'OrganisationSettingsActivity',
-                props: true
+                props: true,
+                tour: {
+                  'properties': tours['organisation-properties'],
+                  'billing': tours['organisation-billing'],
+                  'danger-zone': tours['organisation-dz']
+                }
               }
             }
           }

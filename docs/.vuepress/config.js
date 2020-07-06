@@ -1,3 +1,5 @@
+const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
+
 module.exports = {
   base: '/aktnmap/',
   title: `Akt'n'Map`,
@@ -21,6 +23,8 @@ module.exports = {
   theme: 'kalisio',
   themeConfig: {
     docsDir: 'docs',
+    appUrl: (process.env.NODE_ENV === 'development' ?
+      `http://localhost:${clientPort}/` : 'https://aktnmap.dev.kalisio.xyz/'),
     locales: {
       '/': {
         label: 'English',

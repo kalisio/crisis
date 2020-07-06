@@ -8,7 +8,7 @@ Un processus en deux étapes pourrait être celui-ci:
   1. interaction du participant attendue: *êtes-vous disponible ou indisponible pour intervenir sur cet événement ?*
   2. réponse du coordinateur attendue: *je vous engage ou je ne vous engage pas sur cet événement*
 
-::: tip
+::: tip Astuce
 Chaque réponse du coordinateur à la question d'une étape du processus engendre la génération d'une notification vers le participant destinataire.
 :::
 

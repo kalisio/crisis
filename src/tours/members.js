@@ -103,7 +103,7 @@ module.exports = [{
 }, {
   target: '#tag-member',
   content: 'tours.members.TAG_MEMBER_LABEL',
-  link: 'tours.members.TAG_MEMBER_LINK_LABEL',
+  link: 'tours.members.TAGS_LINK_LABEL',
   params: {
     placement: 'bottom',
     clickOnLink: '#tag-member'

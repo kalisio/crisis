@@ -4,17 +4,53 @@ sidebarDepth: 3
 
 # Basics
 
+Here is a quick rundown of the *key concepts* to handle when you're just getting started with Akt'n'Map.
+
+This presentation comes with small *tutorials* that can be directly run on the application. Thus, you will first have to follow the required steps to create your account then connect to make everything works as expected.
+
+A link can allow you to execute the tutorial directly from the documentation, otherwise open the application at the right place then click on the following icon <a href=""><i class="las la-question-circle"/></a>. You can then follow the step by step guide <a href=""><i class="las la-chevron-left"/></a>, go back if required <a href=""><i class="las la-chevron-right"/></a> and stop anytime <a href=""><i class="las la-times"/></a> as illustrated by the following figure:
+
+![tour](../../assets/Tour-EN.png)
+
+::: warning
+Akt'n'Map look and features are ever-evolving. As a consequence, your screen probably looks a little different than what you can read and see in this documentation but the key concepts remain the same.
+:::
+
 ## <i class="las la-user"></i> User
 
 A *person* who has been **registered** to Akt'n'Map. This can be done through two ways:
   * by creating his own **account** on the application,
   * by being *invited* within an organisation by another user of the application.
 
+:point_right: Don't yet have an account and wish to create one ? <tour-link text="How to create an account" route="register"/>
+
+:point_right: Already have an account but cannot connect ? <tour-link text="How to connect" route="login"/>
+
+:point_right: You have created your account and successfully connect ? <tour-link text="Browse the main menu" route="home" tour="home"/>
+
+## Activity
+
+An **activity** is the entry point used in the application for interacting with the user on a given type of objects. It usually represents a single screen with a dedicated user interface. When multiple screens are required due to the large number of possible actions, each one is displayed as a **tab**. Selecting a tab switch the user interface to the associated screen. 
+
+For instance, what is related to your account and its security is managed in a specific account activity composed of three screens, as illustrated by the following figure:
+
+![account](../../assets/Account-EN.png)
+
 ## <i class="las la-user-friends"></i> Organisation
 
-A *shared workspace* between users where you can invite people to join and collaborate, notably to manage **events**.
+A *shared workspace* between users where you can invite people to join and collaborate, notably to manage **events**. Before performing some tasks in a organisation you must select it as you current *context* or workspace.
 
-A user can belong to *multiple* organisations and being assigned *different roles* in these organisations. A user can also create new organisations.
+How to enter into the context of an organisation through the <tour-link text="main menu" route="home" tour="home"/>
+
+A user can belong to *multiple* organisations. In this case a *dashboard* summarizes the running events on the home page.
+
+:point_right: You belong to *multiple* organisations ? <tour-link text="Open your dashboard" route="dashboard"/>
+
+A user can also create new organisations.
+
+:point_right: You'd like to create an organisation ? <tour-link text="How to through the main menu" route="home" tour="home"/>
+
+A user is being assigned *different roles* in his organisations so that different features are available depending on the currently selected organisation.
 
 ### <i class="las la-graduation-cap"></i> Role
 

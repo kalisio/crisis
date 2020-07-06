@@ -23,7 +23,7 @@
           </div>
           <div v-else class="row no-margin">
             <div class="col-11 self-center">
-              <card class='k-stripe-card'
+              <card id="payment-card" class='k-stripe-card'
               :stripe="$config('stripe.secretKey')"
               :options="$config('stripe.options')"
               @change='onCardUpdated' />

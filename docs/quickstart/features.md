@@ -2,17 +2,15 @@
 
 ## <i class="las la-users"></i> Structure your organization
 
-Structure your personnel in groups and grant them a role, assign them some tags.
-
-Tags make easier to classify your members with respect to other criteria (i.e. skills, title, etc.).
+Structure your personnel in groups and grant them a role, assign them some tags with respect to your business criteria (i.e. skills, titles, etc.).
 
 ## <i class="las la-bullhorn"></i> Notify your organization
 
 Notify your members or teams in a matter of seconds.
 
-You can set predefined models of notifications including information about the event, the location and the way you will interact with the participants.
+You can define predefined models of notifications including information about the event, the location and the way you will interact with the participants.
 
-The recipients could be individual members, teams or groups of members sharing the same criteria (i.e. skills, title, etc.).
+The recipients could be individual members, teams or groups of members sharing the same criteria (i.e. skills, titles, etc.).
 
 ## <i class="las la-comments"></i> Mobilize and interact instantly
 
