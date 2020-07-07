@@ -93,7 +93,7 @@ export default {
             this.registerFabAction({
               name: 'create-' + (doublons.length > 1 ? template._id : template.name),
               label: template.name,
-              icon: kCoreUtils.getIconName(template),
+              icon: template.icon,
               route: { name: 'create-event', params: { contextId: this.contextId, templateId: template._id } }
             })
           })
