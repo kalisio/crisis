@@ -1,5 +1,15 @@
 <template>
-  <k-card v-bind="$props" :itemActions="actions" />
+  <k-card v-bind="$props" :itemActions="actions">
+    <template v-slot:card-label>
+      <span class="text-subtitle1 text-weight-medium ellipsis">{{ name }}</span>
+    </template>
+    <template v-slot:card-content>
+      <q-separator />
+      <div class="q-pa-sm">
+        <k-text-area :text="description" ellipsis="3-lines" />
+      </div>
+    </template>
+  </k-card>
 </template>
 
 <script>
@@ -69,6 +79,7 @@ export default {
   created () {
     // Load the required components
     this.$options.components['k-card'] = this.$load('collection/KCard')
+    this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
   }
 }
 </script>
