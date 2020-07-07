@@ -21,18 +21,18 @@ export default class Users extends BasePage {
       await this.screens.goToRegisterScreen(test)
       await this.screens.register(test, users[i])
       await this.layout.closeSignupAlert(test)
-      await this.layout.closeTour(test)
+      await this.layout.closeWelcomeDialog(test)
       await this.layout.clickLeading(test)
       await this.sideNav.logout(test)
       await this.screens.goToLoginScreen(test)
     }
   }
 
-  async unregisterUsers (test, users) {
+  async unregisterUsers (test, users, verified = false) {
     for (let i in users) {
       await this.screens.login(test, users[i])
-      await this.layout.closeSignupAlert(test)
-      await this.layout.closeTour(test)
+      if (!verified) await this.layout.closeSignupAlert(test)
+      await this.layout.closeWelcomeDialog(test)
       await this.layout.clickOverflowMenu(test, OrganisationSettings.OVERFLOW_MENU_ENTRY)
       await this.layout.clickTabBar(test, OrganisationSettings.DANGER_ZONE_TAB)
       await this.organisationSettings.delete(test, users[i].name)

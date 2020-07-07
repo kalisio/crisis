@@ -35,7 +35,7 @@ test('Setup context', async test => {
 test('Create template', async test => {
   await screens.login(test, data.user)
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickTabBar(test, pages.EventTemplates.TAB_BAR_ENTRY)
   await layout.clickFab(test)
   await eventTemplates.create(test, data.templates[0])
@@ -45,7 +45,7 @@ test('Create template', async test => {
 test('Copy template', async test => {
   await screens.login(test, data.user)
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickTabBar(test, pages.EventTemplates.TAB_BAR_ENTRY)
   await eventTemplates.copy(test, data.templates[0].name, data.templates[1])
   await eventTemplates.checkCount(test, 2)
@@ -54,7 +54,7 @@ test('Copy template', async test => {
 test('Edit template description', async test => {
   await screens.login(test, data.user)
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickTabBar(test, pages.EventTemplates.TAB_BAR_ENTRY)
   await eventTemplates.edit(test, data.templates[1].name,  data.templates[2])
 })
@@ -62,7 +62,7 @@ test('Edit template description', async test => {
 test('Delete template', async test => {
   await screens.login(test, data.user)
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickTabBar(test, pages.EventTemplates.TAB_BAR_ENTRY)
   await eventTemplates.delete(test, data.templates[0].name)
   await eventTemplates.checkCount(test, 1)

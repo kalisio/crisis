@@ -9,8 +9,6 @@ fixture`account`// declare the fixture
   })
   .afterEach(async test => {
     // check for console error messages
-    // FIXME: Storage error
-    // await pages.checkNoClientError(test)
   })
 
 const screens = new pages.Screens()
@@ -30,21 +28,25 @@ const data = {
 test('Create account', async test => {
   await screens.goToRegisterScreen(test)
   await screens.register(test, data.user)
+  await pages.checkNoClientError(test)
 })
 
-test('Update profile', async test => {
+test.skip('Update profile', async test => {
   await screens.login(test, data.user)
   await layout.closeSignupAlert(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickLeading(test)
   await sideNav.clickIdentity(test)
   await account.updateProfile(test, path.join(__dirname, 'assets', data.avatar), data.newName)
   await layout.clickLeading(test)
   await sideNav.logout(test)
+  await pages.checkNoClientError(test)
 })
 
 test('Update password', async test => {
   await screens.login(test, data.user)
   await layout.closeSignupAlert(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickLeading(test)
   await sideNav.clickIdentity(test)
   await layout.clickTabBar(test, pages.Account.SECURITY_TAB)
@@ -52,6 +54,7 @@ test('Update password', async test => {
   await pages.goBack()
   await layout.clickLeading(test)
   await sideNav.logout(test)
+  await pages.checkNoClientError(test)
 })
 
 test('Ensure login with old password fails', async test => {
@@ -59,11 +62,13 @@ test('Ensure login with old password fails', async test => {
   const error = await screens.isErrorVisible()
   await test.expect(error).ok('Error should be displayed')
   data.user.password = data.newPassword
+  //await pages.checkClientError(test)
 })
 
 test('Update email', async test => {
   await screens.login(test, data.user)
   await layout.closeSignupAlert(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickLeading(test)
   await sideNav.clickIdentity(test)
   await layout.clickTabBar(test, pages.Account.SECURITY_TAB)
@@ -71,18 +76,22 @@ test('Update email', async test => {
   await pages.goBack()
   await layout.clickLeading(test)  
   await sideNav.logout(test)
+  await pages.checkNoClientError(test)
 })
 
+// The above changes are not effective since the user does not confirm the mail
 test.skip('Ensure login with old email fails', async test => {
   await screens.login(test, data.user)
   const error = await screens.isErrorVisible()
   await test.expect(error).ok('Error should be displayed')
   data.user.email = data.newEmail
+  await pages.checkClientError(test)
 })
 
 test('Delete account', async test => {
   await screens.login(test, data.user)
   await layout.closeSignupAlert(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.OrganisationSettings.OVERFLOW_MENU_ENTRY)
   await layout.clickTabBar(test, pages.OrganisationSettings.DANGER_ZONE_TAB)
   await organisationSettings.delete(test, data.user.name)
@@ -90,6 +99,8 @@ test('Delete account', async test => {
   await sideNav.clickIdentity(test)
   await layout.clickTabBar(test, pages.Account.DANGER_ZONE_TAB)
   await account.delete(test, data.user.name)
+  await screens.goToLoginScreen(test)
+  await pages.checkNoClientError(test)
 })
 
 test('Ensure login with deleted account fails', async test => {

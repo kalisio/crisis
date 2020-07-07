@@ -48,7 +48,7 @@ test('Setup context', async test => {
   await users.registerUsers(test, data.users)
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await layout.openAndClickFab(test, pages.Members.ADD_MEMBER_FAB_ENTRY)
   await members.add(test, data.users[1].name, pages.Roles.manager)
@@ -68,7 +68,7 @@ test('Setup context', async test => {
 test('Create events', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   for (let i in data.events) {
     const entry = '#create-' + _.kebabCase(data.events[i].template)
     await layout.openAndClickFab(test, entry)
@@ -80,7 +80,7 @@ test('Create events', async test => {
 test('Delete event', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   for (let i in data.events) await events.delete(test, data.events[i].name)
   await events.checkCount(test, 0)
 })
@@ -89,7 +89,7 @@ test('Clear context', async test => {
   // Remove the created group
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
   await groups.delete(test, data.group.name)
   await layout.clickLeading(test)

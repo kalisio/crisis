@@ -4,6 +4,7 @@
       Customer information section
      -->    
     <k-block
+      id="customer-block"
       :color="customerBlockColor" 
       :title="$t('OrganisationBilling.CUSTOMER_BLOCK_TITLE')"
       :text="customerBlockText"

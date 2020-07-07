@@ -36,7 +36,7 @@ test.page`${pages.getUrl('login')}`
   await users.registerUsers(test, data.users)
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await layout.openAndClickFab(test, pages.Members.ADD_MEMBER_FAB_ENTRY)
   await members.add(test, data.users[1].name, pages.Roles.member)
@@ -50,7 +50,7 @@ test.page`${pages.getUrl('login')}`
 test('Create groups', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
   for (let i in data.groups) {
     await layout.clickFab(test)
@@ -63,7 +63,7 @@ test('Create groups', async test => {
 test('Edit group', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
   const newGroupData = { name: 'Group 1 edited', description: 'A new description for group 1'}
   await groups.edit(test, data.groups[0].name, newGroupData)
@@ -74,7 +74,7 @@ test('Edit group', async test => {
 test('Add members to groups', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await members.joinGroup(test, data.users[1].name, data.groups[0].name, pages.Roles.manager)
   await members.joinGroup(test, data.users[2].name, data.groups[0].name, pages.Roles.member)
@@ -86,7 +86,7 @@ test('Add members to groups', async test => {
 test('Check group count', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
   await groups.checkCount(test, 2)
   await pages.checkNoClientError(test)
@@ -95,7 +95,7 @@ test('Check group count', async test => {
 test('Remove member from group', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await members.leaveGroup(test, data.users[1].name, data.groups[0].name)
   await members.leaveGroup(test, data.users[2].name, data.groups[0].name)
@@ -107,7 +107,7 @@ test('Remove member from group', async test => {
 test('Delete group', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
-  await layout.closeTour(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
   for (let i in data.groups) await groups.delete(test, data.groups[i].name)
   await pages.checkNoClientError(test)
