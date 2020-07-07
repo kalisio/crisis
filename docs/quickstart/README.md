@@ -1,4 +1,4 @@
-# Présentation
+# Introduction
 
 **Akt'n'Map** is a situational intelligence solution to inform and coordinate fieldworkers during events like interventions, crisis management, etc.
 

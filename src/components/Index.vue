@@ -1,7 +1,7 @@
 <template>
   <div>
     <k-signup-alert v-if="user" :isVerified="user.isVerified" :email="user.email" />
-    <k-tour />
+    <k-tour ref="tour" />
     <k-welcome />
     <router-view></router-view>
   </div>
@@ -10,7 +10,8 @@
 <script>
 import logger from 'loglevel'
 import { Loading, Dialog } from 'quasar'
-import { mixins, beforeGuard } from '@kalisio/kdk/core.client'
+import { permissions, mixins, beforeGuard } from '@kalisio/kdk/core.client'
+
 import config from 'config'
 import utils from '../utils'
 
@@ -19,7 +20,8 @@ export default {
   // authorisation mixin is required to automatically update user' abilities on update
   mixins: [mixins.authentication, mixins.authorisation],
   methods: {
-    redirect () {
+    redirect (user) {
+      this.user = user
       // Run registered guards to redirect accordingly if required
       const result = beforeGuard(this.$route)
       if (typeof result === 'string') {
@@ -34,6 +36,28 @@ export default {
       if (!this.initialized) {
         this.$router.beforeEach(beforeGuard)
         this.initialized = true
+      }
+      // Check if we'd like to redirect to an organisation
+      let organisation = _.get(this.$route, 'query.organisation', '').toLowerCase()
+      const permission = permissions.Roles[organisation]
+      if (user && organisation) {
+        const organisations = _.get(user, 'organisations', [])
+        organisation = _.find(organisations, org => {
+          // Redirect on target org or any org with the right permissions
+          if (!_.isNil(permission)) {
+            if (permissions.Roles[org.permissions] >= permission) return true
+          } else if (org._id === organisation) return true
+          return false
+        })
+        if (organisation) {
+          // Stop any running tour as we will redirect
+          if (this.$refs.tour.getTour().isRunning) this.$refs.tour.getTour().stop()
+          this.$router.push({
+            name: _.get(this.$route, 'query.route', 'context'),
+            params: Object.assign({ contextId: organisation._id }, _.get(this.$route, 'params', {})),
+            query: _.get(this.$route, 'query', {})
+          })
+        }
       }
     }
   },
@@ -112,20 +136,19 @@ export default {
     this.$toast({ html: this.$t('Index.VERSION_MISMATCH') })
   },
   async mounted () {
-    this.$events.$on('user-changed', user => {
-      this.user = user
-      // Check if we need to redirect based on the fact there is an authenticated user
-      this.redirect()
-    })
+    // Check if we need to redirect based on the fact there is an authenticated user
+    this.$events.$on('user-changed', this.redirect)
 
     try {
       // No need to update/redirect here since the user should be managed by event handler above
       await this.restoreSession()
     } catch (_) {
-      this.user = null
       // Check if we need to redirect based on the fact there is no authenticated user
-      this.redirect()
+      this.redirect(null)
     }
+  },
+  beforeDestroy () {
+    this.$events.$off('user-changed', this.redirect)
   }
 }
 </script>

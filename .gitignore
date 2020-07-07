@@ -3,6 +3,7 @@
 
 # Quasar/Cordova build
 .quasar
+cordova
 src-cordova/config.xml
 src-cordova/*.keystore
 src-cordova/*.json

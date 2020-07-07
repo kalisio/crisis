@@ -10,20 +10,25 @@ export default {
       type: String,
       default: ''
     },
-    route: {
+    path: {
       type: String,
       default: ''
     },
-    tour: {
-      type: String,
-      default: ''
+    params: {
+      type: Object,
+      default: () => {}
     }
   },
   computed: {
     url () {
-      return (this.tour ?
-        this.$site.themeConfig.appUrl + `#/${this.route}?tour=${this.tour}` :
-        this.$site.themeConfig.appUrl + `#/${this.route}?tour=true`)
+      let url = this.$site.themeConfig.appUrl + `#/${this.path}?`
+      // Add tour param be default if not provided
+      if (!this.params.tour) url += 'tour=true&'
+      for (const [key, value] of Object.entries(this.params)) {
+        url += `${key}=${value}&`
+      }
+      // Remove last &
+      return url.slice(0, -1)
     }
   }
 }

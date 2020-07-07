@@ -22,11 +22,11 @@ Une *personne* qui est **enregistrée** sur Akt'n'Map. Cela peut se faire de deu
   * soit en créant elle-même son **compte** sur l'application,
   * soit en étant *invitée* au sein d'une organisation par un autre utilisateur de l'application.
 
-:point_right: Vous n'avez pas encore de compte et souhaitez en créer un ? <tour-link text="Voir comment créer son compte" route="register"/>
+:point_right: Vous n'avez pas encore de compte et souhaitez en créer un ? <tour-link text="Voir comment créer son compte" path="register"/>
 
-:point_right: Vous avez créé votre compte et ne parvenez pas à vous connecter ? <tour-link text="Voir comment se connecter" route="login"/>
+:point_right: Vous avez créé votre compte et ne parvenez pas à vous connecter ? <tour-link text="Voir comment se connecter" path="login"/>
 
-:point_right: Vous avez créé votre compte et êtes parvenu à vous connecter ? <tour-link text="Parcourir le menu principal" route="home" tour="home"/>
+:point_right: Vous avez créé votre compte et êtes parvenu à vous connecter ? <tour-link text="Parcourir le menu principal" path="home" :params="{ tour: 'home' }"/>
 
 ## Activité
 
@@ -40,17 +40,23 @@ Par exemple, tout ce qui a trait à votre compte et à sa sécurité est central
 
 Un *espace partagé* par plusieurs utilisateurs au sein duquel vous pouvez inviter des personnes à collaborer, notamment pour gérer des **évènements**. Avant de pouvoir réaliser certaines actions dans une organisation il faut tout d'abord la sélectionner pour en faire votre *contexte* ou espace de travail courant. 
 
-Voir comment entrer dans le contexte d'une organisation via le <tour-link text="menu principal" route="home" tour="home"/>
+Voir comment entrer dans le contexte d'une organisation via le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
 
 Un utilisateur peut appartenir à *plusieurs* organisations. Dans ce cas un *tableau de bord* synthétise les événements en cours au sein de ses différentes organisations sur la page d'acceuil.
 
-:point_right: Vous appartenez à *plusieurs* organisations ? <tour-link text="Voir votre tableau de bord" route="dashboard"/>
+:point_right: Vous appartenez à *plusieurs* organisations ? <tour-link text="Voir votre tableau de bord" path="dashboard"/>
 
 Un utilisateur peut également créer de nouvelles organisations.
 
-:point_right: Vous souhaitez créer une organisation ? <tour-link text="Voir comment faire via le menu principal" route="home" tour="home"/>
+:point_right: Vous souhaitez créer une nouvelle organisation ? <tour-link text="Voir comment faire via le menu principal" path="home" :params="{ tour: 'home' }"/>
 
-Selon les organisations, un utilisateur possède des *rôles différents* et ne dispose donc pas des même fonctionnalités.
+Selon les organisations, un utilisateur possède des *rôles différents* et ne dispose donc pas des même fonctionnalités. La figure suivante illustre un exemple où:
+* un utilisateur appartient à plusieurs organisations (1, 2 et 3),
+* un utilisateur gére plusieurs organisations (2),
+* une organisation possède plusieurs groupes (3),
+* un membre d'une organisation appartenient à plusieurs groupes (3).
+
+![user-organisations](../../assets/user-organisations.png)
 
 ### <i class="las la-graduation-cap"></i> Rôle
 
@@ -78,9 +84,13 @@ L'utilisateur qui créé une organisation ou un groupe en est par défaut le pro
 
 Un **groupe** vous permet de *déléguer* la gestion d'un espace de travail restreint à ses membres. Les utilisateurs en dehors du groupe ne pourrons pas y accéder ni voir ses membres.
 
-Suivez la procédure suivante pour être guidé pas à pas afin de gérer vos groupes:
-1. Entrez dans le contexte de l'organisation via le <tour-link text="menu principal" route="home" tour="home"/>
-2. Sélectionnez l'activité de <tour-link text="gestion des groupes" route="home" tour="home"/>
+:point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos groupes" path="home" :params="{ organisation: 'manager', route: 'groups-activity' }"/>
+
+::: details Voir aussi
+Comment entrer dans le contexte d'une organisation via le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
+
+Comment entrer dans l'activité de gestion des groupes depuis <tour-link text="le contexte de l'organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+:::
 
 ### <i class="las la-tags"></i> Etiquette
 
@@ -88,11 +98,19 @@ Une **étiquette** vous permet de *catégoriser* un sous-ensemble des membres de
 
 Une étiquette est *transverse* à votre organisation, c'est à dire qu'avec elle vous pouvez cibler des personnes ayant les même critères métier au sein de différents groupes.
 
+:point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos étiquettes" path="home" :params="{ organisation: 'manager', route: 'tags-activity' }"/>
+
+::: details Voir aussi
+Comment entrer dans le contexte d'une organisation via le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
+
+Comment entrer dans l'activité de gestion des étiquettes depuis <tour-link text="le contexte de l'organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+:::
+
 ## <i class="las la-fire"></i> Evénement
 
 Une *chose à faire* ou une *information autour d'un fait concret* que l'on désire partager et traiter avec certains membres d'une organisation. Typiquement une information opérationnelle, une intervention sur le terrain, des actions de gestion de crise, etc.
 
-Un événement génère des *notifications* sur les mobiles des **participants** lors de sa création, mise à jour et clôture par ses **coordinateurs**.
+Un événement génère des *notifications* sur les mobiles des **participants** qui ont installé lapplication mobile lors de sa création, mise à jour et clôture par ses **coordinateurs**.
 
 Les participants et les coordinateurs d'un événement peuvent être choisis comme:
   * des membres de façon individuelle,
@@ -107,12 +125,32 @@ A un évènement, Akt'n'Map permet d’associer :
   * des *photos* ou des *documents* afin de les partager entre les acteurs,
   * un **[processus](../gofurther/processes.md)** définissant les interaction entre les participants et les coordinateurs.
 
-## Participant
+:point_right: Vous êtes prêt à partager de l'information ? <tour-link text="Voir comment gérer vos événements" path="home" :params="{ organisation: 'member' }"/>
+
+### Modèle d'événement
+
+Un événement s'initie toujours à partir d'un **modèle** qui définit son contenu de base. Dans chaque modèle un titre, une description, et/ou des destinataires par défaut pourront être définis. Ainsi, lors de la création de l'événement, il ne reste qu'à compléter ou amender certains éléments au besoin tels que le la localisation.
+
+::: tip Astuce
+Généralement les modèles suivent une *typologie* métier. Par exemple des sapeurs-pompiers pourront définir un modèle *Feu de forêt*, *Secours à personne* ou encore *Accident voie publique*.
+
+Grâce à une typologie vous pourrez ensuite réaliser des **[statistiques pertinentes](../gofurther/archiving.md)** sur vos événements.
+:::
+
+:point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos modèles" path="home" :params="{ organisation: 'manager', route: 'event-templates-activity' }"/>
+
+::: details Voir aussi
+Comment entrer dans le contexte d'une organisation via le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
+
+Comment entrer dans l'activité de gestion des modèles depuis <tour-link text="le contexte de l'organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+:::
+
+### Participant
 
 Un participant ne peut pas modifier un événement bien qu'il puisse partager des documents ou des photos au sein de celui-ci.
 
-## Coordinateur
+### Coordinateur
 
 Un coordinateur peut modifier et clôturer (i.e. détruire) un événement, ainsi que sa liste de participants ou coordinateurs.
 
-Il a également accès à une *vue cartographique* synthétisant la position des acteurs et leur état d’avancement dans le processus.
+Il a également accès à une *vue cartographique* synthétisant la position des acteurs et leur état d’avancement dans le [processus](../gofurther/processes.md).
