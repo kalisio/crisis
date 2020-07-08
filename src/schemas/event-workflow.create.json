@@ -28,18 +28,6 @@
         "helper": "schemas.EVENT_WORKFLOW_DESCRIPTION_FIELD_HELPER"
       }
     },
-    "featureInteraction": {
-      "type": "array",
-      "uniqueItems": true,
-      "minItems": 1,
-      "field": {
-        "component": "form/KSelectField",
-        "helper": "schemas.EVENT_WORKFLOW_FEATURE_INTERACTION_FIELD_HELPER",
-        "multiple": true,
-        "chips": true,
-        "options": []
-      }
-    },
     "interaction": {
       "type": "array", 
       "uniqueItems": true,

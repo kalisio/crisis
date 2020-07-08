@@ -209,6 +209,7 @@ export default {
             badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
           })
         } else {
+          /* FIXME: Not yet available
           if (layer.name !== this.$t('CatalogActivity.ALERTS_LAYER')) {
             featureActions.push({
               name: 'create-event',
@@ -218,6 +219,7 @@ export default {
               badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
             })
           }
+          */
           if (_.get(layer, 'schema.content')) {
             featureActions.push({
               name: 'edit-feature-properties',

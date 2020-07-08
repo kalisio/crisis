@@ -108,30 +108,6 @@
         "component": "form/KItemField",
         "helper": "schemas.EVENTS_TEMPLATES_COORDINATORS_FIELD_CREATE_HELPER"
       }
-    },
-    "layer": { 
-      "type": "object",
-      "multiselect": false,
-      "uniqueItems": true,
-      "minItems": 1,
-      "maxItems": 1,
-      "services": [{
-        "service": "catalog",
-        "field": "name",
-        "subfield": "description",
-        "baseQuery": {
-          "service": "features",
-          "$sort": { "name": 1 },
-          "$select": ["_id", "name", "description"]
-        },
-        "icon": {
-          "name": "layers"
-        }
-      }],
-      "field": {
-        "component": "form/KItemField",
-        "helper": "schemas.EVENTS_TEMPLATES_LAYER_FIELD_HELPER"
-      }
     }
   },
   "required": ["name", "icon"]
