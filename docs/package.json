@@ -1,11 +1,13 @@
 {
   "name": "docs",
   "scripts": {
-    "dev": "vuepress dev --host localhost .",
-    "build": "vuepress build ."
+    "dev": "vuepress dev .",
+    "build": "vuepress build .",
+    "serve": "vuepress serve . --port 7000"
   },
   "devDependencies": {
     "vuepress": "^1.3.0",
+    "vuepress-plugin-serve": "^2.0.0",
     "vuepress-theme-kalisio": "http://github.com/kalisio/vuepress-theme-kalisio#1.3.0"
   }
 }

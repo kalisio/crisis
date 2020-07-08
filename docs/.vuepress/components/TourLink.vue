@@ -16,7 +16,8 @@ export default {
     },
     params: {
       type: Object,
-      default: () => {}
+      // BUG: using arrow function here is causing problem with SSR
+      default: function () { return {} }
     }
   },
   computed: {

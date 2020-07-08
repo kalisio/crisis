@@ -56,6 +56,11 @@ module.exports = {
       },
     }
   },
+  plugins: [
+    [
+      'vuepress-plugin-serve'
+    ],
+  ],
   head: [
     [
       "link",
