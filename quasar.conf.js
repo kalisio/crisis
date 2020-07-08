@@ -101,6 +101,7 @@ module.exports = function (ctx) {
         'Dialog',
         'Platform',
         'Loading',
+        'BottomSheet',
         'AppFullscreen'
       ]
     },
