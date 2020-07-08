@@ -451,7 +451,7 @@ export default {
     },
     getEventTooltip (feature, layer, options) {
       if (!this.templates.includes(options.name)) return
-      const tooltip = L.tooltip({ permanent: true }, layer)
+      const tooltip = L.tooltip({ permanent: false }, layer)
       const name = _.get(feature, 'name')
       const date = new Date(_.get(feature, 'createdAt'))
       return tooltip.setContent('<b>' + name + '</b> - ' + this.formatDate(date))
