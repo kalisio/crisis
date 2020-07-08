@@ -3,7 +3,7 @@
 **Akt'n'Map** est un projet libre disponible sur [GitHub](https://github.com/kalisio/aktnmap).
 
 Il repose sur un écosystème de développement et de déploiement composé de:
-* [KDK](https://kalisio.github.io/kdk/), a kit de développement pour les applications géospatiales
+* [KDK](https://kalisio.github.io/kdk/), un kit de développement pour les applications géospatiales
 * [Kano](https://kalisio.github.io/kdk/), un visualiseur 2D/3D de données géospatiales
 * [Weacast](https://weacast.github.io/weacast-docs/), une plateforme de gestion de données météorologiques,
 * [Kargo](https://kalisio.github.io/kargo/), une solution pour déployer des services géospatiaux
