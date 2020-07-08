@@ -121,6 +121,10 @@ The participants and coordinators of an event can be selected as:
 By creating an event you become the coordinator by default but you can share this responsibility with others by make them a coordinator as well.
 :::
 
+The following figure shows a standard configuration in the application and how events can target different users at different levels:
+
+![structure](../../assets/structure-EN.png)
+
 Akt'n'Map allows to attach to each event:
   * *pictures* or *documents* shared among participants,
   * a **[processes](../gofurther/processes.md)** defining interactions between participants and coordinators.

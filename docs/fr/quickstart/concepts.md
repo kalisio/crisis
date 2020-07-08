@@ -121,6 +121,10 @@ Les participants et les coordinateurs d'un événement peuvent être choisis com
 L'utilisateur qui créé un événement en est par défaut le coordinateur mais il peut partager ou déléguer la gestion à d'autres.
 :::
 
+La figure suivante résume un exemple de structuration classique dans l'application et comment un événement peut cibler des personnes à différents niveaux:
+
+![structure](../../assets/structure-FR.png)
+
 A un évènement, Akt'n'Map permet d’associer :
   * des *photos* ou des *documents* afin de les partager entre les acteurs,
   * un **[processus](../gofurther/processes.md)** définissant les interaction entre les participants et les coordinateurs.
