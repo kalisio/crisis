@@ -44,7 +44,7 @@ Voir comment entrer dans le contexte d'une organisation via le <tour-link text="
 
 Un utilisateur peut appartenir à *plusieurs* organisations. Dans ce cas un *tableau de bord* synthétise les événements en cours au sein de ses différentes organisations sur la page d'acceuil.
 
-:point_right: Vous appartenez à *plusieurs* organisations ? <tour-link text="Voir votre tableau de bord" path="dashboard"/>
+:point_right: Vous appartenez à *plusieurs* organisations ? <tour-link text="Voir votre tableau de bord" path="home/dashboard"/>
 
 Un utilisateur peut également créer de nouvelles organisations.
 

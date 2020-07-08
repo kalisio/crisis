@@ -44,7 +44,7 @@ How to enter into the context of an organisation through the <tour-link text="ma
 
 A user can belong to *multiple* organisations. In this case a *dashboard* summarizes the running events on the home page.
 
-:point_right: You belong to *multiple* organisations ? <tour-link text="Open your dashboard" path="dashboard"/>
+:point_right: You belong to *multiple* organisations ? <tour-link text="Open your dashboard" path="home/dashboard"/>
 
 A user can also create new organisations.
 
