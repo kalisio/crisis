@@ -2,9 +2,7 @@ module.exports = [{
   target: '#name-field',
   content: 'tours.invite-member.MEMBER_NAME_LABEL',
   params: {
-    placement: 'top',
-    clickOnPrevious: '#close-action',
-    previousDelay: 500
+    placement: 'top'
   }
 }, {
   target: '#email-field',
@@ -29,8 +27,6 @@ module.exports = [{
   target: '#invite-button',
   content: 'tours.invite-member.INVITE_MEMBER_LABEL',
   params: {
-    placement: 'left',
-    clickOnNext: '#close-action',
-    nextDelay: 500
+    placement: 'left'
   }
 }]

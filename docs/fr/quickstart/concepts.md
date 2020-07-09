@@ -127,7 +127,7 @@ La figure suivante résume un exemple de structuration classique dans l'applicat
 
 A un évènement, Akt'n'Map permet d’associer :
   * des *photos* ou des *documents* afin de les partager entre les acteurs,
-  * un **[processus](../gofurther/processes.md)** définissant les interaction entre les participants et les coordinateurs.
+  * un **[processus](../gofurther/workflow.md)** définissant les interaction entre les participants et les coordinateurs.
 
 :point_right: Vous êtes prêt à partager de l'information ? <tour-link text="Voir comment gérer vos événements" path="home" :params="{ organisation: 'member' }"/>
 
@@ -157,4 +157,4 @@ Un participant ne peut pas modifier un événement bien qu'il puisse partager de
 
 Un coordinateur peut modifier et clôturer (i.e. détruire) un événement, ainsi que sa liste de participants ou coordinateurs.
 
-Il a également accès à une *vue cartographique* synthétisant la position des acteurs et leur état d’avancement dans le [processus](../gofurther/processes.md).
+Il a également accès à une *vue cartographique* synthétisant la position des acteurs et leur état d’avancement dans le [processus](../gofurther/workflow.md).

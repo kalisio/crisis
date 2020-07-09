@@ -104,7 +104,7 @@
       "ACCOUNT_LINK_LABEL": "Manage <b>your identifiers</b> and their security",
       "ORGANISATION_LABEL": "Enter the context of one of your organisation by selecting its name.",
       "ORGANISATION_LINK_LABEL": "Enter the context of this organisation",
-      "HELP_LABEL": "Access our <b><a href='/#/home/help'>online help</a></b> anytime.",
+      "HELP_LABEL": "Access our online help anytime",
       "ABOUT_LABEL": "Display detailed system information and send us bug reports.",
       "BUG_LABEL": "Send us a bug report with a preformatted email containing required information.",
       "SETTINGS_LABEL": "Update general settings of the system on your device.",
@@ -249,6 +249,22 @@
       "COORDINATORS_LABEL": "Typing <b>the first characters</b> of a user name, a group name or a tag name make it selectable. Once added remove it using the cross.",
       "SELECT_LAYER_LABEL": "Select the target geographical elements layer of the event.",
       "LAYER_LABEL": "Typing <b>the first characters</b> of the layer name make it selectable. Once added remove it using the cross.",
+      "ADD_WORKFLOW_LABEL": "Add a workflow to your model using this option.",
+      "WORKFLOW_LINK_LABEL": "How to create a process",
+      "WORKFLOW_DEFINITION_LABEL": "A process is a sequence of interactions. Each one defines a question a user has to go through before jumping to the next step.",
+      "WORKFLOW_LABEL": "The steps sequence is visible in this section and you can switch to one or another by selecting it.",
+      "WORKFLOW_STEP_TITLE_LABEL": "Choose a title for your step as visible by users.",
+      "WORKFLOW_STEP_ICON_LABEL": "Choose an icon for your step to identify quickly the status of the participant within the process.",
+      "WORKFLOW_STEP_DESCRIPTION_LABEL": "Choose a description for your step as visible by users.",
+      "WORKFLOW_STEP_INTERACTION_LABEL": "Choose possible responses for users in your step. Simply type each response and validate, this will create a chip.",
+      "WORKFLOW_STEP_INTERACTION_ICON_LABEL": "By selecting the chip you will be able to change the associated icon so that you identify quickly the status of the participant within the process.",
+      "WORKFLOW_STEP_END_LABEL": "Choose responses allowing users to quit the process at this step.",
+      "WORKFLOW_STEP_STAKEHOLDER_LABEL": "Select which users will answer the question at this step.",
+      "WORKFLOW_PREVIOUS_STEP_LABEL": "Go back to previous step.",
+      "WORKFLOW_ADD_STEP_LABEL": "Add a step to your process when required.",
+      "WORKFLOW_REMOVE_STEP_LABEL": "Remove a step from your process when required.",
+      "WORKFLOW_PREVIEW_STEP_LABEL": "Preview the interactions of your process.",
+      "WORKFLOW_NEXT_STEP_LABEL": "Jump to next step.",
       "CREATE_TEMPLATE_LABEL": "Confirm the creation of your new template."
     },
     "groups": {
@@ -457,7 +473,8 @@
     "RECONNECT": "We are trying to reconnect...",
     "REFUSED": "Your connection have been refused by the server, you have been disconnected...",
     "RETRY": "Retry",
-    "ALERT": "Alert"
+    "ALERT": "Alert",
+    "ORGANISATION_NOT_FOUND": "Impossible to find a corresponding organisation for this request"
   },
   "plans": {
     "bronze_LABEL": "Bronze",

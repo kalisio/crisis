@@ -51,12 +51,14 @@ export default {
         })
         if (organisation) {
           // Stop any running tour as we will redirect
-          if (this.$refs.tour.getTour().isRunning) this.$refs.tour.getTour().stop()
-          this.$router.push({
+          //this.$refs.tour.getTour().stop()
+          this.$router.replace({
             name: _.get(this.$route, 'query.route', 'context'),
             params: Object.assign({ contextId: organisation._id }, _.get(this.$route, 'params', {})),
             query: _.get(this.$route, 'query', {})
           })
+        } else {
+          this.$toast({ html: this.$t('Index.ORGANISATION_NOT_FOUND') })
         }
       }
     }

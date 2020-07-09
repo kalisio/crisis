@@ -55,8 +55,6 @@ module.exports = [{
   target: '#apply-button',
   content: 'tours.create-event.CREATE_EVENT_LABEL',
   params: {
-    placement: 'left',
-    clickOnNext: '#close-action',
-    nextDelay: 500
+    placement: 'left'
   }
 }]

@@ -108,7 +108,7 @@
       "ACCOUNT_LINK_LABEL": "Gérez ici <b>vos identifiants</b> et leur sécurité",
       "ORGANISATION_LABEL": "Basculez dans le contexte d'une de vos organisations en sélectionnant son nom.",
       "ORGANISATION_LINK_LABEL": "Entrez dans le contexte de cette organisation",
-      "HELP_LABEL": "Accédez à notre <b><a href='/#/home/help'>aide en ligne</a></b> à tout moment.",
+      "HELP_LABEL": "Accédez à notre aide en ligne à tout moment",
       "ABOUT_LABEL": "Affichez les informations détaillées du système et signalez-nous un boggue.",
       "BUG_LABEL": "Signalez-nous un boggue via un email contenant automatiquement les informations nécessaires.",
       "SETTINGS_LABEL": "Modifiez les paramètres généraux du système sur votre appareil.",
@@ -255,6 +255,22 @@
       "COORDINATORS_LABEL": "Tapez <b>les premières lettres</b> du nom d'une personne, d'un groupe ou d'une étiquette pour l'ajouter à la liste. Une fois ajouté utilisez la croix pour supprimer le coordinateur.",
       "SELECT_LAYER_LABEL": "Sélectionnez la couche d'éléments géographiques cible de votre modèle.",
       "LAYER_LABEL": "Tapez <b>les premières lettres</b> du nom de la couche pour l'ajouter à la liste. Une fois ajoutée utilisez la croix pour la supprimer.",
+      "ADD_WORKFLOW_LABEL": "Ajoutez un processus à votre modèle en sélectionnant cette option.",
+      "WORKFLOW_LINK_LABEL": "Voir comment créer un processus",
+      "WORKFLOW_DEFINITION_LABEL": "Un processus est composé d'une série d'étapes d'interaction. Chacune définit une question à laquelle un intervenant doit répondre avant de pouvoir passer à l'étape suivante.",
+      "WORKFLOW_LABEL": "La séquence des étapes est visible dans cette zone et vous pouvez basculer de l'une à l'autre en les sélectionnant.",
+      "WORKFLOW_STEP_TITLE_LABEL": "Choisissez le titre d'une étape tel que visible par vos intervenants.",
+      "WORKFLOW_STEP_ICON_LABEL": "Choisissez l'icône d'une étape de façon à identifier rapidement l'état d'avancement des intervenants dans le processus.",
+      "WORKFLOW_STEP_DESCRIPTION_LABEL": "Choisissez la description d'une étape telle que visible par vos intervenants.",
+      "WORKFLOW_STEP_INTERACTION_LABEL": "Choisissez les réponses possibles pour vos intervenants à cette étape. Entrez simplement chaque réponse puis validez, cela fera apparaitre un badge.",
+      "WORKFLOW_STEP_INTERACTION_ICON_LABEL": "En sélectionnant le badge vous pourrez modifier son icône de façon à identifier rapidement l'état d'avancement des intervenants dans le processus.",
+      "WORKFLOW_STEP_END_LABEL": "Choisissez les réponses qui permettent à un intervenant de stopper son avancement dans le processus à cette étape.",
+      "WORKFLOW_STEP_STAKEHOLDER_LABEL": "Choisissez à quel type d'intervenant la question sera posée à cette étape.",
+      "WORKFLOW_PREVIOUS_STEP_LABEL": "Revenez à l'étape précédente.",
+      "WORKFLOW_ADD_STEP_LABEL": "Ajoutez une étape à votre processus si nécessaire.",
+      "WORKFLOW_REMOVE_STEP_LABEL": "Supprimez une étape de votre processus si nécessaire.",
+      "WORKFLOW_PREVIEW_STEP_LABEL": "Prévisualisez les interactions de votre processus.",
+      "WORKFLOW_NEXT_STEP_LABEL": "Passez à l'étape suivante.",
       "CREATE_TEMPLATE_LABEL": "Confirmez la création de votre nouveau modèle."
     },
     "groups": {
@@ -463,7 +479,8 @@
     "RECONNECT": "Tentative de reconnexion en cours...",
     "REFUSED": "Votre connexion a été refusée par le serveur, vous avez été déconnecté...",
     "RETRY": "Rééssayer",
-    "ALERT": "Alerte"
+    "ALERT": "Alerte",
+    "ORGANISATION_NOT_FOUND": "Impossible de trouver une organisation correspondant à la requête"
   },
   "plans": {
     "bronze_LABEL": "Bronze",

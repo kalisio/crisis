@@ -2,9 +2,7 @@ module.exports = [{
   target: '#group-field',
   content: 'tours.join-group.GROUP_NAME_LABEL',
   params: {
-    placement: 'top',
-    clickOnPrevious: '#close-action',
-    previousDelay: 500
+    placement: 'top'
   }
 }, {
   target: '#role-field',
@@ -22,8 +20,6 @@ module.exports = [{
   target: '#join-button',
   content: 'tours.join-group.ADD_MEMBER_LABEL',
   params: {
-    placement: 'left',
-    clickOnNext: '#close-action',
-    nextDelay: 500
+    placement: 'left'
   }
 }]

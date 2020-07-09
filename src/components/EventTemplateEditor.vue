@@ -1,22 +1,20 @@
 <template>
-  <div>
-    <k-modal ref="modal" :title="title" :toolbar="toolbar()" :buttons="buttons" :route="true">
-      <div slot="modal-content" class="column xs-gutter">
-        <div v-show="!workflowEdition">
-          <k-form :class="{ 'light-dimmed': applyInProgress }" ref="templateForm" :schema="schema"  @field-changed="onFieldChanged"/>
-          <p :class="{ 'light-dimmed': applyInProgress }" class="col-10 caption pull-left">
-            <q-toggle icon="las la-retweet" v-model="hasWorkflow" @input="onWorkflow">
-            </q-toggle>
-            <strong v-show="!hasWorkflow">{{$t('EventTemplateEditor.ADD_WORKFLOW_LABEL')}}</strong>
-            <strong v-show="hasWorkflow">{{$t('EventTemplateEditor.WORKFLOW_HELPER_LABEL')}}</strong>
-            <a v-show="hasWorkflow" class="text-caption" @click="workflowEdition = true"> ({{$t('EventTemplateEditor.WORKFLOW_MANAGE_HELPER_LABEL')}})</a>
-          </p>
-        </div>
-        <event-workflow-form v-show="workflowEdition" ref="workflowForm" :objectId="objectId" :layerId="layerId" />
+  <k-modal ref="modal" :title="title" :toolbar="toolbar()" :buttons="buttons" :route="true">
+    <div slot="modal-content" class="column xs-gutter">
+      <div v-show="!workflowEdition">
+        <k-form :class="{ 'light-dimmed': applyInProgress }" ref="templateForm" :schema="schema"  @field-changed="onFieldChanged"/>
+        <p :class="{ 'light-dimmed': applyInProgress }" class="col-10 caption pull-left">
+          <q-toggle id="workflow-toggle" icon="las la-retweet" v-model="hasWorkflow" @input="onWorkflow">
+          </q-toggle>
+          <strong v-show="!hasWorkflow">{{$t('EventTemplateEditor.ADD_WORKFLOW_LABEL')}}</strong>
+          <strong v-show="hasWorkflow">{{$t('EventTemplateEditor.WORKFLOW_HELPER_LABEL')}}</strong>
+          <a v-show="hasWorkflow" class="text-caption" @click="workflowEdition = true"> ({{$t('EventTemplateEditor.WORKFLOW_MANAGE_HELPER_LABEL')}})</a>
+        </p>
       </div>
-      <q-spinner-cube color="primary" class="fixed-center" v-if="applyInProgress" size="4em"/>
-    </k-modal>
-  </div>
+      <event-workflow-form v-show="workflowEdition" ref="workflowForm" :objectId="objectId" :layerId="layerId" />
+    </div>
+    <q-spinner-cube color="primary" class="fixed-center" v-if="applyInProgress" size="4em"/>
+  </k-modal>
 </template>
 
 <script>

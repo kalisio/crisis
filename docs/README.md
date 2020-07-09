@@ -5,7 +5,7 @@ actionText: Ready to start ?
 actionLink: /quickstart/
 features:
 - title: Customisable
-  details: Define your own organization and business processes
+  details: Define your own organization and business workflows
 - title: Smooth
   details: Mobilize instantly, track progress in realtime and make your teams intervene with ease
 - title: Mobility oriented

@@ -67,7 +67,6 @@ module.exports = {
             component: 'EventDashboard',
             tour: tours.dashboard
           },
-          'help': 'Help',
           'account/:perspective': {
             name: 'account-activity',
             component: 'account/KAccountActivity',

@@ -1,5 +1,5 @@
 <template>
-  <q-stepper header-nav animated ref="stepper" v-model="currentStep" @input="onStepSelected">
+  <q-stepper id="workflow" header-nav animated ref="stepper" v-model="currentStep" @input="onStepSelected">
     <q-step v-for="(step, index) in steps" :key="step.name + '_' + index" :name="step.name"
       :title="step.title" :icon="getStepIcon(step)">
       <k-form ref="stepForm" v-show="!preview" :schema="schema" @form-ready="fillStepForm" @field-changed="onStepFieldChanged">
@@ -10,27 +10,27 @@
     </q-step>
     <template v-slot:navigation>
       <q-stepper-navigation class="row justify-end">
-        <q-btn class="col-1" :disabled="currentStep === steps[0].name" flat color="primary" icon="las la-step-backward" @click="onPreviousStep()">
+        <q-btn class="col-1" id="previous-step" :disabled="currentStep === steps[0].name" flat color="primary" icon="las la-step-backward" @click="onPreviousStep()">
           <q-tooltip v-if="currentStep !== steps[0].name" anchor="top middle" self="bottom middle" :offset="[10, 10]">
             {{$t('EventWorkflowForm.PREVIOUS_STEP_BUTTON')}}
           </q-tooltip>
         </q-btn>
-        <q-btn class="col-1" v-show="!preview" flat color="primary" icon="las la-plus-circle" @click="onAddStep()">
+        <q-btn class="col-1" id="add-step" v-show="!preview" flat color="primary" icon="las la-plus-circle" @click="onAddStep()">
           <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
             {{$t('EventWorkflowForm.ADD_STEP_BUTTON')}}
           </q-tooltip>
         </q-btn>
-        <q-btn class="col-1" v-show="!preview && (steps.length > 1)" flat color="primary" icon="las la-trash" @click="onRemoveStep()">
+        <q-btn class="col-1" id="remove-step" v-show="!preview && (steps.length > 1)" flat color="primary" icon="las la-trash" @click="onRemoveStep()">
           <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
             {{$t('EventWorkflowForm.REMOVE_STEP_BUTTON')}}
           </q-tooltip>
         </q-btn>
-        <q-btn class="col-1" flat color="primary" :icon="preview ? 'las la-edit' : 'las la-play'" @click="onPreviewOrEdit">
+        <q-btn class="col-1" id="preview-step" flat color="primary" :icon="preview ? 'las la-edit' : 'las la-play'" @click="onPreviewOrEdit">
           <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
             {{$t(!preview ? 'EventWorkflowForm.PREVIEW_WORKFLOW_BUTTON': 'EventWorkflowForm.EDIT_WORKFLOW_BUTTON')}}
           </q-tooltip>
         </q-btn>
-        <q-btn class="col-1" :disabled="currentStep === steps[steps.length - 1].name" flat color="primary" icon="las la-step-forward" @click="onNextStep()">
+        <q-btn class="col-1" id="next-step" :disabled="currentStep === steps[steps.length - 1].name" flat color="primary" icon="las la-step-forward" @click="onNextStep()">
           <q-tooltip v-if="currentStep !== steps[steps.length - 1].name" anchor="top middle" self="bottom middle" :offset="[10, 10]">
             {{$t('EventWorkflowForm.NEXT_STEP_BUTTON')}}
           </q-tooltip>

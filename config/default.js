@@ -1,4 +1,5 @@
 const website = 'https://www.kalisio.com'
+const onlineHelp = 'https://kalisio.github.io/aktnmap'
 
 const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
@@ -125,7 +126,7 @@ module.exports = {
   appName: 'Akt\'n\'Map',
   appLogo: 'aktnmap-logo.png',
   appWebsite: 'https://kalisio.com/solutions#aktnmap',
-  appOnlineHelp: 'https://kalisio.github.io/aktnmap',
+  appOnlineHelp: onlineHelp,
   publisher: 'Kalisio',
   publisherWebsite: website,
   logs: {
@@ -212,7 +213,7 @@ module.exports = {
   },
   user_actions: {
     links: [
-      { id: 'help', label: 'sideNav.HELP', icon: 'las la-question', route: { name: 'help'} },
+      { id: 'help', label: 'sideNav.HELP', icon: 'las la-question', url: onlineHelp },
       { }, // separator
       { id: 'logout', label: 'sideNav.LOGOUT', icon: 'las la-sign-out-alt', route: { name: 'logout' } }
     ]

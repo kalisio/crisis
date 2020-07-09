@@ -30,7 +30,29 @@ module.exports = [{
   params: {
     placement: 'top',
     clickOnLink: '#new-organisation',
-    tour: 'create-organisation'
+    nextDelay: 250
+  }
+}, {
+  target: '#name-field',
+  content: 'tours.create-organisation.ORGANISATION_NAME_LABEL',
+  params: {
+    placement: 'top',
+    clickOnPrevious: '#close[1]',
+    previousDelay: 500
+  }
+}, {
+  target: '#description-field',
+  content: 'tours.create-organisation.ORGANISATION_DESCRIPTION_LABEL',
+  params: {
+    placement: 'top'
+  }
+}, {
+  target: '#apply-button',
+  content: 'tours.create-organisation.CREATE_ORGANISATION_LABEL',
+  params: {
+    placement: 'left',
+    clickOnNext: '#close[1]',
+    nextDelay: 500
   }
 }, {
   target: 'div[id^=link-]',
@@ -50,9 +72,10 @@ module.exports = [{
   }
 }, {
   target: '#help',
-  content: 'tours.home.HELP_LABEL',
+  link: 'tours.home.HELP_LABEL',
   params: {
-    placement: 'top'
+    placement: 'top',
+    clickOnLink: '#help'
   }
 }, {
   target: '#edit-settings',
@@ -75,9 +98,7 @@ module.exports = [{
   content: 'tours.home.BUG_LABEL',
   params: {
     placement: 'top',
-    clickOnNext: ['#close-action', '#app-bar-leading'],
     clickOnPrevious: ['#close-action', '#app-bar-leading'],
-    nextDelay: 500,
     previousDelay: 500
   }
 }]

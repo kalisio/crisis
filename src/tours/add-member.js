@@ -2,9 +2,7 @@ module.exports = [{
   target: '#user-field',
   content: 'tours.add-member.MEMBER_NAME_LABEL',
   params: {
-    placement: 'top',
-    clickOnPrevious: '#close-action',
-    previousDelay: 500
+    placement: 'top'
   }
 }, {
   target: '#role-field',

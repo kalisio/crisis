@@ -123,11 +123,11 @@ By creating an event you become the coordinator by default but you can share thi
 
 The following figure shows a standard configuration in the application and how events can target different users at different levels:
 
-![structure](../../assets/structure-EN.png)
+![structure](../assets/structure-EN.png)
 
 Akt'n'Map allows to attach to each event:
   * *pictures* or *documents* shared among participants,
-  * a **[processes](../gofurther/processes.md)** defining interactions between participants and coordinators.
+  * a **[workflow](../gofurther/workflow.md)** defining interactions between participants and coordinators.
 
 :point_right: Ready to share some information ? <tour-link text="How to manage your events" path="home" :params="{ organisation: 'member' }"/>
 
@@ -157,5 +157,5 @@ A participant cannot modify an event although he can share documents and picture
 
 A coordinator can update and close (i.e. destroy) an event, and change its set of participants and coordinators.
 
-His has also access to a *cartographic view* summarizing the position and state of each participant according to the [process](../gofurther/processes.md).
+His has also access to a *cartographic view* summarizing the position and state of each participant according to the [workflow](../gofurther/workflow.md).
 
