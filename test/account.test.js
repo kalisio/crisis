@@ -31,7 +31,7 @@ test('Create account', async test => {
   await pages.checkNoClientError(test)
 })
 
-test.skip('Update profile', async test => {
+test('Update profile', async test => {
   await screens.login(test, data.user)
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
@@ -98,7 +98,7 @@ test('Delete account', async test => {
   await layout.clickLeading(test)
   await sideNav.clickIdentity(test)
   await layout.clickTabBar(test, pages.Account.DANGER_ZONE_TAB)
-  await account.delete(test, data.user.name)
+  await account.delete(test, data.newName)
   await screens.goToLoginScreen(test)
   await pages.checkNoClientError(test)
 })
