@@ -24,7 +24,7 @@ export default async ({ app, Vue }) => {
   }
   catch (error) {
     logger.error(error.message)
-  }
+  } 
   // Load the translation files
   const modules = ['core', 'map', 'aktnmap']
   try {
