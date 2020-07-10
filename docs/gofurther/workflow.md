@@ -30,7 +30,7 @@ Practically, a dedicated editor is used to define each workflow step in the appl
 
 According to our example the second step will be the following:
 
-![workflow-step-2](../assets/Event-Workflow-1-EN.png)
+![workflow-step-2](../assets/Event-Workflow-2-EN.png)
 
 :point_right: You manage an organisation ? <tour-link text="How to create a template including a workflow" path="home" :params="{ organisation: 'manager', route: 'create-event-template' }"/>
 
@@ -40,6 +40,6 @@ When receiving the event the application will ask the participant to anser the q
 
 ![workflow-interaction](../assets/Interaction-EN.png)
 
-The coordinator has access to a *cartographic view* summarizing the position and state of each participant according to the iconography defined within the process. At a glance he can see the list of participants who have received the event as well as their answers. He also knows if he has to provide an answer to some of them according to the definition of the workflow:
+The coordinator has access to a *cartographic view* summarizing the position and state of each participant according to the iconography defined within the process. At a glance he can see the list of participants who have received the event as well as their answers. He also knows if he has to provide an answer to some of them according to the definition of the workflow thanks to a specific icon:
 
 ![workflow-map](../assets/Event-Map-EN.png)

@@ -23,6 +23,10 @@ module.exports = {
   theme: 'kalisio',
   themeConfig: {
     docsDir: 'docs',
+    banner: {
+      image: 'https://s3.eu-central-1.amazonaws.com/kalisioscope/aktnmap/aktnmap-logo-black-256x84.png',
+      slogan: 'Better decisions with instant geographic insights'
+    },
     appUrl: (process.env.NODE_ENV === 'development' ?
       `http://localhost:${clientPort}/` : 'https://aktnmap.dev.kalisio.xyz/'),
     locales: {
@@ -77,6 +81,8 @@ function getQuickStartSidebar () {
     '',
     'features',
     'benefits',
+    'installation',
+    'update',
     'concepts'
   ]
 }

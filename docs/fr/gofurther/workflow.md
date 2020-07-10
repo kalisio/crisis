@@ -31,7 +31,7 @@ En pratique, un éditeur dédié permet de définir chaque étape au sein de l'a
 
 Et celle de la seconde étape ressemblerait à ceci:
 
-![workflow-step-2](../../assets/Event-Workflow-1-FR.png)
+![workflow-step-2](../../assets/Event-Workflow-2-FR.png)
 
 :point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment créer un modèle avec processus" path="home" :params="{ organisation: 'manager', route: 'create-event-template' }"/>
 
@@ -41,6 +41,6 @@ Lors de la réception de l'événement par un intervenant l'application lui dema
 
 ![workflow-interaction](../../assets/Interaction-FR.png)
 
-Le coordinateur dispose quant à lui d'une *vue cartographique* synthétisant la position des intervenants et leur état d'avancement selon l'icônographie définie dans le processus. En un clin d'oeil il visualise la liste des participants ayant reçu l'événement ainsi que leur réponses. Il sait également qu'il doit engager une interaction avec ceux attendant une réponse de sa part conformément à la définition du processus:
+Le coordinateur dispose quant à lui d'une *vue cartographique* synthétisant la position des intervenants et leur état d'avancement selon l'icônographie définie dans le processus. En un clin d'oeil il visualise la liste des participants ayant reçu l'événement ainsi que leur réponses. Il sait également qu'il doit engager une interaction avec ceux attendant une réponse de sa part conformément à la définition du processus grâce à une icône dédiée:
 
 ![workflow-map](../../assets/Event-Map-FR.png)

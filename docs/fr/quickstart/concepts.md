@@ -8,7 +8,7 @@ Nous allons illustrer ici les *concepts de base* vous permettant de prendre en m
 
 Cette présentation s'accompagne parfois de petits *didacticiels* qui peuvent être exécutés directement sur l'application. Aussi il vous sera nécessaire de suivre tout d'abord les étapes vous permettant de créer un compte sur l'application puis de vous y connecter pour que cela fonctionne correctment.
 
-Un lien peut vous permettre d'exécuter directement un didacticiel depuis la documentation, sinon rendez-vous sur l'application à l'endroit adéquat puis activez le didacticiel en cliquant sur l'icone <a href=""><i class="las la-question-circle"/></a>. Vous pourrez ensuite suivre les instructions pas à pas <a href=""><i class="las la-chevron-left"/></a> ou revenir en arrière <a href=""><i class="las la-chevron-right"/></a> et stopper à tout instant <a href=""><i class="las la-times"/></a> comme illustré sur la figure suivante:
+Un lien peut vous permettre d'exécuter directement un didacticiel depuis la documentation, sinon rendez-vous sur l'application à l'endroit adéquat puis activez le didacticiel en cliquant sur l'icone <a href=""><i class="las la-question-circle"/></a>. Vous pourrez ensuite suivre les instructions pas à pas <a href=""><i class="las la-chevron-right"/></a> ou revenir en arrière <a href=""><i class="las la-chevron-left"/></a> et stopper à tout instant <a href=""><i class="las la-times"/></a> comme illustré sur la figure suivante:
 
 ![tour](../../assets/Tour-FR.png)
 
@@ -54,7 +54,7 @@ Selon les organisations, un utilisateur possède des *rôles différents* et ne 
 * un utilisateur appartient à plusieurs organisations (1, 2 et 3),
 * un utilisateur gére plusieurs organisations (2),
 * une organisation possède plusieurs groupes (3),
-* un membre d'une organisation appartenient à plusieurs groupes (3).
+* un membre d'une organisation appartient à plusieurs groupes (3).
 
 ![user-organisations](../../assets/user-organisations.png)
 
@@ -72,6 +72,7 @@ Les droits sont cumulatifs, c'est à dire qu'un propriétaire (respectivement ge
 Le gestionnaire d'une organisation peut donc:
   * gérer les **membres** au sein de cette organisation,
   * créer des **groupes** au sein de cette organisation.
+
 Le propriétaire peut également détruire l'organisation et gérer les moyens de paiements.
 
 Le gestionnaire d'un groupe peut gérer les **membres** au sein de ce groupe et le modifier. Le propriétaire peut également détruire le groupe.

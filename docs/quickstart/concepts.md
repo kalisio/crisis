@@ -8,7 +8,7 @@ Here is a quick rundown of the *key concepts* to handle when you're just getting
 
 This presentation comes with small *tutorials* that can be directly run on the application. Thus, you will first have to follow the required steps to create your account then connect to make everything works as expected.
 
-A link can allow you to execute the tutorial directly from the documentation, otherwise open the application at the right place then click on the following icon <a href=""><i class="las la-question-circle"/></a>. You can then follow the step by step guide <a href=""><i class="las la-chevron-left"/></a>, go back if required <a href=""><i class="las la-chevron-right"/></a> and stop anytime <a href=""><i class="las la-times"/></a> as illustrated by the following figure:
+A link can allow you to execute the tutorial directly from the documentation, otherwise open the application at the right place then click on the following icon <a href=""><i class="las la-question-circle"/></a>. You can then follow the step by step guide <a href=""><i class="las la-chevron-right"/></a>, go back if required <a href=""><i class="las la-chevron-left"/></a> and stop anytime <a href=""><i class="las la-times"/></a> as illustrated by the following figure:
 
 ![tour](../assets/Tour-EN.png)
 
@@ -54,7 +54,7 @@ A user is being assigned *different roles* in his organisations so that differen
 * a user belongs to multiple organisations (1, 2 and 3),
 * a user manages multiple organisations (2),
 * an organisation has multiple groups (3),
-* a member of an organisation appartenient à plusieurs groupes (3).
+* a member of an organisation belongs to multiple groups (3).
 
 ![user-organisations](../assets/user-organisations.png)
 
@@ -72,6 +72,7 @@ Rights are cumulative, a owner (respectively manager) owns all rights of a manag
 The manager of an organisation can:
   * manage **members** of this organisation,
   * create **groups** within this organisation and manage members of these groups.
+  
 The owner can as well detroy the organisation and manage payment means.
 
 The manager of a group can manage **members** of this group. The owner can as well detroy the group.
