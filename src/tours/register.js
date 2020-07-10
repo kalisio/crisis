@@ -53,7 +53,7 @@ module.exports = [{
   }
 }, {
   target: '#login-link',
-  link: 'tours.register.LOGIN_LABEL',
+  link: 'tours.register.LOGIN_LINK_LABEL',
   params: {
     placement: 'bottom',
     route: { name: 'login' }
