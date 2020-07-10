@@ -72,6 +72,7 @@ export default {
   },
   watch: {
     layerId: async function () {
+      if (!this.layerId) return
       await this.loadLayerSchema(this.layerId)
       this.fill({ workflow: this.steps })
     }
