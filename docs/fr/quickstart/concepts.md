@@ -30,7 +30,7 @@ Une *personne* qui est **enregistrée** sur Akt'n'Map. Cela peut se faire de deu
 
 ## Activité
 
-Au sein de l'application les actions visant un même type d'objets sont regroupés sur un même écran présentant une interface utilisateur adaptée et nommée **activité**. Lorsque plusieurs écrans sont nécessaires compte tenu du nombre d'actions possibles ils sont affichés sous la forme d'**onglets**. La sélection d'un onglet permet de basculer sur l'écran ad-hoc.
+Au sein de l'application les actions visant un même type d'objets sont regroupés sur un même écran présentant une interface utilisateur adaptée et nommée **activité**. Lorsque plusieurs écrans sont nécessaires compte tenu du nombre d'actions possibles, ils sont affichés sous la forme d'**onglets**. La sélection d'un onglet permet de basculer sur l'écran ad-hoc.
 
 Par exemple, tout ce qui a trait à votre compte et à sa sécurité est centralisé dans une activité de gestion composée de trois écrans comme illustré sur la figure suivante:
 
@@ -110,7 +110,7 @@ Comment entrer dans l'activité de gestion des étiquettes depuis <tour-link tex
 
 Une *chose à faire* ou une *information autour d'un fait concret* que l'on désire partager et traiter avec certains membres d'une organisation. Typiquement une information opérationnelle, une intervention sur le terrain, des actions de gestion de crise, etc.
 
-Un événement génère des *notifications* sur les mobiles des **participants** qui ont installé lapplication mobile lors de sa création, mise à jour et clôture par ses **coordinateurs**.
+Un événement génère des *notifications* sur les mobiles des **participants** qui ont installé l'application mobile lors de sa création, mise à jour et clôture par ses **coordinateurs**.
 
 Les participants et les coordinateurs d'un événement peuvent être choisis comme:
   * des membres de façon individuelle,
