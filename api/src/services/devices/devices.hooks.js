@@ -1,4 +1,5 @@
 import { hooks as coreHooks } from '@kalisio/kdk/core.api'
+import { subscribeToAppTopic, unsubscribeFromAppTopic } from '../../hooks'
 
 module.exports = {
   before: {
@@ -20,6 +21,7 @@ module.exports = {
     coreHooks.updateSubjectSubscriptions({ field: 'organisations', service: 'organisations' }),
     coreHooks.updateSubjectSubscriptions({ field: 'groups', service: 'groups' }),
     coreHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' }),
+    unsubscribeFromAppTopic,
     hook => {
       // Restore previous devices
       hook.params.user.devices = hook.params.devices
@@ -44,6 +46,7 @@ module.exports = {
       coreHooks.updateSubjectSubscriptions({ field: 'organisations', service: 'organisations' }),
       coreHooks.updateSubjectSubscriptions({ field: 'groups', service: 'groups' }),
       coreHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' }),
+      subscribeToAppTopic,
       hook => {
         // Restore previous devices
         hook.params.user.devices = hook.params.devices
@@ -54,7 +57,8 @@ module.exports = {
       // Resubscribe the device to all possible topics in case some have been lost
       coreHooks.updateSubjectSubscriptions({ field: 'organisations', service: 'organisations' }),
       coreHooks.updateSubjectSubscriptions({ field: 'groups', service: 'groups' }),
-      coreHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' })
+      coreHooks.updateSubjectSubscriptions({ field: 'tags', service: 'tags' }),
+      subscribeToAppTopic
     ],
     patch: [],
     remove: []

@@ -235,7 +235,11 @@ module.exports = {
       ANDROID: process.env.SNS_ANDROID_ARN,
       IOS: process.env.SNS_IOS_ARN
     },
-    topicName
+    topicName,
+    topics: (process.env.SNS_ANDROID_TOPIC_ARN && process.env.SNS_IOS_TOPIC_ARN ? {
+      ANDROID: process.env.SNS_ANDROID_TOPIC_ARN,
+      IOS: process.env.SNS_IOS_TOPIC_ARN
+    } : undefined)
   },
   mapillary: {
     clientID: process.env.MAPILLARY_CLIENTID
