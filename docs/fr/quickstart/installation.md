@@ -21,7 +21,7 @@ L'application internet ne nécessite aucune procédure d'installation particuli�
 
 ## Applications mobiles
 
-Les applications **Akt'n'Map** pour [Android](https://play.google.com/store/apps/details?id=com.kalisio.aktnmap) et [iOS](https://apps.apple.com/fr/app/aktnmap/id1435111844) vous aident à suivre et recevoir vos événements où que vous soyez.
+Vous travaillez sur le terrain ? Les applications **Akt'n'Map** pour [Android](https://play.google.com/store/apps/details?id=com.kalisio.aktnmap) et [iOS](https://apps.apple.com/fr/app/aktnmap/id1435111844) vous aident à suivre et recevoir vos événements où que vous soyez.
 
 Concentrez-vous sur vos priorités en gardant un oeil sur les notifications et prenez rapidement les mesures nécessaires directement depuis l’application.
 

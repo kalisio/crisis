@@ -20,7 +20,7 @@ When we update our online services your mobile application might display a messa
 
 When a new version is available follow this procedure to update:
 
-![android-update](../../assets/Android-Update-EN.png)
+![android-update](../assets/Android-Update-EN.png)
 
 ### iOS
 

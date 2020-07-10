@@ -19,9 +19,9 @@ We advise you to keep your browser up-to-date in order to use a reliable and sec
 
 The web application does not require any installation workflow.
 
-## Applications mobiles
+## Mobiles applications
 
-[Android](https://play.google.com/store/apps/details?id=com.kalisio.aktnmap) and [iOS](https://apps.apple.com/fr/app/aktnmap/id1435111844) apps can help you monitor and capture events on the go.
+You are a fieldworker ? [Android](https://play.google.com/store/apps/details?id=com.kalisio.aktnmap) and [iOS](https://apps.apple.com/fr/app/aktnmap/id1435111844) apps can help you monitor and capture events on the go.
 
 Use mobile app notifications to keep tabs on work that needs your attention and take action faster right from the app.
 
