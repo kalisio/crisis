@@ -1,16 +1,11 @@
-import _ from 'lodash'
-import makeDebug from 'debug'
-
-const debug = makeDebug('aktnmap:devices:hooks')
-
 export async function subscribeToAppTopic (hook) {
-  const topics = hook.app.get('pusher')
-  if (topics) {
+  const topicsObject = hook.app.get('pusher')
+  if (topicsObject) {
     const pusherService = hook.app.getService('pusher')
     await pusherService.create({
       action: 'subscriptions'
     }, {
-      pushObject: topics,
+      pushObject: topicsObject,
       users: [hook.params.user]
     })
   }
@@ -18,12 +13,12 @@ export async function subscribeToAppTopic (hook) {
 }
 
 export async function unsubscribeFromAppTopic (hook) {
-  const topics = hook.app.get('pusher')
-  if (topics) {
+  const topicsObject = hook.app.get('pusher')
+  if (topicsObject) {
     const pusherService = hook.app.getService('pusher')
-    await pusherService.remove(topic._id.toString(), {
+    await pusherService.remove(null, {
       query: { action: 'subscriptions' },
-      pushObject: topics,
+      pushObject: topicsObject,
       users: [hook.params.user]
     })
   }
