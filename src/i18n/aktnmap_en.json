@@ -467,7 +467,8 @@
     "EVENT_TEMPLATE": "Select event template to be triggered",
     "CLOSE_EVENT_WITH_ALERT": "Toggle if the event must be automatically closed when the alert becomes inactive",
     "EVENT_TEMPLATE_REQUIRED": "Event template is required",
-    "EVENT_TEMPLATE_COORDINATOR_REQUIRED": "Event template must define a default coordinator"
+    "EVENT_TEMPLATE_PARTICIPANT_REQUIRED": "Event template must at least define a default participant",
+    "EVENT_TEMPLATE_COORDINATOR_REQUIRED": "Event template must at least define a default coordinator"
   },
   "Index": {
     "VERSION_MISMATCH": "Application version mismatch, please install the latest available version or check your end point",

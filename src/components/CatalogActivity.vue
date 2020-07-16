@@ -152,6 +152,7 @@ export default {
         isStorable: false,
         isEditable: false,
         isSelectable: false,
+        isStyleEditable: false,
         featureId: '_id',
         leaflet: {
           type: 'geoJson',

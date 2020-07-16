@@ -6,14 +6,16 @@
       </template>
       <template v-slot:card-content>
         <q-separator />
-        <div class="q-pa-sm event-card-description" 
-          v-bind:class="{ 'event-card-description-zoomed': zoom === true }"
-          @click="zoom=!zoom"
-          @mouseover="if (!$q.platform.is.mobile) zoom=true"
-          @mouseleave="if (!$q.platform.is.mobile) zoom=false">
-          <k-text-area :text="description" ellipsis="3-lines" />
+        <div v-if="description">
+          <div class="q-pa-sm event-card-description" 
+            v-bind:class="{ 'event-card-description-zoomed': zoom === true }"
+            @click="zoom=!zoom"
+            @mouseover="if (!$q.platform.is.mobile) zoom=true"
+            @mouseleave="if (!$q.platform.is.mobile) zoom=false">
+            <k-text-area :text="description" ellipsis="3-lines" />
+          </div>
+          <q-separator />
         </div>
-        <q-separator />
         <!--
           Location section
          -->

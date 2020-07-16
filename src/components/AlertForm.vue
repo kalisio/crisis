@@ -280,6 +280,10 @@ export default {
         this.hasError = true
         this.error = this.$t('AlertForm.EVENT_TEMPLATE_REQUIRED')
         this.$refs.event.show()
+      } else if (!_.get(eventTemplate, 'participants[0]')) {
+        this.hasError = true
+        this.error = this.$t('AlertForm.EVENT_TEMPLATE_PARTICIPANT_REQUIRED')
+        this.$refs.event.show()
       } else if (!_.get(eventTemplate, 'coordinators[0]')) {
         this.hasError = true
         this.error = this.$t('AlertForm.EVENT_TEMPLATE_COORDINATOR_REQUIRED')
@@ -340,7 +344,7 @@ export default {
       } else {
         _.set(values, 'style.icon-classes', 'fas fa-bell')
       }
-      _.set(values, 'eventTemplate', _.omit(this.$refs.eventTemplate.value(), ['coordinators']))
+      _.set(values, 'eventTemplate', _.omit(this.$refs.eventTemplate.value(), ['participants', 'coordinators']))
       _.set(values, 'closeEvent', this.$refs.closeEvent.value())
       return values
     }

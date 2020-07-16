@@ -16,7 +16,11 @@
         </q-popup-proxy>
       </div>
       <div slot="entry-content">
-        <k-text-area class="q-pa-sm" :text="item.description" />
+        <div v-if="item.location">
+          <k-text-area class="light-paragraph" :text="locationName" />
+          <q-separator />
+        </div>
+        <k-text-area v-if="item.description" class="q-pa-sm" :text="item.description" />
       </div>
     </k-history-entry>
     <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
@@ -45,6 +49,11 @@ export default {
     },
     expiredAt () {
       return this.item.expireAt && !this.item.deletedAt ? new Date(this.item.expireAt) : null
+    },
+    locationName () {
+      let name = _.get(this.item, 'location.name', '')
+      // Can be a layer name translation key in alert case
+      return (this.$t(name) ? this.$t(name) : name)
     }
   },
   data () {
