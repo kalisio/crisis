@@ -110,7 +110,7 @@ export function removeOrganisationServices (organisation) {
   removeArchivedEventLogService.call(app, { context: organisation })
 }
 
-export function createEventOnAlert (organisation) {
+export function processAlert (organisation) {
   return async function (alert) {
     const app = this
     const isActive = _.get(alert, 'status.active')
@@ -118,7 +118,16 @@ export function createEventOnAlert (organisation) {
     const triggeredAt = _.get(alert, 'status.triggeredAt')
     const label = _.get(alert, 'featureLabel', _.get(alert, 'feature'))
     const templateId = _.get(alert, 'eventTemplate._id')
-    // Only on first activation
+    const closeEvent = _.get(alert, 'closeEvent')
+    const eventsService = app.getService('events', organisation)
+    // check for existing event linked to alert
+    const results = await eventsService.find({
+      query: { 'alert': alert._id },
+      $limit: 1,
+      paginate: false
+    })
+    const previousEvent = (results.length > 0 ? results[0] : null)
+    // Create on first activation
     if (isActive && templateId && (checkedAt === triggeredAt)) {
       const eventTemplatesService = app.getService('event-templates', organisation)
       // Get template to be used, which will become the new event
@@ -132,8 +141,13 @@ export function createEventOnAlert (organisation) {
       _.set(event, 'location.name', label ? `${label}` : `${alert.layer}`)
       _.set(event, 'location.longitude', _.get(alert, 'geometry.coordinates[0]'))
       _.set(event, 'location.latitude', _.get(alert, 'geometry.coordinates[1]'))
-      const eventsService = app.getService('events', organisation)
-      await eventsService.create(event)
+      _.set(event, 'alert', alert._id)
+      if (!previousEvent) await eventsService.create(event)
+      else await eventsService.update(event._id, event)
+    }
+    // Remove on deactivation if required
+    if (!isActive && previousEvent && closeEvent) {
+      await eventsService.remove(previousEvent._id)
     }
   }
 }
@@ -197,7 +211,7 @@ export default async function () {
         app.configureService(service.name, service, servicesPath)
         if (service.name === 'alerts') {
           // Create related event whenever an alert is activated
-          service.on('patched', createEventOnAlert(service.getContextId()).bind(app))
+          service.on('patched', processAlert(service.getContextId()).bind(app))
         }
       }
       // Add event/logs archiving feature

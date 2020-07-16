@@ -50,16 +50,8 @@
       </q-list>
     </q-expansion-item>
     <q-expansion-item ref="event" icon="las la-bell" :label="$t('AlertForm.EVENT')" group="group">
-      <q-list dense class="row items-center justify-around q-pa-md">
-        <q-item class="col-12">
-          <q-item-section class="col-6">
-          {{$t('AlertForm.EVENT_TEMPLATE')}}
-          </q-item-section>
-          <q-item-section class="col-6">
-            <k-item-chooser :multiselect="false" :default-items="[]" :services="[eventTemplatesService]" @changed="onEventTemplateSelected" />
-          </q-item-section>
-        </q-item>
-      </q-list>
+      <k-item-field ref="eventTemplate" :properties="eventTemplateFieldProperties" />
+      <k-toggle-field ref="closeEvent" :properties="closeEventFieldProperties" />
     </q-expansion-item>
     <q-list v-show="hasError" dense class="row items-center justify-around q-pa-md">
       <q-item>
@@ -123,14 +115,27 @@ export default {
       },
       frequency: 6 * 60,
       conditions: [],
-      eventTemplatesService: {
-        service: 'event-templates',
-        field: 'name',
-        baseQuery: { $select: ['_id', 'name', 'icon'] },
-        icon: { name: 'whatshot' }
-      },
       hasError: false,
-      error: ''
+      error: '',
+      eventTemplateFieldProperties: {
+        name: 'event-template',
+        services: [{
+          service: 'event-templates',
+          field: 'name',
+          baseQuery: { $select: ['_id', 'name', 'icon', 'coordinators'] },
+          icon: { name: 'whatshot' }
+        }],
+        field: {
+          helper: 'AlertForm.EVENT_TEMPLATE'
+        }
+      },
+      closeEventFieldProperties: {
+        name: 'close-event',
+        default: true,
+        field: {
+          helper: 'AlertForm.CLOSE_EVENT_WITH_ALERT'
+        }
+      }
     }
   },
   methods: {
@@ -265,14 +270,19 @@ export default {
     },
     validate () {
       logger.debug('Validating alert form')
+      const eventTemplate = this.$refs.eventTemplate.value()
       this.hasError = false
       if (!this.hasActiveVariable()) {
         this.hasError = true
         this.error = this.$t('AlertForm.CONDITIONS_REQUIRED')
         this.$refs.conditions.show()
-      } else if (!this.eventTemplate) {
+      } else if (!eventTemplate) {
         this.hasError = true
         this.error = this.$t('AlertForm.EVENT_TEMPLATE_REQUIRED')
+        this.$refs.event.show()
+      } else if (!_.get(eventTemplate, 'coordinators[0]')) {
+        this.hasError = true
+        this.error = this.$t('AlertForm.EVENT_TEMPLATE_COORDINATOR_REQUIRED')
         this.$refs.event.show()
       }
       return {
@@ -330,16 +340,15 @@ export default {
       } else {
         _.set(values, 'style.icon-classes', 'fas fa-bell')
       }
-      _.set(values, 'eventTemplate', this.eventTemplate[0])
+      _.set(values, 'eventTemplate', _.omit(this.$refs.eventTemplate.value(), ['coordinators']))
+      _.set(values, 'closeEvent', this.$refs.closeEvent.value())
       return values
-    },
-    onEventTemplateSelected (template) {
-      this.eventTemplate = template
     }
   },
   async created () {
     // Load the required components
-    this.$options.components['k-item-chooser'] = this.$load('input/KItemChooser')
+    this.$options.components['k-item-field'] = this.$load('form/KItemField')
+    this.$options.components['k-toggle-field'] = this.$load('form/KToggleField')
 
     await this.build()
     this.$emit('form-ready', this)

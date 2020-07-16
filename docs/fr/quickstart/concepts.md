@@ -12,6 +12,10 @@ Un lien peut vous permettre d'exécuter directement un didacticiel depuis la doc
 
 ![tour](../../assets/Tour-FR.png)
 
+::: tip Astuce
+Lorsque vous voyez un label *beta* sur un élément de l'interface utilisateur (par exemple sur un bouton), cela signifie que la fonctionnalité est actuellement en *bêta test*. C'est à dire qu'il s'agit d'une première version et qu'en vue de son amélioration nous receuillons les commentaires et suggestions de nos utilisateurs.
+:::
+
 ::: warning Attention
 Akt'n'Map s'améliore et évolue de façon continue. Aussi, ce qui s’affiche sur votre écran peut parfois diffèrer de ce que vous lirez et verrez dans cette documentation, mais les concepts clés restent les mêmes.
 :::

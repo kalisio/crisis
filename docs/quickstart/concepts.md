@@ -12,6 +12,10 @@ A link can allow you to execute the tutorial directly from the documentation, ot
 
 ![tour](../assets/Tour-EN.png)
 
+::: tip
+Sometimes you can see a *beta* label on a user interface element (like a button), meaning the feature is currently under *beta test*: in order to improve the first version of the feature we collect feedback from our users.
+:::
+
 ::: warning
 Akt'n'Map look and features are ever-evolving. As a consequence, your screen probably looks a little different than what you can read and see in this documentation but the key concepts remain the same.
 :::
