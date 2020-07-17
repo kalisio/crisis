@@ -20,7 +20,7 @@
           <k-text-area class="light-paragraph" :text="locationName" />
           <q-separator />
         </div>
-        <k-text-area v-if="item.description" class="q-pa-sm" :text="item.description" />
+        <k-text-area v-if="description" class="q-pa-sm" :text="description" />
       </div>
     </k-history-entry>
     <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
@@ -35,7 +35,8 @@ export default {
   name: 'archived-event-entry',
   mixins: [
     kCoreMixins.baseItem,
-    mixins.eventLogs
+    mixins.eventLogs,
+    mixins.alerts
   ],
   computed: {
     createdAt () {
@@ -51,9 +52,8 @@ export default {
       return this.item.expireAt && !this.item.deletedAt ? new Date(this.item.expireAt) : null
     },
     locationName () {
-      let name = _.get(this.item, 'location.name', '')
-      // Can be a layer name translation key in alert case
-      return (this.$t(name) ? this.$t(name) : name)
+      // Event generated from alert ?
+      return (this.item.alert ? this.getAlertLocationName(this.item.alert) : _.get(this.item, 'location.name', ''))
     }
   },
   data () {
@@ -62,6 +62,10 @@ export default {
     }
   },
   methods: {
+    getDescription () {
+      // Event generated from alert ?
+      return this.item.alert ? this.getAlertDetailsAsHtml(this.item.alert) : this.item.description
+    },
     formatDate (date) {
       return date.toLocaleString(kCoreUtils.getLocale(),
         { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric' })

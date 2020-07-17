@@ -116,13 +116,12 @@ export function processAlert (organisation) {
     const isActive = _.get(alert, 'status.active')
     const checkedAt = _.get(alert, 'status.checkedAt')
     const triggeredAt = _.get(alert, 'status.triggeredAt')
-    const label = _.get(alert, 'featureLabel', _.get(alert, 'feature'))
     const templateId = _.get(alert, 'eventTemplate._id')
     const closeEvent = _.get(alert, 'closeEvent')
     const eventsService = app.getService('events', organisation)
     // check for existing event linked to alert
     const results = await eventsService.find({
-      query: { 'alert': alert._id },
+      query: { 'alert._id': alert._id },
       $limit: 1,
       paginate: false
     })
@@ -138,10 +137,10 @@ export function processAlert (organisation) {
       // We don't keep ref/link for simplicity and making archived events will be self-consistent
       // No need to keep track of templates that have been removed, etc.
       event.template = template.name
-      _.set(event, 'location.name', label ? `${label}` : `${alert.layer}`)
       _.set(event, 'location.longitude', _.get(alert, 'geometry.coordinates[0]'))
       _.set(event, 'location.latitude', _.get(alert, 'geometry.coordinates[1]'))
-      _.set(event, 'alert', alert._id)
+      // Remove unrelevant properties from alert
+      _.set(event, 'alert', _.omit(alert, ['eventTemplate', 'closeEvent']))
       if (!previousEvent) await eventsService.create(event)
       else await eventsService.update(event._id, event)
     }
@@ -169,7 +168,7 @@ export function setupArchiveListeners (service) {
       app.getService(`archived-${service.name}`, service.context).update(object._id, object)
     } catch (error) { app.logger.error(error.message) }
   })
-  service.on('deleted', async object => {
+  service.on('removed', async object => {
     try {
       app.getService(`archived-${service.name}`, service.context).patch(object._id, { deletedAt: new Date() })
     } catch (error) { app.logger.error(error.message) }

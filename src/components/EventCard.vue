@@ -94,7 +94,8 @@ export default {
     kCoreMixins.schemaProxy,
     kCoreMixins.refsResolver(['form']),
     kMapMixins.navigator,
-    mixins.eventLogs
+    mixins.eventLogs,
+    mixins.alerts
   ],
   computed: {
     icon () {
@@ -107,9 +108,8 @@ export default {
       return kCoreUtils.getIconName(this.item)
     },
     locationName () {
-      let name = _.get(this.item, 'location.name', '')
-      // Can be a layer name translation key in alert case
-      return (this.$t(name) ? this.$t(name) : name)
+      // Event generated from alert ?
+      return (this.item.alert ? this.getAlertLocationName(this.item.alert) : _.get(this.item, 'location.name', ''))
     },
     comment () {
       return this.getUserComment(this.participantState)
@@ -138,6 +138,10 @@ export default {
     }
   },
   methods: {
+    getDescription () {
+      // Event generated from alert ?
+      return this.item.alert ? this.getAlertDetailsAsHtml(this.item.alert) : this.item.description
+    },
     canCapturePhoto () {
       if (!this.$q.platform.is.cordova) return false
       return true

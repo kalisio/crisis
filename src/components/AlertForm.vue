@@ -122,7 +122,7 @@ export default {
         services: [{
           service: 'event-templates',
           field: 'name',
-          baseQuery: { $select: ['_id', 'name', 'icon', 'coordinators'] },
+          baseQuery: { $select: ['_id', 'name', 'icon', 'participants', 'coordinators'] },
           icon: { name: 'whatshot' }
         }],
         field: {
@@ -322,19 +322,14 @@ export default {
       })
       // No expiration date for now
       values.expireAt = undefined
-      _.set(values, 'geometry', this.feature.geometry)
-      _.set(values, 'layer', this.layer.name)
+      // Start from source feature by keeping relevant properties only
+      Object.assign(values, _.pick(this.feature, ['geometry', 'properties']))
+      // Keep track of source layer with relevant properties only
+      _.set(values, 'layer', _.pick(this.layer, ['name', 'service', 'featureId', 'featureLabel', 'variables']))
       // Add reference to feature service whenever required
       if (this.layer.service) {
-        _.set(values, 'service', this.layer.service)
-        if (this.layer.featureId) _.set(values, 'featureId', this.layer.featureId)
         _.set(values, 'feature', this.layer.featureId ?
           _.get(this.feature, 'properties.' + this.layer.featureId) : this.feature._id)
-        // Try with default labels and override if provided by layer
-        let featureLabel = _.get(this.feature, 'properties.name', _.get(this.feature, 'properties.NAME'))
-        // Override if provided by layer
-        if (this.layer.featureLabel) featureLabel = _.get(this.feature, 'properties.' + this.layer.featureLabel)
-        if (featureLabel) _.set(values, 'featureLabel', featureLabel)
       }
       // Setup style if any provided, except if templated as it would require
       // a complex mapping with the underlying feature

@@ -62,6 +62,7 @@ import sift from 'sift'
 import { Dialog } from 'quasar'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import mixins from '../mixins'
 
 const activityMixin = kMapMixins.activity('catalog')
 
@@ -88,7 +89,8 @@ export default {
     kMapMixins.map.tooltip,
     kMapMixins.map.popup,
     kMapMixins.map.activity,
-    kMapMixins.map.mapillaryLayers
+    kMapMixins.map.mapillaryLayers,
+    mixins.alerts
   ],
   provide () {
     return {
@@ -254,45 +256,13 @@ export default {
     getAlertPopup (alert, layer, options) {
       if (options.name !== this.$t('CatalogActivity.ALERTS_LAYER')) return null
 
-      const isActive = _.get(alert, 'status.active')
-      const checkedAt = new Date(_.get(alert, 'status.checkedAt'))
-      let html = ''
-      _.forOwn(alert.conditions, (value, key) => {
-        // Get corresponding variable
-        const variable = _.find(this.currentVariables, { name: key })
-        const label = this.$t(variable.label) || variable.label
-        const unit = variable.units[0]
-        if (_.has(value, '$gte')) html += isActive ?
-          `${label} ` + this.$t('CatalogActivity.ALERT_GTE') + ` ${value.$gte} ${unit}</br>` :
-          `${label} ` + this.$t('CatalogActivity.ALERT_LTE') + ` ${value.$gte} ${unit}</br>`
-        if (_.has(value, '$lte')) html += isActive ?
-          `${label} ` + this.$t('CatalogActivity.ALERT_LTE') + ` ${value.$lte} ${unit}</br>` :
-          `${label} ` + this.$t('CatalogActivity.ALERT_GTE') + ` ${value.$lte} ${unit}</br>`
-      })
-      html += (isActive ? this.$t('CatalogActivity.ALERT_TRIGGERED_AT') : this.$t('CatalogActivity.ALERT_CHECKED_AT')) +
-        ` ${this.formatTime('date.short', checkedAt)} - ${this.formatTime('time.long', checkedAt)}</br>`
-      if (isActive) {
-        // Order triggers by time to get last one, take care to unify weather/measure triggers
-        let triggers = _.sortBy(_.get(alert, 'status.triggers',
-          [trigger => new moment.utc(trigger.time || trigger.forecastTime).valueOf()]))
-        triggers = _.last(triggers)
-        const triggeredAt = new Date(triggers.time || triggers.forecastTime)
-        html += this.$t('CatalogActivity.ALERT_THRESHOLD_AT') +
-        ` ${this.formatTime('date.short', triggeredAt)} - ${this.formatTime('time.long', triggeredAt)}`
-      }
-
+      const html = this.getAlertDetailsAsHtml(alert)
       return L.popup({ autoPan: false }, layer).setContent(`<b>${html}</b>`)
     },
     getAlertTooltip (alert, layer, options) {
       if (options.name !== this.$t('CatalogActivity.ALERTS_LAYER')) return null
 
-      const isActive = _.get(alert, 'status.active')
-      let html = ''
-      if (isActive) html += this.$t('CatalogActivity.ALERT_ACTIVE') + '</br>'
-      else html += this.$t('CatalogActivity.ALERT_INACTIVE') + '</br>'
-      if (_.has(alert, 'layer')) html += (this.$t(`${alert.layer}`) ? this.$t(`${alert.layer}`) : `${alert.layer}`)
-      if (_.has(alert, 'feature')) html += ` - ${alert.featureLabel || alert.feature}</br>`
-
+      const html = this.getAlertStatusAsHtml(alert)
       return L.tooltip({ permanent: false }, layer).setContent(`<b>${html}</b>`)
     },
     onCreateEventAction (data) {
