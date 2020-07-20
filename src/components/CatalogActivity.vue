@@ -65,7 +65,7 @@ import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
 
 const activityMixin = kMapMixins.activity('catalog')
-
+console.log(kMapMixins)
 export default {
   name: 'catalog-activity',
   mixins: [
@@ -89,6 +89,8 @@ export default {
     kMapMixins.map.tooltip,
     kMapMixins.map.popup,
     kMapMixins.map.activity,
+    kMapMixins.map.tiledMeshLayers,
+    kMapMixins.map.tiledWindLayers,
     kMapMixins.map.mapillaryLayers,
     mixins.alerts
   ],

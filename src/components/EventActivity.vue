@@ -76,6 +76,8 @@ export default {
     kMapMixins.map.tooltip,
     kMapMixins.map.popup,
     kMapMixins.map.activity,
+    kMapMixins.map.tiledMeshLayers,
+    kMapMixins.map.tiledWindLayers,
     kMapMixins.map.mapillaryLayers,
     mixins.eventLogs
   ],
