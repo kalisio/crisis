@@ -12,7 +12,7 @@
             @click="zoom=!zoom"
             @mouseover="if (!$q.platform.is.mobile) zoom=true"
             @mouseleave="if (!$q.platform.is.mobile) zoom=false">
-            <k-text-area :text="description" ellipsis="3-lines" />
+            <k-text-area :text="description" length="150" />
           </div>
           <q-separator />
         </div>
@@ -20,7 +20,7 @@
           Location section
          -->
         <div v-if="item.location">
-          <div class="q-pa-sm row items-center no-wrap">
+          <div class="q-pa-sm row items-center justify-between no-wrap">
             <k-text-area class="light-paragraph" :text="locationName" />
             <q-btn icon="las la-map-marker" color="grey-7" flat dense round>
               <q-tooltip>
@@ -44,7 +44,7 @@
           Comment section
          -->
         <div v-if="comment">
-          <k-text-area class="q-pa-sm light-paragraph" :text="comment" />
+          <k-text-area class="q-pa-sm light-paragraph" :text="comment" length="100" />
           <q-separator />
         </div>
         <!--
