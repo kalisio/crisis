@@ -58,15 +58,32 @@ test('Invite guest to join the organisation', async test => {
   await pages.checkNoClientError(test)
 })
 
-test('tag member', async test => {
+test('Tag members', async test => {
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
-  await members.tag(test, data.users[1].name, 'skill')
+  await members.tag(test, data.users[1].name, 'tag1')
+  await members.tag(test, data.users[2].name, 'tag2')
   await members.checkCount(test, 4)
   await layout.clickTabBar(test, pages.Tags.TAB_BAR_ENTRY)
-  await tags.checkCount(test, 1)
+  await tags.checkCount(test, 2)
+  await tags.checkExists(test, 'tag1')
+  await tags.checkCounter(test, 'tag1', 1)
+  await tags.checkExists(test, 'tag2')
+  await tags.checkCounter(test, 'tag2', 1)
+  await pages.checkNoClientError(test)
+})
+
+test('Update tags', async test => {
+  await screens.login(test, data.users[0])
+  await layout.closeSignupAlert(test)
+  await layout.closeWelcomeDialog(test)
+  await layout.clickOverflowMenu(test, pages.Tags.OVERFLOW_MENU_ENTRY)
+  await tags.checkCount(test, 2)
+  await tags.edit(test, 'tag1', { name: 'tag3' })
+  await tags.checkExists(test, 'tag3')
+  await tags.checkCounter(test, 'tag3', 1)
   await pages.checkNoClientError(test)
 })
 

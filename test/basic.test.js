@@ -17,16 +17,21 @@ fixture`basic`// declare the fixture
 const screens = new pages.Screens()
 const layout = new pages.Layout()
 const sideNav = new pages.SideNav()
+const tags = new pages.Tags()
 const organisationSettings = new pages.OrganisationSettings()
 
 test('Login as default user', async test => {
   await screens.login(test, { email: 'kalisio@kalisio.xyz', password: 'Pass;word1' })
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
- /* await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
+  await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await layout.clickOverflowMenu(test, pages.Tags.OVERFLOW_MENU_ENTRY)
+  //console.log(await tags.title('RAD4'))
+  await tags.checkExists(test, 'RAD4')
+  await tags.checkCounter(test, 'RAD4', 5)
+  await tags.edit(test, 'RAD4', { name: 'RAD5' })
   await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
-  await layout.clickOverflowMenu(test, pages.EventTemplates.OVERFLOW_MENU_ENTRY)*/
+  await layout.clickOverflowMenu(test, pages.EventTemplates.OVERFLOW_MENU_ENTRY)
   await layout.clickOverflowMenu(test, pages.OrganisationSettings.OVERFLOW_MENU_ENTRY)
   await layout.clickTabBar(test, pages.OrganisationSettings.BILLING_TAB)
   await organisationSettings.checkCustomerBlockDisabled(test)
