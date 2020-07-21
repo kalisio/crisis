@@ -6,7 +6,7 @@
     <template v-slot:card-content>
       <q-separator />
       <div class="q-pa-sm">
-        <k-text-area :text="description" length="150" />
+        <k-text-area :text="description" :length="150" />
       </div>
     </template>
   </k-card>

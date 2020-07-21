@@ -12,7 +12,7 @@
             @click="zoom=!zoom"
             @mouseover="if (!$q.platform.is.mobile) zoom=true"
             @mouseleave="if (!$q.platform.is.mobile) zoom=false">
-            <k-text-area :text="description" length="150" />
+            <k-text-area :text="description" :length="150" />
           </div>
           <q-separator />
         </div>
@@ -44,7 +44,7 @@
           Comment section
          -->
         <div v-if="comment">
-          <k-text-area class="q-pa-sm light-paragraph" :text="comment" length="100" />
+          <k-text-area class="q-pa-sm light-paragraph" :text="comment" :length="100" />
           <q-separator />
         </div>
         <!--
