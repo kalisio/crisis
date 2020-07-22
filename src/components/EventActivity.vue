@@ -304,14 +304,6 @@ export default {
         return tooltip.setContent('<b>' + name + '</b>')
       }
     },
-    getVigicruesTooltip (feature, layer) {
-      const level = _.get(feature, 'properties.NivSituVigiCruEnt')
-      if (level > 1) {
-        let tooltip = L.tooltip({ permanent: false }, layer)
-        return tooltip.setContent(this.$t('EventActivity.VIGICRUES_LEVEL_' + level))
-      }
-      return null
-    },
     onPopupOpen (event) {
       const feature = _.get(event, 'layer.feature')
       if (!feature || this.archived) return // No edition in archive
@@ -369,9 +361,9 @@ export default {
     this.registerStyle('tooltip', this.getParticipantTooltip)
     this.registerStyle('popup', this.getParticipantPopup)
     this.registerStyle('markerStyle', this.getParticipantMarker)
-    this.registerStyle('tooltip', this.getVigicruesTooltip)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
     this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
+    this.registerStyle('tooltip', this.getVigicruesTooltip)
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
   },
