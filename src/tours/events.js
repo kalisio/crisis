@@ -23,7 +23,7 @@ module.exports = [{
   link: 'tours.events.TEMPLATES_LINK_LABEL',
   params: {
     placement: 'bottom',
-    blockOnMiss: 'div.q-card.q-card--bordered',
+    blockOnMiss: '#fab',
     route: { name: 'event-templates-activity' }
   }
 }, {
@@ -32,6 +32,7 @@ module.exports = [{
   link: 'tours.events.CREATE_EVENT_LINK_LABEL',
   params: {
     placement: 'left',
+    blockOnMiss: 'div.q-card.q-card--bordered',
     route: { name: 'create-event' }
   }
 }, {

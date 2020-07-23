@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     participantName (participant) {
-      return _.get(participant, 'name', this.$t('EventActivity.UNAMED'))
+      return _.get(participant, 'participant.name', this.$t('EventActivity.UNAMED'))
     },
     participantIconName (participant) {
       return kCoreUtils.getIconName(this.getUserIcon(participant), 'name')

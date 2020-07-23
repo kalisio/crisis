@@ -211,7 +211,6 @@ export default {
       if (this.$can('read', 'events', this.contextId, this.item)) {
         let hasFollowUp = false
         let label = this.$t('EventCard.FOLLOW_UP_LABEL')
-        let icon = 'las la-map-marked-alt'
         let warning = false
         if (this.isParticipant) {
           hasFollowUp = this.item.hasWorkflow &&
@@ -219,13 +218,11 @@ export default {
                          this.waitingInteraction(this.participantStep, this.participantState, 'coordinator'))
         }
         if (this.isCoordinator) {
-          // If we'd like to always have a map even when no workflow available switch this value to true
-          // Otherwise use the workflow flag
-          hasFollowUp = true // this.item.hasWorkflow
+          hasFollowUp |= this.item.hasWorkflow &&
+                         (this.nbParticipantsWaitingCoordination > 0)
         }
         if (hasFollowUp) {
           if (this.isParticipant) {
-            icon = 'las la-comment'
             if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
               label = this.$t('EventCard.ACTION_REQUIRED_WARNING')
               warning = true
@@ -243,11 +240,11 @@ export default {
           }
           if (!warning) {
             this.registerPaneAction({
-              name: 'follow-up', label: label, icon, handler: this.followUp
+              name: 'follow-up', label, icon: 'las la-comment', handler: this.followUp
             })
           } else {
             this.registerPaneAction({
-              name: 'follow-up', label: label, icon, 
+              name: 'follow-up', label, icon: 'las la-comment', 
               badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } }, 
               handler: this.followUp 
             })
@@ -265,6 +262,9 @@ export default {
           name: 'browse-media', label: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', 
           badge: { label: this.getMediasCount(), floating: true },
           handler: this.browseMedia
+        })
+        if (this.hasLocation()) this.registerPaneAction({
+          name: 'event-map', label: this.$t('EventCard.MAP_LABEL'), icon: 'las la-map-marked-alt', handler: this.viewMap
         })
       }
       if (this.hasLocation() && this.canNavigate()) {
@@ -342,6 +342,9 @@ export default {
       } else if (this.isCoordinator) {
         this.$router.push({ name: 'event-activity', params: { objectId: this.item._id, contextId: this.contextId } })
       }
+    },
+    viewMap () {
+      this.$router.push({ name: 'event-activity', params: { objectId: this.item._id, contextId: this.contextId } })
     },
     async refreshParticipantState (logs) {
       if (logs.total === 0) {

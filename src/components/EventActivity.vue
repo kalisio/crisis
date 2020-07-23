@@ -132,9 +132,11 @@ export default {
       // Wait until map is ready
       await this.initializeMap()
       this.event = await this.$api.getService(this.archived ? 'archived-events' : 'events', this.contextId).get(this.objectId)
+      this.refreshUser()
       this.setTitle(this.event.name)
-      // Setup the right drawer
-      this.setRightDrawer('EventActivityPanel', this.$data)
+      // Setup the right drawer, add participant list if coordinator
+      if (this.isCoordinator) this.setRightDrawer('EventActivityPanel', this.$data)
+      else this.setRightDrawer('catalog/KCatalogPanel', this.$data)
       // Setup the widgets
       this.registerWidget('information-box', 'las la-digital-tachograph', 'widgets/KInformationBox', this.selection)
       this.registerWidget('time-series', 'las la-chart-line', 'widgets/KTimeSeries', this.$data)
@@ -178,22 +180,29 @@ export default {
         marker.bindPopup(this.event.location.name)
         marker.addTo(this.map)
       }
-      // Create an empty layer used as a container for participants
-      this.addLayer({
-        name: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
-        label: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
-        type: 'OverlayLayer',
-        icon: 'fas fa-user',
-        featureId: 'participant._id',
-        leaflet: {
-          type: 'geoJson',
-          realtime: true,
-          isVisible: true,
-          cluster: { spiderfyDistanceMultiplier: 5.0 }
-        }
-      })
-      // Then update it
-      this.refreshCollection()
+      // Add participants layer if coordinator
+      if (this.isCoordinator) {
+        // Create an empty layer used as a container for participants
+        this.addLayer({
+          name: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
+          label: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
+          type: 'OverlayLayer',
+          icon: 'fas fa-user',
+          featureId: 'participant._id',
+          isStorable: false,
+          isEditable: false,
+          isSelectable: false,
+          isStyleEditable: false,
+          leaflet: {
+            type: 'geoJson',
+            realtime: true,
+            isVisible: true,
+            cluster: { spiderfyDistanceMultiplier: 5.0 }
+          }
+        })
+        // Then update it
+        this.refreshCollection()
+      }
     },
     async getCatalogLayers () {
       let layers = await activityMixin.methods.getCatalogLayers.call(this)

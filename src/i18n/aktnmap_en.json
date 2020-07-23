@@ -372,6 +372,7 @@
     "LOCATION_MAP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
     "NAVIGATE_LABEL": "Navigate",
     "LOCATE_LABEL": "Locate",
+    "MAP_LABEL": "Map",
     "REMOVE_DIALOG_TITLE": "Remove the event {{event}} ?",
     "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove the event <b>{{event}}</b> ?",
     "ACTION_REQUIRED_WARNING": "Action required",
