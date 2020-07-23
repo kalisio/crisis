@@ -81,5 +81,10 @@ config/client-config.json
 
 # Testcafe
 screenshots
+# TestCafe page models
 test/page-models/core
 test/page-models/map
+
+# KDK tours
+src/tours/core
+src/tours/map
