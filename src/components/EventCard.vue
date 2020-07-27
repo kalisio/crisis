@@ -9,9 +9,7 @@
         <div v-if="description">
           <div class="q-pa-sm event-card-description" 
             v-bind:class="{ 'event-card-description-zoomed': zoom === true }"
-            @click="zoom=!zoom"
-            @mouseover="if (!$q.platform.is.mobile) zoom=true"
-            @mouseleave="if (!$q.platform.is.mobile) zoom=false">
+            @click="zoom=!zoom">
             <k-text-area :text="description" :length="150" />
           </div>
           <q-separator />
