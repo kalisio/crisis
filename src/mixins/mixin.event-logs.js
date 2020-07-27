@@ -155,7 +155,6 @@ const eventsMixin = {
           type: 'object',
           field: {
             component: 'form/KSelectField',
-            label: step.title,
             helper: step.description,
             options
           }

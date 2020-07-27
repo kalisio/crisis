@@ -81,6 +81,7 @@ export default {
         await this.$refs.form.build()
         const properties = await this.loadFeatureProperties(this.event.feature)
         if (properties) this.$refs.form.fill(properties)
+        else this.$refs.form.clear()
       }
     },
     async logCoordinatorState () {
