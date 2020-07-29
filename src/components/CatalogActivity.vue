@@ -163,9 +163,11 @@ export default {
           isVisible: true,
           realtime: true,
           'marker-color': `<% if (feature.status.active) { %>red<% } else { %>green<% } %>`,
+          'stroke': `<% if (feature.status.active) { %>red<% } else { %>green<% } %>`,
+          'fill': `<% if (feature.status.active) { %>red<% } else { %>green<% } %>`,
           'icon-classes': `fas fa-bell`,
           'icon-color': 'white',
-          template: ['marker-color'],
+          template: ['marker-color', 'stroke', 'fill'],
           popup: { pick: [] }
         }
       })

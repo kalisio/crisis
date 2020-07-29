@@ -206,16 +206,17 @@ export default {
     generateDefaultConditions (variable) {
       const min = _.get(variable, 'range[0]', 0)
       const max = _.get(variable, 'range[1]', 100)
+      const step = _.get(variable, 'step', _.toNumber(((max - min) * 0.05).toFixed(1))) // 5%
       return {
         isActive: false,
         operator: this.isRange(variable) ? '$range' : '$gte',
         threshold: this.isRange(variable) ? {
-          min: (max - min) * 0.25, // Quartiles
-          max: (max - min) * 0.75
-        } : (max - min) * 0.5, // Mean value
+          min: Math.ceil((max - min) * 0.25 / step) * step, // Quartiles rounded to nearest step
+          max: Math.ceil((max - min) * 0.75 / step) * step
+        } : Math.ceil((max - min) * 0.5 / step) * step, // Mean value rounded to nearest step
         min,
         max,
-        step: _.toNumber(((max - min) * 0.05).toFixed(1)) // 5%
+        step
       }
     },
     frequencyToCron (frequency) {

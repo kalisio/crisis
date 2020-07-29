@@ -1,5 +1,6 @@
 import path from 'path'
 import _ from 'lodash'
+import pointOnFeature from '@turf/point-on-feature'
 import makeDebug from 'debug'
 import kCore from '@kalisio/kdk/core.api'
 import kMap, {
@@ -137,8 +138,12 @@ export function processAlert (organisation) {
       // We don't keep ref/link for simplicity and making archived events will be self-consistent
       // No need to keep track of templates that have been removed, etc.
       event.template = template.name
-      _.set(event, 'location.longitude', _.get(alert, 'geometry.coordinates[0]'))
-      _.set(event, 'location.latitude', _.get(alert, 'geometry.coordinates[1]'))
+      const type = _.get(alert, 'geometry.type', 'Point')
+      const coordinates = (type === 'Point' ?
+        _.get(alert, 'geometry.coordinates') :
+        _.get(pointOnFeature(alert), 'geometry.coordinates'))
+      _.set(event, 'location.longitude', coordinates[0])
+      _.set(event, 'location.latitude', coordinates[1])
       // Remove unrelevant properties from alert
       _.set(event, 'alert', _.omit(alert, ['eventTemplate', 'closeEvent']))
       if (!previousEvent) await eventsService.create(event)
