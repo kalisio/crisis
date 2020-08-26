@@ -18,8 +18,7 @@ This application is based on the [Kalisio Development Kit](https://kalisio.githu
 
 ### License
 
-Copyright (c) 2018 Kalisio
-
+This project is licensed under the MIT License - see the [license file](./LICENSE.md) for details
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkalisio%2Faktnmap.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkalisio%2Faktnmap?ref=badge_large)
 
