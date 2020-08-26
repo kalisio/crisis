@@ -204,6 +204,16 @@
       "WORKFLOW_PREVIEW_STEP_LABEL": "Prévisualisez les interactions de votre processus.",
       "WORKFLOW_NEXT_STEP_LABEL": "Passez à l'étape suivante.",
       "CREATE_TEMPLATE_LABEL": "Confirmez la création de votre nouveau modèle."
+    },
+    "catalog": {
+      "NAVIGATION_BAR_LABEL": "Ouvrez à tout moment la barre de navigation via cette poignée.",
+      "NAVIGATION_BAR_LINK_LABEL": "Parcourir la barre de navigation",
+      "CATALOG_LABEL": "Ouvrez à tout moment le catalogue via cette poignée.",
+      "CATALOG_LINK_LABEL": "Parcourir le catalogue",
+      "TIMELINE_LABEL": "Ouvrez à tout moment la ligne de temps via cette poignée.",
+      "TIMELINE_LINK_LABEL": "Parcourir la ligne de temps",
+      "FAB_LABEL": "Accéder rapidement aux actions relatives aux données cartographiques via ce bouton.",
+      "FAB_LINK_LABEL": "Voir les actions"
     }
   },
   "screen": {

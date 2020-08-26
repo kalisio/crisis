@@ -25,10 +25,14 @@ module.exports = {
   events: require('./events'),
   'create-event': require('./create-event'),
   'event-templates': require('./event-templates'),
-  'create-event-templates': require('./create-event-templates')
+  'create-event-templates': require('./create-event-templates'),
+  catalog: require('./catalog'),
+  'navigation-bar': require('./map/navigation-bar'),
+  'catalog-panel': require('./map/catalog-panel'),
+  'timeline': require('./map/timeline'),
+  'fab': require('./map/fab')
   /*,
-  'archived-events': require('./archived-events'),
-  catalog: require('./catalog')
+  'archived-events': require('./archived-events')
   */
 }
 

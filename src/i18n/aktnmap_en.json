@@ -198,6 +198,16 @@
       "WORKFLOW_PREVIEW_STEP_LABEL": "Preview the interactions of your process.",
       "WORKFLOW_NEXT_STEP_LABEL": "Jump to next step.",
       "CREATE_TEMPLATE_LABEL": "Confirm the creation of your new template."
+    },
+    "catalog": {
+      "NAVIGATION_BAR_LABEL": "Open the main menu any time using this handle.",
+      "NAVIGATION_BAR_LINK_LABEL": "Open the navigation bar any time using this handle.",
+      "CATALOG_LABEL": "Open the catalog any time using this handle.",
+      "CATALOG_LINK_LABEL": "Browse the catalog",
+      "TIMELINE_LABEL": "Open the timeline any time using this handle.",
+      "TIMELINE_LINK_LABEL": "Browse the timeline",
+      "FAB_LABEL": "Quickly execute actions related to map data using this button.",
+      "FAB_LINK_LABEL": "Browse the actions"
     }
   },
   "screen": {

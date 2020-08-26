@@ -170,7 +170,13 @@ module.exports = {
                 name: 'catalog-activity',
                 component: 'CatalogActivity',
                 props: true,
-                tour: tours.catalog
+                tour: {
+                  'catalog-activity': tours.catalog,
+                  'navigation-bar': tours['navigation-bar'],
+                  'catalog-panel': tours['catalog-panel'],
+                  'timeline': tours['timeline'],
+                  'fab': tours['fab']
+                }
               },
               'events': {
                 name: 'events-activity',
