@@ -6,11 +6,17 @@ sidebarDepth: 3
 
 The catalog activity allows to visualise and interact with data on a digital map. Driven by today's most advanced web technologies, it enables tracking of geospatial assets in real-time.
 
+::: warning Note
+This feature requires a spacific subscription, it will not be available otherwise.
+
+:point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
+:::
+
 ## Key concepts
 
 Here is a quick rundown of the *key concepts* to handle when you're just getting started with mapping.
 
-The view can contain a **basemap** (i.e. a background context), a set of data **layers** (i.e. business specific data), an **extent** (i.e. the part of the Earth currently on the screen), and navigation tools to pan and zoom. A layer specifies how a geographic dataset is portrayed on the map. The final rendering supporting your use case can usually be assembled by adding a serie of layers.
+The map can contain a **basemap** (i.e. a background context), a set of data **layers** (i.e. business specific data), and has an **extent** (i.e. the part of the Earth currently on the screen), and navigation tools to pan and zoom. A layer specifies how a geographic dataset is portrayed on the map. The final rendering supporting your use case can usually be assembled by adding a serie of layers.
 
 A **feature layer** is a grouping of similar geographic elements, for example, buildings, cities, roads, earthquake epicenters, etc. Features can be points, lines, or polygons (areas). Feature layers are most appropriate for visualizing your own data on top of your basemaps. Using the catalog activity you can view, save, edit and analyze your own features and their attributes. Moreover, you can include interactive pop-up windows with information about the features.
 
@@ -129,4 +135,4 @@ Using the FAB you can create a new blank data layer or import existing data as a
 
 ### Context menu
 
-*Bientôt disponible*
+*Not yet available*

@@ -163,3 +163,15 @@ Un participant ne peut pas modifier un événement bien qu'il puisse partager de
 Un coordinateur peut modifier et clôturer (i.e. détruire) un événement, ainsi que sa liste de participants ou coordinateurs.
 
 Il a également accès à une *vue cartographique* synthétisant la position des acteurs et leur état d’avancement dans le [processus](../gofurther/workflow.md).
+
+## Abonnements
+
+Chaque organisation dispose d'un **abonnement de base** définissant les limites de ressources pour ses membres au sein de l'application.
+
+Bien que vous puissiez utiliser l'application gratuitement à des fins de test ou pour un usage privé (abonnement **bronze**), le nombre de modèles d'événement, de groupes ou de membres est limité par défaut. Si vous avez besoin d'intégrer plus de personnes au sein de votre organisation, ou de disposer de plus de modèles, vous pouvez souscrire à tout moment un abonnement plus adapté à vos besoins (**argent**, **or** ou **diamant**).
+
+De plus, si l'activité de votre association ou entreprise requiert l'utilisation de certaines de nos [fonctionnalités avancées](../gofurther/README.md) vous devez souscrire un ou plusieurs **abonnements additionels** pour les rendre disponibles à vos membres.
+
+::: warning Note
+:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir les abonnements disponibles et comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
+:::

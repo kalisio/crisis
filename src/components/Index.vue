@@ -54,8 +54,11 @@ export default {
           //this.$refs.tour.getTour().stop()
           this.$router.replace({
             name: _.get(this.$route, 'query.route', 'context'),
-            params: Object.assign({ contextId: organisation._id }, _.get(this.$route, 'params', {})),
-            query: _.get(this.$route, 'query', {})
+            params: Object.assign({
+              contextId: organisation._id,
+              perspective: _.get(this.$route, 'query.perspective')
+            }, _.get(this.$route, 'params', {})),
+            query: _.omit(_.get(this.$route, 'query', {}), ['organisation', 'perspective'])
           })
         } else {
           this.$toast({ message: this.$t('Index.ORGANISATION_NOT_FOUND') })

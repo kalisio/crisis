@@ -6,11 +6,17 @@ sidebarDepth: 3
 
 Le catalogue cartographique permet de visualiser et d'interagir avec une carte numérique. Grâce aux technologies web les plus avancées, il permet le suivi de données géospatiales en temps-réel.
 
+::: warning Note
+Cette fonctionnalité requiert un abonnement spécifique, sans celui-ci vous ne pourrez y accéder.
+
+:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
+:::
+
 ## Concepts de base
 
 Nous allons illustrer ici les *concepts de base* vous permettant de prendre en main la cartographie.
 
-La carte peut contenir un **fond** (i.e. contexte géographique), un ensemble de **couches** (i.e. données métier), une **extension** (i.e. la zone terrestre actuellement à l'écran), ainsi que des outils de navigation et de zoom. Une couche référence un jeu de données géospatiales et spécifie comment il est représenté (i.e. symbolisé) sur la carte. 
+La carte peut contenir un **fond** (i.e. contexte géographique), un ensemble de **couches** (i.e. données métier), et possède une **extension** (i.e. la zone terrestre actuellement à l'écran), ainsi que des outils de navigation et de zoom. Une couche référence un jeu de données géospatiales et spécifie comment il est représenté (i.e. symbolisé) sur la carte. 
 
 Une **couche d'entités** est un regroupement d'entités géographiques semblables, à savoir des bâtiments, des parcelles, des villes, des routes et des épicentres de tremblements de terre, par exemple. Les entités peuvent être ponctuelles, linéaires ou surfaciques (surfaces). Les couches d'entités sont adaptées à la visualisation des vos données métier superposées à vos fonds de carte. En utilisant le catalogue vous pouvez visualiser, sauvegarder, éditer et analyser vos propres entités et leurs propriétés. De plus, vous pouvez inclure une fenêtre contextuelle affichant des informations sur vos entités.
 
@@ -153,4 +159,4 @@ En utilisant ce bouton créez une nouvelle couche de données à partir de zéro
 
 ### Menu contextuel
 
-*Not yet available*
+*Bientôt disponible*

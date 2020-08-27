@@ -164,3 +164,14 @@ A coordinator can update and close (i.e. destroy) an event, and change its set o
 
 His has also access to a *cartographic view* summarizing the position and state of each participant according to the [workflow](../gofurther/workflow.md).
 
+## Subscription plans
+
+Each organisation is subscribed to a **basic plan** defining resource limits enforced to its members within the application.
+
+Although you can use the application freely for testing or private purpose (**bronze** plan), the number of event templates, groups or members is by default limited. If you need to manage more users in your organisation, or require more templates for exemple, you can **upgrade your subscription** anytime to one of our better plans (**silver**, **gold** or **diamond**).
+
+Moreover, if your business requires some of our [powerful advanced features](../gofurther/README.md) you need to subscribe to **additional plans** to make theses features available to your members.
+
+::: warning Note
+:point_right: You own an organisation ? <tour-link text="What are the available plans and how to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
+:::
