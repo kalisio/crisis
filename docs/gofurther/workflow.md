@@ -1,3 +1,7 @@
+---
+sidebarDepth: 3
+---
+
 # Processes
 
 By default an event template is a simple information message without any interaction between participants and coordinators
@@ -22,7 +26,7 @@ graph TD
   Q2 --> |No - Notification| F2[Interaction end]
 </mermaid>
 
-# Definition
+## Definition
 
 Practically, a dedicated editor is used to define each workflow step in the application, i.e. its title, description and the question for participants. According to our example the first step will be the following:
 
@@ -34,7 +38,7 @@ According to our example the second step will be the following:
 
 :point_right: You manage an organisation ? <tour-link text="How to create a template including a workflow" path="home" :params="{ organisation: 'manager', route: 'create-event-template' }"/>
 
-# Execution
+## Execution
 
 When receiving the event the application will ask the participant to anser the question and make him jump to the next step, or stop interacting at this stage, depending on his answer. For each step, a free comment allows to provide additional information required by your workflow:
 

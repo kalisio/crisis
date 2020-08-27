@@ -1,3 +1,7 @@
+---
+sidebarDepth: 3
+---
+
 # Processus
 
 Par défaut un modèle d'événement est un simple message informatif sans possibilité d’interaction entre les participants et les coordinateurs.
@@ -23,7 +27,7 @@ graph TD
   Q2 --> |Non - Notification| F2[Fin de l'interaction]
 </mermaid>
 
-# Définition
+## Définition
 
 En pratique, un éditeur dédié permet de définir chaque étape au sein de l'application, c'est à dire son titre, sa description et la question à laquelle les intervenants devront répondre. Pour notre exemple la configuration de la première étape ressemblerait à ceci:
 
@@ -35,7 +39,7 @@ Et celle de la seconde étape ressemblerait à ceci:
 
 :point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment créer un modèle avec processus" path="home" :params="{ organisation: 'manager', route: 'create-event-template' }"/>
 
-# Exécution
+## Exécution
 
 Lors de la réception de l'événement par un intervenant l'application lui demandera de choisir parmi les réponses possibles et le fera avancer à l'étape suivante du processus, ou stoppera ses interactions à ce niveau, suivant sa réponse. A chaque étape un commentaire libre optionnel peut permettre de fournir des informations supplémentaires:
 
