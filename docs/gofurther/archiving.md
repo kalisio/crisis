@@ -8,7 +8,7 @@ This feature requires a spacific subscription, it will not be available otherwis
 :point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
 :::
 
-The default view in this activity is a time line displaying all events sequentially in a given time range. In addition to usual events actions you will find there some information related to traceability like event creation/update/closing dates and participant count:
+The default view in this activity is a **timeline** or **history** displaying all events sequentially in a given time range. In addition to usual events actions you will find there some information related to traceability like event creation/update/closing dates and participant count:
 
 ![Archiving](../assets/Event-Archiving-EN.png)
 

@@ -208,6 +208,32 @@
       "TIMELINE_LINK_LABEL": "Browse the timeline",
       "FAB_LABEL": "Quickly execute actions related to map data using this button.",
       "FAB_LINK_LABEL": "Browse the actions"
+    },
+    "archived-events": {
+      "HISTORY_LABEL": "The history view display your events sequentially in a selected time range.",
+      "START_TIME_LABEL": "Your first step consists in selecting a start date (the oldest events that will be visible).",
+      "CALENDAR_LABEL": "Select the year, month and day using the interactive calendar.",
+      "END_TIME_LABEL": "Similarly, choose a end date (the newest events that will be visible).",
+      "SORT_LABEL": "Last order events oldest or newest first using this button.",
+      "HISTORY_SCROLL_LABEL": "Browse your events by scrolling to the bottom of the screen.",
+      "HISTORY_EVENTS_LABEL": "You first need to select a relevant time range to display some events.",
+      "HISTORY_DOWNLOAD_LABEL": "Export your events as a CSV file to use it in a thrid-party application if you'd like.",
+      "MAP_VIEW_LABEL": "Switch to a map view of your events using this button.",
+      "MAP_VIEW_LINK_LABEL": "How to configure your map",
+      "BY_TEMPLATE_LABEL": "By default all events are grouped together but you can group them according to your templates using this button.",
+      "BY_TEMPLATE_LAYERS_LABEL": "Using the side panel you can then show/hide the events related to a particular template.",
+      "HEATMAP_LABEL": "Switch to a heatmap view of your events using this button.",
+      "HISTORY_VIEW_LABEL": "Go back to the history",
+      "CHART_VIEW_LABEL": "Create statistics charts of your events using this button.",
+      "CHART_VIEW_LINK_LABEL": "How to configure your charts",
+      "CHART_LABEL": "Charts allows to analyse the distribution (i.e. their count) of your events according to your templates.",
+      "CHART_SAVE_LABEL": "Tip: right-click on the graph anytime to export it as an image.",
+      "CHART_SETTINGS_LABEL": "Configure your chart using this button.",
+      "CHART_TYPE_LABEL": "Select the chart type: pie chart, bar chart, etc.",
+      "CHART_COUNT_LABEL": "Then select the number of templates per chart.",
+      "CHART_COUNT_PAGINATION_LABEL": "If the total number of templates is too much large different charts will be generated and you will be able to navigate through using the arrows on the screen sides.",
+      "CHART_RENDER_LABEL": "Last select the value to be displayed: events count, events percentage or participants count.",
+      "CHART_DOWNLOAD_LABEL": "Export your chart data as a CSV file to use it in a thrid-party application if you'd like."
     }
   },
   "screen": {

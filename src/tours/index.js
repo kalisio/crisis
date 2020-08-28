@@ -30,9 +30,9 @@ module.exports = {
   'navigation-bar': require('./map/navigation-bar'),
   'catalog-panel': require('./map/catalog-panel'),
   'timeline': require('./map/timeline'),
-  'fab': require('./map/fab')
-  /*,
-  'archived-events': require('./archived-events')
-  */
+  'fab': require('./map/fab'),
+  'archived-events': require('./archived-events'),
+  'archived-events-chart': require('./archived-events-chart'),
+  'archived-events-map': require('./archived-events-map')
 }
 

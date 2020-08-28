@@ -208,7 +208,11 @@ module.exports = {
                     props: true
                   },
                 },
-                tour: tours['archived-events']
+                tour: {
+                  'archived-events-activity': tours['archived-events'],
+                  'map': tours['archived-events-map'],
+                  'chart': tours['archived-events-chart']
+                }
               },
               'events/:objectId/:south?/:west?/:north?/:east?': {
                 name: 'event-activity',

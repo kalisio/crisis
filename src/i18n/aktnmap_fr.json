@@ -214,6 +214,32 @@
       "TIMELINE_LINK_LABEL": "Parcourir la ligne de temps",
       "FAB_LABEL": "Accéder rapidement aux actions relatives aux données cartographiques via ce bouton.",
       "FAB_LINK_LABEL": "Voir les actions"
+    },
+    "archived-events": {
+      "HISTORY_LABEL": "La vue historique de vos événements permet de les voir de façon séquentielle dans la plage de temps de votre choix.",
+      "START_TIME_LABEL": "La première chose à faire consiste à sélectionner une date de départ (les plus anciens événements qui seront visibles).",
+      "CALENDAR_LABEL": "Choisissez l'année, le mois et le jour dans le calendrier interactif.",
+      "END_TIME_LABEL": "Puis, de la même façon, une date de fin (les plus récents événements qui seront visibles).",
+      "SORT_LABEL": "Enfin choisissez d'afficher en premier les plus récents, ou les plus vieux, via ce bouton.",
+      "HISTORY_SCROLL_LABEL": "Vous pouvez faire défiler vos événements en scrollant vers le bas de l'écran.",
+      "HISTORY_EVENTS_LABEL": "Pour celà vous devez sélectionner une plage de temps faisant apparaître des événements.",
+      "HISTORY_DOWNLOAD_LABEL": "Exportez vos événements au format CSV pour exploitation dans une application tierce si vous le souhaitez.",
+      "MAP_VIEW_LABEL": "Basculez dans une vue cartographique de vos événements via ce bouton.",
+      "MAP_VIEW_LINK_LABEL": "Voir comment paramétrer la vue cartographique",
+      "BY_TEMPLATE_LABEL": "Par défaut tous vos événements sont regroupés ensemble mais vous pouvez créer des regroupements selon vos modèles via ce bouton.",
+      "BY_TEMPLATE_LAYERS_LABEL": "Via le paneau latéral vous pourrez ainsi afficher/cacher les événements liés à un modèle particulier.",
+      "HEATMAP_LABEL": "Basculez dans une carte de distribution de la densité de vos événements via ce bouton.",
+      "HISTORY_VIEW_LABEL": "Revenez à tout moment à la vue historique",
+      "CHART_VIEW_LABEL": "Créez des graphiques statistiques de vos événements via ce bouton.",
+      "CHART_VIEW_LINK_LABEL": "Voir comment paramétrer les graphiques",
+      "CHART_LABEL": "Le graphique vous permet d'étudier la répartition (i.e. le nombre) de vos événements en fonction de vos modèles.",
+      "CHART_SAVE_LABEL": "Astuce: faite un clic-droit sur le graphique à tout moment pour enregistrer l'image.",
+      "CHART_SETTINGS_LABEL": "Configurez votre graphique via ce bouton.",
+      "CHART_TYPE_LABEL": "Sélectionnez tout d'abord son type: camembert, histogramme, etc.",
+      "CHART_COUNT_LABEL": "Choisissez ensuite le nombre de modèles à afficher par graphique.",
+      "CHART_COUNT_PAGINATION_LABEL": "Si le nombre de modèles au total est trop important plusieurs graphiques seront générés et vous pourrez naviguer entre eux via les flèches latérales.",
+      "CHART_RENDER_LABEL": "Enfin définissez la valeur à afficher: nombre d'événements, pourcentage d'événements ou nombre de participants.",
+      "CHART_DOWNLOAD_LABEL": "Exportez les données de votre graphique au format CSV pour exploitation dans une application tierce."
     }
   },
   "screen": {

@@ -8,7 +8,7 @@ Cette fonctionnalité requiert un abonnement spécifique, sans celui-ci vous ne 
 :point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
 :::
 
-La vue par défaut au sein de cette activité propose une ligne de temps affichant vos événements de façon séquentielle dans une plage de temps donnée. Vous pourrez y retrouver les actions afférentes habituelles, ainsi que de nouvelles information de traçabilité comme les dates de création/modification/clôture et le nombre de participants impliqués: 
+La vue par défaut au sein de cette activité propose une **ligne de temps** ou **historique** affichant vos événements de façon séquentielle dans une plage de temps donnée. Vous pourrez y retrouver les actions afférentes habituelles, ainsi que de nouvelles information de traçabilité comme les dates de création/modification/clôture et le nombre de participants impliqués: 
 
 ![Archivage](../../assets/Event-Archiving-FR.png)
 
