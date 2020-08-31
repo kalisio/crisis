@@ -5,7 +5,7 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: 'div[id^=organisation-grid]',
+  target: 'div[id^="organisation-grid"]',
   title: 'tours.dashboard.GRID_LABEL',
   params: {
     placement: 'bottom'

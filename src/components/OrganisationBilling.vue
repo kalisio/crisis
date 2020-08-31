@@ -12,6 +12,7 @@
       :disabled="!isUserVerified"
       @action-triggered="onUpdateCustomer" />
     <customer-editor 
+      id="customer-editor"
       ref="customerEditor" 
       @customer-updated="onCustomerUpdated" 
       :billingObjectId="objectId" 

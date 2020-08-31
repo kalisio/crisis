@@ -10,15 +10,15 @@ module.exports = [{
   params: {
     placement: 'bottom',
     clickOnNext: '#block-action',
-    nextDelay: 1000,
-    clickOnPrevious: '#close-action',
-    previousDelay: 500
+    nextDelay: 1000
   }
 }, {
   target: '#email-field',
   content: 'tours.organisation.CUSTOMER_EMAIL_LABEL',
   params: {
-    placement: 'left'
+    placement: 'left',
+    clickOnPrevious: '#close-action',
+    previousDelay: 500
   }
 }, {
   target: '#description-field',
@@ -43,26 +43,34 @@ module.exports = [{
   content: 'tours.organisation.UPDATE_LABEL',
   params: {
     placement: 'left',
-    clickOnNext: '#close-action'
+    clickOnNext: '#close-action',
+    nextDelay: 500
   }
 }, {
   target: '#basic-plan',
   content: 'tours.organisation.BASIC_PLAN_LABEL',
   params: {
-    placement: 'top'
+    placement: 'top',
+    clickOnNext: '#basic-plans * i',
+    nextDelay: 500,
+    clickOnPrevious: ['#basic-plans * i', '#block-action'],
+    previousDelay: 500
   }
 }, {
   target: '#silver-action',
   content: 'tours.organisation.SILVER_PLAN_LABEL',
   params: {
-    placement: 'top'
+    placement: 'top',
+    clickOnNext: '#optional-plans * i',
+    nextDelay: 500
   }
 }, {
   target: '#optional-plans',
   content: 'tours.organisation.OPTIONAL_PLANS_LABEL',
   params: {
     placement: 'top',
-    clickDelay: 1000
+    clickOnPrevious: '#basic-plans * i',
+    previousDelay: 500
   }
 }, {
   target: '#archiving-action',
@@ -81,8 +89,6 @@ module.exports = [{
   link: 'tours.organisation.DANGER_ZONE_LABEL',
   params: {
     placement: 'bottom',
-    clickOnPrevious: '#block-action',
-    previousDelay: 500,
     clickOnLink: '#danger-zone',
     tour: 'organisation-settings-activity/danger-zone'
   }
