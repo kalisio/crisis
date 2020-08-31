@@ -65,7 +65,7 @@ import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
 
 const activityMixin = kMapMixins.activity('catalog')
-console.log(kMapMixins)
+
 export default {
   name: 'catalog-activity',
   mixins: [

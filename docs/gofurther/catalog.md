@@ -95,7 +95,7 @@ Each component can be shown/hidden through a handle on the different side of the
 
 In addition, a **floating action button** <i class="las la-chevron-up la-2x"></i> is available in the bottom-right corner to perform some actions.
 
-:point_right: You manage an organisation ? <tour-link text="Browse the catalog activity components" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/>
+:point_right: You manage an organisation ? <tour-link text="Browse the catalog activity components" path="home" :params="{ organisation: 'manager', route: 'catalog-activity', tourDelay: 2000 }"/>
 
 ::: details See also
 How to enter into the context of an organisation through the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>

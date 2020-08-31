@@ -156,7 +156,6 @@ export default {
         from = moment.duration(this.layer.from)
         to = moment.duration(this.layer.to)
       }
-      console.log(from.asMinutes(), to.asMinutes())
       // Take care that we have forecast data in the future and observed data in the past
       if (from.asMinutes() < 0) [from, to] = [to, from]
       // Filter values outside bounds or lower than update frequency
