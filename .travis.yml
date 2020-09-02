@@ -54,15 +54,15 @@ jobs:
       - tools
       - tools  # Include again to work around travis not using the latest, see: https://github.com/travis-ci/travis-ci/issues/6193
       - platform-tools
-      - build-tools-28.0.3
-      - android-28
+      - build-tools-29.0.0
+      - android-29
     licenses:
       - '.+'
     before_install:
     # NVM
     - nvm install 12.16
     # AndroidDK Licence Mangager
-    - yes | sdkmanager "platforms;android-28"
+    - yes | sdkmanager "platforms;android-29"
     # Yarn
     - npm install -g yarn
     # AWS cli
