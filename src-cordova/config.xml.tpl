@@ -12,7 +12,8 @@
   <allow-intent href="sms:*"/>
   <allow-intent href="mailto:*"/>
   <allow-intent href="geo:*"/>
-  <preference name="android-minSdkVersion" value="21"/>
+  <preference name="android-minSdkVersion" value="22" />
+  <preference name="android-targetSdkVersion" value="29" />
   <preference name="permissions" value="none"/>
   <preference name="orientation" value="default"/>
   <preference name="target-device" value="universal"/>
@@ -135,6 +136,6 @@
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
   <plugin name="phonegap-plugin-push" spec="~2.1.2"/>
-  <engine name="android" spec="~8.0.0"/>
+  <engine name="android" spec="~9.0.0"/>
   <engine name="ios" spec="~5.1.1" />
 </widget>
