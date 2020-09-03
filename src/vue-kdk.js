@@ -24,7 +24,7 @@ export default {
       const perspective = await this.$api.getService('organisations')
         .get(this.contextId, { query: { $select: ['billing'] } })
       const options = _.get(perspective, 'billing.options', [])
-      if (!_.find(options, { plan: 'archiving' })) {
+      if (!_.find(options, { plan: option })) {
         Dialog.create({
           title: this.$t('OOPS'),
           message: this.$t('errors.UNSUBSCRIBED_OPTION'),
