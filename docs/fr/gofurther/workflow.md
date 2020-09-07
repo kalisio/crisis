@@ -29,7 +29,7 @@ graph TD
 
 ## Définition
 
-En pratique, un éditeur dédié permet de définir chaque étape au sein de l'application, c'est à dire son titre, sa description et la question à laquelle les intervenants devront répondre. Pour notre exemple la configuration de la première étape ressemblerait à ceci:
+En pratique, un éditeur dédié permet de définir chaque étape au sein de l'application, par exemple son titre et la question à laquelle les intervenants devront répondre. Pour notre exemple la configuration de la première étape ressemblerait à ceci:
 
 ![workflow-step-1](../../assets/Event-Workflow-1-FR.png)
 

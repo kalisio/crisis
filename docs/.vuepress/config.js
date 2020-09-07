@@ -68,6 +68,13 @@ module.exports = {
         href: "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
       }
     ]
+  ],
+  plugins: [
+    ['vuepress-plugin-redirect', {
+      // provide i18n redirection
+      // it will automatically redirect `/foo/bar/` to `/:locale/foo/bar/` if exists
+      locales: true
+    }]
   ]
 }
 

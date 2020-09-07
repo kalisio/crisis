@@ -28,7 +28,7 @@ graph TD
 
 ## Definition
 
-Practically, a dedicated editor is used to define each workflow step in the application, i.e. its title, description and the question for participants. According to our example the first step will be the following:
+Practically, a dedicated editor is used to define each workflow step in the application, i.e. its title and the question for participants. According to our example the first step will be the following:
 
 ![workflow-step-1](../assets/Event-Workflow-1-EN.png)
 
