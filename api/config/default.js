@@ -43,8 +43,6 @@ let apiLimiter = {
 let limiter = {
   http: {
     windowMs: 60*1000, // 1 minute window
-    delayAfter: nbAuthenticationRequestsPerMinute / 2, // begin slowing down responses after the 1/2 requests
-    delayMs: 3000, // slow down subsequent responses by 3 seconds per request 
     max: nbAuthenticationRequestsPerMinute // start blocking after N requests
   },
   websocket: {
