@@ -149,7 +149,9 @@ module.exports = {
       { label: 'screen.TERMS_AND_POLICIES', url: domain + '/#/terms' },
     ],
     login: {
+      /* Removed from default config
       providers: ['google', 'github'],
+      */
       links: [
         { id: 'reset-password-link', label: 'KLogin.FORGOT_YOUR_PASSWORD_LINK', route: {name: 'send-reset-password' } },
         { id: 'register-link', label: 'KLogin.DONT_HAVE_AN_ACCOUNT_LINK', route: { name: 'register' } },

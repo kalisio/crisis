@@ -151,6 +151,7 @@ module.exports = {
         name: 'Kalisio'
       }
     ],
+    /* Removed from default config
     github: {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
@@ -168,6 +169,7 @@ module.exports = {
         '?error_message=An error occured while authenticating with Google, check you correctly authorized the application and have a valid public email in your profile',
       scope: ['profile', 'email']
     },
+    */
     // Required for OAuth2 to work correctly
     cookie: {
       enabled: true,
