@@ -92,6 +92,7 @@ export default {
     kMapMixins.map.tiledMeshLayers,
     kMapMixins.map.tiledWindLayers,
     kMapMixins.map.mapillaryLayers,
+    kMapMixins.map.gsmapLayers,
     mixins.alerts
   ],
   provide () {
