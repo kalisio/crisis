@@ -13,6 +13,18 @@
         "helper": "schemas.EVENT_WORKFLOW_TITLE_FIELD_HELPER"
       }
     },
+    "stakeholder": {
+      "type": "string",
+      "default": "participant",
+      "field": {
+        "component": "form/KSelectField",
+        "helper": "schemas.EVENT_WORKFLOW_STAKEHOLDER_FIELD_HELPER",
+        "options": [
+          { "label": "schemas.EVENT_WORKFLOW_PARTICIPANT_LABEL", "value": "participant", "color": "yellow" },
+          { "label": "schemas.EVENT_WORKFLOW_COORDINATOR_LABEL", "value": "coordinator", "color": "grey" }
+        ]
+      }
+    },
     "icon": {
       "type": "object", 
       "default": { "name": "check", "color": "primary" },
@@ -50,18 +62,6 @@
         "multiple": true,
         "chips": true,
         "options": []
-      }
-    },
-    "stakeholder": {
-      "type": "string",
-      "default": "participant",
-      "field": {
-        "component": "form/KSelectField",
-        "helper": "schemas.EVENT_WORKFLOW_STAKEHOLDER_FIELD_HELPER",
-        "options": [
-          { "label": "schemas.EVENT_WORKFLOW_PARTICIPANT_LABEL", "value": "participant", "color": "yellow" },
-          { "label": "schemas.EVENT_WORKFLOW_COORDINATOR_LABEL", "value": "coordinator", "color": "grey" }
-        ]
       }
     }
   },
