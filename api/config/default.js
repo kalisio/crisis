@@ -11,15 +11,26 @@ const API_PREFIX = '/api'
 // Start blocking after N requests or N auth requests
 let nbRequestsPerMinute = 120
 let nbAuthenticationRequestsPerMinute = 10
+// Whitelist features services from rate limiting as they use a lot of concurrent requests
+const apiLimiterWhitelist = (service) =>
+  service.path.includes('features') ||
+  service.path.includes('hubeau-stations') ||
+  service.path.includes('hubeau-observations') ||
+  service.path.includes('openaq-stations') ||
+  service.path.includes('openaq-measurements') ||
+  service.path.includes('teleray-sensors') ||
+  service.path.includes('teleray-measurements') ||
+  service.path.includes('vigicrues-sections') ||
+  service.path.includes('vigicrues-forecasts')
 // Global API limiter
 let apiLimiter = {
   http: {
+    services: apiLimiterWhitelist,
     windowMs: 60*1000, // 1 minute window
-    delayAfter: nbRequestsPerMinute / 2, // begin slowing down responses after the 1/2 requests
-    delayMs: 1000, // slow down subsequent responses by 1 seconds per request 
     max: nbRequestsPerMinute // start blocking after N requests
   },
   websocket: {
+    services: apiLimiterWhitelist,
     tokensPerInterval: nbRequestsPerMinute, // start blocking after N requests
     interval: 60*1000 // 1 minute window
     /*
