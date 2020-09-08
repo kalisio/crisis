@@ -88,7 +88,7 @@ export async function sendStateNotifications (hook) {
 
   // A notification occur only when we record the interaction of a given workflow step
   // from the coordinator toward the participant
-  const interaction = _.get(hook, 'result.interaction')
+  const interaction = _.get(hook, 'result.properties.interaction')
   const stakeholder = _.get(hook, 'result.stakeholder')
   if (interaction && (stakeholder === 'coordinator')) {
     const pusherService = hook.app.getService('pusher')
