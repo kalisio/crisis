@@ -301,8 +301,22 @@ export default {
       _.set(values, 'period.end.minutes', this.period.end)
       _.set(values, 'cron', this.frequencyToCron(this.frequency))
       if (this.isWeather) {
+        values.elements = []
         values.forecast = this.forecastModel.name
-        values.elements = _.get(this.layer, 'leaflet.elements')
+        // Check model for tiled mesh layers
+        if (_.has(this.layer, 'meteo_model')) {
+          const meteoModel = _.find(_.get(this.layer, 'meteo_model'), { model: values.forecast })
+          if (meteoModel) values.elements.push(_.get(meteoModel, 'weacast.element'))
+        }
+        // Check for tiled wind layers
+        else if (_.has(this.layer, 'u.meteo_model') && _.has(this.layer, 'v.meteo_model')) {
+          let meteoModel = _.find(_.get(this.layer, 'u.meteo_model'), { model: values.forecast })
+          if (meteoModel) values.elements.push(_.get(meteoModel, 'weacast.element'))
+          meteoModel = _.find(_.get(this.layer, 'v.meteo_model'), { model: values.forecast })
+          if (meteoModel) values.elements.push(_.get(meteoModel, 'weacast.element'))
+        }
+        // Weacast weather layers
+        else values.elements = _.get(this.layer, 'leaflet.elements')
       }
       this.variables.forEach((variable, index) => {
         const conditions = this.conditions[index]
