@@ -160,7 +160,7 @@ const eventsMixin = {
           }
         }
         if (step.interaction.length > 0) {
-          schema.properties.interaction.default = step.interaction[0].value
+          schema.properties.interaction.default = options[0]
         }
         schema.required.push('interaction')
       }
