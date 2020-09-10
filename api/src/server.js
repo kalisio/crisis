@@ -23,9 +23,7 @@ export class Server {
 
     const syncConfig = app.get('sync')
     if (syncConfig) {
-      app.configure(sync(Object.assign({
-        uri: app.get('db').url
-      }, syncConfig)))
+      app.configure(sync(syncConfig))
     }
 
     // Serve pure static assets
@@ -50,7 +48,8 @@ export class Server {
     const app = this.app
     // First try to connect to DB
     await app.db.connect()
-
+    // Then sync
+    await app.sync.ready
     // Set up our services (see `services/index.js`)
     await app.configure(services)
     // Register authorisation, perspective, etc. hooks

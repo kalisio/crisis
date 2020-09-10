@@ -4,6 +4,7 @@ var winston = require('winston')
 const express = require('@feathersjs/express')
 var containerized = require('containerized')()
 
+const N = parseInt(process.env.NODE_APP_NB_INSTANCES)
 const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
@@ -313,9 +314,13 @@ module.exports = {
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
     bucket: process.env.S3_BUCKET
   },
-  sync: {
-    collection: 'events'
-  }
+  // When multiple instances are running we need to sync them
+  sync: ((N > 1) || process.env.REDIS_URL ? {
+    // When using mubsub, now deprecated see https://github.com/feathersjs-ecosystem/feathers-sync/pull/135
+    //collection: 'events'
+    // When using redis
+    uri: process.env.REDIS_URL || (containerized ? 'redis://redis:6379' : 'redis://localhost:6379')
+  } : false)
 }
 
 /*

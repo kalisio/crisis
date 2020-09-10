@@ -80,7 +80,7 @@
     "feathers-hooks-common": "^3.0.0",
     "feathers-mongodb-fuzzy-search": "https://github.com/kalisio/feathers-mongodb-fuzzy-search.git",
     "feathers-stripe": "~0.5.0",
-    "feathers-sync": "^1.0.3",
+    "feathers-sync": "^2.1.0",
     "fs-extra": "^8.1.0",
     "http-proxy-middleware": "^0.17.4",
     "winston": "^3.2.1"
