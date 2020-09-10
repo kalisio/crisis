@@ -48,8 +48,8 @@ export class Server {
     const app = this.app
     // First try to connect to DB
     await app.db.connect()
-    // Then sync
-    await app.sync.ready
+    // Then sync if enabled
+    if (app.sync) await app.sync.ready
     // Set up our services (see `services/index.js`)
     await app.configure(services)
     // Register authorisation, perspective, etc. hooks
