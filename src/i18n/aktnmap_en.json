@@ -457,7 +457,7 @@
     "CHART_EXPORT_LABEL": "Export data",
     "CHART_EXPORT_FILE": "Events.csv",
     "MAP_EXPORT_FILE": "Events.geojson",
-    "EVENTS_EXPORT_FILE": "Events.cvs",
+    "EVENTS_EXPORT_FILE": "Events.csv",
     "SHOW_BY_TEMPLATE_LABEL": "By type",
     "SHOW_ALL_LABEL": "Globally",
     "EVENTS_LAYER_NAME": "My events",
