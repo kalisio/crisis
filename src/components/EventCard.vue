@@ -2,7 +2,7 @@
   <div>
     <k-card v-bind="$props" :itemActions="actions">
       <template v-slot:card-label>
-        <span class="text-subtitle1 text-weight-medium ellipsis">{{ name }}</span>
+        <span class="text-subtitle1 text-weight-medium ellipsis-2-lines" style="overflow: hidden">{{ name }}</span>
       </template>
       <template v-slot:card-content>
         <q-separator />
