@@ -2,7 +2,7 @@
   <div>
     <k-card v-bind="$props" :itemActions="actions">
       <template v-slot:card-label>
-        <span class="text-subtitle1 text-weight-medium ellipsis">{{ name }}</span>
+        <span class="text-subtitle1 text-weight-medium ellipsis-2-lines" style="overflow: hidden">{{ name }}</span>
       </template>
       <template v-slot:card-content>
         <q-separator />
@@ -298,10 +298,12 @@ export default {
       const id = this.item._id + '/' + name
       photoDataUri = 'data:image/jpg;base64,' + photoDataUri
       kCoreUtils.createThumbnail(photoDataUri, 200, 200, 50, async thumbnailDataUri => {
+        // Store once everything has been computed
         await storageService.create({ id: id + '.thumbnail', uri: thumbnailDataUri })
+        await storageService.create({ id, uri: photoDataUri, name,
+          resourcesService: 'events', resource: this.item._id, field: 'attachments' })
+        this.refresh()
       })
-      await storageService.create({ id, uri: photoDataUri, name, resourcesService: 'events', resource: this.item._id, field: 'attachments' })
-      this.refresh()
     },
     launchNavigation () {
       const longitude = this.item.location.longitude
