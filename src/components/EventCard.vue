@@ -298,10 +298,12 @@ export default {
       const id = this.item._id + '/' + name
       photoDataUri = 'data:image/jpg;base64,' + photoDataUri
       kCoreUtils.createThumbnail(photoDataUri, 200, 200, 50, async thumbnailDataUri => {
+        // Store once everything has been computed
         await storageService.create({ id: id + '.thumbnail', uri: thumbnailDataUri })
+        await storageService.create({ id, uri: photoDataUri, name,
+          resourcesService: 'events', resource: this.item._id, field: 'attachments' })
+        this.refresh()
       })
-      await storageService.create({ id, uri: photoDataUri, name, resourcesService: 'events', resource: this.item._id, field: 'attachments' })
-      this.refresh()
     },
     launchNavigation () {
       const longitude = this.item.location.longitude
