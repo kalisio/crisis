@@ -340,7 +340,6 @@ export default {
         const properties = await this.loadFeatureProperties(this.event.feature)
         if (properties) this.$refs.form.fill(properties)
         else this.$refs.form.clear()
-
       } else if (this.isCoordinator) {
         this.$router.push({ name: 'event-activity', params: { objectId: this.item._id, contextId: this.contextId } })
       }
