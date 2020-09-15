@@ -130,10 +130,10 @@ Comment entrer dans le catalogue géographique depuis <tour-link text="le contex
 ### Barre de navigation
 
 La barre de navigation permet de réaliser des actions récurrentes:
-* afficher les coordonnées géographiques d'un lieu,
-* rechercher une adresse,
-* recentrer la carte sur votre position,
-* passer en mode plein écran.
+* <i class="las la-crosshairs"></i> afficher les coordonnées géographiques d'un lieu,
+* <i class="las la-search"></i> rechercher une adresse,
+* <i class="las la-save"></i> recentrer la carte sur votre position,
+* <i class="las la-street-view"></i> passer en mode plein écran.
 
 :point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel de la barre de navigation pour plus de détails
 
@@ -141,7 +141,13 @@ La barre de navigation permet de réaliser des actions récurrentes:
 
 La panneau latéral permet de gérer les couches affichées sur la carte. Vous pouvez afficher/cacher une couche à tout moment en la sélectionnant sous la catégorie appropriée.
 
-En utilisant le menu sur une couche vous pouvez accéder aux actions disponibles telles que zoomer sur les données, la sauvegarder, modifier ses propriétés, modifier les entités, modifier sa symbologie, afficher les entités et leurs propriétés, créer des graphiques, la supprimer.
+::: warning Attention
+Les données de certaines couches, lorsqu'elle sont présentes en trop grande quantité pour un affichage fluide et compréhensible, ne sont visibles qu'à partir d'une certaine échelle.
+
+Dans ce cas la couche apparaitra grisée dans le panneau latéral tant que vous n'atteignez pas l'échelle requise sur la carte (zoomez pour ce faire).
+:::
+
+En utilisant le menu <i class="las la-ellipsis-v"/> sur une couche vous pouvez accéder aux [actions disponibles](./catalog.md#actions-des-couches).
 
 :point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel du panneau latéral pour plus de détails
 
@@ -153,10 +159,29 @@ La ligne de temps permet de rapidement sélectionner la date et l'heure des donn
 
 ### Bouton d'actions
 
-En utilisant ce bouton créez une nouvelle couche de données à partir de zéro ou en important des données existantes. Vous pouvez aussi sonder les prévision météorologiques sur un lieu donné si vous disposez de modèles de prévision.
+En utilisant ce bouton vous pouvez:
+* <i class="las la-file-alt la-2x"/> Créer une nouvelle couche de données en positionnant et dessinant vous même les entitées la composant. Vous pouvez adjoindre un fichier définissant le schéma de données des métadonnées associées aux entités (i.e. leurs propriétés) au format [JSON schema](https://json-schema.org/).
+* <i class="las la-file-alt"/> Créer une nouvelle couche de données en important un fichier de données au format [GeoJSON](https://geojson.org/).
+* <i class="las la-eye-dropper"/> Sonder les prévision météorologiques du modèle actuellement actif sur un lieu donné en le sélectionnant sur la carte.
 
 :point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel du bouton d'actions pour plus de détails
 
 ### Menu contextuel
 
-*Bientôt disponible*
+Un *clic droit* sur un élément de la carte affiche un menu contextuel si des actions sont disponibles sur l'élément cible comme <i class="las la-file-alt"/> modifier les propriétés d'une entité métier ou <i class="las la-minus-circle"/> la supprimer.
+
+Si l'élément provient d'une couche de mesures environnementales, ou que vous cliquez sur la carte à une position précise après avoir activé un élément météorologique (e.g. la vent), vous pouvez également <i class="las la-bell"/> [définir une alerte](./alert.md).
+
+### Actions des couches
+
+Suivant la couche différentes actions sont disponibles. La plus commune est *zoomer sur* <i class="las la-search-location"/> la couche pour recentrer la vue sur les données. Si les données ne sont pas visibles pour toutes les échelles l'action modifiera l'échelle de la carte pour que les données puissent être visibles lorsque la couche sera affichée.
+
+Plus d'actions sont disponibles pour les couches de données métier:
+* <i class="las la-save"></i> sauvegarder la couche (i.e. la rendre persistente),
+* <i class="las la-file-alt"></i> modifier les propriétés de la couche comme son nom ou sa description,
+* <i class="las la-edit"></i> modifier les entités (métadonnées et géométrie),
+* <i class="las la-border-style"></i> modifier la symbologie,
+* <i class="las la-filter"></i> filtrer les données en fonction des métadonnées,
+* <i class="las la-th-list"></i> afficher les entités et leurs propriétés,
+* <i class="las la-chart-pie"></i> créer des graphiques,
+* <i class="las la-minus-circle"></i> supprimer la couche.

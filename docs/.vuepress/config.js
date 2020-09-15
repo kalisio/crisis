@@ -94,7 +94,8 @@ function getGoFurtherSidebar () {
     '',
     'workflow',
     'archiving',
-    'catalog'
+    'catalog',
+    'alert'
   ]
 }
 
