@@ -49,7 +49,10 @@ export class Server {
     // First try to connect to DB
     await app.db.connect()
     // Then sync if enabled
-    if (app.sync) await app.sync.ready
+    if (app.sync) {
+      await app.sync.ready
+      app.logger.info('Configured application synchronization')
+    }
     // Set up our services (see `services/index.js`)
     await app.configure(services)
     // Register authorisation, perspective, etc. hooks
