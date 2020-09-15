@@ -201,7 +201,7 @@ export default {
         }))
         if (selectedLayer.length > 0) featureActions.push({
           name: 'create-alert',
-          icon: 'fas fa-bell',
+          icon: 'las la-bell',
           handler: this.onCreateWeatherAlertAction,
           label: this.$t('CatalogActivity.CREATE_WEATHER_ALERT_ACTION'),
           badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
@@ -211,7 +211,7 @@ export default {
         if (layer.variables) {
           featureActions.push({
             name: 'create-alert',
-            icon: 'fas fa-bell',
+            icon: 'las la-bell',
             handler: this.onCreateMeasureAlertAction,
             label: this.$t('CatalogActivity.CREATE_MEASURE_ALERT_ACTION'),
             badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
@@ -231,7 +231,7 @@ export default {
           if (_.get(layer, 'schema.content')) {
             featureActions.push({
               name: 'edit-feature-properties',
-              icon: 'edit',
+              icon: 'las la-file-alt',
               handler: this.onUpdateFeaturePropertiesAction,
               label: this.$t('CatalogActivity.EDIT_FEATURE_PROPERTIES_ACTION'),
               badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }

@@ -3,7 +3,7 @@
 The **logbook** is a long-term archive of your [events](../quickstart/concepts.md#event). It offers a complete traceability of your events with relevant statistics through charts or maps.
 
 ::: warning Note
-This feature requires a spacific subscription, it will not be available otherwise.
+This feature requires a specific subscription, it will not be available otherwise.
 
 :point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
 :::

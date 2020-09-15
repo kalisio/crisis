@@ -7,7 +7,7 @@ sidebarDepth: 3
 The catalog activity allows to visualise and interact with data on a digital map. Driven by today's most advanced web technologies, it enables tracking of geospatial assets in real-time.
 
 ::: warning Note
-This feature requires a spacific subscription, it will not be available otherwise.
+This feature requires a specific subscription, it will not be available otherwise.
 
 :point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
 :::
@@ -106,10 +106,10 @@ How to enter the catalog activity from the <tour-link text="context of your orga
 ### Navigation bar
 
 The navigation bar allows to quickly execute recurring actions:
-* display the coordinates of a location,
-* seek for an address,
-* center the view on your current location,
-* switch to fullscreen mode.
+* <i class="las la-crosshairs"></i> display the coordinates of a location,
+* <i class="las la-search"></i> seek for an address,
+* <i class="las la-save"></i> center the view on your current location,
+* <i class="las la-street-view"></i> switch to fullscreen mode.
 
 :point_right: Launch the <tour-link text="activity tutorial" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> then open the link <i class="las la-external-link-square-alt"/> to the navigation bar tutorial to get more details
 
@@ -117,7 +117,13 @@ The navigation bar allows to quickly execute recurring actions:
 
 The catalog panel allows to manage the layers displayed on your map. You can show/hide a layer by selecting it in the relevant category.
 
-Using the menu on a layer you can access actions available for this layer like zooming to and for user-defined feature layers saving (i.e. make it persistent), editing properties, editing features, editing display style, display raw data, create charts, delete it.
+::: warning
+The data of some layers are only visible starting from a given scale if there is too much data to ensure a readable and smvisualisation.
+
+In this case the layer will be disable until you reach the required scale on the map (zoom in or zoom to the layer to do so).
+:::
+
+Using the menu <i class="las la-ellipsis-v"/> on a layer you can access [available actions](./catalog.md#layer-actions) for this layer.
 
 :point_right: Launch the <tour-link text="activity tutorial" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> then open the link <i class="las la-external-link-square-alt"/> to the catalog panel tutorial to get more details
 
@@ -129,10 +135,29 @@ The timeline allows to quickly execute actions related to the time of the displa
 
 ### Floating action button
 
-Using the FAB you can create a new blank data layer or import existing data as a new data layer. You can also probe weather forecast data at a specific location if your datasets include numerical weather prediction models.
+Using the FAB you can
+* <i class="las la-file-alt la-2x"/> Create a new blank data layer by locating and drawing the underlying entities. You can add the data schema from a [JSON schema](https://json-schema.org/) file in order to edit the meatadata (i.e. properties) of your entities.
+* <i class="las la-file-alt"/> Create a new data layer by import existing data from a [GeoJSON](https://geojson.org/) file.
+* <i class="las la-eye-dropper"/> Probe weather forecast data from active prediction models by selecting a specific location on the map.
 
 :point_right: Launch the <tour-link text="activity tutorial" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> then open the link <i class="las la-external-link-square-alt"/> to the FAB tutorial to get more details
 
-### Context menu
+### Contextual menu
 
-*Not yet available*
+A *right-click* on a feature of the map will display a contextual menu if some actions are available for the target element like <i class="las la-file-alt"/> editing the properties of a user-defined feature or <i class="las la-minus-circle"/> remove it.
+
+If the target feature comes from a measure layer or you right-click on a location of the map after activating a weather data layer (e.g. wind) you can also <i class="las la-bell"/> [setup an alert](./alert.md).
+
+### Layer actions
+
+Depending on the layer different actions are available. The most common action is to *zoom to* <i class="las la-search-location"/> the layer in order to fit the view on the available data. If the layer is disabled at high scales this action will set the current scale of the map so that data will start be visible if the layer is shown.
+
+More actions are available on user-defined feature layers:
+* <i class="las la-save"></i> save the layer (i.e. make it persistent),
+* <i class="las la-file-alt"></i> edit layer properties like its name or description,
+* <i class="las la-edit"></i> edit layer features (metadata and geometry),
+* <i class="las la-border-style"></i> edit display style,
+* <i class="las la-filter"></i> filter data according to metadata,
+* <i class="las la-th-list"></i> display raw data,
+* <i class="las la-chart-pie"></i> create charts,
+* <i class="las la-minus-circle"></i> delete the layer.
