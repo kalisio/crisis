@@ -6,7 +6,10 @@ import { addCreatorAsCoordinator, processNotification, sendEventNotifications, c
 
 module.exports = {
   before: {
-    all: [coreHooks.convertObjectIDs(['layer', 'feature']), coreHooks.convertToString(['alert.conditions'])],
+    all: [
+      coreHooks.convertObjectIDs(['layer', 'feature', 'alert._id']),
+      coreHooks.convertToString(['alert.conditions'])
+    ],
     find: [mapHooks.marshallSpatialQuery],
     get: [],
     // Because expireAt comes from client convert it to Date object

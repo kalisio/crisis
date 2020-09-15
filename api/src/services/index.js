@@ -2,7 +2,7 @@ import path from 'path'
 import _ from 'lodash'
 import pointOnFeature from '@turf/point-on-feature'
 import makeDebug from 'debug'
-import kCore from '@kalisio/kdk/core.api'
+import kCore, { createObjectID } from '@kalisio/kdk/core.api'
 import kMap, {
   createFeaturesService, removeFeaturesService,
   createCatalogService, removeCatalogService,
@@ -122,7 +122,7 @@ export function processAlert (organisation) {
     const eventsService = app.getService('events', organisation)
     // check for existing event linked to alert
     const results = await eventsService.find({
-      query: { 'alert._id': alert._id },
+      query: { 'alert._id': createObjectID(alert._id) },
       $limit: 1,
       paginate: false
     })
@@ -146,12 +146,38 @@ export function processAlert (organisation) {
       _.set(event, 'location.latitude', coordinates[1])
       // Remove unrelevant properties from alert
       _.set(event, 'alert', _.omit(alert, ['eventTemplate', 'closeEvent']))
-      if (!previousEvent) await eventsService.create(event)
-      else await eventsService.update(event._id, event)
+      if (!previousEvent) {
+        debug('Creating event for alert', alert)
+        try {
+          await eventsService.create(event)
+        } catch (error) {
+          // This could be possible if we have replication and multiple instances check alert simultaneously
+          if (_.get(error, 'data.code' === 11000)) {
+            debug('Skipping creating event for alert as it does already exist', alert)
+          } else {
+            app.logger.error(error.message)
+          }
+        }
+      } else {
+        debug('Skipping creating event for alert as it does already exist', alert)
+        // This should not be possible except if we have replication and multiple instances check alert simultaneously
+        // But in this case we don't really need to update the event as all checks would have the same result
+        //await eventsService.patch(previousEvent._id.toString(), event)
+      }
     }
     // Remove on deactivation if required
     if (!isActive && previousEvent && closeEvent) {
-      await eventsService.remove(previousEvent._id)
+      debug(`Removing event ${previousEvent._id.toString()} for alert`, alert)
+      try {
+        await eventsService.remove(previousEvent._id.toString())
+      } catch (error) {
+        // This could be possible if we have replication and multiple instances check alert simultaneously
+        if (error.code === 404) {
+          debug('Skipping removing event for alert as it does not exist anymore', alert)
+        } else {
+          app.logger.error(error.message)
+        }
+      }
     }
   }
 }
@@ -161,7 +187,14 @@ export function setupArchiveListeners (service) {
   service.on('created', async object => {
     try {
       app.getService(`archived-${service.name}`, service.context).create(object)
-    } catch (error) { app.logger.error(error.message) }
+    } catch (error) {
+      // This could be possible if we have replication and multiple instances check alert simultaneously
+      if (_.get(error, 'data.code' === 11000)) {
+        debug('Skipping archiving object as it does already exist', object)
+      } else {
+        app.logger.error(error.message)
+      }
+    }
   })
   service.on('updated', async object => {
     try {
@@ -176,7 +209,14 @@ export function setupArchiveListeners (service) {
   service.on('removed', async object => {
     try {
       app.getService(`archived-${service.name}`, service.context).patch(object._id, { deletedAt: new Date() })
-    } catch (error) { app.logger.error(error.message) }
+    } catch (error) {
+      // This could be possible if we have replication and multiple instances check alert simultaneously
+      if (error.code === 404) {
+        debug('Skipping removing object as it does not exist anymore', object)
+      } else {
+        app.logger.error(error.message)
+      }
+    }
   })
 }
 
