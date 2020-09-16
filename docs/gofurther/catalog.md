@@ -108,8 +108,8 @@ How to enter the catalog activity from the <tour-link text="context of your orga
 The navigation bar allows to quickly execute recurring actions:
 * <i class="las la-crosshairs"></i> display the coordinates of a location,
 * <i class="las la-search"></i> seek for an address,
-* <i class="las la-save"></i> center the view on your current location,
-* <i class="las la-street-view"></i> switch to fullscreen mode.
+* <i class="las la-street-view"></i> center the view on your current location,
+* <i class="las la-expand"></i> switch to fullscreen mode.
 
 :point_right: Launch the <tour-link text="activity tutorial" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> then open the link <i class="las la-external-link-square-alt"/> to the navigation bar tutorial to get more details
 
@@ -135,7 +135,7 @@ The timeline allows to quickly execute actions related to the time of the displa
 
 ### Floating action button
 
-Using the FAB you can
+Using the FAB you can:
 * <i class="las la-file-alt la-2x"/> Create a new blank data layer by locating and drawing the underlying entities. You can add the data schema from a [JSON schema](https://json-schema.org/) file in order to edit the meatadata (i.e. properties) of your entities.
 * <i class="las la-file-alt"/> Create a new data layer by import existing data from a [GeoJSON](https://geojson.org/) file.
 * <i class="las la-eye-dropper"/> Probe weather forecast data from active prediction models by selecting a specific location on the map.

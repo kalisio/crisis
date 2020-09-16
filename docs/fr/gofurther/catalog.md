@@ -132,8 +132,8 @@ Comment entrer dans le catalogue géographique depuis <tour-link text="le contex
 La barre de navigation permet de réaliser des actions récurrentes:
 * <i class="las la-crosshairs"></i> afficher les coordonnées géographiques d'un lieu,
 * <i class="las la-search"></i> rechercher une adresse,
-* <i class="las la-save"></i> recentrer la carte sur votre position,
-* <i class="las la-street-view"></i> passer en mode plein écran.
+* <i class="las la-street-view"></i> recentrer la carte sur votre position,
+* <i class="las la-expand"></i> passer en mode plein écran.
 
 :point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel de la barre de navigation pour plus de détails
 
