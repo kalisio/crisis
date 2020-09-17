@@ -160,8 +160,8 @@ La ligne de temps permet de rapidement sélectionner la date et l'heure des donn
 ### Bouton d'actions
 
 En utilisant ce bouton vous pouvez:
-* <i class="las la-file-alt la-2x"/> Créer une nouvelle couche de données en positionnant et dessinant vous même les entitées la composant. Vous pouvez adjoindre un fichier définissant le schéma de données des métadonnées associées aux entités (i.e. leurs propriétés) au format [JSON schema](https://json-schema.org/).
-* <i class="las la-file-alt"/> Créer une nouvelle couche de données en important un fichier de données au format [GeoJSON](https://geojson.org/).
+* <i class="las la-plus"/> Créer une nouvelle couche de données en positionnant et dessinant vous même les entitées la composant. Vous pouvez adjoindre un fichier définissant le schéma de données des métadonnées associées aux entités (i.e. leurs propriétés) au format [JSON schema](https://json-schema.org/).
+* <i class="las la-file-import"/> Créer une nouvelle couche de données en important un fichier de données au format [GeoJSON](https://geojson.org/).
 * <i class="las la-eye-dropper"/> Sonder les prévision météorologiques du modèle actuellement actif sur un lieu donné en le sélectionnant sur la carte.
 
 :point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel du bouton d'actions pour plus de détails
