@@ -162,7 +162,7 @@
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.15.4",
     "glob": "^7.1.2",
-    "mongodb": "^3.1.4",
+    "mongodb": "^3.1.13",
     "npm-run-all": "^4.1.2",
     "opn": "^5.0.0",
     "pixelmatch": "^5.2.0",
