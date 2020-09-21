@@ -74,7 +74,7 @@
     "@feathersjs/errors": "~3.3.0",
     "@feathersjs/express": "^1.2.3",
     "@feathersjs/feathers": "~3.3.1",
-    "@kalisio/feathers-distributed": "^1.0.3",
+    "@kalisio/feathers-distributed": "^1.0.4",
     "@turf/point-on-feature": "^5.1.0",
     "containerized": "^1.0.2",
     "feathers-hooks-common": "^3.0.0",
