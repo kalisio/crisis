@@ -59,7 +59,7 @@
     "concat-stream": "^2.0.0",
     "cross-env": "^5.2.0",
     "eslint": "^6.1.0",
-    "googleapis": "^21.3.0",
+    "googleapis": "^39.1.0",
     "mocha": "^6.2.0",
     "nodemon": "^1.11.0",
     "nyc": "^15.0.1",
