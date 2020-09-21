@@ -111,7 +111,8 @@ module.exports = {
   distribution: { // Distribute no services simply use remote ones
     services: (service) => false,
     middlewares: { after: express.errorHandler() },
-    key: 'aktnmap'
+    key: 'aktnmap',
+    healthcheckPath: API_PREFIX + '/distribution/'
   },
   paginate: {
     default: 20,
