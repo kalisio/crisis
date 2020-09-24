@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api'
 import { hooks as mapHooks } from '@kalisio/kdk/map.api'
 import { setNow, discard } from 'feathers-hooks-common'
-import { addCreatorAsCoordinator, processNotification, sendEventNotifications, checkEventsQuotas } from '../../hooks'
+import { addCreatorAsCoordinator, processNotification, sendEventNotifications, checkEventsQuotas, archive } from '../../hooks'
 
 module.exports = {
   before: {
@@ -60,4 +60,10 @@ module.exports = {
     patch: [],
     remove: []
   }
+}
+
+// Add archiving feature
+// This is only in dev/preprod mode, in prod this feature is managed by MongoDB Stitch
+if (process.env.NODE_APP_INSTANCE !== 'prod') {
+  module.exports.after.all.push(archive)
 }

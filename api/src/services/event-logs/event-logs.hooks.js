@@ -1,6 +1,6 @@
 import { setNow, populate } from 'feathers-hooks-common'
 import { hooks } from '@kalisio/kdk/core.api'
-import { addLogDefaults, sendStateNotifications, linkWithPreviousLog, updatePreviousLog } from '../../hooks'
+import { addLogDefaults, sendStateNotifications, linkWithPreviousLog, updatePreviousLog, archive } from '../../hooks'
 
 const populatePreviousLog = populate({
   schema: hook => {
@@ -59,4 +59,10 @@ module.exports = {
     patch: [],
     remove: []
   }
+}
+
+// Add archiving feature
+// This is only in dev/preprod mode, in prod this feature is managed by MongoDB Stitch
+if (process.env.NODE_APP_INSTANCE !== 'prod') {
+  module.exports.after.all.push(archive)
 }

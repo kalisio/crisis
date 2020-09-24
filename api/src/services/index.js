@@ -182,44 +182,6 @@ export function processAlert (organisation) {
   }
 }
 
-export function setupArchiveListeners (service) {
-  const app = this
-  service.on('created', async object => {
-    try {
-      app.getService(`archived-${service.name}`, service.context).create(object)
-    } catch (error) {
-      // This could be possible if we have replication and multiple instances check alert simultaneously
-      if (_.get(error, 'data.code' === 11000)) {
-        debug('Skipping archiving object as it does already exist', object)
-      } else {
-        app.logger.error(error.message)
-      }
-    }
-  })
-  service.on('updated', async object => {
-    try {
-      app.getService(`archived-${service.name}`, service.context).update(object._id, object)
-    } catch (error) { app.logger.error(error.message) }
-  })
-  service.on('patched', async object => {
-    try {
-      app.getService(`archived-${service.name}`, service.context).update(object._id, object)
-    } catch (error) { app.logger.error(error.message) }
-  })
-  service.on('removed', async object => {
-    try {
-      app.getService(`archived-${service.name}`, service.context).patch(object._id, { deletedAt: new Date() })
-    } catch (error) {
-      // This could be possible if we have replication and multiple instances check alert simultaneously
-      if (error.code === 404) {
-        debug('Skipping removing object as it does not exist anymore', object)
-      } else {
-        app.logger.error(error.message)
-      }
-    }
-  })
-}
-
 export default async function () {
   const app = this
 
@@ -256,13 +218,6 @@ export default async function () {
         if (service.name === 'alerts') {
           // Create related event whenever an alert is activated
           service.on('patched', processAlert(service.getContextId()).bind(app))
-        }
-      }
-      // Add event/logs archiving feature
-      if ((service.name === 'events') || (service.name === 'event-logs')) {
-        // This is only in dev/preprod mode, in prod this feature is managed by MongoDB Stitch
-        if (process.env.NODE_APP_INSTANCE !== 'prod') {
-          setupArchiveListeners.call(app, service)
         }
       }
     })
