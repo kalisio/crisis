@@ -68,7 +68,7 @@ export default {
     },
     formatDate (date) {
       return date.toLocaleString(kCoreUtils.getLocale(),
-        { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric' })
+        { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
     },
     refreshActions () {
       // Required alias for the event logs mixin
