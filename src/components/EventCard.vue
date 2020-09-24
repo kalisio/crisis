@@ -450,6 +450,7 @@ export default {
     refresh () {
       this.refreshUser()
       if (this.userId) {
+        if (this.item.alert) this.loadAlertLayer(this.item.alert)
         // Update content according to user role
         if (this.isParticipant) {
           this.subscribeParticipantLog()
