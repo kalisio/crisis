@@ -339,7 +339,7 @@ export default {
       // Start from source feature by keeping relevant properties only
       Object.assign(values, _.pick(this.feature, ['geometry', 'properties']))
       // Keep track of source layer with relevant properties only
-      _.set(values, 'layer', _.pick(this.layer, ['name', 'service', 'featureId', 'featureLabel', 'variables']))
+      _.set(values, 'layer', _.pick(this.layer, ['_id', 'name', 'i18n', 'service', 'featureId', 'featureLabel', 'variables']))
       // Add reference to feature service whenever required
       if (this.layer.service) {
         _.set(values, 'feature', this.layer.featureId ?

@@ -109,7 +109,8 @@ export default {
     browseMedia () {
       this.$refs.mediaBrowser.show(this.item.attachments)
     },
-    async refreshParticipantCount () {
+    async refresh () {
+      if (this.item.alert) this.loadAlertLayer(this.item.alert)
       const eventLogsService = this.$api.getService('archived-event-logs', this.contextId)
       const result = await eventLogsService.find({
         query: {
@@ -128,7 +129,7 @@ export default {
     this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
     this.$options.components['k-location-map'] = this.$load('KLocationMap')
     // Get participant count
-    await this.refreshParticipantCount()
+    await this.refresh()
   },
   beforeDestroy () {
   }

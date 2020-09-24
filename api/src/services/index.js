@@ -1,5 +1,6 @@
 import path from 'path'
 import _ from 'lodash'
+import moment from 'moment'
 import pointOnFeature from '@turf/point-on-feature'
 import makeDebug from 'debug'
 import kCore, { createObjectID } from '@kalisio/kdk/core.api'
@@ -115,8 +116,8 @@ export function processAlert (organisation) {
   return async function (alert) {
     const app = this
     const isActive = _.get(alert, 'status.active')
-    const checkedAt = _.get(alert, 'status.checkedAt')
-    const triggeredAt = _.get(alert, 'status.triggeredAt')
+    const checkedAt = moment.utc(_.get(alert, 'status.checkedAt'))
+    const triggeredAt = moment.utc(_.get(alert, 'status.triggeredAt'))
     const templateId = _.get(alert, 'eventTemplate._id')
     const closeEvent = _.get(alert, 'closeEvent')
     const eventsService = app.getService('events', organisation)
@@ -128,7 +129,7 @@ export function processAlert (organisation) {
     })
     const previousEvent = (results.length > 0 ? results[0] : null)
     // Create on first activation
-    if (isActive && templateId && (checkedAt === triggeredAt)) {
+    if (isActive && templateId && checkedAt.isSame(triggeredAt)) {
       const eventTemplatesService = app.getService('event-templates', organisation)
       // Get template to be used, which will become the new event
       const template = await eventTemplatesService.get(templateId)

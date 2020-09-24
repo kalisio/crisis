@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import i18next from 'i18next'
 import { utils as kCoreUtils } from '@kalisio/kdk/core.client'
 
 const alertsMixin = {
@@ -62,6 +63,16 @@ const alertsMixin = {
       }
       // Can be a translation key
       return (this.$t(name) ? this.$t(name) : name)
+    },
+    loadAlertLayer (alert) {
+      if (!_.has(alert, 'layer._id')) return null
+      const layer = _.get(alert, 'layer._id')
+      // Process i18n
+      if (layer.i18n) {
+        const locale = kCoreUtils.getAppLocale()
+        const i18n = _.get(layer.i18n, locale)
+        if (i18n) i18next.addResourceBundle(locale, 'kdk', i18n, true, true)
+      }
     }
   }
 }
