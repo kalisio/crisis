@@ -54,12 +54,14 @@ export async function sendEventNotifications (hook) {
       if (hook.service.context) {
         participantService = hook.service.getContextId() + '/' + participantService
       }
+      const title = hook.result.name
+      const body = (typeof notification === 'string' ?
+        notification : (hook.result.description ? hook.result.description : ''))
       publishPromises.push(pusherService.create({
         action: 'message',
         // The notification contains the event title + a given prefix
         message: {
-          title: hook.result.name,
-          body: notification,
+          title, body,
           createdAt: hook.result.createdAt,
           updatedAt: hook.result.updatedAt,
           // Custom vibration pattern
