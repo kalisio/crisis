@@ -28,7 +28,7 @@ module.exports = {
       slogan: 'Better decisions with instant geographic insights'
     },
     appUrl: (process.env.NODE_ENV === 'development' ?
-      `http://localhost:${clientPort}/` : 'https://aktnmap.dev.kalisio.xyz/'),
+      `http://localhost:${clientPort}/` : 'https://aktnmap.test.kalisio.xyz/'),
     locales: {
       '/': {
         label: 'English',
