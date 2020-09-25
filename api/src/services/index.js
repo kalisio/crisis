@@ -150,7 +150,7 @@ export function processAlert (organisation) {
       if (!previousEvent) {
         debug('Creating event for alert', alert)
         try {
-          await eventsService.create(event)
+          await eventsService.create(event, { notification: true })
         } catch (error) {
           // This could be possible if we have replication and multiple instances check alert simultaneously
           if (_.get(error, 'data.code' === 11000)) {
@@ -170,7 +170,7 @@ export function processAlert (organisation) {
     if (!isActive && previousEvent && closeEvent) {
       debug(`Removing event ${previousEvent._id.toString()} for alert`, alert)
       try {
-        await eventsService.remove(previousEvent._id.toString())
+        await eventsService.remove(previousEvent._id.toString(), { notification: true })
       } catch (error) {
         // This could be possible if we have replication and multiple instances check alert simultaneously
         if (error.code === 404) {
