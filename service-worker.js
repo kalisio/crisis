@@ -27,23 +27,23 @@ self.addEventListener('message', (event) => {
 self.__precacheManifest = [
   {
     "url": "404.html",
-    "revision": "03d0fed6794271b4acf0abe733c98b0d"
+    "revision": "35d34ed1c2fa663e5c05cc6b2a38ab52"
   },
   {
     "url": "about/contact.html",
-    "revision": "ad044768aebcaee0993fef1aa5e6fad4"
+    "revision": "c1b090f9c261cbfc94b04fbf8b0e5dd9"
   },
   {
     "url": "about/contributing.html",
-    "revision": "b8d1d5023a68f5baf593e20c749edb95"
+    "revision": "fb964831dc3bf8e1817e5cf4e22041e8"
   },
   {
     "url": "about/index.html",
-    "revision": "eaa2c0545b24ab3e6f4a41169019519e"
+    "revision": "d4e7f64634ba95f822d040782ae80f45"
   },
   {
     "url": "about/license.html",
-    "revision": "7dd6f17383e6e881fad94ec4a5df7ad5"
+    "revision": "afb5f18775cd05cd98a44c205c03d749"
   },
   {
     "url": "App-Store-EN.png",
@@ -358,92 +358,92 @@ self.__precacheManifest = [
     "revision": "f4238afcb9eef965a3c19076f3d4f492"
   },
   {
-    "url": "assets/js/app.8c5242c9.js",
-    "revision": "05c38fa55cd388a9ba9790cb290a8815"
+    "url": "assets/js/app.6de25863.js",
+    "revision": "4411c9eecfb9059f896a4c33b9f2b615"
   },
   {
     "url": "fr/about/contact.html",
-    "revision": "965f932567630ce5b0478534ffa34f1f"
+    "revision": "b8f71889e602fda45c873ed775834bba"
   },
   {
     "url": "fr/about/contributing.html",
-    "revision": "34eea4842e60ef16c7f2ec46624b9026"
+    "revision": "51bd8955bde66ef973872d553bb1ba03"
   },
   {
     "url": "fr/about/index.html",
-    "revision": "a1f08e8b5fd2c39fa238405bca9673f3"
+    "revision": "d79f0004ee6e26df3d0c8eda40a2f7a2"
   },
   {
     "url": "fr/about/license.html",
-    "revision": "d269479b814020f5e6fff24106dc96c1"
+    "revision": "cd348d8bf42f806d57f1b8e7818de3ea"
   },
   {
     "url": "fr/gofurther/alert.html",
-    "revision": "0f0d21bdc5a3fdd63e6ec236fe232c13"
+    "revision": "5ed25a8b0bfacd0528292c44efa3f47c"
   },
   {
     "url": "fr/gofurther/archiving.html",
-    "revision": "6a84459c3a2c5132035c0cecba2a0898"
+    "revision": "ed5455852f0eaaed35ce516b39408220"
   },
   {
     "url": "fr/gofurther/catalog.html",
-    "revision": "8539c14adadccda48c5f8a61a52aaffc"
+    "revision": "0685372ec8c5382a6d094044586c3c9e"
   },
   {
     "url": "fr/gofurther/index.html",
-    "revision": "8ed39f34a3455f109aebc35721f40d4c"
+    "revision": "bbec60a32dbbbb971166c564a807f2aa"
   },
   {
     "url": "fr/gofurther/workflow.html",
-    "revision": "5fd3773358247a25977add7ec6be21b6"
+    "revision": "e0997fac3c2367ef5c69539b193b5fa2"
   },
   {
     "url": "fr/index.html",
-    "revision": "87d141c51fa2cc17a86a379a75c92345"
+    "revision": "64f15c838cd0bf2593c39b465fb83f31"
   },
   {
     "url": "fr/quickstart/benefits.html",
-    "revision": "19f0cfc3356e01a99415fad9e2fb08d9"
+    "revision": "3f90edf8da7cbef9de2ef676ce7fc318"
   },
   {
     "url": "fr/quickstart/concepts.html",
-    "revision": "540d8642132e582d23d86a7fd6a9e8a8"
+    "revision": "5235fc33b37fceee96616e65679c1635"
   },
   {
     "url": "fr/quickstart/features.html",
-    "revision": "838a2eee30daf7e880c3715a2105cacb"
+    "revision": "e3bbede1cf98562a3d0e158f4c72a215"
   },
   {
     "url": "fr/quickstart/index.html",
-    "revision": "f750d4c5f6eba29663a87cd724a52eb2"
+    "revision": "80a05b51d107704f95f02271782283ac"
   },
   {
     "url": "fr/quickstart/installation.html",
-    "revision": "9afff7a55a3b8b29c5b709a94acb74e5"
+    "revision": "b55d9907618f19e616f61c0b026159a9"
   },
   {
     "url": "fr/quickstart/update.html",
-    "revision": "363b805c4b7477cca8152dba85093542"
+    "revision": "0af08b9238e12ae88a889016d7374526"
   },
   {
     "url": "gofurther/alert.html",
-    "revision": "f9c8d69dc3eacead6456a6b8616b90a0"
+    "revision": "778ad9c85ea11391b6de78b12773775c"
   },
   {
     "url": "gofurther/archiving.html",
-    "revision": "a5f19a44aa5600fb5782ead7222fdb86"
+    "revision": "51673cf0115df5814c2f7c5ff81d22eb"
   },
   {
     "url": "gofurther/catalog.html",
-    "revision": "834180819fe6660dbf8010a7b84d4ec9"
+    "revision": "70c65ac77712559400a84f7e4bbabce7"
   },
   {
     "url": "gofurther/index.html",
-    "revision": "e467d1295aa3fedb6523acb9cff3d947"
+    "revision": "499fb7c1c9ab7b6a947cc3ac1e4c1249"
   },
   {
     "url": "gofurther/workflow.html",
-    "revision": "e7f09e4b431da852503b370b9e1a2ff3"
+    "revision": "c6c9563ecfb73f028f823bb21490e2ad"
   },
   {
     "url": "Google-Play-EN.png",
@@ -455,31 +455,31 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "6e2eb1da1f7203bdd20f79147ed77c84"
+    "revision": "2d0511767797543c9b4588f1dda117ff"
   },
   {
     "url": "quickstart/benefits.html",
-    "revision": "72077786ebf16cbbcab103a08031ba8b"
+    "revision": "ac2e13c5d747c7d9c040b08276f6c24b"
   },
   {
     "url": "quickstart/concepts.html",
-    "revision": "33c5a15b4a07dfb280a514a49e59501d"
+    "revision": "ff5509ffb6042f64a65dde388055d8ac"
   },
   {
     "url": "quickstart/features.html",
-    "revision": "e55498ab63a9141613bf4838076d7751"
+    "revision": "c235d1b8cf3a4b6944296431ba1d0a31"
   },
   {
     "url": "quickstart/index.html",
-    "revision": "f42d4c00d01c1d14969b39f164d839d0"
+    "revision": "90bfd22274508898bb7edb430c6eafad"
   },
   {
     "url": "quickstart/installation.html",
-    "revision": "91efaf123fd21843612e290b242e8b4f"
+    "revision": "c8fec6c8c8a5f4f8255ebb816c0b9caf"
   },
   {
     "url": "quickstart/update.html",
-    "revision": "e7fb6ecbaa6bbb7bed02be0dcad2f282"
+    "revision": "8b92f3bbf3f556c213ab1d834cf3980b"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
