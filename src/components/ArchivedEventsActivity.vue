@@ -72,7 +72,7 @@
       <k-history
         id="history"
         class="q-pa-md"
-        v-show="showHistory"
+        v-if="showHistory"
         style="padding-top: 25px" 
         service="archived-events" 
         :nb-items-per-page="2" 
