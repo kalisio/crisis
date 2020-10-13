@@ -301,7 +301,8 @@ export default {
         // Store once everything has been computed
         await storageService.create({ id: id + '.thumbnail', uri: thumbnailDataUri })
         await storageService.create({ id, uri: photoDataUri, name,
-          resourcesService: 'events', resource: this.item._id, field: 'attachments' })
+          resourcesService: 'events', resource: this.item._id, field: 'attachments',
+          notification: this.$t('EventNotifications.UPDATE_MEDIA') })
         this.refresh()
       })
     },
