@@ -95,6 +95,12 @@ export default {
     mixins.eventLogs,
     mixins.alerts
   ],
+  watch: {
+    item: function () {
+      // Some actions are not fully reactive and need to be updated manually
+      this.refreshActions()
+    }
+  },
   computed: {
     icon () {
       return this.getUserIcon(this.participantState, this.participantStep)
