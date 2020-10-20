@@ -6,7 +6,7 @@ sidebarDepth: 3
 
 ## Web application
 
-The web application is available on [https://app.aktnmap.com](https://app.aktnmap.com).
+The web application is available on [https://aktnmap.kalisio.com](https://aktnmap.kalisio.com).
 
 It has been tested on the following browsers:
 * [Google Chrome](https://www.google.fr/chrome/)

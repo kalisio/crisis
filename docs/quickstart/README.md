@@ -6,7 +6,7 @@
 </iframe>
 
 **Akt'n'Map** is available as:
-  * a web application on [https://app.aktnmap.com](https://app.aktnmap.com),
+  * a web application on [https://aktnmap.kalisio.com](https://aktnmap.kalisio.com),
   * a mobile Android application on [Google Play](https://play.google.com/store/apps/details?id=com.kalisio.aktnmap),
   * a mobile iOS application on [Apple Store](https://apps.apple.com/fr/app/aktnmap/id1435111844).
 
