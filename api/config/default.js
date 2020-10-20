@@ -134,7 +134,7 @@ module.exports = {
       audience: process.env.SUBDOMAIN || 'kalisio', // The resource server where the token is processed
       issuer: 'kalisio', // The issuing server, application or resource
       algorithm: 'HS256', // See https://github.com/auth0/node-jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
-      expiresIn: '1d'
+      expiresIn: '7d'
     },
     passwordPolicy: {
       minLength: 8,
