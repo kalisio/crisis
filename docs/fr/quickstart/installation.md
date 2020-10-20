@@ -6,7 +6,7 @@ sidebarDepth: 3
 
 ## Application internet
 
-L'application internet est accessible sur [https://app.aktnmap.com](https://app.aktnmap.com).
+L'application internet est accessible sur [https://aktnmap.kalisio.com](https://aktnmap.kalisio.com).
 
 Elle fonctionne sur les navigateurs suivants:
 * [Google Chrome](https://www.google.fr/chrome/)
