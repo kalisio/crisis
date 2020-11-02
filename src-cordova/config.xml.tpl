@@ -135,7 +135,7 @@
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
-  <plugin name="phonegap-plugin-push" spec="~2.1.2"/>
+  <plugin name="phonegap-plugin-push" spec="~2.3.0"/>
   <engine name="android" spec="~9.0.0"/>
   <engine name="ios" spec="~5.1.1" />
 </widget>

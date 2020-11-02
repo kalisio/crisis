@@ -30,6 +30,8 @@
     "prod": "cd api && npm run prod",
     "build": "npm run tours:cp && quasar build",
     "cordova:clean": "cd src-cordova && cordova clean && cd ..",
+    "cordova:clean:android": "cd src-cordova && cordova clean android && cd ..",
+    "cordova:clean:ios": "cd src-cordova && cordova clean ios && cd ..",
     "cordova:dev:android": "envsub -s dollar-both src-cordova/config.xml.tpl src-cordova/config.xml && npm run tours:cp && quasar dev -m android",
     "cordova:dev:ios": "envsub -s dollar-both src-cordova/config.xml.tpl src-cordova/config.xml && npm run tours:cp && quasar dev -m ios",
     "cordova:build:android": "envsub -s dollar-both src-cordova/config.xml.tpl src-cordova/config.xml && npm run tours:cp && quasar build -m cordova -T android",
