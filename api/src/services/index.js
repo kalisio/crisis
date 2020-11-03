@@ -183,6 +183,14 @@ export function processAlert (organisation) {
   }
 }
 
+export function removeAlert (organisation) {
+  return async function (alert) {
+    const app = this
+    const alertsService = app.getService('alerts', organisation)
+    alertsService.unregisterAlert(alert)
+  }
+}
+
 export default async function () {
   const app = this
 
@@ -219,6 +227,8 @@ export default async function () {
         if (service.name === 'alerts') {
           // Create related event whenever an alert is activated
           service.on('patched', processAlert(service.getContextId()).bind(app))
+          // Remove related cron-based task whenever an alert is removed
+          service.on('removed', removeAlert(service.getContextId()).bind(app))
         }
       }
     })
