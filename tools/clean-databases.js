@@ -12,10 +12,10 @@ let client, db, orgs, databases, rl
 
 program
     .usage('[options]')
-    .option('-u, --url [url]', 'MongoDB URL of the application database to be checked', 'mongodb://127.0.0.1:27017')
-    .option('-d, --database [database]', 'MongoDB application database name to be checked', 'aktnmap')
-    .option('-i, --input-databases [file]', 'List of input organisation databases to be checked, if not given will pull from database')
-    .option('-o, --output-databases [file]', 'Where the list of output organisation databases to be deleted should be generated', 'databases.json')
+    .option('-u, --url [url]', 'MongoDB URL of the application database to be processed', 'mongodb://127.0.0.1:27017')
+    .option('-d, --database [database]', 'MongoDB application database name to be processed', 'aktnmap')
+    .option('-i, --input-databases [file]', 'List of input organisation databases to be processed, if not given will pull from database')
+    .option('-o, --output-databases [file]', 'Where the list of output organisation databases to be processed should be generated', 'databases.json')
     .option('-f, --force', 'Force to remove databases even if not empty')
     .option('-A, --apply', 'Apply cleanup in database')
     .parse(process.argv)
@@ -27,7 +27,7 @@ async function initialize() {
   db = client.db(program.database)
   orgs = db.collection('organisations')
   orgs = await orgs.find({}).toArray()
-  console.log(`Found ${orgs.length} organisations to be checked`)
+  console.log(`Found ${orgs.length} organisations to be processed`)
 }
 // Disconnect from DB
 async function finalize() {
@@ -59,13 +59,14 @@ async function filterDatabases() {
       return true // Otherwise it is not, remove it
     }
   }).length
+  console.log(`Filtered ${nbNoOrgDatabase} non organisation databases (invalid Object ID as name)`)
   // Loop over orgs
   for (let i = 0; i < orgs.length; i++) {
     const org = orgs[i]
     // Filter DBs according to existing orgs
     nbOrgDatabases += _.remove(databases, (database) => !_.find(orgs, org => org._id.toString() === database.name)).length
   }
-  console.log(`Found ${nbOrgDatabases} existing organisation databases, filtered ${nbNoOrgDatabase} non organisation databases`)
+  console.log(`Filtered ${nbOrgDatabases} organisation databases not found in organization list`)
 }
 // Export databases found in app DB to file then remove it from app DB as well if it is required
 async function cleanDatabases () {
@@ -74,11 +75,11 @@ async function cleanDatabases () {
     // When relative path is given assume it relative to working dir
     if (!path.isAbsolute(databasesFile)) databasesFile = path.join(process.cwd(), databasesFile)
     fs.writeFileSync(databasesFile, JSON.stringify(databases))
-    console.log(`Written ${databases.length} organisation databases to be deleted to file`)
+    console.log(`Written ${databases.length} organisation databases to be processed to file`)
   }
   if (program.apply) {
     rl = readline.createInterface({ input: process.stdin, output: process.stdout })
-    const answer = await new Promise((resolve, reject) => rl.question(`Are you sure you want to remove ${databases.length} organisation databases from application database [yes|no]`, resolve))
+    const answer = await new Promise((resolve, reject) => rl.question(`Are you sure you want to process ${databases.length} organisation databases from application database [yes|no]`, resolve))
     rl.close()
     if (answer === 'yes') {
       // Loop over databases
