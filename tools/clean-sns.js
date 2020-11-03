@@ -13,12 +13,13 @@ let app, client, db, orgs, topics, subscriptions, rl
 
 program
     .usage('[options]')
-    .option('-u, --url [url]', 'MongoDB URL of the application database to be checked', 'mongodb://127.0.0.1:27017')
-    .option('-d, --database [database]', 'MongoDB application database name to be checked', 'aktnmap')
+    .option('-u, --url [url]', 'MongoDB URL of the application database to be processed', 'mongodb://127.0.0.1:27017')
+    .option('-d, --database [database]', 'MongoDB application database name to be processed', 'aktnmap')
     .option('-k, --key [key]', 'SNS Access Key')
     .option('-K, --secret-key [key]', 'SNS Secret Access Key')
     .option('-a, --app [arn]', 'SNS application ARN')
-    .option('-t, --input-topics [file]', 'List of input application topics to be checked, if not given will pull from SNS')
+    .option('-p, --pattern [pattern]', 'Pattern to filter topics based on their names', '.*aktnmap-dev-')
+    .option('-t, --input-topics [file]', 'List of input application topics to be processed, if not given will pull from SNS')
     .option('-T, --output-topics [file]', 'Where the list of output application topics to be deleted should be generated', 'topics.json')
     .option('-A, --apply', 'Apply cleanup in SNS')
     .parse(process.argv)
@@ -58,11 +59,16 @@ async function readTopics () {
   } else {
     topics = await util.promisify(app.getTopics.bind(app))()
     console.log(`Found ${topics.length} application topics in SNS`)
+    //console.dir(topics, {'maxArrayLength': null})
   }
 }
 // Remove from read topics those found in DB
 async function filterTopics() {
-  let nbOrgTopics = nbGroupTopics = nbTagTopics = 0
+  let nbPrefixTopics = nbOrgTopics = nbGroupTopics = nbTagTopics = 0
+  // Filter topics according to name first
+  const regex = RegExp(program.pattern)
+  nbPrefixTopics = _.remove(topics, (topic) => !regex.exec(topic.TopicArn)).length
+  console.log(`Filtered ${nbPrefixTopics} topics using pattern ${program.pattern}`)
   // Loop over orgs
   for (let i = 0; i < orgs.length; i++) {
     // Filter topics according to orgs
