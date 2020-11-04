@@ -24,6 +24,5 @@ When a new version is available follow this procedure to update:
 
 ### iOS
 
-1. Open the App Store, then tap *"Today"* at the bottom of the screen.
-2. Tap your profile icon at the top of the screen.
-3. Scroll down to find Akt'n'Map then tap *"Update"* next to the app to update it.
+1. Open the App Store, then tap *"Updates"* at the bottom of the screen.
+2. Scroll down to find Akt'n'Map then tap *"Update"* next to the app to update it.

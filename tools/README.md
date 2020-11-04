@@ -33,3 +33,9 @@ This script is a MongoDB Stitch Function to be used for events archiving, please
 ### `EventLogsArchiving_MongoAtlas`
 
 This script is a MongoDB Stitch Function to be used for event logs archiving, please follow this [link](https://docs.google.com/document/d/1h4LC6dWelImEHPQCMaksNwGh1lwlct9ncjSTL6_-vYA/edit?usp=sharing) for more information.
+
+### Exporting application users
+
+mongoexport --uri mongodb+srv://<LOGIN>:<PASSWORD>@URL/aktnmap --collection users --fields "email" --type csv --out aktnmap-users.csv
+
+**Take care to use the same version of mongoexport than your DB server otherwise it might raise an error like `Failed to parse: xxx`**
