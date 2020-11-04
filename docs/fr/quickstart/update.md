@@ -25,6 +25,5 @@ Lorsqu'une nouvelle version est disponible vous pouvez la mettre à jour en suiv
 ### iOS
 
 Lorsqu'une nouvelle version est disponible vous pouvez la mettre à jour en suivant cette procédure:
-1. Ouvrez l'App Store, puis sélectionnez *"Aujourd'hui"* en bas de l’écran.
-2. Touchez l'icône de votre profil en haut de l'écran.
-3. Faites défiler l'écran pour trouver Akt'n'Map puis sélectionnez l'option *"Mettre à jour"* qui figure à côté.
+1. Ouvrez l'App Store, puis sélectionnez *"Mises à jour"* en bas de l’écran.
+2. Faites défiler l'écran pour trouver Akt'n'Map puis sélectionnez l'option *"Mettre à jour"* qui figure à côté.
