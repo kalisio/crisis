@@ -44,7 +44,7 @@ Ces données, au format [Raster](https://datacarpentry.org/organization-geospati
 
 ### PlanetObserver - PlanetSAT
 
-Le jeu de données **PlanetSAT** est une collection de mosaïques numériques d'[orthophotographies](https://fr.wikipedia.org/wiki/Orthophotographie). Les données sont issues de traitements spécifiques appliqués au données sources de [Sentinel-2](https://fr.wikipedia.org/wiki/Sentinel-2) et [Landsat-8](https://fr.wikipedia.org/wiki/Landsat_8) et sont disponibles à une résolution de 10 mètres par pixel.
+Le jeu de données **PlanetSAT** est une collection de mosaïques numériques d'[orthophotographies](https://fr.wikipedia.org/wiki/Orthophotographie). Les données sont issues de traitements spécifiques appliqués aux résultats des missions d'observation de la terre [Sentinel-2](https://fr.wikipedia.org/wiki/Sentinel-2) et [Landsat-8](https://fr.wikipedia.org/wiki/Landsat_8) et sont disponibles à une résolution de 10 mètres par pixel.
 
 ![Islande](../../assets/planetsat.jpg)
 
