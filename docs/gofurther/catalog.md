@@ -40,11 +40,11 @@ This [vector](https://datacarpentry.org/organization-geospatial/02-intro-vector-
 
 ![Arc de Triomphe - Paris](../assets/ign_orthohr.jpg)
 
-Those [raster](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/index.html) datasets are available with a resolution of 50 centimeters per pixels for **BD ORTHO** and 20 centimeters per pixels for **ORTHO HR**. The [Institut national de l'information géographique et forestière (IGN)](https://www.ign.fr/) produces those datasets and they both are available under open license at this [address](https://geoservices.ign.fr/documentation/diffusion/telechargement-donnees-libres.html).
+Those [raster](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/index.html) datasets are available with a resolution of 50 centimeters per pixel for **BD ORTHO** and 20 centimeters per pixel for **ORTHO HR**. The [Institut national de l'information géographique et forestière (IGN)](https://www.ign.fr/) produces those datasets and they both are available under open license at this [address](https://geoservices.ign.fr/documentation/diffusion/telechargement-donnees-libres.html).
 
 ### PlanetObserver - PlanetSAT
 
-The **PlanetSAT** dataset is a collection of [orthoimages](https://en.wikipedia.org/wiki/Orthophoto). Those images are the result of specific processing on data produced by the [Sentinel-2](https://fr.wikipedia.org/wiki/Sentinel-2) and [Landsat-8](https://fr.wikipedia.org/wiki/Landsat_8) earth observation missions. The dataset is available with a resolution of 10 meters per pixels.
+The **PlanetSAT** dataset is a collection of [orthoimages](https://en.wikipedia.org/wiki/Orthophoto). Those images are the result of specific processing on data produced by the [Sentinel-2](https://fr.wikipedia.org/wiki/Sentinel-2) and [Landsat-8](https://fr.wikipedia.org/wiki/Landsat_8) earth observation missions. The dataset is available with a resolution of 10 meters per pixel.
 
 ![Islande](../assets/planetsat.jpg)
 
