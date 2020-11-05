@@ -38,11 +38,15 @@ Ces données, au format [Vecteur](https://datacarpentry.org/organization-geospat
 
 Les jeux de données **BD ORTHO** (Base de Données Orthophotographique) et **ORTHO HR** (Orthophotographie Haute Résolution) sont chacun une collection de mosaïques numériques d'[orthophotographies](https://fr.wikipedia.org/wiki/Orthophotographie) en couleurs, rectifiées dans la projection légale spécifique adaptée au territoire couvert.
 
+![Arc de Triomphe - Paris](../../assets/ign_orthohr.jpg)
+
 Ces données, au format [Raster](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/index.html) sont disponibles à une résolution de 50 centimètres par pixel pour le jeu de donnée **BD ORTHO** et 20 centimètres par pixel pour le jeu de donnée **ORTHO HR**. Les données sont produites par l'[Institut national de l'information géographique et forestière (IGN)](https://www.ign.fr/) et sont placées sous license ouverte à [cette addresse](https://geoservices.ign.fr/documentation/diffusion/telechargement-donnees-libres.html).
 
 ### PlanetObserver - PlanetSAT
 
 Le jeu de données **PlanetSAT** est une collection de mosaïques numériques d'[orthophotographies](https://fr.wikipedia.org/wiki/Orthophotographie). Les données sont issues de traitements spécifiques appliqués au données sources de [Sentinel-2](https://fr.wikipedia.org/wiki/Sentinel-2) et [Landsat-8](https://fr.wikipedia.org/wiki/Landsat_8) et sont disponibles à une résolution de 10 mètres par pixel.
+
+![Islande](../../assets/planetsat.jpg)
 
 Les données sont produites par [PlanetObserver](https://planetobserver.com/).
 
