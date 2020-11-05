@@ -1,6 +1,6 @@
 # Environmental alerts
 
-**Environmental alerts** automatically generates an [event](../quickstart/concepts.md#evenement) whenever specific conditions are met within your region in our environmental data. Typically it can be:
+**Environmental alerts** automatically generates an [event](../quickstart/concepts.md#event) whenever specific conditions are met within your region in our environmental data. Typically it can be:
 * dangerous meteorological conditions to identify like a wind speed greater than 100 Km/h in a given area,
 * reference levels/thresholds to be checked like a 100 year flood level on a river.
 
