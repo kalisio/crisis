@@ -34,6 +34,18 @@ Le catalogue inclut un ensemble de données de base, auxquelles vous pouvez adjo
 
 Ces données, au format [Vecteur](https://datacarpentry.org/organization-geospatial/02-intro-vector-data/index.html) sont dites sont structurées selon des thématiques données (bâtiments, utilisation du sol, etc.). Elles sont proposées selon différents styles de représentations (e.g. clair, sombre, topographique). Les données sont produites par [OpenMapTiles](https://openmaptiles.com/).
 
+### IGN - BD ORTHO/ORTHO HR
+
+Les jeux de données **BD ORTHO** (Base de Données Orthophotographique) et **ORTHO HR** (Orthophotographie Haute Résolution) sont chacun une collection de mosaïques numériques d'[orthophotographies](https://fr.wikipedia.org/wiki/Orthophotographie) en couleurs, rectifiées dans la projection légale spécifique adaptée au territoire couvert.
+
+Ces données, au format [Raster](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/index.html) sont disponibles à une résolution de 50 centimètres par pixel pour le jeu de donnée **BD ORTHO** et 20 centimètres par pixel pour le jeu de donnée **ORTHO HR**. Les données sont produites par l'[Institut national de l'information géographique et forestière (IGN)](https://www.ign.fr/) et sont placées sous license ouverte à [cette addresse](https://geoservices.ign.fr/documentation/diffusion/telechargement-donnees-libres.html).
+
+### PlanetObserver - PlanetSAT
+
+Le jeu de données **PlanetSAT** est une collection de mosaïques numériques d'[orthophotographies](https://fr.wikipedia.org/wiki/Orthophotographie). Les données sont issues de traitements spécifiques appliqués au données sources de [Sentinel-2](https://fr.wikipedia.org/wiki/Sentinel-2) et [Landsat-8](https://fr.wikipedia.org/wiki/Landsat_8) et sont disponibles à une résolution de 10 mètres par pixel.
+
+Les données sont produites par [PlanetObserver](https://planetobserver.com/).
+
 ### Vigicrues
 
 **Vigicrues** est une base de données qui stocke les données de vigilance des crues fournies par le service [Vigicrues](https://www.vigicrues.gouv.fr/). Ces données regroupent l'ensemble des cours d’eau intégrés au dispositif de vigilance crues sous la forme de tronçons. Chacun de ces tronçons stocke le niveau de vigilance nécessaire pour faire face aux dangers liés aux inondations susceptibles de se produire dans les 24 heures à venir.
