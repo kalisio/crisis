@@ -11,6 +11,7 @@ const alertsMixin = {
     getAlertDetailsAsHtml (alert) {
       const isActive = _.get(alert, 'status.active')
       const checkedAt = new Date(_.get(alert, 'status.checkedAt'))
+      const triggeredAt = new Date(_.get(alert, 'status.triggeredAt'))
       let html = ''
       _.forOwn(alert.conditions, (value, key) => {
         // Get corresponding variable
@@ -24,10 +25,9 @@ const alertsMixin = {
           `${label} ` + this.$t('CatalogActivity.ALERT_LTE') + ` ${value.$lte} ${unit}</br>` :
           `${label} ` + this.$t('CatalogActivity.ALERT_GTE') + ` ${value.$lte} ${unit}</br>`
       })
-      html += (isActive ?
-        this.$t('CatalogActivity.ALERT_TRIGGERED_AT') :
-        this.$t('CatalogActivity.ALERT_CHECKED_AT')) + ` ${this.formatAlertDateTime(checkedAt)}</br>`
+      html += this.$t('CatalogActivity.ALERT_CHECKED_AT') + ` ${this.formatAlertDateTime(checkedAt)}</br>`
       if (isActive) {
+        html += this.$t('CatalogActivity.ALERT_TRIGGERED_AT') + ` ${this.formatAlertDateTime(triggeredAt)}</br>`
         // Order triggers by time to get last one, take care to unify weather/measure triggers
         let triggers = _.sortBy(_.get(alert, 'status.triggers',
           [trigger => new moment.utc(trigger.time || trigger.forecastTime).valueOf()]))
