@@ -20,5 +20,10 @@ Right click at the location where you want to check your conditions on the map f
 
 <i class="lab la-cloudversify la-2x"></i> Conditions triggering the alert given as thresholds to (not) overcome for each available meteorological element or measure value.
 
-<i class="las la-bell la-2x"></i> The event to be created when triggering the alert and if it has to be automatically closed when the alert becomes inactive.
+<i class="las la-bell la-2x"></i> The template of the event to be created when triggering the alert and if it has to be automatically closed when the alert becomes inactive.
 
+::: warning Note
+As the event is automatically created by the application once the alert conditions are met, it should at least contain one participant and one coordinator.
+:::
+
+![Archivage](../assets/Alert-EN.png)
