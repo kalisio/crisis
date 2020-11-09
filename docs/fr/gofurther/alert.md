@@ -20,5 +20,11 @@ Pour les prévisions météorologiques il vous suffit de faire un clic droit à 
 
 <i class="lab la-cloudversify la-2x"></i> Les conditions à satisfaire pour déclencher l'alerte sous la forme d'un seuil à (ne pas) dépasser pour chaque élément météorologique ou mesure d'intérêt parmi ceux disponibles.
 
-<i class="las la-bell la-2x"></i> L'événement à créer lorsque l'alerte est déclenchée, tout en précisant s'il doit également être automatiquement clôturé lorsque l'alerte n'est plus active.
+<i class="las la-bell la-2x"></i> Le modèle d'événement à créer lorsque l'alerte est déclenchée, tout en précisant s'il doit également être automatiquement clôturé lorsque l'alerte n'est plus active.
+
+::: warning Note
+Etant donné que l'événement sera automatiquement créé par l'application lorsque les conditions de l'alerte seront rencontrées, le modèle doit contenir au moins un participant et un coordinateur.
+:::
+
+![Archivage](../../assets/Alert-FR.png)
 
