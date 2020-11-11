@@ -1,5 +1,139 @@
 # Changelog
 
+## [prod-v1.0.0](https://github.com/kalisio/aktnmap/tree/prod-v1.0.0) (2020-11-11)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.7.3...prod-v1.0.0)
+
+**Implemented enhancements:**
+
+-  Prohibit the modification of a tag once created [\#188](https://github.com/kalisio/aktnmap/issues/188)
+- Improve capabilities to include distributed services [\#176](https://github.com/kalisio/aktnmap/issues/176)
+- Remove authentication from OAuth providers in default configuration [\#166](https://github.com/kalisio/aktnmap/issues/166)
+- Upgrade to Android 10 \(API 29\)  [\#156](https://github.com/kalisio/aktnmap/issues/156)
+- Add an action to allow participants to access the event activity from the event [\#153](https://github.com/kalisio/aktnmap/issues/153)
+-  Event creation actions must be rendered using the color of the icon of the corresponding model [\#143](https://github.com/kalisio/aktnmap/issues/143)
+- Allow to navigate to an organisation from the dashboard [\#139](https://github.com/kalisio/aktnmap/issues/139)
+- Provide a topic to notify all the users [\#135](https://github.com/kalisio/aktnmap/issues/135)
+- Manage alerts on vigicrues layer [\#134](https://github.com/kalisio/aktnmap/issues/134)
+- Allow to take a photo with the mobile apps [\#132](https://github.com/kalisio/aktnmap/issues/132)
+- Migrate to line awesome icons [\#127](https://github.com/kalisio/aktnmap/issues/127)
+- Display the number of medias attached to an event [\#126](https://github.com/kalisio/aktnmap/issues/126)
+- Initiate a tags activity [\#124](https://github.com/kalisio/aktnmap/issues/124)
+- Allow to resend an invitation [\#121](https://github.com/kalisio/aktnmap/issues/121)
+- Improve documentation [\#120](https://github.com/kalisio/aktnmap/issues/120)
+- Add organisation options management [\#118](https://github.com/kalisio/aktnmap/issues/118)
+- Tag required features as "beta" [\#117](https://github.com/kalisio/aktnmap/issues/117)
+- Allow to zoom on an image when browsing the medias [\#114](https://github.com/kalisio/aktnmap/issues/114)
+- On mobile allow to enlarge the content of an event card  [\#106](https://github.com/kalisio/aktnmap/issues/106)
+- Enhance archived events activity [\#98](https://github.com/kalisio/aktnmap/issues/98)
+- Migrate to the new kdk module [\#97](https://github.com/kalisio/aktnmap/issues/97)
+- Simulate MongoDB Stitch archiving function in dev [\#96](https://github.com/kalisio/aktnmap/issues/96)
+- Enhance weather/measure alert management [\#94](https://github.com/kalisio/aktnmap/issues/94)
+- Deployment should rely on an existing MongoDB instance [\#92](https://github.com/kalisio/aktnmap/issues/92)
+- Add ability to generate events from alerts on weather/measure probes [\#88](https://github.com/kalisio/aktnmap/issues/88)
+- Simplify GUI when the user belongs to a single organization [\#84](https://github.com/kalisio/aktnmap/issues/84)
+- Allow to create events targeting specific map features [\#75](https://github.com/kalisio/aktnmap/issues/75)
+- Archive events and event logs for traceability and statistics [\#60](https://github.com/kalisio/aktnmap/issues/60)
+- Add Healthcheck [\#55](https://github.com/kalisio/aktnmap/issues/55)
+
+**Fixed bugs:**
+
+- Alert regularly closed then reopen on long activation period [\#201](https://github.com/kalisio/aktnmap/issues/201)
+- Location field not correctly filled in event created from an alert [\#200](https://github.com/kalisio/aktnmap/issues/200)
+- Alerts still checked once destroyed [\#197](https://github.com/kalisio/aktnmap/issues/197)
+- Upgrade phonegap-plugin-push [\#196](https://github.com/kalisio/aktnmap/issues/196)
+- Cannot register devices running iOS 13 [\#193](https://github.com/kalisio/aktnmap/issues/193)
+- Web app does not work anymore on Safari - iOS 10.3 [\#191](https://github.com/kalisio/aktnmap/issues/191)
+- Browse media button not available after adding a media [\#190](https://github.com/kalisio/aktnmap/issues/190)
+- Notification not sent when taking a photo from mobile [\#189](https://github.com/kalisio/aktnmap/issues/189)
+- Tag modification from a member card  is not taken into account when switching to tag activity [\#187](https://github.com/kalisio/aktnmap/issues/187)
+- API rate limiting on archived events [\#186](https://github.com/kalisio/aktnmap/issues/186)
+-  Event timeline displays additional events after viewing an event details [\#184](https://github.com/kalisio/aktnmap/issues/184)
+- Events created from alerts do not send notifications [\#182](https://github.com/kalisio/aktnmap/issues/182)
+- Event archiving raises errors with replication [\#181](https://github.com/kalisio/aktnmap/issues/181)
+- Alert tooltip/event description should display minutes [\#180](https://github.com/kalisio/aktnmap/issues/180)
+- Multiple alert events created [\#178](https://github.com/kalisio/aktnmap/issues/178)
+- Long titles overflow from event and template cards [\#174](https://github.com/kalisio/aktnmap/issues/174)
+- Variable name not correctly translated in event generated from alert [\#173](https://github.com/kalisio/aktnmap/issues/173)
+- Cannot create alert on tiled meteorological layer [\#172](https://github.com/kalisio/aktnmap/issues/172)
+- Map button not available after updating event location [\#171](https://github.com/kalisio/aktnmap/issues/171)
+- Special characters displayed as HTML codes in event editor title [\#170](https://github.com/kalisio/aktnmap/issues/170)
+- Notifications not sent with a process of two steps [\#169](https://github.com/kalisio/aktnmap/issues/169)
+- Access-control related issues when managing organisations [\#165](https://github.com/kalisio/aktnmap/issues/165)
+- API rate limiting on tiled layers [\#163](https://github.com/kalisio/aktnmap/issues/163)
+- Event activity is blocked after closing the media browser [\#154](https://github.com/kalisio/aktnmap/issues/154)
+- Tiled weather layers do not work [\#151](https://github.com/kalisio/aktnmap/issues/151)
+- Event description containing multilines is not displayed correctly [\#150](https://github.com/kalisio/aktnmap/issues/150)
+- The location map should truncate the location info when it is too long [\#148](https://github.com/kalisio/aktnmap/issues/148)
+- Updating a tag  within the tag activity raises an error [\#147](https://github.com/kalisio/aktnmap/issues/147)
+- Quasar language packs installation is missing [\#146](https://github.com/kalisio/aktnmap/issues/146)
+- On mobile, the navigation app selector does not work anymore [\#144](https://github.com/kalisio/aktnmap/issues/144)
+- Editing an event template containing a process raises an error [\#142](https://github.com/kalisio/aktnmap/issues/142)
+- The Location Map cannot request the tiles through the API Gateway [\#141](https://github.com/kalisio/aktnmap/issues/141)
+- Update the profile with an avatar raises an error  [\#133](https://github.com/kalisio/aktnmap/issues/133)
+- Adding a media in an event does not make the browse media action to show up [\#131](https://github.com/kalisio/aktnmap/issues/131)
+- Selecting current activity in app bar raises NavigationDuplicated error [\#130](https://github.com/kalisio/aktnmap/issues/130)
+- Status bar hides app bar on mobiles [\#129](https://github.com/kalisio/aktnmap/issues/129)
+-  Prevent a media from being uploaded multiple times [\#128](https://github.com/kalisio/aktnmap/issues/128)
+- Once authenticated returning on the base URL does not link to the home page [\#122](https://github.com/kalisio/aktnmap/issues/122)
+- Errors raised twice on the client when catched [\#116](https://github.com/kalisio/aktnmap/issues/116)
+- Invited users are not removed when the invitation link expires [\#115](https://github.com/kalisio/aktnmap/issues/115)
+- Move feathers-sync adapter to Redis [\#113](https://github.com/kalisio/aktnmap/issues/113)
+- Default interaction value not correctly selected in log form [\#102](https://github.com/kalisio/aktnmap/issues/102)
+- Can't upload a media on iPad [\#79](https://github.com/kalisio/aktnmap/issues/79)
+- The name of the groups on the member card are not updated when modifying the group name [\#54](https://github.com/kalisio/aktnmap/issues/54)
+
+**Closed issues:**
+
+- Disable ability to create events targeting specific map features [\#145](https://github.com/kalisio/aktnmap/issues/145)
+
+**Merged pull requests:**
+
+- build\(deps\): bump node-fetch from 2.6.0 to 2.6.1 [\#177](https://github.com/kalisio/aktnmap/pull/177) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump lodash from 4.17.15 to 4.17.20 in /docs [\#175](https://github.com/kalisio/aktnmap/pull/175) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump http-proxy from 1.18.0 to 1.18.1 in /docs [\#167](https://github.com/kalisio/aktnmap/pull/167) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps-dev\): bump mongodb from 3.1.4 to 3.1.13 [\#162](https://github.com/kalisio/aktnmap/pull/162) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump showdown from 1.9.0 to 1.9.1 [\#161](https://github.com/kalisio/aktnmap/pull/161) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump elliptic from 6.5.2 to 6.5.3 in /docs [\#157](https://github.com/kalisio/aktnmap/pull/157) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump lodash from 4.17.15 to 4.17.19 [\#149](https://github.com/kalisio/aktnmap/pull/149) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump websocket-extensions from 0.1.3 to 0.1.4 in /docs [\#138](https://github.com/kalisio/aktnmap/pull/138) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump acorn from 6.4.0 to 6.4.1 in /docs [\#137](https://github.com/kalisio/aktnmap/pull/137) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Add license scan report and status [\#91](https://github.com/kalisio/aktnmap/pull/91) ([fossabot](https://github.com/fossabot))
+
+## [v0.7.3](https://github.com/kalisio/aktnmap/tree/v0.7.3) (2019-09-08)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.7.2...v0.7.3)
+
+**Implemented enhancements:**
+
+- Catalog data integration in event activity [\#81](https://github.com/kalisio/aktnmap/issues/81)
+- Allow organisations to manage their own map data catalog [\#52](https://github.com/kalisio/aktnmap/issues/52)
+
+**Fixed bugs:**
+
+- Tags cannot be edited on members [\#85](https://github.com/kalisio/aktnmap/issues/85)
+- Cannot deploy as root [\#83](https://github.com/kalisio/aktnmap/issues/83)
+- Optimize bundle size [\#82](https://github.com/kalisio/aktnmap/issues/82)
+- On production mode, mobile applications are named AktnMap-prod [\#78](https://github.com/kalisio/aktnmap/issues/78)
+
+## [v0.7.2](https://github.com/kalisio/aktnmap/tree/v0.7.2) (2019-05-15)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.7.1...v0.7.2)
+
+**Fixed bugs:**
+
+- Cannot create events using Firefox v66 [\#80](https://github.com/kalisio/aktnmap/issues/80)
+- Replication can make application crash at startup [\#72](https://github.com/kalisio/aktnmap/issues/72)
+
+## [v0.7.1](https://github.com/kalisio/aktnmap/tree/v0.7.1) (2019-05-14)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.7.0...v0.7.1)
+
+**Fixed bugs:**
+
+- Can't change actor states by picking markers on the map anymore [\#77](https://github.com/kalisio/aktnmap/issues/77)
+- Login screen in production version exhibits a "Development version" [\#76](https://github.com/kalisio/aktnmap/issues/76)
+
 ## [v0.7.0](https://github.com/kalisio/aktnmap/tree/v0.7.0) (2019-04-18)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.6.8...v0.7.0)
@@ -8,6 +142,7 @@
 
 - PDF files could be used as attachment in events and downloaded when browsing [\#63](https://github.com/kalisio/aktnmap/issues/63)
 - Support iOS [\#57](https://github.com/kalisio/aktnmap/issues/57)
+- Master branch does not build [\#56](https://github.com/kalisio/aktnmap/issues/56)
 
 **Fixed bugs:**
 
@@ -19,6 +154,7 @@
 - Android build is broken [\#62](https://github.com/kalisio/aktnmap/issues/62)
 - Text format is lost on event description [\#59](https://github.com/kalisio/aktnmap/issues/59)
 - Follow-up action is not available when geolocation does not work [\#58](https://github.com/kalisio/aktnmap/issues/58)
+- Build is not working on travis  [\#51](https://github.com/kalisio/aktnmap/issues/51)
 
 ## [v0.6.8](https://github.com/kalisio/aktnmap/tree/v0.6.8) (2019-02-25)
 
