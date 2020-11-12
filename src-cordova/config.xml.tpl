@@ -75,19 +75,19 @@
     <preference name="WKWebViewOnly" value="true" />    
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
-      <string>Need to access your position to build meaningful events</string>
+      <string>Share your position with managers of your events</string>
     </edit-config>
     <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-      <string>Need to access your position to build meaningful events</string>
+      <string>Share your position with managers of your events</string>
     </edit-config>
     <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-      <string>Need camera access to take pictures</string>
+      <string>Take photos to share with participants of your events</string>
     </edit-config>
     <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-      <string>Need photo library access to get pictures from there</string>
+      <string>Upload photos to share with participants of your events</string>
     </edit-config>
     <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-      <string>Need photo library access to save pictures there</string>
+      <string>Save photos to share with participants of your events</string>
     </edit-config>
     <icon height="29" src="res/icons/ios/icon-small.png" width="29"/>
     <icon height="58" src="res/icons/ios/icon-small-2x.png" width="58"/>
