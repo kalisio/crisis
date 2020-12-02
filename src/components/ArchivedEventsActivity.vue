@@ -515,6 +515,8 @@ export default {
           return { value, count: response.total }
         }))
       }
+      // No need to display zero values
+      data = data.filter(item => item.count > 0)
       // Sort data so that we don't have charts mixing large and small numbers when paginating, go large first
       data = _.sortBy(data, item => -item.count)
       this.values = data.map(item => item.value)
