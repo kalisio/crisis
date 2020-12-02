@@ -1,5 +1,6 @@
 <template>
-  <k-catalog-panel :layers="layers" :layerHandlers="layerHandlers" :layerCategories="layerCategories" >
+  <k-catalog-panel :layers="layers" :layerHandlers="layerHandlers" :layerCategories="layerCategories"
+    :forecastModels="forecastModels" :forecastModelHandlers="forecastModelHandlers" :forecastModel="forecastModel" >
     <div slot="footer" >
       <q-expansion-item v-if="participants.length > 0" icon="las la-user" header-class="text-primary" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">
         <template v-for="participant in participants">
