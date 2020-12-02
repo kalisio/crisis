@@ -303,17 +303,13 @@ export default {
       if (this.isWeather) {
         values.elements = []
         values.forecast = this.forecastModel.name
-        // Check model for tiled mesh layers
+        // Check layers using meteo model source(s)
         if (_.has(this.layer, 'meteo_model')) {
-          const meteoModel = _.find(_.get(this.layer, 'meteo_model'), { model: values.forecast })
-          if (meteoModel) values.elements.push(_.get(meteoModel, 'weacast.element'))
-        }
-        // Check for tiled wind layers
-        else if (_.has(this.layer, 'u.meteo_model') && _.has(this.layer, 'v.meteo_model')) {
-          let meteoModel = _.find(_.get(this.layer, 'u.meteo_model'), { model: values.forecast })
-          if (meteoModel) values.elements.push(_.get(meteoModel, 'weacast.element'))
-          meteoModel = _.find(_.get(this.layer, 'v.meteo_model'), { model: values.forecast })
-          if (meteoModel) values.elements.push(_.get(meteoModel, 'weacast.element'))
+          // Check source supports forecast model
+          const defaultModel = _.get(this.layer.meteo_model, 'default.model') === values.forecast
+          const otherModel = _.find(this.layer.meteo_model.sources, { model: values.forecast })
+          if (defaultModel || otherModel)
+            values.elements.push(_.get(this.layer, 'meteoElements'))
         }
         // Weacast weather layers
         else values.elements = _.get(this.layer, 'leaflet.elements')
