@@ -445,7 +445,7 @@
     "CHART_MODAL_TITLE": "Graphiques des événements",
     "CHART_LABEL": "Type de graphique",
     "PAGINATION_LABEL": "Nombre de valeurs",
-    "NULL_VALUE_LABEL": "Aucune",
+    "NULL_VALUE_LABEL": "Indéfini",
     "ALL_VALUES": "Toutes",
     "RENDER_LABEL": "Type d'affichage",
     "COUNT_LABEL": "Nombre",

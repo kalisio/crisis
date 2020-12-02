@@ -440,7 +440,7 @@
     "CHART_MODAL_TITLE": "Graph for events",
     "CHART_LABEL": "Chart type",
     "PAGINATION_LABEL": "Number of values",
-    "NULL_VALUE_LABEL": "None",
+    "NULL_VALUE_LABEL": "Undefined",
     "ALL_VALUES": "All",
     "RENDER_LABEL": "Display type",
     "COUNT_LABEL": "Count",

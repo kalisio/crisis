@@ -498,6 +498,10 @@ export default {
     async getChartData () {
       // Get possible values
       this.values = await this.loadService().find({ query: { $distinct: 'template' } })
+      // Due to a change in the data structure to enhance archiving some old events do not have a "template" field resulting in a null value
+      this.values.forEach((value, index) => {
+        if (!value) this.values[index] = this.$t('ArchivedEventsActivity.NULL_VALUE_LABEL')
+      })
       // Then count events or participants for each value
       let data
       if (this.render.value === 'participants') {
@@ -511,7 +515,7 @@ export default {
           return { value, count: response.total }
         }))
       }
-      // Sort data so that we don't have charts mixin large and small numbers when paginating, go large first
+      // Sort data so that we don't have charts mixing large and small numbers when paginating, go large first
       data = _.sortBy(data, item => -item.count)
       this.values = data.map(item => item.value)
       this.chartData = data.map(item => item.count)
