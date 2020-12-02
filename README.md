@@ -2,7 +2,7 @@
 
 ## Akt'n'Map application
 
-[![Build Status](https://travis-ci.org/kalisio/aktnmap.png?branch=master)](https://travis-ci.org/kalisio/aktnmap)
+[![Build Status](https://travis-ci.com/kalisio/aktnmap.png?branch=master)](https://travis-ci.com/kalisio/aktnmap)
 [![Code Climate](https://codeclimate.com/github/kalisio/aktnmap/badges/gpa.svg)](https://codeclimate.com/github/kalisio/aktnmap)
 [![Test Coverage](https://codeclimate.com/github/kalisio/aktnmap/badges/coverage.svg)](https://codeclimate.com/github/kalisio/aktnmap/coverage)
 [![Dependency Status](https://img.shields.io/david/kalisio/aktnmap.svg?style=flat-square)](https://david-dm.org/kalisio/aktnmap)
