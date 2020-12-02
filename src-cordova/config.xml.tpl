@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="$PACKAGE_ID" version="1.0.0" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER" xmlns:android="http://schemas.android.com/apk/res/android">
+<widget id="$PACKAGE_ID" version="1.1.0" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER" xmlns:android="http://schemas.android.com/apk/res/android">
   <name>$TITLE</name>
   <description>Akt'n'Map application</description>
   <icon src="res/icons/icon.png"/>
@@ -12,8 +12,8 @@
   <allow-intent href="sms:*"/>
   <allow-intent href="mailto:*"/>
   <allow-intent href="geo:*"/>
-  <preference name="android-minSdkVersion" value="22" />
-  <preference name="android-targetSdkVersion" value="29" />
+  <preference name="android-minSdkVersion" value="22"/>
+  <preference name="android-targetSdkVersion" value="29"/>
   <preference name="permissions" value="none"/>
   <preference name="orientation" value="default"/>
   <preference name="target-device" value="universal"/>
@@ -30,14 +30,14 @@
   <preference name="android-installLocation" value="auto"/>
   <preference name="loadUrlTimeoutValue" value="30000"/>
   <preference name="SplashScreen" value="screen"/>
-  <preference name="StatusBarOverlaysWebView" value="false" />
+  <preference name="StatusBarOverlaysWebView" value="false"/>
   <platform name="android">
     <hook src="hooks/android-before-build.js" type="before_build"/>
     <allow-intent href="market:*"/>
     <resource-file src="google-services.json" target="app/google-services.json"/>
-     <custom-config-file parent="/*" target="AndroidManifest.xml">
-        <uses-permission android:name="android.permission.CAMERA"/>
-        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <custom-config-file parent="/*" target="AndroidManifest.xml">
+      <uses-permission android:name="android.permission.CAMERA"/>
+      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     </custom-config-file>
     <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png"/>
     <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png"/>
@@ -50,7 +50,7 @@
     <splash density="mdpi" src="res/screens/android/screen-mdpi-portrait.png"/>
     <splash density="xhdpi" src="res/screens/android/screen-xhdpi-portrait.png"/>
     <splash density="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png"/>
-    <splash density="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>    
+    <splash density="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>
     <splash density="land-hdpi" src="res/screens/android/screen-hdpi-landscape.png"/>
     <splash density="land-ldpi" src="res/screens/android/screen-ldpi-landscape.png"/>
     <splash density="land-mdpi" src="res/screens/android/screen-mdpi-landscape.png"/>
@@ -70,10 +70,10 @@
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
     <feature name="CDVWKWebViewEngine">
-        <param name="ios-package" value="CDVWKWebViewEngine" />
+      <param name="ios-package" value="CDVWKWebViewEngine"/>
     </feature>
-    <preference name="WKWebViewOnly" value="true" />    
-    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+    <preference name="WKWebViewOnly" value="true"/>
+    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine"/>
     <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
       <string>Need to access your position to build meaningful events</string>
     </edit-config>
@@ -129,13 +129,13 @@
   <plugin name="cordova-plugin-sim" spec="~1.3.3"/>
   <plugin name="cordova-plugin-whitelist" spec="~1.3.4"/>
   <plugin name="cordova-plugin-inappbrowser" spec="~4.0.0"/>
-  <plugin name="cordova-plugin-wkwebview-engine" spec="~1.2.1" />
-  <plugin name="cordova-plugin-file" spec="~6.0.2" />
-  <plugin name="cordova-plugin-file-opener2" spec="~3.0.2" />
+  <plugin name="cordova-plugin-wkwebview-engine" spec="~1.2.1"/>
+  <plugin name="cordova-plugin-file" spec="~6.0.2"/>
+  <plugin name="cordova-plugin-file-opener2" spec="~3.0.2"/>
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
   <plugin name="phonegap-plugin-push" spec="~2.3.0"/>
   <engine name="android" spec="~9.0.0"/>
-  <engine name="ios" spec="~5.1.1" />
+  <engine name="ios" spec="~5.1.1"/>
 </widget>
