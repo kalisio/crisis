@@ -79,6 +79,7 @@ export default {
     kMapMixins.style,
     kMapMixins.weacast,
     kMapMixins.time,
+    kMapMixins.context,
     activityMixin,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,

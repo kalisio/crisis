@@ -155,6 +155,7 @@ export default {
     kCoreMixins.baseCollection,
     kMapMixins.style,
     activityMixin,
+    kMapMixins.context,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
     kMapMixins.map.heatmapLayers,

@@ -244,7 +244,7 @@ module.exports = {
     tools: ['fullscreen'],
     actions: [],
     layerActions: ['zoom-to'],
-    restore: { view: false }
+    restore: { layers: false }
   },
   routes: require('../src/router/routes')
 }

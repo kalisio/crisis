@@ -34,6 +34,7 @@ export default function () {
         utc: 'timeFormat.utc',
         location: 'locationFormat',
         restoreView: 'restore.view',
+        restoreLayers: 'restore.layers',
         timelineStep: 'timeline.step',
         timeseriesSpan: 'timeseries.span'
       }
