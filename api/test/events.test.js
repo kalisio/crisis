@@ -3,7 +3,7 @@ import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import core, { kalisio, hooks as coreHooks, permissions as corePermissions } from '@kalisio/kdk/core.api'
 import * as permissions from '../src/permissions'
-import { createOrganisationServices, removeOrganisationServices, setupArchiveListeners } from '../src/services'
+import { createOrganisationServices, removeOrganisationServices } from '../src/services'
 
 describe('events', () => {
   let app, userService, userObject, orgManagerObject, orgObject, orgUserObject, orgService,
@@ -99,7 +99,7 @@ describe('events', () => {
       })
   })
   // Let enough time to process
-    .timeout(5000)
+    .timeout(15000)
 
   it('creates a org manager', () => {
     return userService.create({ email: 'manager@test.org', name: 'org-manager' }, { checkAuthorisation: true })
@@ -120,7 +120,7 @@ describe('events', () => {
       })
   })
   // Let enough time to process
-    .timeout(5000)
+    .timeout(15000)
 
   it('creates the org', async () => {
     orgObject = await orgService.create({ name: 'test-org' }, { user: orgManagerObject, checkAuthorisation: true })
@@ -130,7 +130,6 @@ describe('events', () => {
     // This should create services for organisation events
     eventService = app.getService('events', orgObject)
     expect(eventService).toExist()
-    setupArchiveListeners.call(app, eventService)
     archivedEventService = app.getService('archived-events', orgObject)
     expect(archivedEventService).toExist()
     // This should create a service for organisation event templates
@@ -139,12 +138,11 @@ describe('events', () => {
     // This should create services for organisation event templates
     eventLogService = app.getService('event-logs', orgObject)
     expect(eventLogService).toExist()
-    setupArchiveListeners.call(app, eventLogService)
     archivedEventLogService = app.getService('archived-event-logs', orgObject)
     expect(archivedEventLogService).toExist()
   })
   // Let enough time to process
-    .timeout(5000)
+    .timeout(15000)
 
   it('creates a org user', () => {
     return userService.create({ email: 'user@test.org', name: 'org-user' }, { checkAuthorisation: true })
@@ -186,7 +184,7 @@ describe('events', () => {
       })
   })
   // Let enough time to process
-    .timeout(10000)
+    .timeout(15000)
 
   it('org manager can create event template', () => {
     return eventTemplateService.create({ title: 'template' }, { user: orgManagerObject, checkAuthorisation: true })
@@ -197,6 +195,8 @@ describe('events', () => {
         expect(templates.data.length > 0).beTrue()
       })
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('members can access event templates service', async () => {
     const templates = await eventTemplateService.find({ query: {}, user: orgUserObject, checkAuthorisation: true })
@@ -241,6 +241,8 @@ describe('events', () => {
     })
     return Promise.all([operation, event])
   })
+  // Let enough time to process
+    .timeout(15000)
 
   it('org member can update event', () => {
     const operation = eventService.patch(eventObject._id, {
@@ -265,6 +267,8 @@ describe('events', () => {
     })
     return Promise.all([operation, event])
   })
+  // Let enough time to process
+    .timeout(15000)
 
   it('org member can delete an event', async () => {
     await eventService.remove(eventObject._id, {
@@ -275,6 +279,8 @@ describe('events', () => {
     const events = await eventService.find({ query: { title: 'updated member event' }, user: orgUserObject, checkAuthorisation: true })
     expect(events.data.length === 0).beTrue()
   })
+  // Let enough time to process
+    .timeout(10000)
 
   it('org manager can create event', () => {
     const operation = eventService.create({
@@ -307,7 +313,7 @@ describe('events', () => {
     return Promise.all([operation, event])
   })
   // Let enough time to process
-    .timeout(10000)
+    .timeout(15000)
 
   it('non-members cannot access events', async () => {
     try {
@@ -336,6 +342,8 @@ describe('events', () => {
     userObject = users.data[0]
     expect(userObject.organisations[0].permissions).to.deep.equal('member')
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('members cannot access events when they are not participants', async () => {
     const events = await eventService.find({ query: {}, user: userObject, checkAuthorisation: true })
@@ -365,6 +373,8 @@ describe('events', () => {
     })
     return Promise.all([operation, event])
   })
+  // Let enough time to process
+    .timeout(15000)
 
   it('event coordinators can add attachments to events', async () => {
     const content = Buffer.from('some buffered data')
@@ -385,25 +395,29 @@ describe('events', () => {
     const data = await storageService.get('buffer.txt')
     expect(data.size === 18).beTrue()
   })
-    .timeout(10000)
+    .timeout(15000)
 
   it('members can access events when they are participants', async () => {
     const events = await eventService.find({ query: {}, user: orgUserObject, checkAuthorisation: true })
     expect(events.data.length === 1).beTrue()
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('participants can create event logs', async () => {
     await eventLogService.create({ event: eventObject._id }, { user: orgUserObject, checkAuthorisation: true })
     const logs = await eventLogService.find({ query: { lastInEvent: true }, user: orgUserObject, checkAuthorisation: true })
     expect(logs.data.length === 1).beTrue()
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('coordinators can create event logs', () => {
     const operation = eventLogService.create({
       event: eventObject._id,
       participant: orgUserObject._id,
       stakeholder: 'coordinator',
-      interaction: { value: 'go' }
+      properties: { interaction: { value: 'go' } }
     }, { user: orgManagerObject, checkAuthorisation: true })
       .then(log => {
         return eventLogService.find({ query: { lastInEvent: true }, user: orgManagerObject, checkAuthorisation: true })
@@ -419,6 +433,8 @@ describe('events', () => {
     })
     return Promise.all([operation, event])
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('events and logs are replicated in archive', async () => {
     const events = await archivedEventService.find({ query: {}, user: orgManagerObject, checkAuthorisation: true })
@@ -443,6 +459,8 @@ describe('events', () => {
     expect(result[0]._id).to.equal('template2')
     expect(result[0].count).to.equal(2)
   })
+  // Let enough time to process
+    .timeout(10000)
 
   it('event coordinators can remove events', () => {
     const operation = eventService.remove(eventObject._id, {
@@ -469,30 +487,40 @@ describe('events', () => {
     })
     return Promise.all([operation, event])
   })
+  // Let enough time to process
+    .timeout(10000)
 
   it('removes test user', async () => {
     await userService.remove(userObject._id, { user: userObject, checkAuthorisation: true })
     const users = await userService.find({ query: { name: userObject.name }, user: userObject, checkAuthorisation: true })
     expect(users.data.length === 0).beTrue()
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('removes org user', async () => {
     await userService.remove(orgUserObject._id, { user: orgUserObject, checkAuthorisation: true })
     const users = await userService.find({ query: { name: orgUserObject.name }, user: orgUserObject, checkAuthorisation: true })
     expect(users.data.length === 0).beTrue()
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('removes org', async () => {
     await orgService.remove(orgObject._id, { user: orgManagerObject, checkAuthorisation: true })
     const orgs = await orgService.find({ query: { name: 'test-org' }, user: orgManagerObject, checkAuthorisation: true })
     expect(orgs.data.length === 0).beTrue()
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('removes org manager', async () => {
     await userService.remove(orgManagerObject._id, { user: orgManagerObject, checkAuthorisation: true })
     const users = await userService.find({ query: { name: orgManagerObject.name }, user: orgManagerObject, checkAuthorisation: true })
     expect(users.data.length === 0).beTrue()
   })
+  // Let enough time to process
+    .timeout(5000)
 
   // Cleanup
   after(async () => {
