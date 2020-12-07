@@ -29,6 +29,7 @@ describe('aktnmap', () => {
     platform: 'ANDROID',
     uuid: 'member-id'
   }
+  const appTopic = process.env.SNS_ANDROID_TOPIC_ARN
 
   before(() => {
     chailint(chai, util)
@@ -409,14 +410,15 @@ describe('aktnmap', () => {
         expect(userObject.devices[1].lastActivity).toExist()
       })
     const events = new Promise((resolve, reject) => {
-      // This should subscribe the new device to all topics: org, group, tag
+      // This should subscribe the new device to all topics: app, org, group, tag
       // Because we check for resubscription after update to avoid any problem we get 2 for each
-      const expectedSubscriptions = 2 * 3
+      const expectedSubscriptions = 2 * 4
       let subscriptions = 0
       sns.on('subscribed', (subscriptionArn, endpointArn, topicArn) => {
         expect(topicArn).to.satisfy(topic => (topic === orgObject.topics[otherDevice.platform]) ||
           (topic === groupObject.topics[otherDevice.platform]) ||
-          (topic === tagObject.topics[otherDevice.platform]))
+          (topic === tagObject.topics[otherDevice.platform]) ||
+          (topic === appTopic))
         subscriptions++
         if (subscriptions === expectedSubscriptions) {
           sns.removeAllListeners('subscribed')
@@ -427,7 +429,7 @@ describe('aktnmap', () => {
     return Promise.all([operation, events])
   })
   // Let enough time to process
-    .timeout(10000)
+    .timeout(15000)
 
   it('check new device email', (done) => {
     // Add some delay to wait for email reception
@@ -453,8 +455,8 @@ describe('aktnmap', () => {
         expect(userObject.devices[0].registrationId).to.equal(otherDevice.registrationId)
       })
     const events = new Promise((resolve, reject) => {
-      // This should unsubscribe old device to all topics: org, group, tag
-      const expectedUnsubscriptions = 3
+      // This should unsubscribe old device to all topics: app, org, group, tag
+      const expectedUnsubscriptions = 4
       let unsubscriptions = 0
       // This should unregister the old device
       let userDeleted = false
@@ -475,7 +477,7 @@ describe('aktnmap', () => {
     return Promise.all([operation, events])
   })
   // Let enough time to process
-    .timeout(10000)
+    .timeout(15000)
 
   it('invites a member to join the organisation', () => {
     const sponsor = { id: userObject._id, organisationId: orgObject._id, roleGranted: 'member' }
@@ -503,7 +505,7 @@ describe('aktnmap', () => {
       })
   })
   // Let enough time to process
-    .timeout(10000)
+    .timeout(15000)
 
   it('check invitation email', (done) => {
     // Add some delay to wait for email reception
