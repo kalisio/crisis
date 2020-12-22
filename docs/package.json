@@ -7,8 +7,8 @@
     "export": "vuepress export ."
   },
   "devDependencies": {
-    "vuepress": "^1.3.0",
-    "vuepress-theme-kalisio": "http://github.com/kalisio/vuepress-theme-kalisio#1.5.0",
-    "vuepress-plugin-redirect": "^1.2.5"
+    "vuepress": "^1.7.1",
+    "vuepress-plugin-redirect": "^1.2.5",
+    "vuepress-theme-kalisio": "https://github.com/kalisio/vuepress-theme-kalisio#v0.1.0"
   }
 }
