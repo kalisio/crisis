@@ -81,6 +81,10 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   apiLimiter = null
   limiter = null
 }
+// Override defaults if env provided
+if (process.env.SUBDOMAIN) {
+  domain = 'https://aktnmap.' + process.env.SUBDOMAIN
+}
 
 module.exports = {
   // Proxy your API if using any.
