@@ -299,7 +299,7 @@ export default {
       })
     },
     async onPhotoCaptured (photoDataUri) {
-      const storageService = this.$api.getService('storage')
+      const storageService = this.$api.getService('storage', this.contextId)
       const name = moment().format('YYYYMMDD_HHmmss.jpg')
       const id = this.item._id + '/' + name
       photoDataUri = 'data:image/jpg;base64,' + photoDataUri
