@@ -2,6 +2,20 @@
 
 ## [prod-v1.0.0](https://github.com/kalisio/aktnmap/tree/prod-v1.0.0) (2020-11-11)
 
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.0.0...prod-v1.0.1)
+
+**Fixed bugs:**
+
+- Slow operations related to organization management [\#208](https://github.com/kalisio/aktnmap/issues/208)
+- Graphs about archived events can be empty [\#205](https://github.com/kalisio/aktnmap/issues/205)
+- Graphs about archived events contain a null type [\#203](https://github.com/kalisio/aktnmap/issues/203)
+- Weather layers not available in event activity [\#202](https://github.com/kalisio/aktnmap/issues/202)
+- Monitoring of distributed services on multiple instances [\#199](https://github.com/kalisio/aktnmap/issues/199)
+- Removing a device from user profile causes app to crash [\#192](https://github.com/kalisio/aktnmap/issues/192)
+- Uploading a photo in the dashboard from a mobile using the dedicated action raises an error [\#168](https://github.com/kalisio/aktnmap/issues/168)
+
+## [prod-v1.0.0](https://github.com/kalisio/aktnmap/tree/prod-v1.0.0) (2020-11-12)
+
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.7.3...prod-v1.0.0)
 
 **Implemented enhancements:**
