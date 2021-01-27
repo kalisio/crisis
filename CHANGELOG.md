@@ -4,10 +4,6 @@
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.0.0...prod-v1.0.1)
 
-**Implemented enhancements:**
-
-- Keep track of currently activated layers [\#204](https://github.com/kalisio/aktnmap/issues/204)
-
 **Fixed bugs:**
 
 - Slow operations related to organization management [\#208](https://github.com/kalisio/aktnmap/issues/208)
@@ -17,10 +13,6 @@
 - Monitoring of distributed services on multiple instances [\#199](https://github.com/kalisio/aktnmap/issues/199)
 - Removing a device from user profile causes app to crash [\#192](https://github.com/kalisio/aktnmap/issues/192)
 - Uploading a photo in the dashboard from a mobile using the dedicated action raises an error [\#168](https://github.com/kalisio/aktnmap/issues/168)
-
-**Merged pull requests:**
-
-- build\(deps\): bump ini from 1.3.5 to 1.3.7 [\#209](https://github.com/kalisio/aktnmap/pull/209) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [prod-v1.0.0](https://github.com/kalisio/aktnmap/tree/prod-v1.0.0) (2020-11-12)
 
