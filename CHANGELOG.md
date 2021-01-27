@@ -1,6 +1,28 @@
 # Changelog
 
-## [prod-v1.0.0](https://github.com/kalisio/aktnmap/tree/prod-v1.0.0) (2020-11-11)
+## [prod-v1.0.1](https://github.com/kalisio/aktnmap/tree/prod-v1.0.1) (2021-01-27)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.0.0...prod-v1.0.1)
+
+**Implemented enhancements:**
+
+- Keep track of currently activated layers [\#204](https://github.com/kalisio/aktnmap/issues/204)
+
+**Fixed bugs:**
+
+- Slow operations related to organization management [\#208](https://github.com/kalisio/aktnmap/issues/208)
+- Graphs about archived events can be empty [\#205](https://github.com/kalisio/aktnmap/issues/205)
+- Graphs about archived events contain a null type [\#203](https://github.com/kalisio/aktnmap/issues/203)
+- Weather layers not available in event activity [\#202](https://github.com/kalisio/aktnmap/issues/202)
+- Monitoring of distributed services on multiple instances [\#199](https://github.com/kalisio/aktnmap/issues/199)
+- Removing a device from user profile causes app to crash [\#192](https://github.com/kalisio/aktnmap/issues/192)
+- Uploading a photo in the dashboard from a mobile using the dedicated action raises an error [\#168](https://github.com/kalisio/aktnmap/issues/168)
+
+**Merged pull requests:**
+
+- build\(deps\): bump ini from 1.3.5 to 1.3.7 [\#209](https://github.com/kalisio/aktnmap/pull/209) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [prod-v1.0.0](https://github.com/kalisio/aktnmap/tree/prod-v1.0.0) (2020-11-12)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.7.3...prod-v1.0.0)
 
@@ -25,13 +47,13 @@
 - Tag required features as "beta" [\#117](https://github.com/kalisio/aktnmap/issues/117)
 - Allow to zoom on an image when browsing the medias [\#114](https://github.com/kalisio/aktnmap/issues/114)
 - On mobile allow to enlarge the content of an event card  [\#106](https://github.com/kalisio/aktnmap/issues/106)
-- Enhance archived events activity [\#98](https://github.com/kalisio/aktnmap/issues/98)
 - Migrate to the new kdk module [\#97](https://github.com/kalisio/aktnmap/issues/97)
 - Simulate MongoDB Stitch archiving function in dev [\#96](https://github.com/kalisio/aktnmap/issues/96)
+- Enhance archived events activity [\#98](https://github.com/kalisio/aktnmap/issues/98)
 - Enhance weather/measure alert management [\#94](https://github.com/kalisio/aktnmap/issues/94)
 - Deployment should rely on an existing MongoDB instance [\#92](https://github.com/kalisio/aktnmap/issues/92)
-- Add ability to generate events from alerts on weather/measure probes [\#88](https://github.com/kalisio/aktnmap/issues/88)
 - Simplify GUI when the user belongs to a single organization [\#84](https://github.com/kalisio/aktnmap/issues/84)
+- Add ability to generate events from alerts on weather/measure probes [\#88](https://github.com/kalisio/aktnmap/issues/88)
 - Allow to create events targeting specific map features [\#75](https://github.com/kalisio/aktnmap/issues/75)
 - Archive events and event logs for traceability and statistics [\#60](https://github.com/kalisio/aktnmap/issues/60)
 - Add Healthcheck [\#55](https://github.com/kalisio/aktnmap/issues/55)
@@ -79,9 +101,9 @@
 - Errors raised twice on the client when catched [\#116](https://github.com/kalisio/aktnmap/issues/116)
 - Invited users are not removed when the invitation link expires [\#115](https://github.com/kalisio/aktnmap/issues/115)
 - Move feathers-sync adapter to Redis [\#113](https://github.com/kalisio/aktnmap/issues/113)
-- Default interaction value not correctly selected in log form [\#102](https://github.com/kalisio/aktnmap/issues/102)
 - Can't upload a media on iPad [\#79](https://github.com/kalisio/aktnmap/issues/79)
 - The name of the groups on the member card are not updated when modifying the group name [\#54](https://github.com/kalisio/aktnmap/issues/54)
+- Default interaction value not correctly selected in log form [\#102](https://github.com/kalisio/aktnmap/issues/102)
 
 **Closed issues:**
 
