@@ -13,7 +13,7 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://aktnmap.test.kalisio.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
-  domain = 'https://aktnmap.prod.kalisio.xyz'
+  domain = 'https://aktnmap.prod.kalisio.com'
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
