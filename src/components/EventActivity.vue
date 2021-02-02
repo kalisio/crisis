@@ -345,7 +345,6 @@ export default {
     this.registerStyle('markerStyle', this.getParticipantMarker)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
     this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
-    this.registerStyle('tooltip', this.getVigicruesTooltip)
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
   },
