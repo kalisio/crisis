@@ -369,7 +369,6 @@ export default {
     this.$options.components['k-list'] = this.$load('collection/KList')
     this.$options.components['alert-form'] = this.$load('AlertForm')
 
-    this.registerStyle('tooltip', this.getVigicruesTooltip)
     this.registerStyle('tooltip', this.getAlertTooltip)
     this.registerStyle('popup', this.getAlertPopup)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
