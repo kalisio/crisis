@@ -161,7 +161,7 @@ export default {
           label: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
           type: 'OverlayLayer',
           icon: 'fas fa-user',
-          featureId: 'participant._id',
+          featureId: (this.archived ? 'participant' : 'participant._id'),
           isStorable: false,
           isEditable: false,
           isSelectable: false,
