@@ -15,14 +15,14 @@ let nbAuthenticationRequestsPerMinute = 10
 // Whitelist features services from rate limiting as they use a lot of concurrent requests
 const apiLimiterWhitelist = (service) =>
   service.path.includes('features') ||
-  service.path.includes('hubeau-stations') ||
-  service.path.includes('hubeau-observations') ||
-  service.path.includes('openaq-stations') ||
-  service.path.includes('openaq-measurements') ||
-  service.path.includes('teleray-sensors') ||
-  service.path.includes('teleray-measurements') ||
-  service.path.includes('vigicrues-sections') ||
-  service.path.includes('vigicrues-forecasts')
+  service.path.includes('hubeau') ||
+  service.path.includes('openaq') ||
+  service.path.includes('teleray') ||
+  service.path.includes('vigicrues') ||
+  service.path.includes('openradiation') ||
+  service.path.includes('arome') ||
+  service.path.includes('arpege') ||
+  service.path.includes('gfs')
 // Global API limiter
 let apiLimiter = {
   http: {
