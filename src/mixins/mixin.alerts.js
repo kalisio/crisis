@@ -10,6 +10,7 @@ const alertsMixin = {
     },
     getAlertDetailsAsHtml (alert) {
       const isActive = _.get(alert, 'status.active')
+      const hasError = _.get(alert, 'status.error')
       const checkedAt = new Date(_.get(alert, 'status.checkedAt'))
       let triggeredAt = new Date(_.get(alert, 'status.triggeredAt'))
       let html = ''
@@ -35,13 +36,16 @@ const alertsMixin = {
         triggeredAt = new Date(triggers.time || triggers.forecastTime)
         html += this.$t('CatalogActivity.ALERT_THRESHOLD_AT') + ` ${this.formatAlertDateTime(triggeredAt)}`
       }
+      if (hasError) html += '</br><i class="la la-exclamation la-lg"></i><b>' +
+        this.$t('errors.' + _.get(alert, 'status.error.data.translation.key')) + '</b></br>'
       return html
     },
     getAlertStatusAsHtml (alert) {
       const isActive = _.get(alert, 'status.active')
+      const hasError = _.get(alert, 'status.error')
       let html = ''
-      if (isActive) html += this.$t('CatalogActivity.ALERT_ACTIVE') + '</br>'
-      else html += this.$t('CatalogActivity.ALERT_INACTIVE') + '</br>'
+      if (isActive) html += '<b>' + this.$t('CatalogActivity.ALERT_ACTIVE') + '</b></br>'
+      else html += '<b>' + this.$t('CatalogActivity.ALERT_INACTIVE') + '</b></br>'
         // Layer name can be a translation key
       html += (this.$t(`${alert.layer.name}`) ? this.$t(`${alert.layer.name}`) : `${alert.layer.name}`)
       if (_.has(alert, 'feature')) {
@@ -51,6 +55,8 @@ const alertsMixin = {
         if (_.has(alert, 'layer.featureLabel')) featureLabel = _.get(alert, 'properties.' + _.get(alert, 'layer.featureLabel'))
         if (featureLabel) html += ` - ${featureLabel}`
       }
+      if (hasError) html += '</br><i class="la la-exclamation la-lg"></i><b>' +
+        this.$t('errors.' + _.get(alert, 'status.error.data.translation.key')) + '</b></br>'
       return html
     },
     getAlertLocationName (alert) {

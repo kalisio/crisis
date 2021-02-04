@@ -140,12 +140,6 @@ export default {
           type: 'geoJson',
           isVisible: true,
           realtime: true,
-          'marker-color': `<% if (_.get(feature, 'status.active')) { %>red<% } else { %>green<% } %>`,
-          'stroke': `<% if (_.get(feature, 'status.active')) { %>red<% } else { %>green<% } %>`,
-          'fill': `<% if (_.get(feature, 'status.active')) { %>red<% } else { %>green<% } %>`,
-          'icon-classes': `fas fa-bell`,
-          'icon-color': 'white',
-          template: ['marker-color', 'stroke', 'fill'],
           popup: { pick: [] }
         }
       })
@@ -235,17 +229,43 @@ export default {
         this.$events.$emit('error', new Error(this.$t('errors.ALERTS_LIMIT')))
       }
     },
+    getAlertStyle (feature, options) {
+      if (options.name !== this.$t('CatalogActivity.ALERTS_LAYER')) return null
+
+      const isActive = _.get(feature, 'status.active')
+      const hasError = _.get(feature, 'status.error')
+      return {
+        'color': (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green')),
+        'fillColor': (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green')),
+      }
+    },
+    getAlertMarker (feature, latlng, options) {
+      if (options.name !== this.$t('CatalogActivity.ALERTS_LAYER')) return null
+
+      const isActive = _.get(feature, 'status.active')
+      const hasError = _.get(feature, 'status.error')
+      return this.createMarkerFromStyle(latlng, {
+        icon: {
+          type: 'icon.fontAwesome',
+          options: {
+            iconClasses: 'fas fa-bell',
+            markerColor: (isActive ? '#FF0000' : '#008000'),
+            iconColor: (hasError ? '#000000' : '#FFFFFF')
+          }
+        }
+      })
+    },
     getAlertPopup (alert, layer, options) {
       if (options.name !== this.$t('CatalogActivity.ALERTS_LAYER')) return null
 
       const html = this.getAlertDetailsAsHtml(alert)
-      return L.popup({ autoPan: false }, layer).setContent(`<b>${html}</b>`)
+      return L.popup({ autoPan: false }, layer).setContent(html)
     },
     getAlertTooltip (alert, layer, options) {
       if (options.name !== this.$t('CatalogActivity.ALERTS_LAYER')) return null
 
       const html = this.getAlertStatusAsHtml(alert)
-      return L.tooltip({ permanent: false }, layer).setContent(`<b>${html}</b>`)
+      return L.tooltip({ permanent: false }, layer).setContent(html)
     },
     onCreateEventAction (data) {
       this.eventFeature = data.feature
@@ -344,6 +364,8 @@ export default {
 
     this.registerStyle('tooltip', this.getAlertTooltip)
     this.registerStyle('popup', this.getAlertPopup)
+    this.registerStyle('markerStyle', this.getAlertMarker)
+    this.registerStyle('featureStyle', this.getAlertStyle)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
     this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
 
