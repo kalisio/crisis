@@ -59,15 +59,15 @@ module.exports = {
             // Because this child is the default one path is empty and name is the one of the parent route
             path: '',
             name: 'home',
-            redirect: { name: 'dashboard' },
+            redirect: { name: 'organisations-activity' },
             tour: tours.home
           },
-          'dashboard': {
-            path: 'dashboard',
-            component: 'EventDashboard',
+          'organisations-activity': {
+            path: 'organisations',
+            component: 'team/KOrganisationsActivity',
             tour: tours.dashboard
           },
-          'account/:perspective': {
+          'account/:page': {
             name: 'account-activity',
             component: 'account/KAccountActivity',
             props: true,

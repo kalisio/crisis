@@ -141,6 +141,9 @@ module.exports = {
     labels: ['MEMBER', 'MANAGER', 'OWNER'],
     icons: ['las la-user', 'las la-briefcase', 'las la-certificate']
   },
+  context: {
+    service: 'organisations'
+  },
   screens: {
     banner: 'aktnmap-banner.png',
     extraLinks: [
@@ -178,50 +181,97 @@ module.exports = {
   },
   layout: {
     view: 'lHh LpR lFf',
+    topPane: {
+      opener: true,
+      visible: true
+    },
+    bottomPane: {
+      opener: true
+    },
     leftDrawer: {
+      content: [
+        { component: 'QImg', src: 'statics/aktnmap-banner.png' },
+        { component: 'account/KIdentityPanel', class: 'full-width' },
+        { component: 'Settings' },
+        { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px;' },
+        { component: 'layout/KAbout' },
+        { id: 'contextual-help', icon: 'las la-question-circle', label: 'sideNav.CONTEXTUAL_HELP', url: onlineHelp, renderer: 'item' },
+        { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px;' },
+        { id: 'logout', icon: 'las la-sign-out-alt', label: 'sideNav.LOGOUT', route: { name: 'logout' }, renderer: 'item' }
+      ],
       behavior: 'mobile',
-      component: {
-        name: 'layout/KSideNav'
-      }
+      opener: true
     },
     rightDrawer: {
       behavior: 'mobile',
       opener: true
     }
-  }, 
-  appBar: {
-    title: 'Akt\'n\'Map'
   },
-  sideNav: {
-    banner: 'aktnmap-banner.png',
-    components: {
-      user_identity: 'account/KIdentityPanel',
-      user_dashboard: 'layout/KLinksPanel',
-      user_organisation: 'team/KOrganisationsPanel',
-      user_settings: 'Settings',
-      app_about: 'layout/KAbout',
-      user_actions: 'layout/KLinksPanel'
+  accountActivity: {
+    topPane: {
+      content: {
+        profile: [
+          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'back' } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'profile', icon: 'las la-user', color: 'primary', label: 'KAccountActivity.PROFILE', disabled: true },
+          { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
+          { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'KAccountActivity.DANGER_ZONE', route: { name: 'account-activity', params: { page: 'danger-zone' } } }
+        ],
+        security: [
+          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'back' } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'profile', icon: 'las la-user', tooltip: 'KAccountActivity.PROFILE', route: { name: 'account-activity', params: { page: 'profile' } } },
+          { id: 'security', icon: 'las la-shield-alt', color: 'primary', label: 'KAccountActivity.SECURITY', disabled: true },
+          { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'KAccountActivity.DANGER_ZONE', route: { name: 'account-activity', params: { page: 'danger-zone' } } }
+        ],
+        'danger-zone': [
+          { id: 'go-back', icon: 'las la-arrow-left', handler: { name: 'back' } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'profile', icon: 'las la-user', tooltip: 'KAccountActivity.PROFILE', route: { name: 'account-activity', params: { page: 'profile' } } },
+          { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
+          { id: 'danger-zone', icon: 'las la-exclamation-triangle', color: 'primary', label: 'KAccountActivity.DANGER_ZONE', disabled: true }
+        ]
+      }
     }
   },
-  user_dashboard: {
-    links: [
-      { },
-      { id: 'dashboard', label: 'sideNav.DASHBOARD', icon: 'dashboard', route: { name: 'home' } }
-    ]
+  organisationsActivity: {
+    topPane: {
+      content: {
+        'default': [
+          { id: 'my-organisations', icon: 'las la-home', label: 'KOrganisationsActivity.MY_ORGANISATIONS', color: 'primary', disabled: true },
+          { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATION', handler: { name: 'setTopPaneMode', params: ['filter'] } }
+        ],
+        'filter': [
+          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
+          { component: 'QSeparator', vertical: true,  color: 'lightgrey' },
+          { component: 'collection/KFilter' }
+        ]
+      }
+    },
+    fab: {
+      actions: [
+        { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION', handler: { name: 'createOrganisation' } }
+      ]
+    }
   },
-  user_organisations: {
-    icon: 'domain',
-    label: 'Organisations'
-  },
-  user_actions: {
-    links: [
-      { id: 'help', label: 'sideNav.HELP', icon: 'las la-question', url: onlineHelp },
-      { }, // separator
-      { id: 'logout', label: 'sideNav.LOGOUT', icon: 'las la-sign-out-alt', route: { name: 'logout' } }
-    ]
-  },
-  context: {
-    service: 'organisations'
+  eventsActivity: {
+    topPane: {
+      content: {
+        'default': [
+          { id: 'my-organisations', icon: 'las la-home', tooltip: 'EventsActivity.MY_ORGANISATIONS', route: { name: 'organisations-activity' } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'my-events', icon: 'las la-fire', label: 'EventsActivity.MY_EVENTS', color: 'primary', disabled: true },
+          { id: 'filter', icon: 'las la-search', tooltip: 'EventsActivity.FILTER_EVENTS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'configuration', icon: 'las la-grip-horizontal', tooltip: 'EventsActivity.CONFIGURATION', route: { name: 'members-activity' } },
+        ],
+        'filter': [
+          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
+          { component: 'QSeparator', vertical: true,  color: 'lightgrey' },
+          { component: 'collection/KFilter' }
+        ]
+      }
+    }
   },
   catalog: defaultMapOptions,
   catalogCatalog: defaultMapCatalog,

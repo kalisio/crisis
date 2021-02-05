@@ -41,7 +41,6 @@ module.exports = function (ctx) {
         'QAjaxBar',
         'QAvatar',
         'QBadge',
-        'QBanner',
         'QBtn',
         'QCard',
         'QCardSection',
@@ -56,6 +55,7 @@ module.exports = function (ctx) {
         'QField',
         'QHeader',
         'QIcon',
+        'QImg',
         'QInput',
         'QItem',
         'QItemSection',
@@ -69,7 +69,6 @@ module.exports = function (ctx) {
         'QPagination',
         'QPopupProxy',
         'QResizeObserver',
-        'QRouteTab',
         'QScrollArea',
         'QSelect',
         'QSeparator',
@@ -91,8 +90,7 @@ module.exports = function (ctx) {
       directives: [
         'Ripple',
         'ClosePopup',
-        'TouchSwipe',
-        'TouchPan'
+        'TouchSwipe'
       ],
 
       // Quasar plugins

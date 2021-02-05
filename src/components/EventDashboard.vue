@@ -24,14 +24,12 @@
 
 <script>
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 
 export default {
   name: 'event-dashboard',
   mixins: [
     kCoreMixins.baseActivity,
-    kCoreMixins.baseCollection,
-    kMapMixins.geolocation
+    kCoreMixins.baseCollection
   ],
   data () {
     return {
@@ -61,10 +59,7 @@ export default {
     },
     refreshActivity () {
       this.clearActivity()
-      this.setTitle(this.$t('EventDashboard.DASHBOARD'))
-      this.setSearchBar('name')
       this.refreshCollection()
-      this.updatePosition()
     },
     checkSingleOrganisation () {
       // When there is a single organisation directly go to the event activity, no need for the dashboard

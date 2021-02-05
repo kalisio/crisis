@@ -401,8 +401,9 @@
     "PARTICIPANTS_LABEL": "Participants"
   },
   "EventsActivity": {
-    "EVENTS_LABEL": "$t(EVENTS_LABEL)",
-    "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)"
+    "MY_ORGANISATIONS": "Mes organisations",
+    "MY_EVENTS": "Mes événements",
+    "SEARCH_EVENT": "Rechercher un événement"
   },
   "EventCard": {
     "CREATED_AT_LABEL": "Créé le",

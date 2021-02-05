@@ -15,14 +15,10 @@
 
 <script>
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 
 export default {
   name: 'events-activity',
-  mixins: [
-    kCoreMixins.baseActivity, 
-    kMapMixins.geolocation
-  ],
+  mixins: [kCoreMixins.baseActivity()],
   props: {
     contextId: {
       type: String,
@@ -50,27 +46,10 @@ export default {
     },
     async refreshActivity () {
       this.clearActivity()
-      this.setTitle(this.$store.get('context.name'))
-      // Search bar
-      this.setSearchBar('name')
-      // Tabbar actions
-      this.registerTabAction({
-        name: 'events',
-        label: this.$t('EventsActivity.EVENTS_LABEL'),
-        icon: 'las la-fire',
-        route: { name: 'events-activity', params: { contextId: this.contextId } },
-        default: true
-      })
-      if (this.$can('create', 'event-templates', this.contextId)) {
-        this.registerTabAction({
-          name: 'event-templates',
-          label: this.$t('EventsActivity.EVENT_TEMPLATES_LABEL'),
-          icon: 'las la-project-diagram',
-          route: { name: 'event-templates-activity', params: { contextId: this.contextId } }
-        })
-      }
+      this.configureActivity()
       // Fab actions
       if (this.$can('create', 'events', this.contextId)) {
+        const actions = []
         const eventTemplatesService = this.$api.getService('event-templates')
         let response = await eventTemplatesService.find({
           query: { $limit: 0 }
@@ -90,8 +69,8 @@ export default {
             // It is easier to access the DOM with template names, eg in tests, so we use it as action name whenever possible
             // However we have to check about duplicated names
             const doublons = templates.filter(otherTemplate => otherTemplate.name.toLowerCase() === template.name.toLowerCase())
-            this.registerFabAction({
-              name: 'create-' + (doublons.length > 1 ? template._id : template.name),
+            actions.push({
+              id: 'create-' + (doublons.length > 1 ? template._id : template.name),
               label: template.name,
               icon: template.icon,
               route: { name: 'create-event', params: { contextId: this.contextId, templateId: template._id } }
@@ -99,6 +78,7 @@ export default {
           })
           offset = offset + batchSize
         }
+        this.setFab(actions)
       }
     }
   },
@@ -106,8 +86,6 @@ export default {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
-    // Performs geolocation
-    this.updatePosition()
   }
 }
 </script>
