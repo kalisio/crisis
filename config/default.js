@@ -335,7 +335,7 @@ module.exports = {
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextMenu('tags-activity')
         ],
-        'filter': contextFilter('name')
+        'filter': contextFilter('value')
       }
     }
   },
