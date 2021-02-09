@@ -14,9 +14,6 @@ export default {
     refresh () {
       window.location.reload()
     },
-    search () {
-      this.$store.patch('searchBar', { isVisible: !this.$store.get('searchBar.isVisible') })
-    },
     launchTour (name) {
       this.$store.patch('tours.current', { name })
     },

@@ -183,6 +183,7 @@ export default {
           $lte: maxDate.toISOString()
         }
       },
+      filter: this.$store.get('filter'),
       renderer: {
         component: 'ArchivedEventEntry',
         props: {

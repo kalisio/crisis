@@ -110,10 +110,7 @@ const contextFilter = function (field, services = []) {
     { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
     { component: 'QSeparator', vertical: true,  color: 'lightgrey' },
     { 
-      component: 'collection/KFilter', 
-      field,
-      services,
-      on: { event: 'filter-changed', listener: 'onFilterChanged' } 
+      component: 'collection/KFilter', field, services
     }
   ]
 }

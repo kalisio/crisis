@@ -13,7 +13,7 @@
           </q-item>
           <q-item :id="'organisation-grid-' + org._id">
             <q-item-section>
-              <k-grid service="events" :renderer="renderer" :contextId="org._id" :base-query="baseQuery" :filter-query="filterQuery" :list-strategy="'smart'" />
+              <k-grid service="events" :renderer="renderer" :contextId="org._id" :base-query="baseQuery" :filter-query="filter.query" :list-strategy="'smart'" />
             </q-item-section>
           </q-item>
         </q-list>
@@ -38,6 +38,7 @@ export default {
           updatedAt: -1
         }
       },
+      filter: this.$store.get('filter'),
       renderer: {
         component: 'EventCard',
         props: {
