@@ -94,7 +94,7 @@ const measureLayers = { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAY
 const meteoLayers = { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'las la-cloud-sun-rain', component: 'catalog/KWeatherLayersSelector',
   options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } }
 
-let defaultMapCatalog = {
+const defaultMapCatalog = {
   categories: [
     baseLayers,
     businessLayers,
@@ -103,6 +103,57 @@ let defaultMapCatalog = {
     measureLayers,
     meteoLayers
   ]
+}
+
+const contextFilter = function (field, services = []) {
+  return [
+    { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
+    { component: 'QSeparator', vertical: true,  color: 'lightgrey' },
+    { 
+      component: 'collection/KFilter', 
+      field,
+      services,
+      on: { event: 'filter-changed', listener: 'onFilterChanged' } 
+    }
+  ]
+}
+
+const contextMenu = function (activityName) {
+  return {
+    component: 'frame/KMenu',
+    icon: 'las la-grip-horizontal',
+    actionRenderer: 'item',
+    content: [
+      { id: 'members', icon: 'las la-user-friends', label: 'KMembersActivity.MEMBERS_LABEL',
+        visible: { name: '$can', params: ['service', 'members', ':contextId'] },
+        route: { name: 'members-activity', params: { contextId: ':contextId' } },    
+      },
+      { id: 'tags', icon: 'las la-tags', label: 'KTagsActivity.TAGS_LABEL',
+        visible: { name: '$can', params: ['service', 'tags', ':contextId'] },
+        route: { name: 'tags-activity', params: { contextId: ':contextId' } },    
+      },
+      { id: 'groups', icon: 'las la-sitemap', label: 'KGroupsActivity.GROUPS_LABEL',
+        visible: { name: '$can', params: ['service', 'groups', ':contextId'] },
+        route: { name: 'groups-activity', params: { contextId: ':contextId' } },    
+      },
+      { id: 'events', icon: 'las la-project-diagram', label: 'EventsActivity.EVENTS_LABEL',
+        visible: { name: '$can', params: ['service', 'events', ':contextId'] },
+        route: { name: 'events-activity', params: { contextId: ':contextId' } },    
+      },
+      { id: 'event-templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL',
+        visible: { name: '$can', params: ['service', 'event-templates', ':contextId'] },
+        route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
+      },
+      { id: 'catalog', icon: 'las la-map', label: 'Context.CATALOG',
+        visible: { name: '$can', params: ['update', 'catalog', ':contextId'] },
+        route: { name: 'catalog-activity', params: { contextId: ':contextId' } },    
+      },
+      { id: 'settings', icon: 'las la-cog', label: 'Context.SETTINGS',
+        visible: { name: '$can', params: ['update', 'organisations', ':contextId'] },
+        route: { name: 'organisation-settings-activity', params: { perspective: 'properties', contextId: ':contextId' } },    
+      }
+    ].filter(item => item.name !== activityName)
+  }
 }
 
 module.exports = {
@@ -238,19 +289,76 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { id: 'my-organisations', icon: 'las la-home', label: 'KOrganisationsActivity.MY_ORGANISATIONS', color: 'primary', disabled: true },
-          { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATION', handler: { name: 'setTopPaneMode', params: ['filter'] } }
+          { id: 'organisations', icon: 'las la-home', label: 'KOrganisationsActivity.ORGANISATIONS_LABEL', color: 'primary', disabled: true },
+          { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATION_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
-        'filter': [
-          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
-          { component: 'QSeparator', vertical: true,  color: 'lightgrey' },
-          { component: 'collection/KFilter' }
-        ]
+        'filter': contextFilter('name')
       }
     },
     fab: {
       actions: [
-        { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION', handler: { name: 'createOrganisation' } }
+        { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL', handler: { name: 'createOrganisation' } }
+      ]
+    }
+  },
+  membersActivity: {
+    topPane: {
+      content: {
+        'default': [
+          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'groups', icon: 'las la-sitemap', label: 'KMembersActivity.MEMBERS_LABEL', color: 'primary', disabled: true },
+          { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBER_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          contextMenu('groups-activity')
+        ],
+        'filter': contextFilter('profile.name', [
+          { service: 'groups', field: 'name', baseQuery: {}, icon: 'las la-sitemap' },
+          { service: 'tags', field: 'value', baseQuery: {}, icon: 'las la-tag' }
+        ])
+      }
+    },
+    fab: {
+      actions: [
+        { id: 'add-member', icon: 'las la-user-plus', tooltip: 'KMembersActivity.ADD_USER_LABEL',
+          visible: { name: '$can', params: ['update', 'organisations', ':contextId'] }, route: { name: 'add-member' } },
+        { id: 'invite-member', icon: 'las la-envelope', tooltip: 'KMembersActivity.INVITE_GUEST_LABEL',
+          visible: { name: '$can', params: ['update', 'organisations', ':contextId'] }, route: { name: 'invite-member' } }
+      ]
+    }
+  },
+  tagsActivity: {
+    topPane: {
+      content: {
+        'default': [
+          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'tags', icon: 'las la-tags', label: 'KTagsActivity.TAGS_LABEL', color: 'primary', disabled: true },
+          { id: 'search-tag', icon: 'las la-search', tooltip: 'KTagsActivity.SEARCH_TAGS_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          contextMenu('tags-activity')
+        ],
+        'filter': contextFilter('name')
+      }
+    }
+  },
+  groupsActivity: {
+    topPane: {
+      content: {
+        'default': [
+          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'groups', icon: 'las la-sitemap', label: 'KGroupsActivity.GROUPS_LABEL', color: 'primary', disabled: true },
+          { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          contextMenu('groups-activity')
+        ],
+        'filter': contextFilter('name')
+      }
+    },
+    fab: {
+      actions: [
+        { id: 'create-group', icon: 'las la-plus', tooltip: 'KGroupsActivity.CREATE_GROUP_LABEL', route: { name: 'create-group', params: { contextId: ':contextId' } } }
       ]
     }
   },
@@ -258,20 +366,79 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { id: 'my-organisations', icon: 'las la-home', tooltip: 'EventsActivity.MY_ORGANISATIONS', route: { name: 'organisations-activity' } },
+          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { id: 'my-events', icon: 'las la-fire', label: 'EventsActivity.MY_EVENTS', color: 'primary', disabled: true },
-          { id: 'filter', icon: 'las la-search', tooltip: 'EventsActivity.FILTER_EVENTS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { id: 'events', icon: 'las la-fire', label: 'EventsActivity.EVENTS_LABEL', color: 'primary', disabled: true },
+          { id: 'filter', icon: 'las la-search', tooltip: 'EventsActivity.SEARCH_EVENT', handler: { name: 'setTopPaneMode', params: ['filter'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { id: 'configuration', icon: 'las la-grip-horizontal', tooltip: 'EventsActivity.CONFIGURATION', route: { name: 'members-activity' } },
+          contextMenu('events-activity')
         ],
-        'filter': [
-          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
-          { component: 'QSeparator', vertical: true,  color: 'lightgrey' },
-          { component: 'collection/KFilter' }
-        ]
+        'filter': contextFilter('name')
       }
     }
+  },
+  eventTemplatesActivity: {
+    topPane: {
+      content: {
+        'default': [
+          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', color: 'primary', disabled: true },
+          { id: 'search-template', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          contextMenu('event-templates-activity')
+        ],
+        'filter': contextFilter('name')
+      }
+    },
+    fab: {
+      actions: [
+        { id: 'create-event-template', icon: 'las la-plus', tooltip: 'EventTemplatesActivity.CREATE_TEMPLATE_LABEL',
+          visible: { name: '$can', params: ['create', 'event-templates', ':contextId'] },
+          route: { name: 'create-event-template', params: { contextId: ':contextId' } } }
+      ]
+    }
+  },
+  archivedEventsActivity: {
+    topPane: {
+      content: {
+        'history': [
+          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'map-view', icon: 'scatter_plot', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: { name: 'onShowMap' } },
+          { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: { name: 'onShowChart' } },
+          { component: 'input/KTimeRangeChooser', id: 'timerange', icon: 'las la-calendar',
+            on: { event: 'time-range-choosed', listener: 'onTimeRangeChanged' } },
+          { id: 'history-sort', icon: 'las la-sort-amount-down', tooltip: 'ArchivedEventsActivity.ASCENDING_SORT',
+            toggle: { icon: 'las la-sort-amount-up', color: 'grey-9', tooltip: 'ArchivedEventsActivity.DESCENDING_SORT' }, handler: { name: 'onSortOrder' } }
+        ],
+        'map': [
+          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'history-view', icon: 'las la-history', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: { name: 'onShowHistory' } },
+          { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: { name: 'onShowChart' } },
+          { id: 'heatmap', icon: 'las la-bowling-ball', tooltip: 'ArchivedEventsActivity.SHOW_HEATMAP_LABEL',
+            toggle: { icon: 'scatter_plot', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_MARKERS_LABEL' }, handler: { name: 'onHeatmap' } },
+          { id: 'by-template', icon: 'las la-layer-group', tooltip: 'ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL',
+            toggle: { icon: 'las la-object-group', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_ALL_LABEL' }, handler: { name: 'onByTemplate' } }
+        ],
+        'chart': [
+          { id: 'history-view', icon: 'las la-history', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: { name: 'onShowHistory' } },
+          { id: 'map-view', icon: 'scatter_plot', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: { name: 'onShowMap' } }
+        ]
+      }
+    },
+    rightPane: {
+      'map': [
+        { component: 'catalog/KCatalog' }
+      ]
+    },
+    engine: defaultMapOptions,
+    catalog: { categories: [baseLayers, overlayLayers] },
+    tools: ['fullscreen'],
+    actions: [],
+    layerActions: ['zoom-to'],
+    restore: { layers: false }
   },
   catalog: defaultMapOptions,
   catalogCatalog: defaultMapCatalog,
@@ -287,14 +454,6 @@ module.exports = {
     tools: ['track-location', 'location-bar', 'fullscreen'],
     actions: ['probe-location'],
     layerActions: ['zoom-to']
-  },
-  archivedEvents: defaultMapOptions,
-  archivedEventsCatalog: { categories: [baseLayers, overlayLayers] },
-  archivedEventsActivity: {
-    tools: ['fullscreen'],
-    actions: [],
-    layerActions: ['zoom-to'],
-    restore: { layers: false }
   },
   routes: require('../src/router/routes')
 }

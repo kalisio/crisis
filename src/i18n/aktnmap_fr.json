@@ -401,8 +401,7 @@
     "PARTICIPANTS_LABEL": "Participants"
   },
   "EventsActivity": {
-    "MY_ORGANISATIONS": "Mes organisations",
-    "MY_EVENTS": "Mes événements",
+    "EVENTS_LABEL": "$t(EVENTS_LABEL)",
     "SEARCH_EVENT": "Rechercher un événement"
   },
   "EventCard": {
@@ -430,8 +429,6 @@
     "FOLLOWUP_MODAL_SAVE_BUTTON": "$t(SAVE_LABEL)"
   },
   "ArchivedEventsActivity": {
-    "FROM_DATE": "Depuis le",
-    "TO_DATE": "Jusqu'au",
     "ASCENDING_SORT": "Plus vieux d'abord",
     "DESCENDING_SORT": "Plus récent d'abord",
     "SORT_BY_LABEL": "par date de",
@@ -484,9 +481,9 @@
     "PARTICIPANT_COUNT": "Nombre de participants"
   },
   "EventTemplatesActivity": {
-    "EVENTS_LABEL": "$t(EVENTS_LABEL)",
     "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)",
-    "CREATE_TEMPLATE_LABEL": "Créer un modèle"
+    "CREATE_TEMPLATE_LABEL": "Créer un modèle",
+    "SEARCH_TEMPLATE_LABEL": "Rechercher un modèle"
   },
   "EventTemplateCard": {
     "REMOVE_LABEL": "$t(REMOVE_LABEL)",

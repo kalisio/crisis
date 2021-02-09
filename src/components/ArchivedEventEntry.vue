@@ -75,21 +75,20 @@ export default {
       this.event = this.item
       // Item actions
       this.clearActions()
-      if (this.$can('read', 'archived-events', this.contextId)) {
-        this.registerPaneAction({
-          name: 'view-event', label: this.$t('ArchivedEventEntry.VIEW_LABEL'), icon: 'las la-file-alt',
-          route: { name: 'view-event', params: { contextId: this.contextId, objectId: this.item._id } }
-        })
-        if (this.hasLocation()) this.registerPaneAction({
-          name: 'locate', label: this.$t('ArchivedEventEntry.LOCATE_LABEL'), icon: 'las la-map-marker', handler: this.locate
-        })
-        this.registerPaneAction({
-          name: 'map', label: this.$t('ArchivedEventEntry.MAP_LABEL'), icon: 'las la-map-marked-alt', handler: this.followUp
-        })
-        if (this.hasMedias()) this.registerPaneAction({
-          name: 'browse-media', label: this.$t('ArchivedEventEntry.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', handler: this.browseMedia
-        })
-      }
+      this.setActions([{
+        name: 'view-event', tooltip: this.$t('ArchivedEventEntry.VIEW_LABEL'), icon: 'las la-file-alt',
+        route: { name: 'view-event', params: { contextId: this.contextId, objectId: this.item._id } },
+        visible: this.$can('read', 'archived-events', this.contextId)
+      }, {
+        name: 'locate', tooltip: this.$t('ArchivedEventEntry.LOCATE_LABEL'), icon: 'las la-map-marker', handler: this.locate,
+        visible: this.hasLocation() && this.$can('read', 'archived-events', this.contextId)
+      }, {
+        name: 'map', tooltip: this.$t('ArchivedEventEntry.MAP_LABEL'), icon: 'las la-map-marked-alt', handler: this.followUp,
+        visible: this.$can('read', 'archived-events', this.contextId)
+      }, {
+        name: 'browse-media', tooltip: this.$t('ArchivedEventEntry.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', handler: this.browseMedia,
+        visible: this.hasMedias() && this.$can('read', 'archived-events', this.contextId)
+      }])
     },
     locate () {
       this.$refs.locationPopup.toggle()

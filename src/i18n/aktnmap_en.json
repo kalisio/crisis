@@ -396,7 +396,7 @@
   },
   "EventsActivity": {
     "MY_ORGANISATIONS": "My organisations",
-    "MY_EVENTS": "My events",
+    "EVENTS_LABEL": "My events",
     "SEARCH_EVENT": "Search for an event"
   },
   "EventCard": {
@@ -424,8 +424,6 @@
     "FOLLOWUP_MODAL_SAVE_BUTTON": "$t(SAVE_LABEL)"
   },
   "ArchivedEventsActivity": {
-    "FROM_DATE": "From",
-    "TO_DATE": " To",
     "MAP_LABEL": "Map",
     "ASCENDING_SORT": "Oldest first",
     "DESCENDING_SORT": "Most recent first",
@@ -478,9 +476,9 @@
     "PARTICIPANT_COUNT": "Participants count"
   },
   "EventTemplatesActivity": {
-    "EVENTS_LABEL": "$t(EVENTS_LABEL)",
     "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)",
-    "CREATE_TEMPLATE_LABEL": "Create a template"
+    "CREATE_TEMPLATE_LABEL": "Create a template",
+    "SEARCH_TEMPLATE_LABEL": "Search for a template"
   },
   "EventTemplateCard": {
     "REMOVE_LABEL": "$t(REMOVE_LABEL)",

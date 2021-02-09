@@ -3,58 +3,6 @@
     <div slot="page-content">
       <!-- Invisible link used to download data -->
       <a ref="downloadLink" v-show="false" :href="currentDownloadLink" :download="currentDownloadName"></a>
-      <!--
-        Time range selector
-      -->
-      <q-page-sticky position="top" :offset="[0, 4]" style="z-index: 1">
-        <div class="row justify-center text-center text-subtitle1">
-          <div class="row items-center time-range-bar">
-            <q-btn v-show="!showHistory" id="history-view" dense flat round color="primary" icon="las la-history" @click="onShowHistory">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_HISTORY_LABEL') }}</q-tooltip>
-            </q-btn>
-            <q-btn v-show="!showMap" id="map-view" dense flat round color="primary" icon="scatter_plot" @click="onShowMap">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_MAP_LABEL') }}</q-tooltip>
-            </q-btn>
-            <q-btn v-show="!showChart" id="chart-view" dense flat round color="primary" icon="las la-chart-pie" @click="onShowChart">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_CHART_LABEL') }}</q-tooltip>
-            </q-btn>
-            <q-btn icon="las la-calendar" id="start-time" dense flat round color="primary" class="cursor-pointer">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.FROM_DATE') + ' ' + formatedMinDate}}</q-tooltip>
-              <q-popup-proxy ref="minDatePopup" transition-show="scale" transition-hide="scale">
-                <q-date id="start-time-popup" v-model="minDateSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
-              </q-popup-proxy>
-            </q-btn>
-            <q-icon name="las la-arrow-right" color="primary"/>
-            <q-btn icon="las la-calendar" id="end-time" dense flat round color="primary" class="cursor-pointer">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.TO_DATE') + ' ' + formatedMaxDate }}</q-tooltip>
-              <q-popup-proxy ref="maxDatePopup" transition-show="scale" transition-hide="scale">
-                <q-date id="end-time-popup" v-model="maxDateSelected" @input="updateBaseQuery()" :options="checkTimeRange"/>
-              </q-popup-proxy>
-            </q-btn>
-            <q-btn v-show="showHistory && ascendingSort" id="history-sort-up" dense flat round color="primary" icon="las la-sort-amount-up" @click="onSortOrder">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.DESCENDING_SORT') }}</q-tooltip>
-            </q-btn>
-            <q-btn v-show="showHistory && !ascendingSort" id="history-sort-down" dense flat round color="primary" icon="las la-sort-amount-down" @click="onSortOrder">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.ASCENDING_SORT') }}</q-tooltip>
-            </q-btn>
-            <!--span v-show="showHistory" >&nbsp;{{$t('ArchivedEventsActivity.SORT_BY_LABEL')}}&nbsp;</span>
-            <q-select v-show="showHistory" v-model="sortBy" class="text-h5" :options="sortOptions" @input="updateBaseQuery()"/-->
-            <q-btn v-show="showMap && heatmap" id="heatmap-off" dense flat round color="primary" icon="scatter_plot" @click="onHeatmap">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_MARKERS_LABEL') }}</q-tooltip>
-            </q-btn>
-            <q-btn v-show="showMap && !heatmap" id="heatmap-on" dense flat round color="primary" icon="las la-bowling-ball" @click="onHeatmap">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_HEATMAP_LABEL') }}</q-tooltip>
-            </q-btn>
-            <q-btn v-show="showMap && byTemplate" id="by-template" dense flat round color="primary" icon="las la-object-group" @click="onByTemplate">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_ALL_LABEL') }}</q-tooltip>
-            </q-btn>
-            <q-btn v-show="showMap && !byTemplate" id="all-events" dense flat round color="primary" icon="las la-layer-group" @click="onByTemplate">
-              <q-tooltip>{{ $t('ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL') }}</q-tooltip>
-            </q-btn>
-            <q-btn v-show="!byTemplate" id="export-data" dense flat round color="primary" icon="las la-file-download" @click="downloadEventsData"/>
-          </div>
-        </div>
-      </q-page-sticky>
       <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
         <div class="row">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -77,8 +25,8 @@
         service="archived-events" 
         :nb-items-per-page="2" 
         :append-items="true" 
-        :base-query="baseQuery" 
-        :filter-query="searchQuery" 
+        :base-query="baseQuery"
+        :filter-query="filterQuery" 
         :renderer="renderer" 
         :contextId="contextId" 
         :list-strategy="'smart'" />
@@ -89,10 +37,6 @@
         <div ref="map" :style="viewStyle">
           <q-resize-observer @resize="onMapResized" />
         </div>
-
-        <q-page-sticky position="top-right" :offset="[4, 4]">
-          <k-navigation-bar />
-        </q-page-sticky>
       </div>
       <!--
         Events graph
@@ -145,16 +89,15 @@ import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 
 // For mapping or statistics we get all events at once to avoid managing pagination
 const MAX_EVENTS = 5000
-const activityMixin = kMapMixins.activity('archivedEvents')
 
 export default {
   name: 'archived-events-activity',
   mixins: [
     kCoreMixins.refsResolver(['map']),
-    kCoreMixins.baseActivity,
+    kCoreMixins.baseActivity(),
     kCoreMixins.baseCollection,
+    kMapMixins.activity,
     kMapMixins.style,
-    activityMixin,
     kMapMixins.context,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
@@ -180,6 +123,9 @@ export default {
     }
   },
   computed: {
+    mode () {
+      return this.topPane.mode
+    },
     showMap () {
       return this.mode === 'map'
     },
@@ -192,25 +138,14 @@ export default {
     nbCharts () {
       if (!this.chartData.length || (this.nbValuesPerChart.value === 0)) return 1
       else return Math.ceil(this.chartData.length / this.nbValuesPerChart.value)
-    },
-    minDate () {
-      return moment(this.minDateSelected, 'YYYY[/]MM[/]DD').startOf('day')
-    },
-    maxDate () {
-      return moment(this.maxDateSelected, 'YYYY[/]MM[/]DD').endOf('day')
-    },
-    formatedMinDate () {
-      return this.formatDate(this.minDate.toDate())
-    },
-    formatedMaxDate () {
-      return this.formatDate(this.maxDate.toDate())
     }
   },
   data () {
+    // FIXME: Should be send as props to the KTimeRangeChooser
     const now = moment()
     // 1 month ago by default
-    const minDateSelected = now.clone().subtract(1, 'months').startOf('day')
-    const maxDateSelected = now.clone().endOf('day')
+    const minDate = now.clone().subtract(1, 'months').startOf('day')
+    const maxDate = now.clone().endOf('day')
 
     const chartTypes = ['pie', 'polarArea', 'radar', 'bar']
     const chartOptions = chartTypes.map(
@@ -244,8 +179,8 @@ export default {
           createdAt: -1
         },
         createdAt: {
-          $gte: minDateSelected.toISOString(),
-          $lte: maxDateSelected.toISOString()
+          $gte: minDate.toISOString(),
+          $lte: maxDate.toISOString()
         }
       },
       renderer: {
@@ -255,10 +190,10 @@ export default {
           }
         }
       },
-      minDateSelected: minDateSelected.format('YYYY[/]MM[/]DD'),
-      maxDateSelected: maxDateSelected.format('YYYY[/]MM[/]DD'),
+      minDate: minDate,
+      maxDate: maxDate,
       ascendingSort: false,
-      mode: 'history',
+      topPane: this.$store.get('topPane'),
       heatmap: false,
       byTemplate: false,
       heatmapRadius: 50,
@@ -305,23 +240,14 @@ export default {
     },
     async refreshActivity () {
       this.clearActivity()
-      this.clearNavigationBar()
+      this.configureActivity()
       // Wait until map is ready
       await this.initializeMap()
-      this.setTitle(this.$store.get('context.name'))
-      // Search bar
-      this.setSearchBar('name')
-      // Setup the right drawer
-      this.clearRightDrawer()
-      this.registerActivityActions()
     },
     async getCatalogLayers () {
-      let layers = await activityMixin.methods.getCatalogLayers.call(this)
+      let layers = await kMapMixins.activity.methods.getCatalogLayers.call(this)
       // We only want base layers
       return _.filter(layers, { type: 'BaseLayer' })
-    },
-    checkTimeRange (date) {
-      return moment(date).isSameOrBefore(moment())
     },
     formatDate (date) {
       return date.toLocaleString(kCoreUtils.getLocale(),
@@ -350,9 +276,6 @@ export default {
       }
     },
     updateBaseQuery() {
-      // Close calendar popups in case it has been used
-      this.$refs.minDatePopup.hide()
-      this.$refs.maxDatePopup.hide()
       this.baseQuery = {
         $sort: {
           [this.sortBy.value]: (this.ascendingSort ? 1 : -1)
@@ -364,7 +287,7 @@ export default {
       }
 
       // Refresh layer data
-      if (this.mode === 'map') this.refreshCollection()
+      if (this.showMap) this.refreshCollection()
     },
     loadService () {
       return this.$api.getService('archived-events')
@@ -467,6 +390,11 @@ export default {
       }
       this.refreshEventsLayers()
     },
+    onTimeRangeChanged (data) {
+      this.minDate = data.minDate
+      this.maxDate = data.maxDate
+      this.updateBaseQuery()
+    },
     onSortOrder () {
       this.ascendingSort = !this.ascendingSort
       this.currentPage = 0
@@ -481,15 +409,13 @@ export default {
       this.refreshEventsLayers()
     },
     onShowHistory () {
-      this.mode = 'history'
+      this.setTopPaneMode('history')
       // Cleanup
       this.clearEventsLayers()
       this.templates = []
-      this.clearRightDrawer()
     },
     onShowMap () {
-      this.mode = 'map'
-      this.setRightDrawer('catalog/KCatalogPanel', this.$data)
+      this.setTopPaneMode('map')
       // Refresh layer data
       this.refreshCollection()
     },
@@ -700,8 +626,7 @@ export default {
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-history'] = this.$load('collection/KHistory')
-    this.$options.components['k-navigation-bar'] = this.$load('KNavigationBar')
-
+    
     this.registerStyle('tooltip', this.getEventTooltip)
     this.registerStyle('popup', this.getEventPopup)
     this.registerStyle('markerStyle', this.getEventMarker)
