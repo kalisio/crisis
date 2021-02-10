@@ -52,7 +52,7 @@ module.exports = {
       'home': {
         // The name of the route has to be set the default child
         name: '',
-        component: 'Home',
+        component: 'layout/KHome',
         meta: { authenticated: true, unauthenticated: false },
         children: {
           'default-home-view': {
@@ -245,7 +245,7 @@ module.exports = {
                 },
                 tour: tours['event-templates']
               },
-              ':perspective': {
+              ':page': {
                 name: 'organisation-settings-activity',
                 component: 'OrganisationSettingsActivity',
                 props: true,

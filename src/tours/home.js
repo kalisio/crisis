@@ -21,7 +21,7 @@ module.exports = [{
   link: 'tours.home.ACCOUNT_LINK_LABEL',
   params: {
     placement: 'bottom',
-    route: { name: 'account-activity', params: { perspective: 'profile' } }
+    route: { name: 'account-activity', params: { page: 'profile' } }
   }
 }, {
   target: '#new-organisation',
