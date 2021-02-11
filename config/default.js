@@ -333,7 +333,7 @@ module.exports = {
           { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBER_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp,
-          contextMenu('groups-activity')
+          contextMenu('members-activity')
         ],
         'filter': contextFilter('profile.name', [
           { service: 'groups', field: 'name', baseQuery: {}, icon: 'las la-sitemap' },
