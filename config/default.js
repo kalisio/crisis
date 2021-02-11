@@ -105,6 +105,12 @@ const defaultMapCatalog = {
   ]
 }
 
+const widgets = [
+  { id: 'information-box', icon: 'las la-digital-tachograph', component: 'widget/KInformationBox', bind: '$data.selection' },
+  { id: 'time-series', icon: 'las la-chart-line', component: 'widget/KTimeSeries', bind: '$data' },
+  { id: 'mapillary-viewer', icon: 'img:statics/mapillary-icon.svg', component: 'widget/KMapillaryViewer' }
+]
+
 const contextFilter = function (field, services = []) {
   return [
     { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
@@ -152,7 +158,7 @@ const contextMenu = function (activityName) {
       },
       { 
         id: 'archived-events', icon: 'las la-clipboard-list', label: 'Context.ARCHIVED_EVENTS',
-        badge: { color: 'secondary', floating: true, transparent: true, label: 'beta' },
+        badge: { color: 'primary', transparent: true, label: 'beta' },
         visible: { name: '$can', params: ['read', 'archived-events', ':contextId'] },
         route: { name: 'archived-events-activity', params: { contextId: ':contextId' } },    
       },
@@ -164,8 +170,8 @@ const contextMenu = function (activityName) {
       },
       { 
         id: 'settings', icon: 'las la-cog', label: 'Context.SETTINGS',
-        visible: { name: '$can', params: ['update', 'organisations', ':contextId'] },
-        route: { name: 'organisation-settings-activity', params: { perspective: 'properties', contextId: ':contextId' } },    
+        visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+        route: { name: 'organisation-settings-activity', params: { page: 'properties', contextId: ':contextId' } },    
       },
       { 
         id: 'refresh', icon: 'las la-sync', label: 'Context.REFRESH', handler: 'refresh'
@@ -280,7 +286,7 @@ module.exports = {
     topPane: {
       content: {
         profile: [
-          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'back' } },
+          { id: 'back', icon: 'las la-arrow-left', handler: 'goBack' },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'profile', icon: 'las la-user', color: 'primary', label: 'KAccountActivity.PROFILE', disabled: true },
           { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
@@ -288,7 +294,7 @@ module.exports = {
           contextHelp
         ],
         security: [
-          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'back' } },
+          { id: 'back', icon: 'las la-arrow-left', handler: 'goBack' },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'profile', icon: 'las la-user', tooltip: 'KAccountActivity.PROFILE', route: { name: 'account-activity', params: { page: 'profile' } } },
           { id: 'security', icon: 'las la-shield-alt', color: 'primary', label: 'KAccountActivity.SECURITY', disabled: true },
@@ -296,7 +302,7 @@ module.exports = {
           contextHelp
         ],
         'danger-zone': [
-          { id: 'go-back', icon: 'las la-arrow-left', handler: { name: 'back' } },
+          { id: 'go-back', icon: 'las la-arrow-left', handler: 'goBack' },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'profile', icon: 'las la-user', tooltip: 'KAccountActivity.PROFILE', route: { name: 'account-activity', params: { page: 'profile' } } },
           { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
@@ -319,15 +325,60 @@ module.exports = {
     },
     fab: {
       actions: [
-        { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL', handler: { name: 'createOrganisation' } }
+        { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL', handler: 'createOrganisation' }
       ]
+    }
+  },
+  organisationSettingsActivity: {
+    topPane: {
+      content: {
+        properties: [
+          { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'properties', icon: 'las la-file-alt', color: 'primary', label: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
+            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] }, disabled: true },
+          { id: 'billing', icon: 'las la-credit-card', tooltip: 'OrganisationSettingsActivity.BILLING_OPTIONS_LABEL',
+            visible: { name: '$can', params: ['update', 'billing', null, { billingObject: ':contextId' }] },
+            route: { name: 'organisation-settings-activity', params: { page: 'billing' } } },
+          { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'OrganisationSettingsActivity.DANGER_ZONE_LABEL',
+            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+            route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
+          contextHelp
+        ],
+        billing: [
+          { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'properties', icon: 'las la-file-alt', tooltip: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
+            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+            route: { name: 'organisation-settings-activity', params: { page: 'properties' } } },
+          { id: 'billing', icon: 'las la-credit-card', color: 'primary', label: 'OrganisationSettingsActivity.BILLING_OPTIONS_LABEL',
+            visible: { name: '$can', params: ['update', 'billing', null, { billingObject: ':contextId' }] }, disabled: true },
+          { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'OrganisationSettingsActivity.DANGER_ZONE_LABEL',
+            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+            route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
+          contextHelp
+        ],
+        'danger-zone': [
+          { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'properties', icon: 'las la-file-alt', tooltip: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
+            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+            route: { name: 'organisation-settings-activity', params: { page: 'properties' } } },
+          { id: 'billing', icon: 'las la-credit-card', tooltip: 'KAccountActivity.SECURITY',
+            visible: { name: '$can', params: ['update', 'billing', null, { billingObject: ':contextId' }] },
+            route: { name: 'organisation-settings-activity', params: { page: 'billing' } } },
+          { id: 'danger-zone', icon: 'las la-exclamation-triangle', color: 'primary', label: 'OrganisationSettingsActivity.DANGER_ZONE_LABEL',
+            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] }, disabled: true },
+          contextHelp
+        ]
+      }
     }
   },
   membersActivity: {
     topPane: {
       content: {
         'default': [
-          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'groups', icon: 'las la-user-friends', label: 'KMembersActivity.MEMBERS_LABEL', color: 'primary', disabled: true },
           { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBER_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
@@ -354,7 +405,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'tags', icon: 'las la-tags', label: 'KTagsActivity.TAGS_LABEL', color: 'primary', disabled: true },
           { id: 'search-tag', icon: 'las la-search', tooltip: 'KTagsActivity.SEARCH_TAGS_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
@@ -370,7 +421,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'groups', icon: 'las la-sitemap', label: 'KGroupsActivity.GROUPS_LABEL', color: 'primary', disabled: true },
           { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
@@ -391,7 +442,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', color: 'primary', route: { name: 'home' } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'events', icon: 'las la-fire', label: 'EventsActivity.EVENTS_LABEL', color: 'primary', disabled: true },
           { id: 'filter', icon: 'las la-search', tooltip: 'EventsActivity.SEARCH_EVENT', handler: { name: 'setTopPaneMode', params: ['filter'] } },
@@ -407,7 +458,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', color: 'primary', disabled: true },
           { id: 'search-template', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
@@ -430,30 +481,30 @@ module.exports = {
     topPane: {
       content: {
         'history': [
-          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { id: 'map-view', icon: 'scatter_plot', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: { name: 'onShowMap' } },
-          { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: { name: 'onShowChart' } },
+          { id: 'map-view', icon: 'scatter_plot', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
+          { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: 'onShowChart' },
           { component: 'input/KTimeRangeChooser', id: 'timerange', icon: 'las la-calendar',
             on: { event: 'time-range-choosed', listener: 'onTimeRangeChanged' } },
           { id: 'history-sort', icon: 'las la-sort-amount-down', tooltip: 'ArchivedEventsActivity.ASCENDING_SORT',
-            toggle: { icon: 'las la-sort-amount-up', color: 'grey-9', tooltip: 'ArchivedEventsActivity.DESCENDING_SORT' }, handler: { name: 'onSortOrder' } },
+            toggle: { icon: 'las la-sort-amount-up', color: 'grey-9', tooltip: 'ArchivedEventsActivity.DESCENDING_SORT' }, handler: 'onSortOrder' },
           contextHelp
         ],
         'map': [
-          { id: 'organisations', icon: 'las la-home', tooltip: 'KOrganisationsActivity.ORGANISATIONS_LABEL', route: { name: 'organisations-activity' } },
+          { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { id: 'history-view', icon: 'las la-history', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: { name: 'onShowHistory' } },
-          { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: { name: 'onShowChart' } },
+          { id: 'history-view', icon: 'las la-history', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
+          { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: 'onShowChart' },
           { id: 'heatmap', icon: 'las la-bowling-ball', tooltip: 'ArchivedEventsActivity.SHOW_HEATMAP_LABEL',
-            toggle: { icon: 'scatter_plot', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_MARKERS_LABEL' }, handler: { name: 'onHeatmap' } },
+            toggle: { icon: 'scatter_plot', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_MARKERS_LABEL' }, handler: 'onHeatmap' },
           { id: 'by-template', icon: 'las la-layer-group', tooltip: 'ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL',
-            toggle: { icon: 'las la-object-group', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_ALL_LABEL' }, handler: { name: 'onByTemplate' } },
+            toggle: { icon: 'las la-object-group', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_ALL_LABEL' }, handler: 'onByTemplate' },
           contextHelp
         ],
         'chart': [
-          { id: 'history-view', icon: 'las la-history', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: { name: 'onShowHistory' } },
-          { id: 'map-view', icon: 'scatter_plot', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: { name: 'onShowMap' } }
+          { id: 'history-view', icon: 'las la-history', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
+          { id: 'map-view', icon: 'scatter_plot', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' }
         ]
       }
     },
@@ -464,25 +515,128 @@ module.exports = {
     },
     engine: defaultMapOptions,
     catalog: { categories: [baseLayers, overlayLayers] },
-    tools: ['fullscreen'],
-    actions: [],
     layerActions: ['zoom-to'],
     restore: { layers: false }
   },
-  catalog: defaultMapOptions,
-  catalogCatalog: defaultMapCatalog,
-  catalogActivity: {
-    tools: ['track-location', 'location-bar', 'fullscreen'],
-    actions: ['create-layer', 'probe-location'],
-    layerActions: ['zoom-to', 'save', 'edit', 'edit-style', 'filter-data', 'view-data', 'chart-data', 'edit-data', 'remove'],
-    featuresChunkSize: 5000
-  },
-  event: defaultMapOptions,
-  eventCatalog: defaultMapCatalog,
   eventActivity: {
-    tools: ['track-location', 'location-bar', 'fullscreen'],
-    actions: ['probe-location'],
-    layerActions: ['zoom-to']
+    topPane: {
+      content: {
+        default: [
+          { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { component: 'KLocateUser' },
+          { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
+          {
+            component: 'frame/KMenu',
+            icon: 'las la-wrench',
+            tooltip: 'mixins.activity.TOOLS',
+            actionRenderer: 'item',
+            content: [
+              { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } }
+            ]
+          },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'toggle-fullscreen', icon: 'las la-expand', tooltip: 'mixins.activity.ENTER_FULLSCREEN', toggle: { icon: 'las la-compress', tooltip: 'mixins.activity.EXIT_FULLSCREEN' }, handler: 'onToggleFullscreen' }
+        ],
+        'display-position': [
+          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { component: 'KPositionIndicator' }
+        ],
+        'search-location': [
+          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { component: 'KSearchLocation' }
+        ]
+      }
+    },
+    rightPane: {
+      content: [
+        { component: 'EventActivityPanel' }
+      ]
+    },
+    bottomPane: {
+      content: [
+        { component: 'KTimeline' }
+      ]
+    },
+    window: {
+      widgets: widgets
+    },
+    fab: {
+      actions: [
+        { id: 'add-media', label: 'EventActivity.ADD_MEDIA_LABEL', icon: 'add_a_photo', handler: 'uploadMedia',
+          visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] } },
+        { id: 'browse-media', label: 'EventActivity.BROWSE_MEDIA_LABEL', icon: 'photo_library', handler: 'browseMedia',
+          visible: { name: '$can', params: ['read', 'events', ':contextId', ':event'] } },
+        { id: 'edit-event', label: 'EventActivity.EDIT_LABEL', icon: 'las la-file-alt',
+          visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] },
+          route: { name: 'edit-event', params: { contextId: ':contextId', service: 'events', objectId: ':objectId' } } },
+        { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'onProbeLocation' }
+      ]
+    },
+    engine: defaultMapOptions,
+    catalog: defaultMapCatalog,
+    layerActions: ['zoom-to', ],
+    featuresChunkSize: 5000 // TODO: here or in mapEngine ?
   },
+  catalogActivity: {
+    topPane: {
+      content: {
+        default: [
+          { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { component: 'KLocateUser' },
+          { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
+          {
+            component: 'frame/KMenu',
+            icon: 'las la-wrench',
+            tooltip: 'mixins.activity.TOOLS',
+            actionRenderer: 'item',
+            content: [
+              { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } }
+            ]
+          },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { id: 'toggle-fullscreen', icon: 'las la-expand', tooltip: 'mixins.activity.ENTER_FULLSCREEN', toggle: { icon: 'las la-compress', tooltip: 'mixins.activity.EXIT_FULLSCREEN' }, handler: 'onToggleFullscreen' }
+        ],
+        'display-position': [
+          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { component: 'KPositionIndicator' }
+        ],
+        'search-location': [
+          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { component: 'KSearchLocation' }
+        ]
+      }
+    },
+    rightPane: {
+      content: [
+        { component: 'catalog/KCatalog' }
+      ]
+    },
+    bottomPane: {
+      content: [
+        { component: 'KTimeline' }
+      ]
+    },
+    window: {
+      widgets: widgets
+    },
+    fab: {
+      actions: [
+        { id: 'create-layer', icon: 'las la-plus', label: 'mixins.activity.CREATE_LAYER', handler: 'onCreateLayer' },
+        { id: 'import-layer', icon: 'las la-file-upload', label: 'mixins.activity.IMPORT_LAYER', handler: 'onImportLayer' },
+        { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'onProbeLocation' }
+      ]
+    },
+    engine: defaultMapOptions,
+    catalog: defaultMapCatalog,
+    layerActions: ['zoom-to', 'save', 'edit', 'edit-style', 'filter-data', 'view-data', 'chart-data', 'edit-data', 'remove'],
+    featuresChunkSize: 5000 // TODO: here or in mapEngine ?
+  },
+  
   routes: require('../src/router/routes')
 }

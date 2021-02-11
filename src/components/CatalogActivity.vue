@@ -12,18 +12,6 @@
        -->
       <k-feature-action-button />
       <!--
-        NavigationBar
-       -->
-      <q-page-sticky position="top">
-        <k-opener-proxy position="top" component="KNavigationBar" :opened="true" />
-      </q-page-sticky>
-      <!--
-        TimeLine
-       -->
-      <q-page-sticky position="bottom">
-        <k-opener-proxy position="bottom" component="KTimeline" />
-      </q-page-sticky>
-      <!--
         ColorLegend
        -->
       <q-page-sticky position="left" :offset="[18, 0]">
@@ -64,15 +52,15 @@ import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
 
-const activityMixin = kMapMixins.activity('catalog')
+const activityMixin = kCoreMixins.baseActivity()
 
 export default {
   name: 'catalog-activity',
   mixins: [
     kCoreMixins.refsResolver(['map']),
-    kCoreMixins.baseActivity,
+    activityMixin,
+    kMapMixins.activity,
     kCoreMixins.baseCollection,
-    kMapMixins.geolocation,
     kMapMixins.featureSelection,
     kMapMixins.featureService,
     kMapMixins.infobox,
@@ -80,7 +68,6 @@ export default {
     kMapMixins.weacast,
     kMapMixins.time,
     kMapMixins.context,
-    activityMixin,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
     kMapMixins.map.forecastLayers,
@@ -129,27 +116,16 @@ export default {
       // No pagination on map items
       return {}
     },
-    async refreshActivity () {
-      this.clearActivity()
-      this.clearNavigationBar()
+    async configureActivity () {
       // Wait until map is ready
       await this.initializeMap()
-      // Title
-      this.setTitle(this.$store.get('context.name'))
-      // Setup the right drawer
-      this.setRightDrawer('catalog/KCatalogPanel', this.$data)
-      // Setup the widgets
-      this.registerWidget('information-box', 'las la-digital-tachograph', 'widgets/KInformationBox', this.selection)
-      this.registerWidget('time-series', 'las la-chart-line', 'widgets/KTimeSeries', this.$data)
-      if (this.mapillaryClientID) this.registerWidget('mapillary-viewer', 'img:statics/mapillary-icon.svg', 'widgets/KMapillaryViewer')
-      // Actions
-      this.registerActivityActions()
+      activityMixin.methods.configureActivity.call(this)
       this.setCurrentTime(moment.utc())
       // Then update geo alerts
       this.refreshCollection()
     },
     async getCatalogLayers () {
-      let layers = await activityMixin.methods.getCatalogLayers.call(this)
+      let layers = await kMapMixins.activity.methods.getCatalogLayers.call(this)
       // Add a "virtual" layer for alerts
       layers.push({
         name: this.$t('CatalogActivity.ALERTS_LAYER'),
@@ -183,7 +159,7 @@ export default {
       return layers
     },
     registerActivityActions () {
-      activityMixin.methods.registerActivityActions.call(this)
+      kMapMixins.activity.methods.registerActivityActions.call(this)
       // Flag required actions as "beta"
       let actions = this.$store.get('fab.actions')
       actions.forEach(action => {
@@ -360,9 +336,6 @@ export default {
   created () {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-opener-proxy'] = this.$load('frame/KOpenerProxy')
-    this.$options.components['k-navigation-bar'] = this.$load('KNavigationBar')
-    this.$options.components['k-timeline'] = this.$load('KTimeline')
     this.$options.components['k-color-legend'] = this.$load('KColorLegend')
     this.$options.components['k-feature-action-button'] = this.$load('KFeatureActionButton')
     this.$options.components['k-modal'] = this.$load('frame/KModal')

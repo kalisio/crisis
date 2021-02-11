@@ -25,10 +25,12 @@
 <script>
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 
+const activityMixin = kCoreMixins.baseActivity()
+
 export default {
   name: 'event-dashboard',
   mixins: [
-    kCoreMixins.baseActivity,
+    activityMixin,
     kCoreMixins.baseCollection
   ],
   data () {
@@ -58,8 +60,8 @@ export default {
     getCollectionBaseQuery () {
       return {}
     },
-    refreshActivity () {
-      this.clearActivity()
+    configureActivity () {
+      activityMixin.methods.configureActivity.call(this)
       this.refreshCollection()
     },
     checkSingleOrganisation () {
@@ -79,8 +81,6 @@ export default {
     // Used to chec kfor single organisation layout at startup or refresh
     this.$on('collection-refreshed', this.checkSingleOrganisation)
     this.checkSingleOrganisation()
-    // Performs geolocation
-    this.refreshActivity()
   },
   beforeDestroy () {
     this.$off('collection-refreshed', this.checkSingleOrganisation)

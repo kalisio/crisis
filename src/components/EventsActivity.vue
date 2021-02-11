@@ -16,9 +16,11 @@
 <script>
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 
+const activityMixin = kCoreMixins.baseActivity()
+
 export default {
   name: 'events-activity',
-  mixins: [kCoreMixins.baseActivity()],
+  mixins: [activityMixin],
   props: {
     contextId: {
       type: String,
@@ -45,9 +47,8 @@ export default {
         onDismiss: { name: 'events-activity', params: { contextId: this.contextId } }
       }
     },
-    async refreshActivity () {
-      this.clearActivity()
-      this.configureActivity()
+    async configureActivity () {
+      activityMixin.methods.configureActivity.call(this)
       // Fab actions
       if (this.$can('create', 'events', this.contextId)) {
         const actions = []
@@ -73,7 +74,8 @@ export default {
             actions.push({
               id: 'create-' + (doublons.length > 1 ? template._id : template.name),
               label: template.name,
-              icon: template.icon,
+              icon: template.icon.name,
+              color: template.icon.color,
               route: { name: 'create-event', params: { contextId: this.contextId, templateId: template._id } }
             })
           })
@@ -87,8 +89,6 @@ export default {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
-    // Setup the activity
-    this.configureActivity()
   }
 }
 </script>

@@ -87,6 +87,8 @@ import { Platform, QSlider } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 
+const activityMixin = kCoreMixins.baseActivity()
+
 // For mapping or statistics we get all events at once to avoid managing pagination
 const MAX_EVENTS = 5000
 
@@ -94,7 +96,7 @@ export default {
   name: 'archived-events-activity',
   mixins: [
     kCoreMixins.refsResolver(['map']),
-    kCoreMixins.baseActivity(),
+    activityMixin,
     kCoreMixins.baseCollection,
     kMapMixins.activity,
     kMapMixins.style,
@@ -239,11 +241,10 @@ export default {
         onDismiss: { name: 'archived-events-activity', params: { contextId: this.contextId } }
       }
     },
-    async refreshActivity () {
-      this.clearActivity()
-      this.configureActivity()
+    async configureActivity () {
       // Wait until map is ready
       await this.initializeMap()
+      activityMixin.methods.configureActivity.call(this)
     },
     async getCatalogLayers () {
       let layers = await kMapMixins.activity.methods.getCatalogLayers.call(this)

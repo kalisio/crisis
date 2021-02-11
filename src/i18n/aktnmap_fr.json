@@ -256,6 +256,7 @@
     "LOGOUT": "Se déconnecter"
   },
   "Context": {
+    "ORGANISATION": "Organisation",
     "EVENTS": "Evénements & modèles",
     "ARCHIVED_EVENTS": "Main courante",
     "MEMBERS": "Membres",

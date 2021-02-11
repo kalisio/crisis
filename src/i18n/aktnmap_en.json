@@ -250,6 +250,7 @@
     "LOGOUT": "Logout"
   },
   "Context": {
+    "ORGANISATION": "Organisation",
     "EVENTS": "Events & Templates",
     "ARCHIVED_EVENTS": "Logbook",
     "MEMBERS": "Members",

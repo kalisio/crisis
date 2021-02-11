@@ -26,7 +26,7 @@ import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
   name: 'organisation-settings-activity',
-  mixins: [kCoreMixins.baseActivity],
+  mixins: [kCoreMixins.baseActivity()],
   props: {
     contextId: {
       type: String,
@@ -37,46 +37,16 @@ export default {
       default: ''
     }
   },
+  watch: {
+    page: function (value) {
+      this.setTopPaneMode(value)
+    }
+  },
   methods: {
     router () {
       return {
         onApply: { name: 'organisation-settings-activity', params: { contextId: this.contextId, page: 'billing' } },
         onDismiss: { name: 'organisation-settings-activity', params: { contextId: this.contextId, page: 'billing' } }
-      }
-    },
-    refreshActivity () {
-      this.clearActivity()
-      this.setTitle(this.$store.get('context.name'))
-      // Tabbar actions
-      if (this.$can('update', 'organisations', null, { _id: this.contextId })) {
-        this.registerTabAction({
-          name: 'properties',
-          label: this.$t('OrganisationSettingsActivity.PROPERTIES_LABEL'),
-          icon: 'las la-file-alt',
-          route: { name: 'organisation-settings-activity',
-            params: { contextId: this.contextId, page: 'properties' },
-            default: this.page === 'properties' }
-        })
-      }
-      if (this.$can('update', 'billing', null, { billingObject: this.contextId })) {
-        this.registerTabAction({
-          name: 'billing',
-          label: this.$t('OrganisationSettingsActivity.BILLING_OPTIONS_LABEL'),
-          icon: 'las la-credit-card',
-          route: { name: 'organisation-settings-activity',
-            params: { contextId: this.contextId, page: 'billing' },
-            default: this.page === 'billing' }
-        })
-      }
-      if (this.$can('remove', 'organisations', null, { _id: this.contextId })) {
-        this.registerTabAction({
-          name: 'danger-zone',
-          label: this.$t('OrganisationSettingsActivity.DANGER_ZONE_LABEL'),
-          icon: 'las la-exclamation-triangle',
-          route: { name: 'organisation-settings-activity',
-            params: { contextId: this.contextId, page: 'danger-zone' },
-            default: this.page === 'danger-zone' }
-        })
       }
     }
   },

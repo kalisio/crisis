@@ -48,18 +48,12 @@ export default {
         onApply: { name: 'event-templates-activity', params: { contextId: this.contextId } },
         onDismiss: { name: 'event-templates-activity', params: { contextId: this.contextId } }
       }
-    },
-    refreshActivity () {
-      this.clearActivity()
-      this.configureActivity()
     }
   },
   created () {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
-    // Setup the activity
-    this.configureActivity()
   }
 }
 </script>
