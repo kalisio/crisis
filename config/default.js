@@ -91,7 +91,7 @@ const overlayLayers = { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAY
   options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } }
 const measureLayers = { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fas la-map-pin',
   options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } } }
-const meteoLayers = { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'las la-cloud-sun-rain', component: 'catalog/KWeatherLayersSelector',
+const meteoLayers = { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'las la-cloud-sun-rain',
   options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } }
 
 const defaultMapCatalog = {
@@ -510,7 +510,7 @@ module.exports = {
     },
     rightPane: {
       'map': [
-        { component: 'catalog/KCatalog' }
+        { component: 'catalog/KCatalog', bind: '$data' }
       ]
     },
     engine: defaultMapOptions,
@@ -552,7 +552,7 @@ module.exports = {
     },
     rightPane: {
       content: [
-        { component: 'EventActivityPanel' }
+        { component: 'EventActivityPanel', bind: '$data' }
       ]
     },
     bottomPane: {
@@ -614,7 +614,7 @@ module.exports = {
     },
     rightPane: {
       content: [
-        { component: 'catalog/KCatalog' }
+        { component: 'catalog/KCatalog', bind: '$data' }
       ]
     },
     bottomPane: {
