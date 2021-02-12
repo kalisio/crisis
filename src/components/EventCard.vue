@@ -199,83 +199,77 @@ export default {
       this.event = this.item
       // Item actions
       this.clearActions()
-      if (this.$can('remove', 'events', this.contextId, this.item)) {
-        this.registerMenuAction({
-          name: 'remove-event', label: this.$t('EventCard.REMOVE_LABEL'), icon: 'las la-minus-circle', handler: this.removeEvent
-        })
+      let actions = []
+      let hasFollowUp = false
+      let tooltip = this.$t('EventCard.FOLLOW_UP_LABEL')
+      let warning = false
+      if (this.isParticipant) {
+        hasFollowUp = this.item.hasWorkflow &&
+                      (this.waitingInteraction(this.participantStep, this.participantState, 'participant') ||
+                       this.waitingInteraction(this.participantStep, this.participantState, 'coordinator'))
       }
-      if (this.$can('update', 'events', this.contextId, this.item)) {
-        this.registerPaneAction({
-          name: 'edit-event',
-          label: this.$t('EventCard.EDIT_LABEL'),
-          icon: 'las la-file-alt',
-          route: { name: 'edit-event', params: { contextId: this.contextId, objectId: this.item._id } }
-        })
+      if (this.isCoordinator) {
+        hasFollowUp |= this.item.hasWorkflow &&
+                       (this.nbParticipantsWaitingCoordination > 0)
       }
-      if (this.$can('read', 'events', this.contextId, this.item)) {
-        let hasFollowUp = false
-        let label = this.$t('EventCard.FOLLOW_UP_LABEL')
-        let warning = false
+      if (hasFollowUp) {
         if (this.isParticipant) {
-          hasFollowUp = this.item.hasWorkflow &&
-                        (this.waitingInteraction(this.participantStep, this.participantState, 'participant') ||
-                         this.waitingInteraction(this.participantStep, this.participantState, 'coordinator'))
-        }
-        if (this.isCoordinator) {
-          hasFollowUp |= this.item.hasWorkflow &&
-                         (this.nbParticipantsWaitingCoordination > 0)
-        }
-        if (hasFollowUp) {
-          if (this.isParticipant) {
-            if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
-              label = this.$t('EventCard.ACTION_REQUIRED_WARNING')
-              warning = true
-            } else if (this.waitingInteraction(this.participantStep, this.participantState, 'coordinator')) {
-              label = this.$t('EventCard.WAITING_COORDINATION_WARNING')
-              warning = true
-            }
-          } 
-          // Participant warning if any overrides coordinator warning
-          if (!warning && this.isCoordinator) {
-            if (this.nbParticipantsWaitingCoordination > 0) {
-              label = this.$t('EventCard.ACTION_REQUIRED_WARNING')
-              warning = true
-            }
+          if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
+            tooltip = this.$t('EventCard.ACTION_REQUIRED_WARNING')
+            warning = true
+          } else if (this.waitingInteraction(this.participantStep, this.participantState, 'coordinator')) {
+            tooltip = this.$t('EventCard.WAITING_COORDINATION_WARNING')
+            warning = true
           }
-          if (!warning) {
-            this.registerPaneAction({
-              name: 'follow-up', label, icon: 'las la-comment', handler: this.followUp
-            })
-          } else {
-            this.registerPaneAction({
-              name: 'follow-up', label, icon: 'las la-comment', 
-              badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } }, 
-              handler: this.followUp 
-            })
+        } 
+        // Participant warning if any overrides coordinator warning
+        if (!warning && this.isCoordinator) {
+          if (this.nbParticipantsWaitingCoordination > 0) {
+            tooltip = this.$t('EventCard.ACTION_REQUIRED_WARNING')
+            warning = true
           }
         }
+        if (!warning) {
+          actions.push({
+            id: 'follow-up', tooltip, icon: 'las la-comment',
+            visible: this.$can('read', 'events', this.contextId, this.item), handler: this.followUp
+          })
+        } else {
+          actions.push({
+            id: 'follow-up', tooltip, icon: 'las la-comment', 
+            badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } }, 
+            visible: this.$can('read', 'events', this.contextId, this.item), handler: this.followUp
+          })
+        }
       }
-      if (this.$can('read', 'events', this.contextId, this.item)) {
-        if (this.canCapturePhoto()) this.registerPaneAction({
-          name: 'capture-photo', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-camera', handler: this.capturePhoto
-        })
-        this.registerPaneAction({
-          name: 'add-media', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-paperclip', handler: this.uploadMedia
-        })
-        if (this.hasMedias()) this.registerPaneAction({
-          name: 'browse-media', label: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', 
-          badge: { label: this.getMediasCount(), floating: true },
-          handler: this.browseMedia
-        })
-        if (this.hasLocation()) this.registerPaneAction({
-          name: 'event-map', label: this.$t('EventCard.MAP_LABEL'), icon: 'las la-map-marked-alt', handler: this.viewMap
-        })
-      }
-      if (this.hasLocation() && this.canNavigate()) {
-        this.registerPaneAction({
-          name: 'navigate', label: this.$t('EventCard.NAVIGATE_LABEL'), icon: 'las la-location-arrow', handler: this.launchNavigation
-        })
-      }
+      
+      actions = actions.concat([{
+        id: 'capture-photo', tooltip: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-camera', handler: this.capturePhoto,
+        visible: this.$can('read', 'events', this.contextId, this.item) && this.canCapturePhoto()
+      }, {
+        id: 'add-media', tooltip: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-paperclip', handler: this.uploadMedia,
+        visible: this.$can('read', 'events', this.contextId, this.item)
+      }, {
+        id: 'browse-media', tooltip: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', handler: this.browseMedia, 
+        badge: { label: this.getMediasCount(), floating: true },
+        visible: this.$can('read', 'events', this.contextId, this.item) && this.hasMedias()
+      }, {
+        id: 'event-map', tooltip: this.$t('EventCard.MAP_LABEL'), icon: 'las la-map-marked-alt', handler: this.viewMap,
+        visible: this.$can('read', 'events', this.contextId, this.item) && this.hasLocation()
+      }, {
+        id: 'navigate', tooltip: this.$t('EventCard.NAVIGATE_LABEL'), icon: 'las la-location-arrow', handler: this.launchNavigation,
+        visible: this.$can('read', 'events', this.contextId, this.item) && this.hasLocation() && this.canNavigate()
+      }, {
+        id: 'edit-event',
+        tooltip: this.$t('EventCard.EDIT_LABEL'),
+        icon: 'las la-file-alt',
+        visible: this.$can('update', 'events', this.contextId, this.item),
+        route: { name: 'edit-event', params: { contextId: this.contextId, objectId: this.item._id } }
+      }, {
+        id: 'remove-event', tooltip: this.$t('EventCard.REMOVE_LABEL'), icon: 'las la-minus-circle', handler: this.removeEvent,
+        visible: this.$can('remove', 'events', this.contextId, this.item)
+      }])
+      this.setActions(actions)
     },
     uploadMedia () {
       this.$refs.uploaderModal.open()
