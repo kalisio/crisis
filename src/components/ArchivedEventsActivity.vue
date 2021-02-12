@@ -26,7 +26,7 @@
         :nb-items-per-page="2" 
         :append-items="true" 
         :base-query="baseQuery"
-        :filter-query="filterQuery" 
+        :filter-query="filter.query" 
         :renderer="renderer" 
         :contextId="contextId" 
         :list-strategy="'smart'" />
