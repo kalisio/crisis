@@ -256,13 +256,6 @@ module.exports = {
   },
   layout: {
     view: 'lHh LpR lFf',
-    topPane: {
-      opener: true,
-      visible: true
-    },
-    bottomPane: {
-      opener: true
-    },
     leftDrawer: {
       content: [
         { component: 'QImg', src: 'statics/aktnmap-banner.png' },
@@ -277,8 +270,14 @@ module.exports = {
       behavior: 'mobile',
       opener: true
     },
-    rightDrawer: {
-      behavior: 'mobile',
+    topPane: {
+      opener: true,
+      visible: true
+    },
+    rightPane: {
+      opener: true
+    },
+    bottomPane: {
       opener: true
     }
   },
