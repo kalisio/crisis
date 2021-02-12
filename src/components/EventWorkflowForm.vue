@@ -56,7 +56,7 @@ export default {
   mixins: [
     kCoreMixins.schemaProxy,
     kCoreMixins.refsResolver(),
-    mixins.eventLogs
+    mixins.events
   ],
   props: {
     contextId: {

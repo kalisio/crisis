@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import sift from 'sift'
+import { Geolocation } from '@kalisio/kdk/map.client.map'
 
 const eventsMixin = {
   data () {
@@ -175,7 +176,7 @@ const eventsMixin = {
       }
       return schema
     },
-    createParticipantLog (step = {}, state = {}) {
+    async createParticipantLog (step = {}, state = {}) {
       const log = {
         type: 'Feature',
         participant: this.userId,
@@ -193,7 +194,8 @@ const eventsMixin = {
       }
       // Participant position as geometry
       if (log.stakeholder === 'participant') {
-        const position = this.$store.get('user.position')
+        await Geolocation.update()
+        const position = this.$store.get('geolocation.position')
         if (position) {
           log.geometry = {
             type: 'Point',
@@ -212,7 +214,7 @@ const eventsMixin = {
       const result = form.validate()
       if (result.isValid) {
         // Directly store as GeoJson objects
-        let log = this.createParticipantLog(step, state)
+        let log = await this.createParticipantLog(step, state)
         _.merge(log.properties, result.values)
         if (this.hasStateFeatureInteraction(log) && this.event.feature) {
           // Use feature geometry instead of user position in this case

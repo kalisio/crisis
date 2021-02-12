@@ -35,7 +35,7 @@ export default {
   name: 'archived-event-entry',
   mixins: [
     kCoreMixins.baseItem,
-    mixins.eventLogs,
+    mixins.events,
     mixins.alerts
   ],
   computed: {

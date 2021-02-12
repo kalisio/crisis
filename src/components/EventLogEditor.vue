@@ -16,7 +16,7 @@ export default {
     kCoreMixins.service,
     kCoreMixins.schemaProxy,
     kCoreMixins.refsResolver(['form']),
-    mixins.eventLogs
+    mixins.events
   ],
   props: {
     objectId: {

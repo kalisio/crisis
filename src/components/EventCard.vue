@@ -92,7 +92,7 @@ export default {
     kCoreMixins.schemaProxy,
     kCoreMixins.refsResolver(['form']),
     kMapMixins.navigator,
-    mixins.eventLogs,
+    mixins.events,
     mixins.alerts
   ],
   watch: {
@@ -364,7 +364,7 @@ export default {
         if (count.total === 0) {
           this.participantState = {}
           this.participantStep = this.getWorkflowStep() || {} // Use empty object by default to simplify display
-          const log = this.createParticipantLog(this.participantStep, this.participantState)
+          const log = await this.createParticipantLog(this.participantStep, this.participantState)
           this.serviceCreate(log)
           // Real-time event should trigger a new refresh for current state
         }
@@ -376,7 +376,7 @@ export default {
         // When participant has just fullfilled a step we need to initiate the next one (if any) by a log acting as a read receipt
         // We know this when we get a higher step in workflow from the current state
         if (this.isBeforeInWorkflow(this.participantState.step, this.participantStep.name)) {
-          const log = this.createParticipantLog(this.participantStep, this.participantState)
+          const log = await this.createParticipantLog(this.participantStep, this.participantState)
           this.serviceCreate(log)
           // Real-time event should trigger a new refresh for current state
         }

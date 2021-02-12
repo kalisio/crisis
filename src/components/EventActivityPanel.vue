@@ -35,7 +35,7 @@ import mixins from '../mixins'
 export default {
   name: 'event-activity-panel',
   mixins: [
-    mixins.eventLogs
+    mixins.events
   ],
   props: {
     layers: {

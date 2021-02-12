@@ -80,7 +80,7 @@ export default {
     kMapMixins.map.tiledWindLayers,
     kMapMixins.map.mapillaryLayers,
     kMapMixins.map.gsmapLayers,
-    mixins.eventLogs
+    mixins.events
   ],
   props: {
     contextId: {
