@@ -8,18 +8,6 @@
         <q-resize-observer @resize="onMapResized" />
       </div>
       <!--
-        NavigationBar
-       -->
-      <q-page-sticky position="top">
-        <k-opener-proxy position="top" component="KNavigationBar" :opened="true" />
-      </q-page-sticky>
-      <!--
-        TimeLine
-       -->
-      <q-page-sticky position="bottom">
-        <k-opener-proxy position="bottom" component="KTimeline" />
-      </q-page-sticky>
-      <!--
         ColorLegend
        -->
       <q-page-sticky position="left" :offset="[18, 0]">
@@ -333,9 +321,6 @@ export default {
   created () {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-opener-proxy'] = this.$load('frame/KOpenerProxy')
-    this.$options.components['k-navigation-bar'] = this.$load('KNavigationBar')
-    this.$options.components['k-timeline'] = this.$load('KTimeline')
     this.$options.components['k-color-legend'] = this.$load('KColorLegend')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-uploader'] = this.$load('input/KUploader')
