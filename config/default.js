@@ -577,7 +577,7 @@ module.exports = {
     },
     engine: defaultMapOptions,
     catalog: defaultMapCatalog,
-    layerActions: ['zoom-to', ],
+    layerActions: ['zoom-to'],
     featuresChunkSize: 5000 // TODO: here or in mapEngine ?
   },
   catalogActivity: {
