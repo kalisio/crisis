@@ -120,6 +120,13 @@ export default {
       // Wait until map is ready
       await this.initializeMap()
       activityMixin.methods.configureActivity.call(this)
+      // Flag required actions as "beta"
+      let actions = this.$store.get('fab.actions')
+      actions.forEach(action => {
+        if ((action.id === 'probe-location') || (action.id === 'create-layer') || (action.id === 'import-layer')) {
+          action.badge = { color: 'primary', floating: true, transparent: true, label: 'beta' }
+        }
+      })
       this.setCurrentTime(moment.utc())
       // Then update geo alerts
       this.refreshCollection()
@@ -151,16 +158,6 @@ export default {
       })
       
       return layers
-    },
-    registerActivityActions () {
-      kMapMixins.activity.methods.registerActivityActions.call(this)
-      // Flag required actions as "beta"
-      let actions = this.$store.get('fab.actions')
-      actions.forEach(action => {
-        if ((action.name === 'probe') || (action.name === 'create-layer') || (action.name === 'import-layer')) {
-          action.badge = { color: 'primary', floating: true, transparent: true, label: 'beta' }
-        }
-      })
     },
     getFeatureActions (feature, layer) {
       let featureActions = []

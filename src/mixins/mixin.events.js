@@ -10,16 +10,18 @@ const eventsMixin = {
       isCoordinator: false
     }
   },
-  methods: {
+  computed: {
     hasLocation () {
       return this.event.location && this.event.location.latitude && this.event.location.longitude
     },
     hasMedias () {
       return this.event.attachments && this.event.attachments.length
     },
-    getMediasCount () {
+    mediasCount () {
       return this.event.attachments ? this.event.attachments.length : 0
-    },
+    }
+  },
+  methods: {
     hasStepUserInteraction (step) {
       if (_.isEmpty(step)) return false
       else return !_.isEmpty(step.interaction)

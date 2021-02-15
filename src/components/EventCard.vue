@@ -84,10 +84,12 @@ import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.cl
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
+const baseItemMixin = kCoreMixins.baseItem()
+
 export default {
   name: 'event-card',
   mixins: [
-    kCoreMixins.baseItem,
+    baseItemMixin,
     kCoreMixins.service,
     kCoreMixins.schemaProxy,
     kCoreMixins.refsResolver(['form']),
@@ -98,7 +100,7 @@ export default {
   watch: {
     item: function () {
       // Some actions are not fully reactive and need to be updated manually
-      this.refreshActions()
+      this.configureActions()
     }
   },
   computed: {
@@ -194,11 +196,11 @@ export default {
       this.schema = await this.generateSchemaForStep(this.participantStep)
       return this.schema
     },
-    refreshActions () {
+    configureActions () {
       // Required alias for the event logs mixin
       this.event = this.item
-      // Item actions
-      this.clearActions()
+      // Generate configured actions
+      baseItemMixin.methods.configureActions.call(this)
       let actions = []
       let hasFollowUp = false
       let tooltip = this.$t('EventCard.FOLLOW_UP_LABEL')
@@ -242,33 +244,8 @@ export default {
           })
         }
       }
-      
-      actions = actions.concat([{
-        id: 'capture-photo', tooltip: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-camera', handler: this.capturePhoto,
-        visible: this.$can('read', 'events', this.contextId, this.item) && this.canCapturePhoto()
-      }, {
-        id: 'add-media', tooltip: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-paperclip', handler: this.uploadMedia,
-        visible: this.$can('read', 'events', this.contextId, this.item)
-      }, {
-        id: 'browse-media', tooltip: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', handler: this.browseMedia, 
-        badge: { label: this.getMediasCount(), floating: true },
-        visible: this.$can('read', 'events', this.contextId, this.item) && this.hasMedias()
-      }, {
-        id: 'event-map', tooltip: this.$t('EventCard.MAP_LABEL'), icon: 'las la-map-marked-alt', handler: this.viewMap,
-        visible: this.$can('read', 'events', this.contextId, this.item) && this.hasLocation()
-      }, {
-        id: 'navigate', tooltip: this.$t('EventCard.NAVIGATE_LABEL'), icon: 'las la-location-arrow', handler: this.launchNavigation,
-        visible: this.$can('read', 'events', this.contextId, this.item) && this.hasLocation() && this.canNavigate()
-      }, {
-        id: 'edit-event',
-        tooltip: this.$t('EventCard.EDIT_LABEL'),
-        icon: 'las la-file-alt',
-        visible: this.$can('update', 'events', this.contextId, this.item),
-        route: { name: 'edit-event', params: { contextId: this.contextId, objectId: this.item._id } }
-      }, {
-        id: 'remove-event', tooltip: this.$t('EventCard.REMOVE_LABEL'), icon: 'las la-minus-circle', handler: this.removeEvent,
-        visible: this.$can('remove', 'events', this.contextId, this.item)
-      }])
+      // Add already configured actions
+      actions = actions.concat(this.actions)
       this.setActions(actions)
     },
     uploadMedia () {
@@ -311,10 +288,10 @@ export default {
       const latitude = this.item.location.latitude
       this.navigate(longitude, latitude)
     },
-    removeEvent (event) {
+    removeEvent () {
       Dialog.create({
-        title: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: event.name }),
-        message: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: event.name }),
+        title: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: this.item.name }),
+        message: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: this.item.name }),
         html: true,
         ok: {
           label: this.$t('OK'),
@@ -326,7 +303,7 @@ export default {
         }
       }).onOk(() => {
         const eventsService = this.$api.getService('events', this.contextId)
-        eventsService.remove(event._id, { query: { notification: this.$t('EventNotifications.REMOVE') } })
+        eventsService.remove(this.item._id, { query: { notification: this.$t('EventNotifications.REMOVE') } })
       })
     },
     async followUp () {
@@ -383,7 +360,7 @@ export default {
       }
 
       // Update actions according to user state
-      this.refreshActions()
+      this.configureActions()
       this.participantLabel = ''
       if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
         this.participantLabel = this.$t('EventCard.WAITING_FOR_PARTICIPANT_LABEL')
@@ -418,7 +395,7 @@ export default {
         log => (log.stakeholder === 'coordinator') && !this.hasStateInteraction(log)
       ).length
       // Update actions according to user state
-      this.refreshActions()
+      this.configureActions()
       // Then label
       if (this.nbParticipantsWaitingCoordination > 0) {
         this.coordinatorLabel = this.$t('EventCard.PARTICPANTS_AWAITING_LABEL', { number: this.nbParticipantsWaitingCoordination })

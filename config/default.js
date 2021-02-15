@@ -311,6 +311,12 @@ module.exports = {
       }
     }
   },
+  accountItems: { // Devices
+    actions: [
+      { id: 'remove-device', tooltip: 'KDeviceCard.UNLINK_LABEL', icon: 'phonelink_erase', handler: 'removeDevice',
+        visible: { name: '$can', params: ['remove', 'devices', ':contextId', ':item'] } }
+    ]
+  },
   organisationsActivity: {
     topPane: {
       content: {
@@ -327,6 +333,11 @@ module.exports = {
         { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL', handler: 'createOrganisation' }
       ]
     }
+  },
+  organisationsItems: {
+    actions: [
+      { id: 'goto-organisation', icon: 'las la-sign-in-alt', route: { name: 'context', params: { contextId: ':item._id' } } }
+    ]
   },
   organisationSettingsActivity: {
     topPane: {
@@ -400,6 +411,21 @@ module.exports = {
       ]
     }
   },
+  membersItems: {
+    actions: [
+      { id: 'tag-member', icon: 'las la-tags', tooltip: 'KMemberCard.TAG_LABEL',
+        route: { name: 'tag-member', params: { contextId: ':contextId', objectId: ':item._id' } },
+        visible: ['!item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }] },
+      { id: 'change-role', icon: 'las la-graduation-cap', tooltip: 'KMemberCard.CHANGE_ROLE_LABEL',
+        route: { name: 'change-role', params: { contextId: ':contextId', objectId: ':item._id', resource: { id: ':contextId', scope: 'organisations', service: 'organisations' } } },
+        visible: ['!item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }] },
+      { id: 'reissue-invitation', icon: 'las la-envelope', tooltip: 'KMemberCard.RESEND_INVITATION_LABEL', handler: 'resendInvitation',
+        visible: ['item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }] },
+      { id: 'overflow-menu', component: 'frame/KMenu', actionRenderer: 'item',
+        visible: ['!item.expireAt', { name: '$can', params: ['remove', 'authorisations', ':contextId', { resource: ':contextId' }] }],
+        content: [{ id: 'remove-member', icon: 'las la-minus-circle', label: 'KMemberCard.REMOVE_LABEL', handler: 'removeMember' }] }
+    ]
+  },
   tagsActivity: {
     topPane: {
       content: {
@@ -415,6 +441,14 @@ module.exports = {
         'filter': contextFilter('value')
       }
     }
+  },
+  tagsItems: {
+    actions: [
+      { id: 'edit-tag', tooltip: 'KTagCard.EDIT_LABEL', icon: 'las la-file-alt',
+        visible: { name: '$can', params: ['update', 'tags', ':contextId', ':item'] },
+        route: { name: 'edit-tag', params: { contextId: ':contextId', objectId: ':item._id' } } },
+      { id: 'list-members', tooltip: 'KTagCard.LIST_MEMBERS_LABEL', icon: 'las la-user-tag', handler: 'onListMembers' }
+    ]
   },
   groupsActivity: {
     topPane: {
@@ -436,6 +470,17 @@ module.exports = {
         { id: 'create-group', icon: 'las la-plus', tooltip: 'KGroupsActivity.CREATE_GROUP_LABEL', route: { name: 'create-group', params: { contextId: ':contextId' } } }
       ]
     }
+  },
+  groupsItems: {
+    actions: [
+      { id: 'edit-group', tooltip: 'KGroupCard.EDIT_LABEL', icon: 'las la-file-alt',
+        visible: { name: '$can', params: ['update', 'groups', ':contextId', ':item'] },
+        route: { name: 'edit-group', params: { contextId: ':contextId', objectId: ':item._id' } } },
+      { id: 'list-members', tooltip: 'KGroupCard.LIST_MEMBERS_LABEL', icon: 'las la-user-circle',
+        visible: { name: '$can', params: ['service', 'members', ':contextId'] }, handler: 'onListMembers' },
+      { id: 'remove-group', tooltip: 'KGroupCard.REMOVE_LABEL', icon: 'las la-minus-circle',
+        visible: { name: '$can', params: ['remove', 'groups', ':contextId', ':item'] }, handler: 'removeGroup' }
+    ]
   },
   eventsActivity: {
     topPane: {
@@ -476,6 +521,38 @@ module.exports = {
       ]
     }
   },
+  eventsItems: {
+    actions: [
+      { id: 'capture-photo', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-camera', handler:  'capturePhoto',
+        visible: ['canCapturePhoto', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
+      { id: 'add-media', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-paperclip', handler:  'uploadMedia',
+        visible: { name: '$can', params: ['read', 'events', ':contextId', ':item'] } },
+      { id: 'browse-media', tooltip: 'EventCard.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', handler:  'browseMedia', 
+        badge: { label: 'mediasCount', floating: true },
+        visible: ['hasMedias', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
+      { id: 'event-map', tooltip: 'EventCard.MAP_LABEL', icon: 'las la-map-marked-alt', handler:  'viewMap',
+        visible: ['hasLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
+      { id: 'navigate', tooltip: 'EventCard.NAVIGATE_LABEL', icon: 'las la-location-arrow', handler:  'launchNavigation',
+        visible: ['hasLocation', 'canNavigate', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
+      { id: 'edit-event', tooltip: 'EventCard.EDIT_LABEL', icon: 'las la-file-alt',
+        visible: ['canCapturePhoto', { name: '$can', params: ['update', 'events', ':contextId', ':item'] }],
+        route: { name: 'edit-event', params: { contextId: ':contextId', objectId: ':item._id' } } },
+      { id: 'remove-event', tooltip: 'EventCard.REMOVE_LABEL', icon: 'las la-minus-circle', handler: 'removeEvent',
+        visible: { name: '$can', params: ['remove', 'events', ':contextId', ':item'] } }
+    ]
+  },
+  eventTemplatesItems: {
+    actions: [
+      { id: 'edit-event-template', tooltip: 'EventTemplateCard.EDIT_LABEL', icon: 'las la-file-alt',
+        visible: { name: '$can', params: ['update', 'event-templates', ':contextId', ':item'] },
+        route: { name: 'edit-event-template', params: { contextId: ':contextId', objectId: ':item._id' } } },
+      { id: 'copy-event-template', tooltip: 'EventTemplateCard.COPY_LABEL', icon: 'las la-copy',
+        visible: { name: '$can', params: ['update', 'event-templates', ':contextId', ':item'] },
+        route: { name: 'create-event-template', params: { contextId: ':contextId', templateId: ':item._id' } } },
+      { id: 'remove-event-template', tooltip: 'EventTemplateCard.REMOVE_LABEL', icon: 'las la-minus-circle',
+        visible: { name: '$can', params: ['remove', 'event-templates', ':contextId', ':item'] }, handler: 'removeEventTemplate' }
+    ]
+  },
   archivedEventsActivity: {
     topPane: {
       content: {
@@ -508,14 +585,30 @@ module.exports = {
       }
     },
     rightPane: {
-      'map': [
-        { component: 'catalog/KCatalog', bind: '$data' }
-      ]
+      content: {
+        'map': [
+          { component: 'catalog/KCatalog', bind: '$data' }
+        ]
+      },
+      mode: null // force default mode to null so that panel is hidden
     },
     engine: defaultMapOptions,
     catalog: { categories: [baseLayers, overlayLayers] },
     layerActions: ['zoom-to'],
     restore: { layers: false }
+  },
+  archivedEventsItems: {
+    actions: [
+      { id: 'view-event', tooltip: 'ArchivedEventEntry.VIEW_LABEL', icon: 'las la-file-alt',
+        route: { name: 'view-event', params: { contextId: ':contextId', objectId: ':item._id' } },
+        visible: { name: '$can', params: ['read', 'archived-events', ':contextId'] } },
+      { id: 'locate', tooltip: 'ArchivedEventEntry.LOCATE_LABEL', icon: 'las la-map-marker', handler: 'locate',
+        visible: ['hasLocation', { name: '$can', params: ['read', 'archived-events', ':contextId'] }] },
+      { id: 'map', tooltip: 'ArchivedEventEntry.MAP_LABEL', icon: 'las la-map-marked-alt', handler: 'followUp',
+        visible: { name: '$can', params: ['read', 'archived-events', ':contextId'] } },
+      { id: 'browse-media', tooltip: 'ArchivedEventEntry.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', handler: 'browseMedia',
+        visible: ['hasMedias', { name: '$can', params: ['read', 'archived-events', ':contextId'] }] }
+    ]
   },
   eventActivity: {
     topPane: {

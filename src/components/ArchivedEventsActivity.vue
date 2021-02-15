@@ -412,12 +412,14 @@ export default {
     },
     onShowHistory () {
       this.setTopPaneMode('history')
+      this.clearRightPane()
       // Cleanup
       this.clearEventsLayers()
       this.templates = []
     },
     onShowMap () {
       this.setTopPaneMode('map')
+      this.setRightPaneMode('map')
       // Refresh layer data
       this.refreshCollection()
     },

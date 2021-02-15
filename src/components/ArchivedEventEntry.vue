@@ -31,10 +31,12 @@
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
 
+const baseItemMixin = kCoreMixins.baseItem()
+
 export default {
   name: 'archived-event-entry',
   mixins: [
-    kCoreMixins.baseItem,
+    baseItemMixin,
     mixins.events,
     mixins.alerts
   ],
@@ -70,25 +72,10 @@ export default {
       return date.toLocaleString(kCoreUtils.getLocale(),
         { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
     },
-    refreshActions () {
+    configureActions () {
       // Required alias for the event logs mixin
       this.event = this.item
-      // Item actions
-      this.clearActions()
-      this.setActions([{
-        name: 'view-event', tooltip: this.$t('ArchivedEventEntry.VIEW_LABEL'), icon: 'las la-file-alt',
-        route: { name: 'view-event', params: { contextId: this.contextId, objectId: this.item._id } },
-        visible: this.$can('read', 'archived-events', this.contextId)
-      }, {
-        name: 'locate', tooltip: this.$t('ArchivedEventEntry.LOCATE_LABEL'), icon: 'las la-map-marker', handler: this.locate,
-        visible: this.hasLocation() && this.$can('read', 'archived-events', this.contextId)
-      }, {
-        name: 'map', tooltip: this.$t('ArchivedEventEntry.MAP_LABEL'), icon: 'las la-map-marked-alt', handler: this.followUp,
-        visible: this.$can('read', 'archived-events', this.contextId)
-      }, {
-        name: 'browse-media', tooltip: this.$t('ArchivedEventEntry.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', handler: this.browseMedia,
-        visible: this.hasMedias() && this.$can('read', 'archived-events', this.contextId)
-      }])
+      baseItemMixin.methods.configureActions.call(this)
     },
     locate () {
       this.$refs.locationPopup.toggle()
