@@ -652,6 +652,11 @@ module.exports = {
         { component: 'KTimeline' }
       ]
     },
+    page: {
+      content: [{
+        component: 'frame/KPageSticky', position: 'left', offset: [18, 0], content: [{ component: 'KColorLegend' }]
+      }]
+    },
     window: {
       widgets: widgets
     },
@@ -713,6 +718,13 @@ module.exports = {
       content: [
         { component: 'KTimeline' }
       ]
+    },
+    page: {
+      content: [{
+        component: 'frame/KPageSticky', position: 'left', offset: [18, 0], content: [{ component: 'KColorLegend' }]
+      }, {
+        component: 'KFeatureActionButton'
+      }]
     },
     window: {
       widgets: widgets

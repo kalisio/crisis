@@ -1,22 +1,10 @@
 <template>
   <k-page :padding="false">
     <template v-slot:page-content>
-      <!--
-        Map
-       -->
+      <!-- Map -->
       <div ref="map" :style="viewStyle">
         <q-resize-observer @resize="onMapResized" />
       </div>
-      <!--
-        Feature actions
-       -->
-      <k-feature-action-button />
-      <!--
-        ColorLegend
-       -->
-      <q-page-sticky position="left" :offset="[18, 0]">
-        <k-color-legend />
-      </q-page-sticky>
 
       <k-modal ref="templateModal"
         :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"

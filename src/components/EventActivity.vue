@@ -1,28 +1,21 @@
 <template>
   <k-page :padding="false">
     <template v-slot:page-content>
-      <!--
-        Map
-       -->
+      <!-- Map -->
       <div ref="map" :style="viewStyle">
         <q-resize-observer @resize="onMapResized" />
       </div>
-      <!--
-        ColorLegend
-       -->
-      <q-page-sticky position="left" :offset="[18, 0]">
-        <k-color-legend />
-      </q-page-sticky>
 
-    <k-modal ref="uploaderModal" :toolbar="getUploaderToolbar()">
-      <div slot="modal-content">
-        <k-uploader ref="uploader" :resource="objectId" :base-query="uploaderQuery()"
-          :options="uploaderOptions()" @uploader-ready="initializeMedias"/>
-      </div>
-    </k-modal>
+      <k-modal ref="uploaderModal" :toolbar="getUploaderToolbar()">
+        <div slot="modal-content">
+          <k-uploader ref="uploader" :resource="objectId" :base-query="uploaderQuery()"
+            :options="uploaderOptions()" @uploader-ready="initializeMedias"/>
+        </div>
+      </k-modal>
 
-    <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
-    <router-view service="events" :router="router()"></router-view>
+      <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
+
+      <router-view service="events" :router="router()"></router-view>
     </template>
   </k-page>
 </template>
