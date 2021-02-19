@@ -180,6 +180,22 @@ const contextMenu = function (activityName) {
   }
 }
 
+const layerActions = [{
+  component: 'frame/KMenu',
+  actionRenderer: 'item',
+  content: [
+    { id: 'zoom-to', label: 'mixins.activity.ZOOM_TO_LABEL', icon: 'las la-search-location', handler: 'onZoomToLayer' },
+    { id: 'save', label: 'mixins.activity.SAVE_LAYER', icon: 'las la-save', handler: 'onSaveLayer' },
+    { id: 'filter-data', label: 'mixins.activity.FILTER_DATA_LABEL', icon: 'las la-filter', handler: 'onFilterLayerData' },
+    { id: 'view-data', label: 'mixins.activity.VIEW_DATA_LABEL', icon: 'las la-th-list', handler: 'onViewLayerData' },
+    { id: 'chart-data', label: 'mixins.activity.CHART_DATA_LABEL', icon: 'las la-chart-pie', handler: 'onChartLayerData' },
+    { id: 'edit', label: 'mixins.activity.EDIT_LABEL', icon: 'las la-file-alt', handler: 'onEditLayer' },
+    { id: 'edit-style', label: 'mixins.activity.EDIT_LAYER_STYLE_LABEL', icon: 'las la-border-style', handler: 'onEditLayerStyle' },
+    { id: 'edit-data', label: 'mixins.activity.STOP_EDIT_DATA_LABEL', icon: 'las la-edit', handler: 'onEditLayerData' },
+    { id: 'remove', label: 'mixins.activity.REMOVE_LABEL', icon: 'las la-minus-circle', handler: 'onRemoveLayer' }
+  ]
+}]
+
 module.exports = {
   // Special alias to host loopback interface in cordova
   //domain: 'http://10.0.2.2:8081',
@@ -594,7 +610,10 @@ module.exports = {
     },
     engine: defaultMapOptions,
     catalog: { categories: [baseLayers, overlayLayers] },
-    layerActions: ['zoom-to'],
+    layers: {
+      actions: layerActions,
+      filter: { $or: [{ id: { $exists: false} }, { id: 'zoom-to' }] }
+    },
     restore: { layers: false }
   },
   archivedEventsItems: {
@@ -674,7 +693,10 @@ module.exports = {
     },
     engine: defaultMapOptions,
     catalog: defaultMapCatalog,
-    layerActions: ['zoom-to'],
+    layers: {
+      actions: layerActions,
+      filter: { $or: [{ id: { $exists: false} }, { id: 'zoom-to' }] }
+    },
     featuresChunkSize: 5000 // TODO: here or in mapEngine ?
   },
   catalogActivity: {
@@ -738,7 +760,9 @@ module.exports = {
     },
     engine: defaultMapOptions,
     catalog: defaultMapCatalog,
-    layerActions: ['zoom-to', 'save', 'edit', 'edit-style', 'filter-data', 'view-data', 'chart-data', 'edit-data', 'remove'],
+    layers: {
+      actions: layerActions
+    },
     featuresChunkSize: 5000 // TODO: here or in mapEngine ?
   },
   
