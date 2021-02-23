@@ -1,5 +1,5 @@
 <template>
-  <k-modal ref="modal" :title="title" :toolbar="toolbar()" :buttons="buttons()" :route="router ? true : false" >
+  <k-modal ref="modal" :title="title" :toolbar="toolbar()" :buttons="buttons()" :opened="true">
     <div slot="modal-content">
       <k-form ref="form" :schema="schema"/>
     </div>
@@ -26,10 +26,6 @@ export default {
     logId: {
       type: String,
       required: true
-    },
-    router: {
-      type: Object,
-      default: () => { return null }
     }
   },
   computed: {
@@ -48,10 +44,7 @@ export default {
         name: 'close-action',
         label: this.$t('EventLogEditor.CLOSE_ACTION'),
         icon: 'las la-times',
-        handler: () => {
-          this.$refs.modal.close()
-          if (this.router) this.$router.push(this.router.onDismiss)
-        }
+        handler: () => this.$refs.modal.close()
       }]
     },
     buttons () {

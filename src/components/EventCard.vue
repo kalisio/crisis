@@ -61,7 +61,7 @@
         </div>
       </template>
     </k-card>
-    <k-modal ref="followUpModal" v-if="hasParticipantInteraction" :title="followUpTitle" :toolbar="getFollowUpToolbar()" :buttons="getFollowUpButtons()" :route="false" >
+    <k-modal ref="followUpModal" v-if="hasParticipantInteraction" :title="followUpTitle" :toolbar="getFollowUpToolbar()" :buttons="getFollowUpButtons()">
       <div slot="modal-content">
         <k-form ref="form" :schema="schema"/>
       </div>

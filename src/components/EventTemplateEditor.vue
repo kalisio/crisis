@@ -1,5 +1,5 @@
 <template>
-  <k-modal ref="modal" :title="title" :toolbar="toolbar()" :buttons="buttons" :route="true">
+  <k-modal ref="modal" :title="title" :toolbar="toolbar()" :buttons="buttons" :opened="true">
     <div slot="modal-content" class="column xs-gutter">
       <div v-show="!workflowEdition">
         <k-form :class="{ 'light-dimmed': applyInProgress }" ref="templateForm" :schema="schema"  @field-changed="onFieldChanged"/>
