@@ -8,7 +8,7 @@
       <!--
         Router view to enable routing to modals
       -->
-      <router-view service="event-templates" router="router()"></router-view>
+      <router-view service="event-templates"></router-view>
     </template>
   </k-page>
 </template>
@@ -39,14 +39,6 @@ export default {
           options: {
           }
         }
-      }
-    }
-  },
-  methods: {
-    router () {
-      return {
-        onApply: { name: 'event-templates-activity', params: { contextId: this.contextId } },
-        onDismiss: { name: 'event-templates-activity', params: { contextId: this.contextId } }
       }
     }
   },

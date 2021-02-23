@@ -70,7 +70,7 @@
       <!--
         Router view to enable routing to modals
       -->
-      <router-view service="archived-events" :router="router()"></router-view>
+      <router-view service="archived-events"></router-view>
     </div>
   </k-page>
 </template>
@@ -235,12 +235,6 @@ export default {
     }
   },
   methods: {
-    router () {
-      return {
-        onApply: { name: 'archived-events-activity', params: { contextId: this.contextId } },
-        onDismiss: { name: 'archived-events-activity', params: { contextId: this.contextId } }
-      }
-    },
     async configureActivity () {
       // Wait until map is ready
       await this.initializeMap()

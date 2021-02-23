@@ -8,7 +8,7 @@
       <!--
         Router view to enable routing to modals
       -->
-      <router-view service="events" :router="router()"></router-view>
+      <router-view service="events"></router-view>
     </template>
   </k-page>
 </template>
@@ -41,12 +41,6 @@ export default {
     }
   },
   methods: {
-    router () {
-      return {
-        onApply: { name: 'events-activity', params: { contextId: this.contextId } },
-        onDismiss: { name: 'events-activity', params: { contextId: this.contextId } }
-      }
-    },
     async configureActivity () {
       activityMixin.methods.configureActivity.call(this)
       // Fab actions

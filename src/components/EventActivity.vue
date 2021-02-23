@@ -15,7 +15,7 @@
 
       <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
 
-      <router-view service="events" :router="router()"></router-view>
+      <router-view service="events"></router-view>
     </template>
   </k-page>
 </template>
@@ -88,12 +88,6 @@ export default {
         icon: 'las la-times',
         handler: () => this.$refs.uploaderModal.close()
       }]
-    },
-    router () {
-      return {
-        onApply: { name: 'event-activity', params: { contextId: this.contextId, objectId: this.objectId } },
-        onDismiss: { name: 'event-activity', params: { contextId: this.contextId, objectId: this.objectId } }
-      }
     },
     loadService () {
       // Archived mode ?

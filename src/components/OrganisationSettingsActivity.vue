@@ -16,7 +16,7 @@
       <!-- 
         Router view to enable routing to modals
       -->
-      <router-view :router="router()"></router-view>
+      <router-view />
     </template>
   </k-page>
 </template>
@@ -40,14 +40,6 @@ export default {
   watch: {
     page: function (value) {
       this.setTopPaneMode(value)
-    }
-  },
-  methods: {
-    router () {
-      return {
-        onApply: { name: 'organisation-settings-activity', params: { contextId: this.contextId, page: 'billing' } },
-        onDismiss: { name: 'organisation-settings-activity', params: { contextId: this.contextId, page: 'billing' } }
-      }
     }
   },
   created () {
