@@ -21,7 +21,7 @@
         id="history"
         class="q-pa-md"
         v-if="showHistory"
-        style="padding-top: 25px" 
+        style="padding-top: 50px" 
         service="archived-events" 
         :nb-items-per-page="2" 
         :append-items="true" 
@@ -41,8 +41,7 @@
       <!--
         Events graph
       -->
-      <k-modal id="chart-modal" ref="chartModal" :title="$t('ArchivedEventsActivity.CHART_MODAL_TITLE')"
-        :toolbar="toolbar" :buttons="[]" >
+      <k-modal id="chart-modal" ref="chartModal" :title="$t('ArchivedEventsActivity.CHART_MODAL_TITLE')" :toolbar="toolbar" :buttons="[]">
         <div slot="modal-content">
           <!-- Used as target for popup as we cannot reference the button in the modal -->
           <span ref="chartSettingsTarget" class="float-right"/>
