@@ -185,13 +185,10 @@ export default {
         }
       },
       filter: this.$store.get('filter'),
-      renderer: {
-        component: 'ArchivedEventEntry',
-        props: {
-          options: {
-          }
-        }
-      },
+      // Make this configurable from app
+      renderer: _.merge({
+        component: 'ArchivedEventEntry'
+      }, this.activityOptions.items),
       minDate: minDate,
       maxDate: maxDate,
       ascendingSort: false,

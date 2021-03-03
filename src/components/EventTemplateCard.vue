@@ -1,5 +1,5 @@
 <template>
-  <k-card v-bind="$props" :itemActions="actions">
+  <k-card v-bind="$props" :actions="itemActions" >
     <template v-slot:card-label>
       <span class="text-subtitle1 text-weight-medium ellipsis-2-lines">{{ name }}</span>
     </template>
@@ -19,7 +19,7 @@ import { Dialog, QIcon } from 'quasar'
 
 export default {
   name: 'event-template-card',
-  mixins: [kCoreMixins.baseItem()],
+  mixins: [kCoreMixins.baseItem],
   components: {
     QIcon
   },

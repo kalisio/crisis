@@ -1,6 +1,6 @@
 <template>
   <div>
-    <k-card v-bind="$props" :itemActions="actions">
+    <k-card v-bind="$props" :actions="itemActions" >
       <template v-slot:card-label>
         <span class="text-subtitle1 text-weight-medium ellipsis-2-lines" style="overflow: hidden">{{ name }}</span>
       </template>
@@ -84,12 +84,10 @@ import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.cl
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
-const baseItemMixin = kCoreMixins.baseItem()
-
 export default {
   name: 'event-card',
   mixins: [
-    baseItemMixin,
+    kCoreMixins.baseItem,
     kCoreMixins.service,
     kCoreMixins.schemaProxy,
     kCoreMixins.refsResolver(['form']),
@@ -200,7 +198,7 @@ export default {
       // Required alias for the event logs mixin
       this.event = this.item
       // Generate configured actions
-      baseItemMixin.methods.configureActions.call(this)
+      kCoreMixins.baseItem.methods.configureActions.call(this)
       let actions = []
       let hasFollowUp = false
       let tooltip = this.$t('EventCard.FOLLOW_UP_LABEL')
@@ -231,22 +229,20 @@ export default {
             warning = true
           }
         }
+        // Required to use splice when modifying an object inside an array to make it reactive
         if (!warning) {
-          actions.push({
+          this.itemActions.splice(0, 0, {
             id: 'follow-up', tooltip, icon: 'las la-comment',
             visible: this.$can('read', 'events', this.contextId, this.item), handler: this.followUp
           })
         } else {
-          actions.push({
+          this.itemActions.splice(0, 0, {
             id: 'follow-up', tooltip, icon: 'las la-comment', 
             badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } }, 
             visible: this.$can('read', 'events', this.contextId, this.item), handler: this.followUp
           })
         }
       }
-      // Add already configured actions
-      actions = actions.concat(this.actions)
-      this.setActions(actions)
     },
     uploadMedia () {
       this.$refs.uploaderModal.open()

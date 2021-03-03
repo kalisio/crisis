@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
@@ -33,13 +34,10 @@ export default {
         }
       },
       filter: this.$store.get('filter'),
-      renderer: {
-        component: 'EventTemplateCard',
-        props: {
-          options: {
-          }
-        }
-      }
+      // Make this configurable from app
+      renderer: _.merge({
+        component: 'EventTemplateCard'
+      }, this.activityOptions.items)
     }
   },
   created () {

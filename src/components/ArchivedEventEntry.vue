@@ -1,6 +1,6 @@
 <template>
   <div>
-    <k-history-entry v-bind="$props" :itemActions="actions">
+    <k-history-entry v-bind="$props" :actions="itemActions" >
       <div slot="entry-date">
         <div v-if="updatedAt"><small>{{$t('ArchivedEventEntry.UPDATED_AT_LABEL')}} {{formatDate(updatedAt)}}</small></div>
         <div v-if="deletedAt"><small>{{$t('ArchivedEventEntry.DELETED_AT_LABEL')}} {{formatDate(deletedAt)}}</small></div>
@@ -31,12 +31,10 @@
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
 
-const baseItemMixin = kCoreMixins.baseItem()
-
 export default {
   name: 'archived-event-entry',
   mixins: [
-    baseItemMixin,
+    kCoreMixins.baseItem,
     mixins.events,
     mixins.alerts
   ],
@@ -75,7 +73,7 @@ export default {
     configureActions () {
       // Required alias for the event logs mixin
       this.event = this.item
-      baseItemMixin.methods.configureActions.call(this)
+      kCoreMixins.baseItem.methods.configureActions.call(this)
     },
     locate () {
       this.$refs.locationPopup.toggle()
