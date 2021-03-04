@@ -1,7 +1,7 @@
-import eventLogs from './mixin.event-logs'
+import events from './mixin.events'
 import alerts from './mixin.alerts'
 
 export default {
-  eventLogs,
+  events,
   alerts
 }

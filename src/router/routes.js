@@ -52,22 +52,22 @@ module.exports = {
       'home': {
         // The name of the route has to be set the default child
         name: '',
-        component: 'Home',
+        component: 'layout/KHome',
         meta: { authenticated: true, unauthenticated: false },
         children: {
           'default-home-view': {
             // Because this child is the default one path is empty and name is the one of the parent route
             path: '',
             name: 'home',
-            redirect: { name: 'dashboard' },
+            redirect: { name: 'organisations-activity' },
             tour: tours.home
           },
-          'dashboard': {
-            path: 'dashboard',
-            component: 'EventDashboard',
+          'organisations-activity': {
+            path: 'organisations',
+            component: 'team/KOrganisationsActivity',
             tour: tours.dashboard
           },
-          'account/:perspective': {
+          'account/:page': {
             name: 'account-activity',
             component: 'account/KAccountActivity',
             props: true,
@@ -245,7 +245,7 @@ module.exports = {
                 },
                 tour: tours['event-templates']
               },
-              ':perspective': {
+              ':page': {
                 name: 'organisation-settings-activity',
                 component: 'OrganisationSettingsActivity',
                 props: true,

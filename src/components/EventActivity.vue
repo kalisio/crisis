@@ -1,40 +1,21 @@
 <template>
   <k-page :padding="false">
     <template v-slot:page-content>
-      <!--
-        Map
-       -->
+      <!-- Map -->
       <div ref="map" :style="viewStyle">
         <q-resize-observer @resize="onMapResized" />
       </div>
-      <!--
-        NavigationBar
-       -->
-      <q-page-sticky position="top">
-        <k-opener-proxy position="top" component="KNavigationBar" :opened="true" />
-      </q-page-sticky>
-      <!--
-        TimeLine
-       -->
-      <q-page-sticky position="bottom">
-        <k-opener-proxy position="bottom" component="KTimeline" />
-      </q-page-sticky>
-      <!--
-        ColorLegend
-       -->
-      <q-page-sticky position="left" :offset="[18, 0]">
-        <k-color-legend />
-      </q-page-sticky>
 
-    <k-modal ref="uploaderModal" :toolbar="getUploaderToolbar()">
-      <div slot="modal-content">
-        <k-uploader ref="uploader" :resource="objectId" :base-query="uploaderQuery()"
-          :options="uploaderOptions()" @uploader-ready="initializeMedias"/>
-      </div>
-    </k-modal>
+      <k-modal ref="uploaderModal" :toolbar="getUploaderToolbar()">
+        <div slot="modal-content">
+          <k-uploader ref="uploader" :resource="objectId" :base-query="uploaderQuery()"
+            :options="uploaderOptions()" @uploader-ready="initializeMedias"/>
+        </div>
+      </k-modal>
 
-    <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
-    <router-view service="events" :router="router()"></router-view>
+      <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
+
+      <router-view service="events"></router-view>
     </template>
   </k-page>
 </template>
@@ -46,7 +27,7 @@ import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.cl
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
-const activityMixin = kMapMixins.activity('event')
+const activityMixin = kCoreMixins.baseActivity()
 
 export default {
   name: 'event-activity',
@@ -58,7 +39,7 @@ export default {
   },
   mixins: [
     kCoreMixins.refsResolver(['map']),
-    kCoreMixins.baseActivity,
+    activityMixin,
     kCoreMixins.baseCollection,
     kMapMixins.featureSelection,    
     kMapMixins.featureService,
@@ -66,7 +47,7 @@ export default {
     kMapMixins.style,
     kMapMixins.weacast,
     kMapMixins.time,
-    activityMixin,
+    kMapMixins.activity,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
     kMapMixins.map.forecastLayers,
@@ -80,7 +61,7 @@ export default {
     kMapMixins.map.tiledWindLayers,
     kMapMixins.map.mapillaryLayers,
     kMapMixins.map.gsmapLayers,
-    mixins.eventLogs
+    mixins.events
   ],
   props: {
     contextId: {
@@ -108,12 +89,6 @@ export default {
         handler: () => this.$refs.uploaderModal.close()
       }]
     },
-    router () {
-      return {
-        onApply: { name: 'event-activity', params: { contextId: this.contextId, objectId: this.objectId } },
-        onDismiss: { name: 'event-activity', params: { contextId: this.contextId, objectId: this.objectId } }
-      }
-    },
     loadService () {
       // Archived mode ?
       return this.$api.getService(this.archived ? 'archived-event-logs' : 'event-logs')
@@ -125,45 +100,17 @@ export default {
       // No pagination on map items
       return {}
     },
-    async refreshActivity () {
+    async configureActivity () {
       // Archived mode ?
       this.archived = _.get(this.$route, 'query.archived')
-      this.clearActivity()
-      this.clearNavigationBar()
       // Wait until map is ready
       await this.initializeMap()
       this.event = await this.$api.getService(this.archived ? 'archived-events' : 'events', this.contextId).get(this.objectId)
       this.refreshUser()
-      this.setTitle(this.event.name)
-      // Setup the right drawer, add participant list if coordinator
-      if (this.isCoordinator) this.setRightDrawer('EventActivityPanel', this.$data)
-      else this.setRightDrawer('catalog/KCatalogPanel', this.$data)
-      // Setup the widgets
-      this.registerWidget('information-box', 'las la-digital-tachograph', 'widgets/KInformationBox', this.selection)
-      this.registerWidget('time-series', 'las la-chart-line', 'widgets/KTimeSeries', this.$data)
-      if (this.mapillaryClientID) this.registerWidget('mapillary-viewer', 'img:statics/mapillary-icon.svg', 'widgets/KMapillaryViewer')
       // If we'd like to only work in real-time
       // this.setCurrentTime(moment.utc())
-      this.registerActivityActions()
-      // Custom actions
-      if (this.$can('update', 'events', this.contextId, this.event)) {
-        this.registerFabAction({
-          name: 'add-media', label: this.$t('EventActivity.ADD_MEDIA_LABEL'), icon: 'add_a_photo', handler: this.uploadMedia
-        })
-      }
-      if (this.$can('read', 'events', this.contextId, this.event)) {
-        if (this.hasMedias()) this.registerFabAction({
-          name: 'browse-media', label: this.$t('EventActivity.BROWSE_MEDIA_LABEL'), icon: 'photo_library', handler: this.browseMedia
-        })
-      }
-      if (this.$can('update', 'events', this.contextId, this.event)) {
-        this.registerFabAction({
-          name: 'edit-event',
-          label: this.$t('EventActivity.EDIT_LABEL'),
-          icon: 'las la-file-alt',
-          route: { name: 'edit-event', params: { contextId: this.contextId, service: 'events', objectId: this.objectId } }
-        })
-      }
+      activityMixin.methods.configureActivity.call(this)
+      
       // Located event ?
       if (this.event.location && this.event.location.longitude && this.event.location.latitude) {
         // Recenter map
@@ -206,7 +153,7 @@ export default {
       }
     },
     async getCatalogLayers () {
-      let layers = await activityMixin.methods.getCatalogLayers.call(this)
+      let layers = await kMapMixins.activity.methods.getCatalogLayers.call(this)
       // Flag required layers as "beta"
       layers.forEach(layer => {
         if (layer.type !== 'BaseLayer') {
@@ -217,7 +164,7 @@ export default {
       return layers
     },
     registerActivityActions () {
-      activityMixin.methods.registerActivityActions.call(this)
+      kMapMixins.activity.methods.registerActivityActions.call(this)
       // Flag required actions as "beta"
       let actions = this.$store.get('fab.actions')
       actions.forEach(action => {
@@ -361,9 +308,6 @@ export default {
   created () {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-opener-proxy'] = this.$load('frame/KOpenerProxy')
-    this.$options.components['k-navigation-bar'] = this.$load('KNavigationBar')
-    this.$options.components['k-timeline'] = this.$load('KTimeline')
     this.$options.components['k-color-legend'] = this.$load('KColorLegend')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-uploader'] = this.$load('input/KUploader')

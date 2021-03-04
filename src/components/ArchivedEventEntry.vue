@@ -1,6 +1,6 @@
 <template>
   <div>
-    <k-history-entry v-bind="$props" :itemActions="actions">
+    <k-history-entry v-bind="$props" :actions="itemActions" >
       <div slot="entry-date">
         <div v-if="updatedAt"><small>{{$t('ArchivedEventEntry.UPDATED_AT_LABEL')}} {{formatDate(updatedAt)}}</small></div>
         <div v-if="deletedAt"><small>{{$t('ArchivedEventEntry.DELETED_AT_LABEL')}} {{formatDate(deletedAt)}}</small></div>
@@ -35,7 +35,7 @@ export default {
   name: 'archived-event-entry',
   mixins: [
     kCoreMixins.baseItem,
-    mixins.eventLogs,
+    mixins.events,
     mixins.alerts
   ],
   computed: {
@@ -70,26 +70,10 @@ export default {
       return date.toLocaleString(kCoreUtils.getLocale(),
         { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
     },
-    refreshActions () {
+    configureActions () {
       // Required alias for the event logs mixin
       this.event = this.item
-      // Item actions
-      this.clearActions()
-      if (this.$can('read', 'archived-events', this.contextId)) {
-        this.registerPaneAction({
-          name: 'view-event', label: this.$t('ArchivedEventEntry.VIEW_LABEL'), icon: 'las la-file-alt',
-          route: { name: 'view-event', params: { contextId: this.contextId, objectId: this.item._id } }
-        })
-        if (this.hasLocation()) this.registerPaneAction({
-          name: 'locate', label: this.$t('ArchivedEventEntry.LOCATE_LABEL'), icon: 'las la-map-marker', handler: this.locate
-        })
-        this.registerPaneAction({
-          name: 'map', label: this.$t('ArchivedEventEntry.MAP_LABEL'), icon: 'las la-map-marked-alt', handler: this.followUp
-        })
-        if (this.hasMedias()) this.registerPaneAction({
-          name: 'browse-media', label: this.$t('ArchivedEventEntry.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', handler: this.browseMedia
-        })
-      }
+      kCoreMixins.baseItem.methods.configureActions.call(this)
     },
     locate () {
       this.$refs.locationPopup.toggle()

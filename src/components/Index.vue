@@ -56,9 +56,9 @@ export default {
             name: _.get(this.$route, 'query.route', 'context'),
             params: Object.assign({
               contextId: organisation._id,
-              perspective: _.get(this.$route, 'query.perspective')
+              page: _.get(this.$route, 'query.page')
             }, _.get(this.$route, 'params', {})),
-            query: _.omit(_.get(this.$route, 'query', {}), ['organisation', 'perspective'])
+            query: _.omit(_.get(this.$route, 'query', {}), ['organisation', 'page'])
           })
         } else {
           this.$toast({ message: this.$t('Index.ORGANISATION_NOT_FOUND') })

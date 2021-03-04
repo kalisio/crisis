@@ -1,5 +1,5 @@
 <template>
-  <k-card v-bind="$props" :itemActions="actions">
+  <k-card v-bind="$props" :actions="itemActions" >
     <template v-slot:card-label>
       <span class="text-subtitle1 text-weight-medium ellipsis-2-lines">{{ name }}</span>
     </template>
@@ -32,35 +32,10 @@ export default {
     }
   },
   methods: {
-    refreshActions () {
-      // Item actions
-      this.clearActions()
-      if (this.$can('update', 'event-templates', this.contextId, this.item)) {
-        this.registerPaneAction({
-          name: 'edit-event-template',
-          label: this.$t('EventTemplateCard.EDIT_LABEL'),
-          icon: 'las la-file-alt',
-          route: { name: 'edit-event-template', params: { contextId: this.contextId, objectId: this.item._id } }
-        })
-      }
-      if (this.$can('update', 'event-templates', this.contextId, this.item)) {
-        this.registerPaneAction({
-          name: 'copy-event-template',
-          label: this.$t('EventTemplateCard.COPY_LABEL'),
-          icon: 'las la-copy',
-          route: { name: 'create-event-template', params: { contextId: this.contextId, templateId: this.item._id } }
-        })
-      }
-      if (this.$can('remove', 'event-templates', this.contextId, this.item)) {
-        this.registerMenuAction({
-          name: 'remove-event-template', label: this.$t('EventTemplateCard.REMOVE_LABEL'), icon: 'las la-minus-circle', handler: this.removeEventTemplate
-        })
-      }
-    },
-    removeEventTemplate (template) {
+    removeEventTemplate () {
       Dialog.create({
-        title: this.$t('EventTemplateCard.REMOVE_DIALOG_TITLE', { template: template.name }),
-        message: this.$t('EventTemplateCard.REMOVE_DIALOG_MESSAGE', { template: template.name }),
+        title: this.$t('EventTemplateCard.REMOVE_DIALOG_TITLE', { template: this.item.name }),
+        message: this.$t('EventTemplateCard.REMOVE_DIALOG_MESSAGE', { template: this.item.name }),
         html: true,
         ok: {
           label: this.$t('OK'),
@@ -72,7 +47,7 @@ export default {
         }
       }).onOk(() => {
         const eventTemplatesService = this.$api.getService('event-templates')
-        eventTemplatesService.remove(template._id)
+        eventTemplatesService.remove(this.item._id)
       })
     }
   },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <k-card v-bind="$props" :itemActions="actions">
+    <k-card v-bind="$props" :actions="itemActions" >
       <template v-slot:card-label>
         <span class="text-subtitle1 text-weight-medium ellipsis-2-lines" style="overflow: hidden">{{ name }}</span>
       </template>
@@ -61,7 +61,7 @@
         </div>
       </template>
     </k-card>
-    <k-modal ref="followUpModal" v-if="hasParticipantInteraction" :title="followUpTitle" :toolbar="getFollowUpToolbar()" :buttons="getFollowUpButtons()" :route="false" >
+    <k-modal ref="followUpModal" v-if="hasParticipantInteraction" :title="followUpTitle" :toolbar="getFollowUpToolbar()" :buttons="getFollowUpButtons()">
       <div slot="modal-content">
         <k-form ref="form" :schema="schema"/>
       </div>
@@ -92,13 +92,13 @@ export default {
     kCoreMixins.schemaProxy,
     kCoreMixins.refsResolver(['form']),
     kMapMixins.navigator,
-    mixins.eventLogs,
+    mixins.events,
     mixins.alerts
   ],
   watch: {
     item: function () {
       // Some actions are not fully reactive and need to be updated manually
-      this.refreshActions()
+      this.configureActions()
     }
   },
   computed: {
@@ -194,87 +194,54 @@ export default {
       this.schema = await this.generateSchemaForStep(this.participantStep)
       return this.schema
     },
-    refreshActions () {
+    configureActions () {
       // Required alias for the event logs mixin
       this.event = this.item
-      // Item actions
-      this.clearActions()
-      if (this.$can('remove', 'events', this.contextId, this.item)) {
-        this.registerMenuAction({
-          name: 'remove-event', label: this.$t('EventCard.REMOVE_LABEL'), icon: 'las la-minus-circle', handler: this.removeEvent
-        })
+      // Generate configured actions
+      kCoreMixins.baseItem.methods.configureActions.call(this)
+      let actions = []
+      let hasFollowUp = false
+      let tooltip = this.$t('EventCard.FOLLOW_UP_LABEL')
+      let warning = false
+      if (this.isParticipant) {
+        hasFollowUp = this.item.hasWorkflow &&
+                      (this.waitingInteraction(this.participantStep, this.participantState, 'participant') ||
+                       this.waitingInteraction(this.participantStep, this.participantState, 'coordinator'))
       }
-      if (this.$can('update', 'events', this.contextId, this.item)) {
-        this.registerPaneAction({
-          name: 'edit-event',
-          label: this.$t('EventCard.EDIT_LABEL'),
-          icon: 'las la-file-alt',
-          route: { name: 'edit-event', params: { contextId: this.contextId, objectId: this.item._id } }
-        })
+      if (this.isCoordinator) {
+        hasFollowUp |= this.item.hasWorkflow &&
+                       (this.nbParticipantsWaitingCoordination > 0)
       }
-      if (this.$can('read', 'events', this.contextId, this.item)) {
-        let hasFollowUp = false
-        let label = this.$t('EventCard.FOLLOW_UP_LABEL')
-        let warning = false
+      if (hasFollowUp) {
         if (this.isParticipant) {
-          hasFollowUp = this.item.hasWorkflow &&
-                        (this.waitingInteraction(this.participantStep, this.participantState, 'participant') ||
-                         this.waitingInteraction(this.participantStep, this.participantState, 'coordinator'))
-        }
-        if (this.isCoordinator) {
-          hasFollowUp |= this.item.hasWorkflow &&
-                         (this.nbParticipantsWaitingCoordination > 0)
-        }
-        if (hasFollowUp) {
-          if (this.isParticipant) {
-            if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
-              label = this.$t('EventCard.ACTION_REQUIRED_WARNING')
-              warning = true
-            } else if (this.waitingInteraction(this.participantStep, this.participantState, 'coordinator')) {
-              label = this.$t('EventCard.WAITING_COORDINATION_WARNING')
-              warning = true
-            }
-          } 
-          // Participant warning if any overrides coordinator warning
-          if (!warning && this.isCoordinator) {
-            if (this.nbParticipantsWaitingCoordination > 0) {
-              label = this.$t('EventCard.ACTION_REQUIRED_WARNING')
-              warning = true
-            }
+          if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
+            tooltip = this.$t('EventCard.ACTION_REQUIRED_WARNING')
+            warning = true
+          } else if (this.waitingInteraction(this.participantStep, this.participantState, 'coordinator')) {
+            tooltip = this.$t('EventCard.WAITING_COORDINATION_WARNING')
+            warning = true
           }
-          if (!warning) {
-            this.registerPaneAction({
-              name: 'follow-up', label, icon: 'las la-comment', handler: this.followUp
-            })
-          } else {
-            this.registerPaneAction({
-              name: 'follow-up', label, icon: 'las la-comment', 
-              badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } }, 
-              handler: this.followUp 
-            })
+        } 
+        // Participant warning if any overrides coordinator warning
+        if (!warning && this.isCoordinator) {
+          if (this.nbParticipantsWaitingCoordination > 0) {
+            tooltip = this.$t('EventCard.ACTION_REQUIRED_WARNING')
+            warning = true
           }
         }
-      }
-      if (this.$can('read', 'events', this.contextId, this.item)) {
-        if (this.canCapturePhoto()) this.registerPaneAction({
-          name: 'capture-photo', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-camera', handler: this.capturePhoto
-        })
-        this.registerPaneAction({
-          name: 'add-media', label: this.$t('EventCard.ADD_MEDIA_LABEL'), icon: 'las la-paperclip', handler: this.uploadMedia
-        })
-        if (this.hasMedias()) this.registerPaneAction({
-          name: 'browse-media', label: this.$t('EventCard.BROWSE_MEDIA_LABEL'), icon: 'las la-photo-video', 
-          badge: { label: this.getMediasCount(), floating: true },
-          handler: this.browseMedia
-        })
-        if (this.hasLocation()) this.registerPaneAction({
-          name: 'event-map', label: this.$t('EventCard.MAP_LABEL'), icon: 'las la-map-marked-alt', handler: this.viewMap
-        })
-      }
-      if (this.hasLocation() && this.canNavigate()) {
-        this.registerPaneAction({
-          name: 'navigate', label: this.$t('EventCard.NAVIGATE_LABEL'), icon: 'las la-location-arrow', handler: this.launchNavigation
-        })
+        // Required to use splice when modifying an object inside an array to make it reactive
+        if (!warning) {
+          this.itemActions.splice(0, 0, {
+            id: 'follow-up', tooltip, icon: 'las la-comment',
+            visible: this.$can('read', 'events', this.contextId, this.item), handler: this.followUp
+          })
+        } else {
+          this.itemActions.splice(0, 0, {
+            id: 'follow-up', tooltip, icon: 'las la-comment', 
+            badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } }, 
+            visible: this.$can('read', 'events', this.contextId, this.item), handler: this.followUp
+          })
+        }
       }
     },
     uploadMedia () {
@@ -317,10 +284,10 @@ export default {
       const latitude = this.item.location.latitude
       this.navigate(longitude, latitude)
     },
-    removeEvent (event) {
+    removeEvent () {
       Dialog.create({
-        title: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: event.name }),
-        message: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: event.name }),
+        title: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: this.item.name }),
+        message: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: this.item.name }),
         html: true,
         ok: {
           label: this.$t('OK'),
@@ -332,7 +299,7 @@ export default {
         }
       }).onOk(() => {
         const eventsService = this.$api.getService('events', this.contextId)
-        eventsService.remove(event._id, { query: { notification: this.$t('EventNotifications.REMOVE') } })
+        eventsService.remove(this.item._id, { query: { notification: this.$t('EventNotifications.REMOVE') } })
       })
     },
     async followUp () {
@@ -370,7 +337,7 @@ export default {
         if (count.total === 0) {
           this.participantState = {}
           this.participantStep = this.getWorkflowStep() || {} // Use empty object by default to simplify display
-          const log = this.createParticipantLog(this.participantStep, this.participantState)
+          const log = await this.createParticipantLog(this.participantStep, this.participantState)
           this.serviceCreate(log)
           // Real-time event should trigger a new refresh for current state
         }
@@ -382,14 +349,14 @@ export default {
         // When participant has just fullfilled a step we need to initiate the next one (if any) by a log acting as a read receipt
         // We know this when we get a higher step in workflow from the current state
         if (this.isBeforeInWorkflow(this.participantState.step, this.participantStep.name)) {
-          const log = this.createParticipantLog(this.participantStep, this.participantState)
+          const log = await this.createParticipantLog(this.participantStep, this.participantState)
           this.serviceCreate(log)
           // Real-time event should trigger a new refresh for current state
         }
       }
 
       // Update actions according to user state
-      this.refreshActions()
+      this.configureActions()
       this.participantLabel = ''
       if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
         this.participantLabel = this.$t('EventCard.WAITING_FOR_PARTICIPANT_LABEL')
@@ -424,7 +391,7 @@ export default {
         log => (log.stakeholder === 'coordinator') && !this.hasStateInteraction(log)
       ).length
       // Update actions according to user state
-      this.refreshActions()
+      this.configureActions()
       // Then label
       if (this.nbParticipantsWaitingCoordination > 0) {
         this.coordinatorLabel = this.$t('EventCard.PARTICPANTS_AWAITING_LABEL', { number: this.nbParticipantsWaitingCoordination })

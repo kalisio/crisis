@@ -1,5 +1,5 @@
 <template>
-  <k-catalog-panel :layers="layers" :layerHandlers="layerHandlers" :layerCategories="layerCategories"
+  <k-catalog :layers="layers" :layerHandlers="layerHandlers" :layerCategories="layerCategories"
     :forecastModels="forecastModels" :forecastModelHandlers="forecastModelHandlers" :forecastModel="forecastModel" >
     <div slot="footer" >
       <q-expansion-item v-if="participants.length > 0" icon="las la-user" header-class="text-primary" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">
@@ -24,7 +24,7 @@
         </template>
       </q-expansion-item>
     </div>
-  </k-catalog-panel>
+  </k-catalog>
 </template>
 
 <script>
@@ -35,7 +35,7 @@ import mixins from '../mixins'
 export default {
   name: 'event-activity-panel',
   mixins: [
-    mixins.eventLogs
+    mixins.events
   ],
   props: {
     layers: {
@@ -93,7 +93,7 @@ export default {
   },
   created () {
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
-    this.$options.components['k-catalog-panel'] = this.$load('catalog/KCatalogPanel')
+    this.$options.components['k-catalog'] = this.$load('catalog/KCatalog')
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
   }

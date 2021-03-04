@@ -1,5 +1,5 @@
 <template>
-  <k-modal ref="modal" :title="$t('CustomerEditor.TITLE')" :toolbar="getToolbar()" :buttons="getButtons()" :route="false">
+  <k-modal ref="modal" :title="$t('CustomerEditor.TITLE')" :toolbar="getToolbar()" :buttons="getButtons()">
     <div slot="modal-content">
       <div class="column">
         <div>

@@ -13,7 +13,7 @@
           </q-item>
           <q-item :id="'organisation-grid-' + org._id">
             <q-item-section>
-              <k-grid service="events" :renderer="renderer" :contextId="org._id" :base-query="baseQuery" :filter-query="searchQuery" :list-strategy="'smart'" />
+              <k-grid service="events" :renderer="renderer" :contextId="org._id" :base-query="baseQuery" :filter-query="filter.query" :list-strategy="'smart'" />
             </q-item-section>
           </q-item>
         </q-list>
@@ -24,14 +24,14 @@
 
 <script>
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
+
+const activityMixin = kCoreMixins.baseActivity()
 
 export default {
   name: 'event-dashboard',
   mixins: [
-    kCoreMixins.baseActivity,
-    kCoreMixins.baseCollection,
-    kMapMixins.geolocation
+    activityMixin,
+    kCoreMixins.baseCollection
   ],
   data () {
     return {
@@ -40,6 +40,7 @@ export default {
           updatedAt: -1
         }
       },
+      filter: this.$store.get('filter'),
       renderer: {
         component: 'EventCard',
         props: {
@@ -59,12 +60,9 @@ export default {
     getCollectionBaseQuery () {
       return {}
     },
-    refreshActivity () {
-      this.clearActivity()
-      this.setTitle(this.$t('EventDashboard.DASHBOARD'))
-      this.setSearchBar('name')
+    configureActivity () {
+      activityMixin.methods.configureActivity.call(this)
       this.refreshCollection()
-      this.updatePosition()
     },
     checkSingleOrganisation () {
       // When there is a single organisation directly go to the event activity, no need for the dashboard
@@ -83,8 +81,6 @@ export default {
     // Used to chec kfor single organisation layout at startup or refresh
     this.$on('collection-refreshed', this.checkSingleOrganisation)
     this.checkSingleOrganisation()
-    // Performs geolocation
-    this.refreshActivity()
   },
   beforeDestroy () {
     this.$off('collection-refreshed', this.checkSingleOrganisation)
