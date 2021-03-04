@@ -88,3 +88,6 @@ test/page-models/map
 # KDK tours
 src/tours/core
 src/tours/map
+
+#KDK icons
+src/assets/icons
