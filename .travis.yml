@@ -59,17 +59,12 @@ jobs:
     licenses:
       - '.+'
     before_install:
-    # NVM
     - nvm install 12.16
-    # AndroidDK Licence Mangager
     - yes | sdkmanager "platforms;android-29"
-    # Yarn
     - npm install -g yarn
-    # AWS cli
     - pip install --user awscli
-    # Fastlane
-    - gem install fastlane -v '~> 2.137.0'
-    # Quasar cli
+    - rvm install ruby-2.6.5
+    - gem install fastlane -v '~> 2.171.0'
     - npm install -g @quasar/cli  
     install:
     - yarn
@@ -83,15 +78,10 @@ jobs:
     language: objective-c
     osx_image: xcode11.5
     before_install:
-    # NVM
     - nvm install 12.16
-    # Yarn
     - npm install -g yarn
-    # AWS cli
     - brew install awscli
-    # Ios deploy
     - npm install -g ios-deploy --unsafe-perm=true
-    # Quasar cli
     - npm install -g @quasar/cli  
     install:
     - yarn
