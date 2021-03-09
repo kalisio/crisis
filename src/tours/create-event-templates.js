@@ -17,7 +17,7 @@ module.exports = [{
   content: 'tours.create-event-template.SELECT_ICON_LABEL',
   params: {
     placement: 'top',
-    clickOnPrevious: '#close-modal[1]',
+    clickOnPrevious: '#close-action[1]',
     previousDelay: 500
   }
 }, {
@@ -25,7 +25,7 @@ module.exports = [{
   content: 'tours.create-event-template.SELECT_COLOR_LABEL',
   params: {
     placement: 'top',
-    clickOnNext: '#close-modal[1]',
+    clickOnNext: '#close-action[1]',
     nextDelay: 500
   }
 }, {
@@ -72,7 +72,7 @@ module.exports = [{
   content: 'tours.create-event-template.WORKFLOW_LABEL',
   params: {
     placement: 'bottom',
-    clickOnPrevious: '#close-modal'
+    clickOnPrevious: '#close-action'
   }
 }, {
   target: '#workflow * #title-field',
@@ -140,7 +140,7 @@ module.exports = [{
   title: 'tours.create-event-template.WORKFLOW_PREVIEW_STEP_LABEL',
   params: {
     placement: 'top',
-    clickOnNext: '#close-modal'
+    clickOnNext: '#close-action'
   }
 }, {
   target: '#apply-button',

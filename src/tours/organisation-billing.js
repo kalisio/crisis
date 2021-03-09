@@ -23,7 +23,7 @@ module.exports = [{
   content: 'tours.organisation.CUSTOMER_EMAIL_LABEL',
   params: {
     placement: 'left',
-    clickOnPrevious: '#close-modal',
+    clickOnPrevious: '#close-action',
     previousDelay: 500
   }
 }, {
@@ -49,7 +49,7 @@ module.exports = [{
   content: 'tours.organisation.UPDATE_LABEL',
   params: {
     placement: 'left',
-    clickOnNext: '#close-modal',
+    clickOnNext: '#close-action',
     nextDelay: 500
   }
 }, {
