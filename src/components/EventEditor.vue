@@ -1,5 +1,10 @@
 <template>
-  <k-modal ref="modal" :title="editorTitle" :toolbar="toolbar()" :buttons="buttons" :opened="true">
+  <k-modal ref="modal" 
+    :title="editorTitle" 
+    :buttons="buttons" 
+    v-model="isModalOpened"
+    @opened="$emit('opened')"
+    @closed="$emit('closed')">
     <div slot="modal-content" class="column xs-gutter">
       <k-form :class="{ 'light-dimmed': applyInProgress }" ref="eventForm" :contextId="contextId" :objectId="objectId" :schema="schema" @field-changed="onFieldChanged" />
       <q-spinner-cube color="primary" class="fixed-center" v-if="applyInProgress" size="4em"/>
@@ -17,6 +22,7 @@ const editorMixin = mixins.baseEditor(['eventForm'])
 export default {
   name: 'event-editor',
   mixins: [
+    mixins.baseModal,
     mixins.service,
     mixins.objectProxy,
     mixins.schemaProxy,
@@ -45,11 +51,6 @@ export default {
     }
   },
   methods: {
-    toolbar () {
-      return [
-        { name: 'close-action', label: this.$t('EventEditor.CLOSE_ACTION'), icon: 'las la-times', handler: () => this.doClose() }
-      ]
-    },
     async loadObject () {
       // When a template is provided use it as reference for object
       if (this.template) {
@@ -132,10 +133,6 @@ export default {
           delete this.object.workflow
         }
       }
-    },
-    doClose () {
-      this.$refs.modal.close()
-      this.$router.push({ name: 'events-activity' })
     }
   },
   async created () {
@@ -147,10 +144,10 @@ export default {
       this.template = await this.$api.getService('event-templates').get(this.templateId)
     }
     this.refresh()
-    this.$on('applied', this.doClose)
+    this.$on('applied', this.closeModal)
   },
   beforeDestroy () {
-    this.$off('applied', this.doClose)
+    this.$off('applied', this.closeModal)
   }
 }
 </script>

@@ -1,5 +1,11 @@
 <template>
-  <k-modal ref="modal" :title="title" :toolbar="toolbar()" :buttons="buttons" :opened="true">
+  <k-modal ref="modal" 
+    :title="title" 
+    :toolbar="toolbar()" 
+    :buttons="buttons" 
+    v-model="isModalOpened"
+    @opened="$emit('opened')"
+    @closed="$emit('closed')">
     <div slot="modal-content" class="column xs-gutter">
       <div v-show="!workflowEdition">
         <k-form :class="{ 'light-dimmed': applyInProgress }" ref="templateForm" :schema="schema"  @field-changed="onFieldChanged"/>
@@ -24,6 +30,7 @@ import { mixins } from '@kalisio/kdk/core.client'
 export default {
   name: 'event-template-editor',
   mixins: [
+    mixins.baseModal,
     mixins.service,
     mixins.objectProxy,
     mixins.schemaProxy,
@@ -57,7 +64,7 @@ export default {
     toolbar () {
       let action = { name: 'close-action', label: this.$t('EventTemplateEditor.CLOSE_ACTION'), icon: 'las la-times' }
       if (this.workflowEdition) action.handler = () => { this.workflowEdition = false }
-      else action.handler = () => this.doClose()
+      else action.handler = () => this.closeModal()
       return [action]
     },
     loadObject () {
@@ -90,10 +97,6 @@ export default {
       // Enter workflow edition mode
       if (hasWorkflow) this.workflowEdition = true
     },
-    doClose () {
-      this.$refs.modal.close()
-      this.$router.push({ name: 'event-templates-activity' })
-    },
     async initialize () {
       await this.refresh()
       // In edition mode activate workflow according to its existence
@@ -117,10 +120,10 @@ export default {
       this.template = await this.$api.getService('event-templates').get(this.templateId)
     }
     this.initialize()
-    this.$on('applied', this.doClose)
+    this.$on('applied', this.closeModal)
   },
   beforeDestroy () {
-    this.$off('applied', this.doClose)
+    this.$off('applied', this.closeModal)
   }
 }
 </script>
