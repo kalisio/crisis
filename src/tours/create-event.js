@@ -2,9 +2,7 @@ module.exports = [{
   target: '#name-field',
   content: 'tours.create-event.EVENT_NAME_LABEL',
   params: {
-    placement: 'bottom',
-    clickOnPrevious: '#close-action',
-    previousDelay: 500
+    placement: 'bottom'
   }
 }, {
   target: '#description-field',

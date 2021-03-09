@@ -6,13 +6,15 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#app-bar-actions',
-  content: 'tours.events.APP_BAR_ACTIONS_LABEL',
+  target: '#app-bar-overflow-menu',
+  content: 'tours.event-templates.OVERFLOW_MENU_LABEL',
   params: {
-    placement: 'left'
+    placement: 'left',
+    clickOn: '#app-bar-overflow-menu',
+    clickDelay: 500
   }
 }, {
-  target: '#search',
+  target: '#search-event',
   content: 'tours.events.SEARCH_LABEL',
   params: {
     placement: 'left'

@@ -84,11 +84,11 @@
       "SESSION_LABEL": "Otherwise the session will remain active on your device for <b>24H</b>, you will not have to login again in this time frame."
     },
     "organisation": {
-      "PROPERTIES_LABEL": "This tab allows to update your organisation information.",
+      "PROPERTIES_LABEL": "This activity allows to update your organisation information",
       "NAME_LABEL": "Its name as viewed by others users.",
       "DESCRIPTION_LABEL": "Then its description.",
       "UPDATE_LABEL": "Confirm the update in order to apply the modifications to your organisation.",
-      "BILLING_LABEL": "This tab allows to update your <b>subscriptions</b>",
+      "BILLING_LABEL": "This activity allows to update your <b>subscriptions</b>",
       "CUSTOMER_LABEL": "This section recaps your current method of payment.",
       "PAYMENT_METHOD_LABEL": "This button allows to update it.",
       "CUSTOMER_EMAIL_LABEL": "Select the owner of the organisation who will receive the invoices.",
@@ -101,13 +101,13 @@
       "OPTIONAL_PLANS_LABEL": "This section shows your additional plans.",
       "ARCHIVING_PLAN_LABEL": "Activate events archiving by selecting this plan.",
       "CATALOG_PLAN_LABEL": "Activate the geographic catalog by selecting this plan.",
-      "DANGER_ZONE_LABEL": "This tab allows to remove your account",
+      "DANGER_ZONE_LABEL": "This activity allows to remove your account",
       "DELETE_LABEL": "A manual confirmation will be required before final removal."
     },
     "context": {
-      "EVENTS_LABEL": "This tab allows to manage the <b>events</b> in your organisation.",
+      "EVENTS_LABEL": "This activity allows to manage the <b>events</b> in your organisation.",
       "EVENTS_LINK_LABEL": "How to manage events",
-      "TEMPLATES_LABEL": "This tab allows to manage the event <b>templates</b> in your organisation.",
+      "TEMPLATES_LABEL": "This activity allows to manage the event <b>templates</b> in your organisation.",
       "TEMPLATES_LINK_LABEL": "How to manage models",
       "APP_BAR_ACTIONS_LABEL": "Les activités principales sont directement disponibles via la barre d'actions.",
       "OVERFLOW_MENU_LABEL": "Les autres activités disponibles sont accessibles via ce menu déroulant.",
@@ -125,7 +125,7 @@
       "ORGANISATION_LINK_LABEL": "Enter the context of this organisation"
     },
     "events": {
-      "EVENTS_LABEL": "This tab allows to manage the <b>events</b> in your organisation.",
+      "EVENTS_LABEL": "This activity allows to manage the <b>events</b> in your organisation.",
       "EVENT_DEFINITION_LABEL": "An event allows you to share information and photos as well as interacting with participants on the field.",
       "APP_BAR_ACTIONS_LABEL": "$t(tours.APP_BAR_ACTIONS_LABEL)",
       "SEARCH_LABEL": "Type part of a word contained in the name of your events in the arising bar to perform a search.",
@@ -158,7 +158,7 @@
       "CREATE_EVENT_LABEL": "Confirm the creation of your new event."
     },
     "event-templates": {
-      "TEMPLATES_LABEL": "This tab allows to manage the event <b>templates</b> in your organisation.",
+      "TEMPLATES_LABEL": "This activity allows to manage the event <b>templates</b> in your organisation.",
       "TEMPLATE_DEFINITION_LABEL": "A template allows to define the recurrent content of a specific event type.",
       "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
       "SEARCH_LABEL": "Type part of a word contained in the name of your models in the arising bar to perform a search.",

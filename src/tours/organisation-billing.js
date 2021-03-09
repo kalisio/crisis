@@ -1,4 +1,10 @@
 module.exports = [{
+  target: '#billing',
+  content: 'tours.organisation.BILLING_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
   target: '#customer-block',
   content: 'tours.organisation.CUSTOMER_LABEL',
   params: {
@@ -17,7 +23,7 @@ module.exports = [{
   content: 'tours.organisation.CUSTOMER_EMAIL_LABEL',
   params: {
     placement: 'left',
-    clickOnPrevious: '#close-action',
+    clickOnPrevious: '#close-modal',
     previousDelay: 500
   }
 }, {
@@ -43,7 +49,7 @@ module.exports = [{
   content: 'tours.organisation.UPDATE_LABEL',
   params: {
     placement: 'left',
-    clickOnNext: '#close-action',
+    clickOnNext: '#close-modal',
     nextDelay: 500
   }
 }, {
@@ -83,6 +89,14 @@ module.exports = [{
   content: 'tours.organisation.CATALOG_PLAN_LABEL',
   params: {
     placement: 'top'
+  }
+}, {
+  target: '#properties',
+  link: 'tours.organisation.PROPERTIES_LABEL',
+  params: {
+    placement: 'bottom',
+    clickOnLink: '#properties',
+    tour: 'organisation-settings-activity/properties'
   }
 }, {
   target: '#danger-zone',

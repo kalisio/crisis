@@ -30,4 +30,12 @@ module.exports = [{
     clickOnLink: '#billing',
     tour: 'organisation-settings-activity/billing'
   }
+}, {
+  target: '#danger-zone',
+  link: 'tours.organisation.DANGER_ZONE_LABEL',
+  params: {
+    placement: 'bottom',
+    clickOnLink: '#danger-zone',
+    tour: 'organisation-settings-activity/danger-zone'
+  }
 }]

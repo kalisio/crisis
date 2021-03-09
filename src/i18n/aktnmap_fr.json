@@ -89,11 +89,11 @@
       "SESSION_LABEL": "Sinon la session reste active sur votre appareil pendant <b>24H</b> et vous n'aurez pas besoin de vous reconnecter durant ce laps de temps."
     },
     "organisation": {
-      "PROPERTIES_LABEL": "Cet onglet vous permet de modifier les informations liées à votre organisation.",
+      "PROPERTIES_LABEL": "Cette activité vous permet de modifier les informations liées à votre organisation",
       "NAME_LABEL": "Son nom tel qu'il sera visible par les autres utilisateurs.",
       "DESCRIPTION_LABEL": "Et ensuite sa description.",
       "UPDATE_LABEL": "Confirmez la mise à jour pour appliquer les modifications apportées à votre organisation.",
-      "BILLING_LABEL": "Cet onglet vous permet de modifier vos <b>abonnements</b>",
+      "BILLING_LABEL": "Cette activité vous permet de modifier vos <b>abonnements</b>",
       "CUSTOMER_LABEL": "Cette zone récapitule votre moyen de paiement actuel.",
       "PAYMENT_METHOD_LABEL": "Ce bouton permet de le mettre à jour.",
       "CUSTOMER_EMAIL_LABEL": "Sélectionnez le propriétaire de l'organisation qui recevra les factures.",
@@ -106,14 +106,14 @@
       "OPTIONAL_PLANS_LABEL": "Cette zone présente vos abonnements additionnels.",
       "ARCHIVING_PLAN_LABEL": "Pour activer l'archivage des événements sélectionnez cet abonnement.",
       "CATALOG_PLAN_LABEL": "Pour activer le catalogue de données géographiques sélectionnez cet abonnement.",
-      "DANGER_ZONE_LABEL": "Cet onglet vous permet de supprimer votre compte du système",
+      "DANGER_ZONE_LABEL": "Cette activité vous permet de supprimer votre compte du système",
       "DELETE_LABEL": "Une confirmation manuelle vous sera demandé avant la suppression définitive de votre organisation.",
       "PREVENT_DELETE_LABEL": "Vous devrez également au préalable supprimer l'ensemble des groupes."
     },
     "context": {
-      "EVENTS_LABEL": "Cet onglet vous permet de gérer les <b>événements</b> au sein de votre organisation.",
+      "EVENTS_LABEL": "Cette activité vous permet de gérer les <b>événements</b> au sein de votre organisation.",
       "EVENTS_LINK_LABEL": "Voir comment gérer les événements",
-      "TEMPLATES_LABEL": "Cet onglet vous permet de gérer les <b>modèles</b> au sein de votre organisation.",
+      "TEMPLATES_LABEL": "Cette activité vous permet de gérer les <b>modèles</b> au sein de votre organisation.",
       "TEMPLATES_LINK_LABEL": "Voir comment gérer les modèles",
       "APP_BAR_ACTIONS_LABEL": "Les activités principales sont directement disponibles via la barre d'actions.",
       "OVERFLOW_MENU_LABEL": "Les autres activités disponibles sont accessibles via ce menu déroulant.",
@@ -131,7 +131,7 @@
       "ORGANISATION_LINK_LABEL": "Entrez dans le contexte de cette organisation"
     },
     "events": {
-      "EVENTS_LABEL": "Cet onglet vous permet de gérer les <b>événements</b> au sein de votre organisation.",
+      "EVENTS_LABEL": "Cette activité vous permet de gérer les <b>événements</b> au sein de votre organisation.",
       "EVENT_DEFINITION_LABEL": "Un énénements vous permet de partager instantanément des informations et des photos, ainsi que d'interagir avec ses participants sur le terrain.",
       "APP_BAR_ACTIONS_LABEL": "$t(tours.APP_BAR_ACTIONS_LABEL)",
       "SEARCH_LABEL": "Tapez tout ou partie d'un mot contenu dans le nom de vos événements au sein de la barre qui apparait pour effectuer une recherche.",
@@ -164,7 +164,7 @@
       "CREATE_EVENT_LABEL": "Confirmez la création de votre nouvel événement."
     },
     "event-templates": {
-      "TEMPLATES_LABEL": "Cet onglet vous permet de gérer les <b>modèles</b> d'événements au sein de votre organisation.",
+      "TEMPLATES_LABEL": "Cette activité vous permet de gérer les <b>modèles</b> d'événements au sein de votre organisation.",
       "TEMPLATE_DEFINITION_LABEL": "Un modèle permet de définir le contenu récurrent d'un type d'événement particulier.",
       "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
       "SEARCH_LABEL": "Tapez tout ou partie d'un mot contenu dans le nom de vos modèles au sein de la barre qui apparait pour effectuer une recherche.",

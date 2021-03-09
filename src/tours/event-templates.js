@@ -11,20 +11,16 @@ module.exports = [{
   params: {
     placement: 'left',
     clickOn: '#app-bar-overflow-menu',
-    clickDelay: 500,
-    clickOnNext: '#app-bar-overflow-menu',
-    nextDelay: 500,
-    clickOnPrevious: '#app-bar-overflow-menu',
-    previousDelay: 500
+    clickDelay: 500
   }
 }, {
-  target: '#search',
+  target: '#search-event-template',
   content: 'tours.event-templates.SEARCH_LABEL',
   params: {
     placement: 'left'
   }
 }, {
-  target: '#fab',
+  target: '#create-event-template',
   content: 'tours.event-templates.NEW_TEMPLATE_LABEL',
   link: 'tours.event-templates.CREATE_TEMPLATE_LINK_LABEL',
   params: {
@@ -51,20 +47,10 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#card-overflow-menu',
-  content: 'tours.event-templates.TEMPLATE_OVERFLOW_MENU_LABEL',
-  params: {
-    placement: 'top',
-    clickOnNext: '#card-overflow-menu',
-    nextDelay: 500
-  }
-}, {
   target: '#remove-event-template',
   title: 'tours.event-templates.REMOVE_TEMPLATE_LABEL',
   content: 'tours.event-templates.REMOVE_CONFIRMATION_LABEL',
   params: {
-    placement: 'left',
-    clickOnPrevious: '#card-overflow-menu',
-    previousDelay: 500
+    placement: 'left'
   }
 }]

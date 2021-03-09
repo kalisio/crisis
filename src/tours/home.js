@@ -98,7 +98,7 @@ module.exports = [{
   content: 'tours.home.BUG_LABEL',
   params: {
     placement: 'top',
-    clickOnPrevious: ['#close-action', '#app-bar-leading'],
+    clickOnPrevious: ['#close-modal', '#app-bar-leading'],
     previousDelay: 500
   }
 }]

@@ -127,6 +127,7 @@ const contextHelp = {
 
 const contextMenu = function (activityName) {
   return {
+    id: 'app-bar-overflow-menu',
     component: 'frame/KMenu',
     icon: 'las la-grip-horizontal',
     actionRenderer: 'item',
@@ -181,6 +182,7 @@ const contextMenu = function (activityName) {
 }
 
 const layerActions = [{
+  id: 'layer-actions',
   component: 'frame/KMenu',
   actionRenderer: 'item',
   content: [
@@ -301,7 +303,7 @@ module.exports = {
     topPane: {
       content: {
         profile: [
-          { id: 'back', icon: 'las la-arrow-left', handler: 'goBack' },
+          { id: 'home', icon: 'las la-home', size: '1rem', route: { name: 'home' } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'profile', icon: 'las la-user', color: 'primary', label: 'KAccountActivity.PROFILE', disabled: true },
           { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
@@ -309,7 +311,7 @@ module.exports = {
           contextHelp
         ],
         security: [
-          { id: 'back', icon: 'las la-arrow-left', handler: 'goBack' },
+          { id: 'home', icon: 'las la-home', size: '1rem', route: { name: 'home' } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'profile', icon: 'las la-user', tooltip: 'KAccountActivity.PROFILE', route: { name: 'account-activity', params: { page: 'profile' } } },
           { id: 'security', icon: 'las la-shield-alt', color: 'primary', label: 'KAccountActivity.SECURITY', disabled: true },
@@ -317,7 +319,7 @@ module.exports = {
           contextHelp
         ],
         'danger-zone': [
-          { id: 'go-back', icon: 'las la-arrow-left', handler: 'goBack' },
+          { id: 'home', icon: 'las la-home', size: '1rem', route: { name: 'home' } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'profile', icon: 'las la-user', tooltip: 'KAccountActivity.PROFILE', route: { name: 'account-activity', params: { page: 'profile' } } },
           { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
@@ -406,7 +408,7 @@ module.exports = {
         'default': [
           { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { id: 'groups', icon: 'las la-user-friends', label: 'KMembersActivity.MEMBERS_LABEL', color: 'primary', disabled: true },
+          { id: 'members', icon: 'las la-user-friends', label: 'KMembersActivity.MEMBERS_LABEL', color: 'primary', disabled: true },
           { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBER_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp,
@@ -436,7 +438,7 @@ module.exports = {
           visible: ['!item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }] },
         { id: 'reissue-invitation', icon: 'las la-envelope', tooltip: 'KMemberCard.RESEND_INVITATION_LABEL', handler: 'resendInvitation',
           visible: ['item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }] },
-        { id: 'overflow-menu', component: 'frame/KMenu', actionRenderer: 'item',
+        { id: 'card-overflow-menu', component: 'frame/KMenu', actionRenderer: 'item',
           visible: ['!item.expireAt', { name: '$can', params: ['remove', 'authorisations', ':contextId', { resource: ':contextId' }] }],
           content: [{ id: 'remove-member', icon: 'las la-minus-circle', label: 'KMemberCard.REMOVE_LABEL', handler: 'removeMember' }] }
       ]
@@ -540,8 +542,8 @@ module.exports = {
         'default': [
           { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { id: 'templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', color: 'primary', disabled: true },
-          { id: 'search-template', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { id: 'event-templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', color: 'primary', disabled: true },
+          { id: 'search-event-template', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp,
           contextMenu('event-templates-activity')
@@ -638,10 +640,7 @@ module.exports = {
           { component: 'KLocateUser' },
           { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
           {
-            component: 'frame/KMenu',
-            icon: 'las la-wrench',
-            tooltip: 'mixins.activity.TOOLS',
-            actionRenderer: 'item',
+            id: 'tools', component: 'frame/KMenu', icon: 'las la-wrench', tooltip: 'mixins.activity.TOOLS', actionRenderer: 'item',
             content: [
               { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } }
             ]
@@ -708,10 +707,7 @@ module.exports = {
           { component: 'KLocateUser' },
           { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
           {
-            component: 'frame/KMenu',
-            icon: 'las la-wrench',
-            tooltip: 'mixins.activity.TOOLS',
-            actionRenderer: 'item',
+            id: 'tools', component: 'frame/KMenu', icon: 'las la-wrench', tooltip: 'mixins.activity.TOOLS', actionRenderer: 'item',
             content: [
               { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } }
             ]
