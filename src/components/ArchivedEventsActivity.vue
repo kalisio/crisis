@@ -170,10 +170,10 @@ export default {
 
     return {
       toolbar: [
-        { name: 'settings', icon: 'las la-cog', label: this.$i18n.t('ArchivedEventsActivity.CHART_SETTINGS_LABEL'),
+        { id: 'settings', icon: 'las la-cog', label: this.$i18n.t('ArchivedEventsActivity.CHART_SETTINGS_LABEL'),
           handler: () => this.$refs.chartSettings.show() },
-        { name: 'download', icon: 'las la-file-download', label: this.$i18n.t('ArchivedEventsActivity.CHART_EXPORT_LABEL'), handler: () => this.downloadChartData() },
-        { name: 'close', icon: 'las la-times', handler: () => this.$refs.chartModal.close() }
+        { id: 'download', icon: 'las la-file-download', label: this.$i18n.t('ArchivedEventsActivity.CHART_EXPORT_LABEL'), handler: () => this.downloadChartData() },
+        { id: 'close-action', icon: 'las la-times', handler: () => this.$refs.chartModal.close() }
       ],
       baseQuery: {
         $sort: {

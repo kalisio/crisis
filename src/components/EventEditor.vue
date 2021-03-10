@@ -46,7 +46,7 @@ export default {
   computed: {
     buttons () {
       return [
-        { name: 'apply-button', label: this.applyButton, color: 'primary', handler: () => this.apply() }
+        { id: 'apply-button', label: this.applyButton, color: 'primary', handler: () => this.apply() }
       ]
     }
   },

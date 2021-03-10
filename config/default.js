@@ -308,6 +308,7 @@ module.exports = {
           { id: 'profile', icon: 'las la-user', color: 'primary', label: 'KAccountActivity.PROFILE', disabled: true },
           { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'KAccountActivity.DANGER_ZONE', route: { name: 'account-activity', params: { page: 'danger-zone' } } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp
         ],
         security: [
@@ -316,6 +317,7 @@ module.exports = {
           { id: 'profile', icon: 'las la-user', tooltip: 'KAccountActivity.PROFILE', route: { name: 'account-activity', params: { page: 'profile' } } },
           { id: 'security', icon: 'las la-shield-alt', color: 'primary', label: 'KAccountActivity.SECURITY', disabled: true },
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'KAccountActivity.DANGER_ZONE', route: { name: 'account-activity', params: { page: 'danger-zone' } } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp
         ],
         'danger-zone': [
@@ -324,6 +326,7 @@ module.exports = {
           { id: 'profile', icon: 'las la-user', tooltip: 'KAccountActivity.PROFILE', route: { name: 'account-activity', params: { page: 'profile' } } },
           { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', color: 'primary', label: 'KAccountActivity.DANGER_ZONE', disabled: true },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp
         ]
       }
@@ -341,6 +344,7 @@ module.exports = {
         'default': [
           { id: 'organisations', icon: 'las la-home', label: 'KOrganisationsActivity.ORGANISATIONS_LABEL', color: 'primary', disabled: true },
           { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATION_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp
         ],
         'filter': contextFilter('name')
@@ -371,6 +375,7 @@ module.exports = {
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'OrganisationSettingsActivity.DANGER_ZONE_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
             route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp
         ],
         billing: [
@@ -384,6 +389,7 @@ module.exports = {
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'OrganisationSettingsActivity.DANGER_ZONE_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
             route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp
         ],
         'danger-zone': [
@@ -397,6 +403,7 @@ module.exports = {
             route: { name: 'organisation-settings-activity', params: { page: 'billing' } } },
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', color: 'primary', label: 'OrganisationSettingsActivity.DANGER_ZONE_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] }, disabled: true },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp
         ]
       }
@@ -583,6 +590,7 @@ module.exports = {
             on: { event: 'time-range-choosed', listener: 'onTimeRangeChanged' } },
           { id: 'history-sort', icon: 'las la-sort-amount-down', tooltip: 'ArchivedEventsActivity.ASCENDING_SORT',
             toggle: { icon: 'las la-sort-amount-up', color: 'grey-9', tooltip: 'ArchivedEventsActivity.DESCENDING_SORT' }, handler: 'onSortOrder' },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp
         ],
         'map': [
@@ -594,6 +602,7 @@ module.exports = {
             toggle: { icon: 'scatter_plot', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_MARKERS_LABEL' }, handler: 'onHeatmap' },
           { id: 'by-template', icon: 'las la-layer-group', tooltip: 'ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL',
             toggle: { icon: 'las la-object-group', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_ALL_LABEL' }, handler: 'onByTemplate' },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           contextHelp
         ],
         'chart': [
@@ -645,8 +654,9 @@ module.exports = {
               { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } }
             ]
           },
+          { id: 'toggle-fullscreen', icon: 'las la-expand', tooltip: 'mixins.activity.ENTER_FULLSCREEN', toggle: { icon: 'las la-compress', tooltip: 'mixins.activity.EXIT_FULLSCREEN' }, handler: 'onToggleFullscreen' },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { id: 'toggle-fullscreen', icon: 'las la-expand', tooltip: 'mixins.activity.ENTER_FULLSCREEN', toggle: { icon: 'las la-compress', tooltip: 'mixins.activity.EXIT_FULLSCREEN' }, handler: 'onToggleFullscreen' }
+          contextHelp
         ],
         'display-position': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
@@ -712,8 +722,10 @@ module.exports = {
               { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } }
             ]
           },
+          { id: 'toggle-fullscreen', icon: 'las la-expand', tooltip: 'mixins.activity.ENTER_FULLSCREEN', toggle: { icon: 'las la-compress', tooltip: 'mixins.activity.EXIT_FULLSCREEN' }, handler: 'onToggleFullscreen' },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { id: 'toggle-fullscreen', icon: 'las la-expand', tooltip: 'mixins.activity.ENTER_FULLSCREEN', toggle: { icon: 'las la-compress', tooltip: 'mixins.activity.EXIT_FULLSCREEN' }, handler: 'onToggleFullscreen' }
+          contextHelp,
+          contextMenu('catalog-activity')
         ],
         'display-position': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },

@@ -72,7 +72,7 @@ export default {
               label: template.name,
               icon: template.icon.name,
               color: template.icon.color,
-              route: { name: 'create-event', params: { contextId: this.contextId, templateId: template._id } }
+              route: { id: 'create-event', params: { contextId: this.contextId, templateId: template._id } }
             })
           })
           offset = offset + batchSize

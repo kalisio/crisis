@@ -81,6 +81,12 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
+  target: '#workflow * #stakeholder-field',
+  title: 'tours.create-event-template.WORKFLOW_STEP_STAKEHOLDER_LABEL',
+  params: {
+    placement: 'top'
+  }
+}, {
   target: '#workflow * #choosed-icon',
   title: 'tours.create-event-template.WORKFLOW_STEP_ICON_LABEL',
   params: {
@@ -104,12 +110,6 @@ module.exports = [{
   title: 'tours.create-event-template.WORKFLOW_STEP_END_LABEL',
   params: {
     placement: 'bottom'
-  }
-}, {
-  target: '#workflow * #stakeholder-field',
-  title: 'tours.create-event-template.WORKFLOW_STEP_STAKEHOLDER_LABEL',
-  params: {
-    placement: 'top'
   }
 }, {
   target: '#workflow * #previous-step',

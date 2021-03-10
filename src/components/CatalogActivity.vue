@@ -284,7 +284,7 @@ export default {
     },
     getAlertModalToolbar () {
       return [
-        { name: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.alertModal.close() }
+        { id: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.alertModal.close() }
       ]
     },
     onCreateMeasureAlertAction (data) {
@@ -323,7 +323,7 @@ export default {
     },
     getTemplateModalToolbar () {
       return [
-        { name: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.templateModal.close() }
+        { id: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.templateModal.close() }
       ]
     },
     onEventTemplateSelected (template) {

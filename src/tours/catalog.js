@@ -1,5 +1,5 @@
 module.exports = [{
-  target: '#opener-top',
+  target: '#top-opener',
   title: 'tours.catalog.NAVIGATION_BAR_LABEL',
   link: 'tours.catalog.NAVIGATION_BAR_LINK_LABEL',
   params: {
@@ -7,21 +7,21 @@ module.exports = [{
     tour: 'navigation-bar'
   }
 }, {
-  target: '#opener-right',
+  target: '#right-opener',
   title: 'tours.catalog.CATALOG_LABEL',
   link: 'tours.catalog.CATALOG_LINK_LABEL',
   params: {
     placement: 'left',
-    hoverClickOnLink: '#opener-right',
+    hoverClickOnLink: '#right-opener',
     tour: 'catalog-panel'
   }
 }, {
-  target: '#opener-bottom',
+  target: '#bottom-opener',
   title: 'tours.catalog.TIMELINE_LABEL',
   link: 'tours.catalog.TIMELINE_LINK_LABEL',
   params: {
     placement: 'top',
-    hoverClickOnLink: '#opener-bottom',
+    hoverClickOnLink: '#bottom-opener',
     tour: 'timeline'
   }
 }, {

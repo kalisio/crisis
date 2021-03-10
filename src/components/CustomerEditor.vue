@@ -109,12 +109,12 @@ export default {
     },
     getToolbar () {
       return [
-        { name: 'close-action', label: this.$t('CustomerEditor.CLOSE_ACTION'), icon: 'las la-times', handler: () => this.close() }
+        { id: 'close-action', label: this.$t('CustomerEditor.CLOSE_ACTION'), icon: 'las la-times', handler: () => this.close() }
       ]
     },
     getButtons () {
       return [
-        { name: 'update-button', label: this.$t('CustomerEditor.UPDATE_BUTTON'), color: 'primary', handler: () => this.onUpdateClicked() }
+        { id: 'update-button', label: this.$t('CustomerEditor.UPDATE_BUTTON'), color: 'primary', handler: () => this.onUpdateClicked() }
       ]
     },
     async open (customer, purchasers) {
