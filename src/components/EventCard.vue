@@ -243,6 +243,14 @@ export default {
           })
         }
       }
+      // Find the add media action and push the browse media action just after
+      const index = _.findIndex(this.itemActions, (action) => action.id === 'add-media')
+      // Required to use splice when modifying an object inside an array to make it reactive
+      this.itemActions.splice(index + 1, 0, {
+        id: 'browse-media', tooltip: 'EventCard.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', handler: this.browseMedia, 
+        badge: { label: this.mediasCount, floating: true },
+        visible: this.hasMedias && this.$can('read', 'events', this.contextId, this.item)
+      })
     },
     uploadMedia () {
       this.$refs.uploaderModal.open()
