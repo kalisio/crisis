@@ -10,14 +10,16 @@ module.exports = [{
   title: 'tours.archived-events.CHART_SETTINGS_LABEL',
   params: {
     placement: 'left',
-    clickOn: '#settings',
-    clickDelay: 500
+    clickOnNext: '#settings',
+    nextDelay: 500
   }
 }, {
   target: '#chart-type',
   title: 'tours.archived-events.CHART_TYPE_LABEL',
   params: {
-    placement: 'left'
+    placement: 'left',
+    clickOnPrevious: '#close-action',
+    previousDelay: 500
   }
 }, {
   target: '#count-per-chart',
@@ -29,20 +31,31 @@ module.exports = [{
   target: '#chart-render',
   title: 'tours.archived-events.CHART_RENDER_LABEL',
   params: {
-    placement: 'left'
+    placement: 'left',
+    clickOnNext: '#close-action',
+    nextDelay: 500
   }
 }, {
-  target: '#download',
+  target: '#export-data',
   title: 'tours.archived-events.CHART_DOWNLOAD_LABEL',
   params: {
     placement: 'left'
   }
 }, {
-  target: '#chart-modal * #close',
-  link: 'tours.archived-events.CHART_CLOSE_LABEL',
+  target: '#history-view',
+  title: 'tours.archived-events.HISTORY_VIEW_LABEL',
+  link: 'tours.archived-events.HISTORY_VIEW_LINK_LABEL',
   params: {
-    placement: 'left',
-    clickOnLink: '#chart-modal * #close',
-    tour: 'archived-events-activity'
+    placement: 'bottom',
+    clickOnLink: '#history-view'
+  }
+}, {
+  target: '#map-view',
+  title: 'tours.archived-events.MAP_VIEW_LABEL',
+  link: 'tours.archived-events.MAP_VIEW_LINK_LABEL',
+  params: {
+    placement: 'bottom',
+    clickOnLink: '#map-view',
+    tour: 'archived-events-activity/map'
   }
 }]

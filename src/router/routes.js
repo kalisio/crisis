@@ -59,13 +59,23 @@ module.exports = {
             // Because this child is the default one path is empty and name is the one of the parent route
             path: '',
             name: 'home',
-            redirect: { name: 'organisations-activity' },
-            tour: tours.home
+            redirect: { name: 'organisations-activity' }
           },
-          'organisations-activity': {
-            path: 'organisations',
+          'organisations': {
+            name: 'organisations-activity',
             component: 'team/KOrganisationsActivity',
-            tour: tours.dashboard
+            tour: {
+              'organisations-activity': tours['organisations'],
+              'side-nav': tours['side-nav']
+            },
+            children: {
+              'create': {
+                name: 'create-organisation',
+                component: 'editor/KModalEditor',
+                props: true,
+                tour: tours['create-organisation']
+              }
+            }
           },
           'account/:page': {
             name: 'account-activity',
@@ -76,12 +86,6 @@ module.exports = {
               'security': tours['account-security'],
               'danger-zone': tours['account-dz']
             }
-          },
-          'create-organisation' : {
-            name: 'create-organisation',
-            component: 'editor/KModalEditor',
-            props: true,
-            tour: tours['create-organisation']
           },
           ':contextId': {
             // The name of the route has to be set the default child

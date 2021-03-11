@@ -41,29 +41,25 @@
       <!--
         Events graph
       -->
-      <k-modal id="chart-modal" ref="chartModal" :title="$t('ArchivedEventsActivity.CHART_MODAL_TITLE')" :toolbar="toolbar" :buttons="[]">
+      <div v-show="showChart" class="row justify-center text-center q-ma-none q-pa-none" >
+        <q-page-sticky position="top" :offset="[0, 60]">
+        <div style="width: 90vw">
+          <canvas class="chart" id="chart" ref="chart"></canvas>
+        </div>
+        </q-page-sticky>
+        <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
+          icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
+        <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
+          icon="las la-chevron-right" class="absolute-right" @click="onNextChart" />
+      </div>
+      <k-modal id="chart-settings-modal" ref="chartSettings" :title="$t('ArchivedEventsActivity.CHART_SETTINGS_MODAL_TITLE')">
         <div slot="modal-content">
-          <!-- Used as target for popup as we cannot reference the button in the modal -->
-          <span ref="chartSettingsTarget" class="float-right"/>
-          <q-popup-proxy ref="chartSettings" :target="$refs.chartSettingsTarget">
-            <div id="chart-settings" class="q-pa-md" style="min-width: 300px">
-              <q-select id="chart-type" v-model="chartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')"
-              :options="chartOptions" @input="refreshChart"/>
-              <q-select id="count-per-chart" v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')"
-                :options="paginationOptions" @input="refreshChartAndPagination"/>
-              <q-select id="chart-render" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')"
-                :options="renderOptions" @input="refreshChart"/>
-            </div>
-          </q-popup-proxy>
-          <div class="row justify-center text-center q-ma-none q-pa-none" >
-            <div style="width: 90vw">
-              <canvas class="chart" id="chart" ref="chart"></canvas>
-            </div>
-            <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
-              icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
-            <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
-              icon="las la-chevron-right" class="absolute-right" @click="onNextChart" />
-          </div>
+          <q-select id="chart-type" v-model="chartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')"
+          :options="chartOptions" @input="refreshChart"/>
+          <q-select id="count-per-chart" v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')"
+            :options="paginationOptions" @input="refreshChartAndPagination"/>
+          <q-select id="chart-render" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')"
+            :options="renderOptions" @input="refreshChart"/>
         </div>
       </k-modal>
       <!--
@@ -169,12 +165,6 @@ export default {
     }]
 
     return {
-      toolbar: [
-        { id: 'settings', icon: 'las la-cog', label: this.$i18n.t('ArchivedEventsActivity.CHART_SETTINGS_LABEL'),
-          handler: () => this.$refs.chartSettings.show() },
-        { id: 'download', icon: 'las la-file-download', label: this.$i18n.t('ArchivedEventsActivity.CHART_EXPORT_LABEL'), handler: () => this.downloadChartData() },
-        { id: 'close-action', icon: 'las la-times', handler: () => this.$refs.chartModal.close() }
-      ],
       baseQuery: {
         $sort: {
           createdAt: -1
@@ -413,8 +403,20 @@ export default {
       // Refresh layer data
       this.refreshCollection()
     },
+    onShowChart () {
+      this.setTopPaneMode('chart')
+      this.clearRightPane()
+      // Cleanup
+      this.clearEventsLayers()
+      this.templates = []
+      // Refresh chart data
+      this.refreshChart()
+    },
     onHeatmapRadius (radius) {
       this.refreshEventsLayers()
+    },
+    showChartSettings () {
+      this.$refs.chartSettings.open()
     },
     async getChartData () {
       // Get possible values
@@ -501,11 +503,6 @@ export default {
       }
 
       return config
-    },
-    onShowChart () {
-      this.$refs.chartModal.openMaximized()
-      // Refresh chart data
-      this.refreshChart()
     },
     async refreshChart () {
       // Destroy previous graph if any

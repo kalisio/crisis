@@ -9,7 +9,7 @@ module.exports = [{
   target: '#app-bar-overflow-menu',
   content: 'tours.event-templates.OVERFLOW_MENU_LABEL',
   params: {
-    placement: 'left',
+    placement: 'bottom',
     clickOn: '#app-bar-overflow-menu',
     clickDelay: 500
   }
@@ -17,7 +17,7 @@ module.exports = [{
   target: '#search-event-template',
   content: 'tours.event-templates.SEARCH_LABEL',
   params: {
-    placement: 'left'
+    placement: 'bottom'
   }
 }, {
   target: '#create-event-template',

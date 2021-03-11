@@ -71,22 +71,26 @@
     "EVENTS_LOG_COMMENT_FIELD_HELPER": "Saisissez votre commentaire pour cette étape"
   },
   "tours": {
-    "home": {
-      "LEADING_LABEL": "Ouvrez à tout moment le menu latéral.",
-      "SIDENAV_LABEL": "Il vous permettra d'accéder à la gestion des différents aspects lié à votre compte et à vos organisation.",
+    "side-nav": {
       "ACCOUNT_LINK_LABEL": "Gérez ici <b>vos identifiants</b> et leur sécurité",
-      "ORGANISATION_LABEL": "Basculez dans le contexte d'une de vos organisations en sélectionnant son nom.",
-      "ORGANISATION_LINK_LABEL": "Entrez dans le contexte de cette organisation",
       "HELP_LABEL": "Accédez à notre aide en ligne à tout moment",
       "ABOUT_LABEL": "Affichez les informations détaillées du système et signalez-nous un boggue.",
       "BUG_LABEL": "Signalez-nous un boggue via un email contenant automatiquement les informations nécessaires.",
       "SETTINGS_LABEL": "Modifiez les paramètres généraux du système sur votre appareil.",
-      "DASHBOARD_LABEL": "Accéder au tableau de bord des événements de vos différentes organisations.",
-      "ORGANISATION_DEFINITION_LABEL": "Une organisation est un espace de travail partagé au sein duquel vous pouvez inviter des personnes à collaborer.",
-      "NEW_ORGANISATION_LINK_LABEL": "Créez une nouvelle <b>organisation</b> pour partager des événements",
-      "DASHBOARD_LINK_LABEL": "Voir votre tableau de bord",
       "LOGOUT_LABEL": "Déconnectez vous si vous souhaitez clôturer votre session de travail.",
-      "SESSION_LABEL": "Sinon la session reste active sur votre appareil pendant <b>24H</b> et vous n'aurez pas besoin de vous reconnecter durant ce laps de temps."
+      "SESSION_LABEL": "Sinon la session reste active plusieurs jours sur votre appareil et vous n'aurez pas besoin de vous reconnecter durant ce laps de temps."
+    },
+    "organisations": {
+      "SIDENAV_LABEL": "Ouvrez à tout moment le menu principal via cette poignée.",
+      "SIDENAV_LINK_LABEL": "Parcourir le menu principal",
+      "HELP_LABEL": "Activez à notre contextuelle en ligne à tout moment",
+      "ORGANISATIONS_LABEL": "Cette activité vous permet de gérer vos <b>organisations</b>.",
+      "ORGANISATION_DEFINITION_LABEL": "Une organisation est un espace de travail partagé au sein duquel vous pouvez inviter des personnes à collaborer.",
+      "ORGANISATION_LABEL": "Basculez dans le contexte d'une de vos organisations en sélectionnant son nom.",
+      "ORGANISATION_LINK_LABEL": "Entrez dans le contexte de cette organisation",
+      "SEARCH_LABEL": "Tapez tout ou partie d'un mot contenu dans le nom de vos organisations au sein de la barre qui apparait pour effectuer une recherche.",
+      "NEW_ORGANISATION_LABEL": "Créez une <b>nouvelle organisation</b> via ce bouton.",
+      "NEW_ORGANISATION_LINK_LABEL": "Voir comment créer une nouvelle <b>organisation</b> pour partager des événements"
     },
     "organisation": {
       "PROPERTIES_LABEL": "Cette activité vous permet de modifier les informations liées à votre organisation",
@@ -219,9 +223,9 @@
     },
     "archived-events": {
       "HISTORY_LABEL": "La vue historique de vos événements permet de les voir de façon séquentielle dans la plage de temps de votre choix.",
-      "START_TIME_LABEL": "La première chose à faire consiste à sélectionner une date de départ (les plus anciens événements qui seront visibles).",
-      "CALENDAR_LABEL": "Choisissez l'année, le mois et le jour dans le calendrier interactif.",
-      "END_TIME_LABEL": "Puis, de la même façon, une date de fin (les plus récents événements qui seront visibles).",
+      "TIME_RANGE_LABEL": "Utilisez ce bouton pour modifier celle par défaut.",
+      "START_TIME_LABEL": "Choisissez dans le calendrier interactif l'année, le mois et le jour de début, définissant les plus récents événements qui seront visibles.",
+      "END_TIME_LABEL": "Choisissez dans le calendrier interactif l'année, le mois et le jour de fin, définissant les plus anciens événements qui seront visibles.",
       "SORT_LABEL": "Enfin choisissez d'afficher en premier les plus récents, ou les plus vieux, via ce bouton.",
       "HISTORY_SCROLL_LABEL": "Vous pouvez faire défiler vos événements en scrollant vers le bas de l'écran.",
       "HISTORY_EVENTS_LABEL": "Pour celà vous devez sélectionner une plage de temps faisant apparaître des événements.",
@@ -231,7 +235,9 @@
       "BY_TEMPLATE_LABEL": "Par défaut tous vos événements sont regroupés ensemble mais vous pouvez créer des regroupements selon vos modèles via ce bouton.",
       "BY_TEMPLATE_LAYERS_LABEL": "Via le paneau latéral vous pourrez ainsi afficher/cacher les événements liés à un modèle particulier.",
       "HEATMAP_LABEL": "Basculez dans une carte de distribution de la densité de vos événements via ce bouton.",
-      "HISTORY_VIEW_LABEL": "Revenez à tout moment à la vue historique",
+      "MAP_DOWNLOAD_LABEL": "Exportez vos événements au format GeoJSON pour exploitation dans une application cartographique tierce si vous le souhaitez.",
+      "HISTORY_VIEW_LABEL": "Basculez dans une vue historique de vos événements via ce bouton.",
+      "HISTORY_VIEW_LINK_LABEL": "Voir comment paramétrer la vue historique",
       "CHART_VIEW_LABEL": "Créez des graphiques statistiques de vos événements via ce bouton.",
       "CHART_VIEW_LINK_LABEL": "Voir comment paramétrer les graphiques",
       "CHART_LABEL": "Le graphique vous permet d'étudier la répartition (i.e. le nombre) de vos événements en fonction de vos modèles.",
@@ -443,7 +449,7 @@
     "SHOW_MARKERS_LABEL": "Afficher les positions",
     "SHOW_HEATMAP_LABEL": "Afficher la distribution",
     "HEATMAP_RADIUS_LABEL": "Empreinte",
-    "CHART_MODAL_TITLE": "Graphiques des événements",
+    "CHART_SETTINGS_MODAL_TITLE": "Paramétrage du graphique",
     "CHART_LABEL": "Type de graphique",
     "PAGINATION_LABEL": "Nombre de valeurs",
     "NULL_VALUE_LABEL": "Indéfini",
@@ -462,6 +468,7 @@
     "CHART_SETTINGS_LABEL": "Configurer le graphique",
     "CHART_EXPORT_LABEL": "Exporter les données",
     "CHART_EXPORT_FILE": "Evenements.csv",
+    "EXPORT_DATA_LABEL": "Exporter les données",
     "MAP_EXPORT_FILE": "Evenements.geojson",
     "EVENTS_EXPORT_FILE": "Evenements.csv",
     "SHOW_BY_TEMPLATE_LABEL": "Par type",

@@ -121,8 +121,10 @@ const contextFilter = function (field, services = []) {
   ]
 }
 
-const contextHelp = {
-  id: 'online-help', icon: 'las la-question-circle', tooltip: 'Context.CONTEXTUAL_HELP', handler: 'launchTour'
+const contextHelp = function (tour) {
+  return Object.assign({
+    id: 'online-help', icon: 'las la-question-circle', tooltip: 'Context.CONTEXTUAL_HELP'
+  }, tour ? { handler: { name: 'launchTour', params: [tour] } } : { handler: 'launchTour' })
 }
 
 const contextMenu = function (activityName) {
@@ -187,7 +189,7 @@ const layerActions = [{
   actionRenderer: 'item',
   content: [
     { id: 'zoom-to', label: 'mixins.activity.ZOOM_TO_LABEL', icon: 'las la-search-location', handler: 'onZoomToLayer' },
-    { id: 'save', label: 'mixins.activity.SAVE_LAYER', icon: 'las la-save', handler: 'onSaveLayer', visible: 'isLayerStorable' },
+    { id: 'save', label: 'mixins.activity.SAVE_LABEL', icon: 'las la-save', handler: 'onSaveLayer', visible: 'isLayerStorable' },
     { id: 'filter-data', label: 'mixins.activity.FILTER_DATA_LABEL', icon: 'las la-filter', handler: 'onFilterLayerData', visible: 'isLayerEditable' },
     { id: 'view-data', label: 'mixins.activity.VIEW_DATA_LABEL', icon: 'las la-th-list', handler: 'onViewLayerData', visible: 'isLayerEditable' },
     { id: 'chart-data', label: 'mixins.activity.CHART_DATA_LABEL', icon: 'las la-chart-pie', handler: 'onChartLayerData', visible: 'isLayerEditable' },
@@ -309,7 +311,7 @@ module.exports = {
           { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'KAccountActivity.DANGER_ZONE', route: { name: 'account-activity', params: { page: 'danger-zone' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp
+          contextHelp()
         ],
         security: [
           { id: 'home', icon: 'las la-home', size: '1rem', route: { name: 'home' } },
@@ -318,7 +320,7 @@ module.exports = {
           { id: 'security', icon: 'las la-shield-alt', color: 'primary', label: 'KAccountActivity.SECURITY', disabled: true },
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'KAccountActivity.DANGER_ZONE', route: { name: 'account-activity', params: { page: 'danger-zone' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp
+          contextHelp()
         ],
         'danger-zone': [
           { id: 'home', icon: 'las la-home', size: '1rem', route: { name: 'home' } },
@@ -327,7 +329,7 @@ module.exports = {
           { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', color: 'primary', label: 'KAccountActivity.DANGER_ZONE', disabled: true },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp
+          contextHelp()
         ]
       }
     },
@@ -345,14 +347,14 @@ module.exports = {
           { id: 'organisations', icon: 'las la-home', label: 'KOrganisationsActivity.ORGANISATIONS_LABEL', color: 'primary', disabled: true },
           { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATION_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp
+          contextHelp()
         ],
         'filter': contextFilter('name')
       }
     },
     fab: {
       actions: [
-        { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL', handler: 'createOrganisation' }
+        { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL', route: { name: 'create-organisation' } }
       ]
     },
     items: {
@@ -376,7 +378,7 @@ module.exports = {
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
             route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp
+          contextHelp()
         ],
         billing: [
           { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
@@ -390,7 +392,7 @@ module.exports = {
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
             route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp
+          contextHelp()
         ],
         'danger-zone': [
           { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
@@ -404,7 +406,7 @@ module.exports = {
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', color: 'primary', label: 'OrganisationSettingsActivity.DANGER_ZONE_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] }, disabled: true },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp
+          contextHelp()
         ]
       }
     }
@@ -418,7 +420,7 @@ module.exports = {
           { id: 'members', icon: 'las la-user-friends', label: 'KMembersActivity.MEMBERS_LABEL', color: 'primary', disabled: true },
           { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBER_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp,
+          contextHelp(),
           contextMenu('members-activity')
         ],
         'filter': contextFilter('profile.name', [
@@ -460,7 +462,7 @@ module.exports = {
           { id: 'tags', icon: 'las la-tags', label: 'KTagsActivity.TAGS_LABEL', color: 'primary', disabled: true },
           { id: 'search-tag', icon: 'las la-search', tooltip: 'KTagsActivity.SEARCH_TAGS_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp,
+          contextHelp(),
           contextMenu('tags-activity')
         ],
         'filter': contextFilter('value')
@@ -484,7 +486,7 @@ module.exports = {
           { id: 'groups', icon: 'las la-sitemap', label: 'KGroupsActivity.GROUPS_LABEL', color: 'primary', disabled: true },
           { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp,
+          contextHelp(),
           contextMenu('groups-activity')
         ],
         'filter': contextFilter('name')
@@ -516,7 +518,7 @@ module.exports = {
           { id: 'events', icon: 'las la-fire', label: 'EventsActivity.EVENTS_LABEL', color: 'primary', disabled: true },
           { id: 'filter', icon: 'las la-search', tooltip: 'EventsActivity.SEARCH_EVENT', handler: { name: 'setTopPaneMode', params: ['filter'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp,
+          contextHelp(),
           contextMenu('events-activity')
         ],
         'filter': contextFilter('name')
@@ -552,7 +554,7 @@ module.exports = {
           { id: 'event-templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', color: 'primary', disabled: true },
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp,
+          contextHelp(),
           contextMenu('event-templates-activity')
         ],
         'filter': contextFilter('name')
@@ -590,24 +592,30 @@ module.exports = {
             on: { event: 'time-range-choosed', listener: 'onTimeRangeChanged' } },
           { id: 'history-sort', icon: 'las la-sort-amount-down', tooltip: 'ArchivedEventsActivity.ASCENDING_SORT',
             toggle: { icon: 'las la-sort-amount-up', color: 'grey-9', tooltip: 'ArchivedEventsActivity.DESCENDING_SORT' }, handler: 'onSortOrder' },
+          { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.EXPORT_DATA_LABEL', handler: 'downloadEventsData' },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp
+          contextHelp()
         ],
         'map': [
           { id: 'organisation', icon: 'las la-home', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { id: 'history-view', icon: 'las la-history', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: 'onShowChart' },
-          { id: 'heatmap', icon: 'las la-bowling-ball', tooltip: 'ArchivedEventsActivity.SHOW_HEATMAP_LABEL',
-            toggle: { icon: 'scatter_plot', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_MARKERS_LABEL' }, handler: 'onHeatmap' },
           { id: 'by-template', icon: 'las la-layer-group', tooltip: 'ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL',
             toggle: { icon: 'las la-object-group', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_ALL_LABEL' }, handler: 'onByTemplate' },
+          { id: 'heatmap', icon: 'las la-bowling-ball', tooltip: 'ArchivedEventsActivity.SHOW_HEATMAP_LABEL',
+            toggle: { icon: 'scatter_plot', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_MARKERS_LABEL' }, handler: 'onHeatmap' },
+          { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.EXPORT_DATA_LABEL', handler: 'downloadEventsData' },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp
+          contextHelp('archived-events-activity/map')
         ],
         'chart': [
           { id: 'history-view', icon: 'las la-history', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
-          { id: 'map-view', icon: 'scatter_plot', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' }
+          { id: 'map-view', icon: 'scatter_plot', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
+          { id: 'settings', icon: 'las la-cog', tooltip: 'ArchivedEventsActivity.CHART_SETTINGS_LABEL', handler: 'showChartSettings' },
+          { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.CHART_EXPORT_LABEL', handler: 'downloadChartData' },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          contextHelp('archived-events-activity/chart')
         ]
       }
     },
@@ -656,7 +664,7 @@ module.exports = {
           },
           { id: 'toggle-fullscreen', icon: 'las la-expand', tooltip: 'mixins.activity.ENTER_FULLSCREEN', toggle: { icon: 'las la-compress', tooltip: 'mixins.activity.EXIT_FULLSCREEN' }, handler: 'onToggleFullscreen' },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp
+          contextHelp()
         ],
         'display-position': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
@@ -724,7 +732,7 @@ module.exports = {
           },
           { id: 'toggle-fullscreen', icon: 'las la-expand', tooltip: 'mixins.activity.ENTER_FULLSCREEN', toggle: { icon: 'las la-compress', tooltip: 'mixins.activity.EXIT_FULLSCREEN' }, handler: 'onToggleFullscreen' },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          contextHelp,
+          contextHelp(),
           contextMenu('catalog-activity')
         ],
         'display-position': [
