@@ -1,5 +1,5 @@
 <template>
-  <k-card v-bind="$props" :actions="itemActions" >
+  <k-card v-bind="$props" :actions="itemActions" :bind-actions="false">
     <template v-slot:card-label>
       <span class="text-subtitle1 text-weight-medium ellipsis-2-lines">{{ name }}</span>
     </template>

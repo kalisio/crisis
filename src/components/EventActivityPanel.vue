@@ -62,10 +62,6 @@ export default {
       type: Object,
       default: () => {}
     },
-    event: {
-      type: Object,
-      default: () => {}
-    },
     participants: {
       type: Array,
       default: () => []

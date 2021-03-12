@@ -1,6 +1,6 @@
 <template>
   <div>
-    <k-card v-bind="$props" :actions="itemActions" >
+    <k-card v-bind="$props" :actions="itemActions" :bind-actions="false">
       <template v-slot:card-label>
         <span class="text-subtitle1 text-weight-medium ellipsis-2-lines" style="overflow: hidden">{{ name }}</span>
       </template>
@@ -61,7 +61,7 @@
         </div>
       </template>
     </k-card>
-    <k-modal ref="followUpModal" v-if="hasParticipantInteraction" :title="followUpTitle" :toolbar="getFollowUpToolbar()" :buttons="getFollowUpButtons()">
+    <k-modal ref="followUpModal" v-if="hasParticipantInteraction" :title="followUpTitle" :buttons="getFollowUpButtons()">
       <div slot="modal-content">
         <k-form ref="form" :schema="schema"/>
       </div>
@@ -150,24 +150,16 @@ export default {
       if (!this.$q.platform.is.cordova) return false
       return true
     },
-    getFollowUpToolbar () {
-      return [{
-        name: 'close-action',
-        label: this.$t('EventCard.FOLLOWUP_MODAL_CLOSE_ACTION'),
-        icon: 'las la-times',
-        handler: () => this.$refs.followUpModal.close()
-      }]
-    },
     getFollowUpButtons () {
       return [{
-        name: 'save-button',
+        id: 'save-button',
         label: this.$t('EventCard.FOLLOWUP_MODAL_SAVE_BUTTON'),
         handler: () => this.logParticipantState()
       }]
     },
     getUploaderToolbar () {
       return [{
-        name: 'close-action',
+        id: 'close-action',
         label: this.$t('EventCard.UPLOADER_MODAL_CLOSE_ACTION'),
         icon: 'las la-times',
         handler: () => {
@@ -199,7 +191,6 @@ export default {
       this.event = this.item
       // Generate configured actions
       kCoreMixins.baseItem.methods.configureActions.call(this)
-      let actions = []
       let hasFollowUp = false
       let tooltip = this.$t('EventCard.FOLLOW_UP_LABEL')
       let warning = false
@@ -229,7 +220,6 @@ export default {
             warning = true
           }
         }
-        // Required to use splice when modifying an object inside an array to make it reactive
         if (!warning) {
           this.itemActions.splice(0, 0, {
             id: 'follow-up', tooltip, icon: 'las la-comment',
@@ -245,11 +235,10 @@ export default {
       }
       // Find the add media action and push the browse media action just after
       const index = _.findIndex(this.itemActions, (action) => action.id === 'add-media')
-      // Required to use splice when modifying an object inside an array to make it reactive
       this.itemActions.splice(index + 1, 0, {
         id: 'browse-media', tooltip: 'EventCard.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', handler: this.browseMedia, 
-        badge: { label: this.mediasCount, floating: true },
-        visible: this.hasMedias && this.$can('read', 'events', this.contextId, this.item)
+        badge: { label: this.mediasCount().toString(), floating: true },
+        visible: this.hasMedias() && this.$can('read', 'events', this.contextId, this.item)
       })
     },
     uploadMedia () {

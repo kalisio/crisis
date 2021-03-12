@@ -76,7 +76,6 @@ export default {
   data () {
     return {
       filter: null,
-      event: {},
       participants: []
     }
   },
@@ -112,7 +111,7 @@ export default {
       activityMixin.methods.configureActivity.call(this)
       
       // Located event ?
-      if (this.event.location && this.event.location.longitude && this.event.location.latitude) {
+      if (this.hasLocation()) {
         // Recenter map
         this.center(this.event.location.longitude, this.event.location.latitude, 15)
         // And add event marker

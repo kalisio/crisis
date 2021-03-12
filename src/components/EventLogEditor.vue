@@ -1,5 +1,5 @@
 <template>
-  <k-modal ref="modal" :title="title" :toolbar="toolbar()" :buttons="buttons()" :opened="true">
+  <k-modal :title="title" v-model="isModalOpened" :buttons="buttons()">
     <div slot="modal-content">
       <k-form ref="form" :schema="schema"/>
     </div>
@@ -13,6 +13,7 @@ import mixins from '../mixins'
 export default {
   name: 'event-log-editor',
   mixins: [
+    kCoreMixins.baseModal,
     kCoreMixins.service,
     kCoreMixins.schemaProxy,
     kCoreMixins.refsResolver(['form']),
@@ -39,17 +40,9 @@ export default {
     }
   },
   methods: {
-    toolbar () {
-      return [{
-        name: 'close-action',
-        label: this.$t('EventLogEditor.CLOSE_ACTION'),
-        icon: 'las la-times',
-        handler: () => this.$refs.modal.close()
-      }]
-    },
     buttons () {
       return [{
-        name: 'save-button',
+        id: 'save-button',
         label: this.$t('EventLogEditor.SAVE_BUTTON'),
         color: 'primary',
         handler: () => this.logCoordinatorState()
@@ -79,10 +72,9 @@ export default {
     },
     async logCoordinatorState () {
       await this.logStep(this.$refs.form, this.step, this.state)
-      this.$refs.modal.close()
+      this.$refs.closeModal()
       if (this.router) this.$router.push(this.router.onApply)
     }
-
   },
   async created () {
     // Load the required components

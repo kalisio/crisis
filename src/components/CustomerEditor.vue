@@ -1,5 +1,5 @@
 <template>
-  <k-modal ref="modal" :title="$t('CustomerEditor.TITLE')" :toolbar="getToolbar()" :buttons="getButtons()">
+  <k-modal :title="$t('CustomerEditor.TITLE')" v-model="isModalOpened" :buttons="getButtons()">
     <div slot="modal-content">
       <div class="column">
         <div>
@@ -54,6 +54,7 @@ export default {
     Card
   },
   mixins: [
+    kCoreMixins.baseModal,
     kCoreMixins.refsResolver(['form'])
   ],
   props: {
@@ -107,11 +108,6 @@ export default {
         required: ['email']
       }
     },
-    getToolbar () {
-      return [
-        { id: 'close-action', label: this.$t('CustomerEditor.CLOSE_ACTION'), icon: 'las la-times', handler: () => this.close() }
-      ]
-    },
     getButtons () {
       return [
         { id: 'update-button', label: this.$t('CustomerEditor.UPDATE_BUTTON'), color: 'primary', handler: () => this.onUpdateClicked() }
@@ -127,10 +123,7 @@ export default {
       if (!_.isNil(this.customer.card)) this.hasCard = true
       this.purchasers = purchasers
       // Open the editor
-      this.$refs.modal.open()
-    },
-    close () {
-      this.$refs.modal.close()
+      this.openModal()
     },
     onFormReady () {
       // Updated the purchasers selection
@@ -152,7 +145,7 @@ export default {
           response = await billingService.update(this.billingObjectId, this.customer)
         }
         this.$emit('customer-updated', response)
-        this.close()
+        this.closeModal()
       }
     },
     async onCardUpdated (card) {

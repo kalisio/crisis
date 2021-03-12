@@ -1,5 +1,5 @@
 <template>
-  <k-modal ref="modal" 
+  <k-modal
     :title="editorTitle" 
     :buttons="buttons" 
     v-model="isModalOpened"

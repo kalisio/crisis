@@ -7,21 +7,20 @@ const eventsMixin = {
     return {
       userId: '',
       isParticipant: false,
-      isCoordinator: false
-    }
-  },
-  computed: {
-    hasLocation () {
-      return this.event.location && this.event.location.latitude && this.event.location.longitude
-    },
-    hasMedias () {
-      return this.event.attachments && this.event.attachments.length
-    },
-    mediasCount () {
-      return this.event.attachments ? this.event.attachments.length : 0
+      isCoordinator: false,
+      event: {}
     }
   },
   methods: {
+    hasLocation () {
+      return _.has(this.event, 'location.latitude') && _.has(this.event, 'location.longitude')
+    },
+    hasMedias () {
+      return _.has(this.event, 'attachments') && (this.event.attachments.length > 0)
+    },
+    mediasCount () {
+      return _.has(this.event, 'attachments') ? this.event.attachments.length : 0
+    },
     hasStepUserInteraction (step) {
       if (_.isEmpty(step)) return false
       else return !_.isEmpty(step.interaction)
