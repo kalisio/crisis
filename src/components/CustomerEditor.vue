@@ -1,5 +1,5 @@
 <template>
-  <k-modal :title="$t('CustomerEditor.TITLE')" v-model="isModalOpened" :buttons="getButtons()">
+  <k-modal :title="$t('CustomerEditor.TITLE')" v-model="isModalOpened" @opened="$emit('opened')" @closed="$emit('closed')" :buttons="getButtons()">
     <div slot="modal-content">
       <div class="column">
         <div>
