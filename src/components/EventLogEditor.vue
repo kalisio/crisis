@@ -73,7 +73,6 @@ export default {
     async logCoordinatorState () {
       await this.logStep(this.$refs.form, this.step, this.state)
       this.$refs.closeModal()
-      if (this.router) this.$router.push(this.router.onApply)
     }
   },
   async created () {
