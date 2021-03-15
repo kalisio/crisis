@@ -527,9 +527,9 @@ module.exports = {
     items: {
       actions: [
         { id: 'capture-photo', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-camera', handler:  'capturePhoto',
-          visible: ['canCapturePhoto', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
+          visible: ['canCapturePhoto', { name: '$can', params: ['update', 'events', ':contextId', ':item'] }] },
         { id: 'add-media', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-paperclip', handler:  'uploadMedia',
-          visible: { name: '$can', params: ['read', 'events', ':contextId', ':item'] } },
+          visible: { name: '$can', params: ['update', 'events', ':contextId', ':item'] } },
         { id: 'event-map', tooltip: 'EventCard.MAP_LABEL', icon: 'las la-map-marked-alt', handler:  'viewMap',
           visible: ['hasLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
         { id: 'navigate', tooltip: 'EventCard.NAVIGATE_LABEL', icon: 'las la-location-arrow', handler:  'launchNavigation',
@@ -695,13 +695,15 @@ module.exports = {
     },
     fab: {
       actions: [
-        { id: 'add-media', label: 'EventActivity.ADD_MEDIA_LABEL', icon: 'add_a_photo', handler: 'uploadMedia',
+        { id: 'add-media', label: 'EventActivity.ADD_MEDIA_LABEL', icon: 'las la-paperclip', handler: 'uploadMedia',
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] } },
         { id: 'browse-media', label: 'EventActivity.BROWSE_MEDIA_LABEL', icon: 'photo_library', handler: 'browseMedia',
-          visible: { name: '$can', params: ['read', 'events', ':contextId', ':event'] } },
+          visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] } },
+        { id: 'navigate', label: 'EventActivity.NAVIGATE_LABEL', icon: 'las la-location-arrow', handler:  'launchNavigation',
+          visible: ['hasLocation', 'canNavigate', { name: '$can', params: ['read', 'events', ':contextId', ':event'] }] },
         { id: 'edit-event', label: 'EventActivity.EDIT_LABEL', icon: 'las la-file-alt',
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] },
-          route: { name: 'edit-event', params: { contextId: ':contextId', service: 'events', objectId: ':objectId' } } },
+          route: { name: 'edit-map-event', params: { contextId: ':contextId', objectId: ':objectId' } } },
         { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'onProbeLocation' }
       ]
     },

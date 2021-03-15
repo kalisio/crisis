@@ -6,7 +6,7 @@
         <q-resize-observer @resize="onMapResized" />
       </div>
 
-      <k-modal ref="uploaderModal" :toolbar="getUploaderToolbar()">
+      <k-modal ref="uploaderModal">
         <div slot="modal-content">
           <k-uploader ref="uploader" :resource="objectId" :base-query="uploaderQuery()"
             :options="uploaderOptions()" @uploader-ready="initializeMedias"/>
@@ -80,14 +80,6 @@ export default {
     }
   },
   methods: {
-    getUploaderToolbar () {
-      return [{
-        name: 'close-action',
-        label: this.$t('EventActivity.UPLOADER_MODAL_CLOSE_ACTION'),
-        icon: 'las la-times',
-        handler: () => this.$refs.uploaderModal.close()
-      }]
-    },
     loadService () {
       // Archived mode ?
       return this.$api.getService(this.archived ? 'archived-event-logs' : 'event-logs')
@@ -109,7 +101,13 @@ export default {
       // If we'd like to only work in real-time
       // this.setCurrentTime(moment.utc())
       activityMixin.methods.configureActivity.call(this)
-      
+      // Flag required actions as "beta"
+      let actions = this.$store.get('fab.actions')
+      actions.forEach(action => {
+        if (action.id === 'probe-location') {
+          action.badge = { color: 'primary', floating: true, transparent: true, label: 'beta' }
+        }
+      })
       // Located event ?
       if (this.hasLocation()) {
         // Recenter map
@@ -161,16 +159,6 @@ export default {
       })
       
       return layers
-    },
-    registerActivityActions () {
-      kMapMixins.activity.methods.registerActivityActions.call(this)
-      // Flag required actions as "beta"
-      let actions = this.$store.get('fab.actions')
-      actions.forEach(action => {
-        if (action.name === 'probe') {
-          action.badge = { color: 'primary', floating: true, transparent: true, label: 'beta' }
-        }
-      })
     },
     uploadMedia () {
       this.$refs.uploaderModal.open()

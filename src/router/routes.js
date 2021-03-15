@@ -197,7 +197,7 @@ module.exports = {
                     name: 'edit-event',
                     component: 'EventEditor',
                     props: true
-                  },
+                  }
                 },
                 tour: tours.events
               },
@@ -226,6 +226,11 @@ module.exports = {
                   'log/:logId': {
                     name: 'event-log',
                     component: 'EventLogEditor',
+                    props: true
+                  },
+                  'edit': {
+                    name: 'edit-map-event',
+                    component: 'EventEditor',
                     props: true
                   }
                 }
