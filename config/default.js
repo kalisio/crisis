@@ -699,8 +699,6 @@ module.exports = {
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] } },
         { id: 'browse-media', label: 'EventActivity.BROWSE_MEDIA_LABEL', icon: 'photo_library', handler: 'browseMedia',
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] } },
-        { id: 'navigate', label: 'EventActivity.NAVIGATE_LABEL', icon: 'las la-location-arrow', handler:  'launchNavigation',
-          visible: ['hasLocation', 'canNavigate', { name: '$can', params: ['read', 'events', ':contextId', ':event'] }] },
         { id: 'edit-event', label: 'EventActivity.EDIT_LABEL', icon: 'las la-file-alt',
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] },
           route: { name: 'edit-map-event', params: { contextId: ':contextId', objectId: ':objectId' } } },
