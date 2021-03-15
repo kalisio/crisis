@@ -358,6 +358,7 @@ module.exports = {
       ]
     },
     items: {
+      component: 'OrganisationCard',
       actions: [
         { id: 'goto-organisation', icon: 'las la-sign-in-alt', route: { name: 'context', params: { contextId: ':item._id' } } }
       ]
