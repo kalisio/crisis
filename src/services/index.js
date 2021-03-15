@@ -12,6 +12,7 @@ export default function () {
     // Add hooks to automatically check uniqueness when creating a new user
     api.getService('users').hooks(usersHooks)
     api.configure(kMap)
+    // Declare the built-in services, others are optional
     api.declareService('catalog', { context: true })
     api.declareService('features', { context: true })
     api.declareService('alerts', { context: true })

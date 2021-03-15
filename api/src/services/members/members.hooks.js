@@ -1,9 +1,25 @@
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
+import _ from 'lodash'
+import { when } from 'feathers-hooks-common'
+import { hooks as coreHooks, createObjectID } from '@kalisio/kdk/core.api'
+
+// Fix for https://github.com/kalisio/aktnmap/issues/217
+// because in some cases the context is stored in the DB as an ObjectID while it is as a string otherwise.
+// Filtering using context assumes that the context is always a string so we manage to match ObjectIDs as well
+function hasItemContext (hook) {
+  return _.get(hook.params, 'query.tags.$elemMatch.context', _.get(hook.params, 'query.groups.$elemMatch.context'))
+}
+
+function itemContextMatch (hook) {
+  let query = _.get(hook.params, 'query.tags.$elemMatch', _.get(hook.params, 'query.groups.$elemMatch'))
+  query.$or = [{ context: query.context }, { context: createObjectID(query.context) }]
+  delete query.context
+  return hook
+}
 
 module.exports = {
   before: {
     all: [],
-    find: [],
+    find: [when(hasItemContext, itemContextMatch)],
     get: [],
     create: [],
     update: [],
