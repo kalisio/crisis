@@ -3,21 +3,26 @@
     <!--
       Card header
     -->
-    <template v-slot:card-header>
+    <!--template v-slot:card-header>
       <div class="q-pa-sm row justify-end">
         <q-badge id="events-badge" outine color="secondary">
           {{ eventsStats.total }} événement(s) en cours
         </q-badge>
       </div>
-    </template>
+    </template-->
     <!--
       Card content
      -->
     <div slot="card-content">
       <q-separator />
       <div class="q-pa-md row justify-around items-center">
+        <q-btn :key="roleKey(role)" flat small rounded dense color="primary" class="col-3"
+          id="events-total"
+          icon="las la-fire"
+          :label="eventsStats.total"
+          @click="onListEvents()"/>
         <template v-for="(role, index) in roleNames">
-          <q-btn :key="roleKey(role)" flat small rounded color="primary"
+          <q-btn :key="roleKey(role)" flat small rounded dense color="primary" class="col-3"
             :id="role"
             :icon="roleIcons[index]"
             :label="memberStats[role]"
@@ -57,6 +62,9 @@ export default {
         const response = await permissions.countMembersOfOrganisation(membersService, this.item._id, role)
         this.$set(this.memberStats, role, response.total)
       }))
+    },
+    onListEvents () {
+      this.$router.push({ name: 'events-activity', params: { contextId: this.item._id } })
     },
     onListMembers (role, index) {
       // Setup filter accordingly
