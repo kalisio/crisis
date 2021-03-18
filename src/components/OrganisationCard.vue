@@ -16,16 +16,16 @@
     <div slot="card-content">
       <q-separator />
       <div class="q-pa-md row justify-around items-center">
-        <q-btn :key="roleKey(role)" flat small rounded dense color="primary" class="col-3"
-          id="events-total"
+        <q-btn v-if="isCountAvailable('events')" :key="key('events')" flat small rounded dense color="primary" class="col-3"
+          :id="key('events')"
           icon="las la-fire"
-          :label="eventsStats.total"
+          :label="stats.events"
           @click="onListEvents()"/>
         <template v-for="(role, index) in roleNames">
-          <q-btn :key="roleKey(role)" flat small rounded dense color="primary" class="col-3"
-            :id="role"
+          <q-btn v-if="isCountAvailable(role)" :key="key(role)" flat small rounded dense color="primary" class="col-3"
+            :id="key(role)"
             :icon="roleIcons[index]"
-            :label="memberStats[role]"
+            :label="stats[role]"
             @click="onListMembers(role, index)"/>
         </template>
       </div>
@@ -42,25 +42,27 @@ export default {
   mixins: [kCoreMixins.baseItem],
   data () {
     return {
-      eventsStats: {},
-      memberStats: {},
+      stats: {},
       roleLabels: []
     }
   },
   methods: {
-    roleKey (role) {
-      return this.item._id + '-' + role
+    key (scope) {
+      return this.item._id + '-' + scope
+    },
+    isCountAvailable (scope) {
+      return !_.isNil(this.stats[scope])
     },
     async refreshStats () {
       // Count events
       const eventsService = this.$api.getService('events', this.item._id)
       const response = await eventsService.find({ query: {}, $limit: 0 })
-      this.$set(this.eventsStats, 'total', response.total)
+      this.$set(this.stats, 'events', response.total)
       // Count members
       const membersService = this.$api.getService('members', this.item._id)
       await Promise.all(this.roleNames.map(async (role) => {
         const response = await permissions.countMembersOfOrganisation(membersService, this.item._id, role)
-        this.$set(this.memberStats, role, response.total)
+        this.$set(this.stats, role, response.total)
       }))
     },
     onListEvents () {

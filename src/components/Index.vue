@@ -20,11 +20,19 @@ export default {
   // authorisation mixin is required to automatically update user' abilities on update
   mixins: [mixins.authentication, mixins.authorisation],
   methods: {
-    redirect (user) {
+    async redirect (user) {
       this.user = user
       // Run registered guards to redirect accordingly if required
       const result = beforeGuard(this.$route)
       if (typeof result === 'string') {
+        // When there is a single organisation directly go to the event activity, no need for the organisation dashboard
+        if (user && (result === 'home')) {
+          const response = await this.$api.getService(this.$config('context.service')).find({ query: {}, $limit: 1 })
+          if (response.total === 1) {
+            this.$router.push({ name: 'context', params: { contextId: response.data[0]._id } })
+            return
+          }
+        }
         // Redirect to a given route based on authentication state
         this.$router.push({ name: result })
       } else if (!result) {
