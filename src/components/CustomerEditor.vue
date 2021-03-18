@@ -85,7 +85,7 @@ export default {
             type: 'string',
             field: {
               component: 'form/KSelectField',
-              helper: 'CustomerEditor.CUSTOMER_EMAIL_FIELD_HELPER',
+              label: 'CustomerEditor.CUSTOMER_EMAIL_FIELD_LABEL',
               type: 'radio',
               options: []
             }
@@ -94,14 +94,14 @@ export default {
             type: 'string',
             field: {
               component: 'form/KTextareaField',
-              helper: 'CustomerEditor.CUSTOMER_DESCRIPTION_FIELD_HELPER'
+              label: 'CustomerEditor.CUSTOMER_DESCRIPTION_FIELD_LABEL'
             }
           },
           vatNumber: {
             type: 'string',
             field: {
               component: 'form/KTextField',
-              helper: 'CustomerEditor.CUSTOMER_VAT_NUMBER_FIELD_HELPER'
+              label: 'CustomerEditor.CUSTOMER_VAT_NUMBER_FIELD_LABEL'
             }
           }
         },

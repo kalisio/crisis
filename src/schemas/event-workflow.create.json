@@ -10,7 +10,7 @@
       "minLength": 3,
       "field": {
         "component": "form/KTextField",
-        "helper": "schemas.EVENT_WORKFLOW_TITLE_FIELD_HELPER"
+        "label": "schemas.EVENT_WORKFLOW_TITLE_FIELD_LABEL"
       }
     },
     "stakeholder": {
@@ -18,7 +18,7 @@
       "default": "participant",
       "field": {
         "component": "form/KSelectField",
-        "helper": "schemas.EVENT_WORKFLOW_STAKEHOLDER_FIELD_HELPER",
+        "label": "schemas.EVENT_WORKFLOW_STAKEHOLDER_FIELD_LABEL",
         "options": [
           { "label": "schemas.EVENT_WORKFLOW_PARTICIPANT_LABEL", "value": "participant", "color": "yellow" },
           { "label": "schemas.EVENT_WORKFLOW_COORDINATOR_LABEL", "value": "coordinator", "color": "grey" }
@@ -30,14 +30,14 @@
       "default": { "name": "check", "color": "primary" },
       "field": {
         "component": "form/KIconField",
-        "helper": "schemas.EVENT_WORKFLOW_ICON_FIELD_HELPER"
+        "label": "schemas.EVENT_WORKFLOW_ICON_FIELD_LABEL"
       }
     },
     "description": {
       "type": "string", 
       "field": {
         "component": "form/KTextareaField",
-        "helper": "schemas.EVENT_WORKFLOW_DESCRIPTION_FIELD_HELPER"
+        "label": "schemas.EVENT_WORKFLOW_DESCRIPTION_FIELD_LABEL"
       }
     },
     "interaction": {
@@ -46,7 +46,7 @@
       "minItems": 2,
       "field": {
         "component": "form/KChipsField",
-        "helper": "schemas.EVENT_WORKFLOW_INTERACTION_FIELD_HELPER",
+        "label": "schemas.EVENT_WORKFLOW_INTERACTION_FIELD_LABEL",
         "icon" : {
           "name" : "label",
           "color" : "red"
@@ -58,7 +58,7 @@
       "uniqueItems": true,
       "field": {
         "component": "form/KSelectField",
-        "helper": "schemas.EVENT_WORKFLOW_END_FIELD_HELPER",
+        "label": "schemas.EVENT_WORKFLOW_END_FIELD_LABEL",
         "multiple": true,
         "chips": true,
         "options": []

@@ -9,14 +9,14 @@
       "minLength": 3,
       "field": {
         "component": "form/KTextField",
-        "helper": "schemas.EVENTS_NAME_FIELD_HELPER"
+        "label": "schemas.EVENTS_NAME_FIELD_LABEL"
       }
     },
     "description": {
       "type": "string",
       "field": {
         "component": "form/KTextareaField",
-        "helper": "schemas.EVENTS_DESCRIPTION_FIELD_HELPER"
+        "label": "schemas.EVENTS_DESCRIPTION_FIELD_LABEL"
       }
     },
     "location": {
@@ -24,7 +24,7 @@
       "draggable": true,
       "field": {
         "component": "KLocationField",
-        "helper": "schemas.EVENTS_LOCATION_FIELD_HELPER"
+        "label": "schemas.EVENTS_LOCATION_FIELD_LABEL"
       }
     },
     "expireAt": {
@@ -33,7 +33,7 @@
       "format": "date-time",
       "field": {
         "component": "form/KDatetimeField",
-        "helper": "schemas.EVENTS_EXPIRE_AT_FIELD_HELPER",
+        "label": "schemas.EVENTS_EXPIRE_AT_FIELD_LABEL",
         "type": "datetime",
         "defaultOffset": 604800
       }
@@ -77,7 +77,7 @@
       }],
       "field": {
         "component": "form/KItemField",
-        "helper": "schemas.EVENTS_PARTICIPANTS_FIELD_HELPER"
+        "label": "schemas.EVENTS_PARTICIPANTS_FIELD_LABEL"
       }
     },
     "coordinators": { 
@@ -118,7 +118,7 @@
       }],
       "field": {
         "component": "form/KItemField",
-        "helper": "schemas.EVENTS_COORDINATORS_FIELD_CREATE_HELPER"
+        "label": "schemas.EVENTS_COORDINATORS_FIELD_CREATE_LABEL"
       }
     },
     "attachments": { 
@@ -126,7 +126,7 @@
       "group": "schemas.EVENTS_ADVANCED_SETTINGS",
       "field": {
         "component": "form/KAttachmentField",
-        "helper": "schemas.EVENTS_ATTACHMENTS_FIELD_HELPER",
+        "label": "schemas.EVENTS_ATTACHMENTS_FIELD_LABEL",
         "service": "storage",
         "acceptedFiles": "image/*,application/pdf",
         "multiple": true,
@@ -142,7 +142,7 @@
       "default": true,
       "field": {
         "component": "form/KToggleField",
-        "helper": "schemas.EVENTS_HAS_WORKFLOW_FIELD_HELPER",
+        "label": "schemas.EVENTS_HAS_WORKFLOW_FIELD_LABEL",
         "icon": "fa-retweet"
       }
     },
@@ -152,7 +152,7 @@
       "default": true,
       "field": {
         "component": "form/KToggleField",
-        "helper": "schemas.EVENTS_NOTIFICATION_FIELD_CREATE_HELPER",
+        "label": "schemas.EVENTS_NOTIFICATION_FIELD_CREATE_LABEL",
         "checked-icon": "notifications",
         "unchecked-icon": "notifications_off"
       }

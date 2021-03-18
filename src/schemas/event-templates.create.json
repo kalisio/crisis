@@ -10,7 +10,7 @@
       "minLength": 3,
       "field": {
         "component": "form/KTextField",
-        "helper": "schemas.EVENT_TEMPLATES_NAME_FIELD_HELPER"
+        "label": "schemas.EVENT_TEMPLATES_NAME_FIELD_LABEL"
       }
     },
     "icon": {
@@ -18,14 +18,14 @@
       "default": { "name": "mode_edit", "color": "primary" },
       "field": {
         "component": "form/KIconField",
-        "helper": "schemas.EVENT_TEMPLATES_ICON_FIELD_HELPER"
+        "label": "schemas.EVENT_TEMPLATES_ICON_FIELD_LABEL"
       }
     },
     "description": {
       "type": "string", 
       "field": {
         "component": "form/KTextareaField",
-        "helper": "schemas.EVENT_TEMPLATES_DESCRIPTION_FIELD_HELPER"
+        "label": "schemas.EVENT_TEMPLATES_DESCRIPTION_FIELD_LABEL"
       }
     },
     "participants": { 
@@ -65,7 +65,7 @@
       }],
       "field": {
         "component": "form/KItemField",
-        "helper": "schemas.EVENTS_TEMPLATES_PARTICIPANTS_FIELD_HELPER"
+        "label": "schemas.EVENTS_TEMPLATES_PARTICIPANTS_FIELD_LABEL"
       }
     },
     "coordinators": { 
@@ -106,7 +106,7 @@
       }],
       "field": {
         "component": "form/KItemField",
-        "helper": "schemas.EVENTS_TEMPLATES_COORDINATORS_FIELD_CREATE_HELPER"
+        "label": "schemas.EVENTS_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL"
       }
     }
   },
