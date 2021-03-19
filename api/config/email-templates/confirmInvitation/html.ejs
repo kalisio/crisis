@@ -1,6 +1,6 @@
 <h1>[Akt'n'Map] <%= email.subject %></h1>
 
-<p>Dear <%= user.name %>,</p>
+<p>Dear <%= user.profile.name %>,</p>
 
 <p>you'be been invited by <%= email.sponsor %> to join us on Akt'n'Map.</p> 
 
@@ -12,5 +12,5 @@
 
 </p>
 
-<p>If you accept our <a href='<%= email.domainPath + 'terms' %>'>terms and policies</a> follow <a href='<%= email.link %>'>this link</a> to access the login page. If you do not accept your account will be automatically removed within 48h.</p>
+<p>If you accept our <a href='<%= email.domainPath + 'terms' %>'>terms and policies</a> follow <a href='<%= email.link %>'>this link</a> to access the login page. If you do not accept your account will be automatically removed within seven days.</p>
 

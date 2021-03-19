@@ -44,15 +44,9 @@ module.exports = {
     ],
     find: [fuzzySearch(), coreHooks.marshallCollationQuery],
     get: [],
-    // This one cannot be registered on the user service directly because it should run before password hashing, etc.
-    create: [commonHooks.when(hook => hook.service.name === 'users' && hook.data.sponsor,
-      coreHooks.setExpireAfter(48 * 60 * 60), // 48h in seconds
-      coreHooks.generatePassword,
-      coreHooks.sendInvitationEmail)],
+    create: [],
     update: [coreHooks.preventUpdatePerspectives],
-    patch: [commonHooks.when(hook => hook.service.name === 'users' && hook.data.expireAt,
-      coreHooks.generatePassword,
-      coreHooks.sendInvitationEmail)],
+    patch: [],
     remove: []
   },
 

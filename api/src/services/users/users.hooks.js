@@ -7,9 +7,20 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [when(hook => hook.data.sponsor, checkInvitationsQuotas),
+    create: [
+      when(hook => hook.data.sponsor,
+        checkInvitationsQuotas,
+        (hook) => {
+          // Read invitation expiration from config if any
+          const authConfig = hook.app.get('authentication')
+          return coreHooks.setExpireAfter(authConfig.invitationExpireAfter || 2 * 24 * 60 * 60)(hook) // 48h in seconds
+        },
+        coreHooks.generatePassword,
+        coreHooks.sendInvitationEmail,
+        coreHooks.hashPassword()),
       coreHooks.addVerification,
-      coreHooks.convertDates(['expireAt'])],
+      coreHooks.convertDates(['expireAt'])
+    ],
     update: [coreHooks.convertDates(['expireAt'])],
     patch: [coreHooks.convertDates(['expireAt'])],
     remove: [coreHooks.preventRemoveUser]

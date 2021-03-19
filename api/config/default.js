@@ -150,6 +150,7 @@ module.exports = {
       prohibited: fs.readFileSync(path.join(__dirname, '10k_most_common_passwords.txt')).toString().split('\n'),
       history: 5
     },
+    invitationExpireAfter: 7 * 24 * 60 * 60, // 7 days in seconds
     // Authentication limiter
     limiter,
     defaultUsers: [
@@ -199,7 +200,7 @@ module.exports = {
     }
   },
   organisations: {
-    // nothing for now
+    // nothing for now but required to create the service
   },
   quotas: {
     global: {
