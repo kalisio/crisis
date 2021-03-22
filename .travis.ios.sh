@@ -20,7 +20,7 @@ security unlock-keychain -p travis ios-build.keychain
 security set-keychain-settings -t 3600 -l ~/Library/Keychains/ios-build.keychain
 
 # Import the certificates into the keychain
-security import AppleWWDRCA.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
+security import AppleWWDRCAG3.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
 for CERTIFICATE in $APPLE_CERTIFICATES; do
 	security import $CERTIFICATE.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
 	security import $CERTIFICATE.p12 -k ~/Library/Keychains/ios-build.keychain -P $APPLE_P12_PASSWORD -T /usr/bin/codesign
