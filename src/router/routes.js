@@ -177,9 +177,27 @@ module.exports = {
                 tour: {
                   'catalog-activity': tours.catalog,
                   'navigation-bar': tours['navigation-bar'],
+                  'favorite-views': tours['favorite-views'],
                   'catalog-panel': tours['catalog-panel'],
                   'timeline': tours['timeline'],
                   'fab': tours['fab']
+                },
+                children: {
+                  add: {
+                    name: 'add-layer',
+                    component: 'catalog/KAddLayer',
+                    tour: {
+                      'add-layer': tours['add-layer'],
+                      'import-layer': tours['import-layer'],
+                      'connect-layer': tours['connect-layer'],
+                      'create-layer': tours['create-layer']
+                    }
+                  },
+                  categories: {
+                    name: 'manage-layer-categories',
+                    component: 'catalog/KLayerCategories',
+                    tour: tours['catalog-categories']
+                  }
                 }
               },
               'events': {

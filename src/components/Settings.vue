@@ -27,10 +27,11 @@ export default {
   name: 'settings',
   methods: {
     editSettings () {
-      this.$refs.editor.open()
+      this.$layout.setLeftDrawerVisible(false)
+      this.$refs.editor.openModal()
     },
     onSettingsEdited () {
-      this.$refs.editor.close()
+      this.$refs.editor.closeModal()
     }
   },
   created () {

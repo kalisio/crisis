@@ -24,6 +24,8 @@
           <q-spinner-cube color="primary" class="fixed-center" v-if="inProgress" size="4em"/>
         </div>
       </k-modal>
+      <!-- Child views -->
+      <router-view />
     </template>
   </k-page>
 </template>
@@ -107,7 +109,7 @@ export default {
       // Flag required actions as "beta"
       let actions = this.$store.get('fab.actions')
       actions.forEach(action => {
-        if ((action.id === 'probe-location') || (action.id === 'create-layer') || (action.id === 'import-layer')) {
+        if ((action.id === 'probe-location') || (action.id === 'add-layer')) {
           action.badge = { color: 'primary', floating: true, transparent: true, label: 'beta' }
         }
       })
