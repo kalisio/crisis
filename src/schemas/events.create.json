@@ -23,7 +23,7 @@
       "type": "object", 
       "draggable": true,
       "field": {
-        "component": "KLocationField",
+        "component": "form/KLocationField",
         "label": "schemas.EVENTS_LOCATION_FIELD_LABEL"
       }
     },
@@ -72,7 +72,7 @@
           "scope": "members"
         },
         "icon": {
-          "name": "label"
+          "name": "las la-tag"
         }
       }],
       "field": {

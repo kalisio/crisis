@@ -31,6 +31,19 @@ if (process.env.SUBDOMAIN) {
 // On a developer machine will do domain = gateway = localhost
 const gateway = domain.replace('kano', 'api')
 
+const leftPane = {
+  content: [
+    { component: 'QImg', src: 'statics/aktnmap-banner.png' },
+    { component: 'account/KIdentityPanel', class: 'full-width' },
+    { component: 'Settings' },
+    { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
+    { component: 'layout/KAbout' },
+    { id: 'contextual-help', icon: 'las la-question-circle', label: 'sideNav.HELP', url: onlineHelp, renderer: 'item' },
+    { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
+    { id: 'logout', icon: 'las la-sign-out-alt', label: 'sideNav.LOGOUT', route: { name: 'logout' }, renderer: 'item' }
+  ]
+}
+
 let defaultMapOptions = {
   viewer: {
     minZoom: 3,
@@ -276,18 +289,7 @@ module.exports = {
   },
   layout: {
     view: 'lHh LpR lFf',
-    leftDrawer: {
-      content: [
-        { component: 'QImg', src: 'statics/aktnmap-banner.png' },
-        { component: 'account/KIdentityPanel', class: 'full-width' },
-        { component: 'Settings' },
-        { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px;' },
-        { component: 'layout/KAbout' },
-        { id: 'contextual-help', icon: 'las la-question-circle', label: 'sideNav.HELP', url: onlineHelp, renderer: 'item' },
-        { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px;' },
-        { id: 'logout', icon: 'las la-sign-out-alt', label: 'sideNav.LOGOUT', route: { name: 'logout' }, renderer: 'item' }
-      ],
-      behavior: 'mobile',
+    leftPane: {
       opener: true
     },
     topPane: {
@@ -302,6 +304,7 @@ module.exports = {
     }
   },
   accountActivity: {
+    leftPane: leftPane,
     topPane: {
       content: {
         profile: [
@@ -341,6 +344,7 @@ module.exports = {
     }
   },
   organisationsActivity: {
+    leftPane: leftPane,
     topPane: {
       content: {
         'default': [
@@ -365,6 +369,7 @@ module.exports = {
     }
   },
   organisationSettingsActivity: {
+    leftPane: leftPane,
     topPane: {
       content: {
         properties: [
@@ -413,6 +418,7 @@ module.exports = {
     }
   },
   membersActivity: {
+    leftPane: leftPane,
     topPane: {
       content: {
         'default': [
@@ -455,6 +461,7 @@ module.exports = {
     }
   },
   tagsActivity: {
+    leftPane: leftPane,
     topPane: {
       content: {
         'default': [
@@ -479,6 +486,7 @@ module.exports = {
     }
   },
   groupsActivity: {
+    leftPane: leftPane,
     topPane: {
       content: {
         'default': [
@@ -511,6 +519,7 @@ module.exports = {
     }
   },
   eventsActivity: {
+    leftPane: leftPane,
     topPane: {
       content: {
         'default': [
@@ -544,6 +553,7 @@ module.exports = {
     }
   },
   eventTemplatesActivity: {
+    leftPane: leftPane,
     topPane: {
       content: {
         'default': [
@@ -579,6 +589,7 @@ module.exports = {
     }
   },
   archivedEventsActivity: {
+    leftPane: leftPane,
     topPane: {
       content: {
         'history': [
@@ -647,6 +658,7 @@ module.exports = {
     restore: { layers: false }
   },
   eventActivity: {
+    leftPane: leftPane,
     topPane: {
       content: {
         default: [
@@ -715,6 +727,7 @@ module.exports = {
     featuresChunkSize: 5000 // TODO: here or in mapEngine ?
   },
   catalogActivity: {
+    leftPane: leftPane,
     topPane: {
       content: {
         default: [

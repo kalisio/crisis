@@ -27,7 +27,6 @@ export default {
   name: 'settings',
   methods: {
     editSettings () {
-      this.$layout.setLeftDrawerVisible(false)
       this.$refs.editor.openModal()
     },
     onSettingsEdited () {
