@@ -9,7 +9,8 @@
       <k-modal ref="templateModal"
         :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
         :buttons="[]" :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }">
-        <k-list ref="templates" slot="modal-content" service="event-templates" :base-query="baseTemplateQuery" :contextId="contextId" :list-strategy="'smart'" @selection-changed="onEventTemplateSelected" />
+        <k-list ref="templates" slot="modal-content" service="event-templates" :contextId="contextId"
+          :list-strategy="'smart'" @selection-changed="onCreateEvent" />
       </k-modal>
 
       <k-modal ref="alertModal"
@@ -33,6 +34,7 @@
 <script>
 import moment from 'moment'
 import sift from 'sift'
+import centroid from '@turf/centroid'
 import { Dialog } from 'quasar'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
@@ -149,6 +151,14 @@ export default {
       let featureActions = []
       // When clicked on map
       if (!feature) {
+        // We can initiate an event
+        featureActions.push({
+          name: 'create-event',
+          icon: 'whatshot',
+          handler: this.onSelectEventTemplateAction,
+          label: this.$t('CatalogActivity.CREATE_EVENT_LOCATION_ACTION'),
+          badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
+        })
         // Check if weather layer activated
         const selectedLayer = _.values(this.layers).filter(sift({
           isVisible: true, type: 'OverlayLayer', tags: { $in: ['weather'] }
@@ -160,7 +170,7 @@ export default {
           label: this.$t('CatalogActivity.CREATE_WEATHER_ALERT_ACTION'),
           badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
         })
-      } else if (feature._id && !this.isLayerEdited(layer.name)) { // Only on saved features and not in edition mode
+      } else if (!this.isLayerEdited(layer.name)) { // Not in edition mode
         // Only on feature services targeting non-user data
         if (layer.variables) {
           featureActions.push({
@@ -170,34 +180,19 @@ export default {
             label: this.$t('CatalogActivity.CREATE_MEASURE_ALERT_ACTION'),
             badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
           })
-        } else {
-          /* FIXME: Not yet available
-          if (layer.name !== this.$t('CatalogActivity.ALERTS_LAYER')) {
+        } else if (layer.name !== this.$t('CatalogActivity.ALERTS_LAYER')) {
+          // Could be an internal feature or external one (eg WFS layer)
+          let id = _.get(layer, 'featureId', '_id')
+          id = _.get(feature, 'properties.' + id, _.get(feature, id))
+          if (id) { // Only on saved features
             featureActions.push({
               name: 'create-event',
               icon: 'whatshot',
-              handler: this.onCreateEventAction,
-              label: this.$t('CatalogActivity.CREATE_EVENT_ACTION'),
+              handler: this.onSelectEventTemplateAction,
+              label: this.$t('CatalogActivity.CREATE_EVENT_FEATURE_ACTION'),
               badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
             })
           }
-          */
-          if (_.get(layer, 'schema.content')) {
-            featureActions.push({
-              name: 'edit-feature-properties',
-              icon: 'las la-file-alt',
-              handler: this.onUpdateFeaturePropertiesAction,
-              label: this.$t('CatalogActivity.EDIT_FEATURE_PROPERTIES_ACTION'),
-              badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
-            })
-          }
-          featureActions.push({
-            name: 'remove-feature',
-            icon: 'las la-minus-circle',
-            handler: this.onRemoveFeatureAction,
-            label: this.$t('CatalogActivity.REMOVE_FEATURE_ACTION'),
-            badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
-          })
         }
       }
       return featureActions
@@ -250,35 +245,34 @@ export default {
       const html = this.getAlertStatusAsHtml(alert)
       return L.tooltip({ permanent: false }, layer).setContent(html)
     },
-    onCreateEventAction (data) {
-      this.eventFeature = data.feature
-      this.baseTemplateQuery['layer._id'] = data.layer._id
+    onSelectEventTemplateAction (data) {
+      // Extract event location
+      if (data.feature) {
+        const location = centroid(data.feature)
+        this.eventParams = {
+          longitude: _.get(location, 'geometry.coordinates[0]'),
+          latitude: _.get(location, 'geometry.coordinates[1]')
+          /* Not yet used
+          layerId: data.feature.layer,
+          featureId: data.feature._id
+          */
+        }
+      } else {
+        this.eventParams = {
+          longitude: data.latlng.lng,
+          latitude: data.latlng.lat
+        }
+      }
       this.$refs.templateModal.open()
     },
-    async onUpdateFeaturePropertiesAction (data) {
-      await this.editLayer(data.layer.name)
-      await this.updateFeatureProperties(data.feature, data.layer, data.target)
-      await this.editLayer(data.layer.name)
-    },
-    onRemoveFeatureAction (data) {
-      if (data.layer.name === this.$t('CatalogActivity.ALERTS_LAYER')) { // Alert deletion
-        Dialog.create({
-          title: this.$t('CatalogActivity.REMOVE_ALERT_DIALOG_TITLE'),
-          message: this.$t('CatalogActivity.REMOVE_ALERT_DIALOG_MESSAGE'),
-          html: true,
-          ok: {
-            label: this.$t('OK'),
-            flat: true
-          },
-          cancel: {
-            label: this.$t('CANCEL'),
-            flat: true
-          }
-        }).onOk(async () => {
-          await this.$api.getService('alerts').remove(data.feature._id)
-        })
-      } // User feature deletion
-      else this.onRemoveFeature(data.feature, data.layer, data.target)
+    onCreateEvent (template) {
+      this.$router.push({
+        name: 'create-event',
+        params: Object.assign({
+          contextId: this.contextId,
+          templateId: template._id,
+        }, this.eventParams)
+      })
     },
     getAlertModalToolbar () {
       return [
@@ -323,17 +317,6 @@ export default {
       return [
         { id: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.templateModal.close() }
       ]
-    },
-    onEventTemplateSelected (template) {
-      this.$router.push({
-        name: 'create-event',
-        params: {
-          contextId: this.contextId,
-          templateId: template._id,
-          layerId: this.eventFeature.layer,
-          featureId: this.eventFeature._id
-        }
-      })
     }
   },
   created () {
