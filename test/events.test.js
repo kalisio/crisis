@@ -19,7 +19,6 @@ fixture`events`// declare the fixture
 
   const screens = new pages.Screens()
   const layout = new pages.Layout()
-  const sideNav = new pages.SideNav()
   const users = new pages.Users()
   const members = new pages.Members()
   const groups = new pages.Groups()

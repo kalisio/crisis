@@ -13,7 +13,6 @@ fixture`billing`// declare the fixture
 
   const screens = new pages.Screens()
   const layout = new pages.Layout()
-  const sideNav = new pages.SideNav()
   const organisationsPanel = new pages.OrganisationsPanel()
   const organisationSettings = new pages.OrganisationSettings()
   const users = new pages.Users()

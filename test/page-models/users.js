@@ -2,7 +2,6 @@ import { Selector } from 'testcafe'
 import BasePage from './core/base-page'
 import Screens from './core/screens'
 import Layout from './core/layout'
-import SideNav from './core/side-nav'
 import Account from './core/account'
 import OrganisationSettings from './core/organisation-settings'
 
@@ -12,7 +11,6 @@ export default class Users extends BasePage {
     this.screens = new Screens()
     this.layout = new Layout()
     this.account = new Account()
-    this.sideNav = new SideNav()
     this.organisationSettings = new OrganisationSettings()
   }
 
@@ -22,8 +20,8 @@ export default class Users extends BasePage {
       await this.screens.register(test, users[i])
       await this.layout.closeSignupAlert(test)
       await this.layout.closeWelcomeDialog(test)
-      await this.layout.clickLeading(test)
-      await this.sideNav.logout(test)
+      await this.layout.clickLeftOpener(test)
+      await this.layout.clickLeftPaneAction(test, pages.Layout.LOGOUT)
       await this.screens.goToLoginScreen(test)
     }
   }
@@ -35,10 +33,10 @@ export default class Users extends BasePage {
       await this.layout.closeWelcomeDialog(test)
       await this.layout.clickOverflowMenu(test, OrganisationSettings.OVERFLOW_MENU_ENTRY)
       await this.layout.clickTabBar(test, OrganisationSettings.DANGER_ZONE_TAB)
-      await this.organisationSettings.delete(test, users[i].name)
-      await this.layout.clickLeading(test)
-      await this.sideNav.clickIdentity(test)
-      await this.layout.clickTabBar(test, Account.DANGER_ZONE_TAB)
+      await this.this.organisationSettings.delete(test, users[i].name)
+      await this.layout.clickLeftOpener(test)
+      await this.layout.clickLeftPaneAction(test, pages.Account.MANAGE_ACCOUNT)
+      await this.layout.clickTopPaneAction(test, pages.Account.DANGER_ZONE)
       await this.account.delete(test, users[i].name)
       await this.screens.goToLoginScreen(test)
     }

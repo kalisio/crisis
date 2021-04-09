@@ -16,18 +16,21 @@ fixture`basic`// declare the fixture
 
 const screens = new pages.Screens()
 const layout = new pages.Layout()
-const sideNav = new pages.SideNav()
 const tags = new pages.Tags()
 const organisationSettings = new pages.OrganisationSettings()
 
+const user = {
+  email: 'kalisio@kalisio.xyz',
+  password: 'Pass;word1'
+}
+
 test('Login as default user', async test => {
-  await screens.login(test, { email: 'kalisio@kalisio.xyz', password: 'Pass;word1' })
+  await screens.login(test, user)
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
   await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
   await layout.clickOverflowMenu(test, pages.Tags.OVERFLOW_MENU_ENTRY)
-  //console.log(await tags.title('RAD4'))
-  await tags.checkExists(test, 'RAD4')
+   await tags.checkExists(test, 'RAD4')
   await tags.checkCounter(test, 'RAD4', 5)
   await tags.edit(test, 'RAD4', { name: 'RAD5' })
   await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
@@ -38,6 +41,6 @@ test('Login as default user', async test => {
   await organisationSettings.checkPlanEnabled(test, 'bronze')
   await layout.clickTabBar(test, pages.OrganisationSettings.DANGER_ZONE_TAB)
   await layout.clickLeading(test)
-  await sideNav.logout(test)
+  
   await screens.goToLoginScreen(test)
 })
