@@ -116,25 +116,38 @@ let defaultMapOptions = {
   }
 }
 
-const baseLayers = { name: 'BaseLayers', label: 'KCatalogPanel.BASE_LAYERS', icon: 'las la-layer-group',
-  options: { exclusive: true, filter: { type: 'BaseLayer' } } }
-const businessLayers = { name: 'BusinessLayers', label: 'KCatalogPanel.BUSINESS_LAYERS', icon: 'las la-briefcase',
-  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } } }
-const capturedLayers = { name: 'CapturedLayers', label: 'KCatalogPanel.CAPTURED_LAYERS', icon: 'las la-street-view',
-  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['captured'] } } } }
-const overlayLayers = { name: 'OverlayLayers', label: 'KCatalogPanel.OVERLAY_LAYERS', icon: 'las la-map-marker',
-  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $exists: false } } } }
-const measureLayers = { name: 'MeasureLayers', label: 'KCatalogPanel.MEASURE_LAYERS', icon: 'fas la-map-pin',
-  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } } }
-const meteoLayers = { name: 'MeteoLayers', label: 'KCatalogPanel.METEO_LAYERS', icon: 'las la-cloud-sun-rain',
-  options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } } }
+const businessLayers = {
+  name: 'KCatalogPanel.BUSINESS_LAYERS',
+  icon: 'las la-briefcase',
+  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } }
+}
+const baseLayers = {
+  name: 'KCatalogPanel.BASE_LAYERS',
+  icon: 'las la-layer-group',
+  options: { exclusive: true, filter: { type: 'BaseLayer' } }
+}
+const capturedLayers = {
+  name: 'KCatalogPanel.CAPTURED_LAYERS',
+  icon: 'las la-street-view',
+  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['captured'] } } }
+}
+const measureLayers = {
+  name: 'KCatalogPanel.MEASURE_LAYERS',
+  icon: 'las la-map-pin',
+  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } }
+}
+const meteoLayers = {
+  name: 'KCatalogPanel.METEO_LAYERS',
+  icon: 'las la-cloud-sun-rain',
+  component: 'catalog/KWeatherLayersSelector',
+  options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } }
+}
 
 const defaultMapCatalog = {
   categories: [
-    baseLayers,
     businessLayers,
+    baseLayers,
     capturedLayers,
-    overlayLayers,
     measureLayers,
     meteoLayers
   ]
@@ -219,12 +232,13 @@ const layerActions = [{
   content: [
     { id: 'zoom-to', label: 'mixins.activity.ZOOM_TO_LABEL', icon: 'las la-search-location', handler: 'onZoomToLayer' },
     { id: 'save', label: 'mixins.activity.SAVE_LABEL', icon: 'las la-save', handler: 'onSaveLayer', visible: 'isLayerStorable' },
-    { id: 'filter-data', label: 'mixins.activity.FILTER_DATA_LABEL', icon: 'las la-filter', handler: 'onFilterLayerData', visible: 'isLayerEditable' },
-    { id: 'view-data', label: 'mixins.activity.VIEW_DATA_LABEL', icon: 'las la-th-list', handler: 'onViewLayerData', visible: 'isLayerEditable' },
-    { id: 'chart-data', label: 'mixins.activity.CHART_DATA_LABEL', icon: 'las la-chart-pie', handler: 'onChartLayerData', visible: 'isLayerEditable' },
+    { id: 'filter-data', label: 'mixins.activity.FILTER_DATA_LABEL', icon: 'las la-filter', handler: 'onFilterLayerData', visible: 'isFeatureLayer' },
+    { id: 'view-data', label: 'mixins.activity.VIEW_DATA_LABEL', icon: 'las la-th-list', handler: 'onViewLayerData', visible: 'isFeatureLayer' },
+    { id: 'chart-data', label: 'mixins.activity.CHART_DATA_LABEL', icon: 'las la-chart-pie', handler: 'onChartLayerData', visible: 'isFeatureLayer' },
     { id: 'edit', label: 'mixins.activity.EDIT_LABEL', icon: 'las la-file-alt', handler: 'onEditLayer', visible: 'isLayerEditable' },
     { id: 'edit-style', label: 'mixins.activity.EDIT_LAYER_STYLE_LABEL', icon: 'las la-border-style', handler: 'onEditLayerStyle', visible: 'isLayerStyleEditable' },
-    { id: 'edit-data', label: 'mixins.activity.STOP_EDIT_DATA_LABEL', icon: 'las la-edit', handler: 'onEditLayerData', visible: 'isLayerEditable' },
+    { id: 'edit-data', label: 'mixins.activity.START_EDIT_DATA_LABEL', icon: 'las la-edit', handler: 'onEditLayerData', visible: 'isLayerDataEditable',
+      toggle: { icon: 'las la-edit', tooltip: 'mixins.activity.STOP_EDIT_DATA_LABEL' }, component: 'KEditLayerData' },
     { id: 'remove', label: 'mixins.activity.REMOVE_LABEL', icon: 'las la-minus-circle', handler: 'onRemoveLayer', visible: 'isLayerRemovable' }
   ]
 }]
@@ -673,7 +687,7 @@ module.exports = {
       ]
     },
     engine: defaultMapOptions,
-    catalog: { categories: [baseLayers, overlayLayers] },
+    catalog: { categories: [baseLayers] },
     layers: {
       actions: layerActions,
       filter: { $or: [{ id: { $exists: false} }, { id: 'zoom-to' }] }
@@ -812,6 +826,8 @@ module.exports = {
     page: {
       content: [{
         component: 'frame/KPageSticky', position: 'left', offset: [18, 0], content: [{ component: 'KColorLegend' }]
+      }, {
+        component: 'frame/KPageSticky', position: 'top-left', offset: [18, 18], content: [{ component: 'KUrlLegend' }]
       }, {
         component: 'KFeatureActionButton'
       }]

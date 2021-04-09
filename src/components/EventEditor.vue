@@ -6,7 +6,8 @@
     @opened="$emit('opened')"
     @closed="$emit('closed')">
     <div slot="modal-content" class="column xs-gutter">
-      <k-form :class="{ 'light-dimmed': applyInProgress }" ref="eventForm" :contextId="contextId" :objectId="objectId" :schema="schema" @field-changed="onFieldChanged" />
+      <k-form :class="{ 'light-dimmed': applyInProgress }" ref="eventForm"
+        :contextId="contextId" :objectId="objectId" :schema="schema" @field-changed="onFieldChanged" />
       <q-spinner-cube color="primary" class="fixed-center" v-if="applyInProgress" size="4em"/>
     </div>
   </k-modal>
@@ -41,6 +42,14 @@ export default {
     featureId: {
       type: String,
       default: ''
+    },
+    longitude: {
+      type: Number,
+      default: undefined
+    },
+    latitude: {
+      type: Number,
+      default: undefined
     }
   },
   computed: {
@@ -63,6 +72,9 @@ export default {
         delete this.object._id
         // Setup hasWorkflow tag
         this.object.hasWorkflow = !_.isNil(this.template.workflow)
+        if (!_.isNil(this.longitude) && !_.isNil(this.latitude)) {
+          this.object.location = { longitude: this.longitude, latitude: this.latitude }
+        }
         if (this.layerId) {
           const layer = await this.$api.getService('catalog').get(this.layerId)
           this.object.layer = this.layerId

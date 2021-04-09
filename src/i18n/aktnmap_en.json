@@ -302,7 +302,8 @@
   "CatalogActivity": {
     "CREATE_MEASURE_ALERT_ACTION": "Create an alert on this sensor",
     "CREATE_WEATHER_ALERT_ACTION": "Create a weather alert",
-    "CREATE_EVENT_ACTION": "Create an event on this object",
+    "CREATE_EVENT_FEATURE_ACTION": "Create an event on this object",
+    "CREATE_EVENT_LOCATION_ACTION": "Create an event at this location",
     "EDIT_FEATURE_PROPERTIES_ACTION": "Edit feature properties",
     "REMOVE_FEATURE_ACTION": "Remove feature",
     "CREATE_EVENT_TITLE": "Select an event template",
