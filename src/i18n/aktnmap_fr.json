@@ -262,10 +262,11 @@
     "CONTACT": "Contact",
     "TERMS_AND_POLICIES": "Conditions générales"
   },
-  "sideNav": {
-    "DASHBOARD": "Tableau de bord",
-    "SETTINGS": "Paramètres",
-    "HELP": "$t(HELP)",
+  "leftPane": {
+    "ORGANISATIONS": "Mes organisations",
+    "SETTINGS": "Mes paramètres",
+    "ONLINE_HELP": "Aide en ligne",
+    "CONTEXTUAL_HELP": "Aide contextuelle",
     "LOGOUT": "Se déconnecter"
   },
   "Context": {
@@ -275,7 +276,7 @@
     "MEMBERS": "Membres",
     "TAGS": "Etiquettes",
     "GROUPS": "Groupes",
-    "CATALOG": "Contexte géographique",
+    "CATALOG": "Cartographie",
     "SEARCH": "Rechercher",
     "CONTEXTUAL_HELP": "$t(CONTEXTUAL_HELP)",    
     "REFRESH": "Rafraîchir",

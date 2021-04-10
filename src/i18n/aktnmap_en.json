@@ -257,10 +257,11 @@
     "CONTACT": "Contact",
     "TERMS_AND_POLICIES": "Terms and Policies"
   },
-  "sideNav": {
-    "DASHBOARD": "Dashboard",
-    "SETTINGS": "Settings",
-    "HELP": "$t(HELP)",
+  "leftPane": {
+    "ORGANISATIONS": "My organisations",
+    "SETTINGS": "My settings",
+    "ONLINE_HELP": "Online help",
+    "CONTEXTUAL_HELP": "Contextual help",
     "LOGOUT": "Logout"
   },
   "Context": {
@@ -270,7 +271,7 @@
     "MEMBERS": "Members",
     "TAGS": "Tags",
     "GROUPS": "Groups",
-    "CATALOG": "Geographic Context",
+    "CATALOG": "Cartography",
     "SEARCH": "Search",
     "CONTEXTUAL_HELP": "$t(CONTEXTUAL_HELP)",
     "REFRESH": "Refresh",

@@ -6,7 +6,7 @@
       -->
       <q-item id="edit-settings" @click="editSettings" clickable v-ripple>
         <q-item-section avatar><q-icon name="las la-cog"/></q-item-section>
-        <q-item-section>{{$t('sideNav.SETTINGS')}}</q-item-section>
+        <q-item-section>{{$t('leftPane.SETTINGS')}}</q-item-section>
       </q-item>
     </q-list>
     <!--
@@ -28,6 +28,7 @@ export default {
   methods: {
     editSettings () {
       this.$refs.editor.openModal()
+      this.$emit('triggered')
     },
     onSettingsEdited () {
       this.$refs.editor.closeModal()
