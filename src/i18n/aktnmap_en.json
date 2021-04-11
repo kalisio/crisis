@@ -277,6 +277,13 @@
     "REFRESH": "Refresh",
     "SETTINGS": "Settings"
   },
+  "OrganisationCard": {
+    "EVENTS": "{{count}} event(s)",
+    "MEMBERS": "Members",
+    "TAGS": "Tags",
+    "GROUPS": "Groups",
+    "EVENT_TEMPLATES": "Event templates"
+  },
   "OrganisationProperties": {
     "SUBSCRIPTION_PAGES": "Subscriptions Pages",
     "SUBSCRIPTION_PAGE_LINK": "Link to the subscription page",

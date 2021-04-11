@@ -282,6 +282,13 @@
     "REFRESH": "Rafraîchir",
     "SETTINGS": "Paramètres"
   },
+  "OrganisationCard": {
+    "EVENTS": "{{count}} événement(s)",
+    "MEMBERS": "Membres",
+    "TAGS": "Etiquettes",
+    "GROUPS": "Groupes",
+    "EVENT_TEMPLATES": "Modèles d'événements"
+  },
   "OrganisationProperties": {
     "SUBSCRIPTION_PAGES": "Pages d'abonnements",
     "SUBSCRIPTION_PAGE_LINK": "Lien vers la page d'abonnement",
