@@ -381,7 +381,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { id: 'organisations', icon: 'las la-home', label: 'KOrganisationsActivity.ORGANISATIONS_LABEL', color: 'primary', disabled: true },
+          { id: 'organisations', icon: 'las la-horizontal-grid', label: 'KOrganisationsActivity.ORGANISATIONS_LABEL', color: 'primary', disabled: true },
           { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATION_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('name')
@@ -395,6 +395,11 @@ module.exports = {
     items: {
       component: 'OrganisationCard',
       actions: [
+        { 
+          id: 'settings', icon: 'las la-cog', tooltip: 'Context.SETTINGS',
+          visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+          route: { name: 'organisation-settings-activity', params: { page: 'properties', contextId: ':item._id' } },    
+        },
         { id: 'goto-organisation', icon: 'las la-sign-in-alt', route: { name: 'context', params: { contextId: ':item._id' } } }
       ]
     }
@@ -613,10 +618,6 @@ module.exports = {
     topPane: {
       content: {
         properties: [
-          menuAction,
-          homeAction,
-          organisationAction,
-          separator,
           { id: 'properties', icon: 'las la-file-alt', color: 'primary', label: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] }, disabled: true },
           { id: 'billing', icon: 'las la-credit-card', tooltip: 'OrganisationSettingsActivity.BILLING_OPTIONS_LABEL',
@@ -627,11 +628,7 @@ module.exports = {
             route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' }
         ],
-        billing: [
-          menuAction,
-          homeAction,
-          organisationAction,
-          separator,          
+        billing: [     
           { id: 'properties', icon: 'las la-file-alt', tooltip: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
             route: { name: 'organisation-settings-activity', params: { page: 'properties' } } },
@@ -642,11 +639,7 @@ module.exports = {
             route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' }
         ],
-        'danger-zone': [
-          menuAction,
-          homeAction,
-          organisationAction,
-          separator,          
+        'danger-zone': [        
           { id: 'properties', icon: 'las la-file-alt', tooltip: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
             route: { name: 'organisation-settings-activity', params: { page: 'properties' } } },

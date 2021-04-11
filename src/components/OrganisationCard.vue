@@ -3,13 +3,9 @@
     <!--
       Card header
     -->
-    <!--template v-slot:card-header>
-      <div class="q-pa-sm row justify-end">
-        <q-badge id="events-badge" outine color="secondary">
-          {{ eventsStats.total }} événement(s) en cours
-        </q-badge>
-      </div>
-    </template-->
+    <template v-slot:card-avatar>
+      <k-avatar :object="item" :contextId="item._id" size="6rem" />
+    </template>
     <!--
       Card content
      -->
@@ -84,6 +80,7 @@ export default {
   created () {
     // Load the required components
     this.$options.components['k-card'] = this.$load('collection/KCard')
+    this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
     // We will use the member role to illustrate the number of users
     this.roleNames = permissions.RoleNames
     this.roleIcons = this.$config('roles.icons')
