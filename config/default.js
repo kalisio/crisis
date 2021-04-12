@@ -29,7 +29,7 @@ if (process.env.SUBDOMAIN) {
   domain = 'https://aktnmap.' + process.env.SUBDOMAIN
 }
 // On a developer machine will do domain = gateway = localhost
-const gateway = domain.replace('kano', 'api')
+const gateway = domain.replace('aktnmap', 'api')
 
 const contextHelp = function (tour) {
   return Object.assign({
@@ -233,9 +233,9 @@ module.exports = {
   apiJwt: 'aktnmap-jwt',
   apiTimeout: 20000,
   transport: 'websocket', // Could be 'http' or 'websocket',
-  gateway: 'https://api.',
+  gateway,
   gatewayJwtField: 'jwt',
-  gatewayJwt: 'kano-gateway-jwt',
+  gatewayJwt: 'aktnmap-gateway-jwt',
   appName: 'Akt\'n\'Map',
   appLogo: 'aktnmap-logo.png',
   appWebsite: 'https://kalisio.com/solutions#aktnmap',

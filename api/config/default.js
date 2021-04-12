@@ -85,6 +85,8 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
 if (process.env.SUBDOMAIN) {
   domain = 'https://aktnmap.' + process.env.SUBDOMAIN
 }
+// On a developer machine will do domain = gateway = localhost
+const gateway = domain.replace('aktnmap', 'api')
 
 module.exports = {
   // Proxy your API if using any.
@@ -92,6 +94,7 @@ module.exports = {
   // https://github.com/chimurai/http-proxy-middleware
   proxyTable: {},
   domain,
+  gateway,
   host: process.env.HOSTNAME || 'localhost',
   port: serverPort,
   /* To enable HTTPS

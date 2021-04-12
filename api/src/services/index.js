@@ -200,6 +200,7 @@ export default async function () {
       const response = {
         name: 'aktnmap',
         domain: app.get('domain'),
+        gateway: app.get('gateway'),
         version: packageInfo.version,
         plans: _.get(app.get('billing'), 'plans'),
         options: _.get(app.get('billing'), 'options'),
