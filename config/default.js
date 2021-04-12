@@ -55,9 +55,6 @@ const leftPane = function (tour) {
   }
 }
 
-const menuAction = { id: 'menu', icon: 'las la-bars', tooltip: 'MENU', size: '1rem', handler: { name: 'setLeftPaneVisible', params: [true] } }
-const homeAction = { id: 'home', icon: 'las la-grip-horizontal', tooltip: 'ORGANISATIONS', route: { name: 'home' } }
-const organisationAction = { id: 'organisation', icon: 'las la-arrow-left', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } }
 const separator = { component: 'QSeparator', vertical: true, color: 'lightgrey' }
 const midSeparator = { component: 'QSeparator', vertical: true, inset: true, color: 'grey-5', style: 'max-width: 1px; min-width: 2px;' }
 
@@ -360,31 +357,10 @@ module.exports = {
       component: 'OrganisationCard',
       actions: [
         { 
-          id: 'members', icon: 'las la-user-friends', tooltip: 'KMembersActivity.MEMBERS_LABEL',
-          visible: { name: '$can', params: ['service', 'members', ':item._id'] },
-          route: { name: 'members-activity', params: { contextId: ':item._id' } },    
-        },
-        { 
-          id: 'tags', icon: 'las la-tags', tooltip: 'KTagsActivity.TAGS_LABEL',
-          visible: { name: '$can', params: ['service', 'tags', ':item._id'] },
-          route: { name: 'tags-activity', params: { contextId: ':item._id' } },    
-        },
-        { 
-          id: 'groups', icon: 'las la-sitemap', tooltip: 'KGroupsActivity.GROUPS_LABEL',
-          visible: { name: '$can', params: ['service', 'groups', ':item._id'] },
-          route: { name: 'groups-activity', params: { contextId: ':item._id' } },    
-        },
-        { 
-          id: 'event-templates', icon: 'las la-project-diagram', tooltip: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL',
-          visible: { name: '$can', params: ['service', 'event-templates', ':item._id'] },
-          route: { name: 'event-templates-activity', params: { contextId: ':item._id' } },    
-        },
-        { 
-          id: 'settings', icon: 'las la-cog', tooltip: 'Context.SETTINGS',
+          id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationCard.CONFIGURE',
           visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':item._id' }] },
           route: { name: 'organisation-settings-activity', params: { page: 'properties', contextId: ':item._id' } },    
-        },
-        // { id: 'goto-organisation', icon: 'las la-sign-in-alt', route: { name: 'context', params: { contextId: ':item._id' } } }
+        }
       ]
     }
   },
@@ -393,6 +369,8 @@ module.exports = {
     topPane: {
       content: {
         'default': [
+          { component: 'OrganisationAvatar' },
+          separator,
           { id: 'events', icon: 'las la-fire', label: 'EventsActivity.EVENTS_LABEL', color: 'primary', disabled: true },
           { 
             id: 'catalog', icon: 'las la-map', tooltip: 'Context.CATALOG',
@@ -433,6 +411,8 @@ module.exports = {
     topPane: {
       content: {
         default: [
+          { component: 'OrganisationAvatar' },
+          separator,
           { 
             id: 'events', icon: 'las la-fire', tooltip: 'EventsActivity.EVENTS_LABEL',
             visible: { name: '$can', params: ['service', 'events', ':contextId'] },
@@ -522,6 +502,8 @@ module.exports = {
     topPane: {
       content: {
         'history': [
+          { component: 'OrganisationAvatar' },
+          separator,
           { 
             id: 'events', icon: 'las la-fire', tooltip: 'EventsActivity.EVENTS_LABEL',
             visible: { name: '$can', params: ['service', 'events', ':contextId'] },
@@ -545,7 +527,6 @@ module.exports = {
         'map': [
           { id: 'organisation', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           midSeparator,
-          // { id: 'history-view', icon: 'las la-history', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: 'onShowChart' },
           { id: 'by-template', icon: 'las la-layer-group', tooltip: 'ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL',
             toggle: { icon: 'las la-object-group', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_ALL_LABEL' }, handler: 'onByTemplate' },
@@ -557,10 +538,6 @@ module.exports = {
         'chart': [
           { id: 'organisation', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           midSeparator,
-          /*menuAction,
-          homeAction,
-          separator,
-          { id: 'history-view', icon: 'las la-history', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },*/
           { id: 'map-view', icon: 'scatter_plot', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
           { id: 'settings', icon: 'las la-cog', tooltip: 'ArchivedEventsActivity.CHART_SETTINGS_LABEL', handler: 'showChartSettings' },
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.CHART_EXPORT_LABEL', handler: 'downloadChartData' }
@@ -602,6 +579,8 @@ module.exports = {
     topPane: {
       content: {
         properties: [
+          { component: 'OrganisationAvatar' },
+          separator,          
           { id: 'properties', icon: 'las la-file-alt', color: 'primary', label: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] }, disabled: true },
           { id: 'billing', icon: 'las la-credit-card', tooltip: 'OrganisationSettingsActivity.BILLING_OPTIONS_LABEL',
@@ -612,7 +591,9 @@ module.exports = {
             route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' }
         ],
-        billing: [     
+        billing: [   
+          { component: 'OrganisationAvatar' },
+          separator,     
           { id: 'properties', icon: 'las la-file-alt', tooltip: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
             route: { name: 'organisation-settings-activity', params: { page: 'properties' } } },
@@ -623,7 +604,9 @@ module.exports = {
             route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' }
         ],
-        'danger-zone': [        
+        'danger-zone': [  
+          { component: 'OrganisationAvatar' },
+          separator,         
           { id: 'properties', icon: 'las la-file-alt', tooltip: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
             route: { name: 'organisation-settings-activity', params: { page: 'properties' } } },
@@ -642,6 +625,8 @@ module.exports = {
     topPane: {
       content: {
         'default': [
+          { component: 'OrganisationAvatar' },
+          separator,
           { id: 'members', icon: 'las la-user-friends', label: 'KMembersActivity.MEMBERS_LABEL', color: 'primary', disabled: true },
           { 
             id: 'tags', icon: 'las la-tags', tooltip: 'KTagsActivity.TAGS_LABEL',
@@ -696,7 +681,9 @@ module.exports = {
     leftPane: leftPane(),
     topPane: {
       content: {
-        'default': [                
+        'default': [      
+          { component: 'OrganisationAvatar' },
+          separator,          
           { 
             id: 'members', icon: 'las la-user-friends', tooltip: 'KMembersActivity.MEMBERS_LABEL',
             visible: { name: '$can', params: ['service', 'members', ':contextId'] },
@@ -733,6 +720,8 @@ module.exports = {
     topPane: {
       content: {
         'default': [
+          { component: 'OrganisationAvatar' },
+          separator,
           { 
             id: 'members', icon: 'las la-user-friends', tooltip: 'KMembersActivity.MEMBERS_LABEL',
             visible: { name: '$can', params: ['service', 'members', ':contextId'] },
@@ -777,6 +766,8 @@ module.exports = {
     topPane: {
       content: {
         'default': [ 
+          { component: 'OrganisationAvatar' },
+          separator,
           { 
             id: 'members', icon: 'las la-user-friends', tooltip: 'KMembersActivity.MEMBERS_LABEL',
             visible: { name: '$can', params: ['service', 'members', ':contextId'] },

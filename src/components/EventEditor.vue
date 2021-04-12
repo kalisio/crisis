@@ -55,7 +55,12 @@ export default {
   computed: {
     buttons () {
       return [
-        { id: 'apply-button', label: this.applyButton, color: 'primary', handler: () => this.apply() }
+        { 
+          id: 'apply-button', 
+          label: this.applyButton, 
+          renderer: 'form-button', 
+          handler: () => this.apply() 
+        }
       ]
     }
   },

@@ -84,6 +84,7 @@
       "type": "array",
       "multiselect": true,
       "uniqueItems": true,
+      "minItems": 1,
       "default": [],
       "services": [{
         "service": "members",

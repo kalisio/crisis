@@ -59,13 +59,10 @@
     "EVENTS_ADVANCED_SETTINGS": "Paramètres avancés",
     "EVENTS_CREATE_TITLE": "Créer un nouvel événement ?",
     "EVENTS_NAME_FIELD_LABEL": "Saisissez le nom de l'événement",
-    "EVENTS_NAME_FIELD_LABEL": "Nom de l'événement",
     "EVENTS_DESCRIPTION_FIELD_LABEL": "Saisissez une description de l'événement",
-    "EVENTS_DESCRIPTION_FIELD_LABEL": "Description de l'événement",
     "EVENTS_LOCATION_FIELD_LABEL": "Saisissez le lieu de l'événement",
     "EVENTS_EXPIRE_AT_FIELD_LABEL": "Saisissez la date d'expiration de l'événement",
     "EVENTS_PARTICIPANTS_FIELD_LABEL": "Saisissez les participants à l'événement",
-    "EVENTS_PARTICIPANTS_FIELD_LABEL": "Participants à l'événement",
     "EVENTS_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs de l'événement (autres que vous)",
     "EVENTS_COORDINATORS_FIELD_UPDATE_LABEL": "Saisissez les coordinateurs de l'événement",
     "EVENTS_COORDINATORS_FIELD_LABEL": "Coordinateurs de l'événement",
@@ -74,7 +71,6 @@
     "EVENTS_NOTIFICATION_FIELD_CREATE_LABEL": "Notifier les participants de la création",
     "EVENTS_NOTIFICATION_FIELD_UPDATE_LABEL": "Notifier les participants de la mise à jour",
     "EVENTS_LOG_TITLE": "Entrez votre choix",
-    "EVENTS_LOG_COMMENT_FIELD_LABEL": "Commentaire",
     "EVENTS_LOG_COMMENT_FIELD_LABEL": "Saisissez votre commentaire pour cette étape"
   },
   "tours": {
@@ -284,10 +280,20 @@
   },
   "OrganisationCard": {
     "EVENTS": "{{count}} événement(s)",
+    "VIEW_EVENTS": "Voir les événements",
+    "VIEW_CATALOG": "Voir la carte",
+    "VIEW_ARCHIVED_EVENTS": "Voir la main courante",
+    "CATALOG": "Cartographie",
+    "ARCHIVED_EVENTS": "Main courante",
     "MEMBERS": "Membres",
+    "VIEW_MEMBERS": "Voir les membres",
     "TAGS": "Etiquettes",
+    "VIEW_TAGS": "Voir les étiquettes",
     "GROUPS": "Groupes",
-    "EVENT_TEMPLATES": "Modèles d'événements"
+    "VIEW_GROUPS": "Voir les groupes",
+    "EVENT_TEMPLATES": "Modèles d'événements",
+    "VIEW_EVENT_TEMPLATES": "Voir les modèles d'événements",
+    "CONFIGURE": "Configurer"
   },
   "OrganisationProperties": {
     "SUBSCRIPTION_PAGES": "Pages d'abonnements",

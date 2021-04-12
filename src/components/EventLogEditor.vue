@@ -44,7 +44,7 @@ export default {
       return [{
         id: 'save-button',
         label: this.$t('EventLogEditor.SAVE_BUTTON'),
-        color: 'primary',
+        renderer: 'form-button',
         handler: () => this.logCoordinatorState()
       }]
     },
