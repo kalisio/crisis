@@ -35,12 +35,16 @@
 import moment from 'moment'
 import sift from 'sift'
 import centroid from '@turf/centroid'
+import Vue from 'vue'
 import { Dialog } from 'quasar'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
-import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
 
 const activityMixin = kCoreMixins.baseActivity()
+
+// For mapping we get all events at once to avoid managing pagination
+const MAX_ITEMS = 5000
 
 export default {
   name: 'catalog-activity',
@@ -48,7 +52,6 @@ export default {
     kCoreMixins.refsResolver(['map']),
     activityMixin,
     kMapMixins.activity,
-    kCoreMixins.baseCollection,
     kMapMixins.featureSelection,
     kMapMixins.featureService,
     kMapMixins.infobox,
@@ -94,15 +97,9 @@ export default {
     }
   },
   methods: {
-    loadService () {
-      return this.$api.getService('alerts')
-    },
-    getCollectionBaseQuery () {
-      return { geoJson: true }
-    },
-    getCollectionPaginationQuery () {
-      // No pagination on map items
-      return {}
+    formatDate (date) {
+      return date.toLocaleString(kCoreUtils.getLocale(),
+        { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
     },
     async configureActivity () {
       // Wait until map is ready
@@ -116,35 +113,18 @@ export default {
         }
       })
       this.setCurrentTime(moment.utc())
-      // Then update geo alerts
-      this.refreshCollection()
+      // Then update events/alerts
+      this.alerts.refreshCollection()
+      this.events.refreshCollection()
     },
     async getCatalogLayers () {
       let layers = await kMapMixins.activity.methods.getCatalogLayers.call(this)
-      // Add a "virtual" layer for alerts
-      layers.push({
-        name: this.$t('CatalogActivity.ALERTS_LAYER'),
-        type: 'OverlayLayer',
-        icon: 'fas fa-bell',
-        isStorable: false,
-        isEditable: false,
-        isSelectable: false,
-        isStyleEditable: false,
-        featureId: '_id',
-        leaflet: {
-          type: 'geoJson',
-          isVisible: true,
-          realtime: true,
-          popup: { pick: [] }
-        }
-      })
       // Flag required layers as "beta"
       layers.forEach(layer => {
         if (layer.type !== 'BaseLayer') {
           layer.badge = { color: 'primary', transparent: true, label: 'beta' }
         }
       })
-      
       return layers
     },
     getFeatureActions (feature, layer) {
@@ -154,7 +134,7 @@ export default {
         // We can initiate an event
         featureActions.push({
           name: 'create-event',
-          icon: 'whatshot',
+          icon: 'las la-fire',
           handler: this.onSelectEventTemplateAction,
           label: this.$t('CatalogActivity.CREATE_EVENT_LOCATION_ACTION'),
           badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
@@ -180,14 +160,15 @@ export default {
             label: this.$t('CatalogActivity.CREATE_MEASURE_ALERT_ACTION'),
             badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
           })
-        } else if (layer.name !== this.$t('CatalogActivity.ALERTS_LAYER')) {
+        } else if ((layer.name !== this.$t('CatalogActivity.EVENTS_LAYER')) &&
+                   (layer.name !== this.$t('CatalogActivity.ALERTS_LAYER'))) {
           // Could be an internal feature or external one (eg WFS layer)
           let id = _.get(layer, 'featureId', '_id')
           id = _.get(feature, 'properties.' + id, _.get(feature, id))
           if (id) { // Only on saved features
             featureActions.push({
               name: 'create-event',
-              icon: 'whatshot',
+              icon: 'las la-fire',
               handler: this.onSelectEventTemplateAction,
               label: this.$t('CatalogActivity.CREATE_EVENT_FEATURE_ACTION'),
               badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
@@ -197,13 +178,63 @@ export default {
       }
       return featureActions
     },
-    refreshAlertsLayer () {
-      this.updateLayer(this.$t('CatalogActivity.ALERTS_LAYER'), { type: 'FeatureCollection', features: this.items })
+    async refreshEventsLayer () {
+      // Add a "virtual" layer for events if required
+      const layer = this.getLayerByName(this.$t('CatalogActivity.EVENTS_LAYER'))
+      if (!layer) {
+        await this.addLayer({
+          name: this.$t('CatalogActivity.EVENTS_LAYER'),
+          type: 'OverlayLayer',
+          icon: 'las la-fire',
+          isStorable: false,
+          isEditable: false,
+          isSelectable: false,
+          isStyleEditable: false,
+          featureId: '_id',
+          leaflet: {
+            type: 'geoJson',
+            isVisible: true,
+            realtime: true,
+            popup: { pick: [] }
+          }
+        })
+      }
+      this.updateLayer(this.$t('CatalogActivity.EVENTS_LAYER'), { type: 'FeatureCollection', features: this.events.items })
+    },
+    onEventCollectionRefreshed () {
+      this.refreshEventsLayer()
+      // We do not manage pagination now
+      if (this.events.items.length < this.events.nbTotalItems) {
+        this.$events.$emit('error', new Error(this.$t('errors.EVENTS_LIMIT')))
+      }
+    },
+    async refreshAlertsLayer () {
+      // Add a "virtual" layer for alerts if required
+      const layer = this.getLayerByName(this.$t('CatalogActivity.ALERTS_LAYER'))
+      if (!layer) {
+        await this.addLayer({
+          name: this.$t('CatalogActivity.ALERTS_LAYER'),
+          type: 'OverlayLayer',
+          icon: 'las la-bell',
+          isStorable: false,
+          isEditable: false,
+          isSelectable: false,
+          isStyleEditable: false,
+          featureId: '_id',
+          leaflet: {
+            type: 'geoJson',
+            isVisible: true,
+            realtime: true,
+            popup: { pick: [] }
+          }
+        })
+      }
+      this.updateLayer(this.$t('CatalogActivity.ALERTS_LAYER'), { type: 'FeatureCollection', features: this.alerts.items })
     },
     onAlertCollectionRefreshed () {
       this.refreshAlertsLayer()
       // We do not manage pagination now
-      if (this.items.length < this.nbTotalItems) {
+      if (this.alerts.items.length < this.alerts.nbTotalItems) {
         this.$events.$emit('error', new Error(this.$t('errors.ALERTS_LIMIT')))
       }
     },
@@ -244,6 +275,36 @@ export default {
 
       const html = this.getAlertStatusAsHtml(alert)
       return L.tooltip({ permanent: false }, layer).setContent(html)
+    },
+    getEventMarker (feature, latlng, options) {
+      if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
+
+      return this.createMarkerFromStyle(latlng, {
+        icon: {
+          type: 'icon.fontAwesome',
+          options: {
+            iconClasses: kCoreUtils.getIconName(feature) || 'fas fa-map-marker-alt',
+            // Conversion from palette to RGB color is required for markers
+            markerColor: kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color', 'blue')),
+            iconColor: '#FFFFFF'
+          }
+        }
+      })
+    },
+    getEventPopup (feature, layer, options) {
+      if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
+
+      const popup = L.popup({ autoPan: false }, layer)
+      const description = _.get(feature, 'description')
+      return popup.setContent(description)
+    },
+    getEventTooltip (feature, layer, options) {
+      if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
+
+      const tooltip = L.tooltip({ permanent: false }, layer)
+      const name = _.get(feature, 'name')
+      const date = new Date(_.get(feature, 'createdAt'))
+      return tooltip.setContent('<b>' + name + '</b> - ' + this.formatDate(date))
     },
     onSelectEventTemplateAction (data) {
       // Extract event location
@@ -317,6 +378,21 @@ export default {
       return [
         { id: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.templateModal.close() }
       ]
+    },
+    configureCollection (service, baseQuery) {
+      // As we'd like to use the collection mixin but need to require multiple services (alerts, events)
+      // we create a specific component instance to manage each type of objects which are then added to the map.
+      // Indeed we can only support one service if we directly use the mixin in the activity.
+      const Component = Vue.extend({
+        mixins: [kCoreMixins.baseCollection],
+        methods: {
+          loadService: () => this.$api.getService(service),
+          getCollectionBaseQuery: () => baseQuery,
+          // No pagination on map items
+          getCollectionPaginationQuery: () => ({})
+        }
+      })
+      return new Component()
     }
   },
   created () {
@@ -332,6 +408,9 @@ export default {
     this.registerStyle('popup', this.getAlertPopup)
     this.registerStyle('markerStyle', this.getAlertMarker)
     this.registerStyle('featureStyle', this.getAlertStyle)
+    this.registerStyle('tooltip', this.getEventTooltip)
+    this.registerStyle('popup', this.getEventPopup)
+    this.registerStyle('markerStyle', this.getEventMarker)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
     this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
 
@@ -339,10 +418,15 @@ export default {
     this.$checkBillingOption('catalog')
   },
   mounted () {
-    this.$on('collection-refreshed', this.onAlertCollectionRefreshed)
+    this.alerts = this.configureCollection('alerts', { geoJson: true, $skip: 0, $limit: MAX_ITEMS })
+    this.alerts.$on('collection-refreshed', this.onAlertCollectionRefreshed)
+    this.events = this.configureCollection('events', { geoJson: true, $skip: 0, $limit: MAX_ITEMS,
+      $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt'] })
+    this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
   },
   beforeDestroy () {
-    this.$off('collection-refreshed', this.onAlertCollectionRefreshed)
+    this.alerts.$off('collection-refreshed', this.onAlertCollectionRefreshed)
+    this.events.$off('collection-refreshed', this.onEventCollectionRefreshed)
   }
 }
 </script>

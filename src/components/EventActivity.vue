@@ -127,25 +127,6 @@ export default {
       }
       // Add participants layer if coordinator
       if (this.isCoordinator) {
-        // Create an empty layer used as a container for participants
-        this.addLayer({
-          name: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
-          label: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
-          type: 'OverlayLayer',
-          icon: 'fas fa-user',
-          featureId: (this.archived ? 'participant' : 'participant._id'),
-          isStorable: false,
-          isEditable: false,
-          isSelectable: false,
-          isStyleEditable: false,
-          leaflet: {
-            type: 'geoJson',
-            realtime: true,
-            isVisible: true,
-            cluster: { spiderfyDistanceMultiplier: 5.0 }
-          }
-        })
-        // Then update it
         this.refreshCollection()
       }
     },
@@ -189,7 +170,28 @@ export default {
       }
       return true
     },
-    refreshParticipantsLayer () {
+    async refreshParticipantsLayer () {
+      // Create an empty layer used as a container for participants when required
+      const layer = this.getLayerByName(this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'))
+      if (!layer) {
+        await this.addLayer({
+          name: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
+          label: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
+          type: 'OverlayLayer',
+          icon: 'fas fa-user',
+          featureId: (this.archived ? 'participant' : 'participant._id'),
+          isStorable: false,
+          isEditable: false,
+          isSelectable: false,
+          isStyleEditable: false,
+          leaflet: {
+            type: 'geoJson',
+            realtime: true,
+            isVisible: true,
+            cluster: { spiderfyDistanceMultiplier: 5.0 }
+          }
+        })
+      }
       this.participants.splice(0, this.participants.length)
       _.filter(this.items, (item) => this.filterItem(item)).forEach(item => this.participants.push(item))
       this.updateLayer(this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'), { type: 'FeatureCollection', features: this.participants })

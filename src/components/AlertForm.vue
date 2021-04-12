@@ -123,7 +123,7 @@ export default {
           service: 'event-templates',
           field: 'name',
           baseQuery: { $select: ['_id', 'name', 'icon', 'participants', 'coordinators'] },
-          icon: { name: 'whatshot' }
+          icon: { name: 'las la-fire' }
         }],
         field: {
           helper: 'AlertForm.EVENT_TEMPLATE'

@@ -204,7 +204,7 @@ const eventsMixin = {
           }
         }
       } else {
-        // Copy geometry from previous state for coordinator so that we keep the last know user position
+        // Copy geometry from previous state for coordinator so that we keep the last known user position
         if (state.geometry) log.geometry = state.geometry
         // Copy also participant ID so that the ID of the coordinator is not used
         if (state.participant) log.participant = state.participant._id || state.participant

@@ -6,6 +6,7 @@
   "CLOSE_LABEL": "Close",
   "SAVE_LABEL": "Save",
   "errors": {
+    "EVENTS_LIMIT": "Too much events to display all of them",
     "EVENT_LOG_LIMIT": "Too much participants to display all of them",
     "CANNOT_REMOVE_CUSTOMER": "You are not allowed to remove the customer of <b>{{resource}}</b>, change the payment information first.",
     "UNSUBSCRIBED_OPTION": "Sorry, it seems you did not subscribe to this option. Please update your subscription before coming back here."
@@ -323,6 +324,7 @@
     "REMOVE_FEATURE_ACTION": "Remove feature",
     "CREATE_EVENT_TITLE": "Select an event template",
     "CREATE_ALERT_TITLE": "Create a new alert ?",
+    "EVENTS_LAYER": "My events",
     "ALERTS_LAYER": "My alerts",
     "ALERT_ACTIVE": "Active alert",
     "ALERT_INACTIVE": "Inactive alert",

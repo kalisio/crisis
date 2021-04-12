@@ -21,7 +21,8 @@ export function createEventService (options = {}) {
   debug('Creating events service with options', options)
   app.createService('events', Object.assign({
     servicesPath,
-    modelsPath
+    modelsPath,
+    paginate: { default: 20, max: 5000 }
   }, options))
 }
 
@@ -50,7 +51,7 @@ export function createEventLogService (options = {}) {
   app.createService('event-logs', Object.assign({
     servicesPath,
     modelsPath,
-    paginate: { default: 500, max: 500 }
+    paginate: { default: 1000, max: 5000 }
   }, options))
 }
 
@@ -80,7 +81,7 @@ export function createArchivedEventLogService (options = {}) {
   app.createService('archived-event-logs', Object.assign({
     servicesPath,
     modelsPath,
-    paginate: { default: 500, max: 500 }
+    paginate: { default: 1000, max: 5000 }
   }, options))
 }
 

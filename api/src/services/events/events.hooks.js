@@ -38,7 +38,8 @@ module.exports = {
     all: [coreHooks.convertToJson(['alert.conditions'])],
     find: [mapHooks.asGeoJson({
       longitudeProperty: 'location.longitude',
-      latitudeProperty: 'location.latitude'
+      latitudeProperty: 'location.latitude',
+      asFeatureCollection: false
     })],
     get: [],
     create: [sendEventNotifications],

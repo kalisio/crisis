@@ -6,6 +6,7 @@
   "CLOSE_LABEL": "Fermer",
   "SAVE_LABEL": "Enregistrer",
   "errors": {
+    "EVENTS_LIMIT": "Trop d'événements pour les afficher tous",
     "EVENT_LOG_LIMIT": "Trop de participants pour afficher l'ensemble des informations",
     "CANNOT_REMOVE_CUSTOMER": "Vous n'êtes pas autorisé à supprimer le client de <b>{{resource}}</b>, modifiez préalablement les informations de paiement.",
     "UNSUBSCRIBED_OPTION": "Désolé, il semble que vous n'ayez pas souscrit à cette option. Merci de modifier votre abonnement avant de revenir ici."
@@ -327,6 +328,7 @@
     "REMOVE_FEATURE_ACTION": "Supprimer l'objet",
     "CREATE_EVENT_TITLE": "Sélectectionner un modèle d'événement",
     "CREATE_ALERT_TITLE": "Créer une nouvelle alerte ?",
+    "EVENTS_LAYER": "Mes événements",
     "ALERTS_LAYER": "Mes alertes",
     "ALERT_ACTIVE": "Alerte active",
     "ALERT_INACTIVE": "Alerte inactive",

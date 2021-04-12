@@ -302,7 +302,7 @@ export default {
             name: template,
             label: template,
             type: 'OverlayLayer',
-            icon: 'whatshot',
+            icon: 'las la-fire',
             leaflet: Object.assign({
               type: 'heatmap',
               isVisible: true
@@ -317,7 +317,7 @@ export default {
             name: template,
             label: template,
             type: 'OverlayLayer',
-            icon: 'whatshot',
+            icon: 'las la-fire',
             leaflet: {
               type: 'geoJson',
               realtime: true,
