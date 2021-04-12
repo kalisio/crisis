@@ -186,10 +186,6 @@ export default {
           name: this.$t('CatalogActivity.EVENTS_LAYER'),
           type: 'OverlayLayer',
           icon: 'las la-fire',
-          isStorable: false,
-          isEditable: false,
-          isSelectable: false,
-          isStyleEditable: false,
           featureId: '_id',
           leaflet: {
             type: 'geoJson',
@@ -216,10 +212,6 @@ export default {
           name: this.$t('CatalogActivity.ALERTS_LAYER'),
           type: 'OverlayLayer',
           icon: 'las la-bell',
-          isStorable: false,
-          isEditable: false,
-          isSelectable: false,
-          isStyleEditable: false,
           featureId: '_id',
           leaflet: {
             type: 'geoJson',

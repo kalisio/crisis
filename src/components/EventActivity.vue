@@ -180,10 +180,6 @@ export default {
           type: 'OverlayLayer',
           icon: 'fas fa-user',
           featureId: (this.archived ? 'participant' : 'participant._id'),
-          isStorable: false,
-          isEditable: false,
-          isSelectable: false,
-          isStyleEditable: false,
           leaflet: {
             type: 'geoJson',
             realtime: true,

@@ -570,7 +570,7 @@ module.exports = {
     catalog: { categories: [baseLayers] },
     layers: {
       actions: layerActions,
-      filter: { $or: [{ id: { $exists: false} }, { id: 'zoom-to' }] }
+      filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
     },
     restore: { layers: false }
   },
@@ -874,7 +874,7 @@ module.exports = {
     catalog: defaultMapCatalog,
     layers: {
       actions: layerActions,
-      filter: { $or: [{ id: { $exists: false} }, { id: 'zoom-to' }] }
+      filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
     },
     featuresChunkSize: 5000 // TODO: here or in mapEngine ?
   },
