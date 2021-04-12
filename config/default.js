@@ -161,7 +161,7 @@ const contextFilter = function (field, services = []) {
   ]
 }
 
-const contextMenu = function (activityName) {
+/*const contextMenu = function (activityName) {
   return {
     id: 'app-bar-overflow-menu',
     component: 'frame/KMenu',
@@ -199,6 +199,7 @@ const contextMenu = function (activityName) {
     ].filter(item => !item.route || (item.route.name !== activityName))
   }
 }
+*/
 
 const layerActions = [{
   id: 'layer-actions',
@@ -644,7 +645,11 @@ module.exports = {
             route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
           },
           midSeparator,
-          { component: 'team/KMemberFilter'},
+          { component: 'team/KMemberFilter' },
+          { component: 'collection/KSorter', options: [
+            { icon: 'las la-sort-alpha-down', value: { field: 'profile.name', order: 1 }, default: true },
+            { icon: 'las la-sort-alpha-up', value: { field: 'profile.name', order: -1 } }
+          ]},
           { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBER_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('profile.name', [
@@ -701,6 +706,10 @@ module.exports = {
             route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
           },
           midSeparator,
+          { component: 'collection/KSorter', options: [
+            { icon: 'las la-sort-alpha-down', value: { field: 'value', order: 1 }, default: true },
+            { icon: 'las la-sort-alpha-up', value: { field: 'value', order: -1 } }
+          ]},
           { id: 'search-tag', icon: 'las la-search', tooltip: 'KTagsActivity.SEARCH_TAGS_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('value')
@@ -739,6 +748,7 @@ module.exports = {
             route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
           },
           midSeparator,          
+          { component: 'collection/KSorter' },
           { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('name')
@@ -785,6 +795,7 @@ module.exports = {
           },
           { id: 'event-templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', color: 'primary', disabled: true },
           midSeparator,
+          { component: 'collection/KSorter' },
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
         ],
         'filter': contextFilter('name')

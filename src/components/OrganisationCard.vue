@@ -21,7 +21,7 @@
      -->
     <div slot="card-content">
       <q-separator />
-      <div class="q-pa-md row justify-between items-center">
+      <div class="q-pa-xs row justify-between items-center">
         <div>
           <k-action 
             id= "events"
@@ -34,19 +34,18 @@
         <div>
            <k-action 
             id= "map"
-            size="1rem"
             icon= "las la-map"
             :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
             :route="{ name: 'catalog-activity', params: { contextId: this.item._id } }" />
            <k-action 
             id= "history"
-            size="1rem"
             icon= "las la-history"
             :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
             :route="{ name: 'archived-events-activity', params: { contextId: this.item._id } }" />
         </div>
       </div>
       <q-separator />
+
       <div class="full-width q-pa-md column">
         <div v-if="isCountAvailable('members')" class="row items-center">
           <div class="col-grow">{{ $t('OrganisationCard.MEMBERS') }}</div>
