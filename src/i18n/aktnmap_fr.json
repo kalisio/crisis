@@ -475,7 +475,7 @@
     "HEATMAP_RADIUS_LABEL": "Empreinte",
     "CHART_SETTINGS_MODAL_TITLE": "Paramétrage du graphique",
     "CHART_LABEL": "Type de graphique",
-    "PAGINATION_LABEL": "Nombre de valeurs",
+    "PAGINATION_LABEL": "Nombre de valeurs par graphique",
     "NULL_VALUE_LABEL": "Indéfini",
     "ALL_VALUES": "Toutes",
     "RENDER_LABEL": "Type d'affichage",

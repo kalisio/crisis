@@ -473,7 +473,7 @@
     "HEATMAP_RADIUS_LABEL": "Footprint",
     "CHART_SETTINGS_MODAL_TITLE": "Graph settings",
     "CHART_LABEL": "Chart type",
-    "PAGINATION_LABEL": "Number of values",
+    "PAGINATION_LABEL": "Number of values per chart",
     "NULL_VALUE_LABEL": "Undefined",
     "ALL_VALUES": "All",
     "RENDER_LABEL": "Display type",

@@ -392,7 +392,7 @@ export default {
     },
     onShowHistory () {
       this.setTopPaneMode('history')
-      this.clearRightPane()
+      this.setRightPaneMode('history')
       // Cleanup
       this.clearEventsLayers()
       this.templates = []
@@ -405,7 +405,7 @@ export default {
     },
     onShowChart () {
       this.setTopPaneMode('chart')
-      this.clearRightPane()
+      this.setRightPaneMode('chart')
       // Cleanup
       this.clearEventsLayers()
       this.templates = []
