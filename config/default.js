@@ -548,11 +548,10 @@ module.exports = {
     },
     rightPane: {
       content: {
-        'map': [
-          { component: 'catalog/KCatalog', bind: '$data' }
-        ]
-      },
-      mode: null // force default mode to null so that panel is hidden
+        'history': [],
+        'map': [ { component: 'catalog/KCatalog', bind: '$data' } ],
+        'chart': []
+      }
     },
     items: {
       actions: [
