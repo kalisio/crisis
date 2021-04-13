@@ -1,5 +1,5 @@
 <template>
-  <k-card v-bind="$props" :itemActions="actions" :bind-actions="false">
+  <k-card v-bind="$props" :actions="itemActions" :bind-actions="false">
     <!--
       Card header
     -->
@@ -14,76 +14,91 @@
       Card avatar
     -->
     <template v-slot:card-avatar>
-      <k-avatar :object="item" :contextId="item._id" size="5rem" />
+      <k-avatar :object="item" :contextId="item._id" size="4rem" />
     </template>
     <!--
       Card content
      -->
     <div slot="card-content">
-      <q-separator />
-      <div class="q-pa-xs row justify-between items-center">
-        <div>
-          <k-action 
-            id= "events"
-            size="1rem"
-            icon= "las la-fire"
-            :label="$t('OrganisationCard.EVENTS', { count: this.stats.events })" 
-            :tooltip="$t('OrganisationCard.VIEW_EVENTS')"
-            :route="{ name: 'events-activity', params: { contextId: this.item._id } }" />
-        </div>
-        <div>
-           <k-action 
-            id= "map"
-            icon= "las la-map"
-            :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
-            :route="{ name: 'catalog-activity', params: { contextId: this.item._id } }" />
-           <k-action 
-            id= "history"
-            icon= "las la-history"
-            :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
-            :route="{ name: 'archived-events-activity', params: { contextId: this.item._id } }" />
-        </div>
-      </div>
-      <q-separator />
-
-      <div class="full-width q-pa-md column">
-        <div v-if="isCountAvailable('members')" class="row items-center">
-          <div class="col-grow">{{ $t('OrganisationCard.MEMBERS') }}</div>
-          <q-badge color="grey-7" outline>{{ stats.members }}</q-badge>
-          <k-action 
-            id="event-templates" 
-            icon="las la-eye" 
-            tooltip="OrganisationCard.VIEW_MEMBERS" 
-            :route="{ name: 'members-activity', params: { contextId: this.item._id } }" />
-        </div>
-        <div v-if="isCountAvailable('tags')" class="row items-center">
-          <div class="col-grow">{{ $t('OrganisationCard.TAGS') }}</div>
-          <q-badge color="grey-7" outline>{{ stats.tags }}</q-badge>
-          <k-action 
-            id="event-templates" 
-            icon="las la-eye" 
-            tooltip="OrganisationCard.VIEW_TAGS" 
-            :route="{ name: 'tags-activity', params: { contextId: this.item._id } }" />
-        </div>
-        <div v-if="isCountAvailable('groups')" class="row items-center">
-          <div class="col-grow">{{ $t('OrganisationCard.GROUPS') }}</div>
-          <q-badge color="grey-7" outline>{{ stats.groups }}</q-badge>
-          <k-action 
-            id="event-templates" 
-            icon="las la-eye" 
-            tooltip="OrganisationCard.VIEW_GROUPS" 
-            :route="{ name: 'groups-activity', params: { contextId: this.item._id } }" />
-        </div>
-        <div v-if="isCountAvailable('event-templates')" class="row items-center">
-          <div class="col-grow">{{ $t('OrganisationCard.EVENT_TEMPLATES') }}</div>
-          <q-badge color="grey-7" outline>{{ stats['event-templates'] }}</q-badge>
-          <k-action 
-            id="event-templates" 
-            icon="las la-eye" 
-            tooltip="OrganisationCard.VIEW_EVENT_TEMPLATES" 
-            :route="{ name: 'event-templates-activity', params: { contextId: this.item._id } }" />
-        </div>
-      </div>
+      <!-- Events section -->
+      <q-list bordered>
+        <q-item clickable @click.native.prevent="$router.push({ name: 'events-activity', params: { contextId: item._id } })">
+          <q-item-section avatar>
+            <q-icon name="las la-fire" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('OrganisationCard.EVENTS', { count: this.stats.events }) }}</q-item-label>
+            <q-tooltip>{{ $t('OrganisationCard.VIEW_EVENTS') }}</q-tooltip>
+          </q-item-section>
+          <q-item-section side>
+            <div class="row justify-between">
+              <k-action 
+                id= "map"
+                icon= "las la-map"
+                :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
+                :route="{ name: 'catalog-activity', params: { contextId: this.item._id } }" 
+                :propagate="false" />
+              <k-action 
+                id= "history"
+                icon= "las la-history"
+                :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
+                :route="{ name: 'archived-events-activity', params: { contextId: this.item._id } }" 
+                :propagate="false" />
+            </div>
+          </q-item-section>
+        </q-item>
+      </q-list>
+      <!-- Assets section -->
+      <q-list bordered>
+        <q-item 
+          v-if="isCountAvailable('members')"
+          clickable 
+          @click.native.prevent="$router.push({ name: 'members-activity', params: { contextId: item._id } })">
+          <q-item-section avatar>
+            <q-icon name="las la-user-friends" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('OrganisationCard.MEMBERS', { count: stats.members }) }}</q-item-label>
+            <q-tooltip>{{ $t('OrganisationCard.VIEW_MEMBERS') }}</q-tooltip>
+          </q-item-section>
+        </q-item>
+        <q-item 
+          v-if="isCountAvailable('tags')"
+          clickable 
+          @click.native.prevent="$router.push({ name: 'tags-activity', params: { contextId: item._id } })">
+          <q-item-section avatar>
+            <q-icon name="las la-tag" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('OrganisationCard.TAGS', { count: stats.tags }) }}</q-item-label>
+            <q-tooltip>{{ $t('OrganisationCard.VIEW_TAGS') }}</q-tooltip>
+          </q-item-section>
+        </q-item>
+        <q-item 
+          v-if="isCountAvailable('groups')"
+          clickable 
+          @click.native.prevent="$router.push({ name: 'groups-activity', params: { contextId: item._id } })">
+          <q-item-section avatar>
+            <q-icon name="las la-sitemap" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('OrganisationCard.GROUPS', { count: stats.groups }) }}</q-item-label>
+            <q-tooltip>{{ $t('OrganisationCard.VIEW_GROUPS') }}</q-tooltip>
+          </q-item-section>
+        </q-item>
+        <q-item 
+          v-if="isCountAvailable('event-templates')"
+          clickable 
+          @click.native.prevent="$router.push({ name: 'event-templates-activity', params: { contextId: item._id } })">
+          <q-item-section avatar>
+            <q-icon name="las la-project-diagram" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('OrganisationCard.EVENT_TEMPLATES', { count: stats['event-templates'] }) }}</q-item-label>
+            <q-tooltip>{{ $t('OrganisationCard.VIEW_EVENT_TEMPLATES') }}</q-tooltip>
+          </q-item-section>
+        </q-item>
+      </q-list>
     </div>
   </k-card>
 </template>
@@ -116,19 +131,7 @@ export default {
         const response = await service.find({ query: {}, $limit: 0 })
         this.$set(this.stats, scope, response.total)
       }
-    }/*,
-    /*onListMembers (role, index) {
-      // Setup filter accordingly
-      this.$store.patch('filter', {
-        items: [Object.assign({
-          service: 'organisations',
-          field: 'permissions',
-          baseQuery: { _id: this.item._id },
-          icon: this.roleIcons[index]
-        }, { permissions: role, value: this.$t(this.roleLabels[index]) })]
-      })
-      this.$router.push({ name: 'members-activity', params: { contextId: this.item._id } })
-    }*/
+    }
   },
   created () {
     // Load the required components
