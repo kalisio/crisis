@@ -344,6 +344,7 @@ module.exports = {
         'default': [
           { id: 'organisations', icon: 'las la-grip-horizontal', label: 'KOrganisationsActivity.ORGANISATIONS_LABEL', color: 'primary', disabled: true },
           midSeparator,
+          { component: 'collection/KSorter' },
           { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATION_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('name')
@@ -358,9 +359,9 @@ module.exports = {
       component: 'OrganisationCard',
       actions: [
         { 
-          id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationCard.CONFIGURE',
-          visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':item._id' }] },
-          route: { name: 'organisation-settings-activity', params: { page: 'properties', contextId: ':item._id' } },    
+          id: 'delete-organisation', icon: 'las la-trash', tooltip: 'OrganisationCard.DELETE',
+          visible: { name: '$can', params: ['remove', 'organisations', null, { _id: ':item._id' }] },
+          handler: { name: 'removeItem', params: ['input'] }
         }
       ]
     }

@@ -4,7 +4,10 @@
       Card header
     -->
     <template v-slot:card-header>
-      <div v-if="userRole" class="q-pa-sm row justify-end">
+      <div v-if="userRole" class="q-pa-sm row justify-end q-gutter-x-sm">
+        <q-badge id="plan-badge" color="grey-7">
+          {{ $t(plan) }}
+        </q-badge>
         <q-badge id="role-badge" color="grey-7">
           {{ $t(userRole) }}
         </q-badge>
@@ -61,6 +64,9 @@
             <q-item-label>{{ $t('OrganisationCard.MEMBERS', { count: stats.members }) }}</q-item-label>
             <q-tooltip>{{ $t('OrganisationCard.VIEW_MEMBERS') }}</q-tooltip>
           </q-item-section>
+          <q-item-section side>
+            <q-badge color='primary' outline :label="getQuota('members')" />
+          </q-item-section>
         </q-item>
         <q-item 
           v-if="isCountAvailable('tags')"
@@ -85,6 +91,9 @@
             <q-item-label>{{ $t('OrganisationCard.GROUPS', { count: stats.groups }) }}</q-item-label>
             <q-tooltip>{{ $t('OrganisationCard.VIEW_GROUPS') }}</q-tooltip>
           </q-item-section>
+          <q-item-section side>
+            <q-badge color='primary' outline :label="getQuota('groups')" />
+          </q-item-section>
         </q-item>
         <q-item 
           v-if="isCountAvailable('event-templates')"
@@ -96,6 +105,9 @@
           <q-item-section>
             <q-item-label>{{ $t('OrganisationCard.EVENT_TEMPLATES', { count: stats['event-templates'] }) }}</q-item-label>
             <q-tooltip>{{ $t('OrganisationCard.VIEW_EVENT_TEMPLATES') }}</q-tooltip>
+          </q-item-section>
+          <q-item-section side>
+            <q-badge color='primary' outline :label="getQuota('event-templates')" />
           </q-item-section>
         </q-item>
       </q-list>
@@ -113,8 +125,7 @@ export default {
   data () {
     return {
       role: null,
-      stats: {},
-      roleLabels: []
+      stats: {}
     }
   },
   methods: {
@@ -124,7 +135,11 @@ export default {
     isCountAvailable (scope) {
       return !_.isNil(this.stats[scope])
     },
+    getQuota (scope) {
+      return _.get(this.quotas, `${this.plan}.${scope}`)
+    },
     async refreshStats () {
+      this.quotas = this.$store.get('capabilities.api.quotas', {})
       const scopes = ['events', 'members', 'tags', 'groups', 'event-templates']
       for (const scope of scopes) {
         const service = this.$api.getService(scope, this.item._id)
@@ -133,15 +148,18 @@ export default {
       }
     }
   },
-  created () {
+  async created () {
     // Load the required components
     this.$options.components['k-card'] = this.$load('collection/KCard')
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
     this.$options.components['k-panel'] = this.$load('frame/KPanel')
     this.$options.components['k-action'] = this.$load('frame/KAction')
-    // We will use the member role to illustrate the number of users
+    // Retrieve the billing perspective
+    const perspective = await this.$api.getService('organisations').get(this.item._id, { query: { $select: ['billing'] } })
+    this.plan = _.get(perspective, 'billing.subscription.plan')
+    // Retrieve the user role
     this.userRole = _.upperCase(permissions.getRoleForOrganisation(this.$store.get('user'), this.item._id))
-    this.roleLabels = this.$config('roles.labels')
+    // Compute the stats
     this.refreshStats()
   }
 }
