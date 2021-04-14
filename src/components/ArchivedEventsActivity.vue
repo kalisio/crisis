@@ -78,7 +78,7 @@ import chroma from 'chroma-js'
 import Chart from 'chart.js'
 import 'chartjs-plugin-labels'
 import Papa from 'papaparse'
-import { Platform, QSlider } from 'quasar'
+import { QSlider } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 
@@ -318,6 +318,7 @@ export default {
             label: template,
             type: 'OverlayLayer',
             icon: 'las la-fire',
+            isSelectable: false,
             leaflet: {
               type: 'geoJson',
               realtime: true,
@@ -529,36 +530,16 @@ export default {
       this.refreshChart()
     },
     downloadChartData () {
-      const mimeType = 'text/csv;charset=utf-8;'
       const json = this.values.map((value, index) => ({
         [this.$t('ArchivedEventsActivity.CHART_VALUE_LABEL')]: value,
         [this.$t('ArchivedEventsActivity.CHART_COUNT_LABEL')]: this.chartData[index]
       }))
       const csv = Papa.unparse(json)
-      // Need to convert to blob
-      const blob = new Blob([csv], { type: mimeType })
-      this.currentDownloadLink = URL.createObjectURL(blob)
-      this.currentDownloadName = this.$t('ArchivedEventsActivity.CHART_EXPORT_FILE')
-      if (Platform.is.cordova) {
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, (fs) => {
-          fs.root.getFile(this.currentMedia.name, { create: true, exclusive: false }, (fileEntry) => {
-            fileEntry.createWriter((fileWriter) => {
-              fileWriter.write(blob)
-              cordova.plugins.fileOpener2.open(fileEntry.nativeURL, mimeType)
-            })
-          })
-        })
-      } else {
-        // We call Vue.nextTick() to let Vue update its DOM to get the download link ready
-        this.$nextTick(() => this.$refs.downloadLink.click())
-      }
+      kCoreUtils.downloadAsBlob(csv, this.$t('ArchivedEventsActivity.CHART_EXPORT_FILE'), 'text/csv;charset=utf-8;')
     },
     async downloadEventsData () {
-      let mimeType
-      // Need to convert to blob
-      let blob
+      let data, mimeType
       if (this.showMap) {
-        mimeType = 'application/json;charset=utf-8;'
         let geoJson = this.toGeoJson(this.$t('ArchivedEventsActivity.EVENTS_LAYER_NAME'))
         geoJson.features = geoJson.features.map(feature => {
           // Move required event information into properties
@@ -566,9 +547,9 @@ export default {
             'participants', 'coordinators', 'workflow', 'hasWorkflow'])
           return Object.assign({ properties }, _.pick(feature, ['type', 'geometry']))
         })
-        blob = new Blob([JSON.stringify(geoJson)], { type: mimeType })
+        mimeType = 'application/json;charset=utf-8;'
+        data = JSON.stringify(geoJson)
       } else {
-        mimeType = 'text/csv;charset=utf-8;'
         // Make full request to avoid pagination and filter required data
         const response = await this.loadService().find({
           query: Object.assign({
@@ -586,30 +567,21 @@ export default {
         }
         const json = response.data.map(item => {
           // No nested structure in CSV
-          if (item.location) item.location = item.location.name
+          if (item.location) {
+            item.longitude = item.location.longitude
+            item.latitude = item.location.latitude
+            item.address = item.location.name
+            delete item.location
+          }
           return item
         })
-        const csv = Papa.unparse(json)
-        blob = new Blob([csv], { type: mimeType })
+        mimeType = 'text/csv;charset=utf-8;'
+        data = Papa.unparse(json)
       }
       
-      this.currentDownloadLink = URL.createObjectURL(blob)
-      this.currentDownloadName = (this.showMap ?
+      kCoreUtils.downloadAsBlob(data, (this.showMap ?
         this.$t('ArchivedEventsActivity.MAP_EXPORT_FILE') :
-        this.$t('ArchivedEventsActivity.EVENTS_EXPORT_FILE'))
-      if (Platform.is.cordova) {
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, (fs) => {
-          fs.root.getFile(this.currentMedia.name, { create: true, exclusive: false }, (fileEntry) => {
-            fileEntry.createWriter((fileWriter) => {
-              fileWriter.write(blob)
-              cordova.plugins.fileOpener2.open(fileEntry.nativeURL, mimeType)
-            })
-          })
-        })
-      } else {
-        // We call Vue.nextTick() to let Vue update its DOM to get the download link ready
-        this.$nextTick(() => this.$refs.downloadLink.click())
-      }
+        this.$t('ArchivedEventsActivity.EVENTS_EXPORT_FILE')), mimeType)
     }
   },
   async created () {
