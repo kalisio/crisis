@@ -187,6 +187,7 @@ export default {
           type: 'OverlayLayer',
           icon: 'las la-fire',
           featureId: '_id',
+          isSelectable: false,
           leaflet: {
             type: 'geoJson',
             isVisible: true,
@@ -213,6 +214,7 @@ export default {
           type: 'OverlayLayer',
           icon: 'las la-bell',
           featureId: '_id',
+          isSelectable: false,
           leaflet: {
             type: 'geoJson',
             isVisible: true,
