@@ -4,10 +4,7 @@
       Card header
     -->
     <template v-slot:card-header>
-      <div v-if="userRole" class="q-pa-sm row justify-end q-gutter-x-sm">
-        <q-badge id="plan-badge" color="grey-7">
-          {{ $t(plan) }}
-        </q-badge>
+      <div v-if="userRole" class="q-pa-sm row justify-end">
         <q-badge id="role-badge" color="grey-7">
           {{ $t(userRole) }}
         </q-badge>
@@ -53,61 +50,59 @@
       </q-list>
       <!-- Assets section -->
       <q-list bordered>
-        <q-item 
-          v-if="isCountAvailable('members')"
-          clickable 
-          @click.native.prevent="$router.push({ name: 'members-activity', params: { contextId: item._id } })">
+        <template v-for="scope in scopes.slice(1)">
+          <q-item 
+            v-if="isCountAvailable(scope.name)"
+            :key="scope.key"
+            clickable 
+            @click.native.prevent="$router.push({ name: `${scope.name}-activity`, params: { contextId: item._id } })">
+            <q-item-section avatar>
+              <q-icon :name="scope.icon" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                {{ $t(`OrganisationCard.${scope.key}`, { count: stats[scope.name] }) }}
+              </q-item-label>
+              <q-tooltip>
+                {{ $t(`OrganisationCard.VIEW_${scope.key}`) }}
+              </q-tooltip>
+            </q-item-section>
+          </q-item>
+        </template>
+      </q-list>
+      <!-- PLan section -->
+      <q-list bordered>
+        <q-item @click.native.prevent="$router.push({ name: 'events-activity', params: { contextId: item._id } })">
           <q-item-section avatar>
-            <q-icon name="las la-user-friends" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>{{ $t('OrganisationCard.MEMBERS', { count: stats.members }) }}</q-item-label>
-            <q-tooltip>{{ $t('OrganisationCard.VIEW_MEMBERS') }}</q-tooltip>
+            <q-icon name="las la-credit-card" />
+          </q-item-section>          
+          <q-item-section v-if="subscription">
+            <q-item-label>
+              {{ $t(`plans.${subscription.plan}_LABEL`) }}
+              <q-tooltip>
+                <template v-for="scope in scopes">
+                  <q-chip 
+                    v-if="hasQuota(scope.name)" 
+                    :key="scope.name" 
+                    :icon="scope.icon" 
+                    :label="getQuota(scope.name)"
+                    color="white"
+                    outline 
+                    square   
+                    size="sm" />
+                </template>
+              </q-tooltip>
+            </q-item-label>
           </q-item-section>
           <q-item-section side>
-            <q-badge color='primary' outline :label="getQuota('members')" />
-          </q-item-section>
-        </q-item>
-        <q-item 
-          v-if="isCountAvailable('tags')"
-          clickable 
-          @click.native.prevent="$router.push({ name: 'tags-activity', params: { contextId: item._id } })">
-          <q-item-section avatar>
-            <q-icon name="las la-tag" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>{{ $t('OrganisationCard.TAGS', { count: stats.tags }) }}</q-item-label>
-            <q-tooltip>{{ $t('OrganisationCard.VIEW_TAGS') }}</q-tooltip>
-          </q-item-section>
-        </q-item>
-        <q-item 
-          v-if="isCountAvailable('groups')"
-          clickable 
-          @click.native.prevent="$router.push({ name: 'groups-activity', params: { contextId: item._id } })">
-          <q-item-section avatar>
-            <q-icon name="las la-sitemap" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>{{ $t('OrganisationCard.GROUPS', { count: stats.groups }) }}</q-item-label>
-            <q-tooltip>{{ $t('OrganisationCard.VIEW_GROUPS') }}</q-tooltip>
-          </q-item-section>
-          <q-item-section side>
-            <q-badge color='primary' outline :label="getQuota('groups')" />
-          </q-item-section>
-        </q-item>
-        <q-item 
-          v-if="isCountAvailable('event-templates')"
-          clickable 
-          @click.native.prevent="$router.push({ name: 'event-templates-activity', params: { contextId: item._id } })">
-          <q-item-section avatar>
-            <q-icon name="las la-project-diagram" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>{{ $t('OrganisationCard.EVENT_TEMPLATES', { count: stats['event-templates'] }) }}</q-item-label>
-            <q-tooltip>{{ $t('OrganisationCard.VIEW_EVENT_TEMPLATES') }}</q-tooltip>
-          </q-item-section>
-          <q-item-section side>
-            <q-badge color='primary' outline :label="getQuota('event-templates')" />
+            <div class="row justify-end">
+              <k-action 
+                id= "map"
+                icon= "las la-cog"
+                :tooltip="$t('OrganisationCard.MANAGE_SUBSCRIPTIONS')"
+                :route="{ name: 'organisation-settings-activity', params: { contextId: this.item._id, tab: 'billing' } }" 
+                :propagate="false" />
+            </div>
           </q-item-section>
         </q-item>
       </q-list>
@@ -124,7 +119,15 @@ export default {
   mixins: [kCoreMixins.baseItem],
   data () {
     return {
+      scopes: [ 
+        { key: 'EVENTS', name: 'events', icon: 'las la-fire' },
+        { key: 'MEMBERS', name: 'members', icon: 'las la-user-friends' },
+        { key: 'TAGS', name: 'tags', icon: 'las la-tag' },
+        { key: 'GROUPS', name: 'groups', icon: 'las la-sitemap' },
+        { key: 'EVENT_TEMPLATES', name: 'event-templates', icon: 'las la-project-diagram' }
+      ],
       role: null,
+      subscription: null,
       stats: {}
     }
   },
@@ -135,16 +138,20 @@ export default {
     isCountAvailable (scope) {
       return !_.isNil(this.stats[scope])
     },
+    hasQuota (scope) {
+      if (!this.subscription) return false
+      return _.get(this.quotas, `${this.subscription.plan}.${scope}`) > 0
+    },
     getQuota (scope) {
-      return _.get(this.quotas, `${this.plan}.${scope}`)
+      if (!this.subscription) return undefined
+      return _.get(this.quotas, `${this.subscription.plan}.${scope}`)
     },
     async refreshStats () {
       this.quotas = this.$store.get('capabilities.api.quotas', {})
-      const scopes = ['events', 'members', 'tags', 'groups', 'event-templates']
-      for (const scope of scopes) {
-        const service = this.$api.getService(scope, this.item._id)
+      for (const scope of this.scopes) {
+        const service = this.$api.getService(scope.name, this.item._id)
         const response = await service.find({ query: {}, $limit: 0 })
-        this.$set(this.stats, scope, response.total)
+        this.$set(this.stats, scope.name, response.total)
       }
     }
   },
@@ -156,7 +163,8 @@ export default {
     this.$options.components['k-action'] = this.$load('frame/KAction')
     // Retrieve the billing perspective
     const perspective = await this.$api.getService('organisations').get(this.item._id, { query: { $select: ['billing'] } })
-    this.plan = _.get(perspective, 'billing.subscription.plan')
+    this.subscription = _.get(perspective, 'billing.subscription')
+    console.log(this.subscription)
     // Retrieve the user role
     this.userRole = _.upperCase(permissions.getRoleForOrganisation(this.$store.get('user'), this.item._id))
     // Compute the stats

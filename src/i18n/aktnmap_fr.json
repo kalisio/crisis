@@ -294,7 +294,8 @@
     "VIEW_GROUPS": "Voir les groupes",
     "EVENT_TEMPLATES": "{{count}} modèle(s) d'événement",
     "VIEW_EVENT_TEMPLATES": "Voir les modèles d'événement",
-    "CONFIGURE": "Configurer"
+    "EDIT": "Editer les propriétés",
+    "MANAGE_SUBSCRIPTIONS": "Gérer vos abonnements"
   },
   "OrganisationProperties": {
     "SUBSCRIPTION_PAGES": "Pages d'abonnements",
@@ -315,9 +316,9 @@
     "OPTIONS_TITLE": "Vos abonnements supplémentaires"
   },
   "OrganisationSettingsActivity": {
-    "PROPERTIES_LABEL": "Propriétés",
-    "BILLING_OPTIONS_LABEL": "Abonnements",
-    "DANGER_ZONE_LABEL": "Zone de danger"
+    "SETTINGS": "Paramètres",
+    "PROPERTIES": "Propriétés",
+    "SUBSCRIPTIONS": "Abonnements"
   },
   "CatalogActivity": {
     "CREATE_MEASURE_ALERT_ACTION": "Créer une alerte sur la sonde",

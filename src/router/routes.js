@@ -272,14 +272,13 @@ module.exports = {
                 },
                 tour: tours['event-templates']
               },
-              ':page': {
+              ':tab?': {
                 name: 'organisation-settings-activity',
                 component: 'OrganisationSettingsActivity',
                 props: true,
                 tour: {
                   'properties': tours['organisation-properties'],
                   'billing': tours['organisation-billing'],
-                  'danger-zone': tours['organisation-dz']
                 }
               }
             }

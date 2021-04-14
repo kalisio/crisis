@@ -290,7 +290,8 @@
     "VIEW_GROUPS": "View groups",
     "EVENT_TEMPLATES": "{{count}} event templates",
     "VIEW_EVENT_TEMPLATES": "View event templates",
-    "CONFIGURE": "Configure"
+    "EDIT": "Edit properties",
+    "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions"
   },
   "OrganisationProperties": {
     "SUBSCRIPTION_PAGES": "Subscriptions Pages",
@@ -311,9 +312,9 @@
     "OPTIONS_TITLE": "Your additional plans"
   },
   "OrganisationSettingsActivity": {
-    "PROPERTIES_LABEL": "Properties",
-    "BILLING_OPTIONS_LABEL": "Plans",
-    "DANGER_ZONE_LABEL": "Danger Zone"
+    "SETTINGS": "Settings",
+    "PROPERTIES": "Properties",
+    "SUBSCRIPTIONS": "Subscriptions"
   },
   "CatalogActivity": {
     "CREATE_MEASURE_ALERT_ACTION": "Create an alert on this sensor",
