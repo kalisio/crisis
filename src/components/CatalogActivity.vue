@@ -200,7 +200,7 @@ export default {
     onEventCollectionRefreshed () {
       this.refreshEventsLayer()
       // We do not manage pagination now
-      if (this.events.items.length < this.events.nbTotalItems) {
+      if (this.events.items.length < MAX_ITEMS) {
         this.$events.$emit('error', new Error(this.$t('errors.EVENTS_LIMIT')))
       }
     },
@@ -226,7 +226,7 @@ export default {
     onAlertCollectionRefreshed () {
       this.refreshAlertsLayer()
       // We do not manage pagination now
-      if (this.alerts.items.length < this.alerts.nbTotalItems) {
+      if (this.alerts.items.length < MAX_ITEMS) {
         this.$events.$emit('error', new Error(this.$t('errors.ALERTS_LIMIT')))
       }
     },
