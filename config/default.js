@@ -344,8 +344,8 @@ module.exports = {
         'default': [
           { id: 'organisations', icon: 'las la-grip-horizontal', label: 'KOrganisationsActivity.ORGANISATIONS_LABEL', color: 'primary', disabled: true },
           midSeparator,
-          { component: 'collection/KSorter' },
-          { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATION_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } }
+          { component: 'collection/KSorter', tooltip: 'KOrganisationsActivity.SORT_ORGANISATIONS' },
+          { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATIONS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('name')
       }
@@ -385,7 +385,16 @@ module.exports = {
             route: { name: 'archived-events-activity', params: { contextId: ':contextId' } },    
           },
           midSeparator,
-          { id: 'filter', icon: 'las la-search', tooltip: 'EventsActivity.SEARCH_EVENT', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { component: 'collection/KSorter', 
+            tooltip: 'EventsActivity.SORT_EVENTS',
+            options: [
+              { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
+              { icon: 'kdk:anticlockwise.png', value: { field: 'updatedAt', order: -1 }, default: true },
+              { icon: 'las la-sort-alpha-down', value: { field: 'name', order: 1 } },
+              { icon: 'las la-sort-alpha-up', value: { field: 'name', order: -1 } }
+            ]
+          },
+          { id: 'filter', icon: 'las la-search', tooltip: 'EventsActivity.SEARCH_EVENTS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
         ],
         'filter': contextFilter('name')
       }
@@ -646,11 +655,14 @@ module.exports = {
           },
           midSeparator,
           { component: 'team/KMemberFilter' },
-          { component: 'collection/KSorter', options: [
-            { icon: 'las la-sort-alpha-down', value: { field: 'profile.name', order: 1 }, default: true },
-            { icon: 'las la-sort-alpha-up', value: { field: 'profile.name', order: -1 } }
-          ]},
-          { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBER_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } }
+          { component: 'collection/KSorter', 
+            tooltip: 'KMembersActivity.SORT_MEMBERS',
+            options: [
+              { icon: 'las la-sort-alpha-down', value: { field: 'profile.name', order: 1 }, default: true },
+              { icon: 'las la-sort-alpha-up', value: { field: 'profile.name', order: -1 } }
+            ]
+          },
+          { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBERS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('profile.name', [
           { service: 'groups', field: 'name', baseQuery: {}, icon: 'las la-sitemap' },
@@ -706,11 +718,14 @@ module.exports = {
             route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
           },
           midSeparator,
-          { component: 'collection/KSorter', options: [
-            { icon: 'las la-sort-alpha-down', value: { field: 'value', order: 1 }, default: true },
-            { icon: 'las la-sort-alpha-up', value: { field: 'value', order: -1 } }
-          ]},
-          { id: 'search-tag', icon: 'las la-search', tooltip: 'KTagsActivity.SEARCH_TAGS_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } }
+          { component: 'collection/KSorter', 
+            tooltip: 'KTagsActivity.SORT_TAGS',
+            options: [
+              { icon: 'las la-sort-alpha-down', value: { field: 'value', order: 1 }, default: true },
+              { icon: 'las la-sort-alpha-up', value: { field: 'value', order: -1 } }
+            ]
+          },
+          { id: 'search-tag', icon: 'las la-search', tooltip: 'KTagsActivity.SEARCH_TAGS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('value')
       }
@@ -748,8 +763,8 @@ module.exports = {
             route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
           },
           midSeparator,          
-          { component: 'collection/KSorter' },
-          { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } }
+          { component: 'collection/KSorter', tooltip: 'KGroupsActivity.SORT_GROUPS' },
+          { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUPS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('name')
       }
@@ -795,8 +810,8 @@ module.exports = {
           },
           { id: 'event-templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', color: 'primary', disabled: true },
           midSeparator,
-          { component: 'collection/KSorter' },
-          { id: 'search-event-template', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUP_LABEL', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
+          { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } },
         ],
         'filter': contextFilter('name')
       }

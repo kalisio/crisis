@@ -433,7 +433,8 @@
   },
   "EventsActivity": {
     "EVENTS_LABEL": "$t(EVENTS_LABEL)",
-    "SEARCH_EVENT": "Rechercher un événement"
+    "SEARCH_EVENTS": "Rechercher des évébnements",
+    "SORT_EVENTS": "Trier les événements"
   },
   "EventCard": {
     "CREATED_AT_LABEL": "Créé le",
@@ -514,8 +515,9 @@
   },
   "EventTemplatesActivity": {
     "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)",
-    "CREATE_TEMPLATE_LABEL": "Créer un modèle",
-    "SEARCH_TEMPLATE_LABEL": "Rechercher un modèle"
+    "CREATE_TEMPLATE_LABEL": "Créer un modèle d'événement",
+    "SEARCH_EVENT_TEMPLATES": "Rechercher des modèles d'événements",
+    "SORT_EVENT_TEMPLATES": "Trier les modèles d'événements"
   },
   "EventTemplateCard": {
     "REMOVE_LABEL": "$t(REMOVE_LABEL)",

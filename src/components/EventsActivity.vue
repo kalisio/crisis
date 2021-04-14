@@ -4,7 +4,13 @@
       <!--
         Events collection
       -->
-      <k-grid service="events" :base-query="baseQuery" :filter-query="filter.query" :renderer="renderer" :contextId="contextId" :list-strategy="'smart'" />
+      <k-grid 
+        service="events" 
+        :renderer="renderer" 
+        :contextId="contextId"
+        :base-query="sorter.query" 
+        :filter-query="filter.query" 
+        :list-strategy="'smart'" />
       <!--
         Router view to enable routing to modals
       -->
@@ -30,11 +36,7 @@ export default {
   },
   data () {
     return {
-      baseQuery: {
-        $sort: {
-          updatedAt: -1
-        }
-      },
+      sorter: this.$store.get('sorter'),
       filter: this.$store.get('filter'),
       // Make this configurable from app
       renderer: _.merge({

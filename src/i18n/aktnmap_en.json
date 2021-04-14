@@ -430,7 +430,8 @@
   "EventsActivity": {
     "MY_ORGANISATIONS": "My organisations",
     "EVENTS_LABEL": "My events",
-    "SEARCH_EVENT": "Search for an event"
+    "SEARCH_EVENTS": "Search events",
+    "SORT_EVENTS": "Sort events"
   },
   "EventCard": {
     "CREATED_AT_LABEL": "Created at",
@@ -511,8 +512,9 @@
   },
   "EventTemplatesActivity": {
     "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)",
-    "CREATE_TEMPLATE_LABEL": "Create a template",
-    "SEARCH_TEMPLATE_LABEL": "Search for a template"
+    "CREATE_TEMPLATE_LABEL": "Create an event template",
+    "SEARCH_EVENT_TEMPLATES": "Search event templates",
+    "SORT_EVENT_TEMPLATES": "Sort event templates"
   },
   "EventTemplateCard": {
     "REMOVE_LABEL": "$t(REMOVE_LABEL)",
