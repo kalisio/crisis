@@ -201,7 +201,7 @@ export default {
     onEventCollectionRefreshed () {
       this.refreshEventsLayer()
       // We do not manage pagination now
-      if (this.events.items.length < MAX_ITEMS) {
+      if (this.events.items.length > MAX_ITEMS) {
         this.$events.$emit('error', new Error(this.$t('errors.EVENTS_LIMIT')))
       }
     },
@@ -228,7 +228,7 @@ export default {
     onAlertCollectionRefreshed () {
       this.refreshAlertsLayer()
       // We do not manage pagination now
-      if (this.alerts.items.length < MAX_ITEMS) {
+      if (this.alerts.items.length > MAX_ITEMS) {
         this.$events.$emit('error', new Error(this.$t('errors.ALERTS_LIMIT')))
       }
     },
@@ -373,7 +373,7 @@ export default {
         { id: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.templateModal.close() }
       ]
     },
-    configureCollection (service, baseQuery) {
+    configureCollection (service, baseQuery, props = {}) {
       // As we'd like to use the collection mixin but need to require multiple services (alerts, events)
       // we create a specific component instance to manage each type of objects which are then added to the map.
       // Indeed we can only support one service if we directly use the mixin in the activity.
@@ -386,7 +386,7 @@ export default {
           getCollectionPaginationQuery: () => ({})
         }
       })
-      return new Component()
+      return new Component({ propsData: props })
     }
   },
   created () {
@@ -412,10 +412,10 @@ export default {
     this.$checkBillingOption('catalog')
   },
   mounted () {
-    this.alerts = this.configureCollection('alerts', { geoJson: true, $skip: 0, $limit: MAX_ITEMS })
+    this.alerts = this.configureCollection('alerts', { geoJson: true, $skip: 0, $limit: MAX_ITEMS }, { nbItemsPerPage: 0 })
     this.alerts.$on('collection-refreshed', this.onAlertCollectionRefreshed)
     this.events = this.configureCollection('events', { geoJson: true, $skip: 0, $limit: MAX_ITEMS,
-      $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt'] })
+      $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt'] }, { nbItemsPerPage: 0 })
     this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
   },
   beforeDestroy () {
