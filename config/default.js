@@ -359,6 +359,11 @@ module.exports = {
       component: 'OrganisationCard',
       actions: [
         { 
+          id: 'edit-organisation', icon: 'las la-edit', tooltip: 'OrganisationCard.EDIT',
+          visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':item._id' }] },
+          route: { name: 'organisation-settings-activity', params: { contextId: ':item._id', tab: 'properties' } }
+        },
+        { 
           id: 'delete-organisation', icon: 'las la-trash', tooltip: 'OrganisationCard.DELETE',
           visible: { name: '$can', params: ['remove', 'organisations', null, { _id: ':item._id' }] },
           handler: { name: 'removeItem', params: ['input'] }
@@ -587,11 +592,31 @@ module.exports = {
   organisationSettingsActivity: {
     leftPane: leftPane(),
     topPane: {
-      content: {
-        properties: [
-          { component: 'OrganisationAvatar' },
-          separator,          
-          { id: 'properties', icon: 'las la-file-alt', color: 'primary', label: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
+      content: [
+        { component: 'OrganisationAvatar' },
+        separator,
+        { 
+          id: 'members', icon: 'las la-user-friends', tooltip: 'KMembersActivity.MEMBERS_LABEL',
+          visible: { name: '$can', params: ['service', 'members', ':contextId'] },
+          route: { name: 'members-activity', params: { contextId: ':contextId' } },    
+        },
+        { 
+          id: 'tags', icon: 'las la-tags', tooltip: 'KTagsActivity.TAGS_LABEL',
+          visible: { name: '$can', params: ['service', 'tags', ':contextId'] },
+          route: { name: 'tags-activity', params: { contextId: ':contextId' } },    
+        },
+        { 
+          id: 'groups', icon: 'las la-sitemap', tooltip: 'KGroupsActivity.GROUPS_LABEL',
+          visible: { name: '$can', params: ['service', 'groups', ':contextId'] },
+          route: { name: 'groups-activity', params: { contextId: ':contextId' } },    
+        },
+        { 
+          id: 'event-templates', icon: 'las la-project-diagram', tooltip: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL',
+          visible: { name: '$can', params: ['service', 'event-templates', ':contextId'] },
+          route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
+        },       
+
+           /*{ id: 'properties', icon: 'las la-file-alt', color: 'primary', label: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] }, disabled: true },
           { id: 'billing', icon: 'las la-credit-card', tooltip: 'OrganisationSettingsActivity.BILLING_OPTIONS_LABEL',
             visible: { name: '$can', params: ['update', 'billing', null, { billingObject: ':contextId' }] },
@@ -625,9 +650,8 @@ module.exports = {
             route: { name: 'organisation-settings-activity', params: { page: 'billing' } } },
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', color: 'primary', label: 'OrganisationSettingsActivity.DANGER_ZONE_LABEL',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] }, disabled: true },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' }
-        ]
-      }
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' } */
+      ]
     }
   },
   membersActivity: {
@@ -637,6 +661,11 @@ module.exports = {
         'default': [
           { component: 'OrganisationAvatar' },
           separator,
+          { 
+            id: 'settings', icon: 'las la-edit', tooltip: 'KMembersActivity.SETTINGS_LABEL',
+            visible: { name: '$can', params: ['service', 'organisations', ':contextId'] },
+            route: { name: 'organiation-settings-activity', params: { contextId: ':contextId' } },    
+          },
           { id: 'members', icon: 'las la-user-friends', label: 'KMembersActivity.MEMBERS_LABEL', color: 'primary', disabled: true },
           { 
             id: 'tags', icon: 'las la-tags', tooltip: 'KTagsActivity.TAGS_LABEL',
