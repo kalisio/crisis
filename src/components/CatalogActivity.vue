@@ -174,6 +174,15 @@ export default {
               badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
             })
           }
+        } else if (layer.name === this.$t('CatalogActivity.ALERTS_LAYER')) {
+          // Alert deletion
+          featureActions.push({
+            name: 'remove-alert',
+            icon: 'las la-minus-circle',
+            handler: this.onRemoveAlert,
+            label: this.$t('CatalogActivity.REMOVE_ALERT_ACTION'),
+            badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
+          })
         }
       }
       return featureActions
@@ -327,6 +336,23 @@ export default {
           contextId: this.contextId,
           templateId: template._id,
         }, this.eventParams)
+      })
+    },
+    onRemoveAlert (data) {
+      Dialog.create({
+        title: this.$t('CatalogActivity.REMOVE_ALERT_DIALOG_TITLE'),
+        message: this.$t('CatalogActivity.REMOVE_ALERT_DIALOG_MESSAGE'),
+        html: true,
+        ok: {
+          label: this.$t('OK'),
+          flat: true
+        },
+        cancel: {
+          label: this.$t('CANCEL'),
+          flat: true
+        }
+      }).onOk(async () => {
+        await this.$api.getService('alerts').remove(data.feature._id)
       })
     },
     getAlertModalToolbar () {
