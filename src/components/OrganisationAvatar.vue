@@ -15,9 +15,19 @@ export default {
       organisation: this.$store.get('context')
     }
   },
+  methods: {
+    refresh () {
+      this.organisation = this.$store.get('context')
+    }
+  },
   created () {
     // Load the required components
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
+    // Update when changed
+    this.$events.$on('context-changed', this.refresh)
+  },
+  beforeDestroy () {
+    this.$events.$off('context-changed', this.refresh)
   }
 }
 </script>

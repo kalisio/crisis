@@ -4,12 +4,12 @@
       <q-tabs v-model="currentTab" inline-label>
         <q-route-tab 
           name="properties" 
-          icon="las la-edit" 
+          :icon="$q.screen.gt.xs ? 'las la-edit' : ''" 
           :label="$t('OrganisationSettingsActivity.PROPERTIES')"
           :to="{ name: $route.name, params: { contextId: contextId, tab: 'properties' } }" />
         <q-route-tab 
           name="billing" 
-          icon="las la-credit-card" 
+          :icon="$q.screen.gt.xs ? 'las la-credit-card' : ''" 
           :label="$t('OrganisationSettingsActivity.SUBSCRIPTIONS')"
           :to="{ name: $route.name, params: { contextId: contextId, tab: 'billing' } }" />
       </q-tabs>

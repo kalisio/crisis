@@ -42,7 +42,7 @@
               <k-action
                 v-if="canAccessArchivedEvents"
                 id= "history"
-                icon= "las la-history"
+                icon= "las la-clipboard-list"
                 :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
                 :route="{ name: 'archived-events-activity', params: { contextId: this.item._id } }" 
                 :propagate="false" />
@@ -178,7 +178,6 @@ export default {
     // Retrieve the billing perspective
     const perspective = await this.$api.getService('organisations').get(this.item._id, { query: { $select: ['billing'] } })
     this.subscription = _.get(perspective, 'billing.subscription')
-    console.log(this.subscription)
     // Retrieve the user role
     this.userRole = _.upperCase(permissions.getRoleForOrganisation(this.$store.get('user'), this.item._id))
     // Compute the stats
