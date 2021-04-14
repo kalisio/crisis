@@ -294,8 +294,9 @@
     "VIEW_GROUPS": "Voir les groupes",
     "EVENT_TEMPLATES": "{{count}} modèle(s) d'événement",
     "VIEW_EVENT_TEMPLATES": "Voir les modèles d'événement",
+    "MANAGE_SUBSCRIPTIONS": "Gérer vos abonnements",
     "EDIT": "Editer les propriétés",
-    "MANAGE_SUBSCRIPTIONS": "Gérer vos abonnements"
+    "DELETE": "Supprimer"
   },
   "OrganisationProperties": {
     "SUBSCRIPTION_PAGES": "Pages d'abonnements",

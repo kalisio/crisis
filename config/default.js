@@ -589,71 +589,6 @@ module.exports = {
     },
     restore: { layers: false }
   },
-  organisationSettingsActivity: {
-    leftPane: leftPane(),
-    topPane: {
-      content: [
-        { component: 'OrganisationAvatar' },
-        separator,
-        { 
-          id: 'members', icon: 'las la-user-friends', tooltip: 'KMembersActivity.MEMBERS_LABEL',
-          visible: { name: '$can', params: ['service', 'members', ':contextId'] },
-          route: { name: 'members-activity', params: { contextId: ':contextId' } },    
-        },
-        { 
-          id: 'tags', icon: 'las la-tags', tooltip: 'KTagsActivity.TAGS_LABEL',
-          visible: { name: '$can', params: ['service', 'tags', ':contextId'] },
-          route: { name: 'tags-activity', params: { contextId: ':contextId' } },    
-        },
-        { 
-          id: 'groups', icon: 'las la-sitemap', tooltip: 'KGroupsActivity.GROUPS_LABEL',
-          visible: { name: '$can', params: ['service', 'groups', ':contextId'] },
-          route: { name: 'groups-activity', params: { contextId: ':contextId' } },    
-        },
-        { 
-          id: 'event-templates', icon: 'las la-project-diagram', tooltip: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL',
-          visible: { name: '$can', params: ['service', 'event-templates', ':contextId'] },
-          route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
-        },       
-
-           /*{ id: 'properties', icon: 'las la-file-alt', color: 'primary', label: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
-            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] }, disabled: true },
-          { id: 'billing', icon: 'las la-credit-card', tooltip: 'OrganisationSettingsActivity.BILLING_OPTIONS_LABEL',
-            visible: { name: '$can', params: ['update', 'billing', null, { billingObject: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { page: 'billing' } } },
-          { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'OrganisationSettingsActivity.DANGER_ZONE_LABEL',
-            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' }
-        ],
-        billing: [   
-          { component: 'OrganisationAvatar' },
-          separator,     
-          { id: 'properties', icon: 'las la-file-alt', tooltip: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
-            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { page: 'properties' } } },
-          { id: 'billing', icon: 'las la-credit-card', color: 'primary', label: 'OrganisationSettingsActivity.BILLING_OPTIONS_LABEL',
-            visible: { name: '$can', params: ['update', 'billing', null, { billingObject: ':contextId' }] }, disabled: true },
-          { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'OrganisationSettingsActivity.DANGER_ZONE_LABEL',
-            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { page: 'danger-zone' } } },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' }
-        ],
-        'danger-zone': [  
-          { component: 'OrganisationAvatar' },
-          separator,         
-          { id: 'properties', icon: 'las la-file-alt', tooltip: 'OrganisationSettingsActivity.PROPERTIES_LABEL',
-            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { page: 'properties' } } },
-          { id: 'billing', icon: 'las la-credit-card', tooltip: 'KAccountActivity.SECURITY',
-            visible: { name: '$can', params: ['update', 'billing', null, { billingObject: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { page: 'billing' } } },
-          { id: 'danger-zone', icon: 'las la-exclamation-triangle', color: 'primary', label: 'OrganisationSettingsActivity.DANGER_ZONE_LABEL',
-            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] }, disabled: true },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' } */
-      ]
-    }
-  },
   membersActivity: {
     leftPane: leftPane(),
     topPane: {
@@ -661,11 +596,6 @@ module.exports = {
         'default': [
           { component: 'OrganisationAvatar' },
           separator,
-          { 
-            id: 'settings', icon: 'las la-edit', tooltip: 'KMembersActivity.SETTINGS_LABEL',
-            visible: { name: '$can', params: ['service', 'organisations', ':contextId'] },
-            route: { name: 'organiation-settings-activity', params: { contextId: ':contextId' } },    
-          },
           { id: 'members', icon: 'las la-user-friends', label: 'KMembersActivity.MEMBERS_LABEL', color: 'primary', disabled: true },
           { 
             id: 'tags', icon: 'las la-tags', tooltip: 'KTagsActivity.TAGS_LABEL',
@@ -681,6 +611,11 @@ module.exports = {
             id: 'event-templates', icon: 'las la-project-diagram', tooltip: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL',
             visible: { name: '$can', params: ['service', 'event-templates', ':contextId'] },
             route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
+            id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
+            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId' } },    
           },
           midSeparator,
           { component: 'team/KMemberFilter' },
@@ -746,6 +681,11 @@ module.exports = {
             visible: { name: '$can', params: ['service', 'event-templates', ':contextId'] },
             route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
           },
+          { 
+            id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
+            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId' } },    
+          },
           midSeparator,
           { component: 'collection/KSorter', 
             tooltip: 'KTagsActivity.SORT_TAGS',
@@ -790,6 +730,11 @@ module.exports = {
             id: 'event-templates', icon: 'las la-project-diagram', tooltip: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL',
             visible: { name: '$can', params: ['service', 'event-templates', ':contextId'] },
             route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
+            id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
+            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId' } },    
           },
           midSeparator,          
           { component: 'collection/KSorter', tooltip: 'KGroupsActivity.SORT_GROUPS' },
@@ -838,6 +783,11 @@ module.exports = {
             route: { name: 'tags-activity', params: { contextId: ':contextId' } },    
           },
           { id: 'event-templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', color: 'primary', disabled: true },
+          { 
+            id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
+            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId' } },    
+          },
           midSeparator,
           { component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } },
@@ -862,6 +812,36 @@ module.exports = {
           route: { name: 'create-event-template', params: { contextId: ':contextId', templateId: ':item._id' } } },
         { id: 'remove-event-template', tooltip: 'EventTemplateCard.REMOVE_LABEL', icon: 'las la-minus-circle',
           visible: { name: '$can', params: ['remove', 'event-templates', ':contextId', ':item'] }, handler: 'removeEventTemplate' }
+      ]
+    }
+  },
+  organisationSettingsActivity: {
+    leftPane: leftPane(),
+    topPane: {
+      content: [
+        { component: 'OrganisationAvatar' },
+        separator,
+        { 
+          id: 'members', icon: 'las la-user-friends', tooltip: 'KMembersActivity.MEMBERS_LABEL',
+          visible: { name: '$can', params: ['service', 'members', ':contextId'] },
+          route: { name: 'members-activity', params: { contextId: ':contextId' } },    
+        },
+        { 
+          id: 'tags', icon: 'las la-tags', tooltip: 'KTagsActivity.TAGS_LABEL',
+          visible: { name: '$can', params: ['service', 'tags', ':contextId'] },
+          route: { name: 'tags-activity', params: { contextId: ':contextId' } },    
+        },
+        { 
+          id: 'groups', icon: 'las la-sitemap', tooltip: 'KGroupsActivity.GROUPS_LABEL',
+          visible: { name: '$can', params: ['service', 'groups', ':contextId'] },
+          route: { name: 'groups-activity', params: { contextId: ':contextId' } },    
+        },
+        { 
+          id: 'event-templates', icon: 'las la-project-diagram', tooltip: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL',
+          visible: { name: '$can', params: ['service', 'event-templates', ':contextId'] },
+          route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
+        },
+        { id: 'settings', icon: 'las la-cog', label: 'OrganisationSettingsActivity.SETTINGS', color: 'primary', disabled: true },
       ]
     }
   },

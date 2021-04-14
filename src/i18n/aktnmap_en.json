@@ -290,8 +290,9 @@
     "VIEW_GROUPS": "View groups",
     "EVENT_TEMPLATES": "{{count}} event templates",
     "VIEW_EVENT_TEMPLATES": "View event templates",
+    "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions",
     "EDIT": "Edit properties",
-    "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions"
+    "DELETE": "Delete"
   },
   "OrganisationProperties": {
     "SUBSCRIPTION_PAGES": "Subscriptions Pages",

@@ -14,7 +14,7 @@
       Card avatar
     -->
     <template v-slot:card-avatar>
-      <k-avatar :object="item" :contextId="item._id" size="4rem" />
+      <k-avatar class="q-pa-sm" :object="item" :contextId="item._id" size="4rem" />
     </template>
     <!--
       Card content
@@ -33,12 +33,14 @@
           <q-item-section side>
             <div class="row justify-between">
               <k-action 
+                v-if="canAccessCatalog"
                 id= "map"
                 icon= "las la-map"
                 :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
                 :route="{ name: 'catalog-activity', params: { contextId: this.item._id } }" 
                 :propagate="false" />
-              <k-action 
+              <k-action
+                v-if="canAccessArchivedEvents"
                 id= "history"
                 icon= "las la-history"
                 :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
@@ -97,6 +99,7 @@
           <q-item-section side>
             <div class="row justify-end">
               <k-action 
+                v-if="canAccessBilling"
                 id= "map"
                 icon= "las la-cog"
                 :tooltip="$t('OrganisationCard.MANAGE_SUBSCRIPTIONS')"
@@ -129,6 +132,17 @@ export default {
       role: null,
       subscription: null,
       stats: {}
+    }
+  },
+  computed: {
+    canAccessCatalog () {
+      return this.$can('update', 'catalog', this.item._id)
+    },
+    canAccessArchivedEvents () {
+      return this.$can('read', 'archived-events', this.item._id)
+    },
+    canAccessBilling () {
+      return this.$can('update', 'organisations', null, { _id: this.item._id })
     }
   },
   methods: {
