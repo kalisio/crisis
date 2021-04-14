@@ -129,7 +129,7 @@ export default {
         { key: 'GROUPS', name: 'groups', icon: 'las la-sitemap' },
         { key: 'EVENT_TEMPLATES', name: 'event-templates', icon: 'las la-project-diagram' }
       ],
-      role: null,
+      userRole: null,
       subscription: null,
       stats: {}
     }

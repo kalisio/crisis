@@ -272,7 +272,7 @@ module.exports = {
                 },
                 tour: tours['event-templates']
               },
-              ':tab?': {
+              ':tab': {
                 name: 'organisation-settings-activity',
                 component: 'OrganisationSettingsActivity',
                 props: true,

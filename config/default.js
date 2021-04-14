@@ -615,7 +615,7 @@ module.exports = {
           { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId' } },    
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', tab: 'properties' } },    
           },
           midSeparator,
           { component: 'team/KMemberFilter' },
@@ -684,7 +684,7 @@ module.exports = {
           { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId' } },    
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', tab: 'properties' } },    
           },
           midSeparator,
           { component: 'collection/KSorter', 
@@ -734,7 +734,7 @@ module.exports = {
           { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId' } },    
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', tab: 'properties' } },    
           },
           midSeparator,          
           { component: 'collection/KSorter', tooltip: 'KGroupsActivity.SORT_GROUPS' },
@@ -786,7 +786,7 @@ module.exports = {
           { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId' } },    
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', tab: 'properties' } },    
           },
           midSeparator,
           { component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
