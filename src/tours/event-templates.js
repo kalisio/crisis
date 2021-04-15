@@ -6,18 +6,20 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#app-bar-overflow-menu',
-  content: 'tours.event-templates.OVERFLOW_MENU_LABEL',
-  params: {
-    placement: 'bottom',
-    clickOn: '#app-bar-overflow-menu',
-    clickDelay: 500
-  }
-}, {
   target: '#search-event-template',
   content: 'tours.event-templates.SEARCH_LABEL',
   params: {
     placement: 'bottom'
+  }
+}, {
+  target: '#event-template-sorter',
+  title: 'tours.event-templates.SORT_LABEL',
+  params: {
+    placement: 'left',
+    clickOn: '#event-template-sorter',
+    clickDelay: 500,
+    clickOnNext: '#event-sorter',
+    clickOnPrevious: '#event-sorter'
   }
 }, {
   target: '#create-event-template',

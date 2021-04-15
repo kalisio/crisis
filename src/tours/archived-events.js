@@ -1,7 +1,12 @@
 module.exports = [{
-  target: '#timerange',
+  target: '#archived-events',
   title: 'tours.archived-events.HISTORY_LABEL',
-  content: 'tours.archived-events.TIME_RANGE_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#timerange',
+  title: 'tours.archived-events.TIME_RANGE_LABEL',
   params: {
     placement: 'bottom',
     clickOnNext: '#timerange',

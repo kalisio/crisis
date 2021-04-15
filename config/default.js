@@ -344,7 +344,7 @@ module.exports = {
         'default': [
           { id: 'organisations', icon: 'las la-grip-horizontal', label: 'KOrganisationsActivity.ORGANISATIONS_LABEL', color: 'primary', disabled: true },
           midSeparator,
-          { component: 'collection/KSorter', tooltip: 'KOrganisationsActivity.SORT_ORGANISATIONS' },
+          { id: 'organisation-sorter', component: 'collection/KSorter', tooltip: 'KOrganisationsActivity.SORT_ORGANISATIONS' },
           { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATIONS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('name')
@@ -390,7 +390,8 @@ module.exports = {
             route: { name: 'archived-events-activity', params: { contextId: ':contextId' } },    
           },
           midSeparator,
-          { component: 'collection/KSorter', 
+          { id: 'event-sorter',
+            component: 'collection/KSorter', 
             tooltip: 'EventsActivity.SORT_EVENTS',
             options: [
               { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
@@ -399,7 +400,7 @@ module.exports = {
               { icon: 'las la-sort-alpha-up', value: { field: 'name', order: -1 } }
             ]
           },
-          { id: 'filter', icon: 'las la-search', tooltip: 'EventsActivity.SEARCH_EVENTS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { id: 'search-event', icon: 'las la-search', tooltip: 'EventsActivity.SEARCH_EVENTS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
         ],
         'filter': contextFilter('name')
       }
@@ -541,9 +542,8 @@ module.exports = {
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.EXPORT_DATA_LABEL', handler: 'downloadEventsData' },
         ],
         'map': [
-          { id: 'organisation', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
+          { id: 'history-view', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           midSeparator,
-          { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: 'onShowChart' },
           { id: 'by-template', icon: 'las la-layer-group', tooltip: 'ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL',
             toggle: { icon: 'las la-object-group', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_ALL_LABEL' }, handler: 'onByTemplate' },
           { id: 'heatmap', icon: 'las la-bowling-ball', tooltip: 'ArchivedEventsActivity.SHOW_HEATMAP_LABEL',
@@ -552,9 +552,8 @@ module.exports = {
           // contextHelp('archived-events-activity/map')
         ],
         'chart': [
-          { id: 'organisation', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
+          { id: 'history-view', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           midSeparator,
-          { id: 'map-view', icon: 'scatter_plot', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
           { id: 'settings', icon: 'las la-cog', tooltip: 'ArchivedEventsActivity.CHART_SETTINGS_LABEL', handler: 'showChartSettings' },
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.CHART_EXPORT_LABEL', handler: 'downloadChartData' }
           // contextHelp('archived-events-activity/chart')
@@ -587,7 +586,7 @@ module.exports = {
       actions: layerActions,
       filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
     },
-    restore: { layers: false }
+    restore: { view: false, layers: false }
   },
   membersActivity: {
     leftPane: leftPane(),
@@ -620,6 +619,7 @@ module.exports = {
           midSeparator,
           { component: 'team/KMemberFilter' },
           { component: 'collection/KSorter', 
+            id: 'member-sorter',
             tooltip: 'KMembersActivity.SORT_MEMBERS',
             options: [
               { icon: 'las la-sort-alpha-down', value: { field: 'profile.name', order: 1 }, default: true },
@@ -688,6 +688,7 @@ module.exports = {
           },
           midSeparator,
           { component: 'collection/KSorter', 
+            id: 'tag-sorter',
             tooltip: 'KTagsActivity.SORT_TAGS',
             options: [
               { icon: 'las la-sort-alpha-down', value: { field: 'value', order: 1 }, default: true },
@@ -737,7 +738,7 @@ module.exports = {
             route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', tab: 'properties' } },    
           },
           midSeparator,          
-          { component: 'collection/KSorter', tooltip: 'KGroupsActivity.SORT_GROUPS' },
+          { id: 'group-sorter', component: 'collection/KSorter', tooltip: 'KGroupsActivity.SORT_GROUPS' },
           { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUPS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('name')
@@ -789,7 +790,7 @@ module.exports = {
             route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', tab: 'properties' } },    
           },
           midSeparator,
-          { component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
+          { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } },
         ],
         'filter': contextFilter('name')
@@ -911,6 +912,7 @@ module.exports = {
       actions: layerActions,
       filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
     },
+    restore: { view: false, layers: false },
     featuresChunkSize: 5000 // TODO: here or in mapEngine ?
   },
   

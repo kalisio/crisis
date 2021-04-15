@@ -47,15 +47,7 @@ module.exports = [{
   link: 'tours.archived-events.HISTORY_VIEW_LINK_LABEL',
   params: {
     placement: 'bottom',
-    clickOnLink: '#history-view'
-  }
-}, {
-  target: '#map-view',
-  title: 'tours.archived-events.MAP_VIEW_LABEL',
-  link: 'tours.archived-events.MAP_VIEW_LINK_LABEL',
-  params: {
-    placement: 'bottom',
-    clickOnLink: '#map-view',
-    tour: 'archived-events-activity/map'
+    clickOnLink: '#history-view',
+    tour: 'archived-events-activity'
   }
 }]

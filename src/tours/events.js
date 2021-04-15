@@ -6,26 +6,27 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#app-bar-overflow-menu',
-  content: 'tours.event-templates.OVERFLOW_MENU_LABEL',
-  params: {
-    placement: 'bottom',
-    clickOn: '#app-bar-overflow-menu',
-    clickDelay: 500
-  }
-}, {
   target: '#search-event',
   content: 'tours.events.SEARCH_LABEL',
   params: {
     placement: 'bottom'
   }
 }, {
-  target: '#event-templates',
+  target: '#event-sorter',
+  title: 'tours.events.SORT_LABEL',
+  params: {
+    placement: 'left',
+    clickOn: '#event-sorter',
+    clickDelay: 500,
+    clickOnNext: '#event-sorter',
+    clickOnPrevious: '#event-sorter'
+  }
+}, {
+  target: '.q-page',
   content: 'tours.events.TEMPLATES_LABEL',
   link: 'tours.events.TEMPLATES_LINK_LABEL',
   params: {
-    placement: 'bottom',
-    blockOnMiss: '#fab',
+    placement: 'right',
     route: { name: 'event-templates-activity' }
   }
 }, {
@@ -42,12 +43,6 @@ module.exports = [{
   content: 'tours.events.EVENT_CARD_LABEL',
   params: {
     placement: 'right'
-  }
-}, {
-  target: '#edit-event',
-  content: 'tours.events.UPDATE_EVENT_LABEL',
-  params: {
-    placement: 'bottom'
   }
 }, {
   target: '#follow-up',
@@ -69,20 +64,22 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#card-overflow-menu',
-  content: 'tours.events.EVENT_OVERFLOW_MENU_LABEL',
+  target: '#event-map',
+  content: 'tours.events.EVENT_MAP_LABEL',
   params: {
-    placement: 'top',
-    clickOnNext: '#card-overflow-menu',
-    nextDelay: 500
+    placement: 'bottom'
+  }
+}, {
+  target: '#edit-event',
+  content: 'tours.events.UPDATE_EVENT_LABEL',
+  params: {
+    placement: 'bottom'
   }
 }, {
   target: '#remove-event',
   title: 'tours.events.REMOVE_EVENT_LABEL',
   content: 'tours.events.REMOVE_CONFIRMATION_LABEL',
   params: {
-    placement: 'left',
-    clickOnPrevious: '#card-overflow-menu',
-    previousDelay: 500
+    placement: 'bottom'
   }
 }]

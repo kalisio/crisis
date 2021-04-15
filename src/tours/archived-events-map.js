@@ -29,15 +29,7 @@ module.exports = [{
   link: 'tours.archived-events.HISTORY_VIEW_LINK_LABEL',
   params: {
     placement: 'bottom',
-    clickOnLink: '#history-view'
-  }
-}, {
-  target: '#chart-view',
-  title: 'tours.archived-events.CHART_VIEW_LABEL',
-  link: 'tours.archived-events.CHART_VIEW_LINK_LABEL',
-  params: {
-    placement: 'bottom',
-    clickOnLink: '#chart-view',
-    tour: 'archived-events-activity/chart'
+    clickOnLink: '#history-view',
+    tour: 'archived-events-activity'
   }
 }]

@@ -179,6 +179,7 @@ module.exports = {
                   'navigation-bar': tours['navigation-bar'],
                   'favorite-views': tours['favorite-views'],
                   'catalog-panel': tours['catalog-panel'],
+                  'catalog-categories': tours['catalog-categories'],
                   'timeline': tours['timeline'],
                   'fab': tours['fab']
                 },

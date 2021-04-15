@@ -1,15 +1,14 @@
 module.exports = [{
-  target: '#top-opener',
-  title: 'tours.catalog.NAVIGATION_BAR_LABEL',
-  link: 'tours.catalog.NAVIGATION_BAR_LINK_LABEL',
+  target: '#catalog',
+  title: 'tours.catalog.CATALOG_LABEL',
+  content: 'tours.catalog.NAVIGATION_BAR_LINK_LABEL',
   params: {
-    placement: 'bottom',
-    tour: 'navigation-bar'
+    placement: 'bottom'
   }
 }, {
   target: '#right-opener',
-  title: 'tours.catalog.CATALOG_LABEL',
-  link: 'tours.catalog.CATALOG_LINK_LABEL',
+  title: 'tours.catalog.CATALOG_PANEL_LABEL',
+  link: 'tours.catalog.CATALOG_PANEL_LINK_LABEL',
   params: {
     placement: 'left',
     hoverClickOnLink: '#right-opener',
