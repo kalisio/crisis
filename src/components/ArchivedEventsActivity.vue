@@ -185,7 +185,7 @@ export default {
       topPane: this.$store.get('topPane'),
       heatmap: false,
       byTemplate: false,
-      heatmapRadius: 50,
+      heatmapRadius: 1,
       sortBy: {
         label: this.$i18n.t('ArchivedEventsActivity.SORT_BY_CREATED_DATE_LABEL'),
         value: 'createdAt'
@@ -309,7 +309,7 @@ export default {
             }, this.getHeatmapOptions())
           })
           // Then update it
-          this.updateHeatmap(template, { type: 'FeatureCollection',
+          await this.updateHeatmap(template, { type: 'FeatureCollection',
             features: this.byTemplate ? _.filter(this.items, { template }) : this.items })
         } else {
           // Create an empty layer used as a container for events
@@ -326,10 +326,12 @@ export default {
               isVisible: true
             }
           })// Then update it
-          this.updateLayer(template, { type: 'FeatureCollection',
+          await this.updateLayer(template, { type: 'FeatureCollection',
             features: this.byTemplate ? _.filter(this.items, { template }) : this.items })
         }
       }
+      // Zoom on first layer
+      if (this.templates.length > 0 ) this.zoomToLayer(this.templates[0])
     },
     async clearEventsLayers () {
       for (let i = 0; i < this.templates.length; i++) {
