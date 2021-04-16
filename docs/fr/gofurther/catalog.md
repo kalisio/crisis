@@ -185,7 +185,7 @@ En utilisant ce bouton vous pouvez:
 
 ### Menu contextuel
 
-Un *clic droit* sur un élément de la carte affiche un menu contextuel si des actions sont disponibles sur l'élément cible comme <i class="las la-file-alt"/> modifier les propriétés d'une entité métier ou <i class="las la-minus-circle"/> la supprimer.
+Un *clic droit* sur la carte ou un élément de la carte affiche un menu contextuel avec une action <i class="las la-fire"/> permettant de créer un [événement](../quickstart/concepts.md#evenement) localisé à cet endroit.
 
 Si l'élément provient d'une couche de mesures environnementales, ou que vous cliquez sur la carte à une position précise après avoir activé un élément météorologique (e.g. la vent), vous pouvez également <i class="las la-bell"/> [définir une alerte](./alert.md).
 

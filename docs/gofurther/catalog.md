@@ -161,7 +161,7 @@ Using the FAB you can:
 
 ### Contextual menu
 
-A *right-click* on a feature of the map will display a contextual menu if some actions are available for the target element like <i class="las la-file-alt"/> editing the properties of a user-defined feature or <i class="las la-minus-circle"/> remove it.
+A *right-click* on the map or on a feature will display a contextual menu with an action <i class="las la-fire"/> to create an [event](../quickstart/concepts.md#event) at this specific location.
 
 If the target feature comes from a measure layer or you right-click on a location of the map after activating a weather data layer (e.g. wind) you can also <i class="las la-bell"/> [setup an alert](./alert.md).
 
