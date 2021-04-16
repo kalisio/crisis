@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { colors } from 'quasar'
 import { Theme, mixins } from '@kalisio/kdk/core.client'
 
 export default {
