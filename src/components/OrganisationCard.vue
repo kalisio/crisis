@@ -4,7 +4,10 @@
       Card header
     -->
     <template v-slot:card-header>
-      <div v-if="userRole" class="q-pa-sm row justify-end">
+      <div v-if="userRole" class="q-pa-sm row justify-between">
+        <div>
+          <div v-if="hasColor" :style="`width: 20px; height: 20px; border-radius: 10px; background-color: ${color};`" />
+        </div>
         <q-badge id="organisation-role-badge" color="grey-7">
           {{ $t(userRole) }}
         </q-badge>
@@ -54,7 +57,7 @@
       <q-list bordered>
         <template v-for="scope in scopes.slice(1)">
           <q-item 
-            v-if="isCountAvailable(scope.name)"
+            v-if="hasStats(scope.name)"
             :id="'organisation-' + scope.name" 
             :key="scope.key"
             clickable 
@@ -136,6 +139,12 @@ export default {
     }
   },
   computed: {
+    hasColor () {
+      return !_.isEmpty(this.color)
+    },
+    color () {
+      return _.get(this.item, 'color')
+    },
     canAccessCatalog () {
       return this.$can('update', 'catalog', this.item._id)
     },
@@ -147,12 +156,6 @@ export default {
     }
   },
   methods: {
-    key (scope) {
-      return this.item._id + '-' + scope
-    },
-    isCountAvailable (scope) {
-      return !_.isNil(this.stats[scope])
-    },
     hasQuota (scope) {
       if (!this.subscription) return false
       return _.get(this.quotas, `${this.subscription.plan}.${scope}`) > 0
@@ -160,6 +163,9 @@ export default {
     getQuota (scope) {
       if (!this.subscription) return undefined
       return _.get(this.quotas, `${this.subscription.plan}.${scope}`)
+    },
+    hasStats (scope) {
+      return !_.isNil(this.stats[scope])
     },
     async refreshStats () {
       this.quotas = this.$store.get('capabilities.api.quotas', {})
