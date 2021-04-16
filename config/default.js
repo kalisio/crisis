@@ -42,7 +42,7 @@ const leftPane = function (tour) {
     content: [
       { component: 'QImg', src: 'statics/aktnmap-banner.png' },
       { component: 'account/KIdentityPanel', class: 'full-width' },
-      { id: 'organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'home' }, renderer: 'item' },
+      { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
       { component: 'Settings' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },

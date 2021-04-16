@@ -20,10 +20,12 @@ module.exports = [{
     route: { name: 'account-activity', params: { page: 'profile' } }
   }
 }, {
-  target: '#organisations',
+  target: '#my-organisations',
   content: 'tours.side-nav.ORGANISATIONS_LABEL',
+  link: 'tours.side-nav.ORGANISATIONS_LINK_LABEL',
   params: {
-    placement: 'bottom'
+    placement: 'bottom',
+    route: { name: 'organisations-activity' }
   }
 }, {
   target: '#edit-settings',

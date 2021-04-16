@@ -79,6 +79,7 @@
       "SIDENAV_LINK_LABEL": "Browse the main menu.",
       "ACCOUNT_LINK_LABEL": "Manage <b>your identifiers</b> and their security",
       "ORGANISATIONS_LABEL": "TAccess all your <b>organisations</b> and their parameters.",
+      "ORGANISATIONS_LINK_LABEL": "How to manage organisations",
       "HELP_LABEL": "Access our online help anytime",
       "CONTEXT_HELP_LABEL": "To get contextual help whenever your are lost simply click on the following icon",
       "ABOUT_LABEL": "Display detailed system information and send us bug reports.",
