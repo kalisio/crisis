@@ -42,7 +42,23 @@ module.exports = [{
   link: 'tours.organisations.EVENTS_LINK_LABEL',
   params: {
     placement: 'right',
-    route: { name: 'events-activity' }
+    clickOnLink: '#organisation-events'
+  }
+}, {
+  target: '#organisation-catalog',
+  content: 'tours.organisations.CATALOG_LABEL',
+  link: 'tours.organisations.CATALOG_LINK_LABEL',
+  params: {
+    placement: 'right',
+    clickOnLink: '#organisation-catalog'
+  }
+}, {
+  target: '#organisation-archived-events',
+  content: 'tours.organisations.ARCHIVED_EVENTS_LABEL',
+  link: 'tours.organisations.ARCHIVED_EVENTS_LINK_LABEL',
+  params: {
+    placement: 'right',
+    clickOnLink: '#organisation-archived-events'
   }
 }, {
   target: '#organisation-members',
@@ -50,7 +66,7 @@ module.exports = [{
   link: 'tours.organisations.MEMBERS_LINK_LABEL',
   params: {
     placement: 'right',
-    route: { name: 'members-activity' }
+    clickOnLink: '#organisation-members'
   }
 }, {
   target: '#organisation-tags',
@@ -58,7 +74,7 @@ module.exports = [{
   link: 'tours.organisations.TAGS_LINK_LABEL',
   params: {
     placement: 'right',
-    route: { name: 'tags-activity' }
+    clickOnLink: '#organisation-tags'
   }
 }, {
   target: '#organisation-groups',
@@ -66,7 +82,7 @@ module.exports = [{
   link: 'tours.organisations.GROUPS_LINK_LABEL',
   params: {
     placement: 'right',
-    route: { name: 'groups-activity' }
+    clickOnLink: '#organisation-groups'
   }
 }, {
   target: '#organisation-event-templates',
@@ -74,7 +90,7 @@ module.exports = [{
   link: 'tours.organisations.TEMPLATES_LINK_LABEL',
   params: {
     placement: 'right',
-    route: { name: 'event-templates-activity' }
+    clickOnLink: '#organisation-event-templates'
   }
 }, {
   target: '#organisation-billing',
@@ -82,7 +98,7 @@ module.exports = [{
   link: 'tours.organisations.SETTINGS_LINK_LABEL',
   params: {
     placement: 'right',
-    route: { name: 'organisation-settings-activity', params: { page: 'billing' } }
+    clickOnLink: '#organisation-billing'
   }
 }, {
   target: '#edit-organisation',
@@ -90,7 +106,7 @@ module.exports = [{
   link: 'tours.organisations.SETTINGS_LINK_LABEL',
   params: {
     placement: 'bottom',
-    route: { name: 'organisation-settings-activity', params: { page: 'properties' } }
+    clickOnLink: '#edit-organisation'
   }
 }, {
   target: '#remove-organisation',

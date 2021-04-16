@@ -5,7 +5,7 @@ The **logbook** is a long-term archive of your [events](../quickstart/concepts.m
 ::: warning Note
 This feature requires a specific subscription, it will not be available otherwise.
 
-:point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
+:point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
 :::
 
 The default view in this activity is a **timeline** or **history** displaying all events sequentially in a given time range. In addition to usual events actions you will find there some information related to traceability like event creation/update/closing dates and participant count:
@@ -33,8 +33,6 @@ Last but not least, you will be able to produce statistics about your events and
 :point_right: You manage an organisation ? <tour-link text="Browse your event archive" path="home" :params="{ organisation: 'manager', route: 'archived-events-activity' }"/>
 
 ::: details See also
-How to enter into the context of an organisation through the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
-
-How to enter the groups management activity from the <tour-link text="context of your organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+How to enter the archived events activity from the <tour-link text="dashboard" path="home/organisations"/>
 :::
 

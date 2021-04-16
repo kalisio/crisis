@@ -8,7 +8,15 @@ Here is a quick rundown of the *key concepts* to handle when you're just getting
 
 This presentation comes with small *tutorials* that can be directly run on the application. Thus, you will first have to follow the required steps to create your account then connect to make everything works as expected.
 
-A link can allow you to execute the tutorial directly from the documentation, otherwise open the application at the right place then click on the following icon <a href=""><i class="las la-question-circle"/></a>. You can then follow the step by step guide <a href=""><i class="las la-chevron-right"/></a>, go back if required <a href=""><i class="las la-chevron-left"/></a> and stop anytime <a href=""><i class="las la-times"/></a> as illustrated by the following figure:
+A link can allow you to execute the tutorial directly from the documentation, otherwise open the application at the right place then click on the following icon <a href=""><i class="las la-question-circle"/></a> in the main menu.
+
+![launch-tour](../assets/LaunchTour-EN.png)
+
+::: tip
+To open the main menu use the handle on the left side of your screen.
+:::
+
+You can then follow the step by step guide <a href=""><i class="las la-chevron-right"/></a>, go back if required <a href=""><i class="las la-chevron-left"/></a> and stop anytime <a href=""><i class="las la-times"/></a> as illustrated by the following figure:
 
 ![tour](../assets/Tour-EN.png)
 
@@ -42,17 +50,15 @@ For instance, what is related to your account and its security is managed in a s
 
 ## <i class="las la-user-friends"></i> Organisation
 
-A *shared workspace* between users where you can invite people to join and collaborate, notably to manage **events**. Before performing some tasks in a organisation you must select it as you current *context* or workspace.
+A *shared workspace* between users where you can invite people to join and collaborate, notably to manage **events**. A user can belong to *multiple* organisations and can also **create** new organisations.
 
-How to enter into the context of an organisation through the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
+A *dashboard* summarizes the running events for all his organisations on the home page. All activities related to organisations management are also accessible from this dashboard. By selecting the target activity on an organisation you make it your current *context* or workspace.
 
-A user can belong to *multiple* organisations. In this case a *dashboard* summarizes the running events on the home page.
+:point_right: How to enter into the context of an organisation or create a new one through the <tour-link text="dashboard" path="home/organisations"/>
 
-:point_right: You belong to *multiple* organisations ? <tour-link text="Open your dashboard" path="home/dashboard"/>
-
-A user can also create new organisations.
-
-:point_right: You'd like to create a new organisation ? <tour-link text="How to through the main menu" path="home" :params="{ tour: 'home' }"/>
+::: tip
+If you belong to a single organisation you will automatically enter its context on login.
+:::
 
 A user is being assigned *different roles* in his organisations so that different features are available depending on the currently selected organisation. The following figure shows a use case where:
 * a user belongs to multiple organisations (1, 2 and 3),
@@ -92,9 +98,7 @@ A **group** allows to *delegate* the management of a shared workspace limited to
 :point_right: You manage an organisation ? <tour-link text="How to manage your groups" path="home" :params="{ organisation: 'manager', route: 'groups-activity' }"/>
 
 ::: details See also
-How to enter into the context of an organisation through the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
-
-How to enter the groups management activity from the <tour-link text="context of your organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+How to enter the groups management activity from the <tour-link text="dashboard" path="home/organisations"/>
 :::
 
 ### <i class="las la-tags"></i> Tag
@@ -106,9 +110,7 @@ A tag is *transverse* to your organisation, meaning you can target with it peopl
 :point_right: You manage an organisation ? <tour-link text="How to manage your tags" path="home" :params="{ organisation: 'manager', route: 'tags-activity' }"/>
 
 ::: details See also
-How to enter into the context of an organisation through the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
-
-How to enter the tags management activity from the <tour-link text="context of your organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+How to enter the tags management activity from the <tour-link text="dashboard" path="home/organisations"/>
 :::
 
 ## <i class="las la-fire"></i> Event
@@ -149,9 +151,7 @@ Using a typology you can produce **[relevant statistics](../gofurther/archiving.
 :point_right: You manage an organisation ? <tour-link text="How to manage your templates" path="home" :params="{ organisation: 'manager', route: 'event-templates-activity' }"/>
 
 ::: details See also
-How to enter into the context of an organisation through the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
-
-How to enter the models management activity from the <tour-link text="context of your organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+How to enter the models management activity from the <tour-link text="dashboard" path="home/organisations"/>
 :::
 
 ### Participant
@@ -173,5 +173,5 @@ Although you can use the application freely for testing or private purpose (**br
 Moreover, if your business requires some of our [powerful advanced features](../gofurther/README.md) you need to subscribe to **additional plans** to make theses features available to your members.
 
 ::: warning Note
-:point_right: You own an organisation ? <tour-link text="What are the available plans and how to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
+:point_right: You own an organisation ? <tour-link text="What are the available plans and how to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
 :::

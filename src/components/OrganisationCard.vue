@@ -34,14 +34,14 @@
             <div class="row justify-between">
               <k-action 
                 v-if="canAccessCatalog"
-                id= "map"
+                id= "organisation-catalog"
                 icon= "las la-map"
                 :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
                 :route="{ name: 'catalog-activity', params: { contextId: this.item._id } }" 
                 :propagate="false" />
               <k-action
                 v-if="canAccessArchivedEvents"
-                id= "history"
+                id= "organisation-archived-events"
                 icon= "las la-clipboard-list"
                 :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
                 :route="{ name: 'archived-events-activity', params: { contextId: this.item._id } }" 

@@ -1,9 +1,10 @@
 module.exports = [{
   target: '#catalog',
   title: 'tours.catalog.CATALOG_LABEL',
-  content: 'tours.catalog.NAVIGATION_BAR_LINK_LABEL',
+  link: 'tours.catalog.NAVIGATION_BAR_LINK_LABEL',
   params: {
-    placement: 'bottom'
+    placement: 'bottom',
+    tour: 'navigation-bar'
   }
 }, {
   target: '#right-opener',

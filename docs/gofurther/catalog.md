@@ -9,7 +9,7 @@ The catalog activity allows to visualise and interact with data on a digital map
 ::: warning Note
 This feature requires a specific subscription, it will not be available otherwise.
 
-:point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
+:point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
 :::
 
 ## Key concepts
@@ -109,22 +109,21 @@ Each component can be shown/hidden through a handle on the different side of the
 * at the bottom to open the **timeline**,
 * on the right to open the **catalog panel**.
 
-In addition, a **floating action button** <i class="las la-chevron-up la-2x"></i> is available in the bottom-right corner to perform some actions.
+In addition, a **floating action button** <i class="las la-ellipsis-v la-2x"></i> is available in the bottom-right corner to perform some actions.
 
 :point_right: You manage an organisation ? <tour-link text="Browse the catalog activity components" path="home" :params="{ organisation: 'manager', route: 'catalog-activity', tourDelay: 2000 }"/>
 
 ::: details See also
-How to enter into the context of an organisation through the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
-
-How to enter the catalog activity from the <tour-link text="context of your organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+How to enter the catalog activity from the <tour-link text="dashboard" path="home/organisations"/>
 :::
 
 ### Navigation bar
 
 The navigation bar allows to quickly execute recurring actions:
-* <i class="las la-crosshairs"></i> display the coordinates of a location,
-* <i class="las la-search"></i> seek for an address,
-* <i class="las la-street-view"></i> center the view on your current location,
+* <i class="las la-crosshairs"></i> center the view on your current location,
+* <i class="las la-search-location"></i> seek for an address,
+* <i class="las la-star"></i> list and create your favorite views,
+* <i class="las la-wrench"></i> display the coordinates of a location,
 * <i class="las la-expand"></i> switch to fullscreen mode.
 
 :point_right: Launch the <tour-link text="activity tutorial" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> then open the link <i class="las la-external-link-square-alt"/> to the navigation bar tutorial to get more details
@@ -152,8 +151,10 @@ The timeline allows to quickly execute actions related to the time of the displa
 ### Floating action button
 
 Using the FAB you can:
-* <i class="las la-plus"/> Create a new blank data layer by locating and drawing the underlying entities. You can add the data schema from a [JSON schema](https://json-schema.org/) file in order to edit the meatadata (i.e. properties) of your entities.
-* <i class="las la-file-import"/> Create a new data layer by import existing data from a [GeoJSON](https://geojson.org/) file.
+* <i class="las la-plus"/> Create a new blank data layer:
+   * By connecting to web mapping services using OGC standards (WMS, WFS, TMS, WMTS).
+   * By locating and drawing the underlying entities. You can add the data schema from a [JSON schema](https://json-schema.org/) file in order to edit the meatadata (i.e. properties) of your entities.
+  * By import existing data from a [GeoJSON](https://geojson.org/) file.
 * <i class="las la-eye-dropper"/> Probe weather forecast data from active prediction models by selecting a specific location on the map.
 
 :point_right: Launch the <tour-link text="activity tutorial" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> then open the link <i class="las la-external-link-square-alt"/> to the FAB tutorial to get more details

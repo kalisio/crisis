@@ -5,7 +5,7 @@ La **main courante** propose un archivage long-terme de vos [événements](../qu
 ::: warning Note
 Cette fonctionnalité requiert un abonnement spécifique, sans celui-ci vous ne pourrez y accéder.
 
-:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
+:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
 :::
 
 La vue par défaut au sein de cette activité propose une **ligne de temps** ou **historique** affichant vos événements de façon séquentielle dans une plage de temps donnée. Vous pourrez y retrouver les actions afférentes habituelles, ainsi que de nouvelles information de traçabilité comme les dates de création/modification/clôture et le nombre de participants impliqués: 
@@ -33,7 +33,5 @@ Cerise sur le gâteau, vous pouvez produire des statistiques sur vos événement
 :point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Parcourir la main courante" path="home" :params="{ organisation: 'manager', route: 'archived-events-activity' }"/>
 
 ::: details Voir aussi
-Comment entrer dans le contexte d'une organisation via le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
-
-Comment entrer dans l'activité de main courante depuis <tour-link text="le contexte de l'organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+Comment entrer dans l'activité de main courante depuis le <tour-link text="tableau de bord" path="home/organisations"/>
 :::

@@ -8,7 +8,15 @@ Nous allons illustrer ici les *concepts de base* vous permettant de prendre en m
 
 Cette présentation s'accompagne parfois de petits *didacticiels* qui peuvent être exécutés directement sur l'application. Aussi il vous sera nécessaire de suivre tout d'abord les étapes vous permettant de créer un compte sur l'application puis de vous y connecter pour que cela fonctionne correctment.
 
-Un lien peut vous permettre d'exécuter directement un didacticiel depuis la documentation, sinon rendez-vous sur l'application à l'endroit adéquat puis activez le didacticiel en cliquant sur l'icone <a href=""><i class="las la-question-circle"/></a>. Vous pourrez ensuite suivre les instructions pas à pas <a href=""><i class="las la-chevron-right"/></a> ou revenir en arrière <a href=""><i class="las la-chevron-left"/></a> et stopper à tout instant <a href=""><i class="las la-times"/></a> comme illustré sur la figure suivante:
+Un lien peut vous permettre d'exécuter directement un didacticiel depuis la documentation, sinon rendez-vous sur l'application à l'endroit adéquat puis activez le didacticiel en cliquant sur l'icone <a href=""><i class="las la-question-circle"/></a> dans le menu principal.
+
+![launch-tour](../../assets/LaunchTour-FR.png)
+
+::: tip Astuce
+Pour ouvrir le menu principal utilisez la poignée apparaissant sur le côté gauche de l'écran.
+:::
+
+Vous pourrez ensuite suivre les instructions pas à pas <a href=""><i class="las la-chevron-right"/></a> ou revenir en arrière <a href=""><i class="las la-chevron-left"/></a> et stopper à tout instant <a href=""><i class="las la-times"/></a> comme illustré sur la figure suivante:
 
 ![tour](../../assets/Tour-FR.png)
 
@@ -42,17 +50,15 @@ Par exemple, tout ce qui a trait à votre compte et à sa sécurité est central
 
 ## <i class="las la-user-friends"></i> Organisation
 
-Un *espace partagé* par plusieurs utilisateurs au sein duquel vous pouvez inviter des personnes à collaborer, notamment pour gérer des **évènements**. Avant de pouvoir réaliser certaines actions dans une organisation il faut tout d'abord la sélectionner pour en faire votre *contexte* ou espace de travail courant. 
+Un *espace partagé* par plusieurs utilisateurs au sein duquel vous pouvez inviter des personnes à collaborer, notamment pour gérer des **évènements**. Un utilisateur peut appartenir à *plusieurs* organisations et peut également **créer** de nouvelles organisations.
 
-Voir comment entrer dans le contexte d'une organisation via le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
+Un *tableau de bord* synthétise les événements en cours au sein de ses différentes organisations sur la page d'acceuil. Toutes les activités relatives à la configuration des organisations sont également accessibles depuis ce tableau de bord. En sélectionnant une activité cible sur une organisation vous en faite votre *contexte* ou espace de travail courant. 
 
-Un utilisateur peut appartenir à *plusieurs* organisations. Dans ce cas un *tableau de bord* synthétise les événements en cours au sein de ses différentes organisations sur la page d'acceuil.
+Voir comment entrer dans le contexte d'une organisation ou en créer une nouvelle via le <tour-link text="tableau de bord" path="home/organisations"/>
 
-:point_right: Vous appartenez à *plusieurs* organisations ? <tour-link text="Voir votre tableau de bord" path="home/dashboard"/>
-
-Un utilisateur peut également créer de nouvelles organisations.
-
-:point_right: Vous souhaitez créer une nouvelle organisation ? <tour-link text="Voir comment faire via le menu principal" path="home" :params="{ tour: 'home' }"/>
+::: tip Astuce
+Lorsque vous n'appartennez qu'à une seule organisation vous rentrerez directement dans son contexte lors de la connexion.
+:::
 
 Selon les organisations, un utilisateur possède des *rôles différents* et ne dispose donc pas des même fonctionnalités. La figure suivante illustre un exemple où:
 * un utilisateur appartient à plusieurs organisations (1, 2 et 3),
@@ -92,9 +98,7 @@ Un **groupe** vous permet de *déléguer* la gestion d'un espace de travail rest
 :point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos groupes" path="home" :params="{ organisation: 'manager', route: 'groups-activity' }"/>
 
 ::: details Voir aussi
-Comment entrer dans le contexte d'une organisation via le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
-
-Comment entrer dans l'activité de gestion des groupes depuis <tour-link text="le contexte de l'organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+Comment entrer dans l'activité de gestion des groupes depuis le <tour-link text="tableau de bord" path="home/organisations"/>
 :::
 
 ### <i class="las la-tags"></i> Etiquette
@@ -106,9 +110,7 @@ Une étiquette est *transverse* à votre organisation, c'est à dire qu'avec ell
 :point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos étiquettes" path="home" :params="{ organisation: 'manager', route: 'tags-activity' }"/>
 
 ::: details Voir aussi
-Comment entrer dans le contexte d'une organisation via le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
-
-Comment entrer dans l'activité de gestion des étiquettes depuis <tour-link text="le contexte de l'organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+Comment entrer dans l'activité de gestion des étiquettes depuis le <tour-link text="tableau de bord" path="home/organisations"/>
 :::
 
 ## <i class="las la-fire"></i> Evénement
@@ -149,9 +151,7 @@ Grâce à une typologie vous pourrez ensuite réaliser des **[statistiques perti
 :point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos modèles" path="home" :params="{ organisation: 'manager', route: 'event-templates-activity' }"/>
 
 ::: details Voir aussi
-Comment entrer dans le contexte d'une organisation via le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
-
-Comment entrer dans l'activité de gestion des modèles depuis <tour-link text="le contexte de l'organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+Comment entrer dans l'activité de gestion des modèles depuis le <tour-link text="tableau de bord" path="home/organisations"/>
 :::
 
 ### Participant
@@ -173,5 +173,5 @@ Bien que vous puissiez utiliser l'application gratuitement à des fins de test o
 De plus, si l'activité de votre association ou entreprise requiert l'utilisation de certaines de nos [fonctionnalités avancées](../gofurther/README.md) vous devez souscrire un ou plusieurs **abonnements additionels** pour les rendre disponibles à vos membres.
 
 ::: warning Note
-:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir les abonnements disponibles et comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
+:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir les abonnements disponibles et comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
 :::

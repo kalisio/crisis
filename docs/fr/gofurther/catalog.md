@@ -9,7 +9,7 @@ Le catalogue cartographique permet de visualiser et d'interagir avec une carte n
 ::: warning Note
 Cette fonctionnalité requiert un abonnement spécifique, sans celui-ci vous ne pourrez y accéder.
 
-:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', perspective: 'billing' }"/>
+:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
 :::
 
 ## Concepts de base
@@ -133,22 +133,21 @@ Chaque composant peut être affiché/caché par l'intermédiaire de poignées vi
 * la **ligne de temps** en bas,
 * le **panneau latéral** à droite.
 
-De plus, un **bouton** <i class="las la-chevron-up la-2x"></i> situé en bas à droite de l'écran permet d'effectuer certaines actions.
+De plus, un **bouton** <i class="las la-ellipsis-v la-2x"></i> situé en bas à droite de l'écran permet d'effectuer certaines actions.
 
 :point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Naviguez à travers les composants du catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/>
 
 ::: details Voir aussi
-Comment entrer dans le contexte d'une organisation via le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
-
-Comment entrer dans le catalogue géographique depuis <tour-link text="le contexte de l'organisation" path="home" :params="{ organisation: 'manager', tour: 'context' }"/>
+Comment entrer dans le catalogue géographique depuis le <tour-link text="tableau de bord" path="home/organisations"/>
 :::
 
 ### Barre de navigation
 
 La barre de navigation permet de réaliser des actions récurrentes:
-* <i class="las la-crosshairs"></i> afficher les coordonnées géographiques d'un lieu,
-* <i class="las la-search"></i> rechercher une adresse,
-* <i class="las la-street-view"></i> recentrer la carte sur votre position,
+* <i class="las la-crosshairs"></i> recentrer la carte sur votre position,
+* <i class="las la-search-location"></i> rechercher une adresse,
+* <i class="las la-star"></i> accéder et créer vos vues favorites,
+* <i class="las la-wrench"></i> afficher les coordonnées géographiques d'un lieu,
 * <i class="las la-expand"></i> passer en mode plein écran.
 
 :point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel de la barre de navigation pour plus de détails
@@ -176,8 +175,10 @@ La ligne de temps permet de rapidement sélectionner la date et l'heure des donn
 ### Bouton d'actions
 
 En utilisant ce bouton vous pouvez:
-* <i class="las la-plus"/> Créer une nouvelle couche de données en positionnant et dessinant vous même les entitées la composant. Vous pouvez adjoindre un fichier définissant le schéma de données des métadonnées associées aux entités (i.e. leurs propriétés) au format [JSON schema](https://json-schema.org/).
-* <i class="las la-file-import"/> Créer une nouvelle couche de données en important un fichier de données au format [GeoJSON](https://geojson.org/).
+* <i class="las la-plus"/> Créer une nouvelle couche de données
+  * En vous connectant à des services cartographiques respectant les standards OGC (WMS, WFS, TMS, WMTS).
+  * En important un fichier de données au format [GeoJSON](https://geojson.org/).
+  * En positionnant et dessinant vous même les entitées la composant. Vous pouvez adjoindre un fichier définissant le schéma de données des métadonnées associées aux entités (i.e. leurs propriétés) au format [JSON schema](https://json-schema.org/).
 * <i class="las la-eye-dropper"/> Sonder les prévision météorologiques du modèle actuellement actif sur un lieu donné en le sélectionnant sur la carte.
 
 :point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel du bouton d'actions pour plus de détails
