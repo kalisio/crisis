@@ -3,7 +3,7 @@ module.exports = [{
   title: 'tours.side-nav.SIDENAV_LABEL',
   params: {
     placement: 'right',
-    hoverClickOnLink: '#left-opener'
+    hoverClickOnNext: '#left-opener'
   }
 }, {
   target: '#logout',
@@ -23,26 +23,26 @@ module.exports = [{
   target: '#organisations',
   content: 'tours.side-nav.ORGANISATIONS_LABEL',
   params: {
-    placement: 'top'
+    placement: 'bottom'
   }
 }, {
   target: '#edit-settings',
   content: 'tours.side-nav.SETTINGS_LABEL',
   params: {
-    placement: 'top'
-  }
-}, {
-  target: '#help',
-  link: 'tours.side-nav.HELP_LABEL',
-  params: {
-    placement: 'top',
-    clickOnLink: '#help'
+    placement: 'bottom'
   }
 }, {
   target: '#contextual-help',
-  link: 'tours.side-nav.CONTEXT_HELP_LABEL',
+  content: 'tours.side-nav.CONTEXT_HELP_LABEL',
   params: {
     placement: 'top'
+  }
+}, {
+  target: '#online-help',
+  link: 'tours.side-nav.HELP_LABEL',
+  params: {
+    placement: 'top',
+    clickOnLink: '#online-help'
   }
 }, {
   target: '#about',
