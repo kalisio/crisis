@@ -5,7 +5,7 @@
     -->
     <template v-slot:card-header>
       <div v-if="userRole" class="q-pa-sm row justify-end">
-        <q-badge id="role-badge" color="grey-7">
+        <q-badge id="organisation-role-badge" color="grey-7">
           {{ $t(userRole) }}
         </q-badge>
       </div>
@@ -22,7 +22,7 @@
     <div slot="card-content">
       <!-- Events section -->
       <q-list bordered>
-        <q-item clickable @click.native.prevent="$router.push({ name: 'events-activity', params: { contextId: item._id } })">
+        <q-item id="organisation-events" clickable @click.native.prevent="$router.push({ name: 'events-activity', params: { contextId: item._id } })">
           <q-item-section avatar>
             <q-icon name="las la-fire" />
           </q-item-section>
@@ -55,6 +55,7 @@
         <template v-for="scope in scopes.slice(1)">
           <q-item 
             v-if="isCountAvailable(scope.name)"
+            :id="'organisation-' + scope.name" 
             :key="scope.key"
             clickable 
             @click.native.prevent="$router.push({ name: `${scope.name}-activity`, params: { contextId: item._id } })">
@@ -72,7 +73,7 @@
           </q-item>
         </template>
       </q-list>
-      <!-- PLan section -->
+      <!-- Plan section -->
       <q-list bordered>
         <q-item @click.native.prevent="$router.push({ name: 'events-activity', params: { contextId: item._id } })">
           <q-item-section avatar>
@@ -100,10 +101,10 @@
             <div class="row justify-end">
               <k-action 
                 v-if="canAccessBilling"
-                id= "map"
+                id="organisation-billing" 
                 icon= "las la-cog"
                 :tooltip="$t('OrganisationCard.MANAGE_SUBSCRIPTIONS')"
-                :route="{ name: 'organisation-settings-activity', params: { contextId: this.item._id, tab: 'billing' } }" 
+                :route="{ name: 'organisation-settings-activity', params: { contextId: this.item._id, page: 'billing' } }" 
                 :propagate="false" />
             </div>
           </q-item-section>

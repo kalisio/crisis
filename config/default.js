@@ -33,7 +33,7 @@ const gateway = domain.replace('aktnmap', 'api')
 
 const contextHelp = function (tour) {
   return Object.assign({
-    id: 'online-help', icon: 'las la-question-circle', label: 'leftPane.CONTEXTUAL_HELP', renderer: 'item'
+    id: 'contextual-help', icon: 'las la-question-circle', label: 'leftPane.CONTEXTUAL_HELP', renderer: 'item'
   }, tour ? { handler: { name: 'launchTour', params: [tour] } } : { handler: 'launchTour' })
 }
 
@@ -42,7 +42,7 @@ const leftPane = function (tour) {
     content: [
       { component: 'QImg', src: 'statics/aktnmap-banner.png' },
       { component: 'account/KIdentityPanel', class: 'full-width' },
-      { id: 'home', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'home' }, renderer: 'item' },
+      { id: 'organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'home' }, renderer: 'item' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
       { component: 'Settings' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
@@ -361,10 +361,10 @@ module.exports = {
         { 
           id: 'edit-organisation', icon: 'las la-edit', tooltip: 'OrganisationCard.EDIT',
           visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':item._id' }] },
-          route: { name: 'organisation-settings-activity', params: { contextId: ':item._id', tab: 'properties' } }
+          route: { name: 'organisation-settings-activity', params: { contextId: ':item._id', page: 'properties' } }
         },
         { 
-          id: 'delete-organisation', icon: 'las la-trash', tooltip: 'OrganisationCard.DELETE',
+          id: 'remove-organisation', icon: 'las la-trash', tooltip: 'OrganisationCard.DELETE',
           visible: { name: '$can', params: ['remove', 'organisations', null, { _id: ':item._id' }] },
           handler: { name: 'removeItem', params: ['input'] }
         }

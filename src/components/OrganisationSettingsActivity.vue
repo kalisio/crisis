@@ -3,15 +3,15 @@
     <template v-slot:page-content>
       <q-tabs v-model="currentTab" inline-label>
         <q-route-tab 
-          name="properties" 
+          id="properties" name="properties" 
           :icon="$q.screen.gt.xs ? 'las la-edit' : ''" 
           :label="$t('OrganisationSettingsActivity.PROPERTIES')"
-          :to="{ name: $route.name, params: { contextId: contextId, tab: 'properties' } }" />
+          :to="{ name: $route.name, params: { contextId: contextId, page: 'properties' } }" />
         <q-route-tab 
-          name="billing" 
+          id="billing" name="billing" 
           :icon="$q.screen.gt.xs ? 'las la-credit-card' : ''" 
           :label="$t('OrganisationSettingsActivity.SUBSCRIPTIONS')"
-          :to="{ name: $route.name, params: { contextId: contextId, tab: 'billing' } }" />
+          :to="{ name: $route.name, params: { contextId: contextId, page: 'billing' } }" />
       </q-tabs>
       <q-tab-panels v-model="currentTab" animated>
         <q-tab-panel name="properties">
@@ -40,7 +40,7 @@ export default {
       type: String,
       default: ''
     },
-    tab: {
+    page: {
       type: String,
       default: 'properties'
     }
@@ -51,7 +51,7 @@ export default {
     }
   },
   watch: {
-    tab: function (value) {
+    page: function (value) {
       this.currentTab = value
     }
   },

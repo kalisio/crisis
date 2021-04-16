@@ -59,14 +59,14 @@ module.exports = {
             // Because this child is the default one path is empty and name is the one of the parent route
             path: '',
             name: 'home',
+            tour: tours['side-nav'],
             redirect: { name: 'organisations-activity' }
           },
           'organisations': {
             name: 'organisations-activity',
             component: 'team/KOrganisationsActivity',
             tour: {
-              'organisations-activity': tours['organisations'],
-              'side-nav': tours['side-nav']
+              'organisations-activity': tours['organisations']
             },
             children: {
               'create': {
@@ -273,7 +273,7 @@ module.exports = {
                 },
                 tour: tours['event-templates']
               },
-              ':tab': {
+              ':page': {
                 name: 'organisation-settings-activity',
                 component: 'OrganisationSettingsActivity',
                 props: true,

@@ -1,4 +1,11 @@
 module.exports = [{
+  target: '#left-opener',
+  title: 'tours.side-nav.SIDENAV_LABEL',
+  params: {
+    placement: 'right',
+    hoverClickOnLink: '#left-opener'
+  }
+}, {
   target: '#logout',
   title: 'tours.side-nav.LOGOUT_LABEL',
   content: 'tours.side-nav.SESSION_LABEL',
@@ -13,6 +20,18 @@ module.exports = [{
     route: { name: 'account-activity', params: { page: 'profile' } }
   }
 }, {
+  target: '#organisations',
+  content: 'tours.side-nav.ORGANISATIONS_LABEL',
+  params: {
+    placement: 'top'
+  }
+}, {
+  target: '#edit-settings',
+  content: 'tours.side-nav.SETTINGS_LABEL',
+  params: {
+    placement: 'top'
+  }
+}, {
   target: '#help',
   link: 'tours.side-nav.HELP_LABEL',
   params: {
@@ -20,11 +39,10 @@ module.exports = [{
     clickOnLink: '#help'
   }
 }, {
-  target: '#edit-settings',
-  content: 'tours.side-nav.SETTINGS_LABEL',
+  target: '#contextual-help',
+  link: 'tours.side-nav.CONTEXT_HELP_LABEL',
   params: {
-    placement: 'top',
-    previousDelay: 500
+    placement: 'top'
   }
 }, {
   target: '#about',
