@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import { mixins } from '@kalisio/kdk/core.client'
+import { colors } from 'quasar'
+import { Theme, mixins } from '@kalisio/kdk/core.client'
 
 export default {
   name: 'context',
@@ -15,6 +16,8 @@ export default {
       // Uploading can require a long time
       if (context) {
         this.$api.getService('storage', context).timeout = 60 * 60 * 1000 // 1h should be sufficient since we also have size limits
+        // Update the theme
+        Theme.apply(_.get(context, 'color'))
       }
     },
     watchOrganisation (organisation) {
@@ -28,6 +31,7 @@ export default {
   beforeDestroy () {
     this.$events.$off('context-changed', this.setupContext)
     this.service.off('patched', this.watchOrganisation)
+    Theme.restore()
   }
 }
 </script>
