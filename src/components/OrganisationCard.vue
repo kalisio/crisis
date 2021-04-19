@@ -76,9 +76,9 @@
           </q-item>
         </template>
       </q-list>
-      <!-- Plan section -->
+      <!-- Subscription section -->
       <q-list bordered>
-        <q-item @click.native.prevent="$router.push({ name: 'events-activity', params: { contextId: item._id } })">
+        <q-item>
           <q-item-section avatar>
             <q-icon name="las la-credit-card" />
           </q-item-section>          

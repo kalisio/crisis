@@ -614,7 +614,7 @@ module.exports = {
           { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', tab: 'properties' } },    
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', page: 'properties' } },    
           },
           midSeparator,
           { component: 'team/KMemberFilter' },
@@ -635,12 +635,11 @@ module.exports = {
       }
     },
     fab: {
-      actions: [
-        { id: 'add-member', icon: 'las la-user-plus', tooltip: 'KMembersActivity.ADD_USER_LABEL',
-          visible: { name: '$can', params: ['update', 'organisations', ':contextId'] }, route: { name: 'add-member' } },
-        { id: 'invite-member', icon: 'las la-envelope', tooltip: 'KMembersActivity.INVITE_GUEST_LABEL',
-          visible: { name: '$can', params: ['update', 'organisations', ':contextId'] }, route: { name: 'invite-member' } }
-      ]
+      actions: [{ 
+        id: 'add-member', icon: 'las la-plus', tooltip: 'KMembersActivity.ADD_USER_LABEL',
+        visible: { name: '$can', params: ['update', 'organisations', ':contextId'] },
+        route: { name: 'add-member' } 
+      }]
     },
     items: {
       actions: [
@@ -684,7 +683,7 @@ module.exports = {
           { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', tab: 'properties' } },    
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', page: 'properties' } },    
           },
           midSeparator,
           { component: 'collection/KSorter', 
@@ -735,7 +734,7 @@ module.exports = {
           { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', tab: 'properties' } },    
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', page: 'properties' } },    
           },
           midSeparator,          
           { id: 'group-sorter', component: 'collection/KSorter', tooltip: 'KGroupsActivity.SORT_GROUPS' },
@@ -787,7 +786,7 @@ module.exports = {
           { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', tab: 'properties' } },    
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', page: 'properties' } },    
           },
           midSeparator,
           { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
