@@ -14,7 +14,6 @@ fixture`organisations`// declare the fixture
 const screens = new pages.Screens()
 const layout = new pages.Layout()
 const account = new pages.Account()
-const organisationsPanel = new pages.OrganisationsPanel()
 const organisationSettings = new pages.OrganisationSettings()
 
 const data = {

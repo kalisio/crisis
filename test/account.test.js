@@ -13,7 +13,7 @@ fixture`account`// declare the fixture
 
 const screens = new pages.Screens()
 const layout = new pages.Layout()
-const organisationSettings = new pages.OrganisationSettings()
+const organisations = new pages.Organisations()
 const account = new pages.Account()
 
 const data = {
@@ -29,6 +29,9 @@ test('Create account', async test => {
   await screens.register(test, data.user)
   await layout.closeSignupAlert(test)  
   await layout.closeWelcomeDialog(test)
+  await layout.clickLeftOpener(test)
+  await layout.clickLeftPaneAction(test, pages.Organisations.ENTRY)
+  await organisations.checkCount(test, 1)
   await layout.clickLeftOpener(test)
   await layout.clickLeftPaneAction(test, pages.Layout.LOGOUT)  
   await pages.checkNoClientError(test)
@@ -70,15 +73,14 @@ test('Ensure login with old password fails', async test => {
 })
 
 test('Update email', async test => {
-  data.user.password = data.newPassword
-  await screens.login(test, data.user)
+  await screens.login(test, { email: data.user.email, password: data.newPassword })
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
   await layout.clickLeftOpener(test)
   await layout.clickLeftPaneAction(test, pages.Account.MANAGE_ACCOUNT)
   await layout.clickLeftOpener(test)  
   await layout.clickTopPaneAction(test, pages.Account.SECURITY)  
-  await account.updateEmail(test, data.newEmail, data.user.password)
+  await account.updateEmail(test, data.newEmail, data.newPassword)
   await pages.goBack()
   await layout.clickLeftOpener(test)
   await layout.clickLeftPaneAction(test, pages.Layout.LOGOUT)
@@ -87,28 +89,35 @@ test('Update email', async test => {
 
 // The above changes are not effective since the user does not confirm the mail
 test.skip('Ensure login with old email fails', async test => {
-  await screens.login(test, data.user)
+  await screens.login(test, { email: data.user.email, password: data.newPassword })
   const error = await screens.isErrorVisible()
   await test.expect(error).ok('Error should be displayed')
   data.user.email = data.newEmail
   await pages.checkClientError(test)
 })
 
-test('Delete account', async test => {
- /* data.user.email = data.newEmail
-  data.user.password = data.newPassword*/
-  data.user.name = data.newName
-  await screens.login(test, data.user)
+test('Delete organisation', async test => {
+  await screens.login(test, { email: data.user.email, password: data.newPassword })
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
-  await layout.clickTopPaneMenuEntry(test, 'app-bar-overflow-menu', 'settings')
-  await layout.clickTopPaneAction(test, pages.OrganisationSettings.DANGER_ZONE_TAB)
-  await organisationSettings.delete(test, data.user.name)
+  await layout.clickLeftOpener(test)
+  await layout.clickLeftPaneAction(test, pages.Organisations.ENTRY)
+  await organisations.checkCount(test, 1)
+  await organisations.delete(test, data.user.name)
+  await layout.clickLeftOpener(test)
+  await layout.clickLeftPaneAction(test, pages.Layout.LOGOUT)
+  await screens.goToLoginScreen(test)
+  await pages.checkNoClientError(test)
+})
+
+test('Delete account', async test => {
+  await screens.login(test, { email: data.user.email, password: data.newPassword })
+  await layout.closeSignupAlert(test)
+  await layout.closeWelcomeDialog(test)
   await layout.clickLeftOpener(test)  
   await layout.clickLeftPaneAction(test, pages.Account.MANAGE_ACCOUNT)
-  await layout.clickLeftOpener(test)  
   await layout.clickTopPaneAction(test, pages.Account.DANGER_ZONE)
-  await account.delete(test, data.user.name)
+  await account.delete(test, data.newName)
   await screens.goToLoginScreen(test)
   await pages.checkNoClientError(test)
 })
