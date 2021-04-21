@@ -16,7 +16,9 @@ export default {
       if (context) {
         this.$api.getService('storage', context).timeout = 60 * 60 * 1000 // 1h should be sufficient since we also have size limits
         // Update the theme
-        Theme.apply(_.get(context, 'color'))
+        const color = _.get(context, 'color')
+        if (!_.isEmpty(color)) Theme.apply(color)
+        else Theme.restore()
       }
     },
     watchOrganisation (organisation) {
