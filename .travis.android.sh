@@ -7,6 +7,10 @@ travis_fold start "provision"
 
 source .travis.env.sh
 
+# Configure rclone
+mkdir -p $HOME/.config/rclone
+cp $TRAVIS_BUILD_DIR/workspace/common/rclone.conf $HOME/.config/rclone/.
+
 # Install the required secret files requied to sign the app
 cp $TRAVIS_BUILD_DIR/workspace/common/android/*.json src-cordova/
 cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/android/*.json src-cordova/
@@ -29,11 +33,11 @@ fi
 npm run cordova:build:android > android.build.log 2>&1
 EXIT_CODE=$?
 # Copy the log whatever the result
-aws s3 cp android.build.log s3://${BUILD_BUCKET}/android.build.log
+rclone copy android.build.log scw:kalisio-builds/${BUILD_BUCKET}/android.build.log
 check_code $EXIT_CODE "Building the app"
 
 # Backup the android build to S3
-aws s3 sync src-cordova/platforms/android/app/build/outputs/apk s3://${BUILD_BUCKET}/android > /dev/null
+rclone copy src-cordova/platforms/android/app/build/outputs/apk scw:kalisio-builds/${BUILD_BUCKET}/android > /dev/null
 check_code $? "Copying the artefact to s3"
 
 travis_fold end "build"
@@ -52,7 +56,7 @@ cd src-cordova
 fastlane android $NODE_APP_INSTANCE > android.deploy.log 2>&1
 EXIT_CODE=$?
 # Copy the log whatever the result
-aws s3 cp android.deploy.log s3://${BUILD_BUCKET}/android.deploy.log
+rclone copy android.deploy.log scw:kalisio-builds/${BUILD_BUCKET}/android.deploy.log
 check_code $? "Deploying the app"
 
 travis_fold end "deploy"

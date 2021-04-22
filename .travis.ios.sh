@@ -7,6 +7,10 @@ travis_fold start "provision"
 
 source .travis.env.sh
 
+# Configure rclone
+mkdir -p $HOME/.config/rclone
+cp $TRAVIS_BUILD_DIR/workspace/common/rclone.conf $HOME/.config/rclone/.
+
 # Copy the certificates
 cp $TRAVIS_BUILD_DIR/workspace/common/ios/*.cer .
 cp $TRAVIS_BUILD_DIR/workspace/common/ios/*.p12 .
@@ -52,11 +56,11 @@ npm run cordova:build:ios > ios.build.log 2>&1
 # Capture the build result
 EXIT_CODE=$?
 # Copy the log whatever the result
-aws s3 cp ios.build.log s3://${BUILD_BUCKET}/ios.build.log
+rclone copy ios.build.log scw:kalisio-builds/${BUILD_BUCKET}/ios.build.log
 check_code $EXIT_CODE "Building the app"
 
 # Backup the ios build to S3
-aws s3 sync src-cordova/platforms/ios/build s3://${BUILD_BUCKET}/ios > /dev/null
+rclone copy src-cordova/platforms/ios/build scw:kalisio-builds/${BUILD_BUCKET}/ios > /dev/null
 check_code $? "Copying the artefact to s3"
 
 travis_fold end "build"
@@ -70,7 +74,7 @@ travis_fold start "deploy"
 xcrun altool --upload-app -f "./src-cordova/platforms/ios/build/device/$TITLE.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log 2>&1
 EXIT_CODE=$?
 # Copy the log whatever the result
-aws s3 cp ios.deploy.log s3://${BUILD_BUCKET}/ios.deploy.log
+rclone copy ios.deploy.log scw:kalisio-builds/${BUILD_BUCKET}/ios.deploy.log
 check_code $EXIT_CODE "Deploying the app"
 
 travis_fold end "deploy"
