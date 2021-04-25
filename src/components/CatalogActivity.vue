@@ -160,19 +160,6 @@ export default {
             label: this.$t('CatalogActivity.CREATE_MEASURE_ALERT_ACTION'),
             badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
           })
-        } else {
-          // Could be an internal feature or external one (eg WFS layer)
-          let id = _.get(layer, 'featureId', '_id')
-          id = _.get(feature, 'properties.' + id, _.get(feature, id))
-          if (id) { // Only on saved features
-            featureActions.push({
-              name: 'create-event',
-              icon: 'las la-fire',
-              handler: this.onSelectEventTemplateAction,
-              label: this.$t('CatalogActivity.CREATE_EVENT_FEATURE_ACTION'),
-              badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
-            })
-          }
         } else if (layer.name === this.$t('CatalogActivity.ALERTS_LAYER')) {
           // Alert deletion
           featureActions.push({
@@ -180,6 +167,18 @@ export default {
             icon: 'las la-minus-circle',
             handler: this.onRemoveAlert,
             label: this.$t('CatalogActivity.REMOVE_ALERT_ACTION'),
+            badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
+          })
+        }
+        // Could be an internal feature or external one (eg WFS layer)
+        let id = _.get(layer, 'featureId', '_id')
+        id = _.get(feature, 'properties.' + id, _.get(feature, id))
+        if (id) { // Only on saved features
+          featureActions.push({
+            name: 'create-event',
+            icon: 'las la-fire',
+            handler: this.onSelectEventTemplateAction,
+            label: this.$t('CatalogActivity.CREATE_EVENT_FEATURE_ACTION'),
             badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
           })
         }
