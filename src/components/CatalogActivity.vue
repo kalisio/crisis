@@ -160,8 +160,7 @@ export default {
             label: this.$t('CatalogActivity.CREATE_MEASURE_ALERT_ACTION'),
             badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
           })
-        } else if ((layer.name !== this.$t('CatalogActivity.EVENTS_LAYER')) &&
-                   (layer.name !== this.$t('CatalogActivity.ALERTS_LAYER'))) {
+        } else {
           // Could be an internal feature or external one (eg WFS layer)
           let id = _.get(layer, 'featureId', '_id')
           id = _.get(feature, 'properties.' + id, _.get(feature, id))
