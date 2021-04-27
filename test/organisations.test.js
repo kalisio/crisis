@@ -1,6 +1,5 @@
 // Page models
 import * as pages from './page-models'
-import { SideNav } from './page-models'
 
 fixture`organisations`// declare the fixture
   .page`${pages.getUrl()}`  // specify the start page
@@ -14,7 +13,7 @@ fixture`organisations`// declare the fixture
 const screens = new pages.Screens()
 const layout = new pages.Layout()
 const account = new pages.Account()
-const organisationSettings = new pages.OrganisationSettings()
+const organisations = new pages.Organisations()
 
 const data = {
   user: { name: 'Organisations owner', email: 'organisations-owner@kalisio.xyz', password: 'Pass;word1' },
@@ -26,8 +25,8 @@ test('Create user and check default organisation', async test => {
   await screens.register(test, data.user)
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
-  await layout.clickLeading(test)
-  await organisationsPanel.checkCount(test, 1)
+  await layout.clickLeftPaneAction(test, pages.Organisations.ENTRY)
+  await organisations.checkCount(test, 1)
   await pages.checkNoClientError(test)
 })
 

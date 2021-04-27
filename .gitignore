@@ -80,8 +80,7 @@ dist
 config/client-config.json
 
 # Testcafe
-screenshots
-# TestCafe page models
+test/reports
 test/page-models/core
 test/page-models/map
 
