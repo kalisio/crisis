@@ -12,7 +12,7 @@
 
 For more information please visit our websites:
 * [Kalisio Company](https://kalisio.com/)
-* [Akt'n'Map Product](https://aktnmap.com/)
+* [Akt'n'Map Product](https://kalisio.github.io/aktnmap/)
 
 This application is based on the [Kalisio Development Kit](https://kalisio.github.io/kdk/).
 

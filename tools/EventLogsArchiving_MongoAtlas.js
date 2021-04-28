@@ -3,7 +3,7 @@ exports = async function(dbEvent) {
   const id = dbEvent.documentKey._id
   const dbName = dbEvent.ns.db
   const collectionName = dbEvent.ns.coll
-  const collection = context.services.get("aktnmap-prod").db(dbName).collection("archived-" + collectionName)
+  const collection = context.services.get("prod").db(dbName).collection("archived-" + collectionName)
   const log = dbEvent.fullDocument
   // On deletion do not delete archived event but tag it with deletion date
   if (dbEvent.operationType.toLowerCase() == "delete")
