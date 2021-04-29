@@ -647,7 +647,7 @@ module.exports = {
           route: { name: 'tag-member', params: { contextId: ':contextId', objectId: ':item._id' } },
           visible: ['!item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }] },
         { id: 'change-role', icon: 'las la-graduation-cap', tooltip: 'KMemberCard.CHANGE_ROLE_LABEL',
-          route: { name: 'change-role', params: { contextId: ':contextId', objectId: ':item._id', resource: { id: ':contextId', scope: 'organisations', service: 'organisations' } } },
+          route: { name: 'change-role', params: { contextId: ':contextId', objectId: ':item._id' } },
           visible: ['!item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }] },
         { id: 'reissue-invitation', icon: 'las la-envelope', tooltip: 'KMemberCard.RESEND_INVITATION_LABEL', handler: 'resendInvitation',
           visible: ['item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }] },
