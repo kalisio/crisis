@@ -1,6 +1,7 @@
 import { MongoClient, MongoError } from 'mongodb'
 // Page models
 import * as pages from './page-models'
+import { Organisations } from './page-models'
 
 fixture`billing`// declare the fixture
   .page`${pages.getUrl()}`  // specify the start page
@@ -11,10 +12,10 @@ fixture`billing`// declare the fixture
     await pages.mockLocationAPI()
   })
 
-  const screens = new pages.Screens()
-  const layout = new pages.Layout()
-  const organisationSettings = new pages.OrganisationSettings()
-  const users = new pages.Users()
+const screens = new pages.Screens()
+const layout = new pages.Layout()
+const organisations = new pages.Organisations()
+const users = new pages.Users()
 
 const data = {
   user: { name: 'Customer', email: 'customer@kalisio.xyz', password: 'Pass;word1' },
@@ -33,8 +34,9 @@ test.skip('Check billing state for unverified user', async test => {
   await screens.login(test, data.user)
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
-  await layout.clickOverflowMenu(test, pages.OrganisationSettings.OVERFLOW_MENU_ENTRY)
-  await layout.clickTabBar(test, pages.OrganisationSettings.BILLING_TAB)
+  await layout.clickLeftOpener(test)
+  await layout.clickLeftPaneAction(test, pages.Organisations.ENTRY, pages.Organisations.LONG_WAIT)
+  await organisations.goToBilling(test, data.user.name)
   await organisationSettings.checkCustomerBlockDisabled(test)
   await organisationSettings.checkPlanDisabled(test, 'bronze')
   await organisationSettings.checkPlanDisabled(test, 'silver')
