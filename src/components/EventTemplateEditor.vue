@@ -48,9 +48,13 @@ export default {
       return (this.workflowEdition ? this.$t('EventTemplateEditor.WORKFLOW_TITLE') : this.editorTitle)
     },
     buttons () {
-      return (this.workflowEdition ? [] : [
-        { id: 'apply-button', label: this.applyButton, color: 'primary', handler: () => this.apply(), renderer: 'form-button' }
-      ])
+      return (this.workflowEdition ? [] : [{
+        id: 'apply-button',
+        label: this.applyButton,
+        color: 'primary',
+        handler: () => this.apply(),
+        renderer: 'form-button'
+      }])
     }
   },
   data () {

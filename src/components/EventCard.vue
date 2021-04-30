@@ -154,6 +154,7 @@ export default {
       return [{
         id: 'save-button',
         label: this.$t('EventCard.FOLLOWUP_MODAL_SAVE_BUTTON'),
+        renderer: 'form-button',
         handler: () => this.logParticipantState()
       }]
     },

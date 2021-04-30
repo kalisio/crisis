@@ -110,7 +110,13 @@ export default {
     },
     getButtons () {
       return [
-        { id: 'update-button', label: this.$t('CustomerEditor.UPDATE_BUTTON'), color: 'primary', handler: () => this.onUpdateClicked() }
+        {
+          id: 'update-button',
+          label: this.$t('CustomerEditor.UPDATE_BUTTON'),
+          renderer: 'form-button',
+          color: 'primary',
+          handler: () => this.onUpdateClicked()
+        }
       ]
     },
     async open (customer, purchasers) {
