@@ -536,8 +536,8 @@
   },
   "EventTemplateEditor": {
     "ADD_WORKFLOW_LABEL": "Add a workflow ?",
-    "WORKFLOW_LABEL_LABEL": "Workflow activated",
-    "WORKFLOW_MANAGE_LABEL_LABEL": "click to update",
+    "WORKFLOW_HELPER_LABEL": "Workflow activated",
+    "WORKFLOW_MANAGE_HELPER_LABEL": "click to update",
     "WORKFLOW_TITLE": "Manage the different steps of the workflow",
     "CLOSE_ACTION":  "$t(CLOSE_LABEL)"
   },
