@@ -34,7 +34,7 @@ export default {
           persistent: true
         }).onOk(() => {
           this.$router.push({ name: 'organisation-settings-activity',
-            params: { perspective: 'billing', contextId: this.contextId } })
+            params: { page: 'billing', contextId: this.contextId } })
         })
       }
     }
