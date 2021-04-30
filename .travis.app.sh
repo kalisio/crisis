@@ -15,6 +15,10 @@ travis_fold start "provision"
 
 source .travis.env.sh
 
+
+docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
+check_code $? "Connecting to Docker"
+
 travis_fold end "provision"
 
 #
@@ -50,9 +54,6 @@ travis_fold end "build"
 # Deploy the app
 #
 travis_fold start "deploy"
-
-docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
-check_code $? "Connecting to Docker"
 
 # Push the app image to the hub
 push_docker $APP $TAG $FLAVOR 
