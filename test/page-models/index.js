@@ -1,12 +1,14 @@
 import EventTemplates from './event-templates'
 import Events from './events'
 import Users from './users'
+import Billing from './billing'
 
 // Export all models
 export {
   EventTemplates,
   Events,
-  Users
+  Users,
+  Billing
 }
 
 export * from './core'
