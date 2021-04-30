@@ -539,8 +539,8 @@
   },
   "EventTemplateEditor": {
     "ADD_WORKFLOW_LABEL": "Ajouter un processus ?",
-    "WORKFLOW_LABEL_LABEL": "Processus actif",
-    "WORKFLOW_MANAGE_LABEL_LABEL": "cliquez pour modifier",
+    "WORKFLOW_HELPER_LABEL": "Processus actif",
+    "WORKFLOW_MANAGE_HELPER_LABEL": "cliquez pour modifier",
     "WORKFLOW_TITLE": "Gérez les différentes étapes du processus",
     "CLOSE_ACTION":  "$t(CLOSE_LABEL)"
   },

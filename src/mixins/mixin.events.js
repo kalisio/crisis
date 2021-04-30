@@ -171,8 +171,7 @@ const eventsMixin = {
         type: 'string',
         field: {
           component: 'form/KTextareaField',
-          label: this.$t('schemas.EVENTS_LOG_COMMENT_FIELD_LABEL'),
-          helper: this.$t('schemas.EVENTS_LOG_COMMENT_FIELD_HELPER')
+          helper: this.$t('schemas.EVENTS_LOG_COMMENT_FIELD_LABEL')
         }
       }
       return schema
