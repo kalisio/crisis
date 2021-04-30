@@ -352,7 +352,10 @@ module.exports = {
     },
     fab: {
       actions: [
-        { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL', route: { name: 'create-organisation' } }
+        {
+          id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL',
+          visible: { name: '$can', params: ['create', 'event-templates', ':contextId'] },
+          route: { name: 'create-organisation' } }
       ]
     },
     items: {
@@ -637,7 +640,7 @@ module.exports = {
     fab: {
       actions: [{ 
         id: 'add-member', icon: 'las la-plus', tooltip: 'KMembersActivity.ADD_USER_LABEL',
-        visible: { name: '$can', params: ['update', 'organisations', ':contextId'] },
+        visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
         route: { name: 'add-member' } 
       }]
     },
@@ -744,9 +747,10 @@ module.exports = {
       }
     },
     fab: {
-      actions: [
-        { id: 'create-group', icon: 'las la-plus', tooltip: 'KGroupsActivity.CREATE_GROUP_LABEL', route: { name: 'create-group', params: { contextId: ':contextId' } } }
-      ]
+      actions: [{ id: 'create-group', icon: 'las la-plus', tooltip: 'KGroupsActivity.CREATE_GROUP_LABEL',
+          visible: { name: '$can', params: ['create', 'groups', ':contextId'] },
+          route: { name: 'create-group', params: { contextId: ':contextId' } }
+      }]
     },
     items: {
       actions: [
@@ -796,11 +800,11 @@ module.exports = {
       }
     },
     fab: {
-      actions: [
-        { id: 'create-event-template', icon: 'las la-plus', tooltip: 'EventTemplatesActivity.CREATE_TEMPLATE_LABEL',
-          visible: { name: '$can', params: ['create', 'event-templates', ':contextId'] },
-          route: { name: 'create-event-template', params: { contextId: ':contextId' } } }
-      ]
+      actions: [{
+        id: 'create-event-template', icon: 'las la-plus', tooltip: 'EventTemplatesActivity.CREATE_TEMPLATE_LABEL',
+        visible: { name: '$can', params: ['create', 'event-templates', ':contextId'] },
+        route: { name: 'create-event-template', params: { contextId: ':contextId' } }
+      }]
     },
     items: {
       actions: [
