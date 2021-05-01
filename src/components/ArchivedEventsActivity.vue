@@ -19,7 +19,7 @@
       -->
       <k-history
         id="history"
-        class="q-pa-md"
+        class="q-pa-lg"
         v-if="showHistory"
         style="padding-top: 50px" 
         service="archived-events" 
