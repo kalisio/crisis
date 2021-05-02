@@ -61,7 +61,7 @@
             :id="'organisation-' + scope.name" 
             :key="scope.key"
             clickable 
-            @click.native.prevent="$router.push({ name: `${scope.name}-activity`, params: { contextId: item._id } })">
+            @click="$router.push({ name: `${scope.name}-activity`, params: { contextId: item._id } })">
             <q-item-section avatar>
               <q-icon :name="scope.icon" />
             </q-item-section>
