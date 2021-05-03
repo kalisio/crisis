@@ -16,7 +16,7 @@ Un lien peut vous permettre d'exécuter directement un didacticiel depuis la doc
 Pour ouvrir le menu principal utilisez la poignée apparaissant sur le côté gauche de l'écran.
 :::
 
-Vous pourrez ensuite suivre les instructions pas à pas <a href=""><i class="las la-chevron-right"/></a> ou revenir en arrière <a href=""><i class="las la-chevron-left"/></a> et stopper à tout instant <a href=""><i class="las la-times"/></a> comme illustré sur la figure suivante:
+Vous pourrez ensuite suivre les instructions pas à pas <a href=""><i class="las la-chevron-right"/></a> (ou touche <i class="las la-arrow-right"/> du clavier) ou revenir en arrière <a href=""><i class="las la-chevron-left"/></a> (ou touche <i class="las la-arrow-left"/> du clavier) et stopper à tout instant <a href=""><i class="las la-times"/></a> (ou touche *echap* du clavier) comme illustré sur la figure suivante:
 
 ![tour](../../assets/Tour-FR.png)
 
@@ -27,6 +27,16 @@ Lorsque vous voyez un label *beta* sur un élément de l'interface utilisateur (
 ::: warning Attention
 Akt'n'Map s'améliore et évolue de façon continue. Aussi, ce qui s’affiche sur votre écran peut parfois diffèrer de ce que vous lirez et verrez dans cette documentation, mais les concepts clés restent les mêmes.
 :::
+
+## Activité
+
+Au sein de l'application les actions visant à réaliser une tâche spécifique, comme la gestion des [membres](./concepts.md#role) de son [organisation](./concepts.md#organisation) ou de son [catalogue cartographique](../gofurther/catalog.md), sont regroupés sur un même écran présentant une interface utilisateur adaptée et nommée **activité**. Lorsque plusieurs écrans sont nécessaires compte tenu du nombre d'actions possibles, ils sont affichés sous la forme d'**onglets**. La sélection d'un onglet permet de basculer sur l'écran ad-hoc.
+
+Par exemple, tout ce qui a trait à votre compte et à sa sécurité est centralisé dans une activité de gestion composée de trois écrans comme illustré sur la figure suivante:
+
+![account](../../assets/Account-FR.png)
+
+Depuis une activité vous pouvez à tout moment ouvrir le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/> sur la gauche de l'écran ou basculer sur d'autres activité via la **barre d'application** en haut de l'écran.
 
 ## <i class="las la-user"></i> Utilisateur
 
@@ -40,13 +50,9 @@ Une *personne* qui est **enregistrée** sur Akt'n'Map. Cela peut se faire de deu
 
 :point_right: Vous avez créé votre compte et êtes parvenu à vous connecter ? <tour-link text="Parcourir le menu principal" path="home" :params="{ tour: 'home' }"/>
 
-## Activité
-
-Au sein de l'application les actions visant un même type d'objets sont regroupés sur un même écran présentant une interface utilisateur adaptée et nommée **activité**. Lorsque plusieurs écrans sont nécessaires compte tenu du nombre d'actions possibles, ils sont affichés sous la forme d'**onglets**. La sélection d'un onglet permet de basculer sur l'écran ad-hoc.
-
-Par exemple, tout ce qui a trait à votre compte et à sa sécurité est centralisé dans une activité de gestion composée de trois écrans comme illustré sur la figure suivante:
-
-![account](../../assets/Account-FR.png)
+::: details Voir aussi
+<tour-link text="Voir comment inviter des membres" path="home" :params="{ organisation: 'manager', route: 'add-member' }" /> lorsque vous avez créé une organisation et souhaitez inviter des utilisateurs à collaborer.
+:::
 
 ## <i class="las la-user-friends"></i> Organisation
 
@@ -58,6 +64,10 @@ Voir comment entrer dans le contexte d'une organisation ou en créer une nouvell
 
 ::: tip Astuce
 Lorsque vous n'appartennez qu'à une seule organisation vous rentrerez directement dans son contexte lors de la connexion.
+:::
+
+::: details Voir aussi
+Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
 :::
 
 Selon les organisations, un utilisateur possède des *rôles différents* et ne dispose donc pas des même fonctionnalités. La figure suivante illustre un exemple où:
@@ -97,8 +107,12 @@ Un **groupe** vous permet de *déléguer* la gestion d'un espace de travail rest
 
 :point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos groupes" path="home" :params="{ organisation: 'manager', route: 'groups-activity' }"/>
 
+:point_right: Vous avez créé un groupe ? <tour-link text="Voir comment ajouter des membres à votre groupe" path="home" :params="{ organisation: 'manager', route: 'members-activity' }"/>
+
 ::: details Voir aussi
 Comment entrer dans l'activité de gestion des groupes depuis le <tour-link text="tableau de bord" path="home/organisations"/>
+
+Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
 :::
 
 ### <i class="las la-tags"></i> Etiquette
@@ -109,8 +123,12 @@ Une étiquette est *transverse* à votre organisation, c'est à dire qu'avec ell
 
 :point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos étiquettes" path="home" :params="{ organisation: 'manager', route: 'tags-activity' }"/>
 
+:point_right: Vous souhaitez étiquetter des membres ? <tour-link text="Voir comment étiquetter des membres" path="home" :params="{ organisation: 'manager', route: 'members-activity' }"/>
+
 ::: details Voir aussi
 Comment entrer dans l'activité de gestion des étiquettes depuis le <tour-link text="tableau de bord" path="home/organisations"/>
+
+Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
 :::
 
 ## <i class="las la-fire"></i> Evénement
@@ -133,10 +151,15 @@ La figure suivante résume un exemple de structuration classique dans l'applicat
 ![structure](../../assets/structure-FR.png)
 
 A un évènement, Akt'n'Map permet d’associer :
+  * une *localisation* (adresse ou coordonnées géographiques),
   * des *photos* ou des *documents* afin de les partager entre les acteurs,
   * un **[processus](../gofurther/workflow.md)** définissant les interaction entre les participants et les coordinateurs.
 
 :point_right: Vous êtes prêt à partager de l'information ? <tour-link text="Voir comment gérer vos événements" path="home" :params="{ organisation: 'member' }"/>
+
+::: tip Astuce
+Gagnez du temps en localisant votre événement directement depuis votre [catalogue cartographique](../gofurther/catalog.md).
+:::
 
 ### Modèle d'événement
 
@@ -152,6 +175,8 @@ Grâce à une typologie vous pourrez ensuite réaliser des **[statistiques perti
 
 ::: details Voir aussi
 Comment entrer dans l'activité de gestion des modèles depuis le <tour-link text="tableau de bord" path="home/organisations"/>
+
+Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
 :::
 
 ### Participant

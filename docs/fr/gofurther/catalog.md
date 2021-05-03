@@ -139,6 +139,8 @@ De plus, un **bouton** <i class="las la-ellipsis-v la-2x"></i> situé en bas à 
 
 ::: details Voir aussi
 Comment entrer dans le catalogue géographique depuis le <tour-link text="tableau de bord" path="home/organisations"/>
+
+Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
 :::
 
 ### Barre de navigation

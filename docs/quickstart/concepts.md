@@ -16,7 +16,7 @@ A link can allow you to execute the tutorial directly from the documentation, ot
 To open the main menu use the handle on the left side of your screen.
 :::
 
-You can then follow the step by step guide <a href=""><i class="las la-chevron-right"/></a>, go back if required <a href=""><i class="las la-chevron-left"/></a> and stop anytime <a href=""><i class="las la-times"/></a> as illustrated by the following figure:
+You can then follow the step by step guide <a href=""><i class="las la-chevron-right"/></a> (or <i class="las la-arrow-right"/> key), go back if required <a href=""><i class="las la-chevron-left"/></a> (or <i class="las la-arrow-left"/> key) and stop anytime <a href=""><i class="las la-times"/></a> (or *escape* key) as illustrated by the following figure:
 
 ![tour](../assets/Tour-EN.png)
 
@@ -27,6 +27,16 @@ Sometimes you can see a *beta* label on a user interface element (like a button)
 ::: warning
 Akt'n'Map look and features are ever-evolving. As a consequence, your screen probably looks a little different than what you can read and see in this documentation but the key concepts remain the same.
 :::
+
+## Activity
+
+An **activity** is the entry point used in the application for interacting with the user on a given task like managing the [members](./concepts.md#role) of his [organisation](./concepts.md#organisation) or his [catalog](../gofurther/catalog.md). It usually represents a single screen with a dedicated user interface. When multiple screens are required due to the large number of possible actions, each one is displayed as a **tab**. Selecting a tab switch the user interface to the associated screen. 
+
+For instance, what is related to your account and its security is managed in a specific account activity composed of three screens, as illustrated by the following figure:
+
+![account](../assets/Account-EN.png)
+
+From an activity you can always open the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/> on the left-side of the screen or switch to another activity using the **application bar** at the top of the screen.
 
 ## <i class="las la-user"></i> User
 
@@ -40,13 +50,9 @@ A *person* who has been **registered** to Akt'n'Map. This can be done through tw
 
 :point_right: You have created your account and successfully connect ? <tour-link text="Browse the main menu" path="home" :params="{ tour: 'home' }"/>
 
-## Activity
-
-An **activity** is the entry point used in the application for interacting with the user on a given type of objects. It usually represents a single screen with a dedicated user interface. When multiple screens are required due to the large number of possible actions, each one is displayed as a **tab**. Selecting a tab switch the user interface to the associated screen. 
-
-For instance, what is related to your account and its security is managed in a specific account activity composed of three screens, as illustrated by the following figure:
-
-![account](../assets/Account-EN.png)
+::: details See also
+<tour-link text="How to invite members" path="home" :params="{ organisation: 'manager', route: 'add-member' }" /> when you have created your organisation and want to collaborate with users
+:::
 
 ## <i class="las la-user-friends"></i> Organisation
 
@@ -58,6 +64,10 @@ A *dashboard* summarizes the running events for all his organisations on the hom
 
 ::: tip
 If you belong to a single organisation you will automatically enter its context on login.
+:::
+
+::: details See also
+How to display the dashboard from the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
 :::
 
 A user is being assigned *different roles* in his organisations so that different features are available depending on the currently selected organisation. The following figure shows a use case where:
@@ -97,8 +107,12 @@ A **group** allows to *delegate* the management of a shared workspace limited to
 
 :point_right: You manage an organisation ? <tour-link text="How to manage your groups" path="home" :params="{ organisation: 'manager', route: 'groups-activity' }"/>
 
+:point_right: You have created a group ? <tour-link text="How to add members to your group" path="home" :params="{ organisation: 'manager', route: 'members-activity' }"/>
+
 ::: details See also
 How to enter the groups management activity from the <tour-link text="dashboard" path="home/organisations"/>
+
+How to display the dashboard from the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
 :::
 
 ### <i class="las la-tags"></i> Tag
@@ -109,8 +123,12 @@ A tag is *transverse* to your organisation, meaning you can target with it peopl
 
 :point_right: You manage an organisation ? <tour-link text="How to manage your tags" path="home" :params="{ organisation: 'manager', route: 'tags-activity' }"/>
 
+:point_right: You want to tag your members ? <tour-link text="How to tag members" path="home" :params="{ organisation: 'manager', route: 'members-activity' }"/>
+
 ::: details See also
 How to enter the tags management activity from the <tour-link text="dashboard" path="home/organisations"/>
+
+How to display the dashboard from the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
 :::
 
 ## <i class="las la-fire"></i> Event
@@ -133,6 +151,7 @@ The following figure shows a standard configuration in the application and how e
 ![structure](../assets/structure-EN.png)
 
 Akt'n'Map allows to attach to each event:
+  * a *location* (address or geographic coordinates),
   * *pictures* or *documents* shared among participants,
   * a **[workflow](../gofurther/workflow.md)** defining interactions between participants and coordinators.
 
@@ -152,6 +171,8 @@ Using a typology you can produce **[relevant statistics](../gofurther/archiving.
 
 ::: details See also
 How to enter the models management activity from the <tour-link text="dashboard" path="home/organisations"/>
+
+How to display the dashboard from the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
 :::
 
 ### Participant
