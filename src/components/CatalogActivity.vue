@@ -295,8 +295,9 @@ export default {
     getEventPopup (feature, layer, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
-      const popup = L.popup({ autoPan: false }, layer)
       const description = _.get(feature, 'description')
+      if (!description) return null
+      const popup = L.popup({ autoPan: false }, layer)
       return popup.setContent(description)
     },
     getEventTooltip (feature, layer, options) {
