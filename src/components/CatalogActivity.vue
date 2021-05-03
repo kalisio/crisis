@@ -368,7 +368,15 @@ export default {
       if (!result.isValid) return
       this.inProgress = true
       try {
-        const alert = await this.$api.getService('alerts').create(result.values)
+        // Add notification prefix to be used at creation,
+        // Indeed, as alerting is a background process it will not be able to easily guess the user locale
+        let alert = Object.assign(result.values, {
+          notification: {
+            create: this.$t('EventNotifications.CREATE'),
+            remove: this.$t('EventNotifications.REMOVE')
+          }
+        })
+        alert = await this.$api.getService('alerts').create(alert)
       } catch (_) {
       }
       this.inProgress = false

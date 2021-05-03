@@ -161,46 +161,6 @@ const contextFilter = function (field, services = []) {
   ]
 }
 
-/*const contextMenu = function (activityName) {
-  return {
-    id: 'app-bar-overflow-menu',
-    component: 'frame/KMenu',
-    icon: 'las la-grip-horizontal',
-    actionRenderer: 'item',
-    content: [
-      { 
-        id: 'members', icon: 'las la-user-friends', label: 'KMembersActivity.MEMBERS_LABEL',
-        visible: { name: '$can', params: ['service', 'members', ':contextId'] },
-        route: { name: 'members-activity', params: { contextId: ':contextId' } },    
-      },
-      { 
-        id: 'tags', icon: 'las la-tags', label: 'KTagsActivity.TAGS_LABEL',
-        visible: { name: '$can', params: ['service', 'tags', ':contextId'] },
-        route: { name: 'tags-activity', params: { contextId: ':contextId' } },    
-      },
-      { 
-        id: 'groups', icon: 'las la-sitemap', label: 'KGroupsActivity.GROUPS_LABEL',
-        visible: { name: '$can', params: ['service', 'groups', ':contextId'] },
-        route: { name: 'groups-activity', params: { contextId: ':contextId' } },    
-      },
-      { 
-        id: 'event-templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL',
-        visible: { name: '$can', params: ['service', 'event-templates', ':contextId'] },
-        route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
-      },
-      { 
-        id: 'settings', icon: 'las la-cog', label: 'Context.SETTINGS',
-        visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-        route: { name: 'organisation-settings-activity', params: { page: 'properties', contextId: ':contextId' } },    
-      },
-      { 
-        id: 'refresh', icon: 'las la-sync', label: 'Context.REFRESH', handler: 'refresh'
-      }
-    ].filter(item => !item.route || (item.route.name !== activityName))
-  }
-}
-*/
-
 const layerActions = [{
   id: 'layer-actions',
   component: 'frame/KMenu',
@@ -211,7 +171,7 @@ const layerActions = [{
     { id: 'filter-data', label: 'mixins.activity.FILTER_DATA_LABEL', icon: 'las la-filter', handler: 'onFilterLayerData', visible: 'isFeatureLayer' },
     { id: 'view-data', label: 'mixins.activity.VIEW_DATA_LABEL', icon: 'las la-th-list', handler: 'onViewLayerData', visible: 'isFeatureLayer' },
     { id: 'chart-data', label: 'mixins.activity.CHART_DATA_LABEL', icon: 'las la-chart-pie', handler: 'onChartLayerData', visible: 'isFeatureLayer' },
-    { id: 'edit', label: 'mixins.activity.EDIT_LABEL', icon: 'las la-file-alt', handler: 'onEditLayer', visible: 'isLayerEditable' },
+    { id: 'edit', label: 'mixins.activity.EDIT_LABEL', icon: 'las la-edit', handler: 'onEditLayer', visible: 'isLayerEditable' },
     { id: 'edit-style', label: 'mixins.activity.EDIT_LAYER_STYLE_LABEL', icon: 'las la-border-style', handler: 'onEditLayerStyle', visible: 'isLayerStyleEditable' },
     { id: 'edit-data', label: 'mixins.activity.START_EDIT_DATA_LABEL', icon: 'las la-edit', handler: 'onEditLayerData', visible: 'isLayerDataEditable',
       toggle: { icon: 'las la-edit', tooltip: 'mixins.activity.STOP_EDIT_DATA_LABEL' }, component: 'KEditLayerData' },
@@ -418,7 +378,7 @@ module.exports = {
           visible: ['hasLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
         { id: 'navigate', tooltip: 'EventCard.NAVIGATE_LABEL', icon: 'las la-location-arrow', handler:  'launchNavigation',
           visible: ['hasLocation', 'canNavigate', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
-        { id: 'edit-event', tooltip: 'EventCard.EDIT_LABEL', icon: 'las la-file-alt',
+        { id: 'edit-event', tooltip: 'EventCard.EDIT_LABEL', icon: 'las la-edit',
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':item'] },
           route: { name: 'edit-event', params: { contextId: ':contextId', objectId: ':item._id' } } },
         { id: 'remove-event', tooltip: 'EventCard.REMOVE_LABEL', icon: 'las la-minus-circle', handler: 'removeEvent',
@@ -704,10 +664,9 @@ module.exports = {
     },
     items: {
       actions: [
-        { id: 'edit-tag', tooltip: 'KTagCard.EDIT_LABEL', icon: 'las la-file-alt',
+        { id: 'edit-tag', tooltip: 'KTagCard.EDIT_LABEL', icon: 'las la-edit',
           visible: { name: '$can', params: ['update', 'tags', ':contextId', ':item'] },
-          route: { name: 'edit-tag', params: { contextId: ':contextId', objectId: ':item._id' } } },
-        { id: 'list-members', tooltip: 'KTagCard.LIST_MEMBERS_LABEL', icon: 'las la-user-tag', handler: 'onListMembers' }
+          route: { name: 'edit-tag', params: { contextId: ':contextId', objectId: ':item._id' } } }
       ]
     }
   },
@@ -754,13 +713,13 @@ module.exports = {
     },
     items: {
       actions: [
-        { id: 'edit-group', tooltip: 'KGroupCard.EDIT_LABEL', icon: 'las la-file-alt',
+        { id: 'edit-group', tooltip: 'KGroupCard.EDIT_LABEL', icon: 'las la-edit',
           visible: { name: '$can', params: ['update', 'groups', ':contextId', ':item'] },
           route: { name: 'edit-group', params: { contextId: ':contextId', objectId: ':item._id' } } },
-        { id: 'list-members', tooltip: 'KGroupCard.LIST_MEMBERS_LABEL', icon: 'las la-user-circle',
-          visible: { name: '$can', params: ['service', 'members', ':contextId'] }, handler: 'onListMembers' },
-        { id: 'remove-group', tooltip: 'KGroupCard.REMOVE_LABEL', icon: 'las la-minus-circle',
-          visible: { name: '$can', params: ['remove', 'groups', ':contextId', ':item'] }, handler: 'removeGroup' }
+         { id: 'remove-group', icon: 'las la-trash', tooltip: 'KGroupCard.REMOVE_LABEL',
+          visible: { name: '$can', params: ['remove', 'groups', ':contextId', ':item'] }, 
+          handler: { name: 'removeItem', params: ['confirm'] }
+        }
       ]
     }
   },
@@ -808,7 +767,7 @@ module.exports = {
     },
     items: {
       actions: [
-        { id: 'edit-event-template', tooltip: 'EventTemplateCard.EDIT_LABEL', icon: 'las la-file-alt',
+        { id: 'edit-event-template', tooltip: 'EventTemplateCard.EDIT_LABEL', icon: 'las la-edit',
           visible: { name: '$can', params: ['update', 'event-templates', ':contextId', ':item'] },
           route: { name: 'edit-event-template', params: { contextId: ':contextId', objectId: ':item._id' } } },
         { id: 'copy-event-template', tooltip: 'EventTemplateCard.COPY_LABEL', icon: 'las la-copy',
@@ -903,7 +862,7 @@ module.exports = {
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] } },
         { id: 'browse-media', label: 'EventActivity.BROWSE_MEDIA_LABEL', icon: 'photo_library', handler: 'browseMedia',
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] } },
-        { id: 'edit-event', label: 'EventActivity.EDIT_LABEL', icon: 'las la-file-alt',
+        { id: 'edit-event', label: 'EventActivity.EDIT_LABEL', icon: 'las la-edit',
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] },
           route: { name: 'edit-map-event', params: { contextId: ':contextId', objectId: ':objectId' } } },
         { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'onProbeLocation' }

@@ -19,7 +19,7 @@
       -->
       <k-history
         id="history"
-        class="q-pa-md"
+        class="q-pa-lg"
         v-if="showHistory"
         style="padding-top: 50px" 
         service="archived-events" 
@@ -509,9 +509,7 @@ export default {
     },
     async refreshChart () {
       // Destroy previous graph if any
-      if (this.chart) {
-        this.chart.destroy()
-      }
+      if (this.chart) this.chart.destroy()
       // Retrieve data
       await this.getChartData()
       // We need to force a refresh so that the computed props are correctly updated by Vuejs
@@ -606,6 +604,7 @@ export default {
     this.$on('collection-refreshed', this.onCollectionRefreshed)
   },
   beforeDestroy () {
+    if (this.chart) this.chart.destroy()
     this.$off('collection-refreshed', this.onCollectionRefreshed)
   }
 }
