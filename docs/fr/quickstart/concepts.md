@@ -48,9 +48,11 @@ Une *personne* qui est **enregistrée** sur Akt'n'Map. Cela peut se faire de deu
 
 :point_right: Vous avez créé votre compte et ne parvenez pas à vous connecter ? <tour-link text="Voir comment se connecter" path="login"/>
 
-:point_right: Vous avez créé une organisation et souhaitez inviter des utilisateurs à collaborer ? <tour-link text="Voir comment inviter des membres" path="home" :params="{ organisation: 'manager', route: 'add-member' }" />
-
 :point_right: Vous avez créé votre compte et êtes parvenu à vous connecter ? <tour-link text="Parcourir le menu principal" path="home" :params="{ tour: 'home' }"/>
+
+::: details Voir aussi
+<tour-link text="Voir comment inviter des membres" path="home" :params="{ organisation: 'manager', route: 'add-member' }" /> lorsque vous avez créé une organisation et souhaitez inviter des utilisateurs à collaborer.
+:::
 
 ## <i class="las la-user-friends"></i> Organisation
 
@@ -62,6 +64,10 @@ Voir comment entrer dans le contexte d'une organisation ou en créer une nouvell
 
 ::: tip Astuce
 Lorsque vous n'appartennez qu'à une seule organisation vous rentrerez directement dans son contexte lors de la connexion.
+:::
+
+::: details Voir aussi
+Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
 :::
 
 Selon les organisations, un utilisateur possède des *rôles différents* et ne dispose donc pas des même fonctionnalités. La figure suivante illustre un exemple où:

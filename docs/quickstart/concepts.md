@@ -48,9 +48,11 @@ A *person* who has been **registered** to Akt'n'Map. This can be done through tw
 
 :point_right: Already have an account but cannot connect ? <tour-link text="How to connect" path="login"/>
 
-:point_right: You have created your organisation and want to collaborate with users ? <tour-link text="How to invite members" path="home" :params="{ organisation: 'manager', route: 'add-member' }" />
-
 :point_right: You have created your account and successfully connect ? <tour-link text="Browse the main menu" path="home" :params="{ tour: 'home' }"/>
+
+::: details See also
+<tour-link text="How to invite members" path="home" :params="{ organisation: 'manager', route: 'add-member' }" /> when you have created your organisation and want to collaborate with users
+:::
 
 ## <i class="las la-user-friends"></i> Organisation
 
