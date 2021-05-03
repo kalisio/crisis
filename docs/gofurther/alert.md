@@ -14,11 +14,11 @@ This feature requires a subscription to the [environmental data catalog](./catal
 
 Alerts can be created from the [mapping catalog](./catalog.md) by selecting the target data layer in the [catalog panel](./catalog.md#catalog-panel). Select a [weather forecast](./catalog.md#weather-prediction) like wind or sensor networks like [Hub'Eau](./catalog.md#hub-eau).
 
-Right click at the location where you want to check your conditions on the map for weather forecast data. The action allowing to create an alert <i class="las la-search-location"></i> appear in the [contextual menu](./catalog.md#contextual-menu). Similarly, make it appear by right clicking on the sensor you would like to check your conditions on for measurements. The component to define the settings of your alert is divided into different sections:
+Right click at the location where you want to check your conditions on the map for weather forecast data. The action allowing to create an alert <i class="las la-bell"></i> appear in the [contextual menu](./catalog.md#contextual-menu). Similarly, make it appear by right clicking on the sensor you would like to check your conditions on for measurements. The component to define the settings of your alert is divided into different sections:
   
 <i class="las la-clock la-2x"></i> The frequency to check your alert conditions as well as the analysis time range. For sensor data it will be the range where to seek for triggers in the past. For weather forecast data it will be the time range where to seek for triggers in the future.
 
-<i class="lab la-cloudversify la-2x"></i> Conditions triggering the alert given as thresholds to (not) overcome for each available meteorological element or measure value.
+<i class="lab la-cloudversify la-2x"></i> Conditions triggering the alert given as thresholds to (or to not) overcome for each available meteorological element or measure value.
 
 <i class="las la-bell la-2x"></i> The template of the event to be created when triggering the alert and if it has to be automatically closed when the alert becomes inactive.
 
