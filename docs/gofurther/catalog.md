@@ -115,6 +115,8 @@ In addition, a **floating action button** <i class="las la-ellipsis-v la-2x"></i
 
 ::: details See also
 How to enter the catalog activity from the <tour-link text="dashboard" path="home/organisations"/>
+
+How to display the dashboard from the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
 :::
 
 ### Navigation bar

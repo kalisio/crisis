@@ -34,4 +34,6 @@ Cerise sur le gâteau, vous pouvez produire des statistiques sur vos événement
 
 ::: details Voir aussi
 Comment entrer dans l'activité de main courante depuis le <tour-link text="tableau de bord" path="home/organisations"/>
+
+Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
 :::

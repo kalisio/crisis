@@ -34,5 +34,7 @@ Last but not least, you will be able to produce statistics about your events and
 
 ::: details See also
 How to enter the archived events activity from the <tour-link text="dashboard" path="home/organisations"/>
+
+How to display the dashboard from the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
 :::
 
