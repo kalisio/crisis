@@ -15,7 +15,6 @@ module.exports = {
   'create-group': require('./core/create-group'),
   members: require('./core/members'),
   'add-member': require('./core/add-member'),
-  'invite-member': require('./core/invite-member'),
   'join-group': require('./core/join-group'),
   'tag-member': require('./core/tag-member'),
   tags: require('./core/tags'),

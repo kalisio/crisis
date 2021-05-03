@@ -314,7 +314,6 @@ module.exports = {
       actions: [
         {
           id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL',
-          visible: { name: '$can', params: ['create', 'event-templates', ':contextId'] },
           route: { name: 'create-organisation' } }
       ]
     },

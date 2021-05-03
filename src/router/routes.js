@@ -105,12 +105,6 @@ module.exports = {
                 component: 'team/KMembersActivity', 
                 props: true,
                 children: {
-                  'invite': {
-                    name: 'invite-member',
-                    component: 'team/KInviteMember',
-                    props: true,
-                    tour: tours['invite-member']
-                  },
                   'add': {
                     name: 'add-member',
                     component: 'team/KAddMember',
