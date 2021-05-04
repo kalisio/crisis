@@ -1,5 +1,9 @@
 # Changelog
 
+## [prod-v1.1.1](https://github.com/kalisio/aktnmap/tree/prod-v1.1.1) (2021-05-04)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.0...prod-v1.1.1)
+
 ## [prod-v1.1.0](https://github.com/kalisio/aktnmap/tree/prod-v1.1.0) (2021-05-04)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.0.1...prod-v1.1.0)
