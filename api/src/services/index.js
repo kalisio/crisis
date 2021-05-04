@@ -141,9 +141,9 @@ export function processAlert (organisation) {
       // No need to keep track of templates that have been removed, etc.
       event.template = template.name
       const type = _.get(alert, 'geometry.type', 'Point')
-      const coordinates = (type === 'Point' ?
-        _.get(alert, 'geometry.coordinates') :
-        _.get(pointOnFeature(alert), 'geometry.coordinates'))
+      const coordinates = (type === 'Point'
+        ? _.get(alert, 'geometry.coordinates')
+        : _.get(pointOnFeature(alert), 'geometry.coordinates'))
       _.set(event, 'location.longitude', coordinates[0])
       _.set(event, 'location.latitude', coordinates[1])
       // Remove unrelevant properties from alert
@@ -164,7 +164,7 @@ export function processAlert (organisation) {
         debug('Skipping creating event for alert as it does already exist', alert)
         // This should not be possible except if we have replication and multiple instances check alert simultaneously
         // But in this case we don't really need to update the event as all checks would have the same result
-        //await eventsService.patch(previousEvent._id.toString(), event)
+        // await eventsService.patch(previousEvent._id.toString(), event)
       }
     }
     // Remove on deactivation if required

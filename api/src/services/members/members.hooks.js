@@ -10,7 +10,7 @@ function hasItemContext (hook) {
 }
 
 function itemContextMatch (hook) {
-  let query = _.get(hook.params, 'query.tags.$elemMatch', _.get(hook.params, 'query.groups.$elemMatch'))
+  const query = _.get(hook.params, 'query.tags.$elemMatch', _.get(hook.params, 'query.groups.$elemMatch'))
   query.$or = [{ context: query.context }, { context: createObjectID(query.context) }]
   delete query.context
   return hook

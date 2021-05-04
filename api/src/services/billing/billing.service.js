@@ -118,7 +118,8 @@ export default function (name, app, options) {
         await billingObjectService.patch(billingObjectId, {
           'billing.customer': null,
           'billing.subscription': null,
-          'billing.options': [] })
+          'billing.options': []
+        })
       }
     },
     async createSubscription (billingObject, data) {
@@ -140,7 +141,7 @@ export default function (name, app, options) {
       }
       const billingObjectService = app.getService(data.billingObjectService)
       if (optionConfig) {
-        let options = _.get(billingObject, 'billing.options', [])
+        const options = _.get(billingObject, 'billing.options', [])
         if (!_.find(options, { plan })) {
           options.push(subscription)
           await billingObjectService.patch(billingObjectId, { 'billing.options': options })
@@ -192,7 +193,7 @@ export default function (name, app, options) {
         }
       } else {
         debug(`remove ${plan} option subscription from ` + billingObjectId)
-        let options = _.get(billingObject, 'billing.options')
+        const options = _.get(billingObject, 'billing.options')
         const subscribedOption = _.find(options, { plan })
         let subscriptionId
         if (subscribedOption) {
