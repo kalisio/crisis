@@ -16,7 +16,8 @@ describe('billing', () => {
     // Register all default hooks for authorisation
     // Default rules for all users
     permissions.defineAbilities.registerHook(permissions.defineUserAbilities)
-    
+    permissions.defineAbilities.registerHook(billingPermissions.defineUserAbilities)
+
     app = kalisio()
     // Register authorisation/log hook
     app.hooks({

@@ -140,7 +140,7 @@ export async function countParticipants (hook) {
     const collection = service.Model
     // The query contains the match stage except options relevent to the aggregation pipeline
     const match = _.omit(query, ['$aggregate', '$geoNear', '$sort'])
-    
+
     const pipeline = []
     // Check for geometry stage
     if (query.$geoNear) {
@@ -153,22 +153,24 @@ export async function countParticipants (hook) {
     // If we aggregate according to a property stored in events
     if (eventProperty) {
       // Add a lookup to retrieve this property
-      pipeline.push({ $lookup:
+      pipeline.push({
+        $lookup:
         { from: 'archived-events', localField: 'event', foreignField: '_id', as: 'eventLookup' }
       })
       // Then set it on result
-      pipeline.push({ $project:
-        { [`${eventProperty}`] : { $arrayElemAt: [`$eventLookup.${eventProperty}`, 0] }, participant: 1, event: 1 }
+      pipeline.push({
+        $project:
+        { [`${eventProperty}`]: { $arrayElemAt: [`$eventLookup.${eventProperty}`, 0] }, participant: 1, event: 1 }
       })
       // Then group by accordingly
-      pipeline.push({ $group: { _id : `$${eventProperty}`, count: { $sum: 1 } } })
+      pipeline.push({ $group: { _id: `$${eventProperty}`, count: { $sum: 1 } } })
     } else {
       // Otherwise simply group by event
-      pipeline.push({ $group: { _id : '$event', count: { $sum: 1 } } })
+      pipeline.push({ $group: { _id: '$event', count: { $sum: 1 } } })
     }
     // Add a filter to discard any null element
-    pipeline.push({ $match: { _id : { $ne : null } } })
-    debug(`Aggregating participants in logs`)
+    pipeline.push({ $match: { _id: { $ne: null } } })
+    debug('Aggregating participants in logs')
     pipeline.forEach(stage => {
       _.forOwn(stage, (value, key) => debug('Stage', key, value))
     })

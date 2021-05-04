@@ -16,7 +16,7 @@ module.exports = {
       when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations',
         checkMembersQuotas,
         preventRemovingCustomer)
-      ],
+    ],
     update: [],
     patch: [],
     remove: [
@@ -32,7 +32,7 @@ module.exports = {
         preventRemovingCustomer,
         coreHooks.removeOrganisationTagsAuthorisations,
         coreHooks.removeOrganisationGroupsAuthorisations)
-      ]
+    ]
   },
 
   after: {
