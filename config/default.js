@@ -42,7 +42,7 @@ const leftPane = function (tour) {
     content: [
       { component: 'QImg', src: 'statics/aktnmap-banner.png' },
       { component: 'account/KIdentityPanel', class: 'full-width' },
-      { id: 'organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
+      { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
       { component: 'Settings' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
@@ -314,7 +314,6 @@ module.exports = {
       actions: [
         {
           id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL',
-          visible: { name: '$can', params: ['create', 'event-templates', ':contextId'] },
           route: { name: 'create-organisation' } }
       ]
     },
@@ -736,14 +735,14 @@ module.exports = {
             route: { name: 'members-activity', params: { contextId: ':contextId' } },    
           },
           { 
-            id: 'groups', icon: 'las la-sitemap', tooltip: 'KGroupsActivity.GROUPS_LABEL',
-            visible: { name: '$can', params: ['service', 'groups', ':contextId'] },
-            route: { name: 'groups-activity', params: { contextId: ':contextId' } },    
-          },
-          { 
             id: 'tags', icon: 'las la-tags', tooltip: 'KTagsActivity.TAGS_LABEL',
             visible: { name: '$can', params: ['service', 'tags', ':contextId'] },
             route: { name: 'tags-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
+            id: 'groups', icon: 'las la-sitemap', tooltip: 'KGroupsActivity.GROUPS_LABEL',
+            visible: { name: '$can', params: ['service', 'groups', ':contextId'] },
+            route: { name: 'groups-activity', params: { contextId: ':contextId' } },    
           },
           { id: 'event-templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', color: 'primary', disabled: true },
           { 
