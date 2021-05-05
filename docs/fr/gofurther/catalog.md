@@ -88,6 +88,12 @@ Données de qualité de l'air collectées dans 93 pays par l'association [OpenAQ
 
 ![OpenAQ](../../assets/openaq.png)
 
+### OpenRadiation
+
+Le projet [OpenRadiation](https://www.openradiation.org)  pour objectif de centraliser des mesures de la radioactivité dans l'environnement réalisées par des citoyens. Il permet aux utilisateurs de prendre les mesures à l'aide de différents dosimètres et de les exploiter à travers plusieurs outils.
+
+![OpenRadiation](../assest/openradiation.png)
+
 ### Mapillary
 
 Base de données de photos géolocalisées issues de la plateforme [Mapillary](https://www.mapillary.com/) et alimenté par production participative.
