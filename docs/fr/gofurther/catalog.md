@@ -92,7 +92,7 @@ Données de qualité de l'air collectées dans 93 pays par l'association [OpenAQ
 
 Le projet [OpenRadiation](https://www.openradiation.org)  pour objectif de centraliser des mesures de la radioactivité dans l'environnement réalisées par des citoyens. Il permet aux utilisateurs de prendre les mesures à l'aide de différents dosimètres et de les exploiter à travers plusieurs outils.
 
-![OpenRadiation](../assets/openradiation.png)
+![OpenRadiation](../../assets/openradiation.png)
 
 ### Mapillary
 
