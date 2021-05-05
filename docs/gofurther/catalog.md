@@ -78,7 +78,7 @@ Air quality data collected in 93 different countries by the [OpenAQ](https://ope
 
 The [OpenRadiation](https://www.openradiation.org/en) project aims to centralize environmental radioactivity measurements by citizens, both in France and worldwide. It allow all users to capture measurements using various kind of dosimeters and exploit these measurements through various tools.
 
-![OpenRadiation](../assest/openradiation.png)
+![OpenRadiation](../assets/openradiation.png)
 
 ### Mapillary
 
