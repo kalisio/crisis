@@ -1,36 +1,13 @@
 import { Selector } from 'testcafe'
 import VueSelector from 'testcafe-vue-selectors'
-import BasePage from './core/base-page'
+import BaseCollection from './core/base-collection'
+import Layout from './core//layout'
 import _ from 'lodash'
 
-export default class Events extends BasePage {
+export default class Events extends BaseCollection {
   constructor () {
-    super()
-    this.events = Selector('.q-page .q-card')
-  }
-
-  static get TOOL_BAR_ENTRY () {
-    return '#events'
-  }
-
-  static get TAB_BAR_ENTRY () {
-    return '#events'
-  }
-
-  async clickCardToolBar (test, name, action) {
-    await test
-      .click(this.events.withText(name).find(action))
-  }
-
-  async clickCardOverflowMenu (test, name, entry) {
-    await test
-      .click(this.events.withText(name).find('#card-overflow-menu'))
-      .click(Selector('.q-menu').find(entry))
-  }
-
-  async checkCount (test, count) {
-    const eventsCount = this.events.count
-    await test.expect(eventsCount).eql(count, 'Invalid events count')
+    super('eventsGrid', 'QCard')
+    this.layout = new Layout()
   }
 
   async create (test, data) {

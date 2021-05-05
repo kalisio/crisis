@@ -73,17 +73,14 @@ test('Tag members', async test => {
   await layout.closeWelcomeDialog(test)
   await layout.clickLeftOpener(test)
   await layout.clickLeftPaneAction(test, pages.Organisations.ENTRY, pages.Organisations.LONG_WAIT)
-  await organisations.clickAction(test, data.users[0].name, 'organisation-members', pages.Organisations.LONG_WAIT)
- 
-  //await members.tag(test, data.users[1].name, 'tag1')
-  //await members.tag(test, data.users[2].name, 'tag2')
+  await organisations.goToMembers(test, data.users[0].name)
+  await members.tag(test, data.users[1].name, 'tag1')
+  await members.tag(test, data.users[2].name, 'tag2')
   await members.checkCount(test, 4)
   await layout.clickTopPaneAction(test, 'tags')
   await tags.checkCount(test, 2)
   await tags.checkExists(test, 'tag1')
-  await tags.checkCounter(test, 'tag1', 1)
   await tags.checkExists(test, 'tag2')
-  await tags.checkCounter(test, 'tag2', 1)
   await pages.checkNoClientError(test)
 })
 
@@ -97,6 +94,7 @@ test('Update tags', async test => {
   await tags.checkCount(test, 2)
   await tags.edit(test, 'tag1', { name: 'tag3' })
   await tags.checkExists(test, 'tag3')
+  await tags.checkCount(test, 2)
   await pages.checkNoClientError(test)
 })
 
@@ -107,7 +105,7 @@ test('Change member role', async test => {
   await layout.clickLeftOpener(test)
   await layout.clickLeftPaneAction(test, pages.Organisations.ENTRY, pages.Organisations.LONG_WAIT)
   await organisations.clickAction(test, data.users[0].name, 'organisation-members', pages.Organisations.LONG_WAIT)
-  await members.changeRole(test, data.users[2].name, pages.Roles.manager)
+  await members.changeRole(test, data.users[2].name, 0) // Manager is 0 in this case
   await members.checkCount(test, 4)
   await pages.checkNoClientError(test)
 })

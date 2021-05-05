@@ -5,6 +5,7 @@
         Templates collection
       -->
       <k-grid 
+        ref="eventTemplatesGrid"
         service="event-templates" 
         :renderer="renderer" 
         :contextId="contextId"

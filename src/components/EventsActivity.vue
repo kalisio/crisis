@@ -4,7 +4,8 @@
       <!--
         Events collection
       -->
-      <k-grid 
+      <k-grid
+        ref="eventsGrid"
         service="events" 
         :renderer="renderer" 
         :contextId="contextId"

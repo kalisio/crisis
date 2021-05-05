@@ -70,11 +70,12 @@ test('Edit group', async test => {
   await organisations.goToGroups(test, data.users[0].name)
   const newGroupData = { name: 'Group 1 edited', description: 'A new description for group 1'}
   await groups.edit(test, data.groups[0].name, newGroupData)
-  data.groups[0] = newGroupData
   await pages.checkNoClientError(test)
 })
 
 test('Add members to groups', async test => {
+  const newGroupData = { name: 'Group 1 edited', description: 'A new description for group 1'}
+  data.groups[0] = newGroupData
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
@@ -100,6 +101,8 @@ test('Check group count', async test => {
 })
 
 test('Remove member from group', async test => {
+  const newGroupData = { name: 'Group 1 edited', description: 'A new description for group 1'}
+  data.groups[0] = newGroupData
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
@@ -114,6 +117,8 @@ test('Remove member from group', async test => {
 })
 
 test('Delete group', async test => {
+  const newGroupData = { name: 'Group 1 edited', description: 'A new description for group 1'}
+  data.groups[0] = newGroupData
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
