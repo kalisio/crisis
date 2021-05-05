@@ -1,4 +1,3 @@
-import path from 'path'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import core, { kalisio, hooks as coreHooks, permissions as corePermissions } from '@kalisio/kdk/core.api'
@@ -447,14 +446,18 @@ describe('events', () => {
     // Count by event
     let result = await archivedEventLogService.find({
       query: { $aggregate: true, event: eventObject._id },
-      user: orgManagerObject, checkAuthorisation: true })
+      user: orgManagerObject,
+      checkAuthorisation: true
+    })
     expect(result.length).to.equal(1)
     expect(result[0]._id.toString()).to.equal(eventObject._id.toString())
     expect(result[0].count).to.equal(2)
     // Count by event template
     result = await archivedEventLogService.find({
       query: { $aggregate: 'template', event: eventObject._id },
-      user: orgManagerObject, checkAuthorisation: true })
+      user: orgManagerObject,
+      checkAuthorisation: true
+    })
     expect(result.length).to.equal(1)
     expect(result[0]._id).to.equal('template2')
     expect(result[0].count).to.equal(2)

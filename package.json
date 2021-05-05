@@ -1,7 +1,7 @@
 {
   "name": "aktnmap",
   "description": "Kalisio Akt'n'Map Application",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "homepage": "https://github.com/kalisio/aktnmap",
   "keywords": [
     "kalisio"
@@ -24,7 +24,7 @@
     "release:patch": "cd api && npm run release:patch && cd .. && npm version --no-git-tag-version --force patch",
     "release:minor": "cd api && npm run release:minor && cd .. && npm version --no-git-tag-version --force minor",
     "release:major": "cd api && npm run release:major && cd .. && npm version --no-git-tag-version --force major",
-    "changelog": "github_changelog_generator -u kalisio -p aktnmap && git add CHANGELOG.md && git commit -am \"Updating changelog\" && git push origin",
+    "changelog": "github_changelog_generator -u kalisio -p aktnmap && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
     "clean": "quasar clean",
     "provision": "npm run icons:cp && npm run tours:cp",
     "dev": "npm run provision && cross-env NODE_ENV=development quasar dev",
@@ -74,7 +74,7 @@
   },
   "dependencies": {
     "@feathersjs/client": "^3.5.4",
-    "@kalisio/kdk": "^1.2.0",
+    "@kalisio/kdk": "^1.3.2",
     "@panter/vue-i18next": "^0.9.1",
     "@quasar/extras": "^1.6.0",
     "@turf/bbox": "^6.0.1",
