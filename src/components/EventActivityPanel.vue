@@ -7,7 +7,7 @@
           <div class="row justify-between no-wrap" style="overflow: auto" :key="participant._id">
             <div class="col-auto self-center">
               <q-btn flat round small color="primary" @click="onStateClicked(participant)">
-                <q-icon :name="participantIconName(participant)"  :color="participantIconColor(participant)" />
+                <q-icon :name="participantIconName(participant)" :color="participantIconColor(participant)" />
               </q-btn>
               {{participantName(participant)}}
             </div>
@@ -65,6 +65,10 @@ export default {
     participants: {
       type: Array,
       default: () => []
+    },
+    event: {
+      type: Object,
+      default: () => {}
     }
   },
   methods: {
@@ -72,10 +76,10 @@ export default {
       return _.get(participant, 'participant.name', this.$t('EventActivity.UNAMED'))
     },
     participantIconName (participant) {
-      return kCoreUtils.getIconName(this.getUserIcon(participant), 'name')
+      return kCoreUtils.getIconName(participant)
     },
     participantIconColor (participant) {
-      return _.get(this.getUserIcon(participant), 'color', '')
+      return _.get(participant, 'icon.color', '')
     },
     participantComment (participant) {
       return this.getUserComment(participant)
