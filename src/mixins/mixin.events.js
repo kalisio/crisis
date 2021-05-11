@@ -71,7 +71,7 @@ const eventsMixin = {
       // In case of no workflow
       // FIXME: not sure we'd like to have the same icon for all participants in this case, should be different from event one
       // if (this.event && this.event.icon) return this.event.icon
-      return { name: 'fa-user', color: 'blue' }
+      return { name: 'fas fa-user', color: 'blue' }
     },
     getUserComment (state = {}) {
       // When last step had a recorded interaction use its comment if any

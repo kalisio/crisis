@@ -281,7 +281,7 @@ export default {
   created () {
     this.defaultStep = {
       title: '',
-      icon: { name: 'check', color: 'primary' },
+      icon: { name: 'fas fa-check', color: 'grey' },
       description: '',
       featureInteraction: [],
       interaction: [],

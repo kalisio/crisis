@@ -27,7 +27,7 @@
     },
     "icon": {
       "type": "object", 
-      "default": { "name": "check", "color": "primary" },
+      "default": { "name": "fas fa-check", "color": "grey" },
       "field": {
         "component": "form/KIconField",
         "label": "schemas.EVENT_WORKFLOW_ICON_FIELD_LABEL"
@@ -48,7 +48,7 @@
         "component": "form/KChipsField",
         "label": "schemas.EVENT_WORKFLOW_INTERACTION_FIELD_LABEL",
         "icon" : {
-          "name" : "label",
+          "name" : "fas fa-user",
           "color" : "red"
         }
       }
