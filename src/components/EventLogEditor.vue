@@ -72,7 +72,7 @@ export default {
     },
     async logCoordinatorState () {
       await this.logStep(this.$refs.form, this.step, this.state)
-      this.$refs.closeModal()
+      this.closeModal()
     }
   },
   async created () {

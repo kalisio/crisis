@@ -22,6 +22,7 @@ fixture`events`// declare the fixture
   const users = new pages.Users()
   const members = new pages.Members()
   const groups = new pages.Groups()
+  const organisations = new pages.Organisations()
   const eventTemplates = new pages.EventTemplates()
   const events = new pages.Events()
 
@@ -43,23 +44,21 @@ const data = {
   ]
 }
 
-test('Setup context', async test => {
+test('Setup events context', async test => {
   await users.registerUsers(test, data.users)
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)
   await layout.closeWelcomeDialog(test)
-  await layout.clickOverflowMenu(test, pages.Members.OVERFLOW_MENU_ENTRY)
-  await layout.openAndClickFab(test, pages.Members.ADD_MEMBER_FAB_ENTRY)
+  await layout.clickLeftOpener(test)
+  await layout.clickLeftPaneAction(test, pages.Organisations.ENTRY, pages.Organisations.LONG_WAIT)
+  await organisations.goToMembers(test, data.users[0].name)
   await members.add(test, data.users[1].name, pages.Roles.manager)
   await members.tag(test, data.users[1].name, 'fireman')
-  await layout.openAndClickFab(test, pages.Members.ADD_MEMBER_FAB_ENTRY)
   await members.add(test, data.users[2].name, pages.Roles.member)
-  await layout.clickOverflowMenu(test, pages.Groups.OVERFLOW_MENU_ENTRY)
-  await layout.clickFab(test)
+  await layout.clickTopPaneAction(test, 'groups')
   await groups.create(test, data.group)
-  await layout.clickOverflowMenu(test, pages.EventTemplates.OVERFLOW_MENU_ENTRY)
+  await layout.clickTopPaneAction(test, 'event-templates')
   for (let i in data.eventTemplates) {
-    await layout.clickFab(test)
     await eventTemplates.create(test, data.eventTemplates[i])
   }
 })
@@ -84,7 +83,7 @@ test('Delete event', async test => {
   await events.checkCount(test, 0)
 })
 
-test('Clear context', async test => {
+test('Clear events context', async test => {
   // Remove the created group
   await screens.login(test, data.users[0])
   await layout.closeSignupAlert(test)

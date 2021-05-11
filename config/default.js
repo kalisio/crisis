@@ -370,9 +370,9 @@ module.exports = {
     items: {
       actions: [
         { id: 'capture-photo', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-camera', handler:  'capturePhoto',
-          visible: ['canCapturePhoto', { name: '$can', params: ['update', 'events', ':contextId', ':item'] }] },
+          visible: ['canCapturePhoto', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
         { id: 'add-media', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-paperclip', handler:  'uploadMedia',
-          visible: { name: '$can', params: ['update', 'events', ':contextId', ':item'] } },
+          visible: { name: '$can', params: ['read', 'events', ':contextId', ':item'] } },
         { id: 'event-map', tooltip: 'EventCard.MAP_LABEL', icon: 'las la-map-marked-alt', handler:  'viewMap',
           visible: ['hasLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
         { id: 'navigate', tooltip: 'EventCard.NAVIGATE_LABEL', icon: 'las la-location-arrow', handler:  'launchNavigation',
