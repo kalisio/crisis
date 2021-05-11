@@ -4,12 +4,16 @@ import { Geolocation } from '@kalisio/kdk/map.client.map'
 
 const eventsMixin = {
   data () {
-    return {
+    let data = {
       userId: '',
       isParticipant: false,
       isCoordinator: false,
       event: {}
     }
+    // In event panel we inject the event as props from the activity instead
+    // This avoids a warning of Vuejs about duplicated name in data/props
+    if (_.has(this.$props, 'event')) delete data.event
+    return data
   },
   methods: {
     hasLocation () {

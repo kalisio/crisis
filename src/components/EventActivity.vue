@@ -226,7 +226,7 @@ export default {
       // Recall last interaction state
       const interaction = this.getUserInteraction(feature)
       if (interaction) {
-        return popup.setContent(interaction)
+        return popup.setContent(step.title + ' : ' + interaction)
       } else {
         // Feature interaction will be managed through standard properties popup
         return null
