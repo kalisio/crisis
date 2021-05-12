@@ -371,12 +371,17 @@ export default {
       // Update actions according to user state
       this.configureActions()
       this.participantLabel = ''
+      const interaction = this.getUserInteraction(this.participantState)
+      // Awaiting status in priority
       if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
         this.participantLabel = this.participantStep.title + ' : ' + this.$t('EventCard.WAITING_FOR_PARTICIPANT_LABEL')
       } else if (this.waitingInteraction(this.participantStep, this.participantState, 'coordinator')) {
         this.participantLabel = this.participantStep.title + ' : ' + this.$t('EventCard.WAITING_FOR_COORDINATOR_LABEL')
+      } else if (interaction) {
+        // Don't use current step here as the interaction can be recorded on the previous one
+        const step = this.getUserInteractionStep(this.participantState)
+        this.participantLabel = step.title + ' : ' + interaction
       }
-
       this.refreshInProgress = false
     },
     subscribeParticipantLog () {
