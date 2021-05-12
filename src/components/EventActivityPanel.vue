@@ -8,6 +8,8 @@
             <div class="col-auto self-center">
               <q-btn flat round small color="primary" @click="onStateClicked(participant)">
                 <q-icon :name="participantIconName(participant)" :color="participantIconColor(participant)" />
+                <q-tooltip v-if="participant.step" content-class="bg-primary" >{{ participantState(participant) }}</q-tooltip>
+                <q-tooltip v-if="participant.step" :offset="[0, 48]">{{ $t('EventActivityPanel.FILTER_PARTICIPANTS') }}</q-tooltip>
               </q-btn>
               {{participantName(participant)}}
             </div>
@@ -73,6 +75,7 @@ export default {
   },
   methods: {
     participantName (participant) {
+      // Manage the case the participant is not correctly populated
       return _.get(participant, 'participant.name', this.$t('EventActivity.UNAMED'))
     },
     participantIconName (participant) {
@@ -83,6 +86,12 @@ export default {
     },
     participantComment (participant) {
       return this.getUserComment(participant)
+    },
+    participantState (participant) {
+      const step = this.getWorkflowStep(participant)
+      const interaction = this.getUserInteraction(participant)
+      const state = (interaction ? step.title + ' : ' + interaction : step.title)
+      return state
     },
     onZoomClicked (participant) {
       this.$events.$emit('zoom-to-participant', participant)

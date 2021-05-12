@@ -432,7 +432,8 @@
     "UPLOADER_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)"
   },
   "EventActivityPanel": {
-    "PARTICIPANTS_LABEL": "Participants"
+    "PARTICIPANTS_LABEL": "Participants",
+    "FILTER_PARTICIPANTS": "Sélectionnez pour filtrer les participants à cette étape du processus"
   },
   "EventsActivity": {
     "EVENTS_LABEL": "$t(EVENTS_LABEL)",

@@ -320,11 +320,13 @@ export default {
       this.$router.push({ name: 'event-activity', params: { objectId: this.item._id, contextId: this.contextId } })
     },
     async refreshParticipantState (logs) {
+      // As we also update the previous log state in the backend the refresh can be raised
+      // while logs are in a "temporary" state in the DB...
+      // FIXME: we should probably use a transaction to make things better
+      // Meanwhile, we add checks to avoid initiate the same logs multiple times
+
+      // No last log yet => initiate the workflow by a log acting as a read receipt
       if (logs.total === 0) {
-        // No last log yet => initiate the workflow by a log acting as a read receipt
-        // FIXME: don't know really why but it seems that during some temporary state
-        // the refresh is raised without any active logs while they are tagged as is in the DB...
-        // We just add a check to avoid initiate the workflow multiple times
         const count = await this.serviceFind({
           query: {
             $limit: 0,
@@ -347,9 +349,19 @@ export default {
         // When participant has just fullfilled a step we need to initiate the next one (if any) by a log acting as a read receipt
         // We know this when we get a higher step in workflow from the current state
         if (this.isBeforeInWorkflow(this.participantState.step, this.participantStep.name)) {
-          const log = await this.createParticipantLog(this.participantStep, this.participantState)
-          this.serviceCreate(log)
-          // Real-time event should trigger a new refresh for current state
+          const count = await this.serviceFind({
+            query: {
+              $limit: 0,
+              participant: this.userId,
+              event: this.item._id,
+              step: this.participantStep.name
+            }
+          })
+          if (count.total === 0) {
+            const log = await this.createParticipantLog(this.participantStep, this.participantState)
+            this.serviceCreate(log)
+            // Real-time event should trigger a new refresh for current state
+          }
         }
       }
 
@@ -406,6 +418,7 @@ export default {
       this.coordinatorLogListener = this.loadService().watch({ listStrategy: 'smart' })
         .find({
           query: {
+            $sort: { createdAt: -1 }, // sort by newest ones
             event: this.item._id,
             lastInEvent: true
           }

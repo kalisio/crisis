@@ -428,7 +428,8 @@
     "UPLOADER_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)"
   },
   "EventActivityPanel": {
-    "PARTICIPANTS_LABEL": "Participants"
+    "PARTICIPANTS_LABEL": "Participants",
+    "FILTER_PARTICIPANTS": "Select to filter participants at this workflow step"
   },
   "EventsActivity": {
     "MY_ORGANISATIONS": "My organisations",
