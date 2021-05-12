@@ -166,8 +166,7 @@ export default {
       if (this.hasStateUserInteraction(item.previous)) {
         return (this.getUserInteraction(item.previous) === this.filter.interaction)
       }
-      // If same step but no interaction found filter if rquired
-      return _.get(this.filter, 'interaction')
+      return true
     },
     async refreshParticipantsLayer () {
       // Create an empty layer used as a container for participants when required
@@ -194,14 +193,13 @@ export default {
     },
     getParticipantMarker (feature, latlng, options) {
       if (options.name !== this.$t('EventActivity.PARTICIPANTS_LAYER_NAME')) return
-      const icon = this.getUserIcon(feature, this.getWorkflowStep(feature))
       return this.createMarkerFromStyle(latlng, {
         icon: {
           type: 'icon.fontAwesome',
           options: {
-            iconClasses: kCoreUtils.getIconName(icon, 'name') || 'fas fa-user',
+            iconClasses: kCoreUtils.getIconName(feature) || 'fas fa-user',
             // Conversion from palette to RGB color is required for markers
-            markerColor: kCoreUtils.getColorFromPalette(_.get(icon, 'color', 'blue')),
+            markerColor: kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color', 'blue')),
             iconColor: '#FFFFFF'
           }
         }
@@ -210,7 +208,7 @@ export default {
     getParticipantPopup (feature, layer, options) {
       if (options.name !== this.$t('EventActivity.PARTICIPANTS_LAYER_NAME')) return
       const popup = L.popup({ autoPan: false }, layer)
-      const step = this.getWorkflowStep(feature)
+      let step = this.getWorkflowStep(feature)
       // Check for any recorded interaction to be displayed
       // Nothing visible because clicking on the marker opens a dialog in this case
       if (!this.archived && this.waitingInteraction(step, feature, 'coordinator')) {
@@ -225,6 +223,8 @@ export default {
       // Recall last interaction state
       const interaction = this.getUserInteraction(feature)
       if (interaction) {
+        // Don't use current step here as the interaction can be recorded on the previous one
+        step = this.getUserInteractionStep(feature)
         return popup.setContent(step.title + ' : ' + interaction)
       } else {
         // Feature interaction will be managed through standard properties popup
@@ -239,9 +239,9 @@ export default {
       const name = _.get(feature, 'participant.name', this.$t('EventActivity.UNAMED'))
       // Check for any interaction to be performed
       if (!this.archived && this.waitingInteraction(step, feature, 'coordinator')) {
-        return tooltip.setContent('<b>' + name + '<br>' + this.$t('EventActivity.ACTION_REQUIRED') + '</b>')
+        return tooltip.setContent('<b>' + name + '<br>' + step.title + ' : ' + this.$t('EventActivity.ACTION_REQUIRED') + '</b>')
       } else if (!this.archived && this.waitingInteraction(step, feature, 'participant')) {
-        return tooltip.setContent('<b>' + name + '<br>' + this.$t('EventActivity.AWAITING_INFORMATION') + '</b>')
+        return tooltip.setContent('<b>' + name + '<br>' + step.title + ' : ' + this.$t('EventActivity.AWAITING_INFORMATION') + '</b>')
       } else {
         return tooltip.setContent('<b>' + name + '</b>')
       }

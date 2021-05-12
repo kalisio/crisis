@@ -421,15 +421,18 @@
     "EDIT_LABEL": "$t(EDIT_LABEL)",
     "SHOW_PANE_LABEL": "View participants pane",
     "HIDE_PANE_LABEL": "Hide participants pane",
-    "ACTION_REQUIRED": "Action required",
-    "AWAITING_INFORMATION": "Awaiting information",
+    "ACTION_REQUIRED": "action required",
+    "AWAITING_INFORMATION": "awaiting information",
     "UNAMED": "Unamed",
     "PARTICIPANTS_LAYER_NAME": "Participants",
     "UPLOADER_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)"
   },
   "EventActivityPanel": {
     "PARTICIPANTS_LABEL": "Participants",
-    "FILTER_PARTICIPANTS": "Select to filter participants at this workflow step"
+    "UNAMED": "$t(EventActivity.UNAMED)",
+    "ACTION_REQUIRED_WARNING": "action required",
+    "AWAITING_INFORMATION": "awaiting information",
+    "FILTER_PARTICIPANTS": "Select to filter participants with this status"
   },
   "EventsActivity": {
     "MY_ORGANISATIONS": "My organisations",
@@ -453,9 +456,9 @@
     "REMOVE_DIALOG_TITLE": "Remove the event {{event}} ?",
     "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove the event <b>{{event}}</b> ?",
     "ACTION_REQUIRED_WARNING": "Action required",
-    "WAITING_COORDINATION_WARNING": "Waiting coordination",
-    "WAITING_FOR_PARTICIPANT_LABEL": "Coordinator is waiting for your input",
-    "WAITING_FOR_COORDINATOR_LABEL": "Waiting for coordinator feedback",
+    "WAITING_COORDINATION_WARNING": "waiting coordination",
+    "WAITING_FOR_PARTICIPANT_LABEL": "coordinator is waiting for your input",
+    "WAITING_FOR_COORDINATOR_LABEL": "waiting for coordinator feedback",
     "PARTICPANTS_AWAITING_LABEL": "{{number}} participants awaiting coordination",
     "NO_PARTICPANTS_AWAITING_LABEL": "No participants awaiting coordination",
     "FOLLOWUP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",

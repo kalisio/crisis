@@ -25,31 +25,39 @@ const eventsMixin = {
     mediasCount () {
       return _.has(this.event, 'attachments') ? this.event.attachments.length : 0
     },
+    // Check if there is a defined user interaction on target step
     hasStepUserInteraction (step) {
       if (_.isEmpty(step)) return false
       else return !_.isEmpty(step.interaction)
     },
+    // Check if there is a defined feature interaction on target step
     hasStepFeatureInteraction (step) {
       if (_.isEmpty(step)) return false
       else return !_.isEmpty(step.featureInteraction)
     },
+    // Check if there is a defined interaction on target step
     hasStepInteraction (step) {
       return this.hasStepUserInteraction(step) || this.hasStepFeatureInteraction(step)
     },
+    // Check if there is a recorded user interaction on target state
     hasStateUserInteraction (state) {
       if (_.isEmpty(state)) return false
       else return !_.isEmpty(_.get(state, 'properties.interaction'))
     },
+    // Check if there is a recorded feature interaction on target state
     hasStateFeatureInteraction (state) {
       if (_.isEmpty(state)) return false
       else return !_.isEmpty(state.properties)
     },
+    // Check if there is a recorded interaction on target state
     hasStateInteraction (state) {
       return this.hasStateUserInteraction(state) || this.hasStateFeatureInteraction(state)
     },
+    // Check if we wait for an interaction at current state based on target step/stakeholder
     waitingInteraction (step, state, stakeholder) {
       return (this.hasStepInteraction(step) && !this.hasStateInteraction(state) && (step.stakeholder === stakeholder))
     },
+    // Get last user interaction
     getUserInteraction (state = {}) {
       // When last step had a recorded interaction use it if any
       if (_.has(state, 'properties.interaction')) return _.get(state, 'properties.interaction.value')
@@ -57,9 +65,21 @@ const eventsMixin = {
       if (state.previous) return this.getUserInteraction(state.previous)
       return ''
     },
+    // Get last user interaction step
+    getUserInteractionStep (state = {}) {
+      let stepName
+      // When last step had a recorded interaction use it if any
+      if (_.has(state, 'properties.interaction')) stepName = _.get(state, 'step')
+      // If we wait for an interaction use previous state if any
+      else if (state.previous) stepName = _.get(state, 'previous.step')
+      const stepIndex = this.event.workflow.findIndex(workflowStep => workflowStep.name === stepName)
+      return this.event.workflow[stepIndex]
+    },
+    // Does this step has an interaction ending the workflow
     hasEnd (step) {
       return !_.isEmpty(step.end)
     },
+    // Does the current state has an interaction ending the workflow based on target step
     endWorkflow (step, state) {
       return (this.hasEnd(step) && this.hasStateInteraction(state) && step.end.includes(this.getUserInteraction(state)))
     },
@@ -84,12 +104,14 @@ const eventsMixin = {
       if (state.previous) return this.getUserComment(state.previous)
       return ''
     },
+    // Check if the given state is related to a step before target one
     isBeforeInWorkflow (stateName, stepName) {
       const stateIndex = this.event.workflow.findIndex(workflowStep => workflowStep.name === stateName)
       const stepIndex = this.event.workflow.findIndex(workflowStep => workflowStep.name === stepName)
 
       return (stepIndex > stateIndex)
     },
+    // Get current workflow step of the user
     getWorkflowStep (state = {}) {
       if (_.isNil(this.event.workflow)) return null
 
@@ -115,6 +137,7 @@ const eventsMixin = {
         return currentStep
       }
     },
+    // Check if the coordinator has to perform an interaction according to given participant state
     canFollowUp (participant) {
       const step = this.getWorkflowStep(participant)
       return this.waitingInteraction(step, participant, 'coordinator')

@@ -425,15 +425,18 @@
     "EDIT_LABEL": "$t(EDIT_LABEL)",
     "SHOW_PANE_LABEL": "Afficher le volet participants",
     "HIDE_PANE_LABEL": "Cacher le volet participants",
-    "ACTION_REQUIRED": "Action requise",
-    "AWAITING_INFORMATION": "En attente d'information",
+    "ACTION_REQUIRED": "action requise",
+    "AWAITING_INFORMATION": "en attente d'information",
     "UNAMED": "Sans nom",
     "PARTICIPANTS_LAYER_NAME": "Participants",
     "UPLOADER_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)"
   },
   "EventActivityPanel": {
     "PARTICIPANTS_LABEL": "Participants",
-    "FILTER_PARTICIPANTS": "Sélectionnez pour filtrer les participants à cette étape du processus"
+    "UNAMED": "$t(EventActivity.UNAMED)",
+    "ACTION_REQUIRED_WARNING": "action requise",
+    "AWAITING_INFORMATION": "en attente d'information",
+    "FILTER_PARTICIPANTS": "Sélectionnez pour filtrer les participants avec ce statut"
   },
   "EventsActivity": {
     "EVENTS_LABEL": "$t(EVENTS_LABEL)",
@@ -455,10 +458,10 @@
     "MAP_LABEL": "Carte",    
     "REMOVE_DIALOG_TITLE": "Clôturer l'événement {{event}} ?",
     "REMOVE_DIALOG_MESSAGE": "Etes vous sûr de vouloir clôturer l'événement <b>{{event}}</b> ?",
-    "ACTION_REQUIRED_WARNING": "Action requise",
-    "WAITING_COORDINATION_WARNING": "En attente du coordinateur",
-    "WAITING_FOR_PARTICIPANT_LABEL": "Le coordinateur est en attente de votre action",
-    "WAITING_FOR_COORDINATOR_LABEL": "En attente du coordinateur",
+    "ACTION_REQUIRED_WARNING": "action requise",
+    "WAITING_COORDINATION_WARNING": "en attente du coordinateur",
+    "WAITING_FOR_PARTICIPANT_LABEL": "le coordinateur est en attente de votre action",
+    "WAITING_FOR_COORDINATOR_LABEL": "en attente du coordinateur",
     "PARTICPANTS_AWAITING_LABEL": "{{number}} participants en attente de coordination",
     "NO_PARTICPANTS_AWAITING_LABEL": "Aucun participant en attente de coordination",
     "FOLLOWUP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
