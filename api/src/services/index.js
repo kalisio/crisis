@@ -89,6 +89,34 @@ export function removeArchivedEventLogService (options) {
   // TODO
 }
 
+export function createPlanTemplatesService (options = {}) {
+  const app = this
+
+  debug('Creating plan templates service with options', options)
+  app.createService('plan-templates', Object.assign({
+    servicesPath,
+    modelsPath
+  }, options))
+}
+
+export function removePlanTemplatesService (options) {
+  // TODO
+}
+
+export function createPlansService (options = {}) {
+  const app = this
+
+  debug('Creating plans service with options', options)
+  app.createService('plans', Object.assign({
+    servicesPath,
+    modelsPath
+  }, options))
+}
+
+export function removePlansService (options) {
+  // TODO
+}
+
 export function createOrganisationServices (organisation, db) {
   const app = this
   createCatalogService.call(app, { context: organisation, db })
@@ -99,6 +127,8 @@ export function createOrganisationServices (organisation, db) {
   createEventLogService.call(app, { context: organisation, db })
   createArchivedEventService.call(app, { context: organisation, db })
   createArchivedEventLogService.call(app, { context: organisation, db })
+  createPlanTemplatesService.call(app,  { context: organisation, db })
+  createPlansService.call(app,  { context: organisation, db })
 }
 
 export function removeOrganisationServices (organisation) {
@@ -111,6 +141,8 @@ export function removeOrganisationServices (organisation) {
   removeEventLogService.call(app, { context: organisation })
   removeArchivedEventService.call(app, { context: organisation })
   removeArchivedEventLogService.call(app, { context: organisation })
+  removePlanTemplatesService.call(app,  { context: organisation, db })
+  removePlansService.call(app,  { context: organisation, db })  
 }
 
 export function processAlert (organisation) {

@@ -195,6 +195,24 @@ module.exports = {
                   }
                 }
               },
+              'plans': {
+                name: 'plans-activity',
+                component: 'PlansActivity',
+                props: true,
+                children: {
+                  'create/:templateId?': {
+                    name: 'create-plan',
+                    component: 'editor/KModalEditor',
+                    props: true,
+                    tour: tours['create-plan']
+                  },
+                  'edit/:objectId': {
+                    name: 'edit-plan',
+                    component: 'editor/KModalEditor',
+                    props: true
+                  }
+                }
+              },
               'events': {
                 name: 'events-activity',
                 component: 'EventsActivity',
@@ -266,6 +284,25 @@ module.exports = {
                   }
                 },
                 tour: tours['event-templates']
+              },
+              'plan-templates': {
+                name: 'plan-templates-activity',
+                component: 'PlanTemplatesActivity',
+                props: true,
+                children: {
+                  'create/:templateId?': {
+                    name: 'create-plan-template',
+                    component: 'editor/KModalEditor',
+                    props: true,
+                    tour: tours['create-plan-templates']
+                  },
+                  'edit/:objectId': {
+                    name: 'edit-plan-template',
+                    component: 'editor/KModalEditor',
+                    props: true
+                  }
+                },
+                tour: tours['plan-templates']
               },
               ':page': {
                 name: 'organisation-settings-activity',

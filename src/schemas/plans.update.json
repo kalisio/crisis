@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://www.kalisio.xyz/schemas/plans.create.json#",
+  "title": "schemas.OBJECT_NAME",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string", 
+      "minLength": 2,
+      "field": {
+        "component": "form/KTextField",
+        "label": "schemas.PLANS_NAME_FIELD_LABEL"
+      }
+    },
+    "description": {
+      "type": "string", 
+      "field": {
+        "component": "form/KTextareaField",
+        "label": "schemas.PLANS_DESCRIPTION_FIELD_LABEL"
+      }
+    },
+    "objectives": {
+      "type": "array",
+      "field": {
+        "component": "form/KChipsField",
+        "lablel": "schema.PLANS_OBJECTIVES_FIELD_LABEL"
+      }
+    },
+    "location": {
+      "type": "object", 
+      "draggable": true,
+      "field": {
+        "component": "form/KLocationField",
+        "label": "schemas.PLANS_LOCATION_FIELD_LABEL"
+      }
+    }
+  },
+  "required": ["name"]
+}

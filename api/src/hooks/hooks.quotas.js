@@ -86,7 +86,7 @@ export const checkEventsQuotas = coreHooks.countLimit({
   }
 })
 
-export const checkTemplatesQuotas = coreHooks.countLimit({
+export const checkEventTemplatesQuotas = coreHooks.countLimit({
   service: 'event-templates',
   count: async (hook) => {
     return countItems(hook, hook.service)
@@ -95,6 +95,30 @@ export const checkTemplatesQuotas = coreHooks.countLimit({
     // Retrieve the org with billing infos
     const org = await getOrgWithBilling(hook, hook.service.getContextId())
     return getItemsQuota(hook, 'event-templates', org)
+  }
+})
+
+export const checkPlanQuotas = coreHooks.countLimit({
+  service: 'plans',
+  count: async (hook) => {
+    return countItems(hook, hook.service)
+  },
+  max: async (hook) => {
+    // Retrieve the org with billing infos
+    const org = await getOrgWithBilling(hook, hook.service.getContextId())
+    return getItemsQuota(hook, 'plans', org)
+  }
+})
+
+export const checkPlanTemplatesQuotas = coreHooks.countLimit({
+  service: 'plan-templates',
+  count: async (hook) => {
+    return countItems(hook, hook.service)
+  },
+  max: async (hook) => {
+    // Retrieve the org with billing infos
+    const org = await getOrgWithBilling(hook, hook.service.getContextId())
+    return getItemsQuota(hook, 'plan-templates', org)
   }
 })
 
@@ -110,8 +134,8 @@ export const checkAlertsQuotas = coreHooks.countLimit({
   }
 })
 
-export const checkPlanQuotas = async (hook) => {
-  const services = ['members', 'groups', 'events', 'event-templates', 'alerts']
+export const checkSubscriptionQuotas = async (hook) => {
+  const services = ['members', 'groups', 'events', 'event-templates', 'plans', 'plan-templates', 'alerts']
   const quotaHooks = []
   services.forEach(service => {
     quotaHooks.push(coreHooks.countLimit({

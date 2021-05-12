@@ -3,6 +3,7 @@
   "EVENT_TEMPLATES_LABEL": "Modèles",
   "REMOVE_LABEL": "Supprimer",
   "EDIT_LABEL": "Editer",
+  "COPY_LABEL": "Copier",
   "CLOSE_LABEL": "Fermer",
   "SAVE_LABEL": "Enregistrer",
   "errors": {
@@ -72,7 +73,16 @@
     "EVENTS_NOTIFICATION_FIELD_CREATE_LABEL": "Notifier les participants de la création",
     "EVENTS_NOTIFICATION_FIELD_UPDATE_LABEL": "Notifier les participants de la mise à jour",
     "EVENTS_LOG_TITLE": "Entrez votre choix",
-    "EVENTS_LOG_COMMENT_FIELD_LABEL": "Saisissez votre commentaire pour cette étape"
+    "EVENTS_LOG_COMMENT_FIELD_LABEL": "Saisissez votre commentaire pour cette étape",
+    "PLANS_CREATE_TITLE": "Créér un nouveau plan ?",
+    "PLANS_UPDATE_TITLE": "Mettre à jour le plan ?",
+    "PLANS_NAME_FIELD_LABEL": "Saisissez le nom de ce plan",
+    "PLANS_DESCRIPTION_FIELD_LABEL": "Saisissez une description de ce plan",
+    "PLANS_OBJECTIVES_FIELD_LABEL": "Saisissez les objectifs de ce plan",
+    "PLANS_LOCATION_FIELD_LABEL": "Saisissez une localisation pour ce plan",
+    "PLAN_TEMPLATES_NAME_FIELD_LABEL": "Saisissez le nom de ce modèle de plan",
+    "PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL": "Saisissez une description de ce modèle de plan",
+    "PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL": "Saisissez les objectifs de ce modèle de plan"
   },
   "tours": {
     "side-nav": {
@@ -284,6 +294,7 @@
   "OrganisationCard": {
     "EVENTS": "{{count}} événement(s)",
     "VIEW_EVENTS": "Voir les événements",
+    "VIEW_PLANS": "Voir les plans",
     "VIEW_CATALOG": "Voir la carte",
     "VIEW_ARCHIVED_EVENTS": "Voir la main courante",
     "CATALOG": "Cartographie",
@@ -296,6 +307,8 @@
     "VIEW_GROUPS": "Voir les groupes",
     "EVENT_TEMPLATES": "{{count}} modèle(s) d'événement",
     "VIEW_EVENT_TEMPLATES": "Voir les modèles d'événement",
+    "PLAN_TEMPLATES": "{{count}} modèle(s) de plans",
+    "VIEW_PLAN_TEMPLATES": "Voir les modèles de plans",    
     "MANAGE_SUBSCRIPTIONS": "Gérer vos abonnements",
     "EDIT": "Editer les propriétés",
     "DELETE": "Supprimer"
@@ -525,7 +538,7 @@
   "EventTemplateCard": {
     "REMOVE_LABEL": "$t(REMOVE_LABEL)",
     "EDIT_LABEL": "$t(EDIT_LABEL)",
-    "COPY_LABEL": "Copier",
+    "COPY_LABEL": "$t(COPY_LABEL)",
     "REMOVE_DIALOG_TITLE": "Supprimer le modèle {{template}} ?",
     "REMOVE_DIALOG_MESSAGE": "Etes vous sûr de vouloir supprimer le modèle <b>{{template}}</b> ?"
   },
@@ -585,5 +598,20 @@
     "CONFIRM_DIALOG_SUBSCRIBE_MESSAGE": "Merci de confirmer la souscription à l'option <b>$t({{option}})</b>",
     "CONFIRM_DIALOG_UNSUBSCRIBE_MESSAGE": "Merci de confirmer la résiliation de l'option <b>$t({{option}})</b>",
     "OPTION_DISABLED_TOOLTIP": "Merci de renseigner les informations de paiement pour souscrire aux options"
+  },
+  "PlansActivity": {
+    "PLANS_LABEL": "Plans"
+  },
+  "PlanCard": {
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "REMOVE_LABEL": "$t(REMOVE_LABEL)"
+  },
+  "PlanTemplatesActivity": {
+    "PLAN_TEMPLATES_LABEL": "Modèles de plan"
+  },
+  "PlanTemplateCard": {
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "COPY_LABEL": "$t(COPY_LABEL)",
+    "REMOVE_LABEL": "$t(REMOVE_LABEL)"
   }
 }

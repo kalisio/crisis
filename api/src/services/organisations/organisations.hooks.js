@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { when } from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { checkOrganisationsQuotas, checkPlanQuotas, subscribeDefaultPlan, removeBilling } from '../../hooks'
+import { checkOrganisationsQuotas, checkSubscriptionQuotas, subscribeDefaultPlan, removeBilling } from '../../hooks'
 
 module.exports = {
   before: {
@@ -11,7 +11,7 @@ module.exports = {
     create: [checkOrganisationsQuotas],
     update: [],
     // When changing billing plan check for quotas
-    patch: [when(hook => _.get(hook, 'data.billing'), checkOrganisationsQuotas, checkPlanQuotas)],
+    patch: [when(hook => _.get(hook, 'data.billing'), checkOrganisationsQuotas, checkSubscriptionQuotas)],
     remove: [coreHooks.preventRemoveOrganisation]
   },
 

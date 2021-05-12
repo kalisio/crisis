@@ -36,6 +36,13 @@
           <q-item-section side>
             <div class="row justify-between">
               <k-action 
+                v-if="canAccessPlans"
+                id= "organisation-plans"
+                icon= "kdk:kanban.png"
+                :tooltip="$t('OrganisationCard.VIEW_PLANS')"
+                :route="{ name: 'plans-activity', params: { contextId: this.item._id } }" 
+                :propagate="false" />
+              <k-action 
                 v-if="canAccessCatalog"
                 id= "organisation-catalog"
                 icon= "las la-map"
@@ -131,7 +138,8 @@ export default {
         { key: 'MEMBERS', name: 'members', icon: 'las la-user-friends' },
         { key: 'TAGS', name: 'tags', icon: 'las la-tag' },
         { key: 'GROUPS', name: 'groups', icon: 'las la-sitemap' },
-        { key: 'EVENT_TEMPLATES', name: 'event-templates', icon: 'las la-project-diagram' }
+        { key: 'EVENT_TEMPLATES', name: 'event-templates', icon: 'las la-project-diagram' },
+        { key: 'PLAN_TEMPLATES', name: 'plan-templates', icon: 'kdk:kanban.png' }
       ],
       userRole: null,
       subscription: null,
@@ -144,6 +152,9 @@ export default {
     },
     color () {
       return _.get(this.item, 'color')
+    },
+    canAccessPlans () {
+      return this.$can('read', 'plans', this.item._id)
     },
     canAccessCatalog () {
       return this.$can('update', 'catalog', this.item._id)

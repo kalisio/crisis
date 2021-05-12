@@ -183,7 +183,7 @@ graph TB
   before --> UPDATE[UPDATE]
   UPDATE --> after
   before -- Check for organisations quota exceeded<br/>when updating plan --> hook6(checkOrganisationsQuotas)
-  hook6 -- Check for plan quotas exceeded<br/>-members, groups, events, templates, alerts- --> hook7(checkPlanQuotas)
+  hook6 -- Check for plan quotas exceeded<br/>-members, groups, events, templates, , plans, plan-templates, alerts- --> hook7(checkSubscriptionQuotas)
   hook7 --> PATCH[PATCH]
   PATCH --> after
   before -- Check for empty organisation --> hook8(preventRemoveOrganisation)

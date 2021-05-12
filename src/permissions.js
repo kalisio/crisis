@@ -1,4 +1,5 @@
 import { permissions } from '@kalisio/kdk/core.common'
+import catalog from './tours/catalog'
 
 function defineEventAbilities (subject, can, cannot) {
   if (subject && subject._id) {
@@ -65,6 +66,33 @@ function defineEventAbilities (subject, can, cannot) {
   }
 }
 
+function definePlanAbilities (subject, can, cannot) {
+  if (subject && subject._id) {
+    if (subject.organisations) {
+      subject.organisations.forEach(organisation => {
+        const role = permissions.Roles[organisation.permissions]
+        console.log(role)
+        if (role >= permissions.Roles.member) {
+          if (organisation._id) {
+            // The unique identifier of a service is its path not its name.
+            // Indeed we have for instance a 'events' service in each organisation.
+            can('service', organisation._id.toString() + '/plans')
+            can('service', organisation._id.toString() + '/plan-templates')
+            can('all', 'plan-templates', { context: organisation._id })
+            can('all', 'plans', { context: organisation._id })
+          }
+        }
+        if (role >= permissions.Roles.manager) {
+          if (organisation._id) {
+            can('all', 'plan-templates', { context: organisation._id })
+            can('all', 'plans', { context: organisation._id })
+          }
+        }
+      })
+    }
+  }
+}
+
 function defineBillingAbilities (subject, can, cannot) {
   if (subject && subject._id) {
     if (subject.organisations) {
@@ -83,11 +111,10 @@ function defineBillingAbilities (subject, can, cannot) {
 
 // Hook computing contextual catalog, features, events, etc. abilities for a given user
 export function defineUserAbilities (subject, can, cannot) {
-
   defineEventAbilities(subject, can, cannot)
-
   defineBillingAbilities(subject, can, cannot)
-
+  definePlanAbilities(subject, can, cannot)
+  
   if (subject && subject._id) {
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {

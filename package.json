@@ -42,7 +42,7 @@
     "analyze": "npm run analyze:stats && npm run analyze:treemap",
     "lint": "standard src/**/*.js src/**/*.vue test/**/*.js tutorials/**/*.js --fix",
     "benchmark": "node ./benchmark",
-    "icons:cp": "shx cp -R node_modules/@kalisio/kdk/extras/icons src/assets/icons",
+    "icons:cp": "shx cp -R node_modules/@kalisio/kdk/extras/icons src/assets",
     "tours:cp": "shx cp -R node_modules/@kalisio/kdk/extras/tours/* src/tours",
     "cafe:cp": "shx cp -R node_modules/@kalisio/kdk/extras/testcafe/page-models/* test/page-models",
     "cafe:firefox": "npm run cafe:cp && testcafe firefox test/*.test.js",

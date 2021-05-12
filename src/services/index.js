@@ -21,6 +21,8 @@ export default function () {
     api.declareService('event-templates', { context: true })
     api.declareService('archived-events', { context: true })
     api.declareService('archived-event-logs', { context: true })
+    api.declareService('plans', { context: true })
+    api.declareService('plan-templates', { context: true })
     api.declareService('billing')
     // Setup service for settings edition
     const settingsService = api.createService('settings', {

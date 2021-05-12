@@ -1,11 +1,11 @@
-import { checkEventTemplatesQuotas } from '../../hooks'
+import { checkPlanTemplatesQuotas } from '../../hooks'
 
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [checkEventTemplatesQuotas],
+    create: [checkPlanTemplatesQuotas],
     update: [],
     patch: [],
     remove: []

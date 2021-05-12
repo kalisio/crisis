@@ -3,6 +3,7 @@
   "EVENT_TEMPLATES_LABEL": "Templates",
   "REMOVE_LABEL": "Remove",
   "EDIT_LABEL": "Edit",
+  "COPY_LABEL": "Copy",
   "CLOSE_LABEL": "Close",
   "SAVE_LABEL": "Save",
   "errors": {
@@ -71,7 +72,16 @@
     "EVENTS_NOTIFICATION_FIELD_CREATE_LABEL": "Notify participants when creating",
     "EVENTS_NOTIFICATION_FIELD_UPDATE_LABEL": "Notify participants when updating",
     "EVENTS_LOG_TITLE": "Enter your choice",
-    "EVENTS_LOG_COMMENT_FIELD_LABEL": "Enter your comment for this step"
+    "PLANS_CREATE_TITLE": "Create a new plan ?",
+    "PLANS_UPDATE_TITLE": "Update this plan ?",
+    "EVENTS_LOG_COMMENT_FIELD_LABEL": "Enter your comment for this step",
+    "PLANS_NAME_FIELD_LABEL": "Enter the name of this plan",
+    "PLANS_DESCRIPTION_FIELD_LABEL": "Enter a description of this plan",
+    "PLANS_OBJECTIVES_FIELD_LABEL": "Enter the objectives of this plan",
+    "PLANS_LOCATION_FIELD_LABEL": "Enter the location of this plan",
+    "PLAN_TEMPLATES_NAME_FIELD_LABEL": "Enter the name of this plan template",
+    "PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL": "Enter a description of this plan template",
+    "PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL": "Enter the objectives of this plan template"
   },
   "tours": {
     "side-nav": {
@@ -282,6 +292,7 @@
   "OrganisationCard": {
     "EVENTS": "{{count}} event(s)",
     "VIEW_EVENTS": "View events",
+    "VIEW_PLANS": "View plans",
     "VIEW_CATALOG": "View map",
     "VIEW_ARCHIVED_EVENTS": "View logbook",
     "MEMBERS": "{{count}} members",
@@ -292,6 +303,8 @@
     "VIEW_GROUPS": "View groups",
     "EVENT_TEMPLATES": "{{count}} event templates",
     "VIEW_EVENT_TEMPLATES": "View event templates",
+    "PLAN_TEMPLATES": "{{count}} plan templates",
+    "VIEW_PLAN_TEMPLATES": "View plan templates",
     "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions",
     "EDIT": "Edit properties",
     "DELETE": "Delete"
@@ -522,7 +535,7 @@
   "EventTemplateCard": {
     "REMOVE_LABEL": "$t(REMOVE_LABEL)",
     "EDIT_LABEL": "$t(EDIT_LABEL)",
-    "COPY_LABEL": "Copy",
+    "COPY_LABEL": "$t(COPY_LABEL)",
     "REMOVE_DIALOG_TITLE": "Remove the template {{template}} ?",
     "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove the template <b>{{template}}</b> ?"
   },
@@ -582,5 +595,20 @@
     "CONFIRM_DIALOG_SUBSCRIBE_MESSAGE": "Please confirm to subscribe to the <b>$t({{option}})</b> option",
     "CONFIRM_DIALOG_UNSUBSCRIBE_MESSAGE": "Please confirm unsubscribtion to the <b>$t({{option}})</b> option",
     "OPTION_DISABLED_TOOLTIP": "Please provide the payment information to subscribe to this option"
+  },
+  "PlansActivity": {
+    "PLANS_LABEL": "Plans"
+  },
+  "PlanCard": {
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "REMOVE_LABEL": "$t(REMOVE_LABEL)"
+  },
+  "PlanTemplatesActivity": {
+    "PLAN_TEMPLATES_LABEL": "Plan templates"
+  },
+  "PlanTemplateCard": {
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "COPY_LABEL": "$t(COPY_LABEL)",
+    "REMOVE_LABEL": "$t(REMOVE_LABEL)"
   }
 }

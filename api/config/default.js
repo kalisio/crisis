@@ -215,6 +215,8 @@ module.exports = {
       groups: (process.env.NODE_ENV === 'development' ? 5 : 1),
       events: -1,
       'event-templates': (process.env.NODE_ENV === 'development' ? 5 : 1),
+      plans: (process.env.NODE_ENV === 'development' ? 5 : 0),
+      'plan-templates': (process.env.NODE_ENV === 'development' ? 5 : 0),
       alerts: (process.env.NODE_ENV === 'development' ? 5 : 1)
     },
     silver: {
@@ -222,6 +224,8 @@ module.exports = {
       groups: 5,
       events: -1,
       'event-templates': 5,
+      plans: 5,
+      'plan-templates': 5,
       alerts: 5
     },
     gold: {
@@ -229,6 +233,8 @@ module.exports = {
       groups: -1,
       events: -1,
       'event-templates': -1,
+      plans: -1,
+      'plan-templates': -1,
       alerts: 50
     },
     diamond: {
@@ -236,6 +242,8 @@ module.exports = {
       groups: -1,
       events: -1,
       'event-templates': -1,
+      plans: -1,
+      'plan-templates': -1,
       alerts: -1
     }
   },

@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://www.kalisio.xyz/schemas/plan-templates.update.json#",
+  "title": "schemas.OBJECT_NAME",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string", 
+      "minLength": 2,
+      "field": {
+        "component": "form/KTextField",
+        "label": "schemas.PLAN_TEMPLATES_NAME_FIELD_LABEL"
+      }
+    },
+    "description": {
+      "type": "string", 
+      "field": {
+        "component": "form/KTextareaField",
+        "label": "schemas.PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL"
+      }
+    },
+    "objectives": {
+      "type": "array",
+      "field": {
+        "component": "form/KChipsField",
+        "lablel": "schema.PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL"
+      }
+    },
+    "color" : {
+      "type": "string",
+      "field": {
+        "component": "form/KColorField",
+        "label": "schemas.COLOR_FIELD_LABEL"
+      }
+    }
+  },
+  "required": ["name", "description"]
+}

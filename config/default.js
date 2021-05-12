@@ -333,6 +333,46 @@ module.exports = {
       ]
     }
   },
+  plansActivity: {
+    leftPane: leftPane(),
+    topPane: {
+      content: {
+        'default': [
+          { component: 'OrganisationAvatar' },
+          separator,
+          { id: 'plans', icon: 'kdk:kanban.svg', label: 'PlansActivity.PLANS_LABEL', color: 'primary', disabled: true },
+          { 
+            id: 'events', icon: 'las la-fire', tooltip: 'EventsActivity.EVENTS_LABEL',
+            visible: { name: '$can', params: ['service', 'events', ':contextId'] },
+            route: { name: 'events-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
+            id: 'catalog', icon: 'las la-map', tooltip: 'Context.CATALOG',
+            visible: { name: '$can', params: ['update', 'catalog', ':contextId'] },
+            route: { name: 'catalog-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
+            id: 'archived-events', icon: 'las la-clipboard-list', tooltip: 'Context.ARCHIVED_EVENTS',
+            visible: { name: '$can', params: ['read', 'archived-events', ':contextId'] },
+            route: { name: 'archived-events-activity', params: { contextId: ':contextId' } },    
+          },
+          midSeparator,
+          { id: 'plan-sorter',
+            component: 'collection/KSorter', 
+            tooltip: 'EventsActivity.SORT_EVENTS',
+            options: [
+              { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
+              { icon: 'kdk:anticlockwise.png', value: { field: 'updatedAt', order: -1 }, default: true },
+              { icon: 'las la-sort-alpha-down', value: { field: 'name', order: 1 } },
+              { icon: 'las la-sort-alpha-up', value: { field: 'name', order: -1 } }
+            ]
+          },
+          { id: 'search-event', icon: 'las la-search', tooltip: 'EventsActivity.SEARCH_EVENTS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+        ],
+        'filter': contextFilter('name')
+      }
+    }
+  },
   eventsActivity: {
     leftPane: leftPane(),
     topPane: {
@@ -340,6 +380,11 @@ module.exports = {
         'default': [
           { component: 'OrganisationAvatar' },
           separator,
+          { 
+            id: 'plans', icon: 'kdk:kanban.png', tooltip: 'PlansActivity.PLANS_LABEL',
+            visible: { name: '$can', params: ['update', 'plans', ':contextId'] },
+            route: { name: 'plans-activity', params: { contextId: ':contextId' } },    
+          },
           { id: 'events', icon: 'las la-fire', label: 'EventsActivity.EVENTS_LABEL', color: 'primary', disabled: true },
           { 
             id: 'catalog', icon: 'las la-map', tooltip: 'Context.CATALOG',
@@ -392,6 +437,11 @@ module.exports = {
         default: [
           { component: 'OrganisationAvatar' },
           separator,
+          { 
+            id: 'plans', icon: 'kdk:kanban.png', tooltip: 'PlansActivity.PLANS_LABEL',
+            visible: { name: '$can', params: ['update', 'plans', ':contextId'] },
+            route: { name: 'plans-activity', params: { contextId: ':contextId' } },    
+          },
           { 
             id: 'events', icon: 'las la-fire', tooltip: 'EventsActivity.EVENTS_LABEL',
             visible: { name: '$can', params: ['service', 'events', ':contextId'] },
@@ -484,6 +534,11 @@ module.exports = {
           { component: 'OrganisationAvatar' },
           separator,
           { 
+            id: 'plans', icon: 'kdk:kanban.png', tooltip: 'PlansActivity.PLANS_LABEL',
+            visible: { name: '$can', params: ['update', 'plans', ':contextId'] },
+            route: { name: 'plans-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
             id: 'events', icon: 'las la-fire', tooltip: 'EventsActivity.EVENTS_LABEL',
             visible: { name: '$can', params: ['service', 'events', ':contextId'] },
             route: { name: 'events-activity', params: { contextId: ':contextId' } },    
@@ -574,6 +629,11 @@ module.exports = {
             route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
           },
           { 
+            id: 'plan-templates', icon: 'kdk:kanban.png', tooltip: 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL',
+            visible: { name: '$can', params: ['service', 'plan-templates', ':contextId'] },
+            route: { name: 'plan-templates-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
             route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', page: 'properties' } },    
@@ -643,6 +703,11 @@ module.exports = {
             route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
           },
           { 
+            id: 'plan-templates', icon: 'kdk:kanban.png', tooltip: 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL',
+            visible: { name: '$can', params: ['service', 'plan-templates', ':contextId'] },
+            route: { name: 'plan-templates-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
             route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', page: 'properties' } },    
@@ -691,6 +756,11 @@ module.exports = {
             id: 'event-templates', icon: 'las la-project-diagram', tooltip: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL',
             visible: { name: '$can', params: ['service', 'event-templates', ':contextId'] },
             route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
+            id: 'plan-templates', icon: 'kdk:kanban.png', tooltip: 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL',
+            visible: { name: '$can', params: ['service', 'plan-templates', ':contextId'] },
+            route: { name: 'plan-templates-activity', params: { contextId: ':contextId' } },    
           },
           { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
@@ -746,6 +816,11 @@ module.exports = {
           },
           { id: 'event-templates', icon: 'las la-project-diagram', label: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', color: 'primary', disabled: true },
           { 
+            id: 'plan-templates', icon: 'kdk:kanban.png', tooltip: 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL',
+            visible: { name: '$can', params: ['service', 'plan-templates', ':contextId'] },
+            route: { name: 'plan-templates-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
             id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
             visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
             route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', page: 'properties' } },    
@@ -777,6 +852,68 @@ module.exports = {
       ]
     }
   },
+  planTemplatesActivity: {
+    leftPane: leftPane(),
+    topPane: {
+      content: {
+        'default': [ 
+          { component: 'OrganisationAvatar' },
+          separator,
+          { 
+            id: 'members', icon: 'las la-user-friends', tooltip: 'KMembersActivity.MEMBERS_LABEL',
+            visible: { name: '$can', params: ['service', 'members', ':contextId'] },
+            route: { name: 'members-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
+            id: 'tags', icon: 'las la-tags', tooltip: 'KTagsActivity.TAGS_LABEL',
+            visible: { name: '$can', params: ['service', 'tags', ':contextId'] },
+            route: { name: 'tags-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
+            id: 'groups', icon: 'las la-sitemap', tooltip: 'KGroupsActivity.GROUPS_LABEL',
+            visible: { name: '$can', params: ['service', 'groups', ':contextId'] },
+            route: { name: 'groups-activity', params: { contextId: ':contextId' } },    
+          },
+          { 
+            id: 'event-templates', icon: 'las la-project-diagram', tooltip: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL',
+            visible: { name: '$can', params: ['service', 'event-templates', ':contextId'] },
+            route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
+          },
+          { id: 'plan-templates', icon: 'kdk:kanban.png', label: 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL', color: 'primary', disabled: true },
+          { 
+            id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
+            visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+            route: { name: 'organisation-settings-activity', params: { contextId: ':contextId', page: 'properties' } },    
+          },
+          midSeparator,
+          { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
+          { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+        ],
+        'filter': contextFilter('name')
+      }
+    },
+    fab: {
+      actions: [{
+        id: 'create-plan-template', icon: 'las la-plus', tooltip: 'PlanTemplatesActivity.CREATE_TEMPLATE_LABEL',
+        visible: { name: '$can', params: ['create', 'plan-templates', ':contextId'] },
+        route: { name: 'create-plan-template', params: { contextId: ':contextId' } }
+      }]
+    },
+    items: {
+      actions: [
+        { id: 'edit-plan-template', tooltip: 'PlanTemplateCard.EDIT_LABEL', icon: 'las la-edit',
+          visible: { name: '$can', params: ['update', 'plan-templates', ':contextId', ':item'] },
+          route: { name: 'edit-plan-template', params: { contextId: ':contextId', objectId: ':item._id' } } },
+        { id: 'copy-plan-template', tooltip: 'PlanTemplateCard.COPY_LABEL', icon: 'las la-copy',
+          visible: { name: '$can', params: ['update', 'plan-templates', ':contextId', ':item'] },
+          route: { name: 'create-plan-template', params: { contextId: ':contextId', templateId: ':item._id' } } },
+        { id: 'remove-plan-template', tooltip: 'PlanTemplateCard.REMOVE_LABEL', icon: 'las la-trash',
+          visible: { name: '$can', params: ['remove', 'plan-templates', ':contextId', ':item'] }, 
+          handler: { name: 'removeItem', params: ['confirm'] }
+        }
+      ]
+    }
+  },
   organisationSettingsActivity: {
     leftPane: leftPane(),
     topPane: {
@@ -802,6 +939,11 @@ module.exports = {
           id: 'event-templates', icon: 'las la-project-diagram', tooltip: 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL',
           visible: { name: '$can', params: ['service', 'event-templates', ':contextId'] },
           route: { name: 'event-templates-activity', params: { contextId: ':contextId' } },    
+        },
+        { 
+          id: 'plan-templates', icon: 'kdk:kanban.png', tooltip: 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL',
+          visible: { name: '$can', params: ['service', 'plan-templates', ':contextId'] },
+          route: { name: 'plan-templates-activity', params: { contextId: ':contextId' } },    
         },
         { id: 'settings', icon: 'las la-cog', label: 'OrganisationSettingsActivity.SETTINGS', color: 'primary', disabled: true },
       ]
