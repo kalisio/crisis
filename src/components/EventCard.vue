@@ -103,7 +103,7 @@ export default {
   },
   computed: {
     icon () {
-      return this.getUserIcon(this.participantState, this.participantStep)
+      return kCoreUtils.getIconName(this.getUserIcon(this.participantState, this.participantStep))
     },
     iconColor () {
       return _.get(this.item, 'icon.color', '')
@@ -207,10 +207,10 @@ export default {
       if (hasFollowUp) {
         if (this.isParticipant) {
           if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
-            tooltip = this.$t('EventCard.ACTION_REQUIRED_WARNING')
+            tooltip = this.participantStep.title + ' : ' + this.$t('EventCard.ACTION_REQUIRED_WARNING')
             warning = true
           } else if (this.waitingInteraction(this.participantStep, this.participantState, 'coordinator')) {
-            tooltip = this.$t('EventCard.WAITING_COORDINATION_WARNING')
+            tooltip = this.participantStep.title + ' : ' + this.$t('EventCard.WAITING_COORDINATION_WARNING')
             warning = true
           }
         } 
@@ -324,55 +324,65 @@ export default {
       // while logs are in a "temporary" state in the DB...
       // FIXME: we should probably use a transaction to make things better
       // Meanwhile, we add checks to avoid initiate the same logs multiple times
-
-      // No last log yet => initiate the workflow by a log acting as a read receipt
-      if (logs.total === 0) {
-        const count = await this.serviceFind({
-          query: {
-            $limit: 0,
-            participant: this.userId,
-            event: this.item._id
-          }
-        })
-        if (count.total === 0) {
-          this.participantState = {}
-          this.participantStep = this.getWorkflowStep() || {} // Use empty object by default to simplify display
-          const log = await this.createParticipantLog(this.participantStep, this.participantState)
-          this.serviceCreate(log)
-          // Real-time event should trigger a new refresh for current state
-        }
-      } else if (logs.data.length > 0) {
-        this.participantState = logs.data[0]
-        this.participantStep = this.getWorkflowStep(this.participantState) || {} // Use empty object by default to simplify display
-        // When no workflow to be fulfilled
-        if (_.isEmpty(this.participantStep)) return
-        // When participant has just fullfilled a step we need to initiate the next one (if any) by a log acting as a read receipt
-        // We know this when we get a higher step in workflow from the current state
-        if (this.isBeforeInWorkflow(this.participantState.step, this.participantStep.name)) {
+      if (this.refreshInProgress) return // Avoid reentrance
+      this.refreshInProgress = true
+      try {
+        // No last log yet => initiate the workflow by a log acting as a read receipt
+        if (logs.total === 0) {
           const count = await this.serviceFind({
             query: {
               $limit: 0,
               participant: this.userId,
-              event: this.item._id,
-              step: this.participantStep.name
+              event: this.item._id
             }
           })
           if (count.total === 0) {
+            this.participantState = {}
+            this.participantStep = this.getWorkflowStep() || {} // Use empty object by default to simplify display
             const log = await this.createParticipantLog(this.participantStep, this.participantState)
             this.serviceCreate(log)
             // Real-time event should trigger a new refresh for current state
           }
+        } else if (logs.data.length > 0) {
+          this.participantState = logs.data[0]
+          this.participantStep = this.getWorkflowStep(this.participantState) || {} // Use empty object by default to simplify display
+          // When no workflow to be fulfilled
+          if (_.isEmpty(this.participantStep)) return
+          // When participant has just fullfilled a step we need to initiate the next one (if any) by a log acting as a read receipt
+          // We know this when we get a higher step in workflow from the current state
+          if (this.isBeforeInWorkflow(this.participantState.step, this.participantStep.name)) {
+            const count = await this.serviceFind({
+              query: {
+                $limit: 0,
+                participant: this.userId,
+                event: this.item._id,
+                step: this.participantStep.name
+              }
+            })
+            if (count.total === 0) {
+              const log = await this.createParticipantLog(this.participantStep, this.participantState)
+              this.serviceCreate(log)
+              // Real-time event should trigger a new refresh for current state
+            }
+          }
         }
+      } catch (_) {
       }
-
       // Update actions according to user state
       this.configureActions()
       this.participantLabel = ''
+      const interaction = this.getUserInteraction(this.participantState)
+      // Awaiting status in priority
       if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
-        this.participantLabel = this.$t('EventCard.WAITING_FOR_PARTICIPANT_LABEL')
+        this.participantLabel = this.participantStep.title + ' : ' + this.$t('EventCard.WAITING_FOR_PARTICIPANT_LABEL')
       } else if (this.waitingInteraction(this.participantStep, this.participantState, 'coordinator')) {
-        this.participantLabel = this.$t('EventCard.WAITING_FOR_COORDINATOR_LABEL')
+        this.participantLabel = this.participantStep.title + ' : ' + this.$t('EventCard.WAITING_FOR_COORDINATOR_LABEL')
+      } else if (interaction) {
+        // Don't use current step here as the interaction can be recorded on the previous one
+        const step = this.getUserInteractionStep(this.participantState)
+        this.participantLabel = step.title + ' : ' + interaction
       }
+      this.refreshInProgress = false
     },
     subscribeParticipantLog () {
       // Remove previous listener if any
@@ -397,20 +407,26 @@ export default {
       }
     },
     refreshCoordinatorState (logs) {
-      this.nbParticipantsWaitingCoordination = logs.data.filter(
-        log => (log.stakeholder === 'coordinator') && !this.hasStateInteraction(log)
-      ).length
-      // Update actions according to user state
-      this.configureActions()
-      // Then label
-      if (this.nbParticipantsWaitingCoordination > 0) {
-        this.coordinatorLabel = this.$t('EventCard.PARTICPANTS_AWAITING_LABEL', { number: this.nbParticipantsWaitingCoordination })
-      } else {
-        this.coordinatorLabel = this.$t('EventCard.NO_PARTICPANTS_AWAITING_LABEL')
+      if (this.refreshInProgress) return // Avoid reentrance
+      this.refreshInProgress = true
+      try {
+        this.nbParticipantsWaitingCoordination = logs.data.filter(
+          log => (log.stakeholder === 'coordinator') && !this.hasStateInteraction(log)
+        ).length
+        // Update actions according to user state
+        this.configureActions()
+        // Then label
+        if (this.nbParticipantsWaitingCoordination > 0) {
+          this.coordinatorLabel = this.$t('EventCard.PARTICPANTS_AWAITING_LABEL', { number: this.nbParticipantsWaitingCoordination })
+        } else {
+          this.coordinatorLabel = this.$t('EventCard.NO_PARTICPANTS_AWAITING_LABEL')
+        }
+        if (logs.data.length < logs.total) {
+          this.$events.$emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
+        }
+      } catch (_) {
       }
-      if (logs.data.length < logs.total) {
-        this.$events.$emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
-      }
+      this.refreshInProgress = false
     },
     subscribeCoordinatorLog () {
       // Remove previous listener if any
