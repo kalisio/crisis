@@ -35,22 +35,24 @@ export async function linkWithPreviousLog (hook) {
   const participant = item.participant
   const event = item.event
   if (event && participant) {
-    const previousLogs = await hook.service.find({
-      query: {
-        $sort: { createdAt: -1 }, // Sorting by newest ones
-        $limit: 1,
-        participant,
-        event,
-        lastInEvent: true
-      },
-      paginate: false
-    })
-    if (previousLogs.length > 0) {
-      const previousLog = previousLogs[0]
-      debug('Tagging previous log for participant ' + participant.toString() + ' on event ' + event.toString())
-      item.previous = previousLog._id
-      // Copy expiry date
-      item.expireAt = previousLog.expireAt
+    if (!item.previous) {
+      const previousLogs = await hook.service.find({
+        query: {
+          $sort: { createdAt: -1 }, // Sorting by newest ones
+          $limit: 1,
+          participant,
+          event,
+          lastInEvent: true
+        },
+        paginate: false
+      })
+      if (previousLogs.length > 0) {
+        const previousLog = previousLogs[0]
+        debug('Tagging previous log for participant ' + participant.toString() + ' on event ' + event.toString())
+        item.previous = previousLog._id
+        // Copy expiry date
+        item.expireAt = previousLog.expireAt
+      }
     }
     // When the first log is created we need to extract it from the source event
     if (!item.expireAt) {

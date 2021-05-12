@@ -85,7 +85,7 @@ export default {
       return this.$api.getService(this.archived ? 'archived-event-logs' : 'event-logs')
     },
     getCollectionBaseQuery () {
-      return { lastInEvent: true, event: this.objectId }
+      return { lastInEvent: true, event: this.objectId, $sort: { createdAt: -1 } }
     },
     getCollectionPaginationQuery () {
       // No pagination on map items
@@ -161,14 +161,13 @@ export default {
       if (item.step !== this.filter.step) return false
       // Is it the same interaction ?
       if (this.hasStateUserInteraction(item)) {
-        if (this.getUserInteraction(item) === this.filter.interaction) return true
-        return false
+        return (this.getUserInteraction(item) === this.filter.interaction)
       }
       if (this.hasStateUserInteraction(item.previous)) {
-        if (this.getUserInteraction(item.previous) === this.filter.interaction) return true
-        return false
+        return (this.getUserInteraction(item.previous) === this.filter.interaction)
       }
-      return true
+      // If same step but no interaction found filter if rquired
+      return _.get(this.filter, 'interaction')
     },
     async refreshParticipantsLayer () {
       // Create an empty layer used as a container for participants when required
@@ -284,11 +283,17 @@ export default {
         item.icon = this.getUserIcon(item, this.getWorkflowStep(item) || {}) // Take care when no workflow
         item.comment = this.getUserComment(item)
       })
-      this.refreshParticipantsLayer()
       // We do not manage pagination now
       if (this.items.length < this.nbTotalItems) {
         this.$events.$emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
       }
+      // It appears that in some weird cases we can have duplicated logs,
+      // e.g. https://github.com/kalisio/aktnmap/issues/247
+      // As by default the list is ordered according to creation date,
+      // simply keep the most recent one in case of doublons
+      // Manage the case the participant is not correctly populated
+      this.items = _.uniqBy(this.items, (item) => _.get(item, 'participant._id', _.get(item, 'participant')))
+      this.refreshParticipantsLayer()
     }
   },
   created () {
