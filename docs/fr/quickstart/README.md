@@ -10,4 +10,9 @@
   * application mobile Android sur [Google Play](https://play.google.com/store/apps/details?id=com.kalisio.aktnmap),
   * application mobile iOS sur l'[Apple Store](https://apps.apple.com/fr/app/aktnmap/id1435111844).
 
-Une fois [enregistré](./concepts.md#utilisateur) sur l'application vous pouvez accéder à toutes les versions sans restriction.
+Une fois [enregistré](./concepts.md#utilisateur) sur l'application vous pouvez accéder à toutes les versions.
+
+## Disponibilité du service
+
+La disponibilité du service est mesurée comme le pourcentage de temps pendant lequel l'application est disponible sur une période donnée. RRendez-vous à tout moment sur notre [page Statping](https://statping.portal.kalisio.com/service/aktnmap) pour obtenir les dernières informations sur l'état du service.
+
