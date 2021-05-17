@@ -10,4 +10,8 @@
   * a mobile Android application on [Google Play](https://play.google.com/store/apps/details?id=com.kalisio.aktnmap),
   * a mobile iOS application on [Apple Store](https://apps.apple.com/fr/app/aktnmap/id1435111844).
 
-Once [registered](./concepts.md#user) to the application you can access all versions without any limit.
+Once [registered](./concepts.md#user) to the application you can access all versions.
+
+## Service availability
+
+The service availability is measured as the percentage of time the application is available over a given period. Check back our [Statping page](https://statping.portal.kalisio.com/service/aktnmap) any time to get current status information.

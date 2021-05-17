@@ -1,5 +1,26 @@
 # Changelog
 
+## [prod-v1.1.2](https://github.com/kalisio/aktnmap/tree/prod-v1.1.2) (2021-05-13)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.1...prod-v1.1.2)
+
+**Implemented enhancements:**
+
+- Simplify alert setup on probes [\#245](https://github.com/kalisio/aktnmap/issues/245)
+- Display the whole geographic context when locating an event [\#185](https://github.com/kalisio/aktnmap/issues/185)
+
+**Fixed bugs:**
+
+- Coordinator cannot follow up participants in event panel [\#258](https://github.com/kalisio/aktnmap/issues/258)
+- Incorrect icon displayed in event panel [\#257](https://github.com/kalisio/aktnmap/issues/257)
+- Capture photo or add media actions not available on event for participants [\#252](https://github.com/kalisio/aktnmap/issues/252)
+- Impossible to close event log editor [\#248](https://github.com/kalisio/aktnmap/issues/248)
+- Participant shown twice on event activity with workflow [\#247](https://github.com/kalisio/aktnmap/issues/247)
+- iOS app does not respect Apple app privacy guideline [\#239](https://github.com/kalisio/aktnmap/issues/239)
+- Empty business category in mapping activities [\#237](https://github.com/kalisio/aktnmap/issues/237)
+- Cannot create an event without a workflow  in a random way [\#212](https://github.com/kalisio/aktnmap/issues/212)
+- Remove automated object ID population in card route handler [\#22](https://github.com/kalisio/aktnmap/issues/22)
+
 ## [prod-v1.1.1](https://github.com/kalisio/aktnmap/tree/prod-v1.1.1) (2021-05-04)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.0...prod-v1.1.1)
