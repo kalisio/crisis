@@ -21,15 +21,6 @@
 - Cannot create an event without a workflow  in a random way [\#212](https://github.com/kalisio/aktnmap/issues/212)
 - Remove automated object ID population in card route handler [\#22](https://github.com/kalisio/aktnmap/issues/22)
 
-**Merged pull requests:**
-
-- build\(deps\): bump lodash from 4.17.20 to 4.17.21 in /docs [\#253](https://github.com/kalisio/aktnmap/pull/253) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump hosted-git-info from 2.8.4 to 2.8.9 [\#250](https://github.com/kalisio/aktnmap/pull/250) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump url-parse from 1.4.7 to 1.5.1 in /docs [\#249](https://github.com/kalisio/aktnmap/pull/249) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump lodash from 4.17.20 to 4.17.21 [\#244](https://github.com/kalisio/aktnmap/pull/244) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump ssri from 6.0.1 to 6.0.2 [\#233](https://github.com/kalisio/aktnmap/pull/233) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump ssri from 6.0.1 to 6.0.2 in /docs [\#232](https://github.com/kalisio/aktnmap/pull/232) ([dependabot[bot]](https://github.com/apps/dependabot))
-
 ## [prod-v1.1.1](https://github.com/kalisio/aktnmap/tree/prod-v1.1.1) (2021-05-04)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.0...prod-v1.1.1)
