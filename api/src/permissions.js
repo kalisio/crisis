@@ -70,7 +70,6 @@ function definePlanAbilities (subject, can, cannot) {
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {
         const role = permissions.Roles[organisation.permissions]
-        console.log(role)
         if (role >= permissions.Roles.member) {
           if (organisation._id) {
             // The unique identifier of a service is its path not its name.
