@@ -213,6 +213,7 @@ module.exports = {
       members: 10,
       // Setup some default quotas in dev so that we can perform testing more easily
       groups: (process.env.NODE_ENV === 'development' ? 5 : 1),
+      tags: (process.env.NODE_ENV === 'development' ? 10 : 5),
       events: -1,
       'event-templates': (process.env.NODE_ENV === 'development' ? 5 : 1),
       plans: (process.env.NODE_ENV === 'development' ? 5 : 0),
@@ -222,6 +223,7 @@ module.exports = {
     silver: {
       members: 25,
       groups: 5,
+      tags: 50,
       events: -1,
       'event-templates': 5,
       plans: 5,
@@ -230,21 +232,23 @@ module.exports = {
     },
     gold: {
       members: 250,
-      groups: -1,
+      groups: 50,
+      tags: 100,
       events: -1,
-      'event-templates': -1,
-      plans: -1,
-      'plan-templates': -1,
+      'event-templates': 50,
+      plans: 10,
+      'plan-templates': 10,
       alerts: 50
     },
     diamond: {
-      members: -1,
-      groups: -1,
+      members: 2500,
+      groups: 250,
+      tags: 250,
       events: -1,
-      'event-templates': -1,
-      plans: -1,
-      'plan-templates': -1,
-      alerts: -1
+      'event-templates': 100,
+      plans: 25,
+      'plan-templates': 25,
+      alerts: 250
     }
   },
   mailer: {

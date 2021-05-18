@@ -73,7 +73,7 @@ export default {
             actions.push({
               id: 'create-' + (doublons.length > 1 ? template._id : template.name),
               label: template.name,
-              icon: undefined,
+              icon: 'las la-plus',
               color: template.color,
               route: { name: 'create-plan', params: { contextId: this.contextId, templateId: template._id } }
             })

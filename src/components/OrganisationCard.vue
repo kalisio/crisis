@@ -1,5 +1,5 @@
 <template>
-  <k-card v-bind="$props" :actions="itemActions" :bind-actions="false">
+  <k-card v-bind="$props" :actions="itemActions" :bind-actions="false" style="min-width: 330px">
     <!--
       Card header
     -->
@@ -24,107 +24,61 @@
      -->
     <div slot="card-content">
       <!-- Events section -->
-      <q-list bordered>
-        <q-item id="organisation-events" clickable @click.native.prevent="$router.push({ name: 'events-activity', params: { contextId: item._id } })">
-          <q-item-section avatar>
-            <q-icon name="las la-fire" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>{{ $t('OrganisationCard.EVENTS', { count: this.stats.events }) }}</q-item-label>
-            <q-tooltip>{{ $t('OrganisationCard.VIEW_EVENTS') }}</q-tooltip>
-          </q-item-section>
-          <q-item-section side>
-            <div class="row justify-between">
-              <k-action 
-                v-if="canAccessPlans"
-                id= "organisation-plans"
-                icon= "kdk:kanban.png"
-                :tooltip="$t('OrganisationCard.VIEW_PLANS')"
-                :route="{ name: 'plans-activity', params: { contextId: this.item._id } }" 
-                :propagate="false" />
-              <k-action 
-                v-if="canAccessCatalog"
-                id= "organisation-catalog"
-                icon= "las la-map"
-                :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
-                :route="{ name: 'catalog-activity', params: { contextId: this.item._id } }" 
-                :propagate="false" />
-              <k-action
-                v-if="canAccessArchivedEvents"
-                id= "organisation-archived-events"
-                icon= "las la-clipboard-list"
-                :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
-                :route="{ name: 'archived-events-activity', params: { contextId: this.item._id } }" 
-                :propagate="false" />
-            </div>
-          </q-item-section>
-        </q-item>
-      </q-list>
-      <!-- Assets section -->
-      <q-list bordered>
-        <template v-for="scope in scopes.slice(1)">
-          <q-item 
-            v-if="hasStats(scope.name)"
-            :id="'organisation-' + scope.name" 
-            :key="scope.key"
-            clickable 
-            @click="$router.push({ name: `${scope.name}-activity`, params: { contextId: item._id } })">
-            <q-item-section avatar>
-              <q-icon :name="scope.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>
-                {{ $t(`OrganisationCard.${scope.key}`, { count: stats[scope.name] }) }}
-              </q-item-label>
-              <q-tooltip>
-                {{ $t(`OrganisationCard.VIEW_${scope.key}`) }}
-              </q-tooltip>
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-list>
-      <!-- Subscription section -->
-      <q-list bordered>
-        <q-item>
-          <q-item-section avatar>
-            <q-icon name="las la-credit-card" />
-          </q-item-section>          
-          <q-item-section v-if="subscription">
-            <q-item-label>
-              {{ $t(`plans.${subscription.plan}_LABEL`) }}
-              <q-tooltip>
-                <template v-for="scope in scopes">
-                  <q-chip 
-                    v-if="hasQuota(scope.name)" 
-                    :key="scope.name" 
-                    :icon="scope.icon" 
-                    :label="getQuota(scope.name)"
-                    color="white"
-                    outline 
-                    square   
-                    size="sm" />
-                </template>
-              </q-tooltip>
-            </q-item-label>
-          </q-item-section>
-          <q-item-section side>
-            <div class="row justify-end">
-              <k-action 
-                v-if="canAccessBilling"
-                id="organisation-billing" 
-                icon= "las la-cog"
-                :tooltip="$t('OrganisationCard.MANAGE_SUBSCRIPTIONS')"
-                :route="{ name: 'organisation-settings-activity', params: { contextId: this.item._id, page: 'billing' } }" 
-                :propagate="false" />
-            </div>
-          </q-item-section>
-        </q-item>
-      </q-list>
+      <q-item 
+        id="organisation-events" 
+        dense 
+        clickable 
+        @click.native.prevent="$router.push({ name: 'events-activity', params: { contextId: item._id } })">
+        <q-item-section avatar>
+          <q-icon name="las la-fire" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>{{ $t('OrganisationCard.EVENTS', { count: eventsCount }) }}</q-item-label>
+          <q-tooltip>{{ $t('OrganisationCard.VIEW_EVENTS') }}</q-tooltip>
+        </q-item-section>
+        <q-item-section side>
+          <div class="row justify-between">
+            <k-action 
+              v-if="canAccessPlans"
+              id= "organisation-plans"
+              icon= "kdk:kanban.png"
+              :tooltip="$t('OrganisationCard.VIEW_PLANS')"
+              :route="{ name: 'plans-activity', params: { contextId: this.item._id } }" 
+              :propagate="false" />
+            <k-action 
+              v-if="canAccessCatalog"
+              id= "organisation-catalog"
+              icon= "las la-map"
+              :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
+              :route="{ name: 'catalog-activity', params: { contextId: this.item._id } }" 
+              :propagate="false" />
+            <k-action
+              v-if="canAccessArchivedEvents"
+              id= "organisation-archived-events"
+              icon= "las la-clipboard-list"
+              :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
+              :route="{ name: 'archived-events-activity', params: { contextId: this.item._id } }" 
+              :propagate="false" />
+          </div>
+        </q-item-section>
+      </q-item>
+      <!-- Statistics section -->
+      <q-expansion-item label="Statistiques" icon="las la-chart-bar" @show="computeStatistics">
+        <k-chart 
+          v-if="hasStatistics"
+          class="q-pa-xs" 
+          type="horizontalBar" 
+          :data="chartData" 
+          :options="chartOptions" />
+      </q-expansion-item>
     </div>
   </k-card>
 </template>
 
 <script>
+import logger from 'loglevel'
+import _, { reduce } from 'lodash'
+import { colors } from 'quasar'
 import { permissions } from '@kalisio/kdk/core.common'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
@@ -133,17 +87,49 @@ export default {
   mixins: [kCoreMixins.baseItem],
   data () {
     return {
-      scopes: [ 
-        { key: 'EVENTS', name: 'events', icon: 'las la-fire' },
-        { key: 'MEMBERS', name: 'members', icon: 'las la-user-friends' },
-        { key: 'TAGS', name: 'tags', icon: 'las la-tag' },
-        { key: 'GROUPS', name: 'groups', icon: 'las la-sitemap' },
-        { key: 'EVENT_TEMPLATES', name: 'event-templates', icon: 'las la-project-diagram' },
-        { key: 'PLAN_TEMPLATES', name: 'plan-templates', icon: 'kdk:kanban.png' }
-      ],
       userRole: null,
-      subscription: null,
-      stats: {}
+      eventsCount: 0,
+      hasStatistics: false,
+      chartData: {
+        labels: [],
+        datasets: [{
+          tooltip: [],
+          data: [],
+          backgroundColor: []
+        }]
+      },
+      chartOptions: {
+        legend: {
+          display: false
+        },
+        responsive: true,
+        scales: {
+          xAxes: [{
+            stacked: true,
+            ticks: {
+              min: 0,
+              max: 100,
+              callback: function(value){return value+ "%"}
+            }
+          }],
+          yAxes: [{
+            stacked: true,
+            min: 0,
+            max: 100
+          }]
+        },
+        tooltips: {
+          custom: function(tooltip) {
+            if (!tooltip) return;
+            tooltip.displayColors = false
+          },
+          callbacks: {
+            label: function(tooltipItems, data) {
+              return ' ' + data.datasets[tooltipItems.datasetIndex].tooltip[tooltipItems.index]
+            }
+          }
+        }
+      }
     }
   },
   computed: {
@@ -154,36 +140,59 @@ export default {
       return _.get(this.item, 'color')
     },
     canAccessPlans () {
-      return this.$can('read', 'plans', this.item._id)
+      return this.$can('service', 'plans', this.item._id)
     },
     canAccessCatalog () {
       return this.$can('update', 'catalog', this.item._id)
     },
     canAccessArchivedEvents () {
-      return this.$can('read', 'archived-events', this.item._id)
+      return this.$can('service', 'archived-events', this.item._id)
     },
     canAccessBilling () {
       return this.$can('update', 'organisations', null, { _id: this.item._id })
     }
   },
   methods: {
-    hasQuota (scope) {
-      if (!this.subscription) return false
-      return _.get(this.quotas, `${this.subscription.plan}.${scope}`) > 0
+    async countItems (serviceName) {
+      const service = this.$api.getService(serviceName, this.item._id)
+      const response = await service.find({ query: {}, $limit: 0 })
+      return response.total
     },
-    getQuota (scope) {
-      if (!this.subscription) return undefined
-      return _.get(this.quotas, `${this.subscription.plan}.${scope}`)
-    },
-    hasStats (scope) {
-      return !_.isNil(this.stats[scope])
-    },
-    async refreshStats () {
-      this.quotas = this.$store.get('capabilities.api.quotas', {})
-      for (const scope of this.scopes) {
-        const service = this.$api.getService(scope.name, this.item._id)
-        const response = await service.find({ query: {}, $limit: 0 })
-        this.$set(this.stats, scope.name, response.total)
+    async computeStatistics () {
+      if (!this.hasStatistics) {
+        // Retrieve the billing perspective
+        const perspective = await this.$api.getService('organisations').get(this.item._id, { query: { $select: ['billing'] } })
+        const subscription = _.get(perspective, 'billing.subscription.plan')
+        if (_.isEmpty(subscription)) {
+          logger.debug('No subscription found for the organisation ID: ', this.item._id )
+          return
+        }
+        // Retrieve the quotas
+        const orgQuotas = _.get(perspective, 'billing.quotas')
+        const appQuotas = this.$store.get('capabilities.api.quotas', {})
+        if (_.isEmpty(appQuotas)) {
+          logger.debug('No application quotas found')
+          return
+        }
+        let quotas = appQuotas[subscription]
+        _.merge(quotas, orgQuotas)
+        // Compute the data 
+        for (let i = 0; i < this.statisticsScopes.length; i++) {
+          const scope = this.statisticsScopes[i]
+          const scopeQuota = quotas[scope.name]
+          if (scopeQuota !== 0) {
+            const count = await this.countItems(scope.name)
+            const percent = count * 100 / scopeQuota
+            this.chartData.labels.push(this.$t(scope.key))
+            this.chartData.datasets[0].tooltip.push(count + '/' + scopeQuota)
+            this.chartData.datasets[0].data.push(percent)
+            let color = colors.getBrand('positive')
+            if (percent > 75) color = colors.getBrand('negative')
+            else if (percent > 50) color = colors.getBrand('warning')
+            this.chartData.datasets[0].backgroundColor.push(color)
+          }
+        }
+        this.hasStatistics = true
       }
     }
   },
@@ -192,14 +201,20 @@ export default {
     this.$options.components['k-card'] = this.$load('collection/KCard')
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
     this.$options.components['k-panel'] = this.$load('frame/KPanel')
+    this.$options.components['k-chart'] = this.$load('frame/KChart')
     this.$options.components['k-action'] = this.$load('frame/KAction')
-    // Retrieve the billing perspective
-    const perspective = await this.$api.getService('organisations').get(this.item._id, { query: { $select: ['billing'] } })
-    this.subscription = _.get(perspective, 'billing.subscription')
-    // Retrieve the user role
+      // Retrieve the user role
     this.userRole = _.upperCase(permissions.getRoleForOrganisation(this.$store.get('user'), this.item._id))
-    // Compute the stats
-    this.refreshStats()
+    // Counts the number of events
+    this.eventsCount = await this.countItems('events')
+    // Defines the statistics 
+    this.statisticsScopes = [ 
+      { key: 'OrganisationCard.MEMBERS', name: 'members', icon: 'las la-user-friends' },
+      { key: 'OrganisationCard.TAGS', name: 'tags', icon: 'las la-tag' },
+      { key: 'OrganisationCard.GROUPS', name: 'groups', icon: 'las la-sitemap' },
+      { key: 'OrganisationCard.EVENT_TEMPLATES', name: 'event-templates', icon: 'las la-project-diagram' },
+      { key: 'OrganisationCard.PLAN_TEMPLATES', name: 'plan-templates', icon: 'kdk:kanban.png' }
+    ]
   }
 }
 </script>
