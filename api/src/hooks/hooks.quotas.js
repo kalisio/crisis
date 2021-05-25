@@ -98,7 +98,7 @@ export const checkEventTemplatesQuotas = coreHooks.countLimit({
   }
 })
 
-export const checkPlanQuotas = coreHooks.countLimit({
+export const checkPlansQuotas = coreHooks.countLimit({
   service: 'plans',
   count: async (hook) => {
     return countItems(hook, hook.service)

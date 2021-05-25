@@ -74,6 +74,12 @@ module.exports = {
                 component: 'editor/KModalEditor',
                 props: true,
                 tour: tours['create-organisation']
+              },
+              'edit/:objectId': {
+                name: 'edit-organisation',
+                component: 'editor/KModalEditor',
+                props: true,
+                tour: tours['edit-organisation']
               }
             }
           },
@@ -202,13 +208,25 @@ module.exports = {
                 children: {
                   'create/:templateId?': {
                     name: 'create-plan',
-                    component: 'editor/KModalEditor',
+                    component: 'PlanEditor',
                     props: true,
                     tour: tours['create-plan']
                   },
                   'edit/:objectId': {
                     name: 'edit-plan',
                     component: 'editor/KModalEditor',
+                    props: true
+                  }
+                }
+              },
+              'plans-archive': {
+                name: 'archived-plans-activity',
+                component: 'ArchivedPlansActivity',
+                props: true,
+                children: {
+                  'view/:objectId': {
+                    name: 'view-plan-event',
+                    component: 'viewer/KModalViewer',
                     props: true
                   }
                 }

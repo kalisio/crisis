@@ -18,21 +18,6 @@
         "component": "form/KTextareaField",
         "label": "schemas.PLANS_DESCRIPTION_FIELD_LABEL"
       }
-    },
-    "objectives": {
-      "type": "array",
-      "field": {
-        "component": "form/KChipsField",
-        "lablel": "schema.PLANS_OBJECTIVES_FIELD_LABEL"
-      }
-    },
-    "location": {
-      "type": "object", 
-      "draggable": true,
-      "field": {
-        "component": "form/KLocationField",
-        "label": "schemas.PLANS_LOCATION_FIELD_LABEL"
-      }
     }
   },
   "required": ["name"]

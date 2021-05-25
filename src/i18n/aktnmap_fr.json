@@ -292,7 +292,8 @@
     "SETTINGS": "Paramètres"
   },
   "OrganisationCard": {
-    "EVENTS": "{{count}} événement(s)",
+    "EVENTS_LABEL": "{{count}} événement(s)",
+    "PLANS_LABEL": "Plans",
     "VIEW_EVENTS": "Voir les événements",
     "VIEW_PLANS": "Voir les plans",
     "VIEW_CATALOG": "Voir la carte",
@@ -310,8 +311,8 @@
     "PLAN_TEMPLATES": "Modèles de plan",
     "VIEW_PLAN_TEMPLATES": "Voir les modèles de plan",    
     "MANAGE_SUBSCRIPTIONS": "Gérer vos abonnements",
-    "EDIT": "Editer les propriétés",
-    "DELETE": "Supprimer"
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "REMOVE_LABEL": "$t(REMOVE_LABEL)"
   },
   "OrganisationProperties": {
     "SUBSCRIPTION_PAGES": "Pages d'abonnements",
@@ -584,7 +585,7 @@
     "CUSTOMER_VAT_NUMBER_FIELD_LABEL": "Saisissez votre numéro de TVA",
     "BILLING_METHOD_MESSAGE": "Saisissez une carte bancaire si vous voulez payer de façon automatique",
     "CLOSE_ACTION": "Fermer",
-    "UPDATE_BUTTON": "mettre à jour"
+    "UPDATE_BUTTON": "Mettre à jour"
   },
   "PlanChooser": {
     "CLICK": "Nous contacter",
@@ -607,8 +608,15 @@
     "PLANS_LABEL": "Plans"
   },
   "PlanCard": {
-    "EDIT_LABEL": "$t(EDIT_LABEL)",
-    "REMOVE_LABEL": "$t(REMOVE_LABEL)"
+    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
+    "OBJECTIVES_LABEL": "Objectifs",
+    "LOCATION_LABEL": "Localisation",
+    "VIEW_ACTION": "Visualiser",
+    "UNDEFINED_LOCATION_LABEL": "Non définie",
+    "EVENTS": "{{count}} événements(s)",
+    "VIEW_PLANS": "Voir les plans",
+    "VIEW_CATALOG": "Voir la carte"
   },
   "PlanTemplatesActivity": {
     "PLAN_TEMPLATES_LABEL": "Modèles de plan"
@@ -617,5 +625,8 @@
     "EDIT_LABEL": "$t(EDIT_LABEL)",
     "COPY_LABEL": "$t(COPY_LABEL)",
     "REMOVE_LABEL": "$t(REMOVE_LABEL)"
+  },
+  "ArchivedPlansActivity": {
+    "ARCHIVED_PLANS_LABEL": "Archive"
   }
 }

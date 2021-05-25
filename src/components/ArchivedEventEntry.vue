@@ -12,7 +12,9 @@
       <div slot="entry-title">
         {{ item.name }} - {{formatDate(createdAt)}}
         <q-popup-proxy ref="locationPopup" no-parent-event transition-show="scale" transition-hide="scale">
-          <k-location-map v-model="item.location" :editable="false" />
+          <q-card>
+            <k-location-map v-model="item.location" width="350px" height="400px" :editable="false" />
+          </q-card>
         </q-popup-proxy>
       </div>
       <div slot="entry-content">

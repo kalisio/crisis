@@ -135,6 +135,18 @@ export default {
     nbCharts () {
       if (!this.chartData.length || (this.nbValuesPerChart.value === 0)) return 1
       else return Math.ceil(this.chartData.length / this.nbValuesPerChart.value)
+    },
+    baseQuery () {
+      return {
+        $sort: {
+          [this.sortBy.value]: (this.ascendingSort ? 1 : -1)
+        },
+        createdAt: {
+          $gte: this.minDate.toISOString(),
+          $lte: this.maxDate.toISOString()
+        },
+        planId: _.isEmpty(this.planId) ? { $eq: null } : this.planId
+      }
     }
   },
   data () {
@@ -165,21 +177,13 @@ export default {
     }]
 
     return {
-      baseQuery: {
-        $sort: {
-          createdAt: -1
-        },
-        createdAt: {
-          $gte: minDate.toISOString(),
-          $lte: maxDate.toISOString()
-        }
-      },
-      filter: this.$store.get('filter'),
       // Make this configurable from app
       renderer: _.merge({
         component: 'ArchivedEventEntry'
       }, this.activityOptions.items),
-      minDate: minDate,
+      planId: null,
+      filter: this.$store.get('filter'),
+      minDate: minDate,      
       maxDate: maxDate,
       ascendingSort: false,
       topPane: this.$store.get('topPane'),
@@ -256,20 +260,6 @@ export default {
         // The higher the blur factor is, the smoother the gradients will be
         blur: 0.8
       }
-    },
-    updateBaseQuery() {
-      this.baseQuery = {
-        $sort: {
-          [this.sortBy.value]: (this.ascendingSort ? 1 : -1)
-        },
-        [this.sortBy.value]: {
-          $gte: this.minDate.toISOString(),
-          $lte: this.maxDate.toISOString()
-        }
-      }
-
-      // Refresh layer data
-      if (this.showMap) this.refreshCollection()
     },
     loadService () {
       return this.$api.getService('archived-events')
@@ -378,12 +368,10 @@ export default {
     onTimeRangeChanged (data) {
       this.minDate = data.minDate
       this.maxDate = data.maxDate
-      this.updateBaseQuery()
     },
     onSortOrder () {
       this.ascendingSort = !this.ascendingSort
       this.currentPage = 0
-      this.updateBaseQuery()
     },
     onByTemplate () {
       this.byTemplate = !this.byTemplate
@@ -597,6 +585,9 @@ export default {
     // Initialize private properties
     this.templates = []
 
+    // Checks the query params
+    this.planId = _.get(this.$route, 'query.plan', null)
+    
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },

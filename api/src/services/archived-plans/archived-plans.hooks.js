@@ -4,37 +4,27 @@ import { hooks as mapHooks } from '@kalisio/kdk/map.api'
 
 module.exports = {
   before: {
-    all: [
-      coreHooks.convertObjectIDs(['planId']),
-      coreHooks.convertToString(['alert.conditions'])
-    ],
+    all: [],
     find: [mapHooks.marshallSpatialQuery, coreHooks.marshallComparisonQuery, coreHooks.distinct],
     get: [],
     create: [
       disallow('external'),
-      coreHooks.convertDates(['createdAt', 'updatedAt', 'expireAt']),
-      coreHooks.convertObjectIDs(['layer', 'feature'])
+      coreHooks.convertDates(['createdAt', 'updatedAt', 'expireAt'])
     ],
     update: [
       disallow('external'),
-      coreHooks.convertDates(['createdAt', 'updatedAt', 'expireAt']),
-      coreHooks.convertObjectIDs(['layer', 'feature'])
+      coreHooks.convertDates(['createdAt', 'updatedAt', 'expireAt'])
     ],
     patch: [
       disallow('external'),
       coreHooks.convertDates(['createdAt', 'updatedAt', 'expireAt']),
-      coreHooks.convertObjectIDs(['layer', 'feature'])
     ],
     remove: [disallow('external')]
   },
 
   after: {
-    all: [coreHooks.convertToJson(['alert.conditions'])],
-    find: [mapHooks.asGeoJson({
-      longitudeProperty: 'location.longitude',
-      latitudeProperty: 'location.latitude',
-      asFeatureCollection: false
-    })],
+    all: [],
+    find: [],
     get: [],
     create: [],
     update: [],

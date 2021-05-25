@@ -440,15 +440,20 @@ export default {
     this.registerStyle('markerStyle', this.getEventMarker)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
     this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
-
+    // Checks the query params
+    this.planId = _.get(this.$route, 'query.plan', null)
     // Check if option has been subscribed
     this.$checkBillingOption('catalog')
   },
   mounted () {
     this.alerts = this.configureCollection('alerts', { geoJson: true, $skip: 0, $limit: MAX_ITEMS }, { nbItemsPerPage: 0 })
     this.alerts.$on('collection-refreshed', this.onAlertCollectionRefreshed)
-    this.events = this.configureCollection('events', { geoJson: true, $skip: 0, $limit: MAX_ITEMS,
-      $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt'] }, { nbItemsPerPage: 0 })
+    let eventsBaseQuery = {
+      geoJson: true, $skip: 0, $limit: MAX_ITEMS,
+      $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt'],
+      planId: _.isEmpty(this.planId) ? { $eq: null } : this.planId
+    }
+    this.events = this.configureCollection('events', eventsBaseQuery, { nbItemsPerPage: 0 })
     this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
   },
   beforeDestroy () {

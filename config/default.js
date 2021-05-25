@@ -57,8 +57,8 @@ const leftPane = function (tour) {
   }
 }
 
-const separator = { component: 'QSeparator', vertical: true, color: 'lightgrey' }
-const midSeparator = { component: 'QSeparator', vertical: true, inset: true, color: 'grey-5', style: 'max-width: 1px; min-width: 2px;' }
+const separator = { component: 'QSeparator', vertical: true, color: 'grey-5' }
+const midSeparator = { component: 'QSeparator', vertical: true, inset: true, color: 'grey-5', style: 'max-width: 1px; min-width: 1px;' }
 
 const currentActivityStamp = function (icon, text) {
   return { component: 'frame/KStamp', icon, iconSize: 'sm', text, direction: 'horizontal', class: 'text-accent' }
@@ -72,28 +72,36 @@ const gotoActivityAction = function (service, icon, label, contextId) {
   }
 }
 
+const plansAction = function (contextId = 'contextId') {
+  return gotoActivityAction('plans', 'las la-stream', 'PlansActivity.PLANS_LABEL', contextId)
+}
+
+const archivedPlansAction = function (contextId = 'contextId') {
+  return gotoActivityAction('archived-plans', 'las la-history', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL', contextId)
+}
+
 const eventsAction = function (contextId = 'contextId') {
   return { 
     id: 'events', icon: 'las la-fire', tooltip: 'EventsActivity.EVENTS_LABEL',
     visible: { name: '$can', params: ['service', 'events', ':contextId'] },
-    route: { name: 'events-activity', params: { contextId: ':contextId' } }
+    route: { name: 'events-activity', params: { contextId: ':contextId' }, query: { plan: ':plan' } }
   }
 }
 
-const plansAction = function (contextId = 'contextId') {
-  return gotoActivityAction('plans', 'kdk:kanban.png', 'PlansActivity.PLANS_LABEL', contextId)
-}
-
-const catalogAction = function (contextId = 'contextId') { 
+const mapAction = function (contextId = 'contextId') { 
   return {
     id: 'catalog', icon: 'las la-map', tooltip: 'Context.CATALOG',
     visible: { name: '$can', params: ['update', 'catalog', `:${contextId}`] },
-    route: { name: 'catalog-activity', params: { contextId: `:${contextId}` } },    
+    route: { name: 'catalog-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } },    
   }
 }
 
 const archivedEventsAction = function (contextId = 'contextId') {
-  return gotoActivityAction('archived-events', 'las la-clipboard-list', 'Context.ARCHIVED_EVENTS', contextId)
+  return { 
+    id: 'archived-events', icon: 'las la-clipboard-list', tooltip: 'Context.ARCHIVED_EVENTS',
+    visible: { name: '$can', params: ['service', 'archived-events', `:${contextId}`] },
+    route: { name: 'archived-events-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } }
+  }
 }
 
 const membersAction = function (contextId = 'contextId') {
@@ -113,7 +121,7 @@ const eventTemplatesAction = function (contextId = 'contextId') {
 }
 
 const planTemplatesAction = function (contextId = 'contextId') {
-  return gotoActivityAction('plan-templates', 'kdk:kanban.png', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL', contextId)   
+  return gotoActivityAction('plan-templates', 'las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL', contextId)   
 }
 
 const organisationSettingsAction = function (contextId = 'contextId') {
@@ -123,13 +131,6 @@ const organisationSettingsAction = function (contextId = 'contextId') {
     route: { name: 'organisation-settings-activity', params: { contextId: `:${contextId}`, page: 'properties' } }
   }
 }
-
-const organisationAvatarActions = [
-  eventsAction(),
-  plansAction(),
-  catalogAction(),
-  archivedEventsAction()
-]
 
 let defaultMapOptions = {
   viewer: {
@@ -375,7 +376,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { id: 'organisations', icon: 'las la-grip-horizontal', label: 'KOrganisationsActivity.ORGANISATIONS_LABEL', color: 'primary', disabled: true },
+          currentActivityStamp('las la-grip-horizontal', 'KOrganisationsActivity.ORGANISATIONS_LABEL'),
           midSeparator,
           { id: 'organisation-sorter', component: 'collection/KSorter', tooltip: 'KOrganisationsActivity.SORT_ORGANISATIONS' },
           { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATIONS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
@@ -397,19 +398,7 @@ module.exports = {
         tagsAction('item._id'),
         groupsAction('item._id'),
         eventTemplatesAction('item._id'),
-        planTemplatesAction('item._id'),
-        { 
-          id: 'edit-organisation', icon: 'las la-edit', tooltip: 'OrganisationCard.EDIT',
-          visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':item._id' }] },
-          route: { name: 'organisation-settings-activity', params: { contextId: ':item._id', page: 'properties' } }
-        },
-        { id: 'card-overflow-menu', component: 'frame/KMenu', actionRenderer: 'item',
-          content: [{ 
-            id: 'remove-organisation', icon: 'las la-trash', label: 'OrganisationCard.DELETE', 
-            visible: { name: '$can', params: ['remove', 'organisations', null, { _id: ':item._id' }] },
-            handler: { name: 'removeItem', params: ['input'] }
-          }]
-        }
+        planTemplatesAction('item._id')
       ]
     }
   },
@@ -420,10 +409,8 @@ module.exports = {
         'default': [
           { component: 'OrganisationAvatar' },
           separator,
-          currentActivityStamp('kdk:kanban.png', 'PlansActivity.PLANS_LABEL'),
-          eventsAction(),
-          catalogAction(),
-          archivedEventsAction(),
+          currentActivityStamp('las la-stream', 'PlansActivity.PLANS_LABEL'),
+          archivedPlansAction(),
           midSeparator,
           { id: 'plan-sorter',
             component: 'collection/KSorter', 
@@ -441,6 +428,22 @@ module.exports = {
       }
     }
   },
+  archivedPlansActivity: {
+    leftPane: leftPane(),
+    topPane: {
+      content: {
+        'default': [
+          { component: 'OrganisationAvatar' },
+          separator,
+          plansAction(),
+          currentActivityStamp('las la-history', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL'),
+          midSeparator,
+          // TODO
+        ],
+        'filter': contextFilter('name')
+      }
+    }
+  },
   eventsActivity: {
     leftPane: leftPane(),
     topPane: {
@@ -449,8 +452,9 @@ module.exports = {
           { component: 'OrganisationAvatar' },
           separator,
           plansAction(),
+          midSeparator,          
           currentActivityStamp('las la-fire', 'EventsActivity.EVENTS_LABEL'),
-          catalogAction(),
+          mapAction(),
           archivedEventsAction(),
           midSeparator,
           { id: 'event-sorter',
@@ -494,6 +498,7 @@ module.exports = {
           { component: 'OrganisationAvatar' },
           separator,
           plansAction(),
+          midSeparator,          
           eventsAction(),
           currentActivityStamp('las la-map', 'Context.CATALOG'),
           archivedEventsAction(),
@@ -578,8 +583,9 @@ module.exports = {
           { component: 'OrganisationAvatar' },
           separator,
           plansAction(),
+          midSeparator,          
           eventsAction(),
-          catalogAction(),
+          mapAction(),
           currentActivityStamp('las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
           midSeparator,
           { id: 'map-view', icon: 'las la-map-marked', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
@@ -640,7 +646,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationAvatar', menu: organisationAvatarActions },
+          { component: 'OrganisationAvatar' },
           separator,
           currentActivityStamp('las la-user-friends', 'KMembersActivity.MEMBERS_LABEL'),
           tagsAction(),
@@ -694,7 +700,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [      
-          { component: 'OrganisationAvatar', menu: organisationAvatarActions },
+          { component: 'OrganisationAvatar' },
           separator,          
           membersAction(),
           currentActivityStamp('las la-tags', 'KTagsActivity.TAGS_LABEL'),
@@ -813,7 +819,7 @@ module.exports = {
           tagsAction(),
           groupsAction(),
           eventTemplatesAction(),
-          currentActivityStamp('kdk:kanban.png', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL'),
+          currentActivityStamp('las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL'),
           organisationSettingsAction(),
           midSeparator,
           { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },

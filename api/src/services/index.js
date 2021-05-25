@@ -89,7 +89,7 @@ export function removeArchivedEventLogService (options) {
   // TODO
 }
 
-export function createPlanTemplatesService (options = {}) {
+export function createPlanTemplateService (options = {}) {
   const app = this
 
   debug('Creating plan templates service with options', options)
@@ -99,11 +99,11 @@ export function createPlanTemplatesService (options = {}) {
   }, options))
 }
 
-export function removePlanTemplatesService (options) {
+export function removePlanTemplateService (options) {
   // TODO
 }
 
-export function createPlansService (options = {}) {
+export function createPlanService (options = {}) {
   const app = this
 
   debug('Creating plans service with options', options)
@@ -113,7 +113,22 @@ export function createPlansService (options = {}) {
   }, options))
 }
 
-export function removePlansService (options) {
+export function removePlanService (options) {
+  // TODO
+}
+
+export function createArchivedPlanService (options = {}) {
+  const app = this
+
+  debug('Creating archived plans service with options', options)
+  app.createService('archived-plans', Object.assign({
+    servicesPath,
+    modelsPath,
+    paginate: { default: 20, max: 5000 }
+  }, options))
+}
+
+export function removeArchivedPlanService (options) {
   // TODO
 }
 
@@ -127,8 +142,9 @@ export function createOrganisationServices (organisation, db) {
   createEventLogService.call(app, { context: organisation, db })
   createArchivedEventService.call(app, { context: organisation, db })
   createArchivedEventLogService.call(app, { context: organisation, db })
-  createPlanTemplatesService.call(app,  { context: organisation, db })
-  createPlansService.call(app,  { context: organisation, db })
+  createPlanTemplateService.call(app,  { context: organisation, db })
+  createPlanService.call(app,  { context: organisation, db })
+  createArchivedPlanService.call(app, { context: organisation, db })
 }
 
 export function removeOrganisationServices (organisation) {
@@ -141,8 +157,9 @@ export function removeOrganisationServices (organisation) {
   removeEventLogService.call(app, { context: organisation })
   removeArchivedEventService.call(app, { context: organisation })
   removeArchivedEventLogService.call(app, { context: organisation })
-  removePlanTemplatesService.call(app,  { context: organisation, db })
-  removePlansService.call(app,  { context: organisation, db })  
+  removePlanTemplateService.call(app,  { context: organisation, db })
+  removePlanService.call(app,  { context: organisation, db })  
+  removeArchivedPlanService.call(app,  { context: organisation, db }) 
 }
 
 export function processAlert (organisation) {

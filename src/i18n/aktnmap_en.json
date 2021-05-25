@@ -290,7 +290,8 @@
     "SETTINGS": "Settings"
   },
   "OrganisationCard": {
-    "EVENTS": "{{count}} event(s)",
+    "EVENTS_LABEL": "{{count}} event(s)",
+    "PLANS_LABEL": "Plans",
     "VIEW_EVENTS": "View events",
     "VIEW_PLANS": "View plans",
     "VIEW_CATALOG": "View map",
@@ -306,8 +307,8 @@
     "PLAN_TEMPLATES": "Plan templates",
     "VIEW_PLAN_TEMPLATES": "View plan templates",
     "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions",
-    "EDIT": "Edit properties",
-    "DELETE": "Delete"
+    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "REMOVE_LABEL": "$t(REMOVE_LABEL)"
   },
   "OrganisationProperties": {
     "SUBSCRIPTION_PAGES": "Subscriptions Pages",
@@ -604,8 +605,15 @@
     "PLANS_LABEL": "Plans"
   },
   "PlanCard": {
-    "EDIT_LABEL": "$t(EDIT_LABEL)",
-    "REMOVE_LABEL": "$t(REMOVE_LABEL)"
+    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
+    "OBJECTIVES_LABEL": "Objectives",
+    "LOCATION_LABEL": "Location",
+    "VIEW_ACTION": "View",
+    "UNDEFINED_LOCATION_LABEL": "Undefined",
+    "EVENTS": "{{count}} event(s)",
+    "VIEW_CATALOG": "View map",
+    "VIEW_ARCHIVED_EVENTS": "View logbook"
   },
   "PlanTemplatesActivity": {
     "PLAN_TEMPLATES_LABEL": "Plan templates"
@@ -614,5 +622,8 @@
     "EDIT_LABEL": "$t(EDIT_LABEL)",
     "COPY_LABEL": "$t(COPY_LABEL)",
     "REMOVE_LABEL": "$t(REMOVE_LABEL)"
+  },
+  "ArchivedPlansActivity": {
+    "ARCHIVED_PLANS_LABEL": "Archived plans"
   }
 }

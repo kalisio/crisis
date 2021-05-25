@@ -76,14 +76,17 @@ function definePlanAbilities (subject, can, cannot) {
             // Indeed we have for instance a 'events' service in each organisation.
             can('service', organisation._id.toString() + '/plans')
             can('service', organisation._id.toString() + '/plan-templates')
-            can('all', 'plan-templates', { context: organisation._id })
-            can('all', 'plans', { context: organisation._id })
+            can('service', organisation._id.toString() + '/archived-plans')            
+            can('read', 'plan-templates', { context: organisation._id })
+            can('read', 'plans', { context: organisation._id })
+            can('read', 'archived-plans', { context: organisation._id })
           }
         }
         if (role >= permissions.Roles.manager) {
           if (organisation._id) {
             can('all', 'plan-templates', { context: organisation._id })
             can('all', 'plans', { context: organisation._id })
+            can('all', 'archived-plans', { context: organisation._id })
           }
         }
       })

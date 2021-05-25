@@ -9,7 +9,7 @@
         service="events" 
         :renderer="renderer" 
         :contextId="contextId"
-        :base-query="sorter.query" 
+        :base-query="baseQuery" 
         :filter-query="filter.query" 
         :list-strategy="'smart'" />
       <!--
@@ -39,10 +39,18 @@ export default {
     return {
       sorter: this.$store.get('sorter'),
       filter: this.$store.get('filter'),
+      planId: '',
       // Make this configurable from app
       renderer: _.merge({
         component: 'EventCard'
       }, this.activityOptions.items)
+    }
+  },
+  computed: {
+    baseQuery () {
+      let query = _.clone(this.sorter.query)
+      Object.assign(query, { planId: _.isEmpty(this.planId) ? { $eq: null } : this.planId })
+      return query
     }
   },
   methods: {
@@ -75,7 +83,11 @@ export default {
               label: template.name,
               icon: template.icon.name,
               color: template.icon.color,
-              route: { name: 'create-event', params: { contextId: this.contextId, templateId: template._id } }
+              route: { 
+                name: 'create-event', 
+                params: { contextId: this.contextId, templateId: template._id }, 
+                query: this.planId ? { plan: this.planId } : {} 
+              }
             })
           })
           offset = offset + batchSize
@@ -88,6 +100,8 @@ export default {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
+    // Checks the query params
+    this.planId = _.get(this.$route, 'query.plan', null)
   }
 }
 </script>

@@ -6,7 +6,7 @@ import { addCreatorAsCoordinator, processNotification, sendEventNotifications, c
 module.exports = {
   before: {
     all: [
-      coreHooks.convertObjectIDs(['layer', 'feature', 'alert._id']),
+      coreHooks.convertObjectIDs(['layer', 'feature', 'alert._id', 'planId']),
       coreHooks.convertToString(['alert.conditions'])
     ],
     find: [mapHooks.marshallSpatialQuery],

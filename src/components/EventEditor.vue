@@ -75,6 +75,10 @@ export default {
         this.object.template = this.template.name
         // Remove id so that event has its own
         delete this.object._id
+        // Setup the plan if defined
+        if (!_.isEmpty(this.planId)) {
+          this.object.planId = this.planId
+        }
         // Setup hasWorkflow tag
         this.object.hasWorkflow = !_.isNil(this.template.workflow)
         if (!_.isNil(this.longitude) && !_.isNil(this.latitude)) {
@@ -160,6 +164,9 @@ export default {
     if (this.templateId) {
       this.template = await this.$api.getService('event-templates').get(this.templateId)
     }
+    // Checks the query params to check whether a plan is active
+    this.planId = _.get(this.$route, 'query.plan', null)
+    // Build the editor
     this.refresh()
     this.$on('applied', this.closeModal)
   },
