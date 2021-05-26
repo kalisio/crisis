@@ -34,42 +34,57 @@
               id= "organisation-catalog"
               icon= "las la-map"
               :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
-              :handler="() => this.routeTo('catalog-activity')"
-              :propagate="false" />
+              :handler="() => this.routeTo('catalog-activity')" />
             <k-action
               v-if="canAccessArchivedEvents"
               id= "organisation-archived-events"
               icon= "las la-clipboard-list"
               :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
-              :handler="() => this.routeTo('archived-events-activity')"
-              :propagate="false" />
+              :handler="() => this.routeTo('archived-events-activity')" />
           </div>
         </q-item-section>
       </q-item>
       <!-- Plans section -->
-      <k-card-section v-if="canAccessPlans" icon="las la-stream" :title="$t('OrganisationCard.PLANS_LABEL')">
+      <k-card-section v-if="canAccessPlans" icon="las la-stream" :title="$t('OrganisationCard.PLANS_LABEL')" :actions="plansHeader">
         <template slot="card-section-content">
           <k-list 
             service="plans" 
             :contextId="item._id" 
-            :renderer="planRenderer"
-            :list-strategy="'smart'" />
+            :renderer="planItemRenderer"
+            :list-strategy="'smart'"  />
         </template>
       </k-card-section>
-      <!-- Statistics section -->
-      <q-expansion-item label="Statistiques" icon="las la-sitemap" @show="computeStatistics">
-        <k-chart 
-          v-if="hasStatistics"
-          class="q-pa-xs" 
-          :config="getStatisticsChartConfig()" />
-      </q-expansion-item>
+      <!-- Structure section -->
+      <k-card-section icon="las la-cog" :title="$t('OrganisationCard.STRUCTURE_LABEL')" :expandable="true" @section-opened="onStructureOpened">
+        <template slot="card-section-content" :routeTo="routeTo">
+          <template v-for="element in structure">
+            <q-item 
+              :key="element.key"
+              clickable
+              @click="() => routeTo(`${element.name}-activity`)">
+              <q-item-section avatar>
+                <q-icon :name="element.icon" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ $t(`OrganisationCard.${element.key}`, { count: counters[element.name] }) }}</q-item-label>
+                <q-tooltip>{{ $t(`OrganisationCard.VIEW_${element.key}`) }}</q-tooltip>
+              </q-item-section>
+              <q-item-section side>
+                <q-badge :label="`${quotas[element.name]} max`" color="grey-7" />
+              </q-item-section>
+            </q-item>
+          </template>
+        </template>
+      </k-card-section>
+      <!-- Subscription section -->
+      <k-card-section icon="las la-credit-card" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :expandable="true" @section-opened="onSubscriptionsOpened">
+      </k-card-section>
     </div>
   </k-card>
 </template>
 
 <script>
 import logger from 'loglevel'
-import { colors } from 'quasar'
 import { permissions } from '@kalisio/kdk/core.common'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
@@ -79,9 +94,17 @@ export default {
   data () {
     return {
       eventsCount: 0,
+      billing: null,
+      quotas: {},
+      counters: {},
       header: null,
-      hasStatistics: false,
-      planRenderer: {
+      plansHeader: [{ 
+        id: 'view-plans', 
+        icon: 'las la-arrow-circle-right', 
+        tooltip: 'OrganisationCard.VIEW_PLANS',
+        handler: () => this.routeTo('plans-activity', this.item._id) }
+      ],
+      planItemRenderer: {
         component: 'collection/KItem',
         actions: [{
           id: 'view-plan',
@@ -99,7 +122,14 @@ export default {
           tooltip: 'OrganisationCard.VIEW_ARCHIVED_EVENTS',
           handler: (context) => this.routeTo('archived-events-activity', context.item._id)
         }]
-      }
+      },
+      structure: [ 
+        { key: 'MEMBERS', name: 'members', icon: 'las la-user-friends' },
+        { key: 'TAGS', name: 'tags', icon: 'las la-tag' },
+        { key: 'GROUPS', name: 'groups', icon: 'las la-sitemap' },
+        { key: 'EVENT_TEMPLATES', name: 'event-templates', icon: 'las la-project-diagram' },
+        { key: 'PLAN_TEMPLATES', name: 'plan-templates', icon: 'las la-stream' }
+      ]
     }
   },
   computed: {
@@ -148,98 +178,36 @@ export default {
       const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.item._id)
       return this.$t(_.upperCase(userRole))
     },
-    getStatisticsChartConfig () {
-      return {
-        type: 'horizontalBar',
-        data: {
-          labels: this.statistics.labels,
-          datasets: [{
-            tooltip: this.statistics.tooltip,
-            data: this.statistics.data,
-            backgroundColor: this.statistics.color
-          }]
-        },
-        options: {
-          legend: {
-            display: false
-          },
-          responsive: true,
-          scales: {
-            xAxes: [{
-              stacked: true,
-              ticks: {
-                min: 0,
-                max: 100,
-                callback: function(value){return value+ "%"}
-              }
-            }],
-            yAxes: [{
-              stacked: true,
-              min: 0,
-              max: 100
-            }]
-          },
-          tooltips: {
-            custom: function(tooltip) {
-              if (!tooltip) return;
-              tooltip.displayColors = false
-            },
-            callbacks: {
-              label: function(tooltipItems, data) {
-                return ' ' + data.datasets[tooltipItems.datasetIndex].tooltip[tooltipItems.index]
-              }
-            }
-          }
-        }
-      }
-    },
     async countItems (serviceName, query = {}) {
       const service = this.$api.getService(serviceName, this.item._id)
       const response = await service.find({ query, $limit: 0 })
       return response.total
     },
-    async computeStatistics () {
-      if (!this.hasStatistics) {
-        this.statistics = {
-          labels: [],
-          tooltip: [],
-          data: [],
-          color: []
-        }
-        // Retrieve the billing perspective
-        const perspective = await this.$api.getService('organisations').get(this.item._id, { query: { $select: ['billing'] } })
-        const subscription = _.get(perspective, 'billing.subscription.plan')
-        if (_.isEmpty(subscription)) {
-          logger.debug('No subscription found for the organisation ID: ', this.item._id )
-          return
-        }
-        // Retrieve the quotas
-        const orgQuotas = _.get(perspective, 'billing.quotas')
-        const appQuotas = this.$store.get('capabilities.api.quotas', {})
-        if (_.isEmpty(appQuotas)) {
-          logger.debug('No application quotas found')
-          return
-        }
-        let quotas = appQuotas[subscription]
-        _.merge(quotas, orgQuotas)
-        // Compute the data 
-        for (let i = 0; i < this.statisticsScopes.length; i++) {
-          const scope = this.statisticsScopes[i]
-          const scopeQuota = quotas[scope.name]
-          if (scopeQuota !== 0) {
-            const count = await this.countItems(scope.name)
-            const percent = count * 100 / scopeQuota
-            this.statistics.labels.push(this.$t(scope.key))
-            this.statistics.tooltip.push(count + '/' + scopeQuota)
-            this.statistics.data.push(percent)
-            let color = colors.getBrand('positive')
-            if (percent > 75) color = colors.getBrand('negative')
-            else if (percent > 50) color = colors.getBrand('warning')
-            this.statistics.color.push(color)
-          }
-        }
-        this.hasStatistics = true
+    async onStructureOpened () {
+      // Counts the different elements
+      for (let i = 0; i < this.structure.length; ++i) {
+        const service = this.structure[i].name
+        this.$set(this.counters, service, await this.countItems(service))
       }
+      // Retrieve the billing perspective
+      const perspective = await this.$api.getService('organisations').get(this.item._id, { query: { $select: ['billing'] } })
+      const subscription = _.get(perspective, 'billing.subscription.plan')
+      if (_.isEmpty(subscription)) {
+        logger.debug('No subscription found for the organisation ID: ', this.item._id )
+        return
+      }
+      // Retrieve the quotas
+      const orgQuotas = _.get(perspective, 'billing.quotas')
+      const appQuotas = this.$store.get('capabilities.api.quotas', {})
+      if (_.isEmpty(appQuotas)) {
+        logger.debug('No application quotas found')
+        return
+      }
+      this.quotas = appQuotas[subscription]
+      _.merge(this.quota, orgQuotas)
+    },
+    onSubscriptionsOpened () {
+      // TODO
     }
   },
   async created () {
@@ -251,16 +219,8 @@ export default {
     this.$options.components['k-chart'] = this.$load('frame/KChart')
     this.$options.components['k-action'] = this.$load('frame/KAction')
     this.$options.components['k-list'] = this.$load('collection/KList')
-    // Counts the number of events
+    // Counts the number of orphan events
     this.eventsCount = await this.countItems('events', { planId: { $eq: null } } )
-    // Defines the statistics 
-    this.statisticsScopes = [ 
-      { key: 'OrganisationCard.MEMBERS', name: 'members', icon: 'las la-user-friends' },
-      { key: 'OrganisationCard.TAGS', name: 'tags', icon: 'las la-tag' },
-      { key: 'OrganisationCard.GROUPS', name: 'groups', icon: 'las la-sitemap' },
-      { key: 'OrganisationCard.EVENT_TEMPLATES', name: 'event-templates', icon: 'las la-project-diagram' },
-      { key: 'OrganisationCard.PLAN_TEMPLATES', name: 'plan-templates', icon: 'kdk:kanban.png' }
-    ]
   }
 }
 </script>

@@ -386,20 +386,11 @@ module.exports = {
     },
     fab: {
       actions: [
-        {
-          id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL',
-          route: { name: 'create-organisation' } }
+        { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL', route: { name: 'create-organisation' } }
       ]
     },
     items: {
-      component: 'OrganisationCard',
-      actions: [
-        membersAction('item._id'),
-        tagsAction('item._id'),
-        groupsAction('item._id'),
-        eventTemplatesAction('item._id'),
-        planTemplatesAction('item._id')
-      ]
+      component: 'OrganisationCard'
     }
   },
   plansActivity: {
