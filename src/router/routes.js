@@ -236,7 +236,7 @@ module.exports = {
                 component: 'EventsActivity',
                 props: true,
                 children: {
-                  'create/:templateId/:layerId?/:featureId?/longitude?/:latitude?': {
+                  'create/:templateId/:layerId?/:featureId?/:longitude?/:latitude?': {
                     name: 'create-event',
                     component: 'EventEditor',
                     props: true,
