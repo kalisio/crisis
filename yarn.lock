@@ -931,7 +931,6 @@
 
 "@feathersjs/authentication@https://github.com/kalisio/authentication.git":
   version "2.1.7"
-  uid b730e0624b112e9be372dea168702dc740037396
   resolved "https://github.com/kalisio/authentication.git#b730e0624b112e9be372dea168702dc740037396"
   dependencies:
     "@feathersjs/commons" "^2.0.0"
@@ -9800,6 +9799,11 @@ ismobilejs@^0.5.1:
 iso8601-js-period@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/iso8601-js-period/-/iso8601-js-period-0.2.0.tgz#e5740fd4e720b960a85eb685fc205201621c018c"
+
+iso8601-js-period@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/iso8601-js-period/-/iso8601-js-period-0.2.1.tgz#f17ea1e45ae14781b02f1d708b5ab457fd7174a0"
+  integrity sha512-iDyz2TQFBd5WhCZjruOwHj01JkQGu7YbVLCVdpA7lCGEcBzE3ffCPAhLh/M8TAp//kCixPpYN4XU54WHCxvD2Q==
 
 isobject@^2.0.0:
   version "2.1.0"
