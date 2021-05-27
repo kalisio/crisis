@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://www.kalisio.xyz/schemas/plan-templates.update-objectives.json#",
+  "title": "schemas.PLANS_UPDATE_OBJECTIVES_TITLE",
+  "type": "object",
+  "properties": {
+    "objectives": {
+      "type": "array",
+      "field": {
+        "component": "form/KChipsField",
+        "label": "schemas.PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL"
+      }
+    }
+  },
+  "required": []
+}
+

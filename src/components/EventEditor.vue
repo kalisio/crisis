@@ -108,14 +108,6 @@ export default {
         return mixins.objectProxy.methods.loadObject.call(this)
       }
     },
-    getSchemaName () {
-      // When used with a service by default use the same name for schema as for service
-      let schemaName = this.service + (this.objectId ? '.update' : '.create')
-      if (this.perspective) {
-        schemaName += ('-' + this.perspective)
-      }
-      return schemaName
-    },
     async loadSchema () {
       // Call super
       let schema = await mixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName())

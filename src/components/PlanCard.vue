@@ -30,14 +30,13 @@
             <template v-for="objective in item.objectives">
               <q-chip
                 :key="objective.value"
+                :icon="objective.icon ? objective.icon.name: 'las la-dot-circle'"
                 :color="objective.icon ? objective.icon.color : black"
+                :label="objective.value"
                 text-color="white"
                 dense
                 outline
-                square>
-                <q-icon v-if="objective.icon" :name="objective.icon.name" />
-                {{ objective.value }}
-              </q-chip>
+                square />
             </template>
           </div>
         </template>
@@ -47,7 +46,7 @@
       -->
       <k-card-section icon="las la-map-marker" :title="$t('PlanCard.LOCATION_LABEL')" :actions="locationActions">
         <template slot="card-section-content">
-          <k-location-map  v-if="item.location" v-model="item.location" :editable="false" />
+          <k-location-map v-if="location" v-model="location" :editable="false" />
           <div v-else>
             <k-stamp :text="'PlanCard.UNDEFINED_LOCATION_LABEL'" direction="horizontal" />
           </div>
@@ -106,6 +105,10 @@ export default {
     },
     canAccessBilling () {
       return this.$can('update', 'organisations', null, { _id: this.contextId })
+    },
+    location () {
+      console.log()
+      return this.item.location
     }
   },
   data () {
@@ -145,12 +148,14 @@ export default {
       }
     ]
     // Define the actions
-    this.objectivesActions.push(
-      { id: 'edit-objectives', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION' }
-    )
-    this.locationActions.push(
-      { id: 'edit-location', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION' }
-    )
+    this.objectivesActions.push({ 
+      id: 'edit-objectives', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION', 
+      route: { name: 'edit-plan-objectives', params: { contextId: this.contextId, objectId: this.item._id } }
+    })
+    this.locationActions.push({ 
+      id: 'edit-location', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION',
+      route: { name: 'edit-plan-location', params: { contextId: this.contextId, objectId: this.item._id } }
+    })
   }
 }
 </script>

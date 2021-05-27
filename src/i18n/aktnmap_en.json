@@ -79,6 +79,8 @@
     "PLANS_DESCRIPTION_FIELD_LABEL": "Enter a description of this plan",
     "PLANS_OBJECTIVES_FIELD_LABEL": "Enter the objectives of this plan",
     "PLANS_LOCATION_FIELD_LABEL": "Enter the location of this plan",
+    "PLANS_UPDATE_OBJECTIVES_TITLE": "Update objectives ?",
+    "PLAN_TEMPLATES_CREATE_TITLE": "Create a new plan template ?",
     "PLAN_TEMPLATES_NAME_FIELD_LABEL": "Enter the name of this plan template",
     "PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL": "Enter a description of this plan template",
     "PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL": "Enter the objectives of this plan template"

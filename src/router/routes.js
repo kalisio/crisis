@@ -222,6 +222,18 @@ module.exports = {
                     name: 'edit-plan',
                     component: 'editor/KModalEditor',
                     props: true
+                  },
+                  'edit-objectives/:objectId': {
+                    name: 'edit-plan-objectives',
+                    component: 'editor/KModalEditor',
+                    props: true,
+                    meta: { schemaName: 'plans.update-objectives' }
+                  },
+                  'edit-location/:objectId': {
+                    name: 'edit-plan-location',
+                    component: 'editor/KModalEditor',
+                    props: true,
+                    meta: { schemaName: 'plans.update-location' }
                   }
                 }
               },
