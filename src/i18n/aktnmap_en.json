@@ -569,9 +569,6 @@
     "CLOSE_ACTION": "$t(CLOSE_LABEL)",
     "SAVE_BUTTON": "$t(SAVE_LABEL)"
   },
-  "EventDashboard": {
-    "DASHBOARD": "Dashboard"
-  },
   "CustomerEditor": {
     "TITLE": "Enter your billing information",
     "CUSTOMER_EMAIL_FIELD_LABEL": "Select the invoice recipient",
