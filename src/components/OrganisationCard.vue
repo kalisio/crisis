@@ -55,7 +55,7 @@
         </template>
       </k-card-section>
       <!-- Structure section -->
-      <k-card-section icon="las la-cog" :title="$t('OrganisationCard.STRUCTURE_LABEL')" :expandable="true" @section-opened="onStructureOpened">
+      <k-card-section icon="las la-cog" :title="$t('OrganisationCard.STRUCTURE_LABEL')" :expandable="true" @section-opened="onAdminSectionOpened">
         <template slot="card-section-content" :routeTo="routeTo">
           <template v-for="element in structure">
             <q-item 
@@ -74,25 +74,21 @@
               </q-item-section>
             </q-item>
           </template>
-        </template>
-      </k-card-section>
-      <!-- Subscription section -->
-      <k-card-section v-if="canAccessBilling" icon="las la-credit-card" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :expandable="true" @section-opened="onSubscriptionsOpened">
-        <template slot="card-section-content" :routeTo="routeTo">
-          <div class="row justify-between items-center">
-            <div class="row items-center">
-              <template v-for="subscription in subscriptions">
-                <div :key="subscription" class="q-pl-sm">
-                  <q-badge :label="$t(`${subscription}_LABEL`)" color="grey-7" />
-                </div>
-              </template>
-            </div>
-            <k-action
-              id="edit-subscriptions"
-              icon="las la-edit" 
-              :tooltip="$t('OrgnisationCard.EDIT_LABEL')" 
-              :route="{ name: 'edit-organisation-billing', params: { objectId: item._id } }" />
-          </div>
+          <q-separator />
+          <k-card-section v-if="canAccessBilling" icon="las la-credit-card" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{ 
+            id: 'edit-billing', icon: 'las la-edit', tooltip: 'OrgnisationCard.EDIT_LABEL', 
+            route: { name: 'edit-organisation-billing', params: { objectId: item._id } } 
+          }]">
+            <template slot="card-section-content">
+               <div class="row items-center">
+                <template v-for="subscription in subscriptions">
+                  <div :key="subscription" class="q-pl-sm">
+                    <q-badge :label="$t(`${subscription}_LABEL`)" color="grey-7" />
+                  </div>
+                </template>
+              </div>
+            </template>
+          </k-card-section>
         </template>
       </k-card-section>
     </div>
@@ -209,6 +205,7 @@ export default {
       const organisationsService = this.$api.getService('organisations')
       const response = await organisationsService.get(this.item._id, { query: { $select: ['billing'] } })
       this.billing = _.get(response, 'billing', null)
+      console.log(this.billing)
       if (!this.billing) {
         logger.debug('No billing found for the organisation ID: ', this.item._id)
       }
@@ -216,9 +213,9 @@ export default {
         logger.debug('No subscription plan found for the organisation ID: ', this.item._id)
       }
     },
-    async onStructureOpened () {
+    async onAdminSectionOpened () {
       // Retrieve the quotas
-      if (!this.billing) this.loadBilling()
+      if (!this.billing) await this.loadBilling()
       const subscription = this.billing.subscription.plan
       const orgQuotas = _.get(this.billing, 'quotas')
       const appQuotas = this.$store.get('capabilities.api.quotas', {})
@@ -233,9 +230,6 @@ export default {
         const service = this.structure[i].name
         this.$set(this.counters, service, await this.countItems(service))
       }
-    },
-    onSubscriptionsOpened () {
-      if (!this.billing) this.loadBilling()
     }
   },
   async created () {
@@ -251,3 +245,4 @@ export default {
   }
 }
 </script>
+
