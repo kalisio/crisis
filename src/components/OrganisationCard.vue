@@ -77,7 +77,23 @@
         </template>
       </k-card-section>
       <!-- Subscription section -->
-      <k-card-section icon="las la-credit-card" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :expandable="true" @section-opened="onSubscriptionsOpened">
+      <k-card-section v-if="canAccessBilling" icon="las la-credit-card" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :expandable="true" @section-opened="onSubscriptionsOpened">
+        <template slot="card-section-content" :routeTo="routeTo">
+          <div class="row justify-between items-center">
+            <div class="row items-center">
+              <template v-for="subscription in subscriptions">
+                <div :key="subscription" class="q-pl-sm">
+                  <q-badge :label="$t(`${subscription}_LABEL`)" color="grey-7" />
+                </div>
+              </template>
+            </div>
+            <k-action
+              id="edit-subscriptions"
+              icon="las la-edit" 
+              :tooltip="$t('OrgnisationCard.EDIT_LABEL')" 
+              :route="{ name: 'edit-organisation-billing', params: { objectId: item._id } }" />
+          </div>
+        </template>
       </k-card-section>
     </div>
   </k-card>
@@ -144,6 +160,12 @@ export default {
     },
     canAccessBilling () {
       return this.$can('update', 'organisations', null, { _id: this.item._id })
+    },
+    subscriptions () {
+      const plan = `plans.${_.get(this.billing, 'subscription.plan')}`
+      const options = _.get(this.billing, 'options')
+      if (options)  return _.concat([plan], _.map(options, (option) => { return `options.${option.plan}` }))
+      return [plan]
     }
   },
   watch: {
@@ -183,21 +205,22 @@ export default {
       const response = await service.find({ query, $limit: 0 })
       return response.total
     },
+    async loadBilling () {
+      const organisationsService = this.$api.getService('organisations')
+      const response = await organisationsService.get(this.item._id, { query: { $select: ['billing'] } })
+      this.billing = _.get(response, 'billing', null)
+      if (!this.billing) {
+        logger.debug('No billing found for the organisation ID: ', this.item._id)
+      }
+      if (!_.get(this.billing, 'subscription.plan')) {
+        logger.debug('No subscription plan found for the organisation ID: ', this.item._id)
+      }
+    },
     async onStructureOpened () {
-      // Counts the different elements
-      for (let i = 0; i < this.structure.length; ++i) {
-        const service = this.structure[i].name
-        this.$set(this.counters, service, await this.countItems(service))
-      }
-      // Retrieve the billing perspective
-      const perspective = await this.$api.getService('organisations').get(this.item._id, { query: { $select: ['billing'] } })
-      const subscription = _.get(perspective, 'billing.subscription.plan')
-      if (_.isEmpty(subscription)) {
-        logger.debug('No subscription found for the organisation ID: ', this.item._id )
-        return
-      }
       // Retrieve the quotas
-      const orgQuotas = _.get(perspective, 'billing.quotas')
+      if (!this.billing) this.loadBilling()
+      const subscription = this.billing.subscription.plan
+      const orgQuotas = _.get(this.billing, 'quotas')
       const appQuotas = this.$store.get('capabilities.api.quotas', {})
       if (_.isEmpty(appQuotas)) {
         logger.debug('No application quotas found')
@@ -205,9 +228,14 @@ export default {
       }
       this.quotas = appQuotas[subscription]
       _.merge(this.quota, orgQuotas)
+      // Counts the different elements
+      for (let i = 0; i < this.structure.length; ++i) {
+        const service = this.structure[i].name
+        this.$set(this.counters, service, await this.countItems(service))
+      }
     },
     onSubscriptionsOpened () {
-      // TODO
+      if (!this.billing) this.loadBilling()
     }
   },
   async created () {
@@ -216,7 +244,6 @@ export default {
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
     this.$options.components['k-panel'] = this.$load('frame/KPanel')
-    this.$options.components['k-chart'] = this.$load('frame/KChart')
     this.$options.components['k-action'] = this.$load('frame/KAction')
     this.$options.components['k-list'] = this.$load('collection/KList')
     // Counts the number of orphan events

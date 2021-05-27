@@ -292,19 +292,19 @@ module.exports = {
     plans: {
       // First plan is the default one
       bronze: {
-        color: 'light-green-4',
+        color: 'light-green-6',
         default: true
       },
       silver: {
-        color: 'light-green-6',
+        color: 'light-green-8',
         stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'plan_D9lRPmBX3N4MzO' : 'plan_DHd5HGwsl31NoC')
       },
       gold: {
-        color: 'light-green-8',
+        color: 'light-green-10',
         stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'plan_D9lSeSigaoIck3' : 'plan_DHd5RMLMSlpUmQ')
       },
       diamond: {
-        color: 'light-green-10',
+        color: 'green-10',
         url: 'https://kalisio.com/contact'
       }
     },

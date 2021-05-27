@@ -124,14 +124,6 @@ const planTemplatesAction = function (contextId = 'contextId') {
   return gotoActivityAction('plan-templates', 'las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL', contextId)   
 }
 
-const organisationSettingsAction = function (contextId = 'contextId') {
-  return  { 
-    id: 'settings', icon: 'las la-cog', tooltip: 'OrganisationSettingsActivity.SETTINGS',
-    visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
-    route: { name: 'organisation-settings-activity', params: { contextId: `:${contextId}`, page: 'properties' } }
-  }
-}
-
 let defaultMapOptions = {
   viewer: {
     minZoom: 3,
@@ -644,7 +636,6 @@ module.exports = {
           groupsAction(),
           eventTemplatesAction(),
           planTemplatesAction(),
-          organisationSettingsAction(),
           midSeparator,
           { component: 'team/KMemberFilter' },
           { component: 'collection/KSorter', 
@@ -698,7 +689,6 @@ module.exports = {
           groupsAction(),
           eventTemplatesAction(),
           planTemplatesAction(),
-          organisationSettingsAction(),
           midSeparator,
           { component: 'collection/KSorter', 
             id: 'tag-sorter',
@@ -733,7 +723,6 @@ module.exports = {
           currentActivityStamp('las la-sitemap', 'KGroupsActivity.GROUPS_LABEL'),
           eventTemplatesAction(),
           planTemplatesAction(),
-          organisationSettingsAction(),
           midSeparator,          
           { id: 'group-sorter', component: 'collection/KSorter', tooltip: 'KGroupsActivity.SORT_GROUPS' },
           { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUPS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
@@ -771,7 +760,6 @@ module.exports = {
           groupsAction(),
           currentActivityStamp('las la-fire', 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL'),
           planTemplatesAction(),
-          organisationSettingsAction(),
           midSeparator,
           { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } },
@@ -811,7 +799,6 @@ module.exports = {
           groupsAction(),
           eventTemplatesAction(),
           currentActivityStamp('las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL'),
-          organisationSettingsAction(),
           midSeparator,
           { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } },
@@ -838,21 +825,6 @@ module.exports = {
           visible: { name: '$can', params: ['remove', 'plan-templates', ':contextId', ':item'] }, 
           handler: { name: 'removeItem', params: ['confirm'] }
         }
-      ]
-    }
-  },
-  organisationSettingsActivity: {
-    leftPane: leftPane(),
-    topPane: {
-      content: [
-        { component: 'OrganisationAvatar' },
-        separator,
-        membersAction(),
-        tagsAction(),
-        groupsAction(),
-        eventTemplatesAction(),
-        planTemplatesAction(),
-        currentActivityStamp('las la-cog', 'OrganisationSettingsActivity.SETTINGS')
       ]
     }
   },

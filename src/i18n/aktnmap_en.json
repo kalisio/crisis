@@ -312,14 +312,7 @@
     "STRUCTURE_LABEL": "Information",
     "SUBSCRIPTIONS_LABEL": "Subscriptions"
   },
-  "OrganisationProperties": {
-    "SUBSCRIPTION_PAGES": "Subscriptions Pages",
-    "SUBSCRIPTION_PAGE_LINK": "Link to the subscription page",
-    "UNSUBSCRIPTION_PAGE_LINK": "Link to unsubscription page",
-    "SUBSCRIPTION_PAGE_LINK_COPIED": "Link to the subscription page copied",
-    "CANNOT_COPY_SUBSCRIPTION_PAGE_LINK": "Unable to copy the link to subscription page"
-  },
-  "OrganisationBilling": {
+  "BillingEditor": {
     "CUSTOMER_BLOCK_TITLE": "Payment Information",
     "CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER": "You must be verified to enter your payment information",
     "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "You did not enter in any payment information",
@@ -586,7 +579,8 @@
     "CLOSE_ACTION": "Close",
     "UPDATE_BUTTON": "Update"
   },
-  "PlanChooser": {
+  "SubscriptionChooser": {
+    "MORE_DETAILS": "More details",
     "CLICK": "Contact us",
     "SELECT": "Select",
     "CURRENT_PLAN": "Your plan",

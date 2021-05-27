@@ -316,14 +316,7 @@
     "STRUCTURE_LABEL": "Information",
     "SUBSCRIPTIONS_LABEL": "Abonnements"
   },
-  "OrganisationProperties": {
-    "SUBSCRIPTION_PAGES": "Pages d'abonnements",
-    "SUBSCRIPTION_PAGE_LINK": "Lien vers la page d'abonnement",
-    "UNSUBSCRIPTION_PAGE_LINK": "Lien vers la page de désabonnement",
-    "PAGE_LINK_COPIED": "Lien vers la page copiée",
-    "CANNOT_COPY_PAGE_LINK": "Impossible de copié le lien vers la page"
-  },
-  "OrganisationBilling": {
+  "BillingEditor": {
     "CUSTOMER_BLOCK_TITLE": "Information de paiement",
     "CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER": "Vous devez être vérifié pour renseigner vos informations de paiement",
     "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "Vous n'avez renseigné aucune information de paiement",
@@ -589,7 +582,8 @@
     "CLOSE_ACTION": "Fermer",
     "UPDATE_BUTTON": "Mettre à jour"
   },
-  "PlanChooser": {
+  "SubscriptionChooser": {
+    "MORE_DETAILS": "En savoir plus",
     "CLICK": "Nous contacter",
     "SELECT": "Sélectionner",
     "CURRENT_PLAN": "Votre offre",

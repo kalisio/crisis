@@ -80,7 +80,13 @@ module.exports = {
                 component: 'editor/KModalEditor',
                 props: true,
                 tour: tours['edit-organisation']
-              }
+              },
+              'edit-billing/:objectId': {
+                name: 'edit-organisation-billing',
+                component: 'BillingEditor',
+                props: true,
+                tour: tours['edit-organisation-billing']
+              },
             }
           },
           'account/:page': {
@@ -321,15 +327,6 @@ module.exports = {
                   }
                 },
                 tour: tours['plan-templates']
-              },
-              ':page': {
-                name: 'organisation-settings-activity',
-                component: 'OrganisationSettingsActivity',
-                props: true,
-                tour: {
-                  'properties': tours['organisation-properties'],
-                  'billing': tours['organisation-billing'],
-                }
               }
             }
           }
