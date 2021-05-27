@@ -309,7 +309,7 @@
     "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions",
     "EDIT_LABEL": "$t(EDIT_LABEL)",
     "REMOVE_LABEL": "$t(REMOVE_LABEL)",
-    "STRUCTURE_LABEL": "Information",
+    "STRUCTURE_LABEL": "Administration",
     "SUBSCRIPTIONS_LABEL": "Subscriptions"
   },
   "BillingEditor": {

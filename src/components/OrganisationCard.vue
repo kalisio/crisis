@@ -76,7 +76,7 @@
           </template>
           <q-separator />
           <k-card-section v-if="canAccessBilling" icon="las la-credit-card" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{ 
-            id: 'edit-billing', icon: 'las la-edit', tooltip: 'OrgnisationCard.EDIT_LABEL', 
+            id: 'edit-billing', icon: 'las la-edit', tooltip: 'OrganisationCard.EDIT_LABEL', 
             route: { name: 'edit-organisation-billing', params: { objectId: item._id } } 
           }]">
             <template slot="card-section-content">
