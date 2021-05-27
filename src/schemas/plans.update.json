@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "http://www.kalisio.xyz/schemas/plans.create.json#",
+  "$id": "http://www.kalisio.xyz/schemas/plans.update.json#",
   "title": "schemas.OBJECT_NAME",
   "type": "object",
   "properties": {

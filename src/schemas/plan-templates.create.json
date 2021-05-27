@@ -12,6 +12,14 @@
         "label": "schemas.PLAN_TEMPLATES_NAME_FIELD_LABEL"
       }
     },
+    "icon": {
+      "type": "object", 
+      "default": { "name": "fa-stream", "color": "primary" },
+      "field": {
+        "component": "form/KIconField",
+        "label": "schemas.EVENT_TEMPLATES_ICON_FIELD_LABEL"
+      }
+    },
     "description": {
       "type": "string", 
       "field": {
@@ -23,14 +31,7 @@
       "type": "array",
       "field": {
         "component": "form/KChipsField",
-        "lablel": "schema.PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL"
-      }
-    },
-    "color" : {
-      "type": "string",
-      "field": {
-        "component": "form/KColorField",
-        "label": "schemas.COLOR_FIELD_LABEL"
+        "label": "schemas.PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL"
       }
     }
   },

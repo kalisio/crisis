@@ -23,7 +23,7 @@
       "type": "array",
       "field": {
         "component": "form/KChipsField",
-        "lablel": "schema.PLANS_OBJECTIVES_FIELD_LABEL"
+        "label": "schemas.PLANS_OBJECTIVES_FIELD_LABEL"
       }
     },
     "location": {

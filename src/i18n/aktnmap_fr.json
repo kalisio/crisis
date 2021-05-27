@@ -80,6 +80,7 @@
     "PLANS_DESCRIPTION_FIELD_LABEL": "Saisissez une description de ce plan",
     "PLANS_OBJECTIVES_FIELD_LABEL": "Saisissez les objectifs de ce plan",
     "PLANS_LOCATION_FIELD_LABEL": "Saisissez une localisation pour ce plan",
+    "PLAN_TEMPLATES_CREATE_TITLE": "Créer un nouveau modèle de plan ?",
     "PLAN_TEMPLATES_NAME_FIELD_LABEL": "Saisissez le nom de ce modèle de plan",
     "PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL": "Saisissez une description de ce modèle de plan",
     "PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL": "Saisissez les objectifs de ce modèle de plan"

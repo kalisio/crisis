@@ -117,7 +117,7 @@ export default {
         handler: () => this.routeTo('plans-activity', this.item._id) }
       ],
       planItemRenderer: {
-        component: 'collection/KItem',
+        component: 'PlanItem',
         actions: [{
           id: 'view-plan',
           icon: 'las la-fire',
