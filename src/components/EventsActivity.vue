@@ -11,7 +11,13 @@
         :contextId="contextId"
         :base-query="baseQuery" 
         :filter-query="filter.query" 
-        :list-strategy="'smart'" />
+        :list-strategy="'smart'">
+        <template slot="empty-section">
+          <div class="absolute-center">
+            <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
+          </div>
+        </template>
+      </k-grid>
       <!--
         Router view to enable routing to modals
       -->
@@ -100,6 +106,7 @@ export default {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
+    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
     // Checks the query params
     this.planId = _.get(this.$route, 'query.plan', null)
   }

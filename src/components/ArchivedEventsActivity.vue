@@ -29,7 +29,13 @@
         :filter-query="filter.query" 
         :renderer="renderer" 
         :contextId="contextId" 
-        :list-strategy="'smart'" />
+        :list-strategy="'smart'">
+        <template slot="empty-section">
+          <div class="absolute-center">
+            <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
+          </div>
+        </template>>
+      </k-history>
       <!--
         Events map
       -->

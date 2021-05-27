@@ -26,19 +26,7 @@
       <!-- Objectives section -->
       <k-card-section icon="las la-dot-circle" :title="$t('PlanCard.OBJECTIVES_LABEL')" :actions="objectivesActions">
         <template slot="card-section-content">
-          <div class="row justify-start items-center">
-            <template v-for="objective in item.objectives">
-              <q-chip
-                :key="objective.value"
-                :icon="objective.icon ? objective.icon.name: 'las la-dot-circle'"
-                :color="objective.icon ? objective.icon.color : black"
-                :label="objective.value"
-                text-color="white"
-                dense
-                outline
-                square />
-            </template>
-          </div>
+          <k-tags-pane class="q-pl-sm" :tags="item.objectives" />
         </template>
       </k-card-section>
       <!--
@@ -123,6 +111,7 @@ export default {
     this.$options.components['k-panel'] = this.$load('frame/KPanel')
     this.$options.components['k-action'] = this.$load('frame/KAction')
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
+    this.$options.components['k-tags-pane'] = this.$load('team/KTagsPane')
     this.$options.components['k-location-map'] = this.$load('KLocationMap')
     // Count the number of events
     const service = this.$api.getService('events', this.contextId)
