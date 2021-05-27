@@ -1,6 +1,5 @@
 import { setNow, discard } from 'feathers-hooks-common'
-import { checkPlansQuotas } from '../../hooks'
-import { archive } from '../../hooks'
+import { addCreatorAsCoordinator,checkPlansQuotas, archive } from '../../hooks'
 
 module.exports = {
   before: {
@@ -9,6 +8,7 @@ module.exports = {
     get: [],
     create: [
       checkPlansQuotas,
+      addCreatorAsCoordinator,
       setNow('createdAt', 'updatedAt')
     ],
     update: [

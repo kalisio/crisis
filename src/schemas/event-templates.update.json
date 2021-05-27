@@ -65,7 +65,7 @@
       }],
       "field": {
         "component": "form/KItemField",
-        "label": "schemas.EVENTS_TEMPLATES_PARTICIPANTS_FIELD_LABEL"
+        "label": "schemas.EVENT_TEMPLATES_PARTICIPANTS_FIELD_LABEL"
       }
     },
     "coordinators": { 
@@ -105,7 +105,7 @@
       }],
       "field": {
         "component": "form/KItemField",
-        "label": "schemas.EVENTS_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL"
+        "label": "schemas.EVENT_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL"
       }
     }
   },

@@ -17,7 +17,7 @@
       "default": { "name": "fa-stream", "color": "primary" },
       "field": {
         "component": "form/KIconField",
-        "label": "schemas.EVENT_TEMPLATES_ICON_FIELD_LABEL"
+        "label": "schemas.PLAN_TEMPLATES_ICON_FIELD_LABEL"
       }
     },
     "description": {
@@ -32,6 +32,47 @@
       "field": {
         "component": "form/KChipsField",
         "label": "schemas.PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL"
+      }
+    },
+    "coordinators": { 
+      "type": "array",
+      "multiselect": true,
+      "uniqueItems": true,
+      "default": [],
+      "services": [{
+        "service": "members",
+        "field": "profile.name",
+        "subfield": "email",
+        "baseQuery": {
+          "$select": ["_id", "email", "profile.name"]
+        },
+        "icon": {
+          "name": "person"
+        } 
+      },
+      {
+        "service": "groups",
+        "field": "name",
+        "baseQuery": {
+          "$select": ["_id", "name"]
+        },
+        "icon": { 
+          "name": "group_work"
+        }
+      },
+      {
+        "service": "tags",
+        "field": "value",
+        "baseQuery": {
+          "scope": "members"
+        },
+        "icon": {
+          "name": "label"
+        }
+      }],
+      "field": {
+        "component": "form/KItemField",
+        "label": "schemas.PLAN_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL"
       }
     }
   },

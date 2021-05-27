@@ -18,6 +18,47 @@
         "component": "form/KTextareaField",
         "label": "schemas.PLANS_DESCRIPTION_FIELD_LABEL"
       }
+    },
+    "coordinators": { 
+      "type": "array",
+      "multiselect": true,
+      "uniqueItems": true,
+      "minItems": 1,
+      "services": [{
+        "service": "members",
+        "field": "profile.name",
+        "subfield": "email",
+        "baseQuery": {
+          "$select": ["_id", "email", "profile.name"]
+        },
+        "icon": {
+          "name": "person"
+        } 
+      },
+      {
+        "service": "groups",
+        "field": "name",
+        "baseQuery": {
+          "$select": ["_id", "name"]
+        },
+        "icon": { 
+          "name": "group_work"
+        }
+      },
+      {
+        "service": "tags",
+        "field": "value",
+        "baseQuery": {
+          "scope": "members"
+        },
+        "icon": {
+          "name": "label"
+        }
+      }],
+      "field": {
+        "component": "form/KItemField",
+        "label": "schemas.PLANS_COORDINATORS_FIELD_UPDATE_LABEL"
+      }
     }
   },
   "required": ["name"]

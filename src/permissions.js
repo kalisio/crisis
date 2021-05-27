@@ -1,5 +1,4 @@
 import { permissions } from '@kalisio/kdk/core.common'
-import catalog from './tours/catalog'
 
 function defineEventAbilities (subject, can, cannot) {
   if (subject && subject._id) {
@@ -19,11 +18,10 @@ function defineEventAbilities (subject, can, cannot) {
             can('read', 'event-templates', { context: organisation._id })
             // A user can create an event
             can('create', 'events', { context: organisation._id })
-            // A user can access events in which he is a participant or his group or his org
+            // A user can access events in which he is a participant
             can('read', 'events', { context: organisation._id, 'participants._id': subject._id })
             // A coordinator can manage his events
             can('all', 'events', { context: organisation._id, 'coordinators._id': subject._id })
-            // can('all', 'events', { context: organisation._id, 'coordinators._id': subject._id })
             // BUG: adding org level participant/coordinator generates a bug because the org owner
             // has the same ID than the org itself causing everybody accessing the event
             // can('read', 'events', { context: organisation._id, 'participants._id': organisation._id })
@@ -32,7 +30,9 @@ function defineEventAbilities (subject, can, cannot) {
           if (subject.groups) {
             subject.groups.forEach(group => {
               if (group._id && group.context && (group.context.toString() === organisation._id.toString())) {
+                // A user can access events in which his group is a participant
                 can('read', 'events', { context: organisation._id, 'participants._id': group._id })
+                // A coordinator can manage events in which his group is a coordinator
                 can('all', 'events', { context: organisation._id, 'coordinators._id': group._id })
               }
             })
@@ -40,7 +40,9 @@ function defineEventAbilities (subject, can, cannot) {
           if (subject.tags) {
             subject.tags.forEach(tag => {
               if (tag._id && tag.context && (tag.context.toString() === organisation._id.toString())) {
+                // A user can access events in which his tag is a participant
                 can('read', 'events', { context: organisation._id, 'participants._id': tag._id })
+                // A coordinator can manage events in which his tag is a coordinator
                 can('all', 'events', { context: organisation._id, 'coordinators._id': tag._id })
               }
             })
@@ -81,12 +83,31 @@ function definePlanAbilities (subject, can, cannot) {
             can('read', 'plan-templates', { context: organisation._id })
             can('read', 'plans', { context: organisation._id })
             can('read', 'archived-plans', { context: organisation._id })
+            // A coordinator can manage his plans
+            can('all', 'plans', { context: organisation._id, 'coordinators._id': subject._id })
+          }
+          if (subject.groups) {
+            subject.groups.forEach(group => {
+              if (group._id && group.context && (group.context.toString() === organisation._id.toString())) {
+                // A coordinator can manage plans in which his group is a coordinator
+                can('all', 'plans', { context: organisation._id, 'coordinators._id': group._id })
+              }
+            })
+          }
+          if (subject.tags) {
+            subject.tags.forEach(tag => {
+              if (tag._id && tag.context && (tag.context.toString() === organisation._id.toString())) {
+                // A coordinator can manage plans in which his tag is a coordinator
+                can('all', 'plans', { context: organisation._id, 'coordinators._id': tag._id })
+              }
+            })
           }
         }
         if (role >= permissions.Roles.manager) {
           if (organisation._id) {
+            // A manager can create a plan
+            can('create', 'plans', { context: organisation._id })
             can('all', 'plan-templates', { context: organisation._id })
-            can('all', 'plans', { context: organisation._id })
             can('all', 'archived-plans', { context: organisation._id })
           }
         }
@@ -114,8 +135,8 @@ function defineBillingAbilities (subject, can, cannot) {
 // Hook computing contextual catalog, features, events, etc. abilities for a given user
 export function defineUserAbilities (subject, can, cannot) {
   defineEventAbilities(subject, can, cannot)
-  defineBillingAbilities(subject, can, cannot)
   definePlanAbilities(subject, can, cannot)
+  defineBillingAbilities(subject, can, cannot)
   
   if (subject && subject._id) {
     if (subject.organisations) {

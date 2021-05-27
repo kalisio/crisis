@@ -80,10 +80,10 @@ export default {
   mixins: [kCoreMixins.baseItem],
   computed: {
     canEdit () {
-      return this.$can('update', 'plans', this.contextId)
+      return this.$can('update', 'plans', this.contextId, this.item)
     },
     canRemove () {
-      return this.$can('remove', 'plans', this.contextId)
+      return this.$can('remove', 'plans', this.contextId, this.item)
     },
     canAccessCatalog () {
       return this.$can('update', 'catalog', this.contextId)
@@ -123,12 +123,12 @@ export default {
       { component: 'QSpace' },
       { 
         id: 'edit-plan', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION',
-        visible: this.$can('update', 'plans', this.contextId),
+        visible: this.$can('update', 'plans', this.contextId, this.item),
         handler: this.editItem
       },
       {
         id: 'remove-plan', icon: 'las la-trash', tooltip: 'PlanCard.REMOVE_LABEL',
-        visible: this.$can('remove', 'plans', this.contextId),
+        visible: this.$can('remove', 'plans', this.contextId, this.item),
         handler: () => this.removeItem('confirm')
       }
     ]
