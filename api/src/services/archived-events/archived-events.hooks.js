@@ -5,7 +5,7 @@ import { hooks as mapHooks } from '@kalisio/kdk/map.api'
 module.exports = {
   before: {
     all: [
-      coreHooks.convertObjectIDs(['planId']),
+      coreHooks.convertObjectIDs(['plan']),
       coreHooks.convertToString(['alert.conditions'])
     ],
     find: [mapHooks.marshallSpatialQuery, coreHooks.marshallComparisonQuery, coreHooks.distinct],
