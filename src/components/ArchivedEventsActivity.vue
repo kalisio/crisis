@@ -583,6 +583,7 @@ export default {
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-history'] = this.$load('collection/KHistory')
+    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
     
     this.registerStyle('tooltip', this.getEventTooltip)
     this.registerStyle('popup', this.getEventPopup)

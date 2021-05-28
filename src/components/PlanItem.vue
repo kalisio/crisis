@@ -35,7 +35,6 @@ export default {
   created () {
     // Loads the required components
     this.$options.components['k-item'] = this.$load('collection/KItem')
-    console.log(this.item)
   }
 }
 </script>
