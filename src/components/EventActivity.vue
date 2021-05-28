@@ -99,15 +99,8 @@ export default {
       this.event = await this.$api.getService(this.archived ? 'archived-events' : 'events', this.contextId).get(this.objectId)
       this.refreshUser()
       // If we'd like to only work in real-time
-      // this.setCurrentTime(moment.utc())
+      //this.setCurrentTime(moment.utc())
       activityMixin.methods.configureActivity.call(this)
-      // Flag required actions as "beta"
-      let actions = this.$store.get('fab.actions')
-      actions.forEach(action => {
-        if (action.id === 'probe-location') {
-          action.badge = { color: 'primary', floating: true, transparent: true, label: 'beta' }
-        }
-      })
       // Located event ?
       if (this.hasLocation()) {
         // Recenter map
@@ -129,17 +122,6 @@ export default {
       if (this.isCoordinator) {
         this.refreshCollection()
       }
-    },
-    async getCatalogLayers () {
-      let layers = await kMapMixins.activity.methods.getCatalogLayers.call(this)
-      // Flag required layers as "beta"
-      layers.forEach(layer => {
-        if (layer.type !== 'BaseLayer') {
-          layer.badge = { color: 'primary', transparent: true, label: 'beta' }
-        }
-      })
-      
-      return layers
     },
     uploadMedia () {
       this.$refs.uploaderModal.open()
