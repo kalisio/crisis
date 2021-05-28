@@ -115,7 +115,7 @@ export default {
     this.$options.components['k-location-map'] = this.$load('KLocationMap')
     // Count the number of events
     const service = this.$api.getService('events', this.contextId)
-    const response = await service.find({ query: { planId: this.item._id }, $limit: 0 })
+    const response = await service.find({ query: { plan: this.item._id }, $limit: 0 })
     this.eventsCount = response.total
     // Define the header
     this.header = [

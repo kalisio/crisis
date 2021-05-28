@@ -61,7 +61,8 @@ export default {
     kMapMixins.map.tiledWindLayers,
     kMapMixins.map.mapillaryLayers,
     kMapMixins.map.gsmapLayers,
-    mixins.events
+    mixins.events,
+    mixins.plans
   ],
   props: {
     contextId: {

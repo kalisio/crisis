@@ -29,12 +29,16 @@
 <script>
 import _ from 'lodash'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import mixins from '../mixins'
 
 const activityMixin = kCoreMixins.baseActivity()
 
 export default {
   name: 'events-activity',
-  mixins: [activityMixin],
+  mixins: [
+    activityMixin,
+    mixins.plans
+  ],
   props: {
     contextId: {
       type: String,
@@ -45,7 +49,6 @@ export default {
     return {
       sorter: this.$store.get('sorter'),
       filter: this.$store.get('filter'),
-      planId: '',
       // Make this configurable from app
       renderer: _.merge({
         component: 'EventCard'
@@ -55,7 +58,7 @@ export default {
   computed: {
     baseQuery () {
       let query = _.clone(this.sorter.query)
-      Object.assign(query, { planId: _.isEmpty(this.planId) ? { $eq: null } : this.planId })
+      Object.assign(query, this.planQuery())
       return query
     }
   },
@@ -107,8 +110,6 @@ export default {
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
-    // Checks the query params
-    this.planId = _.get(this.$route, 'query.plan', null)
   }
 }
 </script>

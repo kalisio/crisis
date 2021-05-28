@@ -15,20 +15,22 @@
 
 <script>
 import _ from 'lodash'
-import { mixins } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { utils } from '@kalisio/kdk/map.client.map'
+import mixins from '../mixins'
 
-const editorMixin = mixins.baseEditor(['eventForm'])
+const editorMixin = kCoreMixins.baseEditor(['eventForm'])
 
 export default {
   name: 'event-editor',
   mixins: [
-    mixins.baseModal,
-    mixins.service,
-    mixins.objectProxy,
-    mixins.schemaProxy,
+    kCoreMixins.baseModal,
+    kCoreMixins.service,
+    kCoreMixins.objectProxy,
+    kCoreMixins.schemaProxy,
     editorMixin,
-    mixins.refsResolver(['eventForm'])
+    kCoreMixins.refsResolver(['eventForm']),
+    mixins.plans
   ],
   props: {
     templateId: {
@@ -77,7 +79,7 @@ export default {
         delete this.object._id
         // Setup the plan if defined
         if (!_.isEmpty(this.planId)) {
-          this.object.planId = this.planId
+          this.object.plan = this.planId
         }
         // Setup hasWorkflow tag
         this.object.hasWorkflow = !_.isNil(this.template.workflow)
@@ -105,12 +107,12 @@ export default {
         }
       } else {
         // Otherwise proceed as usual to load the event object
-        return mixins.objectProxy.methods.loadObject.call(this)
+        return kCoreMixins.objectProxy.methods.loadObject.call(this)
       }
     },
     async loadSchema () {
       // Call super
-      let schema = await mixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName())
+      let schema = await kCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName())
       // When a template is provided check for workflow availability
       if (this.template) {
       // Start from schema template and clone it because it will be shared by all editors
@@ -156,8 +158,6 @@ export default {
     if (this.templateId) {
       this.template = await this.$api.getService('event-templates').get(this.templateId)
     }
-    // Checks the query params to check whether a plan is active
-    this.planId = _.get(this.$route, 'query.plan', null)
     // Build the editor
     this.refresh()
     this.$on('applied', this.closeModal)

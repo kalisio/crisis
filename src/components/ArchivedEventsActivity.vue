@@ -87,6 +87,7 @@ import Papa from 'papaparse'
 import { QSlider } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
+import mixins from '../mixins'
 
 const activityMixin = kCoreMixins.baseActivity()
 
@@ -108,7 +109,8 @@ export default {
     kMapMixins.map.style,
     kMapMixins.map.tooltip,
     kMapMixins.map.popup,
-    kMapMixins.map.activity
+    kMapMixins.map.activity,
+    mixins.plans
   ],
   components: {
     QSlider
@@ -143,16 +145,15 @@ export default {
       else return Math.ceil(this.chartData.length / this.nbValuesPerChart.value)
     },
     baseQuery () {
-      return {
+      return Object.assign({
         $sort: {
           [this.sortBy.value]: (this.ascendingSort ? 1 : -1)
         },
         createdAt: {
           $gte: this.minDate.toISOString(),
           $lte: this.maxDate.toISOString()
-        },
-        planId: _.isEmpty(this.planId) ? { $eq: null } : this.planId
-      }
+        }
+      }, this.planQuery())
     }
   },
   data () {
@@ -187,7 +188,6 @@ export default {
       renderer: _.merge({
         component: 'ArchivedEventEntry'
       }, this.activityOptions.items),
-      planId: null,
       filter: this.$store.get('filter'),
       minDate: minDate,      
       maxDate: maxDate,
@@ -591,9 +591,6 @@ export default {
     
     // Initialize private properties
     this.templates = []
-
-    // Checks the query params
-    this.planId = _.get(this.$route, 'query.plan', null)
     
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')

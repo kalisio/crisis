@@ -46,8 +46,8 @@
     "EVENT_TEMPLATES_ICON_FIELD_LABEL": "Select an icon to represent this template",
     "EVENT_TEMPLATES_DESCRIPTION_FIELD_LABEL": "Enter a description of this template",
     "EVENT_TEMPLATES_PARTICIPANTS_FIELD_LABEL": "Select event participants",
-    "EVENT_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Select event coordinators (other than yourself)",
-    "EVENT_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Select event coordinators",
+    "EVENT_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Select default event coordinators",
+    "EVENT_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Select default event coordinators",
     "EVENT_TEMPLATES_LAYER_FIELD_LABEL": "Select a target data layer",
     "EVENT_WORKFLOW_TITLE_FIELD_LABEL": "Enter the title for this step",
     "EVENT_WORKFLOW_ICON_FIELD_LABEL": "Select the step icon",
@@ -77,6 +77,8 @@
     "PLANS_UPDATE_TITLE": "Update this plan ?",
     "PLANS_NAME_FIELD_LABEL": "Enter the name of this plan",
     "PLANS_DESCRIPTION_FIELD_LABEL": "Enter a description of this plan",
+    "PLANS_COORDINATORS_FIELD_CREATE_LABEL": "Select plan coordinators (other than yourself)",
+    "PLANS_COORDINATORS_FIELD_UPDATE_LABEL": "Select plan coordinators",
     "PLANS_OBJECTIVES_FIELD_LABEL": "Enter the objectives of this plan",
     "PLANS_LOCATION_FIELD_LABEL": "Enter the location of this plan",
     "PLANS_UPDATE_OBJECTIVES_TITLE": "Update objectives ?",
@@ -87,8 +89,8 @@
     "PLAN_TEMPLATES_ICON_FIELD_LABEL": "Select an icon to represent this template",
     "PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL": "Enter a description of this plan template",
     "PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL": "Enter the objectives of this plan template",
-    "PLANS_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Select plan coordinators (other than yourself)",
-    "PLAN_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Select plan coordinators"
+    "PLANS_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Select default plan coordinators",
+    "PLAN_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Select default plan coordinators"
   },
   "tours": {
     "side-nav": {

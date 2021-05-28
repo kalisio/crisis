@@ -46,7 +46,7 @@
     "EVENT_TEMPLATES_ICON_FIELD_LABEL": "Selectionnez une icone pour représenter le modèle",
     "EVENT_TEMPLATES_DESCRIPTION_FIELD_LABEL": "Saisissez une description du modèle",
     "EVENT_TEMPLATES_PARTICIPANTS_FIELD_LABEL": "Saisissez les participants par défaut de l'événement",
-    "EVENT_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs par défaut de l'événement (autres que le créateur)",
+    "EVENT_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs par défaut de l'événement",
     "EVENT_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Saisissez les coordinateurs par défaut de l'événement",
     "EVENT_TEMPLATES_LAYER_FIELD_LABEL": "Sélectionnez une couche de données cible",
     "EVENT_WORKFLOW_TITLE_FIELD_LABEL": "Saisissez le nom de cette étape",
@@ -78,6 +78,8 @@
     "PLANS_UPDATE_TITLE": "Mettre à jour le plan ?",
     "PLANS_NAME_FIELD_LABEL": "Saisissez le nom de ce plan",
     "PLANS_DESCRIPTION_FIELD_LABEL": "Saisissez une description de ce plan",
+    "PLANS_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs du plan (autres que vous)",
+    "PLANS_COORDINATORS_FIELD_UPDATE_LABEL": "Saisissez les coordinateurs du plan",
     "PLANS_OBJECTIVES_FIELD_LABEL": "Saisissez les objectifs de ce plan",
     "PLANS_LOCATION_FIELD_LABEL": "Saisissez une localisation pour ce plan",
     "PLANS_UPDATE_OBJECTIVES_TITLE": "Mettre à jour les objectifs ?",
@@ -86,7 +88,7 @@
     "PLAN_TEMPLATES_ICON_FIELD_LABEL": "Selectionnez une icone pour représenter le modèle",
     "PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL": "Saisissez une description de ce modèle de plan",
     "PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL": "Saisissez les objectifs de ce modèle de plan",
-    "PLAN_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs par défaut du plan (autres que le créateur)",
+    "PLAN_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs par défaut du plan",
     "PLAN_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Saisissez les coordinateurs par défaut du plan"
   },
   "tours": {

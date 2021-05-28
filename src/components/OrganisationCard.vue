@@ -241,7 +241,7 @@ export default {
     this.$options.components['k-action'] = this.$load('frame/KAction')
     this.$options.components['k-list'] = this.$load('collection/KList')
     // Counts the number of orphan events
-    this.eventsCount = await this.countItems('events', { planId: { $eq: null } } )
+    this.eventsCount = await this.countItems('events', { plan: { $eq: null } } )
   }
 }
 </script>
