@@ -2,11 +2,10 @@ import _ from 'lodash'
 
 const plansMixin = {
   data () {
-    let data = {
+    return {
       planId: null,
       plan: null
     }
-    return data
   },
   computed: {
     
