@@ -430,7 +430,7 @@ export default {
     const eventsBaseQuery = Object.assign({
       geoJson: true, $skip: 0, $limit: MAX_ITEMS,
       $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
-    }, this.planQuery())
+    }, this.getPlanQuery())
     this.events = this.configureCollection('events', eventsBaseQuery, { nbItemsPerPage: 0 })
     this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
   },

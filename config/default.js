@@ -440,6 +440,7 @@ module.exports = {
           mapAction(),
           archivedEventsAction(),
           midSeparator,
+          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'event-sorter',
             component: 'collection/KSorter', 
             tooltip: 'EventsActivity.SORT_EVENTS',
@@ -570,6 +571,7 @@ module.exports = {
           mapAction(),
           currentActivityStamp('las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
           midSeparator,
+          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'map-view', icon: 'las la-map-marked', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
           { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: 'onShowChart' },
           { component: 'input/KTimeRangeChooser', id: 'timerange', icon: 'las la-calendar',
@@ -579,6 +581,7 @@ module.exports = {
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.EXPORT_DATA_LABEL', handler: 'downloadEventsData' },
         ],
         'map': [
+          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'history-view', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           midSeparator,
           { id: 'by-template', icon: 'las la-layer-group', tooltip: 'ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL',
@@ -588,6 +591,7 @@ module.exports = {
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.EXPORT_DATA_LABEL', handler: 'downloadEventsData' }
         ],
         'chart': [
+          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'history-view', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           midSeparator,
           { id: 'settings', icon: 'las la-cog', tooltip: 'ArchivedEventsActivity.CHART_SETTINGS_LABEL', handler: 'showChartSettings' },

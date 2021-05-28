@@ -10,7 +10,7 @@
         :renderer="renderer" 
         :contextId="contextId"
         :base-query="baseQuery" 
-        :filter-query="filter.query" 
+        :filter-query="filterQuery" 
         :list-strategy="'smart'">
         <template slot="empty-section">
           <div class="absolute-center">
@@ -39,6 +39,11 @@ export default {
     activityMixin,
     mixins.plans
   ],
+  provide () {
+    return {
+      kActivity: this
+    }
+  },
   props: {
     contextId: {
       type: String,
@@ -58,7 +63,12 @@ export default {
   computed: {
     baseQuery () {
       let query = _.clone(this.sorter.query)
-      Object.assign(query, this.planQuery())
+      Object.assign(query, this.getPlanQuery())
+      return query
+    },
+    filterQuery () {
+      let query = _.clone(this.filter.query)
+      Object.assign(query, this.getPlanObjectiveQuery())
       return query
     }
   },

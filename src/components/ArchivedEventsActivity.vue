@@ -26,7 +26,7 @@
         :nb-items-per-page="2" 
         :append-items="true" 
         :base-query="baseQuery"
-        :filter-query="filter.query" 
+        :filter-query="filterQuery" 
         :renderer="renderer" 
         :contextId="contextId" 
         :list-strategy="'smart'">
@@ -153,7 +153,12 @@ export default {
           $gte: this.minDate.toISOString(),
           $lte: this.maxDate.toISOString()
         }
-      }, this.planQuery())
+      }, this.getPlanQuery())
+    },
+    filterQuery () {
+      let query = _.clone(this.filter.query)
+      Object.assign(query, this.getPlanObjectiveQuery())
+      return query
     }
   },
   data () {
