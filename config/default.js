@@ -432,9 +432,9 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationAvatar' },
+          { component: 'OrganisationAvatar',  },
           separator,
-          plansAction(),
+          { component: 'PlanMenu' },
           midSeparator,          
           currentActivityStamp('las la-fire', 'EventsActivity.EVENTS_LABEL'),
           mapAction(),
@@ -480,7 +480,7 @@ module.exports = {
         default: [
           { component: 'OrganisationAvatar' },
           separator,
-          plansAction(),
+          { component: 'PlanMenu' },
           midSeparator,          
           eventsAction(),
           currentActivityStamp('las la-map', 'Context.CATALOG'),
@@ -565,7 +565,7 @@ module.exports = {
         'history': [
           { component: 'OrganisationAvatar' },
           separator,
-          plansAction(),
+          { component: 'PlanMenu' },
           midSeparator,          
           eventsAction(),
           mapAction(),

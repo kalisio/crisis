@@ -627,5 +627,8 @@
   },
   "ArchivedPlansActivity": {
     "ARCHIVED_PLANS_LABEL": "Archived plans"
+  },
+  "PlanMenu": {
+    "PLANS_LABEL": "Plans"
   }
 }

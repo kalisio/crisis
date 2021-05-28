@@ -7,8 +7,10 @@ const plansMixin = {
       plan: null
     }
   },
-  computed: {
-    
+  watch:{
+    $route (to, from) {
+      this.refreshPlan()
+    }
   },
   methods: {
     hasLocation () {
@@ -25,12 +27,14 @@ const plansMixin = {
       return {
         plan: _.isEmpty(this.planId) ? { $eq: null } : this.planId
       }
+    },
+    async refreshPlan () {
+      this.planId = _.get(this.$route, 'query.plan', null)
+      await this.loadPlan(this.planId)
     }
   },
   async created () {
-    // Checks the query params for plan
-    this.planId = _.get(this.$route, 'query.plan', null)
-    await this.loadPlan(this.planId)
+    this.refreshPlan()
   }
 }
 
