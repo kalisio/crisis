@@ -105,27 +105,10 @@ export default {
       // Wait until map is ready
       await this.initializeMap()
       activityMixin.methods.configureActivity.call(this)
-      // Flag required actions as "beta"
-      let actions = this.$store.get('fab.actions')
-      actions.forEach(action => {
-        if ((action.id === 'probe-location') || (action.id === 'add-layer')) {
-          action.badge = { color: 'primary', floating: true, transparent: true, label: 'beta' }
-        }
-      })
       this.setCurrentTime(moment.utc())
       // Then update events/alerts
       this.alerts.refreshCollection()
       this.events.refreshCollection()
-    },
-    async getCatalogLayers () {
-      let layers = await kMapMixins.activity.methods.getCatalogLayers.call(this)
-      // Flag required layers as "beta"
-      layers.forEach(layer => {
-        if (layer.type !== 'BaseLayer') {
-          layer.badge = { color: 'primary', transparent: true, label: 'beta' }
-        }
-      })
-      return layers
     },
     getFeatureActions (feature, layer) {
       let featureActions = []
@@ -136,8 +119,7 @@ export default {
           name: 'create-event',
           icon: 'las la-fire',
           handler: this.onSelectEventTemplateAction,
-          label: this.$t('CatalogActivity.CREATE_EVENT_LOCATION_ACTION'),
-          badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
+          label: this.$t('CatalogActivity.CREATE_EVENT_LOCATION_ACTION')
         })
         // Check if weather layer activated
         const selectedLayer = _.values(this.layers).filter(sift({
@@ -147,8 +129,7 @@ export default {
           name: 'create-alert',
           icon: 'las la-bell',
           handler: this.onCreateWeatherAlertAction,
-          label: this.$t('CatalogActivity.CREATE_WEATHER_ALERT_ACTION'),
-          badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
+          label: this.$t('CatalogActivity.CREATE_WEATHER_ALERT_ACTION')
         })
       } else if (!this.isLayerEdited(layer.name)) { // Not in edition mode
         // Only on feature services targeting non-user data
@@ -157,8 +138,7 @@ export default {
             name: 'create-alert',
             icon: 'las la-bell',
             handler: this.onCreateMeasureAlertAction,
-            label: this.$t('CatalogActivity.CREATE_MEASURE_ALERT_ACTION'),
-            badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
+            label: this.$t('CatalogActivity.CREATE_MEASURE_ALERT_ACTION')
           })
         } else if (layer.name === this.$t('CatalogActivity.ALERTS_LAYER')) {
           // Alert deletion
@@ -166,8 +146,7 @@ export default {
             name: 'remove-alert',
             icon: 'las la-minus-circle',
             handler: this.onRemoveAlert,
-            label: this.$t('CatalogActivity.REMOVE_ALERT_ACTION'),
-            badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
+            label: this.$t('CatalogActivity.REMOVE_ALERT_ACTION')
           })
         }
         // Could be an internal feature or external one (eg WFS layer)
@@ -178,8 +157,7 @@ export default {
             name: 'create-event',
             icon: 'las la-fire',
             handler: this.onSelectEventTemplateAction,
-            label: this.$t('CatalogActivity.CREATE_EVENT_FEATURE_ACTION'),
-            badge: { color: 'primary', floating: true, transparent: true, label: 'beta' }
+            label: this.$t('CatalogActivity.CREATE_EVENT_FEATURE_ACTION')
           })
         }
       }
