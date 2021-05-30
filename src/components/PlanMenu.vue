@@ -40,7 +40,7 @@ export default {
         id: 'no-plan',
         icon: 'las la-times',
         label: 'PlanMenu.NO_PLAN',
-        route: { name: 'events-activity', params: { contextId } }
+        route: { name: this.$route.name, params: { contextId } }
       }) 
       }
       // Add the plans to the entries

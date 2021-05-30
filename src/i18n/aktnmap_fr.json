@@ -143,7 +143,6 @@
       "PROPERTIES_LABEL": "Cet onglet vous permet de modifier les informations liées à votre organisation",
       "NAME_LABEL": "Son nom tel qu'il sera visible par les autres utilisateurs.",
       "DESCRIPTION_LABEL": "Et ensuite sa description.",
-      "UPDATE_LABEL": "Confirmez la mise à jour pour appliquer les modifications apportées à votre organisation.",
       "BILLING_LABEL": "Cet onglet vous permet de modifier vos <b>abonnements</b>",
       "CUSTOMER_LABEL": "Cette zone récapitule votre moyen de paiement actuel.",
       "PAYMENT_METHOD_LABEL": "Ce bouton permet de le mettre à jour.",
