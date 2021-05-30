@@ -32,9 +32,6 @@ const plansMixin = {
       this.planId = _.get(this.$route, 'query.plan', null)
       await this.loadPlan(this.planId)
     }
-  },
-  async created () {
-    this.refreshPlan()
   }
 }
 

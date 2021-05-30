@@ -62,6 +62,7 @@
     "EVENTS_CREATE_TITLE": "Create a new event ?",
     "EVENTS_NAME_FIELD_LABEL": "Enter the name of this event",
     "EVENTS_DESCRIPTION_FIELD_LABEL": "Enter a description of this event",
+    "EVENTS_OBJECTIVE_FIELD_LABEL": "Select un objective to assign to this event",
     "EVENTS_LOCATION_FIELD_LABEL": "Enter the location of this event",
     "EVENTS_EXPIRE_AT_FIELD_LABEL": "Enter the expiration date for this event",
     "EVENTS_PARTICIPANTS_FIELD_LABEL": "Select event participants",
@@ -629,6 +630,7 @@
     "ARCHIVED_PLANS_LABEL": "Archived plans"
   },
   "PlanMenu": {
-    "PLANS_LABEL": "Plans"
+    "PLANS": "Plans",
+    "NO_PLAN": "None"
   }
 }

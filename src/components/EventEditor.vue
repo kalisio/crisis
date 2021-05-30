@@ -67,6 +67,10 @@ export default {
     }
   },
   methods: {
+    async refresh () {
+      await this.refreshPlan()
+      editorMixin.methods.refresh.call(this)
+    },
     async loadObject () {
       // When a template is provided use it as reference for object
       if (this.template) {
@@ -113,6 +117,15 @@ export default {
     async loadSchema () {
       // Call super
       let schema = await kCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName())
+      console.log(schema)
+      // When a plan is provide add an objective select
+      if (!_.isEmpty(this.planId) && !_.isEmpty(this.plan) && !_.isEmpty(this.plan.objectives)) {
+        _.forEach(this.plan.objectives, objective => {
+          schema.properties.objective.field.options.push({ label: objective.value, value: objective.value })
+        })
+      } else {
+        delete schema.properties.objective
+      }
       // When a template is provided check for workflow availability
       if (this.template) {
       // Start from schema template and clone it because it will be shared by all editors

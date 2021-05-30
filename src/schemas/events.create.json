@@ -19,6 +19,14 @@
         "label": "schemas.EVENTS_DESCRIPTION_FIELD_LABEL"
       }
     },
+    "objective": {
+      "type": "string",
+      "field": {
+        "component": "form/KSelectField",
+        "label": "schemas.EVENTS_OBJECTIVE_FIELD_LABEL",
+        "options": []
+      }
+    },
     "location": {
       "type": "object", 
       "draggable": true,

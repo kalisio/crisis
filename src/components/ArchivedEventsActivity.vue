@@ -592,6 +592,9 @@ export default {
     // Initialize private properties
     this.templates = []
     
+    // Check plan
+    await this.refreshPlan()
+
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },

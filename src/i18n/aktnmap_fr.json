@@ -62,6 +62,7 @@
     "EVENTS_CREATE_TITLE": "Créer un nouvel événement ?",
     "EVENTS_NAME_FIELD_LABEL": "Saisissez le nom de l'événement",
     "EVENTS_DESCRIPTION_FIELD_LABEL": "Saisissez une description de l'événement",
+    "EVENTS_OBJECTIVE_FIELD_LABEL": "Choisissez un objectif à assosicer à l'événement",
     "EVENTS_LOCATION_FIELD_LABEL": "Saisissez le lieu de l'événement",
     "EVENTS_EXPIRE_AT_FIELD_LABEL": "Saisissez la date d'expiration de l'événement",
     "EVENTS_PARTICIPANTS_FIELD_LABEL": "Saisissez les participants à l'événement",
@@ -630,6 +631,7 @@
     "ARCHIVED_PLANS_LABEL": "Archive"
   },
   "PlanMenu": {
-    "PLANS_LABEL": "Plans"
+    "PLANS": "Plans",
+    "NO_PLAN": "Aucun"
   }
 }

@@ -465,9 +465,8 @@ module.exports = {
           visible: ['hasLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
         { id: 'navigate', tooltip: 'EventCard.NAVIGATE_LABEL', icon: 'las la-location-arrow', handler:  'launchNavigation',
           visible: ['hasLocation', 'canNavigate', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
-        { id: 'edit-event', tooltip: 'EventCard.EDIT_LABEL', icon: 'las la-edit',
-          visible: { name: '$can', params: ['update', 'events', ':contextId', ':item'] },
-          route: { name: 'edit-event', params: { contextId: ':contextId', objectId: ':item._id' } } },
+        { id: 'edit-event', tooltip: 'EventCard.EDIT_LABEL', icon: 'las la-edit', handler: 'editItem',
+          visible: { name: '$can', params: ['update', 'events', ':contextId', ':item'] } },
         { id: 'remove-event', tooltip: 'EventCard.REMOVE_LABEL', icon: 'las la-minus-circle', handler: 'removeEvent',
           visible: { name: '$can', params: ['remove', 'events', ':contextId', ':item'] } }
       ]

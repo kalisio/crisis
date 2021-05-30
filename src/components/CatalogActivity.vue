@@ -401,7 +401,7 @@ export default {
       return new Component({ propsData: props })
     }
   },
-  created () {
+  async created () {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-color-legend'] = this.$load('KColorLegend')
@@ -419,6 +419,8 @@ export default {
     this.registerStyle('markerStyle', this.getEventMarker)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
     this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
+    // Handle plan
+    await this.refreshPlan()
     // Check if option has been subscribed
     this.$checkBillingOption('catalog')
   },

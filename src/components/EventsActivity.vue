@@ -62,10 +62,18 @@ export default {
       return query
     }
   },
+  watch: {
+    async $route (to, from) {
+      // Need to refresh the fab because the plan has probably changed
+      await this.refreshFab()
+    }
+  },
   methods: {
     async configureActivity () {
       activityMixin.methods.configureActivity.call(this)
-      // Fab actions
+      this.refreshFab()
+    },
+    async refreshFab () {
       if (this.$can('create', 'events', this.contextId)) {
         const actions = []
         const eventTemplatesService = this.$api.getService('event-templates')
@@ -105,11 +113,13 @@ export default {
       }
     }
   },
-  created () {
+  async created () {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
+    // Handle plan
+    await this.refreshPlan()
   }
 }
 </script>

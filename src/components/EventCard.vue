@@ -1,9 +1,27 @@
 <template>
   <div>
     <k-card v-bind="$props" :actions="itemActions" :bind-actions="false">
-      <template v-slot:card-label>
-        <span class="text-subtitle1 text-weight-medium ellipsis-2-lines" style="overflow: hidden">{{ name }}</span>
+      <!--
+        Card header
+      -->
+      <template v-slot:card-header>
+        <div v-if="item.objective" class="q-pa-sm row justify-start">
+          <q-badge id="objective-badge" outine color="grey-7">
+            {{ item.objective }}
+          </q-badge>
+        </div>
       </template>
+      <!-- 
+        Card label
+       -->
+      <template v-slot:card-label>
+        <span class="text-subtitle1 text-weight-medium ellipsis-2-lines" style="overflow: hidden">
+          {{ name }}
+        </span>
+      </template>
+      <!--
+        Card content
+       -->
       <template v-slot:card-content>
         <q-separator />
         <div v-if="description">
