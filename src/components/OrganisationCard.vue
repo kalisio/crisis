@@ -205,7 +205,6 @@ export default {
       const organisationsService = this.$api.getService('organisations')
       const response = await organisationsService.get(this.item._id, { query: { $select: ['billing'] } })
       this.billing = _.get(response, 'billing', null)
-      console.log(this.billing)
       if (!this.billing) {
         logger.debug('No billing found for the organisation ID: ', this.item._id)
       }
