@@ -103,8 +103,8 @@ export default {
       locationActions: []
     }
   },
-  async created () {
-    // Load the required components
+  beforeCreate () {
+     // Load the required components
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
     this.$options.components['k-card'] = this.$load('collection/KCard')
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
@@ -113,6 +113,8 @@ export default {
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
     this.$options.components['k-tags-pane'] = this.$load('team/KTagsPane')
     this.$options.components['k-location-map'] = this.$load('KLocationMap')
+  },
+  async created () {
     // Count the number of events
     const service = this.$api.getService('events', this.contextId)
     const response = await service.find({ query: { plan: this.item._id }, $limit: 0 })

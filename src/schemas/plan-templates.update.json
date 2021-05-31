@@ -31,7 +31,7 @@
       "type": "array",
       "field": {
         "component": "form/KChipsField",
-        "lablel": "schema.PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL"
+        "label": "schemas.PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL"
       }
     },
     "coordinators": { 

@@ -620,7 +620,8 @@
     "VIEW_ARCHIVED_EVENTS": "Voir la main courante"
   },
   "PlanTemplatesActivity": {
-    "PLAN_TEMPLATES_LABEL": "Modèles de plan"
+    "PLAN_TEMPLATES_LABEL": "Modèles de plan",
+    "CREATE_TEMPLATE_LABEL": "Créer un nouveau modèle de plan"
   },
   "PlanTemplateCard": {
     "EDIT_LABEL": "$t(EDIT_LABEL)",

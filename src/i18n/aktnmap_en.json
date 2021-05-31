@@ -616,7 +616,8 @@
     "VIEW_ARCHIVED_EVENTS": "View logbook"
   },
   "PlanTemplatesActivity": {
-    "PLAN_TEMPLATES_LABEL": "Plan templates"
+    "PLAN_TEMPLATES_LABEL": "Plan templates",
+    "CREATE_TEMPLATE_LABEL": "Create a new plan template"
   },
   "PlanTemplateCard": {
     "EDIT_LABEL": "$t(EDIT_LABEL)",
