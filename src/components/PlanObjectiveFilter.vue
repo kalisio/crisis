@@ -48,7 +48,7 @@ export default {
       this.kActivity.objectiveFilters = filters
     }
   },
-  mounted () {
+  beforeCreate () {
     // Load the required components
     this.$options.components['k-action'] = this.$load('frame/KAction')
   }

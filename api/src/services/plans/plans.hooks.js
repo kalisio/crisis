@@ -1,5 +1,5 @@
 import { setNow, discard } from 'feathers-hooks-common'
-import { addCreatorAsCoordinator,checkPlansQuotas, archive } from '../../hooks'
+import { addCreatorAsCoordinator,checkPlansQuotas, removeEventsPlan, archive } from '../../hooks'
 
 module.exports = {
   before: {
@@ -29,7 +29,7 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [removeEventsPlan]
   },
 
   error: {

@@ -18,7 +18,7 @@ const plansMixin = {
       return _.has(this.plan, 'location.latitude') && _.has(this.plan, 'location.longitude')
     },
     hasPlanObjectives () {
-      return (_.get(this.plan, 'objectives', []).length > 0)
+      return (_.get(this.plan, 'objective', []).length > 0)
     },
     async loadPlan (planId) {
       if (!planId) this.plan = null
@@ -34,10 +34,12 @@ const plansMixin = {
       await this.loadPlan(this.planId)
     },
     getPlanObjectiveQuery () {
-      return {
-        objectives: (_.isEmpty(this.objectiveFilters) ? { $eq: null } : this.objectiveFilters)
-      }
+      if (_.isEmpty(this.objectiveFilters)) return {}
+      else return { objective: { $in: this.objectiveFilters } }
     }
+  },
+  created () {
+    this.refreshPlan()
   }
 }
 

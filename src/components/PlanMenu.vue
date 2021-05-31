@@ -37,11 +37,11 @@ export default {
         this.icon = 'las la-times'
       } else {
         this.entries.push({
-        id: 'no-plan',
-        icon: 'las la-times',
-        label: 'PlanMenu.NO_PLAN',
-        route: { name: this.$route.name, params: { contextId } }
-      }) 
+          id: 'no-plan',
+          icon: 'las la-times',
+          label: 'PlanMenu.NO_PLAN',
+          route: { name: this.$route.name, params: { contextId } }
+        }) 
       }
       // Add the plans to the entries
       const plansService = this.$api.getService('plans', contextId)

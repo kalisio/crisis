@@ -66,11 +66,14 @@ export default {
       ]
     }
   },
+  watch: {
+    plan: {
+      handler () {
+        this.refresh()
+      }
+    }
+  },
   methods: {
-    async refresh () {
-      await this.refreshPlan()
-      editorMixin.methods.refresh.call(this)
-    },
     async loadObject () {
       // When a template is provided use it as reference for object
       if (this.template) {
@@ -116,8 +119,7 @@ export default {
     },
     async loadSchema () {
       // Call super
-      let schema = await kCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName())
-      console.log(schema)
+      let schema = _.cloneDeep(await kCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName()))
       // When a plan is provide add an objective select
       if (!_.isEmpty(this.planId) && !_.isEmpty(this.plan) && !_.isEmpty(this.plan.objectives)) {
         _.forEach(this.plan.objectives, objective => {

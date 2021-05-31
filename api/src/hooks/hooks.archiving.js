@@ -3,6 +3,7 @@ import { getItems } from 'feathers-hooks-common'
 export async function archive (hook) {
   const service = hook.service
   const object = getItems(hook)
+  console.log(object)
   const archivingService = hook.app.getService(`archived-${service.name}`, service.context)
   if (archivingService) {
     switch (hook.method) {

@@ -127,7 +127,7 @@ export default {
         handler: this.editItem
       },
       {
-        id: 'remove-plan', icon: 'las la-trash', tooltip: 'PlanCard.REMOVE_LABEL',
+        id: 'remove-plan', icon: 'las la-trash', tooltip: 'PlanCard.REMOVE_ACTION',
         visible: this.$can('remove', 'plans', this.contextId, this.item),
         handler: () => this.removeItem('confirm')
       }
@@ -135,10 +135,12 @@ export default {
     // Define the actions
     this.objectivesActions.push({ 
       id: 'edit-objectives', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION', 
+      visible: this.$can('update', 'plans', this.contextId, this.item),
       route: { name: 'edit-plan-objectives', params: { contextId: this.contextId, objectId: this.item._id } }
     })
     this.locationActions.push({ 
       id: 'edit-location', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION',
+      visible: this.$can('update', 'plans', this.contextId, this.item),
       route: { name: 'edit-plan-location', params: { contextId: this.contextId, objectId: this.item._id } }
     })
   }

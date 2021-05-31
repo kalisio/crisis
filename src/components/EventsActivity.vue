@@ -76,6 +76,11 @@ export default {
     async $route (to, from) {
       // Need to refresh the fab because the plan has probably changed
       await this.refreshFab()
+    },
+    plan: {
+      handler () {
+        this.refreshFab()
+      }
     }
   },
   methods: {
@@ -128,8 +133,6 @@ export default {
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
-    // Handle plan
-    await this.refreshPlan()
   }
 }
 </script>

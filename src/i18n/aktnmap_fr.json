@@ -616,7 +616,8 @@
     "UNDEFINED_LOCATION_LABEL": "Non définie",
     "EVENTS": "{{count}} événements(s)",
     "VIEW_PLANS": "Voir les plans",
-    "VIEW_CATALOG": "Voir la carte"
+    "VIEW_CATALOG": "Voir la carte",
+    "VIEW_ARCHIVED_EVENTS": "Voir la main courante"
   },
   "PlanTemplatesActivity": {
     "PLAN_TEMPLATES_LABEL": "Modèles de plan"

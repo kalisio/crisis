@@ -11,6 +11,7 @@ export * from './hooks.events'
 export * from './hooks.event-logs'
 export * from './hooks.devices'
 export * from './hooks.archiving'
+export * from './hooks.plans'
 
 export function addCreatorAsCoordinator (hook) {
   if (hook.type !== 'before') {
