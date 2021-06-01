@@ -119,25 +119,27 @@ export default {
     },
     async loadSchema () {
       // Call super
+      // Start from schema and clone it because it will be shared by all editors
       let schema = _.cloneDeep(await kCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName()))
-      // When a plan is provide add an objective select
-      if (!_.isEmpty(this.planId) && !_.isEmpty(this.plan) && !_.isEmpty(this.plan.objectives)) {
-        _.forEach(this.plan.objectives, objective => {
-          schema.properties.objective.field.options.push({ label: objective.value, value: objective.value })
-        })
+      // When a plan is provide add objective edition and remove expiration date
+      if (!_.isEmpty(this.plan)) {
+        _.set(schema, 'properties.objective.field.options',
+          _.get(this.plan, 'objectives', []).map(objective => ({ label: objective.value, value: objective.value }))
+        )
+        _.unset(schema, 'properties.expireAt')
+        _.pull(schema.required, 'expireAt')
       } else {
-        delete schema.properties.objective
+        _.unset(schema, 'properties.objective')
       }
       // When a template is provided check for workflow availability
       if (this.template) {
-      // Start from schema template and clone it because it will be shared by all editors
-        this.schema = _.cloneDeep(schema)
         // Remove workflow from schema if not present in template
         if (_.isNil(this.template.workflow)) {
-          delete this.schema.properties.hasWorkflow
-          _.pull(this.schema.required, 'hasWorkflow')
+          _.unset(schema, 'properties.hasWorkflow')
+          _.pull(schema.required, 'hasWorkflow')
         }
       }
+      this.schema = schema
       return this.schema
     },
     getBaseQuery (object) {

@@ -1,5 +1,6 @@
 import { setNow, discard } from 'feathers-hooks-common'
-import { addCreatorAsCoordinator,checkPlansQuotas, removeEventsPlan, archive } from '../../hooks'
+import { hooks } from '@kalisio/kdk/core.api'
+import { addCreatorAsCoordinator, checkPlansQuotas, updateEventsObjective, removeEventsPlan, archive } from '../../hooks'
 
 module.exports = {
   before: {
@@ -13,11 +14,13 @@ module.exports = {
     ],
     update: [
       discard('createdAt', 'updatedAt'),
-      setNow('updatedAt')
+      setNow('updatedAt'),
+      hooks.populatePreviousObject
     ],
     patch: [
       discard('createdAt', 'updatedAt'),
-      setNow('updatedAt')
+      setNow('updatedAt'),
+      hooks.populatePreviousObject
     ],
     remove: []
   },
@@ -27,8 +30,8 @@ module.exports = {
     find: [],
     get: [],
     create: [],
-    update: [],
-    patch: [],
+    update: [updateEventsObjective],
+    patch: [updateEventsObjective],
     remove: [removeEventsPlan]
   },
 

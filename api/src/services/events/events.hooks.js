@@ -1,6 +1,7 @@
 import { hooks as coreHooks } from '@kalisio/kdk/core.api'
+import _ from 'lodash'
 import { hooks as mapHooks } from '@kalisio/kdk/map.api'
-import { setNow, discard } from 'feathers-hooks-common'
+import { setNow, discard, iff } from 'feathers-hooks-common'
 import { addCreatorAsCoordinator, processNotification, sendEventNotifications, checkEventsQuotas, archive } from '../../hooks'
 
 module.exports = {
@@ -16,16 +17,22 @@ module.exports = {
       checkEventsQuotas,
       processNotification,
       addCreatorAsCoordinator,
+      // Events attached to a plan should remain active until the plan is closed
+      iff(hook => _.get(hook, 'data.plan'), discard('expireAt')),
       setNow('createdAt', 'updatedAt'), coreHooks.convertDates(['expireAt'])
     ],
     update: [
       processNotification,
       discard('createdAt', 'updatedAt'),
+      // Events attached to a plan should remain active until the plan is closed
+      iff(hook => _.get(hook, 'data.plan'), discard('expireAt')),
       setNow('updatedAt'), coreHooks.convertDates(['expireAt'])
     ],
     patch: [
       processNotification,
       discard('createdAt', 'updatedAt'),
+      // Events attached to a plan should remain active until the plan is closed
+      iff(hook => _.get(hook, 'data.plan'), discard('expireAt')),
       setNow('updatedAt'), coreHooks.convertDates(['expireAt'])
     ],
     remove: [
