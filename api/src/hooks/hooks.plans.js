@@ -14,13 +14,11 @@ export async function updateEventsObjective (hook) {
 
   const previousObjectives = _.get(hook, 'params.previousItem.objectives')
   const objectives = _.get(hook, 'data.objectives')
-  console.log(previousObjectives, objectives)
   if (previousObjectives) {
     // Find common objectives
     const commonObjectives = _.intersectionWith(objectives, previousObjectives, isObjectiveEqual)
     // Then removed objectives
     const removedObjectives = _.differenceWith(previousObjectives, commonObjectives, isObjectiveEqual)
-    console.log(commonObjectives, removedObjectives)
     // Update events accordingly
     const service = hook.service
     const eventsService = hook.app.getService('events', service.context)

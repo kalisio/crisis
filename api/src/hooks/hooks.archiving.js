@@ -24,7 +24,6 @@ export async function archive (hook) {
         break
       case 'patch':
         // Possible for batch-patch
-        console.log('query', query, object, hook.data)
         if (_.isEmpty(object)) {
           await archivingService.patch(null, hook.data, { query })
         } else {
