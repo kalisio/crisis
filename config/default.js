@@ -486,6 +486,7 @@ module.exports = {
           currentActivityStamp('las la-map', 'Context.CATALOG'),
           archivedEventsAction(),
           midSeparator,
+          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { component: 'KLocateUser' },
           { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
           {

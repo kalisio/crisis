@@ -97,6 +97,11 @@ export default {
       inProgress: false
     }
   },
+  watch: {
+    objectiveFilters: function () {
+      this.events.refreshCollection()
+    }
+  },
   methods: {
     formatDate (date) {
       return date.toLocaleString(kCoreUtils.getLocale(),
@@ -385,7 +390,7 @@ export default {
         { id: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.templateModal.close() }
       ]
     },
-    configureCollection (service, baseQuery, props = {}) {
+    configureCollection (service, baseQuery, filterQuery, props = {}) {
       // As we'd like to use the collection mixin but need to require multiple services (alerts, events)
       // we create a specific component instance to manage each type of objects which are then added to the map.
       // Indeed we can only support one service if we directly use the mixin in the activity.
@@ -393,7 +398,8 @@ export default {
         mixins: [kCoreMixins.baseCollection],
         methods: {
           loadService: () => this.$api.getService(service),
-          getCollectionBaseQuery: () => baseQuery,
+          getCollectionBaseQuery: baseQuery,
+          getCollectionFilterQuery: filterQuery,
           // No pagination on map items
           getCollectionPaginationQuery: () => ({})
         }
@@ -425,13 +431,13 @@ export default {
     this.$checkBillingOption('catalog')
   },
   mounted () {
-    this.alerts = this.configureCollection('alerts', { geoJson: true, $skip: 0, $limit: MAX_ITEMS }, { nbItemsPerPage: 0 })
+    this.alerts = this.configureCollection('alerts',
+      () => ({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }), () => ({}), { nbItemsPerPage: 0 })
     this.alerts.$on('collection-refreshed', this.onAlertCollectionRefreshed)
-    const eventsBaseQuery = Object.assign({
+    this.events = this.configureCollection('events', () => Object.assign({
       geoJson: true, $skip: 0, $limit: MAX_ITEMS,
       $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
-    }, this.getPlanQuery())
-    this.events = this.configureCollection('events', eventsBaseQuery, { nbItemsPerPage: 0 })
+    }, this.getPlanQuery()), () => this.getPlanObjectiveQuery(), { nbItemsPerPage: 0 })
     this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
   },
   beforeDestroy () {
