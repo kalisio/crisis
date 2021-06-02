@@ -390,7 +390,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationAvatar' },
+          { component: 'OrganisationMenu' },
           separator,
           currentActivityStamp('las la-stream', 'PlansActivity.PLANS_LABEL'),
           archivedPlansAction(),
@@ -416,7 +416,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationAvatar' },
+          { component: 'OrganisationMenu' },
           separator,
           plansAction(),
           currentActivityStamp('las la-history', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL'),
@@ -432,10 +432,8 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationAvatar',  },
+          { component: 'OrganisationMenu',  menu: true },
           separator,
-          { component: 'PlanMenu' },
-          midSeparator,          
           currentActivityStamp('las la-fire', 'EventsActivity.EVENTS_LABEL'),
           mapAction(),
           archivedEventsAction(),
@@ -478,10 +476,8 @@ module.exports = {
     topPane: {
       content: {
         default: [
-          { component: 'OrganisationAvatar' },
-          separator,
-          { component: 'PlanMenu' },
-          midSeparator,          
+          { component: 'OrganisationMenu',  menu: true },
+          separator,        
           eventsAction(),
           currentActivityStamp('las la-map', 'Context.CATALOG'),
           archivedEventsAction(),
@@ -564,10 +560,8 @@ module.exports = {
     topPane: {
       content: {
         'history': [
-          { component: 'OrganisationAvatar' },
+          { component: 'OrganisationMenu',  menu: true },
           separator,
-          { component: 'PlanMenu' },
-          midSeparator,          
           eventsAction(),
           mapAction(),
           currentActivityStamp('las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
@@ -633,7 +627,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationAvatar' },
+          { component: 'OrganisationMenu' },
           separator,
           currentActivityStamp('las la-user-friends', 'KMembersActivity.MEMBERS_LABEL'),
           tagsAction(),
@@ -686,7 +680,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [      
-          { component: 'OrganisationAvatar' },
+          { component: 'OrganisationMenu' },
           separator,          
           membersAction(),
           currentActivityStamp('las la-tags', 'KTagsActivity.TAGS_LABEL'),
@@ -720,7 +714,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationAvatar' },
+          { component: 'OrganisationMenu' },
           separator,
           membersAction(),
           tagsAction(),
@@ -757,7 +751,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [ 
-          { component: 'OrganisationAvatar' },
+          { component: 'OrganisationMenu' },
           separator,
           membersAction(),
           tagsAction(),
@@ -796,7 +790,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [ 
-          { component: 'OrganisationAvatar' },
+          { component: 'OrganisationMenu' },
           separator,
           membersAction(),
           tagsAction(),

@@ -632,7 +632,7 @@
     "ARCHIVED_PLANS_LABEL": "Archive"
   },
   "PlanMenu": {
-    "PLANS": "Plans",
-    "NO_PLAN": "Aucun"
+    "PLANS": "Tous les plans",
+    "NO_PLAN": "Aucun plan"
   }
 }

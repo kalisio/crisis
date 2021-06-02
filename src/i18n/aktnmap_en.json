@@ -628,7 +628,7 @@
     "ARCHIVED_PLANS_LABEL": "Archived plans"
   },
   "PlanMenu": {
-    "PLANS": "Plans",
-    "NO_PLAN": "None"
+    "PLANS": "All plans",
+    "NO_PLAN": "No plan"
   }
 }
