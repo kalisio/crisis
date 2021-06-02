@@ -1,10 +1,17 @@
 <template>
-  <k-menu
-    id="plan-selector"
-    :label="label"
-    :icon="icon"
-    :content="entries" 
-    actionRenderer="item" />
+  <div v-if="hasMenu">
+    <k-menu
+      id="plan-selector"
+      :label="label"
+      :icon="icon"
+      :color="color"
+      :size="size"
+      :content="entries" 
+      actionRenderer="item" />
+  </div>
+  <div v-else>
+    <k-stamp :text="label" :icon="icon" :icon-size="size" direction="horizontal" :class="`text-${color}`" />
+  </div>
 </template>
 
 <script>
@@ -12,16 +19,40 @@ import _ from 'lodash'
 
 export default {
   name: 'plan-menu',
+  props: {
+    icon: {
+      type: String,
+      default: undefined
+    },
+    label: {
+      type: String,
+      default: undefined
+    },
+    color: {
+      type: String,
+      default: 'grey-9'
+    },
+    size: {
+      type: String,
+      default: 'sm'
+    }
+  },
   data () {
     return {
-      label: '',
-      icon: '',
       entries: []
     }
   },
+  computed: {
+    hasMenu () {
+      return this.entries.length > 0
+    }
+  },
   watch:{
-    $route (to, from) {
-      this.refreshMenu()
+    $route: {
+      handler () {
+        this.refreshMenu()
+      },
+      immediate: true
     }
   },
   methods: {
@@ -32,14 +63,11 @@ export default {
       this.planId = _.get(this.$route, 'query.plan', null)
       // If no plan set the menu to the NO PLAN entry
       // Otherwise add the entry in the menu
-      if (!this.planId) {
-        this.label = 'PlanMenu.NO_PLAN'
-        this.icon = 'las la-times'
-      } else {
+      if (this.planId) {
         this.entries.push({
           id: 'no-plan',
           icon: 'las la-times',
-          label: 'PlanMenu.NO_PLAN',
+          label: 'PlanMenu.NO_PLAN_LABEL',
           route: { name: this.$route.name, params: { contextId } }
         }) 
       }
@@ -55,25 +83,13 @@ export default {
             label: plan.name,
             route: { name: this.$route.name, params: this.$route.params, query: { plan: plan._id } }
           }) 
-        } else {
-          this.label = plan.name
-          this.icon = plan.icon.name
         }
-      })
-      // Finaly add the entry to the plan activity
-      this.entries.push({
-        id: 'plans',
-        icon: 'las la-stream',
-        label: 'PlanMenu.PLANS',
-        route: { name: 'plans-activity', params: { contextId } }
       })
     }
   },
-  created () {
-    // Load the required components
+  beforeCreate () {
     this.$options.components['k-menu'] = this.$load('menu/KMenu')
-    // Setup the menu
-    this.refreshMenu()
+    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
   } 
 }
 </script>

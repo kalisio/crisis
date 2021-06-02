@@ -1,31 +1,29 @@
 <template>
   <div v-if="organisation">
-    <div v-if="menu">
-      <div v-if="entries.length > 0">
-        <q-btn-dropdown 
-          flat
-          no-caps
-          fab-mini
-          menu-anchor="bottom left"
-          menu-self="top left">
-          <template v-slot:label>
-            <div>
-              <k-avatar 
-                :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'" 
-                :object="currentObject" 
-                :contextId="organisation._id"
-                :size="$q.screen.lt.sm ? '1.8rem' : '2rem'" />
-            </div>
-          </template>
-          <template v-slot:default>
-            <k-panel
-              id="menu-entries"
-              :content="entries"
-              action-renderer="item"
-              direction="vertical" />
-          </template>
-        </q-btn-dropdown>
-      </div>
+    <div v-if="hasMenu">
+      <q-btn-dropdown 
+        flat
+        no-caps
+        fab-mini
+        menu-anchor="bottom left"
+        menu-self="top left">
+        <template v-slot:label>
+          <div>
+            <k-avatar 
+              :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'" 
+              :object="currentObject" 
+              :contextId="organisation._id"
+              :size="$q.screen.lt.sm ? '1.8rem' : '2rem'" />
+          </div>
+        </template>
+        <template v-slot:default>
+          <k-panel
+            id="menu-entries"
+            :content="entries"
+            action-renderer="item"
+            direction="vertical" />
+        </template>
+      </q-btn-dropdown>
     </div>
     <div v-else>
       <k-avatar 
@@ -64,53 +62,32 @@ export default {
       entries: []
     }
   },
-  watch:{
-    $route: {
-      async handler (to, from) {
-        await this.refresh()
-      },
-      immediate: true
+  computed: {
+    hasMenu () {
+      return this.entries.length > 0
     }
   },
-  methods: {
-    async refresh () {
-      this.organisation = this.$store.get('context')
-      this.currentObject = this.organisation
-      this.entries = []
-      const planId = _.get(this.$route, 'query.plan', null)
-      // If no plan set the menu to the NO PLAN entry
-      // Otherwise add the entry in the menu
-      if (planId) {
-        this.entries.push({
-          id: 'no-plan',
-          icon: 'las la-times',
-          label: 'PlanMenu.NO_PLAN',
-          route: { name: this.$route.name, params: { contextId: this.organisation._id } }
-        }) 
-      }
-      // Add the plans to the entries
-      const plansService = this.$api.getService('plans', this.organisation._id)
-      const response = await plansService.find({})
-      // Build the menu entries
-      _.forEach(response.data, plan => {
-        if (plan._id != this.planId) {
-          this.entries.unshift({
-            id: plan.name,
-            icon: plan.icon.name,
-            label: plan.name,
-            route: { name: this.$route.name, params: this.$route.params, query: { plan: plan._id } }
-          }) 
-        } else {
-          this.currentObject = plan
+  watch:{
+    $route: {
+      handler (to, from) {
+        this.organisation = this.$store.get('context')
+        this.currentObject = this.organisation
+        this.entries = []
+      },
+      immediate: true
+    },
+    plan : {
+      handler (plan) {
+        if (plan) {
+          this.currentObject = this.plan
+          this.entries.push({
+            id: 'edit-plan',
+            icon: 'las la-edit',
+            label: 'OrganisationMenu.EDIT_LABEL',
+            route: { name: 'edit-plan', params: { contextId: this.organisation._id, objectId: this.planId } }
+          })
         }
-      })
-      // Finaly add the entry to the plan activity
-      this.entries.push({
-        id: 'plans',
-        icon: 'las la-stream',
-        label: 'PlanMenu.PLANS',
-        route: { name: 'plans-activity', params: { contextId: this.organisation._id } }
-      })
+      }
     }
   },
   beforeCreate () {

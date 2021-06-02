@@ -632,7 +632,9 @@
     "ARCHIVED_PLANS_LABEL": "Archive"
   },
   "PlanMenu": {
-    "PLANS": "Tous les plans",
-    "NO_PLAN": "Aucun plan"
+    "NO_PLAN_LABEL": "Aucun plan"
+  },
+  "OrganisationMenu": {
+    "EDIT_LABEL": "$t(EDIT_LABEL)"
   }
 }

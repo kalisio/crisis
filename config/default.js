@@ -64,6 +64,10 @@ const currentActivityStamp = function (icon, text) {
   return { component: 'frame/KStamp', icon, iconSize: 'sm', text, direction: 'horizontal', class: 'text-accent' }
 }
 
+const currentActivityPlanMenu = function (icon, text) {
+  return { component: 'PlanMenu', icon, label: text, color: 'accent' }
+}
+
 const gotoActivityAction = function (service, icon, label, contextId) {
   return { 
     id: service, icon, tooltip: label,
@@ -434,7 +438,7 @@ module.exports = {
         'default': [
           { component: 'OrganisationMenu',  menu: true },
           separator,
-          currentActivityStamp('las la-fire', 'EventsActivity.EVENTS_LABEL'),
+          currentActivityPlanMenu('las la-fire', 'EventsActivity.EVENTS_LABEL'),
           mapAction(),
           archivedEventsAction(),
           midSeparator,
@@ -479,7 +483,7 @@ module.exports = {
           { component: 'OrganisationMenu',  menu: true },
           separator,        
           eventsAction(),
-          currentActivityStamp('las la-map', 'Context.CATALOG'),
+          currentActivityPlanMenu('las la-map', 'Context.CATALOG'),
           archivedEventsAction(),
           midSeparator,
           { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
@@ -564,7 +568,7 @@ module.exports = {
           separator,
           eventsAction(),
           mapAction(),
-          currentActivityStamp('las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
+          currentActivityPlanMenu('las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
           midSeparator,
           { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'map-view', icon: 'las la-map-marked', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
