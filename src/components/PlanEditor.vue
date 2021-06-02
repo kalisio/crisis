@@ -47,6 +47,9 @@ export default {
     }
   },
   methods: {
+    getService () {
+      return this.$api.getService('plans')
+    },
     async loadObject () {
       // When a template is provided use it as reference for object
       if (this.template) {

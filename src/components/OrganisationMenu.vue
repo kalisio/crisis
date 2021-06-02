@@ -84,7 +84,10 @@ export default {
             id: 'edit-plan',
             icon: 'las la-edit',
             label: 'OrganisationMenu.EDIT_LABEL',
-            route: { name: 'edit-plan', params: { contextId: this.organisation._id, objectId: this.planId } }
+            route: { 
+              path: this.$route.path + '/edit-plan/' + this.planId,
+              query: this.$route.query 
+            }
           })
         }
       }

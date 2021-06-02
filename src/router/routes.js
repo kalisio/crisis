@@ -204,6 +204,11 @@ module.exports = {
                     name: 'manage-layer-categories',
                     component: 'catalog/KLayerCategories',
                     tour: tours['catalog-categories']
+                  },
+                  'edit-plan/:objectId': {
+                    component: 'PlanEditor',
+                    props: true,
+                    meta: { schemaName: 'plans.update' }
                   }
                 }
               },
@@ -264,6 +269,11 @@ module.exports = {
                     name: 'edit-event',
                     component: 'EventEditor',
                     props: true
+                  },
+                  'edit-plan/:objectId': {
+                    component: 'PlanEditor',
+                    props: true,
+                    meta: { schemaName: 'plans.update' }
                   }
                 },
                 tour: tours.events
@@ -278,6 +288,11 @@ module.exports = {
                     component: 'viewer/KModalViewer',
                     props: true
                   },
+                  'edit-plan/:objectId': {
+                    component: 'PlanEditor',
+                    props: true,
+                    meta: { schemaName: 'plans.update' }
+                  }
                 },
                 tour: {
                   'archived-events-activity': tours['archived-events'],
