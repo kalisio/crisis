@@ -14,7 +14,7 @@
     },
     "icon": {
       "type": "object", 
-      "default": { "name": "fa-stream", "color": "primary" },
+      "default": { "name": "fas fa-stream", "color": "red" },
       "field": {
         "component": "form/KIconField",
         "label": "schemas.PLAN_TEMPLATES_ICON_FIELD_LABEL"
