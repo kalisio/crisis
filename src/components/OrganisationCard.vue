@@ -114,7 +114,7 @@ export default {
         id: 'view-plans', 
         icon: 'las la-arrow-circle-right', 
         tooltip: 'OrganisationCard.VIEW_PLANS',
-        handler: () => this.routeTo('plans-activity', this.item._id) }
+        handler: () => this.routeTo('plans-activity') }
       ],
       planItemRenderer: {
         component: 'PlanItem',
@@ -189,7 +189,9 @@ export default {
   methods: {
     routeTo (activity, planId = null) {
       let route = { name: activity, params: { contextId: this.item._id } }
+      console.log('***', planId)
       if (planId) route = Object.assign(route, { query: { plan: planId } })
+      console.log(route)
       this.$router.push(route)
     },
     getUserRoleLabel () {
