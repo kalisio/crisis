@@ -124,7 +124,7 @@ export default {
       // When a plan is provide add objective edition and remove expiration date
       if (!_.isEmpty(this.plan)) {
         _.set(schema, 'properties.objective.field.options',
-          _.get(this.plan, 'objectives', []).map(objective => ({ label: objective.value, value: objective.value }))
+          _.get(this.plan, 'objectives', []).map(objective => ({ label: objective, value: objective }))
         )
         _.unset(schema, 'properties.expireAt')
         _.pull(schema.required, 'expireAt')

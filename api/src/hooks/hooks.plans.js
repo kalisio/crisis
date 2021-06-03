@@ -8,23 +8,19 @@ export async function updateEventsObjective (hook) {
     throw new Error('The \'updateEventsObjective\' hook should only be used as a \'after\' hook.')
   }
 
-  function isObjectiveEqual (objective1, objective2) {
-    return _.isEqual(objective1.value, objective2.value)
-  }
-
-  const previousObjectives = _.get(hook, 'params.previousItem.objectives')
-  const objectives = _.get(hook, 'data.objectives')
-  if (previousObjectives) {
-    // Find common objectives
-    const commonObjectives = _.intersectionWith(objectives, previousObjectives, isObjectiveEqual)
-    // Then removed objectives
-    const removedObjectives = _.differenceWith(previousObjectives, commonObjectives, isObjectiveEqual)
+  const previousObjectives = _.get(hook, 'params.previousItem.objectives', [])
+  const objectives = _.get(hook, 'data.objectives', [])
+  // Find common objectives
+  const commonObjectives = _.intersectionWith(objectives, previousObjectives)
+  // Then removed objectives
+  const removedObjectives = _.differenceWith(previousObjectives, commonObjectives)
+  if (!_.isEmpty(removedObjectives)) {
     // Update events accordingly
     const service = hook.service
     const eventsService = hook.app.getService('events', service.context)
     await Promise.all(
       removedObjectives.map(objective => 
-        eventsService.patch(null, { objective: null }, { query: { objective: objective.value } })
+        eventsService.patch(null, { objective: null }, { query: { objective } })
       )
     )
   }

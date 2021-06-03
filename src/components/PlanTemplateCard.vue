@@ -10,7 +10,7 @@
       <!-- Objectives section -->
       <k-card-section icon="las la-dot-circle" :title="$t('PlanCard.OBJECTIVES_LABEL')" :actions="objectivesActions">
         <template slot="card-section-content">
-          <k-tags-pane class="q-pl-sm" :tags="item.objectives" />
+          <k-chips-pane class="q-pl-sm" :chips="item.objectives" />
         </template>
       </k-card-section>
     </template>
@@ -33,7 +33,7 @@ export default {
     // Load the required components
     this.$options.components['k-card'] = this.$load('collection/KCard')
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
-    this.$options.components['k-tags-pane'] = this.$load('team/KTagsPane')
+    this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')
   },
   created () {
     // Define the actions

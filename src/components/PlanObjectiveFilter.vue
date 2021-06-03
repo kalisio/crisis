@@ -40,7 +40,7 @@ export default {
   watch: {
     plan: {
       handler: function (plan) {
-        if (plan) this.options = _.get(plan, 'objectives', []).map(objective => ({ label: objective.value, value: objective.value }))
+        if (plan) this.options = _.get(plan, 'objectives', []).map(objective => ({ label: objective, value: objective }))
       },
       immediate: true
     },

@@ -16,7 +16,7 @@ export async function archive (hook) {
         break
       case 'update':
         // Possible for batch-update
-        if (_.isEmpty(object)) {
+        if (Array.isArray(object)) {
           await archivingService.update(null, hook.data, { query })
         } else {
           await archivingService.update(object._id, object)
@@ -24,7 +24,7 @@ export async function archive (hook) {
         break
       case 'patch':
         // Possible for batch-patch
-        if (_.isEmpty(object)) {
+        if (Array.isArray(object)) {
           await archivingService.patch(null, hook.data, { query })
         } else {
           await archivingService.patch(object._id, object)
@@ -32,7 +32,7 @@ export async function archive (hook) {
         break
       case 'remove':
         // Possible for batch-remove
-        if (_.isEmpty(object)) {
+        if (Array.isArray(object)) {
           // Do not tag as deleted already tagged objects
           Object.assign(query, { deletedAt: { $exists: false } })
           await archivingService.patch(null, { deletedAt: new Date() }, { query })

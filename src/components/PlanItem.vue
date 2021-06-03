@@ -10,7 +10,7 @@
               <div>{{ description }}</div>
               <div class="row iems-center">
                 <template v-for="objective in objectives">
-                  <q-badge :key="objective.value" :label="objective.value" color="grey-9" />
+                  <q-badge :key="objective" :label="objective" color="grey-9" />
                 </template>
               </div>
             </div>
