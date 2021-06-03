@@ -15,7 +15,7 @@
     },
     "icon": {
       "type": "object", 
-      "default": { "name": "mode_edit", "color": "primary" },
+      "default": { "name": "fas fa-edit", "color": "grey" },
       "field": {
         "component": "form/KIconField",
         "label": "schemas.EVENT_TEMPLATES_ICON_FIELD_LABEL"
