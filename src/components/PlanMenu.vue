@@ -2,7 +2,7 @@
   <div v-if="hasMenu">
     <k-menu
       id="plan-selector"
-      :label="label"
+      :label="computedLabel"
       :icon="icon"
       :color="color"
       :size="size"
@@ -45,6 +45,9 @@ export default {
   computed: {
     hasMenu () {
       return this.entries.length > 0
+    },
+    computedLabel () {
+      return this.$q.screen.gt.xs ? this.label : ''
     }
   },
   watch:{

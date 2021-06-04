@@ -167,6 +167,6 @@
       }
     }
   },
-  "required": ["name", "expireAt", "participants", "hasWorkflow", "notification"]
+  "required": ["name", "expireAt", "hasWorkflow", "notification"]
 }
 

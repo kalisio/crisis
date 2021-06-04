@@ -457,7 +457,10 @@
   "EventsActivity": {
     "EVENTS_LABEL": "$t(EVENTS_LABEL)",
     "SEARCH_EVENTS": "Rechercher des évébnements",
-    "SORT_EVENTS": "Trier les événements"
+    "SORT_EVENTS": "Trier les événements",
+    "TODO_LABEL": "A faire",
+    "DOING_LABEL": "En cours",
+    "DONE_LABEL": "Cloturés"
   },
   "EventCard": {
     "CREATED_AT_LABEL": "Créé le",

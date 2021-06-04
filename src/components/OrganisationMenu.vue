@@ -6,7 +6,8 @@
         no-caps
         fab-mini
         menu-anchor="bottom left"
-        menu-self="top left">
+        menu-self="top left"
+        content-style="margin: 0px !important; padding: 0px !important;">
         <template v-slot:label>
           <div>
             <k-avatar 
@@ -99,3 +100,9 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="sass">
+.q-btn-dropdown
+  &--simple * + .q-btn-dropdown__arrow
+    margin-left: 48px
+</style>

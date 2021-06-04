@@ -454,7 +454,10 @@
     "MY_ORGANISATIONS": "My organisations",
     "EVENTS_LABEL": "My events",
     "SEARCH_EVENTS": "Search events",
-    "SORT_EVENTS": "Sort events"
+    "SORT_EVENTS": "Sort events",
+    "TODO_LABEL": "To do",
+    "DOING_LABEL": "Doing",
+    "DONE_LABEL": "Done"
   },
   "EventCard": {
     "CREATED_AT_LABEL": "Created at",

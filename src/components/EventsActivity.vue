@@ -5,6 +5,7 @@
         Events collection
       -->
       <k-grid
+        v-if="!planId"
         ref="eventsGrid"
         service="events" 
         :renderer="renderer" 
@@ -18,6 +19,10 @@
           </div>
         </template>
       </k-grid>
+      <k-board
+        v-else
+        ref="eventsBoard"
+        :columns="columns" />
       <!--
         Router view to enable routing to modals
       -->
@@ -50,16 +55,6 @@ export default {
       default: ''
     }
   },
-  data () {
-    return {
-      sorter: this.$store.get('sorter'),
-      filter: this.$store.get('filter'),
-      // Make this configurable from app
-      renderer: _.merge({
-        component: 'EventCard'
-      }, this.activityOptions.items)
-    }
-  },
   computed: {
     baseQuery () {
       let query = _.clone(this.sorter.query)
@@ -70,6 +65,53 @@ export default {
       let query = _.clone(this.filter.query)
       Object.assign(query, this.getPlanObjectiveQuery())
       return query
+    },
+    columns () {
+      return [{
+        label: 'EventsActivity.TODO_LABEL',
+        value: 'todo',
+        props: {
+          service: 'events',
+          renderer: this.renderer,
+          contextId: this.contextId,
+          nbItemsPerPage: 6,
+          listStrategy: 'smart',
+          baseQuery: Object.assign({ participants: { $eq: [] }}, this.baseQuery),
+          filterQuery: this.filterQuery
+        }
+      }, {
+        label: 'EventsActivity.DOING_LABEL',
+        value: 'doing',
+        props: {
+          service: 'events',
+          renderer: this.renderer,
+          contextId: this.contextId,
+          listStrategy: 'smart',
+          baseQuery: Object.assign({ participants: { $ne: [] }}, this.baseQuery),
+          filterQuery: this.filterQuery
+        }
+      }, {
+        label: 'EventsActivity.DONE_LABEL',
+        value: 'done',
+        props: {
+          service: 'archived-events',
+          renderer: this.renderer,
+          contextId: this.contextId,
+          listStrategy: 'smart',
+          baseQuery: Object.assign({ deletedAt: { $exists: true }}, this.baseQuery),
+          filterQuery: this.filterQuery
+        }
+      }]
+    }
+  },
+  data () {
+    return {
+      sorter: this.$store.get('sorter'),
+      filter: this.$store.get('filter'),
+      // Make this configurable from app
+      renderer: _.merge({
+        component: 'EventCard'
+      }, this.activityOptions.items)
     }
   },
   watch: {
@@ -128,10 +170,11 @@ export default {
       }
     }
   },
-  async created () {
+  beforeCreate () {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
+    this.$options.components['k-board'] = this.$load('collection/KBoard')
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
   }
 }
