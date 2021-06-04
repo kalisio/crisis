@@ -22,7 +22,8 @@
       <k-board
         v-else
         ref="eventsBoard"
-        :columns="columns" />
+        :columns="boardColumns" 
+        :height="boardHeight" />
       <!--
         Router view to enable routing to modals
       -->
@@ -66,7 +67,7 @@ export default {
       Object.assign(query, this.getPlanObjectiveQuery())
       return query
     },
-    columns () {
+    boardColumns () {
       return [{
         label: 'EventsActivity.TODO_LABEL',
         value: 'todo',
@@ -74,7 +75,6 @@ export default {
           service: 'events',
           renderer: this.renderer,
           contextId: this.contextId,
-          nbItemsPerPage: 6,
           listStrategy: 'smart',
           baseQuery: Object.assign({ participants: { $eq: [] }}, this.baseQuery),
           filterQuery: this.filterQuery
@@ -102,6 +102,9 @@ export default {
           filterQuery: this.filterQuery
         }
       }]
+    },
+    boardHeight () {
+      return this.$q.screen.height - 200 
     }
   },
   data () {
