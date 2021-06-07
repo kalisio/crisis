@@ -397,7 +397,7 @@ export default {
       const Component = Vue.extend({
         mixins: [kCoreMixins.baseCollection],
         methods: {
-          loadService: () => this.$api.getService(service),
+          getService: () => this.$api.getService(service),
           getCollectionBaseQuery: baseQuery,
           getCollectionFilterQuery: filterQuery,
           // No pagination on map items

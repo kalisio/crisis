@@ -48,9 +48,8 @@ export default {
         handler: () => this.logCoordinatorState()
       }]
     },
-    loadService () {
-      this._service = this.$api.getService('event-logs', this.contextId)
-      return this._service
+    getService () {
+      return this.$api.getService('event-logs', this.contextId)
     },
     async loadSchema () {
       this.schema = await this.generateSchemaForStep(this.step, this.event.layer)
@@ -80,7 +79,7 @@ export default {
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-form'] = this.$load('form/KForm')
     // Retrieve source log/event
-    this.state = await this.loadService().get(this.logId)
+    this.state = await this.getService().get(this.logId)
     this.event = await this.$api.getService('events', this.contextId).get(this.objectId)
     // Load layer schema if any
     await this.loadLayerSchema(this.event.layer)

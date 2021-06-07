@@ -81,7 +81,7 @@ export default {
     }
   },
   methods: {
-    loadService () {
+    getService () {
       // Archived mode ?
       return this.$api.getService(this.archived ? 'archived-event-logs' : 'event-logs')
     },

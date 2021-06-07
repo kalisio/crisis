@@ -252,7 +252,7 @@ const eventsMixin = {
             _.mapKeys(result.values, (value, key) => `properties.${key}`))
         }
         // Then create interaction log
-        return this.serviceCreate(log)
+        return this.getService().create(log)
       } else {
         throw new Error('Cannot log state because form is not valid')
       }

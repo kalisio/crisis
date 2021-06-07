@@ -94,7 +94,7 @@ export default {
     }
   },
   methods: {
-    loadService () {
+    getService () {
       return this.$api.getService('organisations')
     },
     refreshPlans () {

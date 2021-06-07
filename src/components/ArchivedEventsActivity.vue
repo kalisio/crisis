@@ -272,7 +272,7 @@ export default {
         blur: 0.8
       }
     },
-    loadService () {
+    getService () {
       return this.$api.getService('archived-events')
     },
     loadLogsService () {
@@ -422,7 +422,7 @@ export default {
     },
     async getChartData () {
       // Get possible values
-      this.values = await this.loadService().find({ query: { $distinct: 'template' } })
+      this.values = await this.getService().find({ query: { $distinct: 'template' } })
       // Due to a change in the data structure to enhance archiving some old events do not have a "template" field resulting in a null value
       this.values.forEach((value, index) => {
         if (!value) this.values[index] = this.$t('ArchivedEventsActivity.NULL_VALUE_LABEL')
@@ -435,7 +435,7 @@ export default {
         data = response.map(item => ({ value: item._id, count: item.count }))
       } else {
         data = await Promise.all(this.values.map(async value => {
-          const response = await this.loadService()
+          const response = await this.getService()
             .find({ query: Object.assign({ $limit: 0, template: value }, this.baseQuery) })
           return { value, count: response.total }
         }))
@@ -550,7 +550,7 @@ export default {
         data = JSON.stringify(geoJson)
       } else {
         // Make full request to avoid pagination and filter required data
-        const response = await this.loadService().find({
+        const response = await this.getService().find({
           query: Object.assign({
             $skip: 0, $limit: MAX_EVENTS,
             $select: ['_id', 'name', 'description', 'template', 'location',

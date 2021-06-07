@@ -197,9 +197,8 @@ export default {
         handler: () => this.$refs.locationModal.close()
       }]
     },
-    loadService () {
-      this._service = this.$api.getService('event-logs', this.contextId)
-      return this._service
+    getService () {
+      return this.$api.getService('event-logs', this.contextId)
     },
     async loadSchema () {
       // Load layer schema if any first
@@ -349,7 +348,7 @@ export default {
       try {
         // No last log yet => initiate the workflow by a log acting as a read receipt
         if (logs.total === 0) {
-          const count = await this.serviceFind({
+          const count = await this.getService().find({
             query: {
               $limit: 0,
               participant: this.userId,
@@ -360,7 +359,7 @@ export default {
             this.participantState = {}
             this.participantStep = this.getWorkflowStep() || {} // Use empty object by default to simplify display
             const log = await this.createParticipantLog(this.participantStep, this.participantState)
-            this.serviceCreate(log)
+            this.Create(log)
             // Real-time event should trigger a new refresh for current state
           }
         } else if (logs.data.length > 0) {
@@ -371,7 +370,7 @@ export default {
           // When participant has just fullfilled a step we need to initiate the next one (if any) by a log acting as a read receipt
           // We know this when we get a higher step in workflow from the current state
           if (this.isBeforeInWorkflow(this.participantState.step, this.participantStep.name)) {
-            const count = await this.serviceFind({
+            const count = await this.getService().find({
               query: {
                 $limit: 0,
                 participant: this.userId,
@@ -381,7 +380,7 @@ export default {
             })
             if (count.total === 0) {
               const log = await this.createParticipantLog(this.participantStep, this.participantState)
-              this.serviceCreate(log)
+              this.getService().create(log)
               // Real-time event should trigger a new refresh for current state
             }
           }
@@ -407,7 +406,7 @@ export default {
     subscribeParticipantLog () {
       // Remove previous listener if any
       this.unsubscribeParticipantLog()
-      this.participantLogListener = this.loadService().watch({ listStrategy: 'always' })
+      this.participantLogListener = this.getService().watch({ listStrategy: 'always' })
         .find({
           query: {
             $sort: { createdAt: -1 }, // sort by newest ones
@@ -451,7 +450,7 @@ export default {
     subscribeCoordinatorLog () {
       // Remove previous listener if any
       this.unsubscribeCoordinatorLog()
-      this.coordinatorLogListener = this.loadService().watch({ listStrategy: 'smart' })
+      this.coordinatorLogListener = this.getService().watch({ listStrategy: 'smart' })
         .find({
           query: {
             $sort: { createdAt: -1 }, // sort by newest ones

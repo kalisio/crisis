@@ -75,7 +75,6 @@ export default {
           service: 'events',
           renderer: this.renderer,
           contextId: this.contextId,
-          listStrategy: 'smart',
           baseQuery: Object.assign({ participants: { $eq: [] }}, this.baseQuery),
           filterQuery: this.filterQuery
         }
@@ -86,7 +85,6 @@ export default {
           service: 'events',
           renderer: this.renderer,
           contextId: this.contextId,
-          listStrategy: 'smart',
           baseQuery: Object.assign({ participants: { $ne: [] }}, this.baseQuery),
           filterQuery: this.filterQuery
         }
@@ -97,14 +95,13 @@ export default {
           service: 'archived-events',
           renderer: this.renderer,
           contextId: this.contextId,
-          listStrategy: 'smart',
           baseQuery: Object.assign({ deletedAt: { $exists: true }}, this.baseQuery),
           filterQuery: this.filterQuery
         }
       }]
     },
     boardHeight () {
-      return this.$q.screen.height - 200 
+      return this.$q.screen.height - 210 
     }
   },
   data () {
