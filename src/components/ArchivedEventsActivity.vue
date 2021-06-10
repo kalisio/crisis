@@ -9,9 +9,9 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="col-12">
-        <q-slider id="heatmap-radius" v-model="heatmapRadius" :min="1" :max="100" :step="1"
-          label-always :label-value="$t('ArchivedEventsActivity.HEATMAP_RADIUS_LABEL') + ': ' + heatmapRadius + ' Kms'" @change="onHeatmapRadius"></q-slider>
-        </div>
+          <q-slider id="heatmap-radius" v-model="heatmapRadius" :min="1" :max="100" :step="1"
+            label-always :label-value="$t('ArchivedEventsActivity.HEATMAP_RADIUS_LABEL') + ': ' + heatmapRadius + ' Kms'" @change="onHeatmapRadius"></q-slider>
+          </div>
         </div>
       </q-page-sticky>
       <!--
@@ -29,12 +29,13 @@
         :filter-query="filterQuery" 
         :renderer="renderer" 
         :contextId="contextId" 
-        :list-strategy="'smart'">
-        <template slot="empty-section">
+        :list-strategy="'smart'"
+        :height="$q.screen.height - 130">
+        <template slot="empty-history">
           <div class="absolute-center">
             <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
           </div>
-        </template>>
+        </template>
       </k-history>
       <!--
         Events map
@@ -611,6 +612,11 @@ export default {
 </script>
 
 <style lang="stylus">
+
+body {
+  overflow: hidden; /* Hide scrollbars */
+}
+
 .time-range-bar {
   border: solid 1px lightgrey;
   border-radius: 8px;
