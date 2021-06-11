@@ -43,8 +43,8 @@
                 {{ $t('EventCard.LOCATE_LABEL') }}
               </q-tooltip>
               <q-popup-proxy transition-show="scale" transition-hide="scale">
-                <q-card>
-                  <k-location-map v-model="item.location" width="350px" height="400px" :editable="false" />
+                <q-card style="width: 350px; height: 400px">
+                  <k-location-map v-model="item.location" :editable="false" />
                 </q-card>
               </q-popup-proxy>
             </q-btn>
