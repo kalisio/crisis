@@ -45,6 +45,7 @@ module.exports = {
     find: [mapHooks.asGeoJson({
       longitudeProperty: 'location.longitude',
       latitudeProperty: 'location.latitude',
+      geometryProperty: 'location',
       asFeatureCollection: false
     })],
     get: [],

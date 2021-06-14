@@ -9,7 +9,8 @@
       "draggable": true,
       "field": {
         "component": "form/KLocationField",
-        "label": "schemas.PLANS_LOCATION_FIELD_LABEL"
+        "label": "schemas.PLANS_LOCATION_FIELD_LABEL",
+        "draw": true
       }
     }
   },

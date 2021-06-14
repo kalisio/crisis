@@ -32,7 +32,8 @@
       "draggable": true,
       "field": {
         "component": "form/KLocationField",
-        "label": "schemas.EVENTS_LOCATION_FIELD_LABEL"
+        "label": "schemas.EVENTS_LOCATION_FIELD_LABEL",
+        "draw": true
       }
     },
     "expireAt": {
