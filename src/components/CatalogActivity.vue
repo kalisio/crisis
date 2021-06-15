@@ -34,7 +34,6 @@
 <script>
 import moment from 'moment'
 import sift from 'sift'
-import centroid from '@turf/centroid'
 import Vue from 'vue'
 import { Dialog } from 'quasar'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
@@ -295,14 +294,9 @@ export default {
     onSelectEventTemplateAction (data) {
       // Extract event location
       if (data.feature) {
-        const location = centroid(data.feature)
         this.eventParams = {
-          longitude: _.get(location, 'geometry.coordinates[0]'),
-          latitude: _.get(location, 'geometry.coordinates[1]')
-          /* Not yet used
           layerId: data.feature.layer,
           featureId: data.feature._id
-          */
         }
       } else {
         this.eventParams = {

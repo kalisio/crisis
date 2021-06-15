@@ -92,14 +92,24 @@ export default {
         this.object.hasWorkflow = !_.isNil(this.template.workflow)
         if (!_.isNil(this.longitude) && !_.isNil(this.latitude)) {
           this.object.location = { longitude: this.longitude, latitude: this.latitude }
-        }
-        if (this.layerId) {
+        } else if (this.layerId) {
           const layer = await this.$api.getService('catalog').get(this.layerId)
+          // Keep track of layer/feature ID
           this.object.layer = this.layerId
-          // Perform reverse geocoding if we target a feature
           if (this.featureId) {
             const feature = await this.$api.getService('features').get(this.featureId)
             this.object.feature = this.featureId
+            if (_.get(feature, 'type') === 'Point') {
+              // Compatibility with address-based localization
+              Object.assign(this.object.location = {
+                longitude: _.get(feature, 'geometry.coordinates[0]'),
+                latitude: _.get(feature, 'geometry.coordinates[1]')
+              })
+            } else {
+              this.object.location = feature.geometry
+            }
+            /*
+            // Perform reverse geocoding if we target a feature
             let description = _.get(feature, 'name', _.get(feature, 'NAME'))
             if (!description && layer.featureId) description = _.get(feature, `properties.${layer.featureId}`)
             if (description) this.object.description = description
@@ -108,6 +118,7 @@ export default {
               const element = results[0]
               this.object.location = Object.assign(element, { name: utils.formatGeocodingResult(element) })
             }
+            */
           } else {
             // TODO: manage a set of features
           }
