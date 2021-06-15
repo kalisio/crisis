@@ -23,6 +23,7 @@
 <script>
 import _ from 'lodash'
 import L from 'leaflet'
+import chroma from 'chroma-js'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
@@ -102,22 +103,32 @@ export default {
       // If we'd like to only work in real-time
       //this.setCurrentTime(moment.utc())
       activityMixin.methods.configureActivity.call(this)
+      const color = kCoreUtils.getColorFromPalette(_.get(this.event, 'icon.color', 'blue'))
+      const icon = kCoreUtils.getIconName(this.event) || 'fas fa-circle'
       // Located event ?
-      if (this.hasLocation()) {
+      if (this.hasLocationGeometry()) {
+        // Add event layer
+        const layer = L.geoJson({ type: 'Feature', geometry: this.event.location }, {
+          style: () => ({ 'color': color, 'fillColor': chroma(color).alpha(0.5).hex() }) // Transparency
+        })
+        this.map.addLayer(layer)
         // Recenter map
         this.center(this.event.location.longitude, this.event.location.latitude, 15)
-        // And add event marker
+      } else if (this.hasLocation()) {
+        // Add event marker
         const marker = L.marker([this.event.location.latitude, this.event.location.longitude], {
           icon: L.icon.fontAwesome({
-            iconClasses: kCoreUtils.getIconName(this.event) || 'fas fa-circle',
+            iconClasses: icon,
             // Conversion from palette to RGB color is required for markers
-            markerColor: kCoreUtils.getColorFromPalette(_.get(this.event, 'icon.color', 'blue')),
+            markerColor: color,
             iconColor: '#FFFFFF'
           })
         })
         // Address as popup
         marker.bindPopup(this.event.location.name)
         marker.addTo(this.map)
+        // Recenter map
+        this.center(this.event.location.longitude, this.event.location.latitude, 15)
       }
       // Add participants layer if coordinator
       if (this.isCoordinator) {

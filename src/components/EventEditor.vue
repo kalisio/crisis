@@ -15,6 +15,7 @@
 
 <script>
 import _ from 'lodash'
+import centroid from '@turf/centroid'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { utils } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
@@ -99,15 +100,13 @@ export default {
           if (this.featureId) {
             const feature = await this.$api.getService('features').get(this.featureId)
             this.object.feature = this.featureId
-            if (_.get(feature, 'type') === 'Point') {
-              // Compatibility with address-based localization
-              Object.assign(this.object.location = {
-                longitude: _.get(feature, 'geometry.coordinates[0]'),
-                latitude: _.get(feature, 'geometry.coordinates[1]')
-              })
-            } else {
-              this.object.location = feature.geometry
-            }
+            this.object.location = feature.geometry
+            // Compatibility with GPS-based localization
+            const location = centroid(feature)
+            Object.assign(this.object.location, {
+              longitude: _.get(location, 'geometry.coordinates[0]'),
+              latitude: _.get(location, 'geometry.coordinates[1]')
+            })
             /*
             // Perform reverse geocoding if we target a feature
             let description = _.get(feature, 'name', _.get(feature, 'NAME'))

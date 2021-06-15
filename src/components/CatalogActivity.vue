@@ -33,6 +33,7 @@
 
 <script>
 import moment from 'moment'
+import chroma from 'chroma-js'
 import sift from 'sift'
 import Vue from 'vue'
 import { Dialog } from 'quasar'
@@ -275,6 +276,12 @@ export default {
         }
       })
     },
+    getEventStyle (feature, options) {
+      if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
+
+      const color = kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color', 'blue'))
+      return { 'color': color, 'fillColor': chroma(color).alpha(0.5).hex() } // Transparency
+    },
     getEventPopup (feature, layer, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
@@ -417,6 +424,7 @@ export default {
     this.registerStyle('tooltip', this.getEventTooltip)
     this.registerStyle('popup', this.getEventPopup)
     this.registerStyle('markerStyle', this.getEventMarker)
+    this.registerStyle('featureStyle', this.getEventStyle)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
     this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
     // Handle plan

@@ -19,6 +19,9 @@ const eventsMixin = {
     hasLocation () {
       return _.has(this.event, 'location.latitude') && _.has(this.event, 'location.longitude')
     },
+    hasLocationGeometry () {
+      return (_.has(this.event, 'location.type') && (_.get(this.event, 'location.type') !== 'Point'))
+    },
     hasMedias () {
       return _.has(this.event, 'attachments') && (this.event.attachments.length > 0)
     },
