@@ -3,7 +3,7 @@
     <!--
       Header section
      -->
-    <div slot="fact-header">
+    <div slot="history-entry-header">
       <div class="q-pa-sm row justify-between">
         <q-badge v-if="updatedAt" color="grey-7">{{ $t('ArchivedEventEntry.UPDATED_AT_LABEL') }} {{ formatDate(updatedAt) }}</q-badge>
         <q-badge v-if="deletedAt" color="grey-7">{{ $t('ArchivedEventEntry.DELETED_AT_LABEL') }} {{ formatDate(deletedAt) }}</q-badge>
@@ -13,10 +13,17 @@
     <!--
       Content section
      -->
-    <div slot="fact-content">
+    <div slot="history-entry-content">
       <!-- Description -->
       <q-separator />
       <k-text-area v-if="description" class="q-pa-sm" :text="description" />
+       <!-- Objectives -->
+      <div v-if="objectives">
+        <q-separator />
+        <div class="q-px-sm q-pt-sm">
+          <k-chips-pane :chips="objectives" />
+        </div>
+      </div>
       <!-- Location -->
       <div v-if="location">
         <q-separator />
@@ -25,6 +32,7 @@
           <k-action
             id="view-location"
             icon="las la-map-marker"
+            tooltip="ArchivedPlanEntry.VIEW_LOCATION_MAP"
             @triggered="onLocationTriggered">
             <template slot="content">
               <q-popup-proxy ref="locationPopup" no-parent-event transition-show="scale" transition-hide="scale">
@@ -34,13 +42,6 @@
               </q-popup-proxy>
             </template>
           </k-action>
-        </div>
-      </div>
-      <!-- Objectives -->
-      <div v-if="objectives">
-        <q-separator />
-        <div class="q-px-sm q-pt-sm">
-          <k-chips-pane :chips="objectives" />
         </div>
       </div>
     </div>

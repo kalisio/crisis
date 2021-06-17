@@ -24,13 +24,13 @@
      -->
     <template slot="card-content">
       <!-- Objectives section -->
-      <k-card-section icon="las la-dot-circle" :title="$t('PlanCard.OBJECTIVES_LABEL')" :actions="objectivesActions">
+      <k-card-section :title="$t('PlanCard.OBJECTIVES_LABEL')" :actions="objectivesActions">
         <template slot="card-section-content">
           <k-chips-pane class="q-pl-sm" :chips="item.objectives" />
         </template>
       </k-card-section>
-      
-      <k-card-section icon="las la-map-marker" :title="$t('PlanCard.LOCATION_LABEL')" :actions="locationActions">
+      <!-- location section -->
+      <k-card-section :title="$t('PlanCard.LOCATION_LABEL')" :actions="locationActions">
         <template slot="card-section-content">
           <k-location-map v-if="item.location" v-model="item.location" :editable="false" style="min-height: 160px;" />
           <div v-else>
@@ -117,7 +117,7 @@ export default {
     const service = this.$api.getService('events', this.contextId)
     const response = await service.find({ query: { plan: this.item._id }, $limit: 0 })
     this.eventsCount = response.total
-    // Define the header
+    // Define the card header
     this.header = [
       { component: 'QBadge', label: this.item.template, color: this.item.icon ? this.item.icon.color : 'grey-7' },
       { component: 'QSpace' },
@@ -132,12 +132,13 @@ export default {
         handler: () => this.removeItem('confirm')
       }
     ]
-    // Define the actions
+    // Define the objectives section actions
     this.objectivesActions.push({ 
       id: 'edit-objectives', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION', 
       visible: this.$can('update', 'plans', this.contextId, this.item),
       route: { name: 'edit-plan-objectives', params: { contextId: this.contextId, objectId: this.item._id } }
     })
+    // Define the location section actions
     this.locationActions.push({ 
       id: 'edit-location', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION',
       visible: this.$can('update', 'plans', this.contextId, this.item),

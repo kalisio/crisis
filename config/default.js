@@ -81,7 +81,7 @@ const plansAction = function (contextId = 'contextId') {
 }
 
 const archivedPlansAction = function (contextId = 'contextId') {
-  return gotoActivityAction('archived-plans', 'las la-history', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL', contextId)
+  return gotoActivityAction('archived-plans', 'las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL', contextId)
 }
 
 const eventsAction = function (contextId = 'contextId') {
@@ -424,7 +424,7 @@ module.exports = {
           { component: 'OrganisationMenu' },
           separator,
           plansAction(),
-          currentActivityStamp('las la-history', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL'),
+          currentActivityStamp('las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL'),
           midSeparator,
           { 
             id: 'archived-plan-sorter',
@@ -443,6 +443,13 @@ module.exports = {
       content: [
         { component: 'time/KTimeRange' }
       ]
+    },
+    items: {
+      actions: [{
+        id: 'goto-plan-archive', icon: 'las la-clipboard-list', tooltip: 'ArchivedPlanEntry.GOTO_ARCHIVED_EVENTS', 
+        route: { name: 'archived-events-activity', params: { contextId: ':contextId'}, query: { plan: ':item._id'} },
+        visible: { name: '$can', params: ['service', 'archived-events', ':contextId'] }
+      }]
     }
   },
   eventsActivity: {
