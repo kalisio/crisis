@@ -1,5 +1,5 @@
 <template>
-  <k-page padding>
+  <k-page padding @content-resized="onPageContentResized">
     <template v-slot:page-content>
       <!--
         Events collection
@@ -20,10 +20,10 @@
         </template>
       </k-grid>
       <k-board
-        v-else
+        v-else-if="height"
         ref="eventsBoard"
         :columns="boardColumns" 
-        :height="boardHeight" />
+        :height="height" />
       <!--
         Router view to enable routing to modals
       -->
@@ -67,6 +67,11 @@ export default {
       Object.assign(query, this.getPlanObjectiveQuery())
       return query
     },
+    columnWidth () {
+      if (this.$q.screen.lt.md) return 280
+      if (this.$q.screen.lt.lg) return 360
+      return 440
+    },
     boardColumns () {
       return [{
         label: 'EventsActivity.TODO_LABEL',
@@ -76,8 +81,9 @@ export default {
           renderer: this.renderer,
           contextId: this.contextId,
           baseQuery: Object.assign({ participants: { $eq: [] }}, this.baseQuery),
-          filterQuery: this.filterQuery
-        }
+          filterQuery: this.filterQuery,
+        },
+        width: this.columnWidth
       }, {
         label: 'EventsActivity.DOING_LABEL',
         value: 'doing',
@@ -87,7 +93,8 @@ export default {
           contextId: this.contextId,
           baseQuery: Object.assign({ participants: { $ne: [] }}, this.baseQuery),
           filterQuery: this.filterQuery
-        }
+        },
+        width: this.columnWidth
       }, {
         label: 'EventsActivity.DONE_LABEL',
         value: 'done',
@@ -97,11 +104,9 @@ export default {
           contextId: this.contextId,
           baseQuery: Object.assign({ deletedAt: { $exists: true }}, this.baseQuery),
           filterQuery: this.filterQuery
-        }
+        },
+        width: this.columnWidth
       }]
-    },
-    boardHeight () {
-      return this.$q.screen.height - 210 
     }
   },
   data () {
@@ -111,7 +116,8 @@ export default {
       // Make this configurable from app
       renderer: _.merge({
         component: 'EventCard'
-      }, this.activityOptions.items)
+      }, this.activityOptions.items),
+      height: undefined
     }
   },
   watch: {
@@ -168,6 +174,9 @@ export default {
         }
         this.setFab(actions)
       }
+    },
+    onPageContentResized (size) {
+      this.height = size.height - 120
     }
   },
   beforeCreate () {

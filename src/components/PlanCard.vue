@@ -29,12 +29,10 @@
           <k-chips-pane class="q-pl-sm" :chips="item.objectives" />
         </template>
       </k-card-section>
-      <!--
-        Location section
-      -->
+      
       <k-card-section icon="las la-map-marker" :title="$t('PlanCard.LOCATION_LABEL')" :actions="locationActions">
         <template slot="card-section-content">
-          <k-location-map v-if="item.location" v-model="item.location" :editable="false" />
+          <k-location-map v-if="item.location" v-model="item.location" :editable="false" style="min-height: 160px;" />
           <div v-else>
             <k-stamp :text="'PlanCard.UNDEFINED_LOCATION_LABEL'" direction="horizontal" />
           </div>

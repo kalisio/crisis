@@ -1,24 +1,27 @@
 <template>
-  <k-page padding>
+  <k-page padding @content-resized="onPageContentResized">
     <template v-slot:page-content>
-      <k-history
-        id="history"
-        class="q-pa-lg"
-        style="padding-top: 50px" 
-        service="archived-plans" 
-        :nb-items-per-page="2" 
-        :append-items="true" 
-        :base-query="baseQuery"
-        :filter-query="filter.query" 
-        :renderer="renderer" 
-        :contextId="contextId" 
-        :list-strategy="'smart'">
-        <template slot="empty-section">
-          <div class="absolute-center">
-            <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
-          </div>
-        </template>>
-      </k-history>
+      <!--
+        Page content
+       -->
+      <div class="row justify-center q-pa-lg">
+        <k-history
+          v-if="height"
+          id="history"
+          service="archived-plans" 
+          :append-items="true" 
+          :base-query="baseQuery"
+          :filter-query="filter.query" 
+          :renderer="renderer" 
+          :contextId="contextId" 
+          :height="height">
+          <template slot="empty-history">
+            <div class="absolute-center">
+              <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
+            </div>
+          </template>
+        </k-history>
+      </div>
       <!--
         Router view to enable routing to modals
       -->
@@ -52,10 +55,16 @@ export default {
         component: 'ArchivedPlanEntry'
       }, this.activityOptions.items),
       filter: this.$store.get('filter'),
-      sorter: this.$store.get('sorter')
+      sorter: this.$store.get('sorter'),
+      height: undefined
     }
   },
-  created () {
+  methods: {
+    onPageContentResized (size) {
+      this.height = size.height - 110
+    }
+  },
+  beforeCreate () {
     // Load the required components
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-history'] = this.$load('collection/KHistory')

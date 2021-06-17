@@ -87,8 +87,8 @@ const archivedPlansAction = function (contextId = 'contextId') {
 const eventsAction = function (contextId = 'contextId') {
   return { 
     id: 'events', icon: 'las la-fire', tooltip: 'EventsActivity.EVENTS_LABEL',
-    visible: { name: '$can', params: ['service', 'events', ':contextId'] },
-    route: { name: 'events-activity', params: { contextId: ':contextId' }, query: { plan: ':plan' } }
+    visible: { name: '$can', params: ['service', 'events', `:${contextId}`] },
+    route: { name: 'events-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } }
   }
 }
 
@@ -399,7 +399,8 @@ module.exports = {
           currentActivityStamp('las la-stream', 'PlansActivity.PLANS_LABEL'),
           archivedPlansAction(),
           midSeparator,
-          { id: 'plan-sorter',
+          { 
+            id: 'plan-sorter',
             component: 'collection/KSorter', 
             tooltip: 'EventsActivity.SORT_EVENTS',
             options: [
@@ -425,10 +426,23 @@ module.exports = {
           plansAction(),
           currentActivityStamp('las la-history', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL'),
           midSeparator,
-          // TODO
+          { 
+            id: 'archived-plan-sorter',
+            component: 'collection/KSorter', 
+            tooltip: 'ArchivedPlansActivity.SORT_PLANS',
+            options: [
+              { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
+              { icon: 'kdk:anticlockwise.png', value: { field: 'updatedAt', order: -1 }, default: true }
+            ]
+          }
         ],
         'filter': contextFilter('name')
       }
+    },
+    bottomPane: {
+      content: [
+        { component: 'time/KTimeRange' }
+      ]
     }
   },
   eventsActivity: {
@@ -571,18 +585,23 @@ module.exports = {
           currentActivityPlanMenu('las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
           midSeparator,
           { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
+          {
+            id: 'archived-plan-sorter',
+            component: 'collection/KSorter', 
+            tooltip: 'ArchivedPlansActivity.SORT_PLANS',
+            options: [
+              { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
+              { icon: 'kdk:anticlockwise.png', value: { field: 'updatedAt', order: -1 }, default: true }
+            ]
+          },
           { id: 'map-view', icon: 'las la-map-marked', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
           { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: 'onShowChart' },
-          { component: 'input/KTimeRangeChooser', id: 'timerange', icon: 'las la-calendar',
-            on: { event: 'time-range-choosed', listener: 'onTimeRangeChanged' } },
-          { id: 'history-sort', icon: 'las la-sort-amount-down', tooltip: 'ArchivedEventsActivity.ASCENDING_SORT',
-            toggle: { icon: 'las la-sort-amount-up', color: 'grey-9', tooltip: 'ArchivedEventsActivity.DESCENDING_SORT' }, handler: 'onSortOrder' },
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.EXPORT_DATA_LABEL', handler: 'downloadEventsData' },
         ],
         'map': [
-          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'history-view', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           midSeparator,
+          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'by-template', icon: 'las la-layer-group', tooltip: 'ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL',
             toggle: { icon: 'las la-object-group', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_ALL_LABEL' }, handler: 'onByTemplate' },
           { id: 'heatmap', icon: 'las la-bowling-ball', tooltip: 'ArchivedEventsActivity.SHOW_HEATMAP_LABEL',
@@ -590,9 +609,9 @@ module.exports = {
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.EXPORT_DATA_LABEL', handler: 'downloadEventsData' }
         ],
         'chart': [
-          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'history-view', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           midSeparator,
+          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'settings', icon: 'las la-cog', tooltip: 'ArchivedEventsActivity.CHART_SETTINGS_LABEL', handler: 'showChartSettings' },
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.CHART_EXPORT_LABEL', handler: 'downloadChartData' }
         ]
@@ -604,6 +623,11 @@ module.exports = {
         'map': [ { component: 'catalog/KCatalog', bind: '$data' } ],
         'chart': []
       }
+    },
+    bottomPane: {
+      content: [
+        { component: 'time/KTimeRange' }
+      ]
     },
     items: {
       actions: [

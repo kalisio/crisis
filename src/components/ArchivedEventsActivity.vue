@@ -1,5 +1,5 @@
 <template>
-  <k-page id="archived-events" :padding="false">
+  <k-page :padding="false" @content-resized="onPageContentResized">
     <div slot="page-content">
       <!-- Invisible link used to download data -->
       <a ref="downloadLink" v-show="false" :href="currentDownloadLink" :download="currentDownloadName"></a>
@@ -17,26 +17,26 @@
       <!--
         Events history: switch append-items on to activate infinite scroll
       -->
-      <k-history
-        id="history"
-        class="q-pa-lg"
-        v-if="showHistory"
-        style="padding-top: 50px" 
-        service="archived-events" 
-        :nb-items-per-page="2" 
-        :append-items="true" 
-        :base-query="baseQuery"
-        :filter-query="filterQuery" 
-        :renderer="renderer" 
-        :contextId="contextId" 
-        :list-strategy="'smart'"
-        :height="$q.screen.height - 130">
-        <template slot="empty-history">
-          <div class="absolute-center">
-            <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
-          </div>
-        </template>
-      </k-history>
+      <div class="row justify-center q-pa-lg">
+        <k-history
+          v-if="showHistory && height"
+          style="padding-top: 80px;"
+          id="history"
+          service="archived-events" 
+          :append-items="true" 
+          :base-query="baseQuery"
+          :filter-query="filterQuery" 
+          :renderer="renderer" 
+          :contextId="contextId" 
+          :list-strategy="'smart'"
+          :height="height - 200">
+          <template slot="empty-history">
+            <div class="absolute-center">
+              <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
+            </div>
+          </template>
+        </k-history>
+      </div>
       <!--
         Events map
       -->
@@ -146,15 +146,7 @@ export default {
       else return Math.ceil(this.chartData.length / this.nbValuesPerChart.value)
     },
     baseQuery () {
-      return Object.assign({
-        $sort: {
-          [this.sortBy.value]: (this.ascendingSort ? 1 : -1)
-        },
-        createdAt: {
-          $gte: this.minDate.toISOString(),
-          $lte: this.maxDate.toISOString()
-        }
-      }, this.getPlanQuery())
+      return this.getPlanQuery()
     },
     filterQuery () {
       let query = _.clone(this.filter.query)
@@ -163,12 +155,6 @@ export default {
     }
   },
   data () {
-    // FIXME: Should be send as props to the KTimeRangeChooser
-    const now = moment()
-    // 1 month ago by default
-    const minDate = now.clone().subtract(1, 'months').startOf('day')
-    const maxDate = now.clone().endOf('day')
-
     const chartTypes = ['pie', 'polarArea', 'radar', 'bar']
     const chartOptions = chartTypes.map(
         type => ({ value: type, label: this.$i18n.t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`) }))
@@ -195,9 +181,6 @@ export default {
         component: 'ArchivedEventEntry'
       }, this.activityOptions.items),
       filter: this.$store.get('filter'),
-      minDate: minDate,      
-      maxDate: maxDate,
-      ascendingSort: false,
       topPane: this.$store.get('topPane'),
       heatmap: false,
       byTemplate: false,
@@ -233,7 +216,8 @@ export default {
       render: _.find(renderOptions, { value: 'count' }),
       chartData: [],
       currentDownloadLink: null,
-      currentDownloadName: null
+      currentDownloadName: null,
+      height: undefined
     }
   },
   methods: {
@@ -377,14 +361,6 @@ export default {
       }
       this.refreshEventsLayers()
     },
-    onTimeRangeChanged (data) {
-      this.minDate = data.minDate
-      this.maxDate = data.maxDate
-    },
-    onSortOrder () {
-      this.ascendingSort = !this.ascendingSort
-      this.currentPage = 0
-    },
     onByTemplate () {
       this.byTemplate = !this.byTemplate
       this.refreshEventsLayers()
@@ -417,6 +393,9 @@ export default {
     },
     onHeatmapRadius (radius) {
       this.refreshEventsLayers()
+    },
+    onPageContentResized (size) {
+      this.height = size.height - 48
     },
     showChartSettings () {
       this.$refs.chartSettings.open()
@@ -612,21 +591,9 @@ export default {
 </script>
 
 <style lang="stylus">
-
 body {
   overflow: hidden; /* Hide scrollbars */
 }
-
-.time-range-bar {
-  border: solid 1px lightgrey;
-  border-radius: 8px;
-  background: #ffffff
-}
-
-.time-range-bar:hover {
-  border: solid 1px $primary;
-}
-
 .chart {
   border: solid 1px lightgrey;
   border-radius: 8px;
