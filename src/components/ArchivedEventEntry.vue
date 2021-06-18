@@ -1,7 +1,7 @@
 <template>
   <div>
     <k-history-entry v-bind="$props" :actions="itemActions" >
-      <div slot="entry-date">
+      <div slot="history-entry-heade">
         <div v-if="updatedAt"><small>{{$t('ArchivedEventEntry.UPDATED_AT_LABEL')}} {{formatDate(updatedAt)}}</small></div>
         <div v-if="deletedAt"><small>{{$t('ArchivedEventEntry.DELETED_AT_LABEL')}} {{formatDate(deletedAt)}}</small></div>
         <div v-if="expiredAt"><small>{{$t('ArchivedEventEntry.EXPIRED_AT_LABEL')}} {{formatDate(expiredAt)}}</small></div>
@@ -9,7 +9,7 @@
           <q-tooltip>{{ $t('ArchivedEventEntry.PARTICIPANT_COUNT') }}</q-tooltip>
         </q-btn>
       </div>
-      <div slot="entry-title">
+      <div slot="history-entry-title">
         {{ item.name }} - {{formatDate(createdAt)}}
         <q-popup-proxy ref="locationPopup" no-parent-event transition-show="scale" transition-hide="scale">
           <q-card style="width: 350px; height: 400px">
@@ -17,7 +17,7 @@
           </q-card>
         </q-popup-proxy>
       </div>
-      <div slot="entry-content">
+      <div slot="history-entry-content">
         <div v-if="item.location">
           <k-text-area class="light-paragraph" :text="locationName" />
           <q-separator />

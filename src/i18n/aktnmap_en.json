@@ -297,8 +297,9 @@
     "SETTINGS": "Settings"
   },
   "OrganisationCard": {
+    "EVENTS_SECTION": "Events",
     "EVENTS_LABEL": "{{count}} event(s)",
-    "PLANS_LABEL": "Plans",
+    "PLANS_SECTION": "Plans",
     "VIEW_EVENTS": "View events",
     "VIEW_PLANS": "View plans",
     "VIEW_CATALOG": "View map",
@@ -316,7 +317,7 @@
     "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions",
     "EDIT_LABEL": "$t(EDIT_LABEL)",
     "REMOVE_LABEL": "$t(REMOVE_LABEL)",
-    "STRUCTURE_LABEL": "Administration",
+    "STRUCTURE_SECTION": "Administration",
     "SUBSCRIPTIONS_LABEL": "Subscriptions"
   },
   "BillingEditor": {
@@ -610,10 +611,12 @@
   "PlanCard": {
     "EDIT_ACTION": "$t(EDIT_LABEL)",
     "REMOVE_ACTION": "$t(REMOVE_LABEL)",
-    "OBJECTIVES_LABEL": "Objectives",
-    "LOCATION_LABEL": "Location",
+    "DESCRIPTION_SECTION": "Description",
+    "OBJECTIVES_SECTION": "Objectives",
+    "LOCATION_SECTION": "Location",
     "VIEW_ACTION": "View",
     "UNDEFINED_LOCATION_LABEL": "Undefined",
+    "EVENTS_SECTION": "Events",
     "EVENTS": "{{count}} event(s)",
     "VIEW_CATALOG": "View map",
     "VIEW_ARCHIVED_EVENTS": "View logbook"
@@ -629,6 +632,10 @@
   },
   "ArchivedPlansActivity": {
     "ARCHIVED_PLANS_LABEL": "Archived plans"
+  },
+  "ArchivedPlanEntry": {
+    "VIEW_LOCATION_MAP": "View location map",
+    "GOTO_ARCHIVED_EVENTS": "View logbook"
   },
   "PlanMenu": {
     "NO_PLAN_LABEL": "No plan"

@@ -18,11 +18,35 @@
           </div>
         </template>
         <template v-slot:default>
-          <k-panel
+          <q-card class="bg-white" style="width: 300px;">
+            <!-- Objectives section -->
+          <k-card-section :title="$t('PlanCard.OBJECTIVES_LABEL')" >
+            <template slot="card-section-content">
+              <k-chips-pane class="q-pl-sm" :chips="plan.objectives" />
+            </template>
+          </k-card-section>
+          <!-- location section -->
+          <k-card-section :title="$t('PlanCard.LOCATION_LABEL')" >
+            <template slot="card-section-content">
+              <k-location-map v-if="plan.location" v-model="plan.location" :editable="false" style="min-height: 160px;" />
+              <div v-else>
+                <k-stamp :text="'PlanCard.UNDEFINED_LOCATION_LABEL'" direction="horizontal" />
+              </div>
+            </template>
+          </k-card-section>
+          </q-card>
+          
+            
+
+          <!--k-panel
             id="menu-entries"
             :content="entries"
             action-renderer="item"
-            direction="vertical" />
+            direction="vertical" /-->
+
+            <!--q-card style="width: 300px; height: 500px"-->
+
+            </q-card>
         </template>
       </q-btn-dropdown>
     </div>
@@ -97,12 +121,12 @@ export default {
   beforeCreate () {
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
     this.$options.components['k-panel'] = this.$load('frame/KPanel')
+    this.$options.components['plan-card'] = this.$load('PlanCard')
+    this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
+    this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')
+    this.$options.components['k-location-map'] = this.$load('KLocationMap')
   }
 }
 </script>
 
-<style scoped lang="sass">
-.q-btn-dropdown
-  &--simple * + .q-btn-dropdown__arrow
-    margin-left: 48px
-</style>
+

@@ -14,82 +14,78 @@
       Card content
      -->
     <div slot="card-content">
-      <!-- Events section -->
-      <q-item 
-        id="organisation-events" 
-        dense 
-        clickable 
-        @click="() => this.routeTo('events-activity')">
-        <q-item-section avatar>
-          <q-icon name="las la-fire" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ $t('OrganisationCard.EVENTS_LABEL', { count: eventsCount }) }}</q-item-label>
-          <q-tooltip>{{ $t('OrganisationCard.VIEW_EVENTS') }}</q-tooltip>
-        </q-item-section>
-        <q-item-section side>
-          <div class="row justify-between">
-            <k-action 
-              v-if="canAccessCatalog"
-              id= "organisation-catalog"
-              icon= "las la-map"
-              :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
-              :handler="() => this.routeTo('catalog-activity')" />
-            <k-action
-              v-if="canAccessArchivedEvents"
-              id= "organisation-archived-events"
-              icon= "las la-clipboard-list"
-              :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
-              :handler="() => this.routeTo('archived-events-activity')" />
-          </div>
-        </q-item-section>
-      </q-item>
+      <k-card-section :title="$t('OrganisationCard.EVENTS_SECTION')">
+        <!-- Events section -->
+        <q-item 
+          id="organisation-events" 
+          dense 
+          clickable 
+          @click="() => this.routeTo('events-activity')">
+          <q-item-section avatar>
+            <q-icon name="las la-fire" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('OrganisationCard.EVENTS_LABEL', { count: eventsCount }) }}</q-item-label>
+            <q-tooltip>{{ $t('OrganisationCard.VIEW_EVENTS') }}</q-tooltip>
+          </q-item-section>
+          <q-item-section side>
+            <div class="row justify-between">
+              <k-action 
+                v-if="canAccessCatalog"
+                id= "organisation-catalog"
+                icon= "las la-map"
+                :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
+                :handler="() => this.routeTo('catalog-activity')" />
+              <k-action
+                v-if="canAccessArchivedEvents"
+                id= "organisation-archived-events"
+                icon= "las la-clipboard-list"
+                :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
+                :handler="() => this.routeTo('archived-events-activity')" />
+            </div>
+          </q-item-section>
+        </q-item>
+      </k-card-section>
       <!-- Plans section -->
-      <k-card-section v-if="canAccessPlans" icon="las la-stream" :title="$t('OrganisationCard.PLANS_LABEL')" :actions="plansHeader">
-        <template slot="card-section-content">
-          <k-list 
-            service="plans" 
-            :contextId="item._id" 
-            :renderer="planItemRenderer"
-            :list-strategy="'smart'"  />
-        </template>
+      <k-card-section v-if="canAccessPlans" :title="$t('OrganisationCard.PLANS_SECTION')" :actions="plansHeader">
+        <k-list 
+          service="plans" 
+          :contextId="item._id" 
+          :renderer="planItemRenderer"
+          :list-strategy="'smart'"  />
       </k-card-section>
       <!-- Structure section -->
-      <k-card-section icon="las la-cog" :title="$t('OrganisationCard.STRUCTURE_LABEL')" :expandable="true" @section-opened="onAdminSectionOpened">
-        <template slot="card-section-content" :routeTo="routeTo">
-          <template v-for="element in structure">
-            <q-item 
-              :key="element.key"
-              clickable
-              @click="() => routeTo(`${element.name}-activity`)">
-              <q-item-section avatar>
-                <q-icon :name="element.icon" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t(`OrganisationCard.${element.key}`, { count: counters[element.name] }) }}</q-item-label>
-                <q-tooltip>{{ $t(`OrganisationCard.VIEW_${element.key}`) }}</q-tooltip>
-              </q-item-section>
-              <q-item-section side>
-                <q-badge :label="`${quotas[element.name]} max`" color="grey-7" />
-              </q-item-section>
-            </q-item>
-          </template>
-          <q-separator />
-          <k-card-section v-if="canAccessBilling" icon="las la-credit-card" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{ 
-            id: 'edit-billing', icon: 'las la-edit', tooltip: 'OrganisationCard.EDIT_LABEL', 
-            route: { name: 'edit-organisation-billing', params: { objectId: item._id } } 
-          }]">
-            <template slot="card-section-content">
-               <div class="row items-center">
-                <template v-for="subscription in subscriptions">
-                  <div :key="subscription" class="q-pl-sm">
-                    <q-badge :label="$t(`${subscription}_LABEL`)" color="grey-7" />
-                  </div>
-                </template>
-              </div>
-            </template>
-          </k-card-section>
+      <k-card-section icon="las la-cog" :title="$t('OrganisationCard.STRUCTURE_SECTION')" :expandable="true" @section-opened="onAdminSectionOpened">
+        <template v-for="element in structure">
+          <q-item 
+            :key="element.key"
+            clickable
+            @click="() => routeTo(`${element.name}-activity`)">
+            <q-item-section avatar>
+              <q-icon :name="element.icon" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ $t(`OrganisationCard.${element.key}`, { count: counters[element.name] }) }}</q-item-label>
+              <q-tooltip>{{ $t(`OrganisationCard.VIEW_${element.key}`) }}</q-tooltip>
+            </q-item-section>
+            <q-item-section side>
+              <q-badge :label="`${quotas[element.name]} max`" color="grey-7" />
+            </q-item-section>
+          </q-item>
         </template>
+        <q-separator />
+        <k-card-section v-if="canAccessBilling" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{ 
+          id: 'edit-billing', icon: 'las la-edit', size: 'sm', tooltip: 'OrganisationCard.EDIT_LABEL', 
+          route: { name: 'edit-organisation-billing', params: { objectId: item._id } } 
+        }]">
+              <div class="row items-center">
+              <template v-for="subscription in subscriptions">
+                <div :key="subscription" class="q-pl-sm">
+                  <q-badge :label="$t(`${subscription}_LABEL`)" color="grey-7" />
+                </div>
+              </template>
+            </div>
+        </k-card-section>
       </k-card-section>
     </div>
   </k-card>
@@ -112,7 +108,7 @@ export default {
       header: null,
       plansHeader: [{ 
         id: 'view-plans', 
-        icon: 'las la-arrow-circle-right', 
+        icon: 'las la-arrow-right', 
         tooltip: 'OrganisationCard.VIEW_PLANS',
         handler: () => this.routeTo('plans-activity') }
       ],
@@ -173,12 +169,12 @@ export default {
           { component: 'frame/KSpot', color: this.item.color, width: '20px', borderRadius: '5px' },
           { component: 'QSpace' },
           { 
-            id: 'edit-organisation', icon: 'las la-edit', tooltip: 'OrganisationCard.EDIT_LABEL',
+            id: 'edit-organisation', icon: 'las la-edit', tooltip: 'OrganisationCard.EDIT_LABEL', size: 'sm',
             visible: this.$can('update', 'organisations', null, { _id: this.item._id }),
             handler: this.editItem
           },
           {
-            id: 'remove-organisation', icon: 'las la-trash', tooltip: 'OrganisationCard.REMOVE_LABEL',
+            id: 'remove-organisation', icon: 'las la-trash', tooltip: 'OrganisationCard.REMOVE_LABEL', size: 'sm',
             visible: this.$can('remove', 'organisations', null, { _id: this.item._id }),
             handler: () => this.removeItem('input')
           }
