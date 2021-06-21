@@ -461,6 +461,11 @@
     "DONE_LABEL": "Done"
   },
   "EventCard": {
+    "DESCRIPTION_SECTION": "Description",
+    "LOCATION_SECTION": "Location",
+    "PARTICIPANTS_SECTION": "Participants",
+    "COMMENT_SECTION": "Comment",
+    "COORDINATORS_SECTION": "Coordinators",
     "CREATED_AT_LABEL": "Created at",
     "UPDATED_AT_LABEL": "Updated at",
     "REMOVE_LABEL": "$t(REMOVE_LABEL)",
@@ -471,7 +476,7 @@
     "UPLOADER_MODAL_CLOSE_ACTION": "$t(EventActivity.UPLOADER_MODAL_CLOSE_ACTION)",
     "LOCATION_MAP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
     "NAVIGATE_LABEL": "Navigate",
-    "LOCATE_LABEL": "Locate",
+    "LOCATE_LABEL": "View the location",
     "MAP_LABEL": "Map",
     "REMOVE_DIALOG_TITLE": "Remove the event {{event}} ?",
     "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove the event <b>{{event}}</b> ?",
@@ -544,11 +549,18 @@
     "SORT_EVENT_TEMPLATES": "Sort event templates"
   },
   "EventTemplateCard": {
-    "REMOVE_LABEL": "$t(REMOVE_LABEL)",
-    "EDIT_LABEL": "$t(EDIT_LABEL)",
-    "COPY_LABEL": "$t(COPY_LABEL)",
-    "REMOVE_DIALOG_TITLE": "Remove the template {{template}} ?",
-    "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove the template <b>{{template}}</b> ?"
+    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
+    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "COPY_ACTION": "$t(COPY_LABEL)",
+    "DESCRIPTION_SECTION": "Description",
+    "NO_DESRIPTION_LABEL": "No description",
+    "PARTICIPANTS_SECTION": "Participants",
+    "NO_PARTICIPANTS_LABEL": "No participants",
+    "COORDINATORS_SECTION": "Coordinators",
+    "NO_COORDINATORS_LABEL": "No coordinators",
+    "WORKFLOW_SECTION": "Workflow",
+    "WORKFLOW_LABEL": "{{count}} step workflow",
+    "NO_WORKFLOW_LABEL": "No workflow"
   },
   "EventWorkflowForm": {
     "ADD_STEP_BUTTON": "Add a step",
@@ -626,9 +638,15 @@
     "CREATE_TEMPLATE_LABEL": "Create a new plan template"
   },
   "PlanTemplateCard": {
-    "EDIT_LABEL": "$t(EDIT_LABEL)",
-    "COPY_LABEL": "$t(COPY_LABEL)",
-    "REMOVE_LABEL": "$t(REMOVE_LABEL)"
+    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "COPY_ACTION": "$t(COPY_LABEL)",
+    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
+    "DESCRIPTION_SECTION": "Description",
+    "NO_DESRIPTION_LABEL": "No description",
+    "OBJECTIVES_SECTION": "Objectives",
+    "NO_OBJECTIVES_LABEL": "No objectives",
+    "COORDINATORS_SECTION": "Coordinators",
+    "NO_COORDINATORS_LABEL": "No coordinators"
   },
   "ArchivedPlansActivity": {
     "ARCHIVED_PLANS_LABEL": "Archived plans"

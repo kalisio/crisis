@@ -229,14 +229,16 @@ export default {
       }
     }
   },
-  async created () {
-    // Load the required components
+  beforeCreate () {
+     // Load the required components
     this.$options.components['k-card'] = this.$load('collection/KCard')
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
     this.$options.components['k-panel'] = this.$load('frame/KPanel')
     this.$options.components['k-action'] = this.$load('frame/KAction')
     this.$options.components['k-list'] = this.$load('collection/KList')
+  },
+  async created () {
     // Counts the number of orphan events
     this.eventsCount = await this.countItems('events', { plan: { $eq: null } } )
   }

@@ -464,17 +464,22 @@
     "DONE_LABEL": "Cloturés"
   },
   "EventCard": {
+    "DESCRIPTION_SECTION": "Description",
+    "LOCATION_SECTION": "Localisation",
+    "PARTICIPANTS_SECTION": "Participants",
+    "COMMENT_SECTION": "Commentaire",
+    "COORDINATORS_SECTION": "Coordonateurs",
     "CREATED_AT_LABEL": "Créé le",
     "UPDATED_AT_LABEL": "Mis à jour le",
-    "REMOVE_LABEL": "Clôturer",
-    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "REMOVE_ACTION": "Clôturer",
+    "EDIT_ACTION": "$t(EDIT_LABEL)",
     "FOLLOW_UP_LABEL": "Suivre",
     "ADD_MEDIA_LABEL": "$t(EventActivity.ADD_MEDIA_LABEL)",
     "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)",
     "UPLOADER_MODAL_CLOSE_ACTION": "$t(EventActivity.UPLOADER_MODAL_CLOSE_ACTION)",
     "LOCATION_MAP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
     "NAVIGATE_LABEL": "Naviguer",
-    "LOCATE_LABEL": "Localiser",    
+    "LOCATE_LABEL": "Voir la localisation",    
     "MAP_LABEL": "Carte",    
     "REMOVE_DIALOG_TITLE": "Clôturer l'événement {{event}} ?",
     "REMOVE_DIALOG_MESSAGE": "Etes vous sûr de vouloir clôturer l'événement <b>{{event}}</b> ?",
@@ -547,11 +552,18 @@
     "SORT_EVENT_TEMPLATES": "Trier les modèles d'événements"
   },
   "EventTemplateCard": {
-    "REMOVE_LABEL": "$t(REMOVE_LABEL)",
-    "EDIT_LABEL": "$t(EDIT_LABEL)",
-    "COPY_LABEL": "$t(COPY_LABEL)",
-    "REMOVE_DIALOG_TITLE": "Supprimer le modèle {{template}} ?",
-    "REMOVE_DIALOG_MESSAGE": "Etes vous sûr de vouloir supprimer le modèle <b>{{template}}</b> ?"
+    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
+    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "COPY_ACTION": "$t(COPY_LABEL)",
+    "DESCRIPTION_SECTION": "Description",
+    "NO_DESRIPTION_LABEL": "Aucune description",
+    "PARTICIPANTS_SECTION": "Participants",
+    "NO_PARTICIPANTS_LABEL": "Aucun participants",
+    "COORDINATORS_SECTION": "Coordonnateurs",
+    "NO_COORDINATORS_LABEL": "Aucun coordonnateurs",
+    "WORKFLOW_SECTION": "Processus",
+    "WORKFLOW_LABEL": "Processus en {{count}} étape(s)",
+    "NO_WORKFLOW_LABEL": "Aucun processus"    
   },
   "EventWorkflowForm": {
     "ADD_STEP_BUTTON": "Ajouter une étape",
@@ -630,9 +642,15 @@
     "CREATE_TEMPLATE_LABEL": "Créer un nouveau modèle de plan"
   },
   "PlanTemplateCard": {
-    "EDIT_LABEL": "$t(EDIT_LABEL)",
-    "COPY_LABEL": "$t(COPY_LABEL)",
-    "REMOVE_LABEL": "$t(REMOVE_LABEL)"
+    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "COPY_ACTION": "$t(COPY_LABEL)",
+    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
+    "DESCRIPTION_SECTION": "Description",
+    "NO_DESRIPTION_LABEL": "Aucune description",
+    "OBJECTIVES_SECTION": "Objectifs",
+    "NO_OBJECTIVES_LABEL": "Aucun objectifs",
+    "COORDINATORS_SECTION": "Coordonnateurs",
+    "NO_COORDINATORS_LABEL": "Aucun coordonnateurs"
   },
   "ArchivedPlansActivity": {
     "ARCHIVED_PLANS_LABEL": "Archive"

@@ -17,16 +17,16 @@
      -->
     <template slot="card-content">
       <!-- Description -->
-      <k-card-section :title="$t('PlanCard.DESCRIPTION_SECTION')" :actions="locationActions">
-        <k-text-area class="q-pa-xs" :text="item.description" />
+      <k-card-section :title="$t('PlanCard.DESCRIPTION_SECTION')" :actions="descriptionActions">
+        <k-text-area :text="item.description" />
       </k-card-section>
       <!-- Objectives section -->
       <k-card-section :title="$t('PlanCard.OBJECTIVES_SECTION')" :actions="objectivesActions">
-        <k-chips-pane class="q-pl-sm" :chips="item.objectives" />
+        <k-chips-pane :chips="item.objectives" />
       </k-card-section>
       <!-- location section -->
       <k-card-section :title="$t('PlanCard.LOCATION_SECTION')" :actions="locationActions">
-        <k-location-map v-if="item.location" v-model="item.location" :editable="false" style="min-height: 160px;" />
+        <k-location-map v-if="item.location" v-model="item.location" :editable="false" style="min-height: 220px;" />
         <div v-else>
           <k-stamp :text="'PlanCard.UNDEFINED_LOCATION_LABEL'" direction="horizontal" />
         </div>
@@ -69,6 +69,22 @@ export default {
   name: 'plan-card',
   mixins: [kCoreMixins.baseItem],
   computed: {
+    header () {
+      return [
+        { component: 'QBadge', label: this.item.template, color: 'grey-7' },
+        { component: 'QSpace' },
+        { 
+          id: 'edit-plan', icon: 'las la-edit', size: 'sm', tooltip: 'PlanCard.EDIT_ACTION',
+          visible: this.$can('update', 'plans', this.contextId, this.item),
+          handler: this.editItem
+        },
+        {
+          id: 'remove-plan', icon: 'las la-trash', size: 'sm', tooltip: 'PlanCard.REMOVE_ACTION',
+          visible: this.$can('remove', 'plans', this.contextId, this.item),
+          handler: () => this.removeItem('confirm')
+        }
+      ]
+    },
     canEdit () {
       return this.$can('update', 'plans', this.contextId, this.item)
     },
@@ -83,15 +99,32 @@ export default {
     },
     canAccessBilling () {
       return this.$can('update', 'organisations', null, { _id: this.contextId })
+    },
+    descriptionActions () {
+      return [{ 
+        id: 'edit-description', icon: 'las la-edit', size: 'sm', tooltip: 'PlanCard.EDIT_ACTION', 
+        visible: this.$can('update', 'plans', this.contextId, this.item),
+        route: { name: 'edit-plan-description', params: { contextId: this.contextId, objectId: this.item._id } }
+      }]
+    },
+    objectivesActions () {
+      return [{
+        id: 'edit-objectives', icon: 'las la-edit', size: 'sm', tooltip: 'PlanCard.EDIT_ACTION', 
+        visible: this.$can('update', 'plans', this.contextId, this.item),
+        route: { name: 'edit-plan-objectives', params: { contextId: this.contextId, objectId: this.item._id } }
+      }]
+    },
+    locationActions () {
+      return [{
+        id: 'edit-location', icon: 'las la-edit', size: 'sm', tooltip: 'PlanCard.EDIT_ACTION',
+        visible: this.$can('update', 'plans', this.contextId, this.item),
+        route: { name: 'edit-plan-location', params: { contextId: this.contextId, objectId: this.item._id } }
+      }]
     }
   },
   data () {
     return {
-      eventsCount: 0,
-      header: null,
-      descriptionActions: [],
-      objectivesActions: [],
-      locationActions: []
+      eventsCount: 0
     }
   },
   beforeCreate () {
@@ -110,39 +143,6 @@ export default {
     const service = this.$api.getService('events', this.contextId)
     const response = await service.find({ query: { plan: this.item._id }, $limit: 0 })
     this.eventsCount = response.total
-    // Define the card header
-    this.header = [
-      { component: 'QBadge', label: this.item.template, color: 'grey-7' },
-      { component: 'QSpace' },
-      { 
-        id: 'edit-plan', icon: 'las la-edit', size: 'sm', tooltip: 'PlanCard.EDIT_ACTION',
-        visible: this.$can('update', 'plans', this.contextId, this.item),
-        handler: this.editItem
-      },
-      {
-        id: 'remove-plan', icon: 'las la-trash', size: 'sm', tooltip: 'PlanCard.REMOVE_ACTION',
-        visible: this.$can('remove', 'plans', this.contextId, this.item),
-        handler: () => this.removeItem('confirm')
-      }
-    ]
-    // Define the description section actions
-    this.descriptionActions.push({ 
-      id: 'edit-description', icon: 'las la-edit', size: 'sm', tooltip: 'PlanCard.EDIT_ACTION', 
-      visible: this.$can('update', 'plans', this.contextId, this.item),
-      route: { name: 'edit-plan-description', params: { contextId: this.contextId, objectId: this.item._id } }
-    })
-    // Define the objectives section actions
-    this.objectivesActions.push({ 
-      id: 'edit-objectives', icon: 'las la-edit', size: 'sm', tooltip: 'PlanCard.EDIT_ACTION', 
-      visible: this.$can('update', 'plans', this.contextId, this.item),
-      route: { name: 'edit-plan-objectives', params: { contextId: this.contextId, objectId: this.item._id } }
-    })
-    // Define the location section actions
-    this.locationActions.push({ 
-      id: 'edit-location', icon: 'las la-edit', size: 'sm', tooltip: 'PlanCard.EDIT_ACTION',
-      visible: this.$can('update', 'plans', this.contextId, this.item),
-      route: { name: 'edit-plan-location', params: { contextId: this.contextId, objectId: this.item._id } }
-    })
   }
 }
 </script>

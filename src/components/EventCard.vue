@@ -1,16 +1,11 @@
 <template>
   <div>
-    <k-card v-bind="$props" :actions="itemActions" :bind-actions="false">
-      <!--
-        Card header
-      -->
-      <template v-slot:card-header>
-        <div v-if="item.objective" class="q-pa-sm row justify-start">
-          <q-badge id="objective-badge" outine color="grey-7">
-            {{ item.objective }}
-          </q-badge>
-        </div>
-      </template>
+    <k-card 
+      v-bind="$props" 
+      :header="header" 
+      :actions="itemActions" 
+      :bind-actions="false"
+      :dense="dense">
       <!-- 
         Card label
        -->
@@ -23,20 +18,17 @@
         Card content
        -->
       <template v-slot:card-content>
-        <q-separator />
-        <div v-if="description">
-          <div class="q-pa-sm event-card-description" 
-            v-bind:class="{ 'event-card-description-zoomed': zoom === true }"
-            @click="zoom=!zoom">
-            <k-text-area :text="description" :length="150" />
+        <!-- Description -->
+        <k-card-section :title="$t('EventCard.DESCRIPTION_SECTION')" :actions="descriptionActions" :dense="dense">
+          <div v-if="description" class="event-card-description" 
+            v-bind:class="{ 'event-card-description-zoomed': zoomDescription === true }"
+            @click="zoomDescription=!zoomDescription">
+              <k-text-area :text="description" :length="150" />
           </div>
-          <q-separator />
-        </div>
-        <!--
-          Location section
-         -->
-        <div v-if="item.location">
-          <div class="q-pa-sm row items-center justify-between no-wrap">
+        </k-card-section>
+         <!-- location section -->
+        <k-card-section :title="$t('EventCard.LOCATION_SECTION')" :actions="locationActions" :dense="dense">
+          <div v-if="item.location" class="row items-center justify-between no-wrap">
             <k-text-area class="light-paragraph" :text="locationName" />
             <q-btn icon="las la-map-marker" color="grey-7" flat dense round>
               <q-tooltip>
@@ -49,36 +41,29 @@
               </q-popup-proxy>
             </q-btn>
           </div>
-          <q-separator />
-        </div>
-        <!--
-          Parcitipant section
-         -->
-        <div v-if="participantLabel">
-          <div class="q-pa-sm">{{ participantLabel }}</div>
-          <q-separator />
-        </div>
-        <!--
-          Comment section
-         -->
-        <div v-if="comment">
-          <k-text-area class="q-pa-sm light-paragraph" :text="comment" :length="100" />
-          <q-separator />
-        </div>
-        <!--
-          Coordinator section
-         -->
-        <div v-if="coordinatorLabel">
-          <div class="q-pa-sm">{{ coordinatorLabel }}</div>
-          <q-separator />
-        </div>
-        <!--
-          Timestamps section
-         -->
-        <div v-if="createdAt || updatedAt" class="q-pa-sm">
-          <cite v-if="createdAt"><small>{{$t('EventCard.CREATED_AT_LABEL')}} {{createdAt.toLocaleString()}}</small></cite><br />
-          <cite v-if="updatedAt"><small>{{$t('EventCard.UPDATED_AT_LABEL')}} {{updatedAt.toLocaleString()}}</small></cite>
-        </div>
+          <div v-else>
+            <k-stamp :text="'EventCard.UNDEFINED_LOCATION_LABEL'" direction="horizontal" />
+          </div>
+        </k-card-section>
+        <!-- Parcitipants section -->
+        <k-card-section :title="$t('EventCard.PARTICIPANTS_SECTION')" :actions="participantsActions" :dense="dense">
+          <div v-if="participantLabel">{{ participantLabel }}</div>
+        </k-card-section>
+        <!-- Comment section -->
+         <k-card-section :title="$t('EventCard.COMMENT_SECTION')" :dense="dense"> 
+          <k-text-area v-if="comment" class="light-paragraph" :text="comment" :length="100" />
+         </k-card-section>
+        <!-- Coordinator section -->
+        <k-card-section :title="$t('EventCard.COORDINATORS_SECTION')" :actions="coordinatatorsActions" :dense="dense">
+          <div v-if="coordinatorLabel">{{ coordinatorLabel }}</div>
+        </k-card-section>
+        <!-- Timestamps section -->
+        <k-card-section :dense="dense">
+          <div v-if="createdAt || updatedAt">
+            <cite v-if="createdAt"><small>{{$t('EventCard.CREATED_AT_LABEL')}} {{createdAt.toLocaleString()}}</small></cite><br />
+            <cite v-if="updatedAt"><small>{{$t('EventCard.UPDATED_AT_LABEL')}} {{updatedAt.toLocaleString()}}</small></cite>
+          </div>
+        </k-card-section>
       </template>
     </k-card>
     <k-modal ref="followUpModal" v-if="hasParticipantInteraction" :title="followUpTitle" :buttons="getFollowUpButtons()">
@@ -122,6 +107,26 @@ export default {
     }
   },
   computed: {
+    header () {
+      let components = [
+        { component: 'QSpace' },
+        { 
+          id: 'edit-event', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION',
+          visible: this.$can('update', 'events', this.contextId, this.item),
+          handler: this.editItem
+        },
+        {
+          id: 'remove-event', icon: 'las la-times-circle', size: 'sm', tooltip: 'EventCard.REMOVE_ACTION',
+          visible: this.$can('remove', 'events', this.contextId, this.item),
+          handler: () => this.removeItem('confirm')
+        }
+      ]
+      if (this.item.objective) components.splice(0, 0, {
+        component: 'QBadge', label: this.item.objective, color: 'grey-7'
+      })
+      console.log(components)
+      return components
+    },
     icon () {
       return kCoreUtils.getIconName(this.getUserIcon(this.participantState, this.participantStep))
     },
@@ -149,6 +154,41 @@ export default {
     },
     hasParticipantInteraction () {
       return this.waitingInteraction(this.participantStep, this.participantState, 'participant')
+    },
+    descriptionActions () {
+      return [{ 
+        id: 'edit-description', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION', 
+        visible: this.$can('update', 'events', this.contextId, this.item),
+        route: { name: 'edit-event-description', params: { contextId: this.contextId, objectId: this.item._id } }
+      }]
+    },
+    objectivesActions () {
+      return [{
+        id: 'edit-objectives', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION', 
+        visible: this.$can('update', 'events', this.contextId, this.item),
+        route: { name: 'edit-event-objectives', params: { contextId: this.contextId, objectId: this.item._id } }
+      }]
+    },
+    locationActions () {
+      return [{
+        id: 'edit-location', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION',
+        visible: this.$can('update', 'events', this.contextId, this.item),
+        route: { name: 'edit-event-location', params: { contextId: this.contextId, objectId: this.item._id } }
+      }]
+    },
+    participantsActions () {
+      return [{
+        id: 'edit-participants', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION',
+        visible: this.$can('update', 'events', this.contextId, this.item),
+        route: { name: 'edit-event-participants', params: { contextId: this.contextId, objectId: this.item._id } }
+      }]
+    },
+    coordinatatorsActions () {
+      return [{
+        id: 'edit-coordinateors', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION',
+        visible: this.$can('update', 'events', this.contextId, this.item),
+        route: { name: 'edit-event-coordinators', params: { contextId: this.contextId, objectId: this.item._id } }
+      }]
     }
   },
   data () {
@@ -158,7 +198,8 @@ export default {
       participantLabel: '',
       nbParticipantsWaitingCoordination: 0,
       coordinatorLabel: '',
-      zoom: false
+      zoomDescription: false,
+      dense: true
     }
   },
   methods: {
@@ -485,15 +526,19 @@ export default {
       this.$refs.followUpModal.close()
     }
   },
-  created () {
+  beforeCreate () {
     // Load the required components
+    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
     this.$options.components['k-card'] = this.$load('collection/KCard')
+    this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
     this.$options.components['k-form'] = this.$load('form/KForm')
     this.$options.components['k-uploader'] = this.$load('input/KUploader')
     this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
     this.$options.components['k-location-map'] = this.$load('KLocationMap')
+  },
+  created () {
     // Required alias for the event logs mixin
     this.event = this.item
     // Set the required actor
