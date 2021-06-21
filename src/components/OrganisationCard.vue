@@ -7,9 +7,9 @@
     <!--
       Card avatar
     -->
-    <template v-slot:card-avatar>
+    <div slot="card-avatar">
       <k-avatar class="q-pa-sm" :object="item" :contextId="item._id" size="4rem" />
-    </template>
+    </div>
     <!--
       Card content
      -->
