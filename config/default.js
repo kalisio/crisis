@@ -832,7 +832,7 @@ module.exports = {
     topPane: {
       content: {
         default: [
-          { id: 'organisation', icon: 'las la-arrow-left', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
+          { id: 'back', icon: 'las la-arrow-left', handler: 'goBack' },
           separator,
           { component: 'KLocateUser' },
           { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
