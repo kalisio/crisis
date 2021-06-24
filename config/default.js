@@ -46,7 +46,7 @@ const leftPane = function (tour) {
       { component: 'account/KIdentityPanel', class: 'full-width' },
       { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
-      { component: 'Settings' },
+      { component: 'editor/KSettingsEditor' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
       { component: 'layout/KAbout' },
       { id: 'online-help', icon: 'las la-book', label: 'leftPane.ONLINE_HELP', url: onlineHelp, renderer: 'item' },
@@ -295,6 +295,22 @@ module.exports = {
   publisherWebsite: website,
   logs: {
     level: (process.env.NODE_ENV === 'development' ? 'debug' : 'info')
+  },
+  settings: {
+    propertyMapping: {
+      shortTime: 'timeFormat.time.short',
+      longTime: 'timeFormat.time.long',
+      shortDate: 'timeFormat.date.short',
+      longDate: 'timeFormat.date.long',
+      shortYear: 'timeFormat.year.short',
+      longYear: 'timeFormat.year.long',
+      utc: 'timeFormat.utc',
+      location: 'locationFormat',
+      restoreView: 'restore.view',
+      restoreLayers: 'restore.layers',
+      timelineStep: 'timeline.step',
+      timeseriesSpan: 'timeseries.span'
+    }
   },
   stripe: {
     secretKey: process.env.STRIPE_PUBLIC_KEY,
@@ -938,7 +954,7 @@ module.exports = {
     topPane: {
       content: {
         default: [
-          { id: 'organisation', icon: 'las la-arrow-left', tooltip: 'Context.ORGANISATION', route: { name: 'context', params: { contextId: ':contextId' } } },
+          { id: 'back', icon: 'las la-arrow-left', handler: 'goBack' },
           separator,
           { component: 'KLocateUser' },
           { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },

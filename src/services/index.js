@@ -1,5 +1,5 @@
 import logger from 'loglevel'
-import kCore, { LocalSettingsService } from '@kalisio/kdk/core.client'
+import kCore from '@kalisio/kdk/core.client'
 import kMap from '@kalisio/kdk/map.client.map'
 import usersHooks from './users.hooks'
 
@@ -25,26 +25,6 @@ export default function () {
     api.declareService('plan-templates', { context: true })
     api.declareService('archived-plans', { context: true })
     api.declareService('billing')
-    // Setup service for settings edition
-    const settingsService = api.createService('settings', {
-      service: LocalSettingsService,
-      propertyMapping: {
-        shortTime: 'timeFormat.time.short',
-        longTime: 'timeFormat.time.long',
-        shortDate: 'timeFormat.date.short',
-        longDate: 'timeFormat.date.long',
-        shortYear: 'timeFormat.year.short',
-        longYear: 'timeFormat.year.long',
-        utc: 'timeFormat.utc',
-        location: 'locationFormat',
-        restoreView: 'restore.view',
-        restoreLayers: 'restore.layers',
-        timelineStep: 'timeline.step',
-        timeseriesSpan: 'timeseries.span'
-      }
-    })
-    // Restore previous settings if any
-    settingsService.restoreSettings()
   } catch (error) {
     logger.error(error.message)
   }
