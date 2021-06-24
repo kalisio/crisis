@@ -426,12 +426,7 @@ module.exports = {
       actions: [
         editItemAction('organisations', 'OrganisationCard.EDIT_ACTION', 'header', "name,avatar,color"),
         removeItemAction('organisations', 'OrganisationCard.REMOVE_ACTION', 'header'),
-        editItemAction('organisations', 'OrganisationCard.EDIT_ACTION', 'description'),
-        {
-          id: 'view-plans', icon: 'las la-arrow-right', tooltip: 'OrganisationCard.VIEW_PLANS',
-          handler: { name: 'routeTo', params: ['plans-activity'] },
-          scope: 'plans'
-        }
+        editItemAction('organisations', 'OrganisationCard.EDIT_ACTION', 'description')
       ]
     }
   },

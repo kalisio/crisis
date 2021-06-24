@@ -47,12 +47,30 @@
         </q-item>
       </k-card-section>
       <!-- Plans section -->
-      <k-card-section v-if="canAccessPlans" :title="$t('OrganisationCard.PLANS_SECTION')" :actions="plansActions" :context="$props">
-        <k-list 
-          service="plans" 
-          :contextId="item._id" 
-          :renderer="planItemRenderer"
-          :list-strategy="'smart'"  />
+      <k-card-section v-if="canAccessPlans" :title="$t('OrganisationCard.PLANS_SECTION')">
+        <q-item 
+          id="organisation-plans" 
+          dense 
+          clickable 
+          @click="() => this.routeTo('plans-activity')">
+          <q-item-section avatar>
+            <q-icon name="las la-stream" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('OrganisationCard.PLANS_LABEL', { count: plansCount }) }}</q-item-label>
+            <q-tooltip>{{ $t('OrganisationCard.VIEW_PLANS') }}</q-tooltip>
+          </q-item-section>
+          <q-item-section side>
+            <div class="row justify-between">
+              <k-action
+                v-if="canAccessArchivedPlans"
+                id= "organisation-archived-plans"
+                icon= "las la-archive"
+                :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_PLANS')"
+                :handler="() => this.routeTo('archived-plans-activity')" />
+            </div>
+          </q-item-section>
+        </q-item>
       </k-card-section>
       <!-- Structure section -->
       <k-card-section icon="las la-cog" :title="$t('OrganisationCard.STRUCTURE_SECTION')" :expandable="true" @section-opened="onAdminSectionOpened">
@@ -102,28 +120,10 @@ export default {
   data () {
     return {
       eventsCount: 0,
+      plansCount: 0,
       billing: null,
       quotas: {},
       counters: {},
-      planItemRenderer: {
-        component: 'PlanItem',
-        actions: [{
-          id: 'view-plan',
-          icon: 'las la-fire',
-          tooltip: 'OrganisationCard.VIEW_EVENTS',
-          handler: (context) => this.routeTo('events-activity', context.item._id)
-        }, {
-          id: 'view-plan',
-          icon: 'las la-map',
-          tooltip: 'OrganisationCard.VIEW_CATALOG',
-          handler: (context) => this.routeTo('catalog-activity', context.item._id)
-        },{
-          id: 'view-plan',
-          icon: 'las la-clipboard-list',
-          tooltip: 'OrganisationCard.VIEW_ARCHIVED_EVENTS',
-          handler: (context) => this.routeTo('archived-events-activity', context.item._id)
-        }]
-      },
       structure: [ 
         { key: 'MEMBERS', name: 'members', icon: 'las la-user-friends' },
         { key: 'TAGS', name: 'tags', icon: 'las la-tag' },
@@ -145,8 +145,8 @@ export default {
     canAccessPlans () {
       return this.$can('service', 'plans', this.item._id)
     },
-    plansActions () {
-      return _.filter(this.itemActions, { scope: 'plans'})
+    canAccessArchivedPlans () {
+      return this.$can('service', 'archived-plans', this.item._id)
     },
     canAccessCatalog () {
       return this.$can('update', 'catalog', this.item._id)
@@ -221,6 +221,7 @@ export default {
   async created () {
     // Counts the number of orphan events
     this.eventsCount = await this.countItems('events', { plan: { $eq: null } } )
+    this.plansCount = await this.countItems('plans', { plan: { $eq: null } } )
   }
 }
 </script>
