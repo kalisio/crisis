@@ -128,6 +128,26 @@ const planTemplatesAction = function (contextId = 'contextId') {
   return gotoActivityAction('plan-templates', 'las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL', contextId)   
 }
 
+const editItemAction = function (service, tooltip, scope = undefined) {
+  let id = 'edit-item'
+  if (scope) id += `-${scope}`
+  return {
+    id, scope, tooltip, icon: 'las la-edit', size: 'sm',
+    visible: 'canEditItem', 
+    handler: { name: 'editItem', params: [scope] },
+  }
+}
+
+const removeItemAction = function (service, tooltip, scope = undefined) {
+  let id = 'remove-item'
+  if (scope) id += `-${scope}`
+  return {
+    id, scope, tooltip, icon: 'las la-trash', size: 'sm',
+    visible: 'canRemoveItem',
+    handler: { name: 'removeItem', params: ['confirm'] }
+  }
+}
+
 let defaultMapOptions = {
   viewer: {
     minZoom: 3,
@@ -386,7 +406,17 @@ module.exports = {
       ]
     },
     items: {
-      component: 'OrganisationCard'
+      component: 'OrganisationCard',
+      actions: [
+        editItemAction('organisations', 'organisationCard.EDIT_ACTION', 'header'),
+        removeItemAction('organisations', 'organisationCard.REMOVE_ACTION', 'header'),
+        editItemAction('organisations', 'organisationCard.EDIT_ACTION', 'description'),
+        {
+          id: 'view-plans', icon: 'las la-arrow-right', tooltip: 'OrganisationCard.VIEW_PLANS',
+          handler: { name: 'routeTo', params: ['plans-activity'] },
+          scope: 'plans'
+        }
+      ]
     }
   },
   plansActivity: {
@@ -414,6 +444,15 @@ module.exports = {
         ],
         'filter': contextFilter('name')
       }
+    },
+    items: {
+      actions: [
+        editItemAction('plans', 'PlanCard.EDIT_ACTION', 'header'),
+        removeItemAction('plans', 'PlanCard.REMOVE_ACTION', 'header'),
+        editItemAction('plans', 'PlanCard.EDIT_ACTION', 'description'),
+        editItemAction('plans', 'PlanCard.EDIT_ACTION', 'objectives'),
+        editItemAction('plans', 'PlanCard.EDIT_ACTION', 'location')
+      ]
     }
   },
   archivedPlansActivity: {
@@ -481,14 +520,32 @@ module.exports = {
     },
     items: {
       actions: [
-        { id: 'capture-photo', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-camera', handler:  'capturePhoto',
-          visible: ['canCapturePhoto', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
-        { id: 'add-media', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-paperclip', handler:  'uploadMedia',
-          visible: { name: '$can', params: ['read', 'events', ':contextId', ':item'] } },
-        { id: 'event-map', tooltip: 'EventCard.MAP_LABEL', icon: 'las la-map-marked-alt', handler:  'viewMap',
-          visible: ['hasLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] },
-        { id: 'navigate', tooltip: 'EventCard.NAVIGATE_LABEL', icon: 'las la-location-arrow', handler:  'launchNavigation',
-          visible: ['hasLocation', 'canNavigate', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }] }
+        editItemAction('events', 'EventCard.EDIT_ACTION', 'header'),
+        removeItemAction('events', 'EventCard.REMOVE_ACTION', 'header'),
+        editItemAction('events', 'EventCard.EDIT_ACTION', 'description'),
+        editItemAction('events', 'EventCard.EDIT_ACTION', 'location'),
+        editItemAction('events', 'EventCard.EDIT_ACTION', 'participants'),
+        editItemAction('events', 'EventCard.EDIT_ACTION', 'coordinators'),
+        { 
+          id: 'capture-photo', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-camera', 
+          visible: ['canCapturePhoto', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
+          handler: 'capturePhoto', scope: 'footer'
+        },
+        { 
+          id: 'add-media', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-paperclip',
+          visible: { name: '$can', params: ['read', 'events', ':contextId', ':item'] },
+          handler:  'uploadMedia', scope: 'footer'
+        },
+        { 
+          id: 'event-map', tooltip: 'EventCard.MAP_LABEL', icon: 'las la-map-marked-alt',
+          visible: ['hasLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
+          handler:  'viewMap', scope: 'footer'
+        },
+        { 
+          id: 'navigate', tooltip: 'EventCard.NAVIGATE_LABEL', icon: 'las la-location-arrow', 
+          visible: ['hasLocation', 'canNavigate', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
+          handler: 'launchNavigation', scope: 'footer'
+        }
       ]
     }
   },
@@ -692,17 +749,36 @@ module.exports = {
     },
     items: {
       actions: [
-        { id: 'tag-member', icon: 'las la-tags', tooltip: 'KMemberCard.TAG_LABEL',
-          route: { name: 'tag-member', params: { contextId: ':contextId', objectId: ':item._id' } },
-          visible: ['!item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }] },
-        { id: 'change-role', icon: 'las la-graduation-cap', tooltip: 'KMemberCard.CHANGE_ROLE_LABEL',
-          route: { name: 'change-role', params: { contextId: ':contextId', objectId: ':item._id' } },
-          visible: ['!item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }] },
-        { id: 'reissue-invitation', icon: 'las la-envelope', tooltip: 'KMemberCard.RESEND_INVITATION_LABEL', handler: 'resendInvitation',
-          visible: ['item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }] },
-        { id: 'card-overflow-menu', component: 'frame/KPopupAction', actionRenderer: 'item',
+        { 
+          id: 'edit-member-role', icon: 'las la-graduation-cap', tooltip: 'KMemberCard.CHANGE_ROLE_ACTION', size: 'sm',
+          visible: ['!item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }],
+          route: { name: 'edit-member-role', params: { contextId: ':contextId', objectId: ':item._id' } },
+          scope: 'header'
+        },
+        { 
+          id: 'remove-member', icon: 'las la-trash', tooltip: 'KMemberCard.REMOVE_ACTIOn', size: 'sm',
           visible: ['!item.expireAt', { name: '$can', params: ['remove', 'authorisations', ':contextId', { resource: ':contextId' }] }],
-          content: [{ id: 'remove-member', icon: 'las la-minus-circle', label: 'KMemberCard.REMOVE_LABEL', handler: 'removeMember' }] }
+          handler: 'removeMember',
+          scope: 'header'
+        },
+        { 
+          id: 'edit-member-tag', icon: 'las la-tags', tooltip: 'KMemberCard.TAG_ACTION', size: 'sm',
+          visible: ['!item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }], 
+          route: { name: 'edit-member-tags', params: { contextId: ':contextId', objectId: ':item._id' } },
+          scope: 'tags' 
+        },
+        { 
+          id: 'join-group', icon: 'las la-plus-circle', tooltip: 'KMemberCard.JOIN_GROUP_ACTION', size: 'sm',
+          visible: 'canJoinGroup', 
+          route: { name: 'join-group', params: { contextId: ':contextId', objectId: ':item._id' } },
+          scope: 'groups' 
+        },
+        { 
+          id: 'reissue-invitation', icon: 'las la-envelope', tooltip: 'KMemberCard.RESEND_INVITATION_ACTION',
+          visible: ['item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }],
+          handler: 'resendInvitation',
+          scope: 'expiration'
+        },
       ]
     }
   },
@@ -731,6 +807,12 @@ module.exports = {
         ],
         'filter': contextFilter('value')
       }
+    },
+    items: {
+      actions: [
+        editItemAction('tags', 'KTagCard.EDIT_ACTION', 'header'),
+        editItemAction('tags', 'KTagCard.EDIT_ACTION', 'description')
+      ]
     }
   },
   groupsActivity: {
@@ -757,6 +839,13 @@ module.exports = {
           visible: { name: '$can', params: ['create', 'groups', ':contextId'] },
           route: { name: 'create-group', params: { contextId: ':contextId' } }
       }]
+    },
+    items: {
+      actions: [
+        editItemAction('groups', 'KGroupCard.EDIT_ACTION', 'header'),
+        removeItemAction('groups', 'KGroupCard.REMOVE_ACTION', 'header'),
+        editItemAction('groups', 'KGroupCard.EDIT_ACTION', 'description')
+      ]
     }
   },
   eventTemplatesActivity: {
@@ -787,9 +876,18 @@ module.exports = {
     },
     items: {
       actions: [
-        { id: 'copy-event-template', tooltip: 'EventTemplateCard.COPY_ACTION', icon: 'las la-copy',
+        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'header'),
+        removeItemAction('event-templates', 'EventTemplateCard.REMOVE_ACTION', 'header'),
+        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'description'),
+        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'participants'),
+        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'coordinators'),
+        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'workflow'),
+        { 
+          id: 'copy-event-template', tooltip: 'EventTemplateCard.COPY_ACTION', icon: 'las la-copy',
           visible: { name: '$can', params: ['update', 'event-templates', ':contextId', ':item'] },
-          route: { name: 'create-event-template', params: { contextId: ':contextId', templateId: ':item._id' } } }
+          route: { name: 'create-event-template', params: { contextId: ':contextId', templateId: ':item._id' } },
+          scope: 'footer'
+        }
       ]
     }
   },
@@ -821,9 +919,17 @@ module.exports = {
     },
     items: {
       actions: [
-        { id: 'copy-plan-template', tooltip: 'PlanTemplateCard.COPY_ACTION', icon: 'las la-copy',
+        editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'header'),
+        removeItemAction('plan-templates', 'PlanTemplateCard.REMOVE_ACTION', 'header'),
+        editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'description'),
+        editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'objectives'),
+        editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'coordinators'),
+        { 
+          id: 'copy-plan-template', tooltip: 'PlanTemplateCard.COPY_ACTION', icon: 'las la-copy',
           visible: { name: '$can', params: ['update', 'plan-templates', ':contextId', ':item'] },
-          route: { name: 'create-plan-template', params: { contextId: ':contextId', templateId: ':item._id' } } }
+          route: { name: 'create-plan-template', params: { contextId: ':contextId', templateId: ':item._id' } },
+          scope: 'footer'
+        }
       ]
     }
   },

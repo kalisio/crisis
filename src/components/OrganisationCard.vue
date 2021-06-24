@@ -47,7 +47,7 @@
         </q-item>
       </k-card-section>
       <!-- Plans section -->
-      <k-card-section v-if="canAccessPlans" :title="$t('OrganisationCard.PLANS_SECTION')" :actions="plansHeader">
+      <k-card-section v-if="canAccessPlans" :title="$t('OrganisationCard.PLANS_SECTION')" :actions="plansActions" :context="$props">
         <k-list 
           service="plans" 
           :contextId="item._id" 
@@ -106,12 +106,6 @@ export default {
       quotas: {},
       counters: {},
       header: null,
-      plansHeader: [{ 
-        id: 'view-plans', 
-        icon: 'las la-arrow-right', 
-        tooltip: 'OrganisationCard.VIEW_PLANS',
-        handler: () => this.routeTo('plans-activity') }
-      ],
       planItemRenderer: {
         component: 'PlanItem',
         actions: [{
@@ -144,6 +138,9 @@ export default {
     canAccessPlans () {
       return this.$can('service', 'plans', this.item._id)
     },
+    plansActions () {
+      return _.filter(this.itemActions, { scope: 'plans'})
+    },
     canAccessCatalog () {
       return this.$can('update', 'catalog', this.item._id)
     },
@@ -164,30 +161,19 @@ export default {
     item: {
       immediate: true,
       handler () {
-        this.header = [
+        let components = _.filter(this.itemActions, { scope: 'header' })
+        components.splice(0, 0, 
           { component: 'QBadge', label: this.getUserRoleLabel(), color: 'grey-7' },
           { component: 'frame/KSpot', color: this.item.color, width: '20px', borderRadius: '5px' },
-          { component: 'QSpace' },
-          { 
-            id: 'edit-organisation', icon: 'las la-edit', tooltip: 'OrganisationCard.EDIT_LABEL', size: 'sm',
-            visible: this.$can('update', 'organisations', null, { _id: this.item._id }),
-            handler: this.editItem
-          },
-          {
-            id: 'remove-organisation', icon: 'las la-trash', tooltip: 'OrganisationCard.REMOVE_LABEL', size: 'sm',
-            visible: this.$can('remove', 'organisations', null, { _id: this.item._id }),
-            handler: () => this.removeItem('input')
-          }
-        ]
+          { component: 'QSpace' }
+        )
       }
     }
   },
   methods: {
     routeTo (activity, planId = null) {
       let route = { name: activity, params: { contextId: this.item._id } }
-      console.log('***', planId)
       if (planId) route = Object.assign(route, { query: { plan: planId } })
-      console.log(route)
       this.$router.push(route)
     },
     getUserRoleLabel () {

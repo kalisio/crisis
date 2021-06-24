@@ -1,32 +1,17 @@
 <template>
   <k-card 
     v-bind="$props"
-    :header="header"
     :actions="itemActions" 
     :bind-actions="false">
-    <!-- 
-      Card label
-      -->
-    <template v-slot:card-label>
-      <span class="text-subtitle1 text-weight-medium ellipsis-2-lines" style="overflow: hidden">
-        {{ name }}
-      </span>
-    </template>
     <!--
       Card content
      -->
     <template slot="card-content">
-      <!-- Description -->
-      <k-card-section :title="$t('EventTemplateCard.DESCRIPTION_SECTION')" :actions="descriptionActions">
-        <div v-if="hasDescription">
-          <k-text-area :text="item.description" />
-        </div>
-        <div v-else> 
-          {{ $t('EventTemplateCard.NO_DESRIPTION_LABEL')}}
-        </div>
-      </k-card-section>
-       <!-- coordinators section -->
-      <k-card-section :title="$t('EventTemplateCard.PARTICIPANTS_SECTION')" :actions="participantsActions">
+       <!-- Participants section -->
+      <k-card-section 
+        :title="$t('EventTemplateCard.PARTICIPANTS_SECTION')" 
+        :actions="participantsActions" 
+        :context="$props">
         <div v-if="hasParticipants">
           <k-chips-pane class="q-pl-sm" :chips="item.participants" valuePath="profile.name" />
         </div>
@@ -34,8 +19,11 @@
           {{ $t('EventTemplateCard.NO_PARTICIPANTS_LABEL')}}
         </div>
       </k-card-section>
-      <!-- coordinators section -->
-      <k-card-section :title="$t('PlanTemplateCard.COORDINATORS_SECTION')" :actions="coordinatorsActions">
+      <!-- Coordinators section -->
+      <k-card-section 
+        :title="$t('PlanTemplateCard.COORDINATORS_SECTION')" 
+        :actions="coordinatorsActions" 
+        :context="$props">
         <div v-if="hasCoordinators">
           <k-chips-pane class="q-pl-sm" :chips="item.coordinators" valuePath="profile.name" />
         </div>
@@ -44,7 +32,10 @@
         </div>
       </k-card-section>
       <!-- Workflow section -->
-      <k-card-section :title="$t('EventTemplateCard.WORKFLOW_SECTION')" :actions="workflowActions">
+      <k-card-section 
+        :title="$t('EventTemplateCard.WORKFLOW_SECTION')" 
+        :actions="workflowActions" 
+        :context="$props">
          <div v-if="hasWorkflow">
            {{ $t('EventTemplateCard.WORKFLOW_LABEL', { count: item.workflow.length }) }}
         </div>
@@ -64,57 +55,20 @@ export default {
   name: 'event-template-card',
   mixins: [kCoreMixins.baseItem],
   computed: {
-    header () {
-      return [
-        { component: 'QSpace' },
-        { 
-          id: 'edit-event-template', icon: 'las la-edit', size: 'sm', tooltip: 'EventTemplateCard.EDIT_ACTION',
-          visible: this.$can('update', 'event-templates', this.contextId, this.item),
-          handler: this.editItem
-        },
-        {
-          id: 'remove-event-template', icon: 'las la-trash', size: 'sm', tooltip: 'EventTemplateCard.REMOVE_ACTION',
-          visible: this.$can('remove', 'event-templates', this.contextId, this.item),
-          handler: () => this.removeItem('confirm')
-        }
-      ]
-    },
-    descriptionActions () {
-      return [{ 
-        id: 'edit-description', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION', 
-        visible: this.$can('update', 'event-templates', this.contextId, this.item),
-        route: { name: 'edit-event-template-description', params: { contextId: this.contextId, objectId: this.item._id } }
-      }]
-    },
-    hasDescription () {
-      return !_.isEmpty(this.item.description)
-    },
     participantsActions () {
-      return [{
-        id: 'edit-participants', icon: 'las la-edit', size: 'sm', tooltip: 'EventTemplateCard.EDIT_ACTION', 
-        visible: this.$can('update', 'event-templates', this.contextId, this.item),
-        route: { name: 'edit-event-template-coordinators', params: { contextId: this.contextId, objectId: this.item._id } }
-      }]
+      return _.filter(this.itemActions, { scope: 'participants'})
     },
     hasParticipants () {
       return !_.isEmpty(this.item.participants)
     },
     coordinatorsActions () {
-      return [{
-        id: 'edit-coordinators', icon: 'las la-edit', size: 'sm', tooltip: 'EventTemplateCard.EDIT_ACTION', 
-        visible: this.$can('update', 'event-templates', this.contextId, this.item),
-        route: { name: 'edit-event-template-coordinators', params: { contextId: this.contextId, objectId: this.item._id } }
-      }]
+      return _.filter(this.itemActions, { scope: 'coordinators'})
     },
     hasCoordinators () {
       return !_.isEmpty(this.item.coordinators)
     },
     workflowActions () {
-      return [{
-        id: 'edit-workflow', icon: 'las la-edit', size: 'sm', tooltip: 'EventTemplateCard.EDIT_ACTION', 
-        visible: this.$can('update', 'event-templates', this.contextId, this.item),
-        route: { name: 'edit-event-template-workflow', params: { contextId: this.contextId, objectId: this.item._id } }
-      }]
+      return _.filter(this.itemActions, { scope: 'workflow'})
     },
     hasWorkflow () {
       return !_.isEmpty(this.item.workflow)

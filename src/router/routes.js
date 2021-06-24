@@ -123,24 +123,24 @@ module.exports = {
                     props: true,
                     tour: tours['add-member']
                   },
-                  ':objectId/tag': {
-                    name: 'tag-member',
+                  'edit/:objectId/role': {
+                    name: 'edit-member-role',
+                    component: 'team/KChangeRole',
+                    props: true,
+                    tour: tours['edit-member-role']
+                  },
+                  'edit/:objectId/tags': {
+                    name: 'edit-member-tags',
                     component: 'editor/KModalEditor',
                     props: true,
-                    tour: tours['tag-member']
+                    tour: tours['edit-member-tags']
                   },
-                  ':objectId/join-group': {
+                  'join-group/:objectId': {
                     name: 'join-group',
                     component: 'team/KJoinGroup',
                     props: true,
                     tour: tours['join-group']
-                  },
-                  ':objectId/change-role': {
-                    name: 'change-role',
-                    component: 'team/KChangeRole',
-                    props: true,
-                    tour: tours['change-role']
-                  },
+                  }
                 },
                 tour: tours.members
               },
@@ -149,8 +149,11 @@ module.exports = {
                 component: 'team/KTagsActivity',
                 props: true,
                 children: {
-                  'edit/:objectId': {
-                    name: 'edit-tag',
+                  'edit/:objectId/header': {
+                    component: 'editor/KModalEditor',
+                    props: true
+                  },
+                  'edit/:objectId/description': {
                     component: 'editor/KModalEditor',
                     props: true
                   }
@@ -168,8 +171,11 @@ module.exports = {
                     props: true,
                     tour: tours['create-group']
                   },
-                  'edit/:objectId': {
-                    name: 'edit-group',
+                  'edit/:objectId/header': {
+                    component: 'editor/KModalEditor',
+                    props: true
+                  },
+                  'edit/:objectId/description': {
                     component: 'editor/KModalEditor',
                     props: true
                   }
@@ -328,8 +334,7 @@ module.exports = {
                     props: true,
                     tour: tours['create-event-templates']
                   },
-                  'edit/:objectId/:perspective?': {
-                    name: 'edit-event-template',
+                  'edit/:objectId/:schemaProperties?': {
                     component: 'EventTemplateEditor',
                     props: true
                   }
@@ -347,8 +352,7 @@ module.exports = {
                     props: true,
                     tour: tours['create-plan-templates']
                   },
-                  'edit/:objectId': {
-                    name: 'edit-plan-template',
+                  'edit/:objectId/:schemaProperties?': {
                     component: 'editor/KModalEditor',
                     props: true
                   }

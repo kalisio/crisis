@@ -6,28 +6,12 @@
       :actions="itemActions" 
       :bind-actions="false"
       :dense="dense">
-      <!-- 
-        Card label
-       -->
-      <template v-slot:card-label>
-        <span class="text-subtitle1 text-weight-medium ellipsis-2-lines" style="overflow: hidden">
-          {{ name }}
-        </span>
-      </template>
       <!--
         Card content
        -->
       <template v-slot:card-content>
-        <!-- Description -->
-        <k-card-section :title="$t('EventCard.DESCRIPTION_SECTION')" :actions="descriptionActions" :dense="dense">
-          <div v-if="description" class="event-card-description" 
-            v-bind:class="{ 'event-card-description-zoomed': zoomDescription === true }"
-            @click="zoomDescription=!zoomDescription">
-              <k-text-area :text="description" :length="150" />
-          </div>
-        </k-card-section>
          <!-- location section -->
-        <k-card-section :title="$t('EventCard.LOCATION_SECTION')" :actions="locationActions" :dense="dense">
+        <k-card-section :title="$t('EventCard.LOCATION_SECTION')" :actions="locationActions" :dense="dense" :context="$props">
           <div v-if="item.location" class="row items-center justify-between no-wrap">
             <k-text-area class="light-paragraph" :text="locationName" />
             <q-btn icon="las la-map-marker" color="grey-7" flat dense round>
@@ -46,15 +30,15 @@
           </div>
         </k-card-section>
         <!-- Parcitipants section -->
-        <k-card-section :title="$t('EventCard.PARTICIPANTS_SECTION')" :actions="participantsActions" :dense="dense">
+        <k-card-section :title="$t('EventCard.PARTICIPANTS_SECTION')" :actions="participantsActions" :dense="dense" :context="$props">
           <div v-if="participantLabel">{{ participantLabel }}</div>
         </k-card-section>
         <!-- Comment section -->
          <k-card-section :title="$t('EventCard.COMMENT_SECTION')" :dense="dense"> 
           <k-text-area v-if="comment" class="light-paragraph" :text="comment" :length="100" />
          </k-card-section>
-        <!-- Coordinator section -->
-        <k-card-section :title="$t('EventCard.COORDINATORS_SECTION')" :actions="coordinatatorsActions" :dense="dense">
+        <!-- Coordinators section -->
+        <k-card-section :title="$t('EventCard.COORDINATORS_SECTION')" :actions="coordinatatorsActions" :dense="dense" :context="$props">
           <div v-if="coordinatorLabel">{{ coordinatorLabel }}</div>
         </k-card-section>
         <!-- Timestamps section -->
@@ -108,23 +92,11 @@ export default {
   },
   computed: {
     header () {
-      let components = [
-        { component: 'QSpace' },
-        { 
-          id: 'edit-event', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION',
-          visible: this.$can('update', 'events', this.contextId, this.item),
-          handler: this.editItem
-        },
-        {
-          id: 'remove-event', icon: 'las la-times-circle', size: 'sm', tooltip: 'EventCard.REMOVE_ACTION',
-          visible: this.$can('remove', 'events', this.contextId, this.item),
-          handler: () => this.removeItem('confirm')
-        }
-      ]
+      let components = _.filter(this.itemActions, { scope: 'header' })
+      components.splice(0, 0, { component: 'QSpace' })
       if (this.item.objective) components.splice(0, 0, {
         component: 'QBadge', label: this.item.objective, color: 'grey-7'
       })
-      console.log(components)
       return components
     },
     icon () {
@@ -140,14 +112,14 @@ export default {
       // Event generated from alert ?
       return (this.item.alert ? this.getAlertLocationName(this.item.alert) : _.get(this.item, 'location.name', ''))
     },
+    locationActions () {
+      return _.filter(this.itemActions, { scope: 'location' })
+    },
     comment () {
       return this.getUserComment(this.participantState)
     },
-    createdAt () {
-      return this.item.createdAt ? new Date(this.item.createdAt) : null
-    },
-    updatedAt () {
-      return this.item.updatedAt ? new Date(this.item.updatedAt) : null
+    participantsActions () {
+      return _.filter(this.itemActions, { scope: 'participants' })
     },
     followUpTitle () {
       return this.participantStep.title ? this.participantStep.title : 'Enter your choice'
@@ -155,41 +127,15 @@ export default {
     hasParticipantInteraction () {
       return this.waitingInteraction(this.participantStep, this.participantState, 'participant')
     },
-    descriptionActions () {
-      return [{ 
-        id: 'edit-description', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION', 
-        visible: this.$can('update', 'events', this.contextId, this.item),
-        route: { name: 'edit-event-description', params: { contextId: this.contextId, objectId: this.item._id } }
-      }]
+    createdAt () {
+      return this.item.createdAt ? new Date(this.item.createdAt) : null
     },
-    objectivesActions () {
-      return [{
-        id: 'edit-objectives', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION', 
-        visible: this.$can('update', 'events', this.contextId, this.item),
-        route: { name: 'edit-event-objectives', params: { contextId: this.contextId, objectId: this.item._id } }
-      }]
-    },
-    locationActions () {
-      return [{
-        id: 'edit-location', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION',
-        visible: this.$can('update', 'events', this.contextId, this.item),
-        route: { name: 'edit-event-location', params: { contextId: this.contextId, objectId: this.item._id } }
-      }]
-    },
-    participantsActions () {
-      return [{
-        id: 'edit-participants', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION',
-        visible: this.$can('update', 'events', this.contextId, this.item),
-        route: { name: 'edit-event-participants', params: { contextId: this.contextId, objectId: this.item._id } }
-      }]
+    updatedAt () {
+      return this.item.updatedAt ? new Date(this.item.updatedAt) : null
     },
     coordinatatorsActions () {
-      return [{
-        id: 'edit-coordinateors', icon: 'las la-edit', size: 'sm', tooltip: 'EventCard.EDIT_ACTION',
-        visible: this.$can('update', 'events', this.contextId, this.item),
-        route: { name: 'edit-event-coordinators', params: { contextId: this.contextId, objectId: this.item._id } }
-      }]
-    }
+      return _.filter(this.itemActions, { scope: 'coordinators' })
+    },
   },
   data () {
     return {
@@ -199,7 +145,7 @@ export default {
       nbParticipantsWaitingCoordination: 0,
       coordinatorLabel: '',
       zoomDescription: false,
-      dense: true
+      dense: false
     }
   },
   methods: {
