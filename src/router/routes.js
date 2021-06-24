@@ -75,7 +75,7 @@ module.exports = {
                 props: true,
                 tour: tours['create-organisation']
               },
-              'edit/:objectId': {
+              'edit/:objectId/:schemaProperties?': {
                 name: 'edit-organisation',
                 component: 'editor/KModalEditor',
                 props: true,
@@ -253,7 +253,7 @@ module.exports = {
                     props: true,
                     tour: tours['create-event']
                   },
-                  'edit/:objectId': {
+                  'edit/:objectId/:schemaProperties?': {
                     name: 'edit-event',
                     component: 'EventEditor',
                     props: true

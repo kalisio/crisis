@@ -290,8 +290,8 @@
     "PLAN_TEMPLATES": "{{count}} Plan templates",
     "VIEW_PLAN_TEMPLATES": "View plan templates",
     "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions",
-    "EDIT_LABEL": "$t(EDIT_LABEL)",
-    "REMOVE_LABEL": "$t(REMOVE_LABEL)",
+    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
     "STRUCTURE_SECTION": "Administration",
     "SUBSCRIPTIONS_LABEL": "Subscriptions"
   },

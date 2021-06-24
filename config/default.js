@@ -128,13 +128,13 @@ const planTemplatesAction = function (contextId = 'contextId') {
   return gotoActivityAction('plan-templates', 'las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL', contextId)   
 }
 
-const editItemAction = function (service, tooltip, scope = undefined) {
+const editItemAction = function (service, tooltip, scope = undefined, properties = undefined) {
   let id = 'edit-item'
   if (scope) id += `-${scope}`
   return {
     id, scope, tooltip, icon: 'las la-edit', size: 'sm',
     visible: 'canEditItem', 
-    handler: { name: 'editItem', params: [scope] },
+    handler: { name: 'editItem', params: [scope, properties] },
   }
 }
 
@@ -424,9 +424,9 @@ module.exports = {
     items: {
       component: 'OrganisationCard',
       actions: [
-        editItemAction('organisations', 'organisationCard.EDIT_ACTION', 'header'),
-        removeItemAction('organisations', 'organisationCard.REMOVE_ACTION', 'header'),
-        editItemAction('organisations', 'organisationCard.EDIT_ACTION', 'description'),
+        editItemAction('organisations', 'OrganisationCard.EDIT_ACTION', 'header', "name,avatar,color"),
+        removeItemAction('organisations', 'OrganisationCard.REMOVE_ACTION', 'header'),
+        editItemAction('organisations', 'OrganisationCard.EDIT_ACTION', 'description'),
         {
           id: 'view-plans', icon: 'las la-arrow-right', tooltip: 'OrganisationCard.VIEW_PLANS',
           handler: { name: 'routeTo', params: ['plans-activity'] },
@@ -463,7 +463,7 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('plans', 'PlanCard.EDIT_ACTION', 'header'),
+        editItemAction('plans', 'PlanCard.EDIT_ACTION', 'header', 'name,'),
         removeItemAction('plans', 'PlanCard.REMOVE_ACTION', 'header'),
         editItemAction('plans', 'PlanCard.EDIT_ACTION', 'description'),
         editItemAction('plans', 'PlanCard.EDIT_ACTION', 'objectives'),
@@ -536,7 +536,7 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('events', 'EventCard.EDIT_ACTION', 'header'),
+        editItemAction('events', 'EventCard.EDIT_ACTION', 'header', 'name'),
         removeItemAction('events', 'EventCard.REMOVE_ACTION', 'header'),
         editItemAction('events', 'EventCard.EDIT_ACTION', 'description'),
         editItemAction('events', 'EventCard.EDIT_ACTION', 'location'),
@@ -821,7 +821,7 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('tags', 'KTagCard.EDIT_ACTION', 'header'),
+        editItemAction('tags', 'KTagCard.EDIT_ACTION', 'header', 'value,icon'),
         editItemAction('tags', 'KTagCard.EDIT_ACTION', 'description')
       ]
     }
@@ -853,7 +853,7 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('groups', 'KGroupCard.EDIT_ACTION', 'header'),
+        editItemAction('groups', 'KGroupCard.EDIT_ACTION', 'header', 'name'),
         removeItemAction('groups', 'KGroupCard.REMOVE_ACTION', 'header'),
         editItemAction('groups', 'KGroupCard.EDIT_ACTION', 'description')
       ]
@@ -887,7 +887,7 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'header'),
+        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'header', 'name,icon'),
         removeItemAction('event-templates', 'EventTemplateCard.REMOVE_ACTION', 'header'),
         editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'description'),
         editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'participants'),
@@ -930,7 +930,7 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'header'),
+        editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'header', 'name,icon'),
         removeItemAction('plan-templates', 'PlanTemplateCard.REMOVE_ACTION', 'header'),
         editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'description'),
         editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'objectives'),

@@ -105,7 +105,6 @@ export default {
       billing: null,
       quotas: {},
       counters: {},
-      header: null,
       planItemRenderer: {
         component: 'PlanItem',
         actions: [{
@@ -135,6 +134,14 @@ export default {
     }
   },
   computed: {
+    header () {
+      let components = _.filter(this.itemActions, { scope: 'header' })
+      components.splice(0, 0, 
+        { component: 'QBadge', label: this.getUserRoleLabel(), color: 'grey-7' },
+        { component: 'frame/KSpot', color: this.item.color, width: '20px', borderRadius: '5px' },
+        { component: 'QSpace' })
+      return components
+    },
     canAccessPlans () {
       return this.$can('service', 'plans', this.item._id)
     },
@@ -155,19 +162,6 @@ export default {
       const options = _.get(this.billing, 'options')
       if (options)  return _.concat([plan], _.map(options, (option) => { return `options.${option.plan}` }))
       return [plan]
-    }
-  },
-  watch: {
-    item: {
-      immediate: true,
-      handler () {
-        let components = _.filter(this.itemActions, { scope: 'header' })
-        components.splice(0, 0, 
-          { component: 'QBadge', label: this.getUserRoleLabel(), color: 'grey-7' },
-          { component: 'frame/KSpot', color: this.item.color, width: '20px', borderRadius: '5px' },
-          { component: 'QSpace' }
-        )
-      }
     }
   },
   methods: {
