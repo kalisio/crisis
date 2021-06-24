@@ -443,6 +443,7 @@
   "EventCard": {
     "DESCRIPTION_SECTION": "Description",
     "LOCATION_SECTION": "Localisation",
+    "UNDEFINED_LOCATION_LABEL": "Aucune localisation",
     "PARTICIPANTS_SECTION": "Participants",
     "COMMENT_SECTION": "Commentaire",
     "COORDINATORS_SECTION": "Coordonateurs",

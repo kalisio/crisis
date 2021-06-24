@@ -440,6 +440,7 @@
   "EventCard": {
     "DESCRIPTION_SECTION": "Description",
     "LOCATION_SECTION": "Location",
+    "UNDEFINED_LOCATION_LABEL": "No location",
     "PARTICIPANTS_SECTION": "Participants",
     "COMMENT_SECTION": "Comment",
     "COORDINATORS_SECTION": "Coordinators",
