@@ -84,6 +84,12 @@ export default {
     mixins.events,
     mixins.alerts
   ],
+  props: {
+    dense: {
+      type: Boolean,
+      default: false
+    }
+  },
   watch: {
     item: function () {
       // Some actions are not fully reactive and need to be updated manually
@@ -144,8 +150,7 @@ export default {
       participantLabel: '',
       nbParticipantsWaitingCoordination: 0,
       coordinatorLabel: '',
-      zoomDescription: false,
-      dense: false
+      zoomDescription: false
     }
   },
   methods: {

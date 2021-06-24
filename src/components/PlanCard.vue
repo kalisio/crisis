@@ -27,7 +27,8 @@
             icon= "las la-fire"
             :label="$t('PlanCard.EVENTS', { count: eventsCount })"
             :route="{ name: 'events-activity', params: { contextId }, query: { plan: item._id } }"
-            :dense="$q.screen.lt.sm ? true : false" />
+            :dense="$q.screen.lt.sm ? true : false" 
+            :propagate="false" />
           <q-space />
           <k-action 
             v-if="canAccessCatalog"
@@ -35,14 +36,16 @@
             icon= "las la-map"
             :tooltip="$t('PlanCard.VIEW_CATALOG')"
             :route="{ name: 'catalog-activity', params: { contextId }, query: { plan: item._id } }" 
-            :dense="$q.screen.lt.sm ? true : false" />
+            :dense="$q.screen.lt.sm ? true : false" 
+            :propagate="false" />
           <k-action
             v-if="canAccessArchivedEvents"
             id= "plan-archived-events"
             icon= "las la-clipboard-list"
             :tooltip="$t('PlanCard.VIEW_ARCHIVED_EVENTS')"
             :route="{ name: 'archived-events-activity', params: { contextId }, query: { plan: item._id } }" 
-            :dense="$q.screen.lt.sm ? true : false" />
+            :dense="$q.screen.lt.sm ? true : false" 
+            :propagate="false" />
         </div>
       </k-card-section>
     </template>
@@ -90,7 +93,6 @@ export default {
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
     this.$options.components['k-card'] = this.$load('collection/KCard')
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
-    this.$options.components['k-panel'] = this.$load('frame/KPanel')
     this.$options.components['k-action'] = this.$load('frame/KAction')
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
     this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')

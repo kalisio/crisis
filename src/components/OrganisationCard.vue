@@ -35,13 +35,15 @@
                 id= "organisation-catalog"
                 icon= "las la-map"
                 :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
-                :handler="() => this.routeTo('catalog-activity')" />
+                :handler="() => this.routeTo('catalog-activity')" 
+                :propagate="false" />
               <k-action
                 v-if="canAccessArchivedEvents"
                 id= "organisation-archived-events"
                 icon= "las la-clipboard-list"
                 :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
-                :handler="() => this.routeTo('archived-events-activity')" />
+                :handler="() => this.routeTo('archived-events-activity')" 
+                :propagate="false" />
             </div>
           </q-item-section>
         </q-item>
@@ -67,7 +69,8 @@
                 id= "organisation-archived-plans"
                 icon= "las la-archive"
                 :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_PLANS')"
-                :handler="() => this.routeTo('archived-plans-activity')" />
+                :handler="() => this.routeTo('archived-plans-activity')" 
+                :propagate="false" />
             </div>
           </q-item-section>
         </q-item>

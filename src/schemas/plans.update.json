@@ -19,6 +19,23 @@
         "label": "schemas.PLANS_DESCRIPTION_FIELD_LABEL"
       }
     },
+    "objectives": {
+      "type": "array",
+      "field": {
+        "component": "form/KChipsField",
+        "label": "schemas.PLANS_OBJECTIVES_FIELD_LABEL",
+        "icon": false
+      }
+    },
+    "location": {
+      "type": "object", 
+      "draggable": true,
+      "field": {
+        "component": "form/KLocationField",
+        "label": "schemas.PLANS_LOCATION_FIELD_LABEL",
+        "draw": true
+      }
+    },
     "coordinators": { 
       "type": "array",
       "multiselect": true,

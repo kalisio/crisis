@@ -57,6 +57,10 @@ export default {
     }
   },
   computed: {
+    renderer () {
+      const dense = (this.planId ? true : this.$q.screen.lt.sm)
+      return _.merge({component: 'EventCard', dense }, this.activityOptions.items)
+    },
     baseQuery () {
       let query = _.clone(this.sorter.query)
       Object.assign(query, this.getPlanQuery())
@@ -113,10 +117,6 @@ export default {
     return {
       sorter: this.$store.get('sorter'),
       filter: this.$store.get('filter'),
-      // Make this configurable from app
-      renderer: _.merge({
-        component: 'EventCard'
-      }, this.activityOptions.items),
       height: undefined
     }
   },
