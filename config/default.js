@@ -777,12 +777,7 @@ module.exports = {
           handler: 'removeMember',
           scope: 'header'
         },
-        { 
-          id: 'edit-member-tag', icon: 'las la-tags', tooltip: 'KMemberCard.TAG_ACTION', size: 'sm',
-          visible: ['!item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }], 
-          route: { name: 'edit-member-tags', params: { contextId: ':contextId', objectId: ':item._id' } },
-          scope: 'tags' 
-        },
+        editItemAction('members', 'KMemberCard.TAG_ACTION', 'tags'),
         { 
           id: 'join-group', icon: 'las la-plus-circle', tooltip: 'KMemberCard.JOIN_GROUP_ACTION', size: 'sm',
           visible: 'canJoinGroup', 

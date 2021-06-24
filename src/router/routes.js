@@ -129,7 +129,7 @@ module.exports = {
                     props: true,
                     tour: tours['edit-member-role']
                   },
-                  'edit/:objectId/tags': {
+                  'edit/:objectId/:schemaProperties?': {
                     name: 'edit-member-tags',
                     component: 'editor/KModalEditor',
                     props: true,
@@ -149,14 +149,11 @@ module.exports = {
                 component: 'team/KTagsActivity',
                 props: true,
                 children: {
-                  'edit/:objectId/header': {
+                  'edit/:objectId/:schemaProperties?': {
+                    name: 'edit-tag',
                     component: 'editor/KModalEditor',
                     props: true
                   },
-                  'edit/:objectId/description': {
-                    component: 'editor/KModalEditor',
-                    props: true
-                  }
                 },
                 tour: tours.tags
               },
@@ -171,11 +168,8 @@ module.exports = {
                     props: true,
                     tour: tours['create-group']
                   },
-                  'edit/:objectId/header': {
-                    component: 'editor/KModalEditor',
-                    props: true
-                  },
-                  'edit/:objectId/description': {
+                  'edit/:objectId/:schemaProperties?': {
+                    name: 'edit-group',
                     component: 'editor/KModalEditor',
                     props: true
                   }
@@ -229,22 +223,10 @@ module.exports = {
                     props: true,
                     tour: tours['create-plan']
                   },
-                  'edit/:objectId': {
+                  'edit/:objectId/:schemaProperties?': {
                     name: 'edit-plan',
                     component: 'editor/KModalEditor',
                     props: true
-                  },
-                  'edit-objectives/:objectId': {
-                    name: 'edit-plan-objectives',
-                    component: 'editor/KModalEditor',
-                    props: true,
-                    meta: { schemaName: 'plans.update-objectives' }
-                  },
-                  'edit-location/:objectId': {
-                    name: 'edit-plan-location',
-                    component: 'editor/KModalEditor',
-                    props: true,
-                    meta: { schemaName: 'plans.update-location' }
                   }
                 }
               },
