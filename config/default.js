@@ -431,7 +431,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationMenu' },
+          { component: 'OrganisationMenu', mode: 'plan' },
           separator,
           currentActivityStamp('las la-stream', 'PlansActivity.PLANS_LABEL'),
           archivedPlansAction(),
@@ -467,7 +467,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationMenu' },
+          { component: 'OrganisationMenu', mode: 'plan' },
           separator,
           plansAction(),
           currentActivityStamp('las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL'),
@@ -503,7 +503,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationMenu',  menu: true },
+          { component: 'OrganisationMenu', mode: 'run' },
           separator,
           { component: 'PlanMenu' },
           { 
@@ -568,7 +568,7 @@ module.exports = {
     topPane: {
       content: {
         default: [
-          { component: 'OrganisationMenu',  menu: true },
+          { component: 'OrganisationMenu', mode: 'run' },
           separator,
           { component: 'PlanMenu' },       
           { 
@@ -654,7 +654,7 @@ module.exports = {
     topPane: {
       content: {
         'history': [
-          { component: 'OrganisationMenu',  menu: true },
+          { component: 'OrganisationMenu', mode: 'run' },
           separator,
           { component: 'PlanMenu' },
           { 
@@ -733,7 +733,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationMenu' },
+          { component: 'OrganisationMenu', mode: 'admin' },
           separator,
           currentActivityStamp('las la-user-friends', 'KMembersActivity.MEMBERS_LABEL'),
           tagsAction(),
@@ -800,7 +800,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [      
-          { component: 'OrganisationMenu' },
+          { component: 'OrganisationMenu', mode: 'admin' },
           separator,          
           membersAction(),
           currentActivityStamp('las la-tags', 'KTagsActivity.TAGS_LABEL'),
@@ -833,7 +833,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          { component: 'OrganisationMenu' },
+          { component: 'OrganisationMenu', mode: 'admin' },
           separator,
           membersAction(),
           tagsAction(),
@@ -866,7 +866,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [ 
-          { component: 'OrganisationMenu' },
+          { component: 'OrganisationMenu', mode: 'admin' },
           separator,
           membersAction(),
           tagsAction(),
@@ -909,7 +909,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [ 
-          { component: 'OrganisationMenu' },
+          { component: 'OrganisationMenu', mode: 'admin' },
           separator,
           membersAction(),
           tagsAction(),

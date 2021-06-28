@@ -21,7 +21,7 @@
           <div class="row full-width justify-center q-pa-md text-subtitle1 bg-grey-4">
             {{ organisation.name }}
           </div>
-          <k-card-section>
+          <k-card-section v-if="hasEventsSection"> 
             <!-- Events section -->
             <div class="full-width row justify-between items-center no-wrap">
               <k-action 
@@ -45,7 +45,7 @@
             </div>
           </k-card-section>
           <!-- Plans section -->
-          <k-card-section v-if="canAccessPlans">
+          <k-card-section v-if="hasPlansSection && canAccessPlans">
             <div class="full-width row justify-between items-center no-wrap">
               <k-action 
                 id= "organisation-plans"
@@ -61,7 +61,8 @@
                 @triggered="routeTo('archived-plans-activity')" />
             </div>
           </k-card-section>
-          <k-card-section v-if="canManageOrganisation">
+          <!-- Manage section -->
+          <k-card-section v-if="hasManageSection && canManageOrganisation">
             <div class="row justify-center">
               <k-action
                 id= "manage-organisation"
@@ -88,14 +89,36 @@ export default {
   components: {
     QBtnDropdown
   },
+  props: {
+    mode: {
+      type: String,
+      required: true,
+      validator: (value) => {
+        return ['run', 'plan', 'admin'].includes(value)
+      }
+    }
+  },
   data () {
     return {
       organisation: this.$store.get('context'),
       eventsCount: 0,
-      plansCount: 0
+      plansCount: 0,
+      planId: null
     }
   },
   computed: {
+    hasEventsSection () {
+      return this.mode === 'admin' || 
+             (this.mode === 'run' && this.planId)
+    },
+    hasPlansSection () {
+      return this.mode === 'admin' ||
+             this.mode !== 'plan' || 
+             (this.mode === 'run' && !this.planId)
+    },
+    hasManageSection () {
+      return this.mode !== 'admin'
+    },
     canAccessPlans () {
       return this.$can('service', 'plans', this.organisation._id)
     },
@@ -125,13 +148,14 @@ export default {
   },
   beforeCreate () {
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
-     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
+    this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
     this.$options.components['k-action'] = this.$load('frame/KAction')
   },
   async created () {
     // Counts the number of orphan events
     this.eventsCount = await this.countItems('events', { plan: { $eq: null } } )
     this.plansCount = await this.countItems('plans', { plan: { $eq: null } } )
+    this.planId = _.get(this.$route, 'query.plan', null)
   }
 }
 </script>
