@@ -26,14 +26,11 @@
           <div class="q-pa-xs">
             <k-text-area class="light-paragraph q-pa-sm" :text="plan.description" />
             <!-- Objectives section -->
-            <k-card-section :title="$t('PlanCard.OBJECTIVES_SECTION')">
+            <k-card-section>
               <template v-for="(objective, index) in plan.objectives">
                 <div :key="objective" class="row full-width items-center justify-between">
                   <q-toggle v-model="objectiveFilters[index]" :label="objective" />
-                  <k-action 
-                    :id="`view-${objective}-stat`"
-                    icon="las la-chart-pie"
-                    />
+                  
                 </div>
               </template>
             </k-card-section>
@@ -95,7 +92,6 @@ export default {
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
-    this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')
   }
 }
 </script>
