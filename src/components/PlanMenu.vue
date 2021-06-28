@@ -1,98 +1,101 @@
 <template>
-  <div v-if="hasMenu">
-    <k-menu
-      id="plan-selector"
-      :label="computedLabel"
+  <div v-if="plan">
+    <q-btn-dropdown 
+      class="q-pl-sm ellipsis-2-lines"
+      :label="label"
       :icon="icon"
-      :color="color"
       :size="size"
-      :content="entries" 
-      actionRenderer="item" />
-  </div>
-  <div v-else>
-    <k-stamp :text="label" :icon="icon" :icon-size="size" direction="horizontal" :class="`text-${color}`" />
+      flat
+      dense
+      no-caps
+      square
+      menu-anchor="bottom middle"
+      menu-self="top middle">
+      <template v-slot:default>
+        <q-card class="bg-white" style="width: 300px;">
+          <div class="row full-width justify-center items-center q-pa-md q-gutter-x-sm text-subtitle1 bg-grey-4">
+            <k-avatar 
+              :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'" 
+              :object="plan" 
+              :contextId="organisation._id"
+              size="sm" />
+            <div>
+              {{ plan.name }}
+            </div>
+          </div>
+          <div class="q-pa-xs">
+            <k-text-area class="light-paragraph q-pa-sm" :text="plan.description" />
+            <!-- Objectives section -->
+            <k-card-section :title="$t('PlanCard.OBJECTIVES_SECTION')">
+              <template v-for="(objective, index) in plan.objectives">
+                <div :key="objective" class="row full-width items-center justify-between">
+                  <q-toggle v-model="objectiveFilters[index]" :label="objective" />
+                  <k-action 
+                    :id="`view-${objective}-stat`"
+                    icon="las la-chart-pie"
+                    />
+                </div>
+              </template>
+            </k-card-section>
+          </div>
+        </q-card>
+      </template>
+    </q-btn-dropdown>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
+import { QBtnDropdown } from 'quasar'
+import mixins from '../mixins'
 
 export default {
-  name: 'plan-menu',
-  props: {
-    icon: {
-      type: String,
-      default: undefined
+  name: 'plan-item',
+  mixins: [mixins.plans],
+  components: {
+    QBtnDropdown
+  },
+  inject: ['kActivity'],
+  computed: {
+    label () {
+      return this.$q.screen.gt.xs ? this.plan.name : ''
     },
-    label: {
-      type: String,
-      default: undefined
+    icon () {
+      return this.$q.screen.lt.sm ? _.get(this.plan, 'icon.name') : undefined
     },
-    color: {
-      type: String,
-      default: 'grey-9'
-    },
-    size: {
-      type: String,
-      default: 'sm'
+    size () {
+      return this.$q.screen.lt.sm ? 'sm' : 'md'
     }
   },
   data () {
     return {
-      entries: []
-    }
-  },
-  computed: {
-    hasMenu () {
-      return this.entries.length > 0
-    },
-    computedLabel () {
-      return this.$q.screen.gt.xs ? this.label : ''
+      organisation: this.$store.get('context'),
+      objectiveFilters: this.kActivity.objectiveFilters
     }
   },
   watch:{
-    $route: {
+    plan: {
       handler () {
-        this.refreshMenu()
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    async refreshMenu () {
-      const contextId = this.$store.get('context')._id
-      this.entries = []
-      // Get the current plan
-      this.planId = _.get(this.$route, 'query.plan', null)
-      // If no plan set the menu to the NO PLAN entry
-      // Otherwise add the entry in the menu
-      if (this.planId) {
-        this.entries.push({
-          id: 'no-plan',
-          icon: 'las la-times',
-          label: 'PlanMenu.NO_PLAN_LABEL',
-          route: { name: this.$route.name, params: { contextId } }
-        }) 
+        this.objectiveFilters = _.fill(Array(this.plan.objectives.length), false)
       }
-      // Add the plans to the entries
-      const plansService = this.$api.getService('plans', contextId)
-      const response = await plansService.find({})
-      // Build the menu entries
-      _.forEach(response.data, plan => {
-        if (plan._id != this.planId) {
-          this.entries.unshift({
-            id: plan.name,
-            icon: plan.icon.name,
-            label: plan.name,
-            route: { name: this.$route.name, params: this.$route.params, query: { plan: plan._id } }
-          }) 
+    },
+    objectiveFilters: {
+      handler () {
+        let filters = []
+        for (let i = 0; i < this.objectiveFilters.length; i++) {
+          if (this.objectiveFilters[i]) filters.push(this.plan.objectives[i])
         }
-      })
+        this.kActivity.objectiveFilters = filters
+      }
     }
   },
   beforeCreate () {
-    this.$options.components['k-menu'] = this.$load('menu/KMenu')
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
-  } 
+    // Loads the required components
+    this.$options.components['k-action'] = this.$load('frame/KAction')
+    this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
+    this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
+    this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
+    this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')
+  }
 }
 </script>

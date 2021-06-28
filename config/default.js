@@ -61,11 +61,7 @@ const separator = { component: 'QSeparator', vertical: true, color: 'grey-5' }
 const midSeparator = { component: 'QSeparator', vertical: true, inset: true, color: 'grey-5', style: 'max-width: 1px; min-width: 1px;' }
 
 const currentActivityStamp = function (icon, text) {
-  return { component: 'frame/KStamp', icon, iconSize: 'sm', text, direction: 'horizontal', class: 'text-accent' }
-}
-
-const currentActivityPlanMenu = function (icon, text) {
-  return { component: 'PlanMenu', icon, label: text, color: 'accent' }
+  return { component: 'frame/KStamp', icon, iconSize: 'sm', text, direction: 'horizontal', class: 'text-grey-7' }
 }
 
 const gotoActivityAction = function (service, icon, label, contextId) {
@@ -509,11 +505,18 @@ module.exports = {
         'default': [
           { component: 'OrganisationMenu',  menu: true },
           separator,
-          currentActivityPlanMenu('las la-fire', 'EventsActivity.EVENTS_LABEL'),
-          mapAction(),
-          archivedEventsAction(),
+          { component: 'PlanMenu' },
+          { 
+            id: 'events-menu',
+            icon: 'las la-fire',
+            tooltip: 'EventsActivity.EVENTS_LABEL',
+            component: 'menu/KMenu',
+            content: [ mapAction(), archivedEventsAction() ]
+          },
+          // currentActivityStamp('las la-fire', 'EventsActivity.EVENTS_LABEL'),
+          // mapAction(),
+          //archivedEventsAction(),
           midSeparator,
-          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'event-sorter',
             component: 'collection/KSorter', 
             tooltip: 'EventsActivity.SORT_EVENTS',
@@ -566,12 +569,16 @@ module.exports = {
       content: {
         default: [
           { component: 'OrganisationMenu',  menu: true },
-          separator,        
-          eventsAction(),
-          currentActivityPlanMenu('las la-map', 'Context.CATALOG'),
-          archivedEventsAction(),
+          separator,
+          { component: 'PlanMenu' },       
+          { 
+            id: 'events-map-menu',
+            icon: 'las la-map',
+            tooltip: 'Context.CATALOG',
+            component: 'menu/KMenu',
+            content: [ eventsAction(), archivedEventsAction() ]
+          },
           midSeparator,
-          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { component: 'KLocateUser' },
           { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
           {
@@ -619,13 +626,11 @@ module.exports = {
       ]
     },
     page: {
-      content: [{
-        component: 'frame/KPageSticky', position: 'left', offset: [18, 0], content: [{ component: 'KColorLegend' }]
-      }, {
-        component: 'frame/KPageSticky', position: 'top-left', offset: [18, 18], content: [{ component: 'KUrlLegend' }]
-      }, {
-        component: 'KFeatureActionButton'
-      }]
+      content: [
+        { component: 'frame/KPageSticky', position: 'left', offset: [18, 0], content: [{ component: 'KColorLegend' }] }, 
+        { component: 'frame/KPageSticky', position: 'top-left', offset: [18, 18], content: [{ component: 'KUrlLegend' }] }, 
+        { component: 'KFeatureActionButton' }
+      ]
     },
     window: {
       widgets: widgets
@@ -651,11 +656,15 @@ module.exports = {
         'history': [
           { component: 'OrganisationMenu',  menu: true },
           separator,
-          eventsAction(),
-          mapAction(),
-          currentActivityPlanMenu('las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
+          { component: 'PlanMenu' },
+          { 
+            id: 'archived-events-menu',
+            icon: 'las la-clipboard-list',
+            tooltip: 'Context.ARCHIVED_EVENT',
+            component: 'menu/KMenu',
+            content: [ eventsAction(), mapAction() ]
+          },
           midSeparator,
-          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           {
             id: 'archived-plan-sorter',
             component: 'collection/KSorter', 
@@ -672,7 +681,6 @@ module.exports = {
         'map': [
           { id: 'history-view', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           midSeparator,
-          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'by-template', icon: 'las la-layer-group', tooltip: 'ArchivedEventsActivity.SHOW_BY_TEMPLATE_LABEL',
             toggle: { icon: 'las la-object-group', color: 'grey-9', tooltip: 'ArchivedEventsActivity.SHOW_ALL_LABEL' }, handler: 'onByTemplate' },
           { id: 'heatmap', icon: 'las la-bowling-ball', tooltip: 'ArchivedEventsActivity.SHOW_HEATMAP_LABEL',
@@ -682,7 +690,6 @@ module.exports = {
         'chart': [
           { id: 'history-view', icon: 'las la-arrow-left', tooltip: 'ArchivedEventsActivity.SHOW_HISTORY_LABEL', handler: 'onShowHistory' },
           midSeparator,
-          { id: 'plan-objective-filter', component: 'PlanObjectiveFilter' },
           { id: 'settings', icon: 'las la-cog', tooltip: 'ArchivedEventsActivity.CHART_SETTINGS_LABEL', handler: 'showChartSettings' },
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.CHART_EXPORT_LABEL', handler: 'downloadChartData' }
         ]

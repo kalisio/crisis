@@ -642,5 +642,8 @@
   },
   "OrganisationMenu": {
     "EDIT_LABEL": "$t(EDIT_LABEL)"
+  },
+  "MiniOrganisationCard": {
+    "MANAGE_ORGANISATION_ACTION": "Gérer l'organisation"
   }
 }

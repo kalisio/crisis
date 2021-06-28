@@ -26,26 +26,20 @@
             id= "plan-events"
             icon= "las la-fire"
             :label="$t('PlanCard.EVENTS', { count: eventsCount })"
-            :route="{ name: 'events-activity', params: { contextId }, query: { plan: item._id } }"
-            :dense="$q.screen.lt.sm ? true : false" 
-            :propagate="false" />
+            :route="{ name: 'events-activity', params: { contextId }, query: { plan: item._id } }" />
           <q-space />
           <k-action 
             v-if="canAccessCatalog"
             id= "plan-catalog"
             icon= "las la-map"
             :tooltip="$t('PlanCard.VIEW_CATALOG')"
-            :route="{ name: 'catalog-activity', params: { contextId }, query: { plan: item._id } }" 
-            :dense="$q.screen.lt.sm ? true : false" 
-            :propagate="false" />
+            :route="{ name: 'catalog-activity', params: { contextId }, query: { plan: item._id } }" />
           <k-action
             v-if="canAccessArchivedEvents"
             id= "plan-archived-events"
             icon= "las la-clipboard-list"
             :tooltip="$t('PlanCard.VIEW_ARCHIVED_EVENTS')"
-            :route="{ name: 'archived-events-activity', params: { contextId }, query: { plan: item._id } }" 
-            :dense="$q.screen.lt.sm ? true : false" 
-            :propagate="false" />
+            :route="{ name: 'archived-events-activity', params: { contextId }, query: { plan: item._id } }"  />
         </div>
       </k-card-section>
     </template>

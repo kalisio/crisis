@@ -16,87 +16,59 @@
     <div slot="card-content">
       <k-card-section :title="$t('OrganisationCard.EVENTS_SECTION')">
         <!-- Events section -->
-        <q-item 
-          id="organisation-events" 
-          dense 
-          clickable 
-          @click="() => this.routeTo('events-activity')">
-          <q-item-section avatar>
-            <q-icon name="las la-fire" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>{{ $t('OrganisationCard.EVENTS_LABEL', { count: eventsCount }) }}</q-item-label>
-            <q-tooltip>{{ $t('OrganisationCard.VIEW_EVENTS') }}</q-tooltip>
-          </q-item-section>
-          <q-item-section side>
-            <div class="row justify-between">
-              <k-action 
-                v-if="canAccessCatalog"
-                id= "organisation-catalog"
-                icon= "las la-map"
-                :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
-                :handler="() => this.routeTo('catalog-activity')" 
-                :propagate="false" />
-              <k-action
-                v-if="canAccessArchivedEvents"
-                id= "organisation-archived-events"
-                icon= "las la-clipboard-list"
-                :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
-                :handler="() => this.routeTo('archived-events-activity')" 
-                :propagate="false" />
-            </div>
-          </q-item-section>
-        </q-item>
+        <div class="full-width row justify-between items-center no-wrap">
+          <k-action 
+            id= "organisation-events"
+            icon= "las la-fire"
+            :label="$t('OrganisationCard.EVENTS_LABEL', { count: eventsCount })"
+            @triggered="routeTo('events-activity')" />
+          <q-space />
+          <k-action 
+            v-if="canAccessCatalog"
+            id= "organisation-catalog"
+            icon= "las la-map"
+            :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
+            @triggered="routeTo('catalog-activity')"  />
+          <k-action
+            v-if="canAccessArchivedEvents"
+            id= "organisation-archived-events"
+            icon= "las la-clipboard-list"
+            :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
+            @triggered="routeTo('archived-events-activity')"   />
+        </div>
       </k-card-section>
       <!-- Plans section -->
       <k-card-section v-if="canAccessPlans" :title="$t('OrganisationCard.PLANS_SECTION')">
-        <q-item 
-          id="organisation-plans" 
-          dense 
-          clickable 
-          @click="() => this.routeTo('plans-activity')">
-          <q-item-section avatar>
-            <q-icon name="las la-stream" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>{{ $t('OrganisationCard.PLANS_LABEL', { count: plansCount }) }}</q-item-label>
-            <q-tooltip>{{ $t('OrganisationCard.VIEW_PLANS') }}</q-tooltip>
-          </q-item-section>
-          <q-item-section side>
-            <div class="row justify-between">
-              <k-action
-                v-if="canAccessArchivedPlans"
-                id= "organisation-archived-plans"
-                icon= "las la-archive"
-                :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_PLANS')"
-                :handler="() => this.routeTo('archived-plans-activity')" 
-                :propagate="false" />
-            </div>
-          </q-item-section>
-        </q-item>
+        <div class="full-width row justify-between items-center no-wrap">
+          <k-action 
+            id= "organisation-plans"
+            icon= "las la-stream"
+            :label="$t('OrganisationCard.PLANS_LABEL', { count: plansCount })"
+            @triggered="routeTo('plans-activity')" />
+          <q-space />
+          <k-action
+            v-if="canAccessArchivedPlans"
+            id= "organisation-archived-plans"
+            icon= "las la-archive"
+            :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_PLANS')"
+            @triggered="routeTo('archived-plans-activity')" />
+        </div>
       </k-card-section>
       <!-- Structure section -->
-      <k-card-section icon="las la-cog" :title="$t('OrganisationCard.STRUCTURE_SECTION')" :expandable="true" @section-opened="onAdminSectionOpened">
+      <k-card-section icon="las la-cog" :title="$t('OrganisationCard.STRUCTURE_SECTION')" :expandable="true" @section-opened="onStructureSectionOpened">
         <template v-for="element in structure">
-          <q-item 
-            :key="element.key"
-            clickable
-            @click="() => routeTo(`${element.name}-activity`)">
-            <q-item-section avatar>
-              <q-icon :name="element.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ $t(`OrganisationCard.${element.key}`, { count: counters[element.name] }) }}</q-item-label>
-              <q-tooltip>{{ $t(`OrganisationCard.VIEW_${element.key}`) }}</q-tooltip>
-            </q-item-section>
-            <q-item-section side>
-              <q-badge :label="`${quotas[element.name]} max`" color="grey-7" />
-            </q-item-section>
-          </q-item>
+          <div :key="element.key" class="full-width row justify-between items-center no-wrap q-pa-xs">
+            <k-action
+              :id="`organisation-${element.name}`"
+              :icon="element.icon"
+              :label="$t(`OrganisationCard.${element.key}`, { count: counters[element.name] })"
+              @triggered="routeTo(`${element.name}-activity`)" />
+            <q-badge :label="`${quotas[element.name]} max`" color="grey-7" />
+          </div>
         </template>
         <q-separator />
         <k-card-section v-if="canAccessBilling" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{ 
-          id: 'edit-billing', icon: 'las la-edit', size: 'sm', tooltip: 'OrganisationCard.EDIT_LABEL', 
+          id: 'edit-billing', icon: 'las la-edit', size: 'sm', tooltip: 'OrganisationCard.EDIT_ACTION', 
           route: { name: 'edit-organisation-billing', params: { objectId: item._id } } 
         }]">
               <div class="row items-center">
@@ -193,7 +165,7 @@ export default {
         logger.debug('No subscription plan found for the organisation ID: ', this.item._id)
       }
     },
-    async onAdminSectionOpened () {
+    async onStructureSectionOpened () {
       // Retrieve the quotas
       if (!this.billing) await this.loadBilling()
       const subscription = this.billing.subscription.plan

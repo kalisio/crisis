@@ -2,23 +2,26 @@
   <div v-if="organisation">
     <q-btn-dropdown 
       flat
+      dense
       no-caps
-      fab-mini
-      menu-anchor="bottom left"
-      menu-self="top middle"
-      content-style="margin: 0px !important; padding: 0px !important;">
+      square
+      menu-anchor="bottom middle"
+      menu-self="top middle">
       <template v-slot:label>
         <div>
           <k-avatar 
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'" 
-            :object="currentObject" 
+            :object="organisation" 
             :contextId="organisation._id"
-            :size="$q.screen.lt.sm ? '1.8rem' : '2rem'" />
+            :size="$q.screen.lt.sm ? '1.5rem' : '2rem'" />
         </div>
       </template>
       <template v-slot:default>
         <q-card class="bg-white" style="width: 300px;">
-          <mini-organisation-card :organisationId="organisation._id" :dense="true" />
+          <div class="row full-width justify-center q-pa-md text-subtitle1 bg-grey-4">
+            {{ organisation.name }}
+          </div>
+          <mini-organisation-card :organisation="organisation" :dense="true" />
         </q-card>
       </template>
     </q-btn-dropdown>
@@ -29,7 +32,6 @@
 
 <script>
 import { QBtnDropdown } from 'quasar'
-import mixins from '../mixins'
 import MiniOrganisationCard from './MiniOrganisationCard.vue'
 
 export default {
@@ -38,19 +40,9 @@ export default {
     QBtnDropdown,
     MiniOrganisationCard
   },
-  mixins: [mixins.plans],
   data () {
     return {
-      organisation: this.$store.get('context'),
-      currentObject: this.$store.get('context')
-    }
-  },
-  watch: {
-    plan : {
-      handler (plan) {
-        if (plan) this.currentObject = this.plan
-        else this.currentObject = this.$store.get('context')
-      }
+      organisation: this.$store.get('context')
     }
   },
   beforeCreate () {
