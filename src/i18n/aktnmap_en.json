@@ -25,15 +25,16 @@
     "EVENT_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Select default event coordinators",
     "EVENT_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Select default event coordinators",
     "EVENT_TEMPLATES_LAYER_FIELD_LABEL": "Select a target data layer",
-    "EVENT_WORKFLOW_TITLE_FIELD_LABEL": "Enter the title for this step",
-    "EVENT_WORKFLOW_ICON_FIELD_LABEL": "Select the step icon",
-    "EVENT_WORKFLOW_DESCRIPTION_FIELD_LABEL": "Enter the question for this step",
-    "EVENT_WORKFLOW_INTERACTION_FIELD_LABEL": "Enter the answers for this step",
-    "EVENT_WORKFLOW_FEATURE_INTERACTION_FIELD_LABEL": "Interaction with geographical feature",
-    "EVENT_WORKFLOW_END_FIELD_LABEL": "Enter the answers ending the workflow",
-    "EVENT_WORKFLOW_STAKEHOLDER_FIELD_LABEL": "Select the stakeholder (who is answering the question)",
-    "EVENT_WORKFLOW_PARTICIPANT_LABEL": "Participant",
-    "EVENT_WORKFLOW_COORDINATOR_LABEL": "Coordinator",
+    "EVENT_TEMPLATES_WORKFLOW_UPDATE_TITLE": "Update workflow",
+    "EVENT_TEMPLATES_WORKFLOW_TITLE_FIELD_LABEL": "Enter the title for this step",
+    "EVENT_TEMPLATES_WORKFLOW_ICON_FIELD_LABEL": "Select the step icon",
+    "EVENT_TEMPLATES_WORKFLOW_DESCRIPTION_FIELD_LABEL": "Enter the question for this step",
+    "EVENT_TEMPLATES_WORKFLOW_INTERACTION_FIELD_LABEL": "Enter the answers for this step",
+    "EVENT_TEMPLATES_WORKFLOW_FEATURE_INTERACTION_FIELD_LABEL": "Interaction with geographical feature",
+    "EVENT_TEMPLATES_WORKFLOW_END_FIELD_LABEL": "Enter the answers ending the workflow",
+    "EVENT_TEMPLATES_WORKFLOW_STAKEHOLDER_FIELD_LABEL": "Select the stakeholder (who is answering the question)",
+    "EVENT_TEMPLATES_WORKFLOW_PARTICIPANT_LABEL": "Participant",
+    "EVENT_TEMPLATES_WORKFLOW_COORDINATOR_LABEL": "Coordinator",
     "EVENTS_ADVANCED_SETTINGS": "Advanced settings",
     "EVENTS_CREATE_TITLE": "Create a new event ?",
     "EVENTS_NAME_FIELD_LABEL": "Enter the name of this event",
@@ -529,6 +530,10 @@
   "EventTemplateCard": {
     "REMOVE_ACTION": "$t(REMOVE_LABEL)",
     "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "ADD_WORKFLOW_ACTION": "Add workflow",
+    "EDIT_WORKFLOW_ACTION": "Update workflow",
+    "REMOVE_WORKFLOW_ACTION": "Remove workflow",
+    "REMOVE_WORKFLOW_TITLE": "Are you sure you want to delete the workflow?",
     "COPY_ACTION": "$t(COPY_LABEL)",
     "DESCRIPTION_SECTION": "Description",
     "NO_DESRIPTION_LABEL": "No description",
@@ -540,7 +545,7 @@
     "WORKFLOW_LABEL": "{{count}} step workflow",
     "NO_WORKFLOW_LABEL": "No workflow"
   },
-  "EventWorkflowForm": {
+  "EventTemplateWorkflowForm": {
     "ADD_STEP_BUTTON": "Add a step",
     "REMOVE_STEP_BUTTON": "Remove current step",
     "PREVIOUS_STEP_BUTTON": "Previous step",
@@ -549,10 +554,7 @@
     "EDIT_WORKFLOW_BUTTON": "Edit workflow"
   },
   "EventTemplateEditor": {
-    "ADD_WORKFLOW_LABEL": "Add a workflow ?",
-    "WORKFLOW_HELPER_LABEL": "Workflow activated",
-    "WORKFLOW_MANAGE_HELPER_LABEL": "click to update",
-    "WORKFLOW_TITLE": "Manage the different steps of the workflow",
+    "WORKFLOW_HELPER_LABEL": "Copy workflow",
     "CLOSE_ACTION":  "$t(CLOSE_LABEL)"
   },
   "EventNotifications": {

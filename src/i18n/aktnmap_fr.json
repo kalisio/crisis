@@ -25,15 +25,16 @@
     "EVENT_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs par défaut de l'événement",
     "EVENT_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Saisissez les coordinateurs par défaut de l'événement",
     "EVENT_TEMPLATES_LAYER_FIELD_LABEL": "Sélectionnez une couche de données cible",
-    "EVENT_WORKFLOW_TITLE_FIELD_LABEL": "Saisissez le nom de cette étape",
-    "EVENT_WORKFLOW_ICON_FIELD_LABEL": "Selectionnez une icone pour représenter cette étape",
-    "EVENT_WORKFLOW_DESCRIPTION_FIELD_LABEL": "Saisissez la question de cette étape",
-    "EVENT_WORKFLOW_FEATURE_INTERACTION_FIELD_LABEL": "Interaction avec les éléments géographiques",
-    "EVENT_WORKFLOW_INTERACTION_FIELD_LABEL": "Saisissez les réponses de cette étape",
-    "EVENT_WORKFLOW_END_FIELD_LABEL": "Sélectionnez les réponses qui donnent lieu à la fin du processus",
-    "EVENT_WORKFLOW_STAKEHOLDER_FIELD_LABEL": "Sélectionnez la partie prenante (qui va répondre à la question)",
-    "EVENT_WORKFLOW_PARTICIPANT_LABEL": "Participant",
-    "EVENT_WORKFLOW_COORDINATOR_LABEL": "Coordinateur",
+    "EVENT_TEMPLATES_WORKFLOW_UPDATE_TITLE": "Mettre à jour le processus",
+    "EVENT_TEMPLATES_WORKFLOW_TITLE_FIELD_LABEL": "Saisissez le nom de cette étape",
+    "EVENT_TEMPLATES_WORKFLOW_ICON_FIELD_LABEL": "Selectionnez une icone pour représenter cette étape",
+    "EVENT_TEMPLATES_WORKFLOW_DESCRIPTION_FIELD_LABEL": "Saisissez la question de cette étape",
+    "EVENT_TEMPLATES_WORKFLOW_FEATURE_INTERACTION_FIELD_LABEL": "Interaction avec les éléments géographiques",
+    "EVENT_TEMPLATES_WORKFLOW_INTERACTION_FIELD_LABEL": "Saisissez les réponses de cette étape",
+    "EVENT_TEMPLATES_WORKFLOW_END_FIELD_LABEL": "Sélectionnez les réponses qui donnent lieu à la fin du processus",
+    "EVENT_TEMPLATES_WORKFLOW_STAKEHOLDER_FIELD_LABEL": "Sélectionnez la partie prenante (qui va répondre à la question)",
+    "EVENT_TEMPLATES_WORKFLOW_PARTICIPANT_LABEL": "Participant",
+    "EVENT_TEMPLATES_WORKFLOW_COORDINATOR_LABEL": "Coordinateur",
     "EVENTS_ADVANCED_SETTINGS": "Paramètres avancés",
     "EVENTS_CREATE_TITLE": "Créer un nouvel événement ?",
     "EVENTS_NAME_FIELD_LABEL": "Saisissez le nom de l'événement",
@@ -532,6 +533,10 @@
   "EventTemplateCard": {
     "REMOVE_ACTION": "$t(REMOVE_LABEL)",
     "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "ADD_WORKFLOW_ACTION": "Ajouter un processus",
+    "EDIT_WORKFLOW_ACTION": "Modifier le processus",
+    "REMOVE_WORKFLOW_ACTION": "Supprimer le processus",
+    "REMOVE_WORKFLOW_TITLE": "Etes vous sûr de vouloir supprimer le processus ?",
     "COPY_ACTION": "$t(COPY_LABEL)",
     "DESCRIPTION_SECTION": "Description",
     "NO_DESRIPTION_LABEL": "Aucune description",
@@ -543,7 +548,7 @@
     "WORKFLOW_LABEL": "Processus en {{count}} étape(s)",
     "NO_WORKFLOW_LABEL": "Aucun processus"    
   },
-  "EventWorkflowForm": {
+  "EventTemplateWorkflowForm": {
     "ADD_STEP_BUTTON": "Ajouter une étape",
     "REMOVE_STEP_BUTTON": "Supprimer l'étape courante",
     "PREVIOUS_STEP_BUTTON": "Etape précédente",
@@ -552,10 +557,7 @@
     "EDIT_WORKFLOW_BUTTON": "Editer le processus"
   },
   "EventTemplateEditor": {
-    "ADD_WORKFLOW_LABEL": "Ajouter un processus ?",
-    "WORKFLOW_HELPER_LABEL": "Processus actif",
-    "WORKFLOW_MANAGE_HELPER_LABEL": "cliquez pour modifier",
-    "WORKFLOW_TITLE": "Gérez les différentes étapes du processus",
+    "WORKFLOW_HELPER_LABEL": "Copier le processus",
     "CLOSE_ACTION":  "$t(CLOSE_LABEL)"
   },
   "EventNotifications": {

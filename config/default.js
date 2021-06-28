@@ -144,6 +144,28 @@ const removeItemAction = function (service, tooltip, scope = undefined) {
   }
 }
 
+const addWorkflowAction = function (tooltip) {
+  return {
+    id: 'add-item-workflow', scope: 'workflow', tooltip, icon: 'las la-plus-circle', size: 'sm',
+    visible: ['canEditItem', '!item.workflow'],
+    route: { name: 'edit-event-template-workflow', params: { contextId: ':contextId', objectId: ':item._id' } }
+  }
+}
+const editWorkflowAction = function (tooltip) {
+  return {
+    id: 'edit-item-workflow', scope: 'workflow', tooltip, icon: 'las la-edit', size: 'sm',
+    visible: ['canEditItem', 'item.workflow'],
+    route: { name: 'edit-event-template-workflow', params: { contextId: ':contextId', objectId: ':item._id' } }
+  }
+}
+const removeWorkflowAction = function (tooltip) {
+  return {
+    id: 'remove-item-workflow', scope: 'workflow', tooltip, icon: 'las la-trash', size: 'sm',
+    visible: ['canEditItem', 'item.workflow'], 
+    handler: { name: 'removeWorkflow' },
+  }
+}
+
 let defaultMapOptions = {
   viewer: {
     minZoom: 3,
@@ -894,7 +916,9 @@ module.exports = {
         editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'description'),
         editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'participants'),
         editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'coordinators'),
-        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'workflow'),
+        addWorkflowAction('EventTemplateCard.ADD_WORKFLOW_ACTION'),
+        editWorkflowAction('EventTemplateCard.EDIT_WORKFLOW_ACTION'),
+        removeWorkflowAction('EventTemplateCard.REMOVE_WORKFLOW_ACTION'),
         { 
           id: 'copy-event-template', tooltip: 'EventTemplateCard.COPY_ACTION', icon: 'las la-copy',
           visible: { name: '$can', params: ['update', 'event-templates', ':contextId', ':item'] },

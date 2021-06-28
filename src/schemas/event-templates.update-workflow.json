@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://www.kalisio.xyz/schemas/event-workflow.update.json#",
-  "title": "Event Workflow Update",
+  "title": "schemas.EVENT_TEMPLATES_WORKFLOW_UPDATE_TITLE",
   "description": "Event workflow update schema",
   "type": "object",
   "properties": {
@@ -10,17 +10,17 @@
       "minLength": 3,
       "field": {
         "component": "form/KTextField",
-        "label": "schemas.EVENT_WORKFLOW_TITLE_FIELD_LABEL"
+        "label": "schemas.EVENT_TEMPLATES_WORKFLOW_TITLE_FIELD_LABEL"
       }
     },
     "stakeholder": {
       "type": "string",
       "field": {
         "component": "form/KSelectField",
-        "label": "schemas.EVENT_WORKFLOW_STAKEHOLDER_FIELD_LABEL",
+        "label": "schemas.EVENT_TEMPLATES_WORKFLOW_STAKEHOLDER_FIELD_LABEL",
         "options": [
-          { "label": "schemas.EVENT_WORKFLOW_PARTICIPANT_LABEL", "value": "participant", "color": "yellow" },
-          { "label": "schemas.EVENT_WORKFLOW_COORDINATOR_LABEL", "value": "coordinator", "color": "grey" }
+          { "label": "schemas.EVENT_TEMPLATES_WORKFLOW_PARTICIPANT_LABEL", "value": "participant", "color": "yellow" },
+          { "label": "schemas.EVENT_TEMPLATES_WORKFLOW_COORDINATOR_LABEL", "value": "coordinator", "color": "grey" }
         ]
       }
     },
@@ -29,14 +29,14 @@
       "default": { "name": "fas fa-check", "color": "grey" },
       "field": {
         "component": "form/KIconField",
-        "label": "schemas.EVENT_WORKFLOW_ICON_FIELD_LABEL"
+        "label": "schemas.EVENT_TEMPLATES_WORKFLOW_ICON_FIELD_LABEL"
       }
     },
     "description": {
       "type": "string", 
       "field": {
         "component": "form/KTextareaField",
-        "label": "schemas.EVENT_WORKFLOW_DESCRIPTION_FIELD_LABEL"
+        "label": "schemas.EVENT_TEMPLATES_WORKFLOW_DESCRIPTION_FIELD_LABEL"
       }
     },
     "interaction": {
@@ -45,7 +45,7 @@
       "minItems": 2,
       "field": {
         "component": "form/KChipsField",
-        "label": "schemas.EVENT_WORKFLOW_INTERACTION_FIELD_LABEL",
+        "label": "schemas.EVENT_TEMPLATES_WORKFLOW_INTERACTION_FIELD_LABEL",
         "icon" : {
           "name" : "fas fa-user",
           "color" : "red"
@@ -57,7 +57,7 @@
       "uniqueItems": true,
       "field": {
         "component": "form/KSelectField",
-        "label": "schemas.EVENT_WORKFLOW_END_FIELD_LABEL",
+        "label": "schemas.EVENT_TEMPLATES_WORKFLOW_END_FIELD_LABEL",
         "multiple": true,
         "chips": true,
         "options": []

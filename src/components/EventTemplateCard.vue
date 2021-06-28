@@ -49,6 +49,7 @@
 
 <script>
 import _ from 'lodash'
+import { Dialog } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 
 export default {
@@ -56,22 +57,38 @@ export default {
   mixins: [kCoreMixins.baseItem],
   computed: {
     participantsActions () {
-      return _.filter(this.itemActions, { scope: 'participants'})
+      return _.filter(this.itemActions, { scope: 'participants' })
     },
     hasParticipants () {
       return !_.isEmpty(this.item.participants)
     },
     coordinatorsActions () {
-      return _.filter(this.itemActions, { scope: 'coordinators'})
+      return _.filter(this.itemActions, { scope: 'coordinators' })
     },
     hasCoordinators () {
       return !_.isEmpty(this.item.coordinators)
     },
     workflowActions () {
-      return _.filter(this.itemActions, { scope: 'workflow'})
+      return _.filter(this.itemActions, { scope: 'workflow' })
     },
     hasWorkflow () {
       return !_.isEmpty(this.item.workflow)
+    },
+    removeWorkflow () {
+      Dialog.create({
+        title: this.$t('EventTemplateCard.REMOVE_WORKFLOW_TITLE'),
+        persistent: true,
+        ok: {
+          label: this.$t('OK'),
+          flat: true
+        },
+        cancel: {
+          label: this.$t('CANCEL'),
+          flat: true
+        }
+      }).onOk(() => {
+        this.$api.getService('event-templates').patch(this.item._id, { workflow: null, hasWorkflow: false })
+      })
     }
   },
   data () {

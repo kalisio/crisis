@@ -1,23 +1,20 @@
 <template>
   <k-modal ref="modal" 
-    :title="title" 
+    :title="editorTitle" 
     :toolbar="toolbar()" 
     :buttons="buttons" 
     v-model="isModalOpened"
     @opened="$emit('opened')"
     @closed="$emit('closed')">
     <div slot="modal-content" class="column xs-gutter">
-      <div v-show="!workflowEdition">
-        <k-form :class="{ 'light-dimmed': applyInProgress }" ref="templateForm" :schema="schema"  @field-changed="onFieldChanged"/>
-        <p :class="{ 'light-dimmed': applyInProgress }" class="col-10 caption pull-left">
-          <q-toggle id="workflow-toggle" icon="las la-retweet" v-model="hasWorkflow" @input="onWorkflow">
-          </q-toggle>
-          <strong v-show="!hasWorkflow">{{$t('EventTemplateEditor.ADD_WORKFLOW_LABEL')}}</strong>
-          <strong v-show="hasWorkflow">{{$t('EventTemplateEditor.WORKFLOW_HELPER_LABEL')}}</strong>
-          <a v-show="hasWorkflow" class="text-caption" @click="workflowEdition = true"> ({{$t('EventTemplateEditor.WORKFLOW_MANAGE_HELPER_LABEL')}})</a>
-        </p>
-      </div>
-      <event-workflow-form v-show="workflowEdition" ref="workflowForm" :objectId="objectId" :layerId="layerId" />
+      <!-- Form to be used for standard properties -->
+      <k-form :class="{ 'light-dimmed': applyInProgress }" ref="form" :schema="schema" />
+      <!-- Toggle used to copy the source template workflow on creation -->
+      <p v-show="hasWorkflow" :class="{ 'light-dimmed': applyInProgress }" class="col-10 caption pull-left">
+        <q-toggle id="workflow-toggle" icon="las la-retweet" v-model="copyWorkflow" @input="onWorkflow">
+        </q-toggle>
+        <strong>{{$t('EventTemplateEditor.WORKFLOW_HELPER_LABEL')}}</strong>
+      </p>
     </div>
     <q-spinner-cube color="primary" class="fixed-center" v-if="applyInProgress" size="4em"/>
   </k-modal>
@@ -34,8 +31,8 @@ export default {
     mixins.service,
     mixins.objectProxy,
     mixins.schemaProxy,
-    mixins.baseEditor(['templateForm', 'workflowForm']),
-    mixins.refsResolver(['templateForm', 'workflowForm'])
+    mixins.baseEditor(['form']),
+    mixins.refsResolver(['form'])
   ],
   props: {
     templateId: {
@@ -44,86 +41,60 @@ export default {
     }
   },
   computed: {
-    title () {
-      return (this.workflowEdition ? this.$t('EventTemplateEditor.WORKFLOW_TITLE') : this.editorTitle)
-    },
     buttons () {
-      return (this.workflowEdition ? [] : [{
+      return [{
         id: 'apply-button',
         label: this.applyButton,
         color: 'primary',
         handler: () => this.apply(),
         renderer: 'form-button'
-      }])
+      }]
     }
   },
   data () {
     return {
       hasWorkflow: false,
-      workflowEdition: false,
-      layerId: ''
+      copyWorkflow: false
     }
   },
   methods: {
     toolbar () {
-      let action = { id: 'close-action', tooltip: this.$t('EventTemplateEditor.CLOSE_ACTION'), icon: 'las la-times' }
-      if (this.workflowEdition) action.handler = () => { this.workflowEdition = false }
-      else action.handler = () => this.closeModal()
-      return [action]
+      return [{
+        id: 'close-action',
+        tooltip: this.$t('EventTemplateEditor.CLOSE_ACTION'),
+        icon: 'las la-times',
+        handler: () => this.closeModal()
+      }]
     },
-    loadObject () {
+    openModal (maximized = false) {
+      this.refresh()
+      mixins.baseModal.methods.openModal.call(this, maximized)
+    },
+    async loadObject () {
       // When a template is provided use it as reference for object
-      if (this.template) {
-        this.object = Object.assign({}, this.template)
+      if (this.templateId) {
+        this.template = await this.$api.getService('event-templates').get(this.templateId)
+        this.object = _.cloneDeep(this.template)
         // Remove id so that event has its own
         delete this.object._id
-        // Setup hasWorkflow tag
-        this.object.hasWorkflow = !_.isNil(this.template.workflow)
+        // Check for workflow, and by default copy it
+        this.hasWorkflow = !_.isEmpty(_.get(this.template, 'workflow'))
+        this.copyWorkflow = this.hasWorkflow
         return Promise.resolve(this.object)
-      } else if (this.objectId) {
+      } else {
         // Otherwise proceed as usual to load the event object
         return mixins.objectProxy.methods.loadObject.call(this)
       }
     },
-    onFieldChanged (field, value) {
-      // Setup workflow depending on target layer
-      if (field === 'layer') {
-        this.layerId = (value ? value._id : null)
-      }
-    },
-    async onWorkflow (hasWorkflow) {
-      if (this.templateId) {
-        if (hasWorkflow) this.object.workflow = this.template.workflow
-        else delete this.object.workflow
-      }
-      // Activate workflow form accordingly
-      this.setFormDisabled('workflowForm', !hasWorkflow)
-      // Enter workflow edition mode
-      if (hasWorkflow) this.workflowEdition = true
-    },
-    async initialize () {
-      await this.refresh()
-      // In edition mode activate workflow according to its existence
-      if (this.objectId || this.templateId) {
-        this.hasWorkflow = !_.isNil(this.getObject().workflow)
-        this.layerId = _.get(this.getObject(), 'layer._id')
-        this.setFormDisabled('workflowForm', !this.hasWorkflow)
-      } else {
-        // In creation mode disabled by default
-        this.setFormDisabled('workflowForm', true)
-      }
+    async onWorkflow (copyWorkflow) {
+      if (copyWorkflow) this.object.workflow = _.cloneDeep(this.template.workflow)
+      else delete this.object.workflow
     }
   },
   async created () {
     // Load the required components
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-form'] = this.$load('form/KForm')
-    this.$options.components['event-workflow-form'] = this.$load('EventWorkflowForm')
-    // On creation check whether we copy or create a new template
-    if (this.templateId) {
-      this.template = await this.$api.getService('event-templates').get(this.templateId)
-    }
-    this.initialize()
     this.$on('applied', this.closeModal)
   },
   beforeDestroy () {

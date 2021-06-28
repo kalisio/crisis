@@ -317,8 +317,20 @@ module.exports = {
                     tour: tours['create-event-templates']
                   },
                   'edit/:objectId/:schemaProperties?': {
+                    name: 'edit-event-template',
                     component: 'EventTemplateEditor',
                     props: true
+                  },
+                  'edit-workflow/:objectId': {
+                    name: 'edit-event-template-workflow',
+                    component: 'EventTemplateWorkflowEditor',
+                    props: function (route) {
+                      return {
+                        contextId: route.params.contextId,
+                        objectId: route.params.objectId,
+                        perspective: 'workflow'
+                      } 
+                    }
                   }
                 },
                 tour: tours['event-templates']

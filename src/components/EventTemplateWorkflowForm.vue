@@ -12,27 +12,27 @@
       <q-stepper-navigation class="row justify-end">
         <q-btn class="col-1" id="previous-step" :disabled="currentStep === steps[0].name" flat color="primary" icon="las la-step-backward" @click="onPreviousStep()">
           <q-tooltip v-if="currentStep !== steps[0].name" anchor="top middle" self="bottom middle" :offset="[10, 10]">
-            {{$t('EventWorkflowForm.PREVIOUS_STEP_BUTTON')}}
+            {{$t('EventTemplateWorkflowForm.PREVIOUS_STEP_BUTTON')}}
           </q-tooltip>
         </q-btn>
         <q-btn class="col-1" id="add-step" v-show="!preview" flat color="primary" icon="las la-plus-circle" @click="onAddStep()">
           <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
-            {{$t('EventWorkflowForm.ADD_STEP_BUTTON')}}
+            {{$t('EventTemplateWorkflowForm.ADD_STEP_BUTTON')}}
           </q-tooltip>
         </q-btn>
         <q-btn class="col-1" id="remove-step" v-show="!preview && (steps.length > 1)" flat color="primary" icon="las la-trash" @click="onRemoveStep()">
           <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
-            {{$t('EventWorkflowForm.REMOVE_STEP_BUTTON')}}
+            {{$t('EventTemplateWorkflowForm.REMOVE_STEP_BUTTON')}}
           </q-tooltip>
         </q-btn>
         <q-btn class="col-1" id="preview-step" flat color="primary" :icon="preview ? 'las la-edit' : 'las la-play'" @click="onPreviewOrEdit">
           <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
-            {{$t(!preview ? 'EventWorkflowForm.PREVIEW_WORKFLOW_BUTTON': 'EventWorkflowForm.EDIT_WORKFLOW_BUTTON')}}
+            {{$t(!preview ? 'EventTemplateWorkflowForm.PREVIEW_WORKFLOW_BUTTON': 'EventTemplateWorkflowForm.EDIT_WORKFLOW_BUTTON')}}
           </q-tooltip>
         </q-btn>
         <q-btn class="col-1" id="next-step" :disabled="currentStep === steps[steps.length - 1].name" flat color="primary" icon="las la-step-forward" @click="onNextStep()">
           <q-tooltip v-if="currentStep !== steps[steps.length - 1].name" anchor="top middle" self="bottom middle" :offset="[10, 10]">
-            {{$t('EventWorkflowForm.NEXT_STEP_BUTTON')}}
+            {{$t('EventTemplateWorkflowForm.NEXT_STEP_BUTTON')}}
           </q-tooltip>
         </q-btn>
       </q-stepper-navigation>
@@ -47,34 +47,27 @@ import mixins from '../mixins'
 import { QStepper, QStep, QStepperNavigation, uid } from 'quasar'
 
 export default {
-  name: 'event-workflow-form',
+  name: 'event-template-workflow-form',
   components: {
     QStepper,
     QStep,
     QStepperNavigation
   },
   mixins: [
-    kCoreMixins.schemaProxy,
     kCoreMixins.refsResolver(),
     mixins.events
   ],
   props: {
+    schema: {
+      type: Object,
+      default: null
+    },
     contextId: {
       type: String
     },
     objectId: {
       type: String,
       default: ''
-    },
-    layerId: {
-      type: String
-    }
-  },
-  watch: {
-    layerId: async function () {
-      if (!this.layerId) return
-      await this.loadLayerSchema(this.layerId)
-      this.fill({ workflow: this.steps })
     }
   },
   data () {
@@ -240,7 +233,6 @@ export default {
       this.setRefs(['stepForm'])
       // Build the internal form
       await Promise.all([
-        this.loadSchema('event-workflow' + (this.objectId ? '.update' : '.create')),
         this.loadPreviewSchema(),
         this.loadRefs()
       ])
@@ -250,26 +242,24 @@ export default {
         this.getForm('previewForm').build()
       ])
     },
-    async fill (object) {
+    async fill (workflow) {
       // If no workflow given this will use default one
-      if (object.workflow) {
-        this.steps = object.workflow
+      if (workflow && workflow.length > 0) {
+        this.steps = workflow
         this.currentStep = this.steps[0].name
       }
       // Restore step form when editing
       this.restoreStep()
     },
     clear () {
-      this.fill({ workflow: [this.generateStep()] })
+      this.fill([this.generateStep()])
     },
     validate () {
       // Apply current form changes when editing
       const isValid = this.applyStepChanges()
       return {
         isValid,
-        values: {
-          workflow: this.steps
-        }
+        values: this.steps
       }
     },
     async apply (object) {
@@ -293,8 +283,6 @@ export default {
     // Initialize step data on creation so that local ref to form can be resolved
     this.steps = [this.generateStep()]
     this.currentStep = this.steps[0].name
-    // Load layer schema if any
-    this.loadLayerSchema(this.layerId)
   }
 }
 </script>
