@@ -1,0 +1,66 @@
+<template>
+  <k-modal ref="modal" 
+    :title="editorTitle" 
+    :toolbar="toolbar()" 
+    :buttons="buttons" 
+    v-model="isModalOpened"
+    @opened="$emit('opened')"
+    @closed="$emit('closed')">
+    <div slot="modal-content" class="column xs-gutter">
+      <!-- Form to be used for workflow property -->
+      <event-template-workflow-form :class="{ 'light-dimmed': applyInProgress }" ref="form" :schema="schema" />
+      <q-spinner-cube color="primary" class="fixed-center" v-if="applyInProgress" size="4em"/>
+    </div>
+  </k-modal>
+</template>
+
+<script>
+import _ from 'lodash'
+import { mixins } from '@kalisio/kdk/core.client'
+
+export default {
+  name: 'event-template-editor',
+  mixins: [
+    mixins.baseModal,
+    mixins.service,
+    mixins.objectProxy,
+    mixins.schemaProxy,
+    mixins.baseEditor(['form']),
+    mixins.refsResolver(['form'])
+  ],
+  computed: {
+    buttons () {
+      return [{
+        id: 'apply-button',
+        label: this.applyButton,
+        color: 'primary',
+        handler: () => this.apply(),
+        renderer: 'form-button'
+      }]
+    }
+  },
+  methods: {
+    toolbar () {
+      return [{
+        id: 'close-action',
+        tooltip: this.$t('EventTemplateEditor.CLOSE_ACTION'),
+        icon: 'las la-times',
+        handler: () => this.closeModal()
+      }]
+    },
+    openModal (maximized = false) {
+      this.refresh()
+      mixins.baseModal.methods.openModal.call(this, maximized)
+    }
+  },
+  async created () {
+    // Load the required components
+    this.$options.components['k-modal'] = this.$load('frame/KModal')
+    this.$options.components['event-template-workflow-form'] = this.$load('EventTemplateWorkflowForm')
+    this.$on('applied', this.closeModal)
+  },
+  beforeDestroy () {
+    this.$off('applied', this.closeModal)
+  }
+}
+</script>
