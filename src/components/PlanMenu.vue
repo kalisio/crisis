@@ -30,9 +30,20 @@
               <template v-for="(objective, index) in plan.objectives">
                 <div :key="objective" class="row full-width items-center justify-between">
                   <q-toggle v-model="objectiveFilters[index]" :label="objective" />
-                  
                 </div>
               </template>
+            </k-card-section>
+            <!-- Manage section -->
+            <k-card-section v-if="canManagePlan">
+              <div class="row justify-center">
+                <k-action
+                  id= "manage-plan"
+                  icon= "las la-cog"
+                  size="md"
+                  :label="$t('PlanMenu.MANAGE_PLAN_ACTION')"
+                  @triggered="onManagePlan" 
+                  :propagate="false" />
+              </div>
             </k-card-section>
           </div>
         </q-card>
@@ -62,6 +73,9 @@ export default {
     },
     size () {
       return this.$q.screen.lt.sm ? 'sm' : 'md'
+    },
+    canManagePlan () {
+      return this.$can('update', 'plans', this.organisation._id, this.plan)
     }
   },
   data () {
@@ -84,6 +98,14 @@ export default {
         }
         this.kActivity.objectiveFilters = filters
       }
+    }
+  },
+  methods: {
+    onManagePlan () {
+      this.$store.patch('filter', {
+        pattern: this.plan.name
+      })
+      this.$router.push({ name: 'plans-activity', params: { contextId: this.organisation._id, mode: 'filter' } })
     }
   },
   beforeCreate () {

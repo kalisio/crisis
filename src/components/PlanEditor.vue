@@ -37,12 +37,8 @@ export default {
   computed: {
     buttons () {
       return [
-        { 
-          id: 'apply-button', 
-          label: this.applyButton, 
-          renderer: 'form-button', 
-          handler: () => this.apply() 
-        }
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true,  handler: () => this.closeModal() },
+        { id: 'apply-button', label: this.applyButton, renderer: 'form-button',  handler: () => this.apply() }
       ]
     }
   },

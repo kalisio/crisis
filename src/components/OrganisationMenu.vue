@@ -27,20 +27,20 @@
               <k-action 
                 id= "organisation-events"
                 icon= "las la-fire"
-                :label="$t('OrganisationCard.EVENTS_LABEL', { count: eventsCount })"
+                :label="$t('OrganisationMenu.EVENTS_LABEL', { count: eventsCount })"
                 @triggered="routeTo('events-activity')" />
               <q-space />
               <k-action 
                 v-if="canAccessCatalog"
                 id= "organisation-catalog"
                 icon= "las la-map"
-                :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
+                :tooltip="$t('OrganisationMenu.VIEW_CATALOG')"
                 @triggered="routeTo('catalog-activity')"  />
               <k-action
                 v-if="canAccessArchivedEvents"
                 id= "organisation-archived-events"
                 icon= "las la-clipboard-list"
-                :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
+                :tooltip="$t('OrganisationMenu.VIEW_ARCHIVED_EVENTS')"
                 @triggered="routeTo('archived-events-activity')"   />
             </div>
           </k-card-section>
@@ -50,14 +50,14 @@
               <k-action 
                 id= "organisation-plans"
                 icon= "las la-stream"
-                :label="$t('OrganisationCard.PLANS_LABEL', { count: plansCount })"
+                :label="$t('OrganisationMenu.PLANS_LABEL', { count: plansCount })"
                 @triggered="routeTo('plans-activity')" />
               <q-space />
               <k-action
                 v-if="canAccessArchivedPlans"
                 id= "organisation-archived-plans"
                 icon= "las la-archive"
-                :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_PLANS')"
+                :tooltip="$t('OrganisationMenu.VIEW_ARCHIVED_PLANS')"
                 @triggered="routeTo('archived-plans-activity')" />
             </div>
           </k-card-section>
@@ -68,7 +68,7 @@
                 id= "manage-organisation"
                 icon= "las la-cog"
                 size="md"
-                :label="$t('MiniOrganisationCard.MANAGE_ORGANISATION_ACTION')"
+                :label="$t('OrganisationMenu.MANAGE_ORGANISATION_ACTION')"
                 @triggered="routeTo('members-activity')" 
                 :propagate="false" />
             </div>
