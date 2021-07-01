@@ -640,12 +640,11 @@
     "GOTO_ARCHIVED_EVENTS": "Voir la main courante"
   },
   "PlanMenu": {
-    "NO_PLAN_LABEL": "Aucun plan"
+    "MANAGE_PLAN_ACTION": "Gérer le plan"
   },
   "OrganisationMenu": {
-    "EDIT_LABEL": "$t(EDIT_LABEL)"
-  },
-  "MiniOrganisationCard": {
+    "EVENTS_LABEL": "{{count}} événement(s)",
+    "PLANS_LABEL": "{{count}} plan(s)",
     "MANAGE_ORGANISATION_ACTION": "Gérer l'organisation"
   }
 }

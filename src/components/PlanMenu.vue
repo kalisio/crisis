@@ -102,10 +102,7 @@ export default {
   },
   methods: {
     onManagePlan () {
-      this.$store.patch('filter', {
-        pattern: this.plan.name
-      })
-      this.$router.push({ name: 'plans-activity', params: { contextId: this.organisation._id, mode: 'filter' } })
+      this.$router.push({ name: 'plans-activity', params: { contextId: this.organisation._id } })
     }
   },
   beforeCreate () {

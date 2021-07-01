@@ -109,6 +109,7 @@ export default {
   computed: {
     hasEventsSection () {
       return this.mode === 'admin' || 
+             this.mode === 'plan' || 
              (this.mode === 'run' && this.planId)
     },
     hasPlansSection () {

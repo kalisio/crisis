@@ -636,12 +636,11 @@
     "GOTO_ARCHIVED_EVENTS": "View logbook"
   },
   "PlanMenu": {
-    "NO_PLAN_LABEL": "No plan"
+    "MANAGE_PLAN_ACTION": "Manage plan"
   },
   "OrganisationMenu": {
-    "EDIT_LABEL": "$t(EDIT_LABEL)"
-  },
-  "MiniOrganisationCard": {
+    "EVENTS_LABEL": "{{count}} event(s)",
+    "PLANS_LABEL": "{{count}} plan(s)",
     "MANAGE_ORGANISATION_ACTION": "Manage organisation"
   }
 }
