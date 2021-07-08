@@ -308,8 +308,9 @@ export default {
           // Check source supports forecast model
           const defaultModel = _.get(this.layer.meteo_model, 'default.model') === values.forecast
           const otherModel = _.find(this.layer.meteo_model.sources, { model: values.forecast })
-          if (defaultModel || otherModel)
-            values.elements.push(_.get(this.layer, 'meteoElements'))
+          if (defaultModel || otherModel) {
+            values.elements = _.get(this.layer, 'meteoElements')
+          }
         }
         // Weacast weather layers
         else values.elements = _.get(this.layer, 'leaflet.elements')

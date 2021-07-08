@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import moment from 'moment'
 import i18next from 'i18next'
 import { utils as kCoreUtils } from '@kalisio/kdk/core.client'
 
@@ -28,13 +29,20 @@ const alertsMixin = {
       })
       html += this.$t('CatalogActivity.ALERT_CHECKED_AT') + ` ${this.formatAlertDateTime(checkedAt)}</br>`
       if (isActive) {
-        html += this.$t('CatalogActivity.ALERT_TRIGGERED_AT') + ` ${this.formatAlertDateTime(triggeredAt)}</br>`
-        // Order triggers by time to get last one, take care to unify weather/measure triggers
-        let triggers = _.sortBy(_.get(alert, 'status.triggers',
+        // Order triggers by time to get nearest one easily, take care to unify weather/measure triggers
+        const triggers = _.sortBy(_.get(alert, 'status.triggers',
           [trigger => new moment.utc(trigger.time || trigger.forecastTime).valueOf()]))
-        triggers = _.last(triggers)
-        triggeredAt = new Date(triggers.time || triggers.forecastTime)
-        html += this.$t('CatalogActivity.ALERT_THRESHOLD_AT') + ` ${this.formatAlertDateTime(triggeredAt)}`
+        const lastTrigger = _.last(triggers)
+        const firstTrigger = _.head(triggers)
+        // Check for forecast (future) or measure (past)
+        const lastTriggerAt = new moment.utc(lastTrigger.time || lastTrigger.forecastTime)
+        const firstTriggerAt = new moment.utc(firstTrigger.time || firstTrigger.forecastTime)
+        const now = new moment.utc()
+        const nearestTrigger = (Math.abs(now.diff(firstTriggerAt)) < Math.abs(now.diff(lastTriggerAt)) ? firstTrigger : lastTrigger)
+        const nearestTriggerAt = new Date(nearestTrigger.time || nearestTrigger.forecastTime)
+        html += (nearestTrigger === lastTrigger ? this.$t('CatalogActivity.ALERT_LAST') : this.$t('CatalogActivity.ALERT_FIRST'))
+        html += this.$t('CatalogActivity.ALERT_THRESHOLD_AT') + ` ${this.formatAlertDateTime(nearestTriggerAt)}</br>`
+        html += this.$t('CatalogActivity.ALERT_TRIGGERED_AT') + ` ${this.formatAlertDateTime(triggeredAt)}</br>`
       }
       if (hasError) html += '</br><i class="la la-exclamation la-lg"></i><b>' +
         this.$t('errors.' + _.get(alert, 'status.error.data.translation.key')) + '</b></br>'
