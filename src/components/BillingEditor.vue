@@ -1,6 +1,7 @@
 <template>
   <k-modal 
     :title="title" 
+    :buttons="getButtons()"
     v-model="isModalOpened" 
     @opened="$emit('opened')" 
     @closed="$emit('closed')">
@@ -69,6 +70,12 @@ export default {
     kCoreMixins.baseModal,
     kCoreMixins.objectProxy
   ],
+  props: {
+    title: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       isUserVerified: this.$store.get('user.isVerified'),
@@ -94,6 +101,11 @@ export default {
     }
   },
   methods: {
+    getButtons () {
+      return [{
+        id: 'close-button', label: 'CLOSE', renderer: 'form-button', handler: () => this.closeModal() 
+      }]
+    },
     getService () {
       return this.$api.getService('organisations')
     },
@@ -129,19 +141,20 @@ export default {
       this.customer = customer
     }
   },
-  async created () {
+  beforeCreate () {
     // Load the required components
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-block'] = this.$load('frame/KBlock')
     this.$options.components['customer-editor'] = this.$load('CustomerEditor')
     this.$options.components['subscription-chooser'] = this.$load('SubscriptionChooser')
     this.$options.components['options-chooser'] = this.$load('OptionsChooser')
+  },
+  async created () {
     // Load available plans and Whenever the cabilities are updated, update plans as well
     this.refreshPlans()
     this.$events.$on('capabilities-api-changed', this.refreshPlans)
     // Load underlying billing perspective
     const perspective = await this.loadObject()
-    this.title = perspective.name
     this.currentPlan = _.get(perspective, 'billing.subscription.plan')
     this.currentOptions = _.get(perspective, 'billing.options', []).map(option => option.plan)
     this.customer = _.get(perspective, 'billing.customer')
