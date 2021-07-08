@@ -38,7 +38,11 @@ export default {
   props: {
     contextId: {
       type: String,
-      default: ''
+      default: '',
+    },
+    mode: {
+      type: String,
+      default: undefined
     }
   },
   data () {
@@ -88,6 +92,7 @@ export default {
         }
         this.setFab(actions)
       }
+      if (this.mode) this.setTopPaneMode(this.mode)
     }
   },
   created () {

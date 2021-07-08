@@ -1,7 +1,6 @@
 <template>
   <k-modal ref="modal" 
     :title="editorTitle" 
-    :toolbar="toolbar()" 
     :buttons="buttons" 
     v-model="isModalOpened"
     @opened="$emit('opened')"
@@ -30,24 +29,13 @@ export default {
   ],
   computed: {
     buttons () {
-      return [{
-        id: 'apply-button',
-        label: this.applyButton,
-        color: 'primary',
-        handler: () => this.apply(),
-        renderer: 'form-button'
-      }]
+      return [
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true,  handler: () => this.closeModal() },
+        { id: 'apply-button', label: this.applyButton, renderer: 'form-button',  handler: () => this.apply() }
+      ]
     }
-  },
+  },  
   methods: {
-    toolbar () {
-      return [{
-        id: 'close-action',
-        tooltip: this.$t('EventTemplateEditor.CLOSE_ACTION'),
-        icon: 'las la-times',
-        handler: () => this.closeModal()
-      }]
-    },
     openModal (maximized = false) {
       this.refresh()
       mixins.baseModal.methods.openModal.call(this, maximized)

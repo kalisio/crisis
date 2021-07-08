@@ -69,7 +69,7 @@
         <q-separator />
         <k-card-section v-if="canAccessBilling" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{ 
           id: 'edit-billing', icon: 'las la-edit', size: 'sm', tooltip: 'OrganisationCard.EDIT_ACTION', 
-          route: { name: 'edit-organisation-billing', params: { objectId: item._id } } 
+          route: { name: 'edit-organisation-billing', params: { objectId: item._id, perspective: 'billing', title: item.name } } 
         }]">
               <div class="row items-center">
               <template v-for="subscription in subscriptions">
