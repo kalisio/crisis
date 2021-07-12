@@ -125,8 +125,8 @@ export default {
         marker.bindPopup(this.event.location.name)
         marker.addTo(this.map)
       }
-      // Add participants layer if coordinator
-      if (this.isCoordinator) {
+      // Add participants layer if coordinator or archived mode as managers can see all
+      if (this.isCoordinator || this.archived) {
         this.refreshCollection()
       }
     },
