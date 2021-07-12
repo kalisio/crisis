@@ -84,6 +84,7 @@ jobs:
     before_install:
     - nvm install 12.16
     - npm install -g yarn
+    - brew update
     - brew install rclone
     - npm install -g ios-deploy --unsafe-perm=true
     - npm install -g @quasar/cli  
