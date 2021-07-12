@@ -130,8 +130,8 @@ export default {
         // Recenter map
         this.center(this.event.location.longitude, this.event.location.latitude, 15)
       }
-      // Add participants layer if coordinator
-      if (this.isCoordinator) {
+      // Add participants layer if coordinator or archived mode as managers can see all
+      if (this.isCoordinator || this.archived) {
         this.refreshCollection()
       }
     },
