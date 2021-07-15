@@ -4,22 +4,11 @@
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.3...prod-v1.1.4)
 
-**Implemented enhancements:**
-
-- Add a dedicated editor for event workflow [\#272](https://github.com/kalisio/aktnmap/issues/272)
-- Events or plans should be located using any geometry type [\#270](https://github.com/kalisio/aktnmap/issues/270)
-
 **Fixed bugs:**
 
 - Meteorological alerts not checked correctly [\#279](https://github.com/kalisio/aktnmap/issues/279)
 - Missing participants when displaying the map of an archived event [\#275](https://github.com/kalisio/aktnmap/issues/275)
 - The back button on the event map of an archived event targets the events activity [\#274](https://github.com/kalisio/aktnmap/issues/274)
-
-**Merged pull requests:**
-
-- build\(deps\): bump prismjs from 1.23.0 to 1.24.0 in /docs [\#277](https://github.com/kalisio/aktnmap/pull/277) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump postcss from 7.0.35 to 7.0.36 in /docs [\#271](https://github.com/kalisio/aktnmap/pull/271) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump ws from 6.2.1 to 6.2.2 in /docs [\#268](https://github.com/kalisio/aktnmap/pull/268) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [prod-v1.1.3](https://github.com/kalisio/aktnmap/tree/prod-v1.1.3) (2021-06-08)
 
