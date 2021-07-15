@@ -1,5 +1,40 @@
 # Changelog
 
+## [prod-v1.1.4](https://github.com/kalisio/aktnmap/tree/prod-v1.1.4) (2021-07-15)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.3...prod-v1.1.4)
+
+**Implemented enhancements:**
+
+- Add a dedicated editor for event workflow [\#272](https://github.com/kalisio/aktnmap/issues/272)
+- Events or plans should be located using any geometry type [\#270](https://github.com/kalisio/aktnmap/issues/270)
+
+**Fixed bugs:**
+
+- Meteorological alerts not checked correctly [\#279](https://github.com/kalisio/aktnmap/issues/279)
+- Missing participants when displaying the map of an archived event [\#275](https://github.com/kalisio/aktnmap/issues/275)
+- The back button on the event map of an archived event targets the events activity [\#274](https://github.com/kalisio/aktnmap/issues/274)
+
+**Merged pull requests:**
+
+- build\(deps\): bump prismjs from 1.23.0 to 1.24.0 in /docs [\#277](https://github.com/kalisio/aktnmap/pull/277) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump postcss from 7.0.35 to 7.0.36 in /docs [\#271](https://github.com/kalisio/aktnmap/pull/271) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump ws from 6.2.1 to 6.2.2 in /docs [\#268](https://github.com/kalisio/aktnmap/pull/268) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [prod-v1.1.3](https://github.com/kalisio/aktnmap/tree/prod-v1.1.3) (2021-06-08)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.2...prod-v1.1.3)
+
+**Fixed bugs:**
+
+- Changing the role for a group is no more working [\#267](https://github.com/kalisio/aktnmap/issues/267)
+- Too much request on the organisations dashboard [\#236](https://github.com/kalisio/aktnmap/issues/236)
+
+**Merged pull requests:**
+
+- build\(deps\): bump dns-packet from 1.3.1 to 1.3.4 in /docs [\#266](https://github.com/kalisio/aktnmap/pull/266) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump browserslist from 4.16.0 to 4.16.6 in /docs [\#265](https://github.com/kalisio/aktnmap/pull/265) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [prod-v1.1.2](https://github.com/kalisio/aktnmap/tree/prod-v1.1.2) (2021-05-13)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.1...prod-v1.1.2)
@@ -18,8 +53,16 @@
 - Participant shown twice on event activity with workflow [\#247](https://github.com/kalisio/aktnmap/issues/247)
 - iOS app does not respect Apple app privacy guideline [\#239](https://github.com/kalisio/aktnmap/issues/239)
 - Empty business category in mapping activities [\#237](https://github.com/kalisio/aktnmap/issues/237)
-- Cannot create an event without a workflow  in a random way [\#212](https://github.com/kalisio/aktnmap/issues/212)
 - Remove automated object ID population in card route handler [\#22](https://github.com/kalisio/aktnmap/issues/22)
+
+**Merged pull requests:**
+
+- build\(deps\): bump lodash from 4.17.20 to 4.17.21 in /docs [\#253](https://github.com/kalisio/aktnmap/pull/253) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump hosted-git-info from 2.8.4 to 2.8.9 [\#250](https://github.com/kalisio/aktnmap/pull/250) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump url-parse from 1.4.7 to 1.5.1 in /docs [\#249](https://github.com/kalisio/aktnmap/pull/249) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump lodash from 4.17.20 to 4.17.21 [\#244](https://github.com/kalisio/aktnmap/pull/244) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump ssri from 6.0.1 to 6.0.2 [\#233](https://github.com/kalisio/aktnmap/pull/233) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump ssri from 6.0.1 to 6.0.2 in /docs [\#232](https://github.com/kalisio/aktnmap/pull/232) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [prod-v1.1.1](https://github.com/kalisio/aktnmap/tree/prod-v1.1.1) (2021-05-04)
 
