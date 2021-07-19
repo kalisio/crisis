@@ -2,6 +2,7 @@
   <k-modal 
     :title="title" 
     :buttons="getButtons()"
+    :maximized="true"
     v-model="isModalOpened" 
     @opened="$emit('opened')" 
     @closed="$emit('closed')">
