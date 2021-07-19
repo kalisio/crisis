@@ -3,7 +3,10 @@
     v-bind="$props" 
     :header="header"
     :actions="itemActions" 
-    :bind-actions="false">
+    :bind-actions="false"
+    :expandable="true"
+    @expanded="onExpanded"
+    @collapsed="isExpanded = false">
     <!--
       Card avatar
     -->
@@ -54,8 +57,8 @@
             @triggered="routeTo('archived-plans-activity')" />
         </div>
       </k-card-section>
-      <!-- Structure section -->
-      <k-card-section icon="las la-cog" :title="$t('OrganisationCard.STRUCTURE_SECTION')" :expandable="true" @section-opened="onStructureSectionOpened">
+      <!-- Administation section -->
+      <k-card-section v-if="isExpanded" icon="las la-cog" :title="$t('OrganisationCard.STRUCTURE_SECTION')">
         <template v-for="element in structure">
           <div :key="element.key" class="full-width row justify-between items-center no-wrap q-pa-xs">
             <k-action
@@ -94,6 +97,7 @@ export default {
   mixins: [kCoreMixins.baseItem],
   data () {
     return {
+      isExpanded: false,
       eventsCount: 0,
       plansCount: 0,
       billing: null,
@@ -165,9 +169,10 @@ export default {
         logger.debug('No subscription plan found for the organisation ID: ', this.item._id)
       }
     },
-    async onStructureSectionOpened () {
+    async onExpanded () {
+      this.isExpanded = true
       // Retrieve the quotas
-      if (!this.billing) await this.loadBilling()
+      await this.loadBilling()
       const subscription = this.billing.subscription.plan
       const orgQuotas = _.get(this.billing, 'quotas')
       const appQuotas = this.$store.get('capabilities.api.quotas', {})
@@ -189,9 +194,7 @@ export default {
     this.$options.components['k-card'] = this.$load('collection/KCard')
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
-    this.$options.components['k-panel'] = this.$load('frame/KPanel')
     this.$options.components['k-action'] = this.$load('frame/KAction')
-    this.$options.components['k-list'] = this.$load('collection/KList')
   },
   async created () {
     // Counts the number of orphan events

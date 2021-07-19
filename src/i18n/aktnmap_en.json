@@ -441,11 +441,14 @@
     "DONE_LABEL": "Done"
   },
   "EventCard": {
+    "COMMENT_SECTION": "Comment",
     "DESCRIPTION_SECTION": "Description",
+    "OBJECTIVE_SECTION": "Objective",
+    "UNDEFINED_OBJECTIVE_LABEL": "No objective",
     "LOCATION_SECTION": "Location",
     "UNDEFINED_LOCATION_LABEL": "No location",
     "PARTICIPANTS_SECTION": "Participants",
-    "COMMENT_SECTION": "Comment",
+    "UNDEFINED_PARTICIPANTS_LABEL": "No participants",
     "COORDINATORS_SECTION": "Coordinators",
     "CREATED_AT_LABEL": "Created at",
     "UPDATED_AT_LABEL": "Updated at",
@@ -512,6 +515,18 @@
     "EVENTS_LAYER_NAME": "My events",
     "MATCHING_RESULTS": "{{total}} events found.",
     "MAXIMUM_RESULTS": "Please refine your search parameters because you miss some results beyond {{max}} events."
+  },
+  "ArchivedEventCard": {
+    "DESCRIPTION_SECTION": "Description",
+    "OBJECTIVE_SECTION": "Objective",
+    "UNDEFINED_OBJECTIVE_LABEL": "No objective",
+    "LOCATION_SECTION": "Location",
+    "UNDEFINED_LOCATION_LABEL": "No location",
+    "PARTICIPANTS_SECTION": "Participants",
+    "COORDINATORS_SECTION": "Coordinators",
+    "CREATED_AT_LABEL": "Created at",
+    "UPDATED_AT_LABEL": "Updated at",
+    "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)"
   },
   "ArchivedEventEntry": {
     "LOCATE_LABEL": "Location",

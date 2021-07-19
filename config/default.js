@@ -224,6 +224,7 @@ const businessLayers = {
 const baseLayers = {
   name: 'KCatalogPanel.BASE_LAYERS',
   icon: 'las la-layer-group',
+  component: 'catalog/KBaseLayersSelector',
   options: { exclusive: true, filter: { type: 'BaseLayer' } }
 }
 const capturedLayers = {
@@ -559,6 +560,7 @@ module.exports = {
         editItemAction('events', 'EventCard.EDIT_ACTION', 'header', 'name'),
         removeItemAction('events', 'EventCard.REMOVE_ACTION', 'header'),
         editItemAction('events', 'EventCard.EDIT_ACTION', 'description'),
+        editItemAction('events', 'EventCard.EDIT_ACTION', 'objective'),
         editItemAction('events', 'EventCard.EDIT_ACTION', 'location'),
         editItemAction('events', 'EventCard.EDIT_ACTION', 'participants'),
         editItemAction('events', 'EventCard.EDIT_ACTION', 'coordinators'),

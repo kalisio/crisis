@@ -108,19 +108,17 @@ export default {
       if (result.length > 0) this.count = result[0].count
     }
   },
-  async created () {
+  beforeCreate () {
     // Load the required components
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
     this.$options.components['k-history-entry'] = this.$load('collection/KHistoryEntry')
     this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
     this.$options.components['k-location-map'] = this.$load('KLocationMap')
+  },
+  async created () {
     // Get participant count
     await this.refresh()
-  },
-  beforeDestroy () {
   }
 }
 </script>
 
-<style>
-</style>

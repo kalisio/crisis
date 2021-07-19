@@ -1,14 +1,18 @@
 <template>
   <k-modal
     :title="editorTitle" 
-    :buttons="buttons" 
+    :buttons="getButtons()" 
     v-model="isModalOpened"
     @opened="$emit('opened')"
     @closed="$emit('closed')">
     <div slot="modal-content" class="column xs-gutter">
-      <k-form :class="{ 'light-dimmed': applyInProgress }" ref="eventForm"
-        :contextId="contextId" :objectId="objectId" :schema="schema" @field-changed="onFieldChanged" />
-      <q-spinner-cube color="primary" class="fixed-center" v-if="applyInProgress" size="4em"/>
+      <k-form 
+        ref="eventForm"
+        :class="{ 'light-dimmed': applyInProgress }" 
+        :contextId="contextId" 
+        :objectId="objectId" 
+        :schema="schema" 
+        @field-changed="onFieldChanged" />
     </div>
   </k-modal>
 </template>
@@ -55,18 +59,6 @@ export default {
       default: undefined
     }
   },
-  computed: {
-    buttons () {
-      return [
-        { 
-          id: 'apply-button', 
-          label: this.applyButton, 
-          renderer: 'form-button', 
-          handler: () => this.apply() 
-        }
-      ]
-    }
-  },
   watch: {
     plan: {
       handler () {
@@ -75,6 +67,12 @@ export default {
     }
   },
   methods: {
+    getButtons () {
+      return [
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
+        { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply()  }
+      ]
+    },
     async loadObject () {
       // When a template is provided use it as reference for object
       if (this.template) {

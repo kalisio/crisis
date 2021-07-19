@@ -104,7 +104,7 @@ export default {
         value: 'done',
         props: {
           service: 'archived-events',
-          renderer: this.renderer,
+          renderer: {component: 'ArchivedEventCard', dense: true },
           contextId: this.contextId,
           baseQuery: Object.assign({ deletedAt: { $exists: true }}, this.baseQuery),
           filterQuery: this.filterQuery

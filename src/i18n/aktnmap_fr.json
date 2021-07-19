@@ -445,10 +445,13 @@
   },
   "EventCard": {
     "DESCRIPTION_SECTION": "Description",
+    "COMMENT_SECTION": "Commentaire",
+    "OBJECTIVE_SECTION": "Objectif",
+    "UNDEFINED_OBJECTIVE_LABEL": "Aucun objectif",    
     "LOCATION_SECTION": "Localisation",
     "UNDEFINED_LOCATION_LABEL": "Aucune localisation",
     "PARTICIPANTS_SECTION": "Participants",
-    "COMMENT_SECTION": "Commentaire",
+    "UNDEFINED_PARTICIPANTS_LABEL": "Aucun participant",
     "COORDINATORS_SECTION": "Coordonateurs",
     "CREATED_AT_LABEL": "Créé le",
     "UPDATED_AT_LABEL": "Mis à jour le",
@@ -514,6 +517,19 @@
     "EVENTS_LAYER_NAME": "Mes événements",
     "MATCHING_RESULTS": "{{total}} événements trouvés.",
     "MAXIMUM_RESULTS": "Raffinez vos paramètres de recherches car certains résultats sont omis au-delà de {{max}} événements."
+  },
+  "ArchivedEventCard": {
+    "DESCRIPTION_SECTION": "Description",
+    "OBJECTIVE_SECTION": "Objectif",
+    "UNDEFINED_OBJECTIVE_LABEL": "Aucun objectif",    
+    "LOCATION_SECTION": "Localisation",
+    "UNDEFINED_LOCATION_LABEL": "Aucune localisation",
+    "PARTICIPANTS_SECTION": "Participants",
+    "COMMENT_SECTION": "Commentaire",
+    "COORDINATORS_SECTION": "Coordonateurs",
+    "CREATED_AT_LABEL": "Créé le",
+    "UPDATED_AT_LABEL": "Mis à jour le",
+    "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)"
   },
   "ArchivedEventEntry": {
     "LOCATE_LABEL": "Localisation",

@@ -5,62 +5,114 @@
       :header="header" 
       :actions="itemActions" 
       :bind-actions="false"
-      :dense="dense">
+      :dense="dense"
+      :expandable="true"
+      @expanded="isExpanded = true"
+      @collapsed="isExpanded = false">
       <!--
         Card content
        -->
       <template v-slot:card-content>
-         <!-- location section -->
-        <k-card-section :title="$t('EventCard.LOCATION_SECTION')" :actions="locationActions" :dense="dense" :context="$props">
+        <!-- Interaction section -->
+        <k-card-section 
+          :key="item + '-interactions'"
+          :context="$props"
+          :dense="isDense" 
+        >
+          <div v-if="participantLabel">{{ participantLabel }}</div>
+          <div v-if="coordinatorLabel">{{ coordinatorLabel }}</div>
+        </k-card-section>
+        <!-- Comment section -->
+        <k-card-section :title="$t('EventCard.COMMENT_SECTION')" :dense="dense"> 
+          <k-text-area v-if="comment" class="light-paragraph" :text="comment" :length="100" />
+        </k-card-section>           
+        <!-- Objective section -->
+        <k-card-section v-if="isExpanded"
+          :key="item + '-objective'"
+          :title="$t('EventCard.OBJECTIVE_SECTION')" 
+          :actions="objectiveActions" 
+          :context="$props"
+          :dense="dense"
+        > 
+          <k-chips-pane v-if="item.objective" :chips="objective" />
+          <div v-else>
+            <k-stamp :text="'EventCard.UNDEFINED_OBJECTIVE_LABEL'" direction="horizontal" />
+          </div>
+        </k-card-section>
+        <!-- location section -->
+        <k-card-section v-if="isExpanded" 
+          :key="item + '-location'"
+          :title="$t('EventCard.LOCATION_SECTION')" 
+          :actions="locationActions" 
+          :context="$props"
+          :dense="dense">
           <div v-if="item.location" class="row items-center justify-between no-wrap">
             <k-text-area class="light-paragraph" :text="locationName" />
-            <q-btn icon="las la-map-marker" color="grey-7" flat dense round>
-              <q-tooltip>
-                {{ $t('EventCard.LOCATE_LABEL') }}
-              </q-tooltip>
-              <q-popup-proxy transition-show="scale" transition-hide="scale">
-                <q-card style="width: 350px; height: 400px">
-                  <k-location-map v-model="item.location" :editable="false" />
-                </q-card>
-              </q-popup-proxy>
-            </q-btn>
+            <k-popup-action id="location-map" icon="las la-map-marker" :content="[ getLocationMap() ]" />
           </div>
           <div v-else>
             <k-stamp :text="'EventCard.UNDEFINED_LOCATION_LABEL'" direction="horizontal" />
           </div>
         </k-card-section>
-        <!-- Parcitipants section -->
-        <k-card-section :title="$t('EventCard.PARTICIPANTS_SECTION')" :actions="participantsActions" :dense="dense" :context="$props">
-          <div v-if="participantLabel">{{ participantLabel }}</div>
+        <!-- Participants section -->
+        <k-card-section v-if="isExpanded"
+          :key="item + '-participants'"
+          :title="$t('EventCard.PARTICIPANTS_SECTION')" 
+          :actions="participantsActions" 
+          :context="$props"
+          :dense="dense"
+        >
+          <div v-if="hasParticipants">
+            <k-chips-pane class="q-pl-sm" :chips="item.participants" valuePath="profile.name" />
+          </div>
+          <div v-else>
+            {{ $t('EventCard.UNDEFINED_PARTICIPANTS_LABEL')}}
+          </div>
         </k-card-section>
-        <!-- Comment section -->
-         <k-card-section :title="$t('EventCard.COMMENT_SECTION')" :dense="dense"> 
-          <k-text-area v-if="comment" class="light-paragraph" :text="comment" :length="100" />
-         </k-card-section>
         <!-- Coordinators section -->
-        <k-card-section :title="$t('EventCard.COORDINATORS_SECTION')" :actions="coordinatatorsActions" :dense="dense" :context="$props">
-          <div v-if="coordinatorLabel">{{ coordinatorLabel }}</div>
+        <k-card-section v-if="isExpanded"
+          :key="item + '-coordinators'"
+          :title="$t('EventCard.COORDINATORS_SECTION')" 
+          :actions="coordinatorsActions" 
+          :context="$props"
+          :dense="dense"
+        >
+          <k-chips-pane class="q-pl-sm" :chips="item.coordinators" valuePath="profile.name" />
         </k-card-section>
         <!-- Timestamps section -->
-        <k-card-section :dense="dense">
+        <k-card-section v-if="isExpanded" :dense="dense">
           <div v-if="createdAt || updatedAt">
-            <cite v-if="createdAt"><small>{{$t('EventCard.CREATED_AT_LABEL')}} {{createdAt.toLocaleString()}}</small></cite><br />
-            <cite v-if="updatedAt"><small>{{$t('EventCard.UPDATED_AT_LABEL')}} {{updatedAt.toLocaleString()}}</small></cite>
+            <cite v-if="createdAt">
+              <small>{{$t('EventCard.CREATED_AT_LABEL')}} {{createdAt.toLocaleString()}}</small>
+            </cite>
+            <br />
+            <cite v-if="updatedAt">
+              <small>{{$t('EventCard.UPDATED_AT_LABEL')}} {{updatedAt.toLocaleString()}}</small>
+            </cite>
           </div>
         </k-card-section>
       </template>
     </k-card>
+    <!--
+      Follow modal
+    -->
     <k-modal ref="followUpModal" v-if="hasParticipantInteraction" :title="followUpTitle" :buttons="getFollowUpButtons()">
       <div slot="modal-content">
         <k-form ref="form" :schema="schema"/>
       </div>
     </k-modal>
+    <!--
+      Upload modal
+    -->
     <k-modal ref="uploaderModal" :toolbar="getUploaderToolbar()" >
       <div slot="modal-content">
         <k-uploader ref="uploader" :resource="item._id" :base-query="uploaderQuery()"
           :options="uploaderOptions()" @uploader-ready="initializeMedias"/>
       </div>
     </k-modal>
+    <!--
+      Media browser
+    -->
     <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
   </div>
 </template>
@@ -98,11 +150,28 @@ export default {
   },
   computed: {
     header () {
-      let components = _.filter(this.itemActions, { scope: 'header' })
-      components.splice(0, 0, { component: 'QSpace' })
-      if (this.item.objective) components.splice(0, 0, {
-        component: 'QBadge', label: this.item.objective, color: 'grey-7'
-      })
+      let components
+      if (this.isExpanded) {
+        components = _.filter(this.itemActions, { scope: 'header' })
+        components.splice(0, 0, { component: 'QSpace '})
+      } else {
+        components = []
+        if (this.item.objective) components.push({
+          component: 'QBadge', label: this.item.objective, color: 'grey-7'
+        })
+        components.push({ component: 'QSpace '})
+        if (this.item.location) components.push({
+          id: 'location-map', component: 'frame/KPopupAction', tooltip: 'EventCard.LOCATION_SECTION', icon: 'las la-map-marker', content: [
+            this.getLocationMap()
+          ]
+        })
+        if (this.hasParticipants) components.push({
+           id: 'participants-list', component: 'frame/KPopupAction', tooltip: 'EventCard.PARTICIPANTS_SECTION', icon: 'las la-user', content: [
+            { component: 'frame/KChipsPane', chips: this.item.participants, valuePath: 'profile.name', class: 'q-pa-sm' }
+          ]
+        })
+       
+      }
       return components
     },
     icon () {
@@ -113,6 +182,12 @@ export default {
     },
     iconName () {
       return kCoreUtils.getIconName(this.item)
+    },
+    objective () {
+      return [this.item.objective]
+    },
+    objectiveActions () {
+      return _.filter(this.itemActions, { scope: 'objective' })
     },
     locationName () {
       // Event generated from alert ?
@@ -126,6 +201,12 @@ export default {
     },
     participantsActions () {
       return _.filter(this.itemActions, { scope: 'participants' })
+    },
+    hasParticipants () {
+      return !_.isEmpty(this.item.participants)
+    },
+    coordinatorsActions () {
+      return _.filter(this.itemActions, { scope: 'coordinators' })
     },
     followUpTitle () {
       return this.participantStep.title ? this.participantStep.title : 'Enter your choice'
@@ -141,7 +222,7 @@ export default {
     },
     coordinatatorsActions () {
       return _.filter(this.itemActions, { scope: 'coordinators' })
-    },
+    }
   },
   data () {
     return {
@@ -150,13 +231,22 @@ export default {
       participantLabel: '',
       nbParticipantsWaitingCoordination: 0,
       coordinatorLabel: '',
-      zoomDescription: false
+      zoomDescription: false,
+      isExpanded: false
     }
   },
   methods: {
     getDescription () {
       // Event generated from alert ?
       return this.item.alert ? this.getAlertDetailsAsHtml(this.item.alert) : this.item.description
+    },
+    getLocationMap () {
+      return { 
+        component: 'KLocationMap', 
+        value: this.item.location, 
+        editable: false, 
+        style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;' 
+      }
     },
     canCapturePhoto () {
       if (!this.$q.platform.is.cordova) return false
@@ -484,12 +574,14 @@ export default {
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
+    this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')
     this.$options.components['k-form'] = this.$load('form/KForm')
     this.$options.components['k-uploader'] = this.$load('input/KUploader')
     this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
-    this.$options.components['k-location-map'] = this.$load('KLocationMap')
+    this.$options.components['k-popup-action'] = this.$load('frame/KPopupAction')
   },
   created () {
+    this.isDense = this.dense
     // Required alias for the event logs mixin
     this.event = this.item
     // Set the required actor
