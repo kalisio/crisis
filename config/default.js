@@ -124,9 +124,9 @@ const planTemplatesAction = function (contextId = 'contextId') {
   return gotoActivityAction('plan-templates', 'las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL', contextId)   
 }
 
-const editItemAction = function (service, tooltip, scope = undefined, properties = undefined) {
+const editItemAction = function (tooltip, scope = undefined, properties = undefined) {
   let id = 'edit-item'
-  if (scope) id += `-${scope}`
+  if (scope) id += `${scope}`
   return {
     id, scope, tooltip, icon: 'las la-edit', size: 'sm',
     visible: 'canEditItem', 
@@ -134,7 +134,7 @@ const editItemAction = function (service, tooltip, scope = undefined, properties
   }
 }
 
-const removeItemAction = function (service, tooltip, scope = undefined) {
+const removeItemAction = function (tooltip, scope = undefined) {
   let id = 'remove-item'
   if (scope) id += `-${scope}`
   return {
@@ -443,9 +443,9 @@ module.exports = {
     items: {
       component: 'OrganisationCard',
       actions: [
-        editItemAction('organisations', 'OrganisationCard.EDIT_ACTION', 'header', "name,avatar,color"),
-        removeItemAction('organisations', 'OrganisationCard.REMOVE_ACTION', 'header'),
-        editItemAction('organisations', 'OrganisationCard.EDIT_ACTION', 'description')
+        editItemAction('OrganisationCard.EDIT_ACTION', 'header', "name,avatar,color"),
+        removeItemAction('OrganisationCard.REMOVE_ACTION', 'header'),
+        editItemAction('OrganisationCard.EDIT_ACTION', 'description')
       ]
     }
   },
@@ -477,11 +477,11 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('plans', 'PlanCard.EDIT_ACTION', 'header', 'name,'),
-        removeItemAction('plans', 'PlanCard.REMOVE_ACTION', 'header'),
-        editItemAction('plans', 'PlanCard.EDIT_ACTION', 'description'),
-        editItemAction('plans', 'PlanCard.EDIT_ACTION', 'objectives'),
-        editItemAction('plans', 'PlanCard.EDIT_ACTION', 'location')
+        editItemAction('PlanCard.EDIT_ACTION', 'header', 'name'),
+        removeItemAction('PlanCard.REMOVE_ACTION', 'header'),
+        editItemAction('PlanCard.EDIT_ACTION', 'description'),
+        editItemAction('PlanCard.EDIT_ACTION', 'objectives'),
+        editItemAction('PlanCard.EDIT_ACTION', 'location')
       ]
     }
   },
@@ -557,13 +557,13 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('events', 'EventCard.EDIT_ACTION', 'header', 'name'),
-        removeItemAction('events', 'EventCard.REMOVE_ACTION', 'header'),
-        editItemAction('events', 'EventCard.EDIT_ACTION', 'description'),
-        editItemAction('events', 'EventCard.EDIT_ACTION', 'objective'),
-        editItemAction('events', 'EventCard.EDIT_ACTION', 'location'),
-        editItemAction('events', 'EventCard.EDIT_ACTION', 'participants'),
-        editItemAction('events', 'EventCard.EDIT_ACTION', 'coordinators'),
+        editItemAction('EventCard.EDIT_ACTION', 'header', 'name'),
+        removeItemAction('EventCard.REMOVE_ACTION', 'header'),
+        editItemAction('EventCard.EDIT_ACTION', 'description'),
+        editItemAction('EventCard.EDIT_ACTION', 'objective'),
+        editItemAction('EventCard.EDIT_ACTION', 'location'),
+        editItemAction('EventCard.EDIT_ACTION', 'participants'),
+        editItemAction('EventCard.EDIT_ACTION', 'coordinators'),
         { 
           id: 'capture-photo', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-camera', 
           visible: ['canCapturePhoto', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
@@ -803,7 +803,7 @@ module.exports = {
           handler: 'removeMember',
           scope: 'header'
         },
-        editItemAction('members', 'KMemberCard.TAG_ACTION', 'tags'),
+        editItemAction('KMemberCard.TAG_ACTION', 'tags'),
         { 
           id: 'join-group', icon: 'las la-plus-circle', tooltip: 'KMemberCard.JOIN_GROUP_ACTION', size: 'sm',
           visible: 'canJoinGroup', 
@@ -847,8 +847,8 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('tags', 'KTagCard.EDIT_ACTION', 'header', 'value,icon'),
-        editItemAction('tags', 'KTagCard.EDIT_ACTION', 'description')
+        editItemAction('KTagCard.EDIT_ACTION', 'header', 'value,icon'),
+        editItemAction('KTagCard.EDIT_ACTION', 'description')
       ]
     }
   },
@@ -879,9 +879,9 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('groups', 'KGroupCard.EDIT_ACTION', 'header', 'name'),
-        removeItemAction('groups', 'KGroupCard.REMOVE_ACTION', 'header'),
-        editItemAction('groups', 'KGroupCard.EDIT_ACTION', 'description')
+        editItemAction('KGroupCard.EDIT_ACTION', 'header', 'name'),
+        removeItemAction('KGroupCard.REMOVE_ACTION', 'header'),
+        editItemAction('KGroupCard.EDIT_ACTION', 'description')
       ]
     }
   },
@@ -913,11 +913,11 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'header', 'name,icon'),
-        removeItemAction('event-templates', 'EventTemplateCard.REMOVE_ACTION', 'header'),
-        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'description'),
-        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'participants'),
-        editItemAction('event-templates', 'EventTemplateCard.EDIT_ACTION', 'coordinators'),
+        editItemAction('EventTemplateCard.EDIT_ACTION', 'header', 'name,icon'),
+        removeItemAction('EventTemplateCard.REMOVE_ACTION', 'header'),
+        editItemAction('EventTemplateCard.EDIT_ACTION', 'description'),
+        editItemAction('EventTemplateCard.EDIT_ACTION', 'participants'),
+        editItemAction('EventTemplateCard.EDIT_ACTION', 'coordinators'),
         addWorkflowAction('EventTemplateCard.ADD_WORKFLOW_ACTION'),
         editWorkflowAction('EventTemplateCard.EDIT_WORKFLOW_ACTION'),
         removeWorkflowAction('EventTemplateCard.REMOVE_WORKFLOW_ACTION'),
@@ -958,11 +958,11 @@ module.exports = {
     },
     items: {
       actions: [
-        editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'header', 'name,icon'),
-        removeItemAction('plan-templates', 'PlanTemplateCard.REMOVE_ACTION', 'header'),
-        editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'description'),
-        editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'objectives'),
-        editItemAction('plan-templates', 'PlanTemplateCard.EDIT_ACTION', 'coordinators'),
+        editItemAction('PlanTemplateCard.EDIT_ACTION', 'header', 'name,icon'),
+        removeItemAction('PlanTemplateCard.REMOVE_ACTION', 'header'),
+        editItemAction('PlanTemplateCard.EDIT_ACTION', 'description'),
+        editItemAction('PlanTemplateCard.EDIT_ACTION', 'objectives'),
+        editItemAction('PlanTemplateCard.EDIT_ACTION', 'coordinators'),
         { 
           id: 'copy-plan-template', tooltip: 'PlanTemplateCard.COPY_ACTION', icon: 'las la-copy',
           visible: { name: '$can', params: ['update', 'plan-templates', ':contextId', ':item'] },

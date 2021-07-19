@@ -1,7 +1,7 @@
 <template>
   <k-modal
     :title="editorTitle" 
-    :buttons="buttons" 
+    :buttons="getButtons()" 
     v-model="isModalOpened"
     @opened="$emit('opened')"
     @closed="$emit('closed')">
@@ -34,17 +34,12 @@ export default {
       default: ''
     }
   },
-  computed: {
-    buttons () {
-      return [
-        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true,  handler: () => this.closeModal() },
-        { id: 'apply-button', label: this.applyButton, renderer: 'form-button',  handler: () => this.apply() }
-      ]
-    }
-  },
   methods: {
-    getService () {
-      return this.$api.getService('plans')
+    getButtons () {
+      return [
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
+        { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply()  }
+      ]
     },
     async loadObject () {
       // When a template is provided use it as reference for object
@@ -62,10 +57,12 @@ export default {
       }
     }
   },
-  async created () {
+  beforeCreate () {
     // Load the required components
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-form'] = this.$load('form/KForm')
+  },
+  async created () {
     // On creation wait for template/feature first
     if (this.templateId) {
       this.template = await this.$api.getService('plan-templates').get(this.templateId)

@@ -21,7 +21,6 @@
 import _ from 'lodash'
 import centroid from '@turf/centroid'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
-import { utils } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
 const editorMixin = kCoreMixins.baseEditor(['eventForm'])
@@ -131,9 +130,12 @@ export default {
       let schema = _.cloneDeep(await kCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName()))
       // When a plan is provide add objective edition and remove expiration date
       if (!_.isEmpty(this.plan)) {
-        _.set(schema, 'properties.objective.field.options',
-          _.get(this.plan, 'objectives', []).map(objective => ({ label: objective, value: objective }))
-        )
+        // Take into account properties filtering
+        if (_.has(schema.properties, 'objective')) {
+          _.set(schema, 'properties.objective.field.options',
+            _.get(this.plan, 'objectives', []).map(objective => ({ label: objective, value: objective }))
+          )
+        }
         _.unset(schema, 'properties.expireAt')
         _.pull(schema.required, 'expireAt')
       } else {
@@ -175,16 +177,19 @@ export default {
       }
     }
   },
-  async created () {
+  beforeCreate () {
     // Load the required components
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-form'] = this.$load('form/KForm')
+  },
+  async created () { 
     // On creation wait for template/feature first
     if (this.templateId) {
       this.template = await this.$api.getService('event-templates').get(this.templateId)
     }
-    // Build the editor
-    this.refresh()
+    // Build the editor. 
+    //If the event belongs to a plan we need to wait for the plan to be loaded
+    if (!this.planId) this.refresh()
     this.$on('applied', this.closeModal)
   },
   beforeDestroy () {
