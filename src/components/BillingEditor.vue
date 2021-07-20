@@ -82,7 +82,6 @@ export default {
       isUserVerified: this.$store.get('user.isVerified'),
       plans: {},
       quotas: {},
-      title: '',
       currentPlan: '',
       currentOptions: [],
       customer: undefined

@@ -61,6 +61,7 @@ export default {
   watch: {
     plan: {
       handler () {
+        console.log('*** REFRESH EVENT EDITOR')
         this.refresh()
       }
     }
@@ -83,7 +84,8 @@ export default {
         // Remove id so that event has its own
         delete this.object._id
         // Setup the plan if defined
-        if (!_.isEmpty(this.planId)) {
+        console.log('*** LOAD OBJECT: ', this.planId)
+        if (this.hasPlan()) {
           this.object.plan = this.planId
         }
         // Setup hasWorkflow tag
@@ -185,11 +187,13 @@ export default {
   async created () { 
     // On creation wait for template/feature first
     if (this.templateId) {
+      console.log('*** Loading template')
       this.template = await this.$api.getService('event-templates').get(this.templateId)
+      console.log('*** Template loaded')
     }
     // Build the editor. 
     //If the event belongs to a plan we need to wait for the plan to be loaded
-    if (!this.planId) this.refresh()
+    if (!this.hasPlan()) this.refresh()
     this.$on('applied', this.closeModal)
   },
   beforeDestroy () {

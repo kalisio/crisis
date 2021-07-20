@@ -14,6 +14,9 @@ const plansMixin = {
     }
   },
   methods: {
+    hasPlan () {
+      return _.has(this.$route, 'query.plan')
+    },
     hasPlanLocation () {
       return _.has(this.plan, 'location.latitude') && _.has(this.plan, 'location.longitude')
     },
