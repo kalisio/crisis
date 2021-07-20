@@ -61,7 +61,6 @@ export default {
   watch: {
     plan: {
       handler () {
-        console.log('*** REFRESH EVENT EDITOR')
         this.refresh()
       }
     }
@@ -74,8 +73,8 @@ export default {
       ]
     },
     async loadObject () {
-      // When a template is provided use it as reference for object
-      if (this.template) {
+       if (this.templateId) {
+        if (!this.template) this.template = await this.$api.getService('event-templates').get(this.templateId)
         this.object = Object.assign({}, this.template)
         // Keep track of template based on its name for statistics
         // We don't keep ref/link for simplicity and making archived events will be self-consistent
@@ -84,7 +83,6 @@ export default {
         // Remove id so that event has its own
         delete this.object._id
         // Setup the plan if defined
-        console.log('*** LOAD OBJECT: ', this.planId)
         if (this.hasPlan()) {
           this.object.plan = this.planId
         }
@@ -185,12 +183,6 @@ export default {
     this.$options.components['k-form'] = this.$load('form/KForm')
   },
   async created () { 
-    // On creation wait for template/feature first
-    if (this.templateId) {
-      console.log('*** Loading template')
-      this.template = await this.$api.getService('event-templates').get(this.templateId)
-      console.log('*** Template loaded')
-    }
     // Build the editor. 
     //If the event belongs to a plan we need to wait for the plan to be loaded
     if (!this.hasPlan()) this.refresh()

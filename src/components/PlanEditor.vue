@@ -43,7 +43,8 @@ export default {
     },
     async loadObject () {
       // When a template is provided use it as reference for object
-      if (this.template) {
+      if (this.templateId) {
+        if (!this.template) this.template = await this.$api.getService('plan-templates').get(this.templateId)
         this.object = Object.assign({}, this.template)
         // Keep track of template based on its name for statistics
         // We don't keep ref/link for simplicity and making archived events will be self-consistent
@@ -63,10 +64,7 @@ export default {
     this.$options.components['k-form'] = this.$load('form/KForm')
   },
   async created () {
-    // On creation wait for template/feature first
-    if (this.templateId) {
-      this.template = await this.$api.getService('plan-templates').get(this.templateId)
-    }
+    // Build the editor
     this.refresh()
     this.$on('applied', this.closeModal)
   },
