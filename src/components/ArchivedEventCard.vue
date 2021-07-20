@@ -8,8 +8,8 @@
       :dense="isDense"
       :expandable="true"      
       @expanded="isExpanded = true"
-      @collapsed="isExpanded = false">
-      >
+      @collapsed="isExpanded = false"
+    >
       <!--
         Card content
        -->
@@ -31,7 +31,8 @@
           :key="item + '-location'"
           :title="$t('ArchivedEventCard.LOCATION_SECTION')" 
           :context="$props"
-          :dense="dense">
+          :dense="dense"
+        >
           <div v-if="item.location" class="row items-center justify-between no-wrap">
             <k-text-area class="light-paragraph" :text="locationName" />
             <k-popup-action id="location-map" icon="las la-map-marker" :content="[ getLocationMap() ]" />
@@ -99,12 +100,6 @@ export default {
     mixins.events,
     mixins.alerts
   ],
-  props: {
-    dense: {
-      type: Boolean,
-      default: false
-    }
-  },
   watch: {
     item: function () {
       // Some actions are not fully reactive and need to be updated manually
@@ -161,6 +156,9 @@ export default {
     },
     updatedAt () {
       return this.item.updatedAt ? new Date(this.item.updatedAt) : null
+    },
+    dense () {
+      return this.$q.screen.lt.sm
     }
   },
   data () {

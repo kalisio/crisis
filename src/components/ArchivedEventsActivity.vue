@@ -178,7 +178,7 @@ export default {
     return {
       // Make this configurable from app
       renderer: _.merge({
-        component: 'ArchivedEventEntry'
+        component: 'ArchivedEventCard',
       }, this.activityOptions.items),
       filter: this.$store.get('filter'),
       topPane: this.$store.get('topPane'),
