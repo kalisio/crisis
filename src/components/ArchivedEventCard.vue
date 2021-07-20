@@ -5,7 +5,7 @@
       :header="header" 
       :actions="itemActions" 
       :bind-actions="false"
-      :dense="isDense"
+      :dense="dense"
       :expandable="true"      
       @expanded="isExpanded = true"
       @collapsed="isExpanded = false"
@@ -84,7 +84,6 @@
 
 <script>
 import _ from 'lodash'
-import moment from 'moment'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
@@ -100,6 +99,12 @@ export default {
     mixins.events,
     mixins.alerts
   ],
+  props: {
+    dense: {
+      type: Boolean,
+      default: false
+    }
+  },
   watch: {
     item: function () {
       // Some actions are not fully reactive and need to be updated manually
@@ -156,15 +161,11 @@ export default {
     },
     updatedAt () {
       return this.item.updatedAt ? new Date(this.item.updatedAt) : null
-    },
-    dense () {
-      return this.$q.screen.lt.sm
     }
   },
   data () {
     return {
       zoomDescription: false,
-      isDense: false,
       isExpanded: false
     }
   },
@@ -211,7 +212,6 @@ export default {
     this.$options.components['k-popup-action'] = this.$load('frame/KPopupAction')
   },
   created () {
-    this.isDense = this.dense
     // Required alias for the event logs mixin
     this.event = this.item
     // Set the required actor

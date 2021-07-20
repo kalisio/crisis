@@ -50,6 +50,12 @@ import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.cl
 export default {
   name: 'archived-plan-card',
   mixins: [kCoreMixins.baseItem],
+  props: {
+    dense: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
     header () {
       let components = _.filter(this.itemActions, { scope: 'header' })
@@ -57,9 +63,6 @@ export default {
         { component: 'QBadge', label: this.item.template, color: 'grey-7' },
         { component: 'QSpace' })
       return components
-    },
-    dense () {
-      return this.$q.screen.lt.sm
     }
   },
   data () {

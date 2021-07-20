@@ -53,7 +53,8 @@ export default {
       // Make this configurable from app
       renderer: _.merge({
         component: 'ArchivedPlanCard',
-        service: 'archived-plans'
+        service: 'archived-plans',
+        dense: true
       }, this.activityOptions.items),
       filter: this.$store.get('filter'),
       sorter: this.$store.get('sorter'),
