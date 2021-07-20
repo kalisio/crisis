@@ -181,19 +181,10 @@ export default {
         style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;' 
       }
     },
-    configureActions () {
-      // TODO
-      // Required alias for the event logs mixin
-      this.event = this.item
-      // Generate configured actions
-      kCoreMixins.baseItem.methods.configureActions.call(this)
-      // Find the add media action and push the browse media action just after
-      /*const index = _.findIndex(this.itemActions, (action) => action.id === 'add-media')
-      this.itemActions.splice(index + 1, 0, {
-        id: 'browse-media', tooltip: 'ArchivedEventCard.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', handler: this.browseMedia, 
-        badge: { label: this.mediasCount().toString(), floating: true },
-        visible: this.hasMedias() && this.$can('read', 'events', this.contextId, this.item)
-      })*/
+    followUp () {
+      this.$router.push({ name: 'event-activity',
+        params: { objectId: this.item._id, contextId: this.contextId },
+        query: { archived: true } })
     },
     browseMedia () {
       this.$refs.mediaBrowser.show(this.item.attachments)

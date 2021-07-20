@@ -517,7 +517,8 @@ module.exports = {
       actions: [{
         id: 'goto-plan-archive', icon: 'las la-clipboard-list', tooltip: 'ArchivedPlanEntry.GOTO_ARCHIVED_EVENTS', 
         route: { name: 'archived-events-activity', params: { contextId: ':contextId'}, query: { plan: ':item._id'} },
-        visible: { name: '$can', params: ['service', 'archived-events', ':contextId'] }
+        visible: { name: '$can', params: ['service', 'archived-events', ':contextId'] },
+        scope: 'footer'
       }]
     }
   },
@@ -733,15 +734,14 @@ module.exports = {
     },
     items: {
       actions: [
-        { id: 'view-event', tooltip: 'ArchivedEventEntry.VIEW_LABEL', icon: 'las la-file-alt',
-          route: { name: 'view-event', params: { contextId: ':contextId', objectId: ':item._id' } },
-          visible: { name: '$can', params: ['read', 'archived-events', ':contextId'] } },
-        { id: 'locate', tooltip: 'ArchivedEventEntry.LOCATE_LABEL', icon: 'las la-map-marker', handler: 'locate',
-          visible: ['hasLocation', { name: '$can', params: ['read', 'archived-events', ':contextId'] }] },
-        { id: 'map', tooltip: 'ArchivedEventEntry.MAP_LABEL', icon: 'las la-map-marked-alt', handler: 'followUp',
-          visible: { name: '$can', params: ['read', 'archived-events', ':contextId'] } },
-        { id: 'browse-media', tooltip: 'ArchivedEventEntry.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', handler: 'browseMedia',
-          visible: ['hasMedias', { name: '$can', params: ['read', 'archived-events', ':contextId'] }] }
+        { 
+          id: 'view-map', tooltip: 'ArchivedEventEntry.MAP_LABEL', icon: 'las la-map-marked-alt', handler: 'followUp',
+          visible: { name: '$can', params: ['read', 'archived-events', ':contextId'] }, scope: 'footer'
+        },
+        { 
+          id: 'browse-media', tooltip: 'ArchivedEventEntry.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', handler: 'browseMedia',
+          visible: ['hasMedias', { name: '$can', params: ['read', 'archived-events', ':contextId'] }], scope: 'footer'
+        }
       ]
     },
     engine: defaultMapOptions,
