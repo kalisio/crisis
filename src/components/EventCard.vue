@@ -104,7 +104,7 @@
     <!--
       Upload modal
     -->
-    <k-modal ref="uploaderModal" :toolbar="getUploaderToolbar()" >
+    <k-modal ref="uploaderModal" :buttons="getUploaderButtons()" >
       <div slot="modal-content">
         <k-uploader ref="uploader" :resource="item._id" :base-query="uploaderQuery()"
           :options="uploaderOptions()" @uploader-ready="initializeMedias"/>
@@ -260,11 +260,12 @@ export default {
         handler: () => this.logParticipantState()
       }]
     },
-    getUploaderToolbar () {
+    getUploaderButtons () {
       return [{
         id: 'close-action',
         label: this.$t('EventCard.UPLOADER_MODAL_CLOSE_ACTION'),
         icon: 'las la-times',
+        renderer: 'form-button',
         handler: () => {
           this.$refs.uploaderModal.close()
           this.refresh()
