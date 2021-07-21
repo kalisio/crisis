@@ -530,16 +530,9 @@ module.exports = {
           { component: 'OrganisationMenu', mode: 'run' },
           separator,
           { component: 'PlanMenu' },
-          { 
-            id: 'events-menu',
-            icon: 'las la-fire',
-            tooltip: 'EventsActivity.EVENTS_LABEL',
-            component: 'menu/KMenu',
-            content: [ mapAction(), archivedEventsAction() ]
-          },
-          // currentActivityStamp('las la-fire', 'EventsActivity.EVENTS_LABEL'),
-          // mapAction(),
-          //archivedEventsAction(),
+          currentActivityStamp('las la-fire', 'EventsActivity.EVENTS_LABEL'),
+          mapAction(), 
+          archivedEventsAction(),
           midSeparator,
           { id: 'event-sorter',
             component: 'collection/KSorter', 
@@ -596,13 +589,9 @@ module.exports = {
           { component: 'OrganisationMenu', mode: 'run' },
           separator,
           { component: 'PlanMenu' },       
-          { 
-            id: 'events-map-menu',
-            icon: 'las la-map',
-            tooltip: 'Context.CATALOG',
-            component: 'menu/KMenu',
-            content: [ eventsAction(), archivedEventsAction() ]
-          },
+          eventsAction(),
+          currentActivityStamp('las la-map', 'Context.CATALOG'),
+          archivedEventsAction(),
           midSeparator,
           { component: 'KLocateUser' },
           { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
@@ -682,13 +671,9 @@ module.exports = {
           { component: 'OrganisationMenu', mode: 'run' },
           separator,
           { component: 'PlanMenu' },
-          { 
-            id: 'archived-events-menu',
-            icon: 'las la-clipboard-list',
-            tooltip: 'Context.ARCHIVED_EVENT',
-            component: 'menu/KMenu',
-            content: [ eventsAction(), mapAction() ]
-          },
+          eventsAction(),
+          mapAction(),
+          currentActivityStamp('las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
           midSeparator,
           {
             id: 'archived-plan-sorter',
