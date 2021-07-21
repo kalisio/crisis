@@ -8,21 +8,19 @@
 
       <k-modal ref="templateModal"
         :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
-        :buttons="[]" :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }">
+        :buttons="[]" 
+        :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }">
         <k-list ref="templates" slot="modal-content" service="event-templates" :contextId="contextId"
           :list-strategy="'smart'" @selection-changed="onCreateEvent" />
       </k-modal>
 
       <k-modal ref="alertModal"
         :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
-        :buttons="[]" :options="{}">
+        :buttons="getAlertModalButtons()" 
+        :options="{}">
         <div slot="modal-content">
           <alert-form :class="{ 'light-dimmed': inProgress }" ref="alertForm"
             :layer="alertLayer" :feature="alertFeature" :forecastModel="forecastModel"/>
-          <div class="row justify-end" style="padding: 12px">
-            <q-btn id="apply-button" color="primary" flat :label="$t('CREATE')" @click="onCreateAlert"/>
-          </div>
-          <q-spinner-cube color="primary" class="fixed-center" v-if="inProgress" size="4em"/>
         </div>
       </k-modal>
       <!-- Child views -->
@@ -339,9 +337,10 @@ export default {
         await this.$api.getService('alerts').remove(data.feature._id)
       })
     },
-    getAlertModalToolbar () {
+    getAlertModalButtons () {
       return [
-        { id: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.alertModal.close() }
+        { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.$refs.alertModal.close() },
+        { id: 'apply-button', label: 'DONE', renderer: 'form-button', handler: () => this.onCreateAlert() }
       ]
     },
     onCreateMeasureAlertAction (data) {
