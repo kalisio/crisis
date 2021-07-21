@@ -33,18 +33,6 @@
                 </div>
               </template>
             </k-card-section>
-            <!-- Manage section -->
-            <k-card-section v-if="canManagePlan">
-              <div class="row justify-center">
-                <k-action
-                  id= "manage-plan"
-                  icon= "las la-cog"
-                  size="md"
-                  :label="$t('PlanMenu.MANAGE_PLAN_ACTION')"
-                  @triggered="onManagePlan" 
-                  :propagate="false" />
-              </div>
-            </k-card-section>
           </div>
         </q-card>
       </template>
@@ -66,10 +54,13 @@ export default {
   inject: ['kActivity'],
   computed: {
     label () {
-      return this.$q.screen.gt.xs ? this.plan.name : ''
+      return this.$q.screen.lt.md ? '' : this.plan.name
     },
     icon () {
-      return this.$q.screen.lt.sm ? _.get(this.plan, 'icon.name') : undefined
+      return _.get(this.plan, 'icon.name', 'las la-stream')
+    },
+    color () {
+      return _.get(this.plan, 'icon.color', 'grey-7')
     },
     size () {
       return this.$q.screen.lt.sm ? 'sm' : 'md'
