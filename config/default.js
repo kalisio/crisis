@@ -783,7 +783,7 @@ module.exports = {
           scope: 'header'
         },
         { 
-          id: 'remove-member', icon: 'las la-trash', tooltip: 'KMemberCard.REMOVE_ACTIOn', size: 'sm',
+          id: 'remove-member', icon: 'las la-trash', tooltip: 'KMemberCard.REMOVE_ACTION', size: 'sm',
           visible: ['!item.expireAt', { name: '$can', params: ['remove', 'authorisations', ':contextId', { resource: ':contextId' }] }],
           handler: 'removeMember',
           scope: 'header'
@@ -800,7 +800,7 @@ module.exports = {
           visible: ['item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }],
           handler: 'resendInvitation',
           scope: 'expiration'
-        },
+        }
       ]
     }
   },
