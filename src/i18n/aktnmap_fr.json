@@ -543,22 +543,12 @@
     "LOCATION_SECTION": "Localisation",
     "UNDEFINED_LOCATION_LABEL": "Aucune localisation",
     "PARTICIPANTS_SECTION": "Participants",
+    "NO_PARTICIPANTS_LABEL": "No participants",
     "COMMENT_SECTION": "Commentaire",
     "COORDINATORS_SECTION": "Coordonateurs",
     "CREATED_AT_LABEL": "Créé le",
     "UPDATED_AT_LABEL": "Mis à jour le",
     "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)"
-  },
-  "ArchivedEventEntry": {
-    "LOCATE_LABEL": "Localisation",
-    "VIEW_LABEL": "Détails",
-    "MAP_LABEL": "Carte",
-    "BROWSE_MEDIA_LABEL": "$t(EventCard.BROWSE_MEDIA_LABEL)",
-    "CREATED_AT_LABEL": "$t(EventCard.CREATED_AT_LABEL)",
-    "UPDATED_AT_LABEL": "$t(EventCard.UPDATED_AT_LABEL)",
-    "DELETED_AT_LABEL": "Clôturé le",
-    "EXPIRED_AT_LABEL": "Expiré le",
-    "PARTICIPANT_COUNT": "Nombre de participants"
   },
   "EventTemplatesActivity": {
     "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)",

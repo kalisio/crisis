@@ -174,7 +174,7 @@ export default {
           ]
         })
         if (this.hasParticipants) components.push({
-           id: 'participants-list', component: 'frame/KPopupAction', tooltip: 'EventCard.PARTICIPANTS_SECTION', icon: 'las la-user', content: [
+           id: 'participants-list', component: 'frame/KPopupAction', tooltip: 'EventCard.PARTICIPANTS_SECTION', icon: 'las la-user-friends', content: [
             { component: 'frame/KChipsPane', chips: this.item.participants, valuePath: 'profile.name', class: 'q-pa-sm' }
           ]
         })
