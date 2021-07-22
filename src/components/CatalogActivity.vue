@@ -8,7 +8,7 @@
 
       <k-modal ref="templateModal"
         :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
-        :buttons="[]" 
+        :buttons="getTemplateModalButtons()" 
         :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }">
         <k-list ref="templates" slot="modal-content" service="event-templates" :contextId="contextId"
           :list-strategy="'smart'" @selection-changed="onCreateEvent" />
@@ -385,9 +385,9 @@ export default {
         this.$refs.alertModal.open()
       }
     },
-    getTemplateModalToolbar () {
+    getTemplateModalButtons () {
       return [
-        { id: 'close-action', label: this.$t('CLOSE'), icon: 'las la-times', handler: () => this.$refs.templateModal.close() }
+        { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', handler: () => this.$refs.templateModal.close() }
       ]
     },
     configureCollection (service, baseQuery, filterQuery, props = {}) {

@@ -74,7 +74,7 @@ import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { QSlider, QRange } from 'quasar'
 
 export default {
-  name: 'k-alert-form',
+  name: 'alert-form',
   components: {
     QSlider, QRange
   },
