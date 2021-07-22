@@ -324,7 +324,7 @@
     "CREATE_EVENT_FEATURE_ACTION": "Créer un évènement localisé sur cet objet",
     "CREATE_EVENT_LOCATION_ACTION": "Créer un évènement localisé à cet endroit",
     "REMOVE_ALERT_ACTION": "Supprimer l'alerte",
-    "CREATE_EVENT_TITLE": "Sélectectionner un modèle d'événement",
+    "CREATE_EVENT_TITLE": "Sélectionner un modèle d'événement",
     "CREATE_ALERT_TITLE": "Créer une nouvelle alerte ?",
     "EVENTS_LAYER": "Mes événements",
     "ALERTS_LAYER": "Mes alertes",
