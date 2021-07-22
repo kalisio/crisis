@@ -14,17 +14,20 @@
        -->
       <template v-slot:card-content>
         <!-- Interaction section -->
-        <k-card-section 
+        <k-card-section v-if="participantLabel || coordinatorLabel"
           :key="item + '-interactions'"
           :context="$props"
-          :dense="isDense" 
+          :dense="dense" 
         >
           <div v-if="participantLabel">{{ participantLabel }}</div>
           <div v-if="coordinatorLabel">{{ coordinatorLabel }}</div>
         </k-card-section>
         <!-- Comment section -->
-        <k-card-section :title="$t('EventCard.COMMENT_SECTION')" :dense="dense"> 
-          <k-text-area v-if="comment" class="light-paragraph" :text="comment" :length="100" />
+        <k-card-section v-if="comment"
+          :key="item + '-comment'"
+          :title="$t('EventCard.COMMENT_SECTION')" 
+          :dense="dense"> 
+          <k-text-area class="light-paragraph" :text="comment" :length="100" />
         </k-card-section>           
         <!-- Objective section -->
         <k-card-section v-if="isExpanded"
