@@ -515,7 +515,7 @@ module.exports = {
     },
     items: {
       actions: [{
-        id: 'goto-plan-archive', icon: 'las la-clipboard-list', tooltip: 'ArchivedPlanEntry.GOTO_ARCHIVED_EVENTS', 
+        id: 'goto-plan-archive', icon: 'las la-clipboard-list', tooltip: 'ArchivedPlanCard.GOTO_ARCHIVED_EVENTS', 
         route: { name: 'archived-events-activity', params: { contextId: ':contextId'}, query: { plan: ':item._id'} },
         visible: { name: '$can', params: ['service', 'archived-events', ':contextId'] },
         scope: 'footer'

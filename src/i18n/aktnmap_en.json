@@ -637,7 +637,7 @@
     "OBJECTIVES_SECTION": "Objectives",
     "LOCATION_SECTION": "Location",
     "VIEW_ACTION": "View",
-    "UNDEFINED_LOCATION_LABEL": "Undefined",
+    "NO_LOCATION_LABEL": "Undefined location",
     "EVENTS_SECTION": "Events",
     "EVENTS": "{{count}} event(s)",
     "VIEW_CATALOG": "View map",
@@ -661,7 +661,10 @@
   "ArchivedPlansActivity": {
     "ARCHIVED_PLANS_LABEL": "Archived plans"
   },
-  "ArchivedPlanEntry": {
+  "ArchivedPlanCard": {
+    "OBJECTIVES_SECTION": "Objectives",
+    "LOCATION_SECTION": "Location",
+    "NO_LOCATION_LABEL": "Undefined location",
     "VIEW_LOCATION_MAP": "View location map",
     "GOTO_ARCHIVED_EVENTS": "View logbook"
   },

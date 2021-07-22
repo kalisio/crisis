@@ -16,7 +16,7 @@
       <k-card-section :title="$t('PlanCard.LOCATION_SECTION')" :actions="locationActions" :context="$props">
         <k-location-map v-if="item.location" v-model="item.location" :editable="false" style="min-height: 220px;" />
         <div v-else>
-          <k-stamp :text="'PlanCard.UNDEFINED_LOCATION_LABEL'" direction="horizontal" />
+          <k-stamp :text="'PlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
         </div>
       </k-card-section>
       <!-- Events section -->

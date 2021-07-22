@@ -640,7 +640,7 @@
     "OBJECTIVES_SECTION": "Objectifs",
     "LOCATION_SECTION": "Localisation",
     "VIEW_ACTION": "Visualiser",
-    "UNDEFINED_LOCATION_LABEL": "Non définie",
+    "NO_LOCATION_LABEL": "Aucune localisation",
     "EVENTS_SECTION": "Evénements",
     "EVENTS": "{{count}} événements(s)",
     "VIEW_PLANS": "Voir les plans",
@@ -665,7 +665,10 @@
   "ArchivedPlansActivity": {
     "ARCHIVED_PLANS_LABEL": "Archive"
   },
-  "ArchivedPlanEntry": {
+  "ArchivedPlanCard": {
+    "OBJECTIVES_SECTION": "Objectifs",
+    "LOCATION_SECTION": "Localisation",
+    "NO_LOCATION_LABEL": "Aucune localisation",
     "VIEW_LOCATION_MAP": "Voir la carte de localisation",
     "GOTO_ARCHIVED_EVENTS": "Voir la main courante"
   },

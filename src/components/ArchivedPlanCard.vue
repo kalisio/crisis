@@ -17,7 +17,7 @@
       <k-card-section 
         :key="item + '-objectives'"
         :hide-header="!isExpanded"
-        :title="$t('PlanCard.OBJECTIVES_SECTION')"
+        :title="$t('ArchivedPlanCard.OBJECTIVES_SECTION')"
         :context="$props"
         :dense="dense"
       >
@@ -27,16 +27,20 @@
       <k-card-section 
         :key="item + '-location'"
         :hide-header="!isExpanded"
-        :title="$t('PlanCard.LOCATION_SECTION')" 
+        :title="$t('ArchivedPlanCard.LOCATION_SECTION')" 
         :context="$props"
         :dense="dense"
       >
         <div v-if="item.location" class="row items-center justify-between no-wrap">
           <k-text-area class="light-paragraph" :text="item.location.name" />
-          <k-popup-action id="location-map" icon="las la-map-marker" :content="[ getLocationMap() ]" />
+          <k-popup-action 
+            id="location-map" 
+            icon="las la-map-marker" 
+            tooltip="ArchivedPlanCard.VIEW_LOCATION_MAP" 
+            :content="[ getLocationMap() ]" />
         </div>
         <div v-else>
-          <k-stamp :text="'PlanCard.UNDEFINED_LOCATION_LABEL'" direction="horizontal" />
+          <k-stamp :text="'ArchivedPlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
         </div>
       </k-card-section>
     </template>
