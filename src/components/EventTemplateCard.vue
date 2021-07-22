@@ -31,6 +31,18 @@
           {{ $t('PlanTemplateCard.NO_COORDINATORS_LABEL')}}
         </div>
       </k-card-section>
+      <!-- Expiry duration section -->
+      <k-card-section 
+        :title="$t('EventTemplateCard.EXPIRY_DURATION_SECTION')" 
+        :actions="expiryDurationActions" 
+        :context="$props">
+        <div v-if="hasExpiryDuration">
+          {{ $t('EventTemplateCard.EXPIRY_DURATION_LABEL', { days: item.expiryDuration }) }}
+        </div>
+        <div v-else>
+          {{ $t('EventTemplateCard.NO_EXPIRY_DURATION_LABEL')}}
+        </div>
+      </k-card-section>
       <!-- Workflow section -->
       <k-card-section 
         :title="$t('EventTemplateCard.WORKFLOW_SECTION')" 
@@ -67,6 +79,12 @@ export default {
     },
     hasCoordinators () {
       return !_.isEmpty(this.item.coordinators)
+    },
+    expiryDurationActions () {
+      return _.filter(this.itemActions, { scope: 'expiryDuration' })
+    },
+    hasExpiryDuration () {
+      return _.get(this.item, 'expiryDuration')
     },
     workflowActions () {
       return _.filter(this.itemActions, { scope: 'workflow' })

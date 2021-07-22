@@ -19,6 +19,7 @@
 
 <script>
 import _ from 'lodash'
+import moment from 'moment'
 import centroid from '@turf/centroid'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
@@ -86,6 +87,12 @@ export default {
         if (this.hasPlan()) {
           this.object.plan = this.planId
         }
+        // Setup expiry date
+        if (this.object.expiryDuration) {
+          let expiryDate = moment().utc().add({ days: this.object.expiryDuration })
+          this.object.expireAt = expiryDate.toISOString()
+        } 
+        console.log(this.object.expireAt)
         // Setup hasWorkflow tag
         this.object.hasWorkflow = !_.isNil(this.template.workflow)
         if (!_.isNil(this.longitude) && !_.isNil(this.latitude)) {

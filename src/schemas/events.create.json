@@ -168,6 +168,6 @@
       }
     }
   },
-  "required": ["name", "expireAt", "hasWorkflow", "notification"]
+  "required": ["name", "hasWorkflow", "notification"]
 }
 

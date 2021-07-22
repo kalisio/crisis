@@ -24,6 +24,7 @@
     "EVENT_TEMPLATES_PARTICIPANTS_FIELD_LABEL": "Saisissez les participants par défaut de l'événement",
     "EVENT_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs par défaut de l'événement",
     "EVENT_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Saisissez les coordinateurs par défaut de l'événement",
+    "EVENT_TEMPLATES_EXPIRY_DURATION_FIELD_LABEL": "Choisissez une période d'expiration par défaut de l'événement",
     "EVENT_TEMPLATES_LAYER_FIELD_LABEL": "Sélectionnez une couche de données cible",
     "EVENT_TEMPLATES_WORKFLOW_UPDATE_TITLE": "Mettre à jour le processus",
     "EVENT_TEMPLATES_WORKFLOW_TITLE_FIELD_LABEL": "Saisissez le nom de cette étape",
@@ -570,6 +571,9 @@
     "NO_PARTICIPANTS_LABEL": "Aucun participants",
     "COORDINATORS_SECTION": "Coordonnateurs",
     "NO_COORDINATORS_LABEL": "Aucun coordonnateurs",
+    "EXPIRY_DURATION_SECTION": "Durée d'expiration",
+    "EXPIRY_DURATION_LABEL": "{{days}} jours",
+    "NO_EXPIRY_DURATION_LABEL": "Aucune durée d'expiration",    
     "WORKFLOW_SECTION": "Processus",
     "WORKFLOW_LABEL": "Processus en {{count}} étape(s)",
     "NO_WORKFLOW_LABEL": "Aucun processus"    

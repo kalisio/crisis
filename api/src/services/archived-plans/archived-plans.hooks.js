@@ -9,15 +9,15 @@ module.exports = {
     get: [],
     create: [
       disallow('external'),
-      coreHooks.convertDates(['createdAt', 'updatedAt', 'expireAt'])
+      coreHooks.convertDates(['createdAt', 'updatedAt'])
     ],
     update: [
       disallow('external'),
-      coreHooks.convertDates(['createdAt', 'updatedAt', 'expireAt'])
+      coreHooks.convertDates(['createdAt', 'updatedAt'])
     ],
     patch: [
       disallow('external'),
-      coreHooks.convertDates(['createdAt', 'updatedAt', 'expireAt']),
+      coreHooks.convertDates(['createdAt', 'updatedAt']),
     ],
     remove: [disallow('external')]
   },

@@ -903,6 +903,7 @@ module.exports = {
         editItemAction('EventTemplateCard.EDIT_ACTION', 'description'),
         editItemAction('EventTemplateCard.EDIT_ACTION', 'participants'),
         editItemAction('EventTemplateCard.EDIT_ACTION', 'coordinators'),
+        editItemAction('EventTemplateCard.EDIT_ACTION', 'expiryDuration'),
         addWorkflowAction('EventTemplateCard.ADD_WORKFLOW_ACTION'),
         editWorkflowAction('EventTemplateCard.EDIT_WORKFLOW_ACTION'),
         removeWorkflowAction('EventTemplateCard.REMOVE_WORKFLOW_ACTION'),

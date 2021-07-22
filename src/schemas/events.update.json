@@ -143,6 +143,6 @@
       }
     }
   },
-  "required": ["name", "expireAt", "coordinators", "notification"]
+  "required": ["name", "coordinators", "notification"]
 }
 
