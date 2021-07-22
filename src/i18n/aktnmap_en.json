@@ -412,6 +412,23 @@
     "GROUPS_MANAGEMENT": "Groups management",
     "GROUP_MEMBERS_MANAGEMENT": "Group members management"
   },
+  "EventLog": {
+    "UNAMED": "Unamed",
+    "ACTION_REQUIRED_WARNING": "Action required",
+    "AWAITING_INFORMATION": "Awaiting information"
+  },
+  "EventLogItem": {
+    "READ": "Read"
+  },
+  "EventLogsList": {
+    "STEP": "Select a step to filter participants",
+    "ALL_STEPS": "All",
+    "INTERACTION": "Select an interaction to filter participants",
+    "ALL_INTERACTIONS": "All",
+    "FOLLOW_UP_MODAL_TITLE": "Enter your choice",
+    "FOLLOWUP_MODAL_CANCEL_BUTTON": "$t(CANCEL)",
+    "FOLLOWUP_MODAL_APPLY_BUTTON": "$t(SAVE_LABEL)"
+  },
   "EventActivity": {
     "ADD_MEDIA_LABEL": "Add media",
     "BROWSE_MEDIA_LABEL": "Browse media",
@@ -420,15 +437,12 @@
     "HIDE_PANE_LABEL": "Hide participants pane",
     "ACTION_REQUIRED": "action required",
     "AWAITING_INFORMATION": "awaiting information",
-    "UNAMED": "Unamed",
+    "UNAMED": "$t(EventLog.UNAMED)",
     "PARTICIPANTS_LAYER_NAME": "Participants",
     "UPLOADER_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)"
   },
   "EventActivityPanel": {
     "PARTICIPANTS_LABEL": "Participants",
-    "UNAMED": "$t(EventActivity.UNAMED)",
-    "ACTION_REQUIRED_WARNING": "action required",
-    "AWAITING_INFORMATION": "awaiting information",
     "FILTER_PARTICIPANTS": "Select to filter participants with this status"
   },
   "EventsActivity": {
@@ -455,19 +469,23 @@
     "REMOVE_LABEL": "$t(REMOVE_LABEL)",
     "EDIT_LABEL": "$t(EDIT_LABEL)",
     "FOLLOW_UP_LABEL": "Follow up",
+    "FOLLOW_UP_MODAL_TITLE": "Enter your choice",
+    "EVENT_LOGS_LABEL": "Follow up participants",
     "ADD_MEDIA_LABEL": "$t(EventActivity.ADD_MEDIA_LABEL)",
     "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)",
     "UPLOADER_MODAL_CLOSE_ACTION": "$t(EventActivity.UPLOADER_MODAL_CLOSE_ACTION)",
     "LOCATION_MAP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "EVENT_LOGS_MODAL_TITLE": "Details about participants",
+    "EVENT_LOGS_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
     "NAVIGATE_LABEL": "Navigate",
     "LOCATE_LABEL": "View the location",
     "MAP_LABEL": "Map",
     "REMOVE_DIALOG_TITLE": "Remove the event {{event}} ?",
     "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove the event <b>{{event}}</b> ?",
     "ACTION_REQUIRED_WARNING": "Action required",
-    "WAITING_COORDINATION_WARNING": "waiting coordination",
-    "WAITING_FOR_PARTICIPANT_LABEL": "coordinator is waiting for your input",
-    "WAITING_FOR_COORDINATOR_LABEL": "waiting for coordinator feedback",
+    "WAITING_COORDINATION_WARNING": "Waiting coordination",
+    "WAITING_FOR_PARTICIPANT_LABEL": "Coordinator is waiting for your input",
+    "WAITING_FOR_COORDINATOR_LABEL": "Waiting for coordinator feedback",
     "PARTICPANTS_AWAITING_LABEL": "{{number}} participants awaiting coordination",
     "NO_PARTICPANTS_AWAITING_LABEL": "No participants awaiting coordination",
     "FOLLOWUP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",

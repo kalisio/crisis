@@ -94,7 +94,7 @@
       </template>
     </k-card>
     <!--
-      Follow modal
+      Follow up modal
     -->
     <k-modal ref="followUpModal" v-if="hasParticipantInteraction" :title="followUpTitle" :buttons="getFollowUpButtons()">
       <div slot="modal-content">
@@ -108,6 +108,14 @@
       <div slot="modal-content">
         <k-uploader ref="uploader" :resource="item._id" :base-query="uploaderQuery()"
           :options="uploaderOptions()" @uploader-ready="initializeMedias"/>
+      </div>
+    </k-modal>
+    <!--
+      Logs modal
+    -->
+    <k-modal ref="eventLogsModal" :title="$t('EventCard.EVENT_LOGS_MODAL_TITLE')" :buttons="getEventLogsButtons()" >
+      <div slot="modal-content">
+        <event-logs-list :contextId="contextId" :event="item"/>
       </div>
     </k-modal>
     <!--
@@ -209,7 +217,7 @@ export default {
       return _.filter(this.itemActions, { scope: 'coordinators' })
     },
     followUpTitle () {
-      return this.participantStep.title ? this.participantStep.title : 'Enter your choice'
+      return this.participantStep.title ? this.participantStep.title : this.$t('EventCard.FOLLOW_UP_MODAL_TITLE')
     },
     hasParticipantInteraction () {
       return this.waitingInteraction(this.participantStep, this.participantState, 'participant')
@@ -272,6 +280,18 @@ export default {
         }
       }]
     },
+    getEventLogsButtons () {
+      return [{
+        id: 'close-action',
+        label: this.$t('EventCard.EVENT_LOGS_MODAL_CLOSE_ACTION'),
+        icon: 'las la-times',
+        renderer: 'form-button',
+        handler: () => {
+          this.$refs.eventLogsModal.close()
+          this.refresh()
+        }
+      }]
+    },
     getLocationToolbar () {
       return [{
         name: 'close-action',
@@ -292,55 +312,44 @@ export default {
     configureActions () {
       // Required alias for the event logs mixin
       this.event = this.item
+      this.refreshUser()
       // Generate configured actions
       kCoreMixins.baseItem.methods.configureActions.call(this)
-      let hasFollowUp = false
-      let tooltip = this.$t('EventCard.FOLLOW_UP_LABEL')
-      let warning = false
       if (this.isParticipant) {
-        hasFollowUp = this.item.hasWorkflow &&
+        const hasFollowUp = this.item.hasWorkflow &&
                       (this.waitingInteraction(this.participantStep, this.participantState, 'participant') ||
                        this.waitingInteraction(this.participantStep, this.participantState, 'coordinator'))
+        if (hasFollowUp) {
+          let followUpAction = {
+            id: 'follow-up', tooltip, icon: 'las la-comment', scope: 'footer', 
+            badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } },
+            visible: this.$can('read', 'events', this.contextId, this.item), handler: this.followUp
+          }
+          if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
+            followUpAction.tooltip = this.participantStep.title + ' : ' + this.$t('EventCard.ACTION_REQUIRED_WARNING')
+          } else if (this.waitingInteraction(this.participantStep, this.participantState, 'coordinator')) {
+            followUpAction.tooltip = this.participantStep.title + ' : ' + this.$t('EventCard.WAITING_COORDINATION_WARNING')
+          }
+          this.itemActions.splice(0, 0, followUpAction)
+        }
       }
       if (this.isCoordinator) {
-        hasFollowUp |= this.item.hasWorkflow &&
-                       (this.nbParticipantsWaitingCoordination > 0)
-      }
-      if (hasFollowUp) {
-        if (this.isParticipant) {
-          if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
-            tooltip = this.participantStep.title + ' : ' + this.$t('EventCard.ACTION_REQUIRED_WARNING')
-            warning = true
-          } else if (this.waitingInteraction(this.participantStep, this.participantState, 'coordinator')) {
-            tooltip = this.participantStep.title + ' : ' + this.$t('EventCard.WAITING_COORDINATION_WARNING')
-            warning = true
-          }
-        } 
-        // Participant warning if any overrides coordinator warning
-        if (!warning && this.isCoordinator) {
-          if (this.nbParticipantsWaitingCoordination > 0) {
-            tooltip = this.$t('EventCard.ACTION_REQUIRED_WARNING')
-            warning = true
-          }
+        let followUpAction = {
+          id: 'event-logs', tooltip: this.$t('EventCard.EVENT_LOGS_LABEL'), icon: 'las la-users', scope: 'footer',
+          visible: this.$can('read', 'event-logs', this.contextId, this.item), handler: this.eventLogs
         }
-        if (!warning) {
-          this.itemActions.splice(0, 0, {
-            id: 'follow-up', tooltip, icon: 'las la-comment',
-            visible: this.$can('read', 'events', this.contextId, this.item), handler: this.followUp
-          })
-        } else {
-          this.itemActions.splice(0, 0, {
-            id: 'follow-up', tooltip, icon: 'las la-comment', 
-            badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } }, 
-            visible: this.$can('read', 'events', this.contextId, this.item), handler: this.followUp
-          })
+        const hasFollowUp = this.item.hasWorkflow && (this.nbParticipantsWaitingCoordination > 0)
+        if (hasFollowUp) {
+          followUpAction.tooltip += ' : ' + this.$t('EventCard.ACTION_REQUIRED_WARNING')
+          followUpAction.badge = { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } }
         }
+        this.itemActions.splice(0, 0, followUpAction)
       }
       // Find the add media action and push the browse media action just after
       const index = _.findIndex(this.itemActions, (action) => action.id === 'add-media')
       this.itemActions.splice(index + 1, 0, {
-        id: 'browse-media', tooltip: 'EventCard.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', handler: this.browseMedia, 
-        badge: { label: this.mediasCount().toString(), floating: true },
+        id: 'browse-media', tooltip: 'EventCard.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', scope: 'footer',
+        handler: this.browseMedia, badge: { label: this.mediasCount().toString(), floating: true },
         visible: this.hasMedias() && this.$can('read', 'events', this.contextId, this.item)
       })
     },
@@ -418,6 +427,9 @@ export default {
         this.$router.push({ name: 'event-activity', params: { objectId: this.item._id, contextId: this.contextId } })
       }
     },
+    async eventLogs () {
+      this.$refs.eventLogsModal.open()
+    },
     viewMap () {
       this.$router.push({ name: 'event-activity', params: { objectId: this.item._id, contextId: this.contextId } })
     },
@@ -442,7 +454,7 @@ export default {
             this.participantState = {}
             this.participantStep = this.getWorkflowStep() || {} // Use empty object by default to simplify display
             const log = await this.createParticipantLog(this.participantStep, this.participantState)
-            this.Create(log)
+            this.getService().create(log)
             // Real-time event should trigger a new refresh for current state
           }
         } else if (logs.data.length > 0) {
@@ -579,6 +591,7 @@ export default {
     this.$options.components['k-form'] = this.$load('form/KForm')
     this.$options.components['k-uploader'] = this.$load('input/KUploader')
     this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
+    this.$options.components['event-logs-list'] = this.$load('EventLogsList')
     this.$options.components['k-popup-action'] = this.$load('frame/KPopupAction')
   },
   created () {

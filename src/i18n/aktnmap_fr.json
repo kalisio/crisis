@@ -34,7 +34,7 @@
     "EVENT_TEMPLATES_WORKFLOW_END_FIELD_LABEL": "Sélectionnez les réponses qui donnent lieu à la fin du processus",
     "EVENT_TEMPLATES_WORKFLOW_STAKEHOLDER_FIELD_LABEL": "Sélectionnez la partie prenante (qui va répondre à la question)",
     "EVENT_TEMPLATES_WORKFLOW_PARTICIPANT_LABEL": "Participant",
-    "EVENT_TEMPLATES_WORKFLOW_COORDINATOR_LABEL": "Coordinateur",
+    "EVENT_TEMPLATES_WORKFLOW_COORDINATOR_LABEL": "Coordonateur",
     "EVENTS_ADVANCED_SETTINGS": "Paramètres avancés",
     "EVENTS_CREATE_TITLE": "Créer un nouvel événement ?",
     "EVENTS_NAME_FIELD_LABEL": "Saisissez le nom de l'événement",
@@ -45,7 +45,7 @@
     "EVENTS_PARTICIPANTS_FIELD_LABEL": "Saisissez les participants à l'événement",
     "EVENTS_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs de l'événement (autres que vous)",
     "EVENTS_COORDINATORS_FIELD_UPDATE_LABEL": "Saisissez les coordinateurs de l'événement",
-    "EVENTS_COORDINATORS_FIELD_LABEL": "Coordinateurs de l'événement",
+    "EVENTS_COORDINATORS_FIELD_LABEL": "Coordonateurs de l'événement",
     "EVENTS_ATTACHMENTS_FIELD_LABEL": "Selectionnez des médias à attacher à l'événement",
     "EVENTS_HAS_WORKFLOW_FIELD_LABEL": "Associer un processus à l'événement",
     "EVENTS_NOTIFICATION_FIELD_CREATE_LABEL": "Notifier les participants de la création",
@@ -416,6 +416,23 @@
     "GROUPS_MANAGEMENT": "Gestion des groupes",
     "GROUP_MEMBERS_MANAGEMENT": "Gestion des membres d’un groupe"
   },
+  "EventLog": {
+    "UNAMED": "Sans nom",
+    "ACTION_REQUIRED_WARNING": "Action requise",
+    "AWAITING_INFORMATION": "En attente d'information"
+  },
+  "EventLogItem": {
+    "READ": "Lu"
+  },
+  "EventLogsList": {
+    "STEP": "Sélectionnez une étape pour filtrer les participants",
+    "ALL_STEPS": "Toutes",
+    "INTERACTION": "Sélectionnez une réponse pour filtrer les participants",
+    "ALL_INTERACTIONS": "Toutes",
+    "FOLLOW_UP_MODAL_TITLE": "Entrez votre choix",
+    "FOLLOWUP_MODAL_CANCEL_BUTTON": "$t(CANCEL)",
+    "FOLLOWUP_MODAL_APPLY_BUTTON": "$t(SAVE_LABEL)"
+  },
   "EventActivity": {
     "ADD_MEDIA_LABEL": "Ajouter un média",
     "BROWSE_MEDIA_LABEL": "Parcourir les médias",
@@ -424,15 +441,12 @@
     "HIDE_PANE_LABEL": "Cacher le volet participants",
     "ACTION_REQUIRED": "action requise",
     "AWAITING_INFORMATION": "en attente d'information",
-    "UNAMED": "Sans nom",
+    "UNAMED": "$t(EventLog.UNAMED)",
     "PARTICIPANTS_LAYER_NAME": "Participants",
     "UPLOADER_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)"
   },
   "EventActivityPanel": {
     "PARTICIPANTS_LABEL": "Participants",
-    "UNAMED": "$t(EventActivity.UNAMED)",
-    "ACTION_REQUIRED_WARNING": "action requise",
-    "AWAITING_INFORMATION": "en attente d'information",
     "FILTER_PARTICIPANTS": "Sélectionnez pour filtrer les participants avec ce statut"
   },
   "EventsActivity": {
@@ -458,19 +472,23 @@
     "REMOVE_ACTION": "Clôturer",
     "EDIT_ACTION": "$t(EDIT_LABEL)",
     "FOLLOW_UP_LABEL": "Suivre",
+    "FOLLOW_UP_MODAL_TITLE": "Entrez votre choix",
+    "EVENT_LOGS_LABEL": "Suivi des participants",
     "ADD_MEDIA_LABEL": "$t(EventActivity.ADD_MEDIA_LABEL)",
     "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)",
     "UPLOADER_MODAL_CLOSE_ACTION": "$t(EventActivity.UPLOADER_MODAL_CLOSE_ACTION)",
     "LOCATION_MAP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "EVENT_LOGS_MODAL_TITLE": "Détails des participants",
+    "EVENT_LOGS_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
     "NAVIGATE_LABEL": "Naviguer",
     "LOCATE_LABEL": "Voir la localisation",    
     "MAP_LABEL": "Carte",    
     "REMOVE_DIALOG_TITLE": "Clôturer l'événement {{event}} ?",
     "REMOVE_DIALOG_MESSAGE": "Etes vous sûr de vouloir clôturer l'événement <b>{{event}}</b> ?",
-    "ACTION_REQUIRED_WARNING": "action requise",
-    "WAITING_COORDINATION_WARNING": "en attente du coordinateur",
-    "WAITING_FOR_PARTICIPANT_LABEL": "le coordinateur est en attente de votre action",
-    "WAITING_FOR_COORDINATOR_LABEL": "en attente du coordinateur",
+    "ACTION_REQUIRED_WARNING": "Action requise",
+    "WAITING_COORDINATION_WARNING": "En attente du coordinateur",
+    "WAITING_FOR_PARTICIPANT_LABEL": "Le coordinateur est en attente de votre action",
+    "WAITING_FOR_COORDINATOR_LABEL": "En attente du coordinateur",
     "PARTICPANTS_AWAITING_LABEL": "{{number}} participants en attente de coordination",
     "NO_PARTICPANTS_AWAITING_LABEL": "Aucun participant en attente de coordination",
     "FOLLOWUP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",

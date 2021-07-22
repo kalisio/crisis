@@ -100,12 +100,51 @@ const eventsMixin = {
       // if (this.event && this.event.icon) return this.event.icon
       return { name: 'fas fa-user', color: 'blue' }
     },
+    getUserName (state = {}) {
+      // Manage the case the participant is not correctly populated
+      return _.get(state, 'participant.name', this.$t('EventLog.UNAMED'))
+    },
     getUserComment (state = {}) {
       // When last step had a recorded interaction use its comment if any
       if (_.has(state, 'properties.comment')) return _.get(state, 'properties.comment')
       // If we wait for an interaction use previous state comment if any
       if (state.previous) return this.getUserComment(state.previous)
       return ''
+    },
+    getUserFollowUp (state = {}) {
+      const step = this.getWorkflowStep(state)
+      return step.title + ' : ' + this.$t('EventLog.ACTION_REQUIRED_WARNING')
+    },
+    getUserState (state = {}) {
+      const interaction = this.getUserInteraction(state)
+      if (interaction) {
+        // Don't use current step here as the interaction can be recorded on the previous one
+        const step = this.getUserInteractionStep(state)
+        return step.title + ' : ' + interaction
+      } else {
+        const step = this.getWorkflowStep(state)
+        return step.title + ' : ' + this.$t('EventLog.AWAITING_INFORMATION')
+      }
+    },
+    // Check if the coordinator has to perform an interaction according to given participant state
+    canFollowUpUser (state) {
+      const step = this.getWorkflowStep(state)
+      return this.waitingInteraction(step, state, 'coordinator')
+    },
+    doUserFollowUp (participantId) {
+      this.$router.push({ name: 'event-log', params: { logId: participantId } })
+    },
+    // Helper function to process logs as usual objects by adding an icon/coment property extracted from feature properties
+    processStates(states) {
+      states.forEach(state => {
+        state.icon = this.getUserIcon(state, this.getWorkflowStep(state) || {}) // Take care when no workflow
+      })
+      // It appears that in some weird cases we can have duplicated logs,
+      // e.g. https://github.com/kalisio/aktnmap/issues/247
+      // As by default the list is ordered according to creation date,
+      // simply keep the most recent one in case of doublons
+      // Manage the case the participant is not correctly populated
+      return _.uniqBy(states, state => _.get(state, 'participant._id', _.get(state, 'participant')))
     },
     // Check if the given state is related to a step before target one
     isBeforeInWorkflow (stateName, stepName) {
@@ -139,14 +178,6 @@ const eventsMixin = {
       } else {
         return currentStep
       }
-    },
-    // Check if the coordinator has to perform an interaction according to given participant state
-    canFollowUp (participant) {
-      const step = this.getWorkflowStep(participant)
-      return this.waitingInteraction(step, participant, 'coordinator')
-    },
-    doFollowUp (participantId) {
-      this.$router.push({ name: 'event-log', params: { logId: participantId } })
     },
     async loadLayerSchema (layerId) {
       this.layerSchema = null

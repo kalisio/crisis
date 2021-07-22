@@ -6,14 +6,14 @@ sidebarDepth: 3
 
 Par défaut un modèle d'événement est un simple message informatif sans possibilité d’interaction entre les participants et les coordinateurs.
 
-L'ajout d'un **processus** permet de définir une *séquence d'interactions* (i.e. questions à choix multiples) auxquelles doivent répondre le participant et/ou le coordinateur de l'événement.
+L'ajout d'un **processus** permet de définir une *séquence d'interactions* (i.e. questions à choix multiples) auxquelles doivent répondre le participant et/ou le coordonateur de l'événement.
 
 Un processus en deux étapes pourrait être celui-ci:
   1. interaction du participant attendue: *êtes-vous disponible ou indisponible pour intervenir sur cet événement ?*
   2. réponse du coordinateur attendue: *je vous engage ou je ne vous engage pas sur cet événement*
 
 ::: tip Astuce
-Chaque réponse du coordinateur à la question d'une étape du processus engendre la génération d'une notification vers le participant destinataire.
+Chaque réponse du coordonateur à la question d'une étape du processus engendre la génération d'une notification vers le participant destinataire.
 :::
 
 <mermaid>
@@ -45,6 +45,6 @@ Lors de la réception de l'événement par un intervenant l'application lui dema
 
 ![workflow-interaction](../../assets/Interaction-FR.png)
 
-Le coordinateur dispose quant à lui d'une *vue cartographique* synthétisant la position des intervenants et leur état d'avancement selon l'icônographie définie dans le processus. En un clin d'oeil il visualise la liste des participants ayant reçu l'événement ainsi que leur réponses. Il sait également qu'il doit engager une interaction avec ceux attendant une réponse de sa part conformément à la définition du processus grâce à une icône dédiée:
+Le coordonateur dispose quant à lui d'une *vue cartographique* synthétisant la position des intervenants et leur état d'avancement selon l'icônographie définie dans le processus. En un clin d'oeil il visualise la liste des participants ayant reçu l'événement ainsi que leur réponses. Il sait également qu'il doit engager une interaction avec ceux attendant une réponse de sa part conformément à la définition du processus grâce à une icône dédiée:
 
 ![workflow-map](../../assets/Event-Map-FR.png)

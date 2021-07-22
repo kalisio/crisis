@@ -135,15 +135,15 @@ Comment afficher le tableau de bord depuis le <tour-link text="menu principal" p
 
 Une *chose à faire* ou une *information autour d'un fait concret* que l'on désire partager et traiter avec certains membres d'une organisation. Typiquement une information opérationnelle, une intervention sur le terrain, des actions de gestion de crise, etc.
 
-Un événement génère des *notifications* sur les mobiles des **participants** qui ont installé l'application mobile lors de sa création, mise à jour et clôture par ses **coordinateurs**.
+Un événement génère des *notifications* sur les mobiles des **participants** qui ont installé l'application mobile lors de sa création, mise à jour et clôture par ses **coordonateurs**.
 
-Les participants et les coordinateurs d'un événement peuvent être choisis comme:
+Les participants et les coordonateurs d'un événement peuvent être choisis comme:
   * des membres de façon individuelle,
   * des groupes,
   * des étiquettes.
 
 ::: tip Astuce
-L'utilisateur qui créé un événement en est par défaut le coordinateur mais il peut partager ou déléguer la gestion à d'autres.
+L'utilisateur qui créé un événement en est par défaut le coordonateur mais il peut partager ou déléguer la gestion à d'autres.
 :::
 
 La figure suivante résume un exemple de structuration classique dans l'application et comment un événement peut cibler des personnes à différents niveaux:
@@ -153,7 +153,7 @@ La figure suivante résume un exemple de structuration classique dans l'applicat
 A un évènement, Akt'n'Map permet d’associer :
   * une *localisation* (adresse ou coordonnées géographiques),
   * des *photos* ou des *documents* afin de les partager entre les acteurs,
-  * un **[processus](../gofurther/workflow.md)** définissant les interaction entre les participants et les coordinateurs.
+  * un **[processus](../gofurther/workflow.md)** définissant les interaction entre les participants et les coordonateurs.
 
 :point_right: Vous êtes prêt à partager de l'information ? <tour-link text="Voir comment gérer vos événements" path="home" :params="{ organisation: 'member' }"/>
 
@@ -183,9 +183,9 @@ Comment afficher le tableau de bord depuis le <tour-link text="menu principal" p
 
 Un participant ne peut pas modifier un événement bien qu'il puisse partager des documents ou des photos au sein de celui-ci.
 
-### Coordinateur
+### Coordonateur
 
-Un coordinateur peut modifier et clôturer (i.e. détruire) un événement, ainsi que sa liste de participants ou coordinateurs.
+Un coordonateur peut modifier et clôturer (i.e. détruire) un événement, ainsi que sa liste de participants ou coordonateurs.
 
 Il a également accès à une *vue cartographique* synthétisant la position des acteurs et leur état d’avancement dans le [processus](../gofurther/workflow.md).
 

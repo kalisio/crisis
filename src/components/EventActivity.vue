@@ -244,12 +244,12 @@ export default {
     onPopupOpen (event) {
       const feature = _.get(event, 'layer.feature')
       if (!feature || this.archived) return // No edition in archive
-      if (this.canFollowUp(feature)) this.doFollowUp(feature._id)
+      if (this.canFollowUpUser(feature)) this.doUserFollowUp(feature._id)
     },
     onFeatureClicked (options, event) {
       const feature = _.get(event, 'target.feature')
       if (!feature || this.archived) return // No edition in archive
-      if (this.canFollowUp(feature)) this.doFollowUp(feature._id)
+      if (this.canFollowUpUser(feature)) this.doUserFollowUp(feature._id)
     },
     onZoomToParticipant (participant) {
       const coordinates = _.get(participant, 'geometry.coordinates')
@@ -274,20 +274,12 @@ export default {
       this.refreshParticipantsLayer()
     },
     onCollectionRefreshed () {
-      this.items.forEach((item) => {
-        item.icon = this.getUserIcon(item, this.getWorkflowStep(item) || {}) // Take care when no workflow
-        item.comment = this.getUserComment(item)
-      })
+      // Process logs to make it usable as a more conveninet object by adding icon, etc.
+      this.items = this.processStates(this.items)
       // We do not manage pagination now
       if (this.items.length < this.nbTotalItems) {
         this.$events.$emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
       }
-      // It appears that in some weird cases we can have duplicated logs,
-      // e.g. https://github.com/kalisio/aktnmap/issues/247
-      // As by default the list is ordered according to creation date,
-      // simply keep the most recent one in case of doublons
-      // Manage the case the participant is not correctly populated
-      this.items = _.uniqBy(this.items, (item) => _.get(item, 'participant._id', _.get(item, 'participant')))
       this.refreshParticipantsLayer()
     }
   },
