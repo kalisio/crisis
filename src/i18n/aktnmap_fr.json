@@ -432,7 +432,11 @@
     "ALL_INTERACTIONS": "Toutes",
     "FOLLOW_UP_MODAL_TITLE": "Entrez votre choix",
     "FOLLOWUP_MODAL_CANCEL_BUTTON": "$t(CANCEL)",
-    "FOLLOWUP_MODAL_APPLY_BUTTON": "$t(SAVE_LABEL)"
+    "FOLLOWUP_MODAL_APPLY_BUTTON": "$t(SAVE_LABEL)",
+    "FOLLOWUP_MODAL_APPLY_ALL_BUTTON": "$t(SAVE_LABEL) pour la sélection",
+    "EVENT_LOGS_EXPORT_FILE": "Participants.csv",
+    "MATCHING_RESULTS": "{{total}} participants trouvés.",
+    "MAXIMUM_RESULTS": "Raffinez votre filtre car certains résultats sont omis au-delà de {{max}} participants."
   },
   "EventActivity": {
     "ADD_MEDIA_LABEL": "Ajouter un média",
@@ -481,6 +485,7 @@
     "LOCATION_MAP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
     "EVENT_LOGS_MODAL_TITLE": "Détails des participants",
     "EVENT_LOGS_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "EVENT_LOGS_MODAL_EXPORT_DATA_LABEL": "Exporter les données",
     "NAVIGATE_LABEL": "Naviguer",
     "LOCATE_LABEL": "Voir la localisation",    
     "MAP_LABEL": "Carte",    

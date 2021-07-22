@@ -113,9 +113,10 @@
     <!--
       Logs modal
     -->
-    <k-modal ref="eventLogsModal" :title="$t('EventCard.EVENT_LOGS_MODAL_TITLE')" :buttons="getEventLogsButtons()" >
+    <k-modal ref="eventLogsModal" :title="$t('EventCard.EVENT_LOGS_MODAL_TITLE')"
+      :toolbar="getEventLogsToolbar()" :buttons="getEventLogsButtons()" >
       <div slot="modal-content">
-        <event-logs-list :contextId="contextId" :event="item"/>
+        <event-logs-list ref="eventLogsList" :contextId="contextId" :event="item"/>
       </div>
     </k-modal>
     <!--
@@ -280,6 +281,16 @@ export default {
         }
       }]
     },
+    getEventLogsToolbar () {
+      return [{
+        id: 'export-data',
+        tooltip: this.$t('EventCard.EVENT_LOGS_MODAL_EXPORT_DATA_LABEL'),
+        icon: 'las la-file-download',
+        handler: () => {
+          this.$refs.eventLogsList.downloadEventLogsData()
+        }
+      }]
+    },
     getEventLogsButtons () {
       return [{
         id: 'close-action',
@@ -321,7 +332,7 @@ export default {
                        this.waitingInteraction(this.participantStep, this.participantState, 'coordinator'))
         if (hasFollowUp) {
           let followUpAction = {
-            id: 'follow-up', tooltip, icon: 'las la-comment', scope: 'footer', 
+            id: 'follow-up', icon: 'las la-comment', scope: 'footer', 
             badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } },
             visible: this.$can('read', 'events', this.contextId, this.item), handler: this.followUp
           }

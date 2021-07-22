@@ -1,8 +1,15 @@
 <template>
   <k-item 
     v-bind="$props" 
-    :actions="itemActions" 
+    :options="{ toggle: true }"
+    :actions="itemActions"
     :bind-actions="false">
+    <!--
+      Item toggle
+     -->
+    <template slot="item-toggle">
+      <q-checkbox :disabled="!hasFollowUp" v-model="toggled" @input="onItemToggled(toggled)"/>
+    </template>
     <!--
       Item content
      -->
@@ -22,11 +29,15 @@
 
 <script>
 import _ from 'lodash'
+import { QCheckbox } from 'quasar'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
 
 export default {
   name: 'event-log-item',
+  components: {
+    QCheckbox
+  },
   mixins: [
     kCoreMixins.baseItem,
     mixins.events
@@ -35,6 +46,13 @@ export default {
     event: {
       type: Object,
       required: true
+    }
+  },
+  data () {
+    return {
+      toggled: false,
+      itemStep: null,
+      hasFollowUp: false
     }
   },
   computed: {
@@ -50,11 +68,10 @@ export default {
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
     // Update built-in actions
-    const itemStep = this.getWorkflowStep(this.item)
-    const hasFollowUp = !this.archived && this.event.hasWorkflow &&
-      (this.waitingInteraction(itemStep, this.item, 'participant') ||
-       this.waitingInteraction(itemStep, this.item, 'coordinator'))
-    if (hasFollowUp) {
+    this.itemStep = this.getWorkflowStep(this.item)
+    this.hasFollowUp = !this.archived && this.itemStep &&
+      this.waitingInteraction(this.itemStep, this.item, 'coordinator')
+    if (this.hasFollowUp) {
       let followUpAction = _.find(this.itemActions, action => action.id === 'follow-up')
       // Update tooltip of the generic action to reflect current item state in tooltip
       if (followUpAction) followUpAction.tooltip = this.getUserFollowUp(this.item)

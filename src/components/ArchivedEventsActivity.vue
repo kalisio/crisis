@@ -1,8 +1,6 @@
 <template>
   <k-page :padding="false" @content-resized="onPageContentResized">
     <div slot="page-content">
-      <!-- Invisible link used to download data -->
-      <a ref="downloadLink" v-show="false" :href="currentDownloadLink" :download="currentDownloadName"></a>
       <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
         <div class="row">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -216,8 +214,6 @@ export default {
       renderOptions,
       render: _.find(renderOptions, { value: 'count' }),
       chartData: [],
-      currentDownloadLink: null,
-      currentDownloadName: null,
       height: undefined
     }
   },
