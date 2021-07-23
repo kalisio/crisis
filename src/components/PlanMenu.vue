@@ -29,7 +29,7 @@
             <k-card-section>
               <template v-for="(objective, index) in plan.objectives">
                 <div :key="objective" class="row full-width items-center justify-between">
-                  <q-toggle v-model="objectiveFilters[index]" :label="objective" />
+                  <q-toggle v-model="objectiveFilters[index]" :label="objective.value" />
                 </div>
               </template>
             </k-card-section>
@@ -85,7 +85,7 @@ export default {
       handler () {
         let filters = []
         for (let i = 0; i < this.objectiveFilters.length; i++) {
-          if (this.objectiveFilters[i]) filters.push(this.plan.objectives[i])
+          if (this.objectiveFilters[i]) filters.push(_.get(this.plan, `objectives[${i}].value`))
         }
         this.kActivity.objectiveFilters = filters
       }

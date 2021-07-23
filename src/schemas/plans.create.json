@@ -19,6 +19,13 @@
         "label": "schemas.PLANS_DESCRIPTION_FIELD_LABEL"
       }
     },
+    "objectives": {
+      "type": "array",
+      "field": {
+        "component": "form/KChipsField",
+        "label": "schemas.PLANS_OBJECTIVES_FIELD_LABEL"
+      }
+    },
     "location": {
       "type": "object", 
       "draggable": true,

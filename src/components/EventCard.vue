@@ -163,7 +163,7 @@ export default {
       } else {
         components = []
         if (this.item.objective) components.push({
-          component: 'QBadge', label: this.item.objective, color: 'grey-7'
+          component: 'QBadge', label: _.get(this.item, 'objective.value'), color: 'grey-7'
         })
         components.push({ component: 'QSpace '})
         if (this.item.location) components.push({
