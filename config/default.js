@@ -99,7 +99,7 @@ const mapAction = function (contextId = 'contextId') {
 const archivedEventsAction = function (contextId = 'contextId') {
   return { 
     id: 'archived-events', icon: 'las la-clipboard-list', tooltip: 'Context.ARCHIVED_EVENTS',
-    visible: { name: '$can', params: ['service', 'archived-events', `:${contextId}`] },
+    visible: { name: '$can', params: ['read', 'archived-events', `:${contextId}`] },
     route: { name: 'archived-events-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } }
   }
 }

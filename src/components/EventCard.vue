@@ -15,7 +15,6 @@
       <template v-slot:card-content>
         <!-- Interaction section -->
         <k-card-section v-if="participantLabel || coordinatorLabel"
-          :key="item + '-interactions'"
           :context="$props"
           :dense="dense" 
         >
@@ -24,14 +23,12 @@
         </k-card-section>
         <!-- Comment section -->
         <k-card-section v-if="comment"
-          :key="item + '-comment'"
           :title="$t('EventCard.COMMENT_SECTION')" 
           :dense="dense"> 
           <k-text-area class="light-paragraph" :text="comment" :length="100" />
         </k-card-section>           
         <!-- Objective section -->
-        <k-card-section v-if="isExpanded"
-          :key="item + '-objective'"
+        <k-card-section v-if="isExpanded && item.plan"
           :title="$t('EventCard.OBJECTIVE_SECTION')" 
           :actions="objectiveActions" 
           :context="$props"
@@ -44,7 +41,6 @@
         </k-card-section>
         <!-- location section -->
         <k-card-section v-if="isExpanded" 
-          :key="item + '-location'"
           :title="$t('EventCard.LOCATION_SECTION')" 
           :actions="locationActions" 
           :context="$props"
@@ -59,7 +55,6 @@
         </k-card-section>
         <!-- Participants section -->
         <k-card-section v-if="isExpanded"
-          :key="item + '-participants'"
           :title="$t('EventCard.PARTICIPANTS_SECTION')" 
           :actions="participantsActions" 
           :context="$props"
@@ -73,8 +68,7 @@
           </div>
         </k-card-section>
         <!-- Coordinators section -->
-        <k-card-section v-if="isExpanded"
-          :key="item + '-coordinators'"
+        <k-card-section v-if="isExpanded"       
           :title="$t('EventCard.COORDINATORS_SECTION')" 
           :actions="coordinatorsActions" 
           :context="$props"
@@ -173,12 +167,12 @@ export default {
         })
         components.push({ component: 'QSpace '})
         if (this.item.location) components.push({
-          id: 'location-map', component: 'frame/KPopupAction', tooltip: 'EventCard.LOCATION_SECTION', icon: 'las la-map-marker', content: [
+          id: 'location-map', component: 'frame/KPopupAction', tooltip: 'EventCard.VIEW_LOCATION_MAP', icon: 'las la-map-marker', content: [
             this.getLocationMap()
           ]
         })
         if (this.hasParticipants) components.push({
-           id: 'participants-list', component: 'frame/KPopupAction', tooltip: 'EventCard.PARTICIPANTS_SECTION', icon: 'las la-user-friends', content: [
+           id: 'participants-list', component: 'frame/KPopupAction', tooltip: 'EventCard.VIEW_PARTICIPANTS', icon: 'las la-user-friends', content: [
             { component: 'frame/KChipsPane', chips: this.item.participants, valuePath: 'profile.name', class: 'q-pa-sm' }
           ]
         })

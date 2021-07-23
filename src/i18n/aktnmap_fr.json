@@ -498,7 +498,9 @@
     "PARTICPANTS_AWAITING_LABEL": "{{number}} participants en attente de coordination",
     "NO_PARTICPANTS_AWAITING_LABEL": "Aucun participant en attente de coordination",
     "FOLLOWUP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
-    "FOLLOWUP_MODAL_SAVE_BUTTON": "$t(SAVE_LABEL)"
+    "FOLLOWUP_MODAL_SAVE_BUTTON": "$t(SAVE_LABEL)",
+    "VIEW_LOCATION_MAP": "Voir la localisation",
+    "VIEW_PARTICIPANTS": "Voir les participants"
   },
   "ArchivedEventsActivity": {
     "ASCENDING_SORT": "Plus vieux d'abord",

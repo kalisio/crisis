@@ -495,7 +495,9 @@
     "PARTICPANTS_AWAITING_LABEL": "{{number}} participants awaiting coordination",
     "NO_PARTICPANTS_AWAITING_LABEL": "No participants awaiting coordination",
     "FOLLOWUP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
-    "FOLLOWUP_MODAL_SAVE_BUTTON": "$t(SAVE_LABEL)"
+    "FOLLOWUP_MODAL_SAVE_BUTTON": "$t(SAVE_LABEL)",
+    "VIEW_LOCATION_MAP": "View location map",
+    "VIEW_PARTICIPANTS": "View partcipants"
   },
   "ArchivedEventsActivity": {
     "MAP_LABEL": "Map",

@@ -71,7 +71,7 @@ export default {
       return this.$can('update', 'catalog', this.contextId)
     },
     canAccessArchivedEvents () {
-      return this.$can('service', 'archived-events', this.contextId)
+      return this.$can('read', 'archived-events', this.contextId)
     },
     canAccessBilling () {
       return this.$can('update', 'organisations', null, { _id: this.contextId })
