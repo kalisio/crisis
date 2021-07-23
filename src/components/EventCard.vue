@@ -540,7 +540,7 @@ export default {
         // Then label
         if (this.nbParticipantsWaitingCoordination > 0) {
           this.coordinatorLabel = this.$t('EventCard.PARTICPANTS_AWAITING_LABEL', { number: this.nbParticipantsWaitingCoordination })
-        } else {
+        } else if (this.item.hasWorkflow) {
           this.coordinatorLabel = this.$t('EventCard.NO_PARTICPANTS_AWAITING_LABEL')
         }
         if (logs.data.length < logs.total) {
