@@ -27,14 +27,6 @@
         "label": "schemas.PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL"
       }
     },
-    "objectives": {
-      "type": "array",
-      "field": {
-        "component": "form/KChipsField",
-        "label": "schemas.PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL",
-        "icon": false
-      }
-    },
     "coordinators": { 
       "type": "array",
       "multiselect": true,

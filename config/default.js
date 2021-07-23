@@ -480,7 +480,10 @@ module.exports = {
         editItemAction('PlanCard.EDIT_ACTION', 'header', 'name'),
         removeItemAction('PlanCard.REMOVE_ACTION', 'header'),
         editItemAction('PlanCard.EDIT_ACTION', 'description'),
-        editItemAction('PlanCard.EDIT_ACTION', 'objectives'),
+        {
+          id: 'edit-objectives', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION', size: 'sm', 
+          visible: 'canEditItem', handler: 'editObjectives', scope: 'objectives'
+        },
         editItemAction('PlanCard.EDIT_ACTION', 'location')
       ]
     }
@@ -947,7 +950,10 @@ module.exports = {
         editItemAction('PlanTemplateCard.EDIT_ACTION', 'header', 'name,icon'),
         removeItemAction('PlanTemplateCard.REMOVE_ACTION', 'header'),
         editItemAction('PlanTemplateCard.EDIT_ACTION', 'description'),
-        editItemAction('PlanTemplateCard.EDIT_ACTION', 'objectives'),
+        {
+          id: 'edit-objectives', icon: 'las la-edit', tooltip: 'PlanTemplateCard.EDIT_ACTION', size: 'sm', 
+          visible: 'canEditItem', handler: 'editObjectives', scope: 'objectives'
+        },
         editItemAction('PlanTemplateCard.EDIT_ACTION', 'coordinators'),
         { 
           id: 'copy-plan-template', tooltip: 'PlanTemplateCard.COPY_ACTION', icon: 'las la-copy',

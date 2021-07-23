@@ -227,6 +227,11 @@ module.exports = {
                     name: 'edit-plan',
                     component: 'editor/KModalEditor',
                     props: true
+                  },
+                  'edit/:objectId/objectives': {
+                    name: 'edit-plan-objectives',
+                    component: 'ObjectivesEditor',
+                    props: true
                   }
                 }
               },
@@ -348,6 +353,11 @@ module.exports = {
                   },
                   'edit/:objectId/:schemaProperties?': {
                     component: 'editor/KModalEditor',
+                    props: true
+                  },
+                  'edit/:objectId/objectives': {
+                    name: 'edit-plan-template-objectives',
+                    component: 'ObjectivesEditor',
                     props: true
                   }
                 },

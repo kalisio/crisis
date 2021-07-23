@@ -47,13 +47,20 @@ export default {
       return _.filter(this.itemActions, { scope: 'objectives'})
     },
     hasObjectives () {
-      return !_.isEmpty(this.item.description)
+      return !_.isEmpty(this.item.objectives)
     },
     coordinatorsActions () {
       return _.filter(this.itemActions, { scope: 'coordinators'})
     },
     hasCoordinators () {
       return !_.isEmpty(this.item.coordinators)
+    }
+  },
+  methods: {
+    editObjectives () {
+      this.$router.push({
+        name: 'edit-plan-template-objectives', params: { objectId: this.item._id, item: this.item } 
+      })
     }
   },
   beforeCreate () {

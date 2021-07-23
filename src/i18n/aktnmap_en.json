@@ -642,6 +642,7 @@
     "REMOVE_ACTION": "$t(REMOVE_LABEL)",
     "DESCRIPTION_SECTION": "Description",
     "OBJECTIVES_SECTION": "Objectives",
+    "NO_OBJECTIVES_LABEL": "No objectives",
     "LOCATION_SECTION": "Location",
     "VIEW_ACTION": "View",
     "NO_LOCATION_LABEL": "Undefined location",

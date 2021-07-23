@@ -10,7 +10,12 @@
     <template slot="card-content">
       <!-- Objectives section -->
       <k-card-section :title="$t('PlanCard.OBJECTIVES_SECTION')" :actions="objectivesActions">
-        <k-chips-pane :chips="item.objectives" />
+        <div v-if="hasObjectives">
+          <k-chips-pane class="q-pl-sm" :chips="item.objectives" />
+        </div>
+        <div v-else>
+          {{ $t('PlanCard.NO_OBJECTIVES_LABEL')}}
+        </div>
       </k-card-section>
       <!-- location section -->
       <k-card-section :title="$t('PlanCard.LOCATION_SECTION')" :actions="locationActions" :context="$props">
@@ -64,6 +69,9 @@ export default {
     objectivesActions () {
       return _.filter(this.itemActions, { scope: 'objectives' })
     },
+    hasObjectives () {
+      return !_.isEmpty(this.item.objectives)
+    },
     locationActions () {
       return _.filter(this.itemActions, { scope: 'location' })
     },
@@ -80,6 +88,13 @@ export default {
   data () {
     return {
       eventsCount: 0
+    }
+  },
+  methods: {
+    editObjectives () {
+      this.$router.push({
+        name: 'edit-plan-objectives', params: { objectId: this.item._id, item: this.item } 
+      })
     }
   },
   beforeCreate () {

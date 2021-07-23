@@ -645,6 +645,7 @@
     "REMOVE_ACTION": "$t(REMOVE_LABEL)",
     "DESCRIPTION_SECTION": "Description",
     "OBJECTIVES_SECTION": "Objectifs",
+    "NO_OBJECTIVES_LABEL": "Aucun objectif",    
     "LOCATION_SECTION": "Localisation",
     "VIEW_ACTION": "Visualiser",
     "NO_LOCATION_LABEL": "Aucune localisation",
@@ -665,9 +666,9 @@
     "DESCRIPTION_SECTION": "Description",
     "NO_DESRIPTION_LABEL": "Aucune description",
     "OBJECTIVES_SECTION": "Objectifs",
-    "NO_OBJECTIVES_LABEL": "Aucun objectifs",
+    "NO_OBJECTIVES_LABEL": "Aucun objectif",
     "COORDINATORS_SECTION": "Coordonnateurs",
-    "NO_COORDINATORS_LABEL": "Aucun coordonnateurs"
+    "NO_COORDINATORS_LABEL": "Aucun coordonnateur"
   },
   "ArchivedPlansActivity": {
     "ARCHIVED_PLANS_LABEL": "Archive"
