@@ -1,6 +1,6 @@
 <template>
-  <div v-if="plan">
-    <q-btn-dropdown 
+  <div>
+    <q-btn-dropdown v-show="planId"
       class="q-pl-sm ellipsis-2-lines"
       :label="label"
       :icon="icon"
@@ -46,8 +46,10 @@ import { QBtnDropdown } from 'quasar'
 import mixins from '../mixins'
 
 export default {
-  name: 'plan-item',
-  mixins: [mixins.plans],
+  name: 'plan-menu',
+  mixins: [
+    mixins.plans
+  ],
   components: {
     QBtnDropdown
   },
@@ -96,12 +98,15 @@ export default {
       this.$router.push({ name: 'plans-activity', params: { contextId: this.organisation._id } })
     }
   },
-  beforeCreate () {
+  async beforeCreate () {
     // Loads the required components
     this.$options.components['k-action'] = this.$load('frame/KAction')
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
+  },
+  async created () {
+    await this.loadPlan()
   }
 }
 </script>

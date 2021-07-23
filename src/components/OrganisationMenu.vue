@@ -83,12 +83,16 @@
 
 <script>
 import { QBtnDropdown } from 'quasar'
+import mixins from '../mixins'
 
 export default {
   name: 'organisation-menu',
   components: {
     QBtnDropdown
   },
+  mixins: [
+    mixins.plans
+  ],
   props: {
     mode: {
       type: String,
@@ -156,7 +160,6 @@ export default {
     // Counts the number of orphan events
     this.eventsCount = await this.countItems('events', { plan: { $eq: null } } )
     this.plansCount = await this.countItems('plans', { plan: { $eq: null } } )
-    this.planId = _.get(this.$route, 'query.plan', null)
   }
 }
 </script>

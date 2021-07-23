@@ -10,7 +10,7 @@ const plansMixin = {
   },
   watch:{
     $route (to, from) {
-      this.refreshPlan()
+      this.refreshPlanId()
     }
   },
   methods: {
@@ -21,20 +21,19 @@ const plansMixin = {
       return _.has(this.plan, 'location.latitude') && _.has(this.plan, 'location.longitude')
     },
     hasPlanObjectives () {
-      return (_.get(this.plan, 'objective', []).length > 0)
+      return (_.get(this.plan, 'objectives', []).length > 0)
     },
-    async loadPlan (planId) {
-      if (!planId) this.plan = null
-      else this.plan = await this.$api.getService('plans', this.contextId).get(planId)
+    async loadPlan () {
+      if (!this.planId) this.plan = null
+      else this.plan = await this.$api.getService('plans', this.contextId).get(this.planId)
     },
     getPlanQuery () {
       return {
         plan: _.isEmpty(this.planId) ? { $eq: null } : this.planId
       }
     },
-    async refreshPlan () {
+    refreshPlanId () {
       this.planId = _.get(this.$route, 'query.plan', null)
-      await this.loadPlan(this.planId)
     },
     getPlanObjectiveQuery () {
       if (_.isEmpty(this.objectiveFilters)) return {}
@@ -42,7 +41,7 @@ const plansMixin = {
     }
   },
   created () {
-    this.refreshPlan()
+    this.refreshPlanId()
   }
 }
 
