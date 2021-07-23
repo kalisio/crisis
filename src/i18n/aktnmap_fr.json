@@ -683,6 +683,9 @@
   "OrganisationMenu": {
     "EVENTS_LABEL": "{{count}} événement(s)",
     "PLANS_LABEL": "{{count}} plan(s)",
-    "MANAGE_ORGANISATION_ACTION": "Gérer l'organisation"
+    "VIEW_CATALOG": "Voir la carte",
+    "VIEW_ARCHIVED_EVENTS": "Voir la main courante",
+    "VIEW_ARCHIVED_PLANS": "Voir l'arvhive des plans",
+    "MANAGE_ORGANISATION": "Gérer l'organisation"
   }
 }

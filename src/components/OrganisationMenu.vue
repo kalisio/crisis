@@ -68,7 +68,7 @@
                 id= "manage-organisation"
                 icon= "las la-cog"
                 size="md"
-                :label="$t('OrganisationMenu.MANAGE_ORGANISATION_ACTION')"
+                :label="$t('OrganisationMenu.MANAGE_ORGANISATION')"
                 @triggered="routeTo('members-activity')" 
                 :propagate="false" />
             </div>
@@ -124,13 +124,13 @@ export default {
       return this.$can('service', 'plans', this.organisation._id)
     },
     canAccessArchivedPlans () {
-      return this.$can('service', 'archived-plans', this.organisation._id)
+      return this.$can('read', 'archived-plans', this.organisation._id)
     },
     canAccessCatalog () {
       return this.$can('update', 'catalog', this.organisation._id)
     },
     canAccessArchivedEvents () {
-      return this.$can('service', 'archived-events', this.organisation._id)
+      return this.$can('read', 'archived-events', this.organisation._id)
     },
     canManageOrganisation () {
       return this.$can('update', 'organisations', null, this.organisation)

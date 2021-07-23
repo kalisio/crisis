@@ -679,6 +679,9 @@
   "OrganisationMenu": {
     "EVENTS_LABEL": "{{count}} event(s)",
     "PLANS_LABEL": "{{count}} plan(s)",
-    "MANAGE_ORGANISATION_ACTION": "Manage organisation"
+    "VIEW_CATALOG": "View map",
+    "VIEW_ARCHIVED_EVENTS": "View logbook",
+    "VIEW_ARCHIVED_PLANS": "View plans archive",
+    "MANAGE_ORGANISATION": "Manage organisation"
   }
 }
