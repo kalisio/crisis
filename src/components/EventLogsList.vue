@@ -82,6 +82,16 @@ export default {
           icon: 'las la-sms',
           color: 'red',
           handler: (item) => this.onUserFollowUp(item)
+        }, {
+          id: 'location-map',
+          component: 'frame/KPopupAction',
+          tooltip: 'EventLogsList.LOCATION_MAP',
+          icon: 'las la-map-marker',
+          content: [{ 
+            component: 'KLocationMap', 
+            editable: false, 
+            style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;'
+          }]
         }]
       }
     },
