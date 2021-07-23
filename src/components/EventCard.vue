@@ -609,7 +609,6 @@ export default {
     this.$options.components['k-popup-action'] = this.$load('frame/KPopupAction')
   },
   created () {
-    this.isDense = this.dense
     // Required alias for the event logs mixin
     this.event = this.item
     // Set the required actor

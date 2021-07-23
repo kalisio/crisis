@@ -15,9 +15,8 @@
       <!--
         Events history: switch append-items on to activate infinite scroll
       -->
-      <div class="row justify-center q-pa-lg">
+      <div v-if="showHistory && height" class="row justify-center q-pa-lg">
         <k-history
-          v-if="showHistory && height"
           style="padding-top: 80px;"
           id="history"
           service="archived-events" 
@@ -57,7 +56,11 @@
         <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
           icon="las la-chevron-right" class="absolute-right" @click="onNextChart" />
       </div>
-      <k-modal id="chart-settings-modal" ref="chartSettings" :title="$t('ArchivedEventsActivity.CHART_SETTINGS_MODAL_TITLE')">
+      <k-modal 
+        id="chart-settings-modal" 
+        :title="$t('ArchivedEventsActivity.CHART_SETTINGS_MODAL_TITLE')"
+        :buttons="getChartSettingsModalButtons()"
+        ref="chartSettingsModal">
         <div slot="modal-content">
           <q-select id="chart-type" v-model="chartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')"
           :options="chartOptions" @input="refreshChart"/>
@@ -395,7 +398,7 @@ export default {
       this.height = size.height - 48
     },
     showChartSettings () {
-      this.$refs.chartSettings.open()
+      this.$refs.chartSettingsModal.open()
     },
     async getChartData () {
       // Get possible values
@@ -558,6 +561,11 @@ export default {
       kCoreUtils.downloadAsBlob(data, (this.showMap ?
         this.$t('ArchivedEventsActivity.MAP_EXPORT_FILE') :
         this.$t('ArchivedEventsActivity.EVENTS_EXPORT_FILE')), mimeType)
+    },
+    getChartSettingsModalButtons () {
+      return [
+        { id: 'close-buttons', label: 'CLOSE', renderer: 'form-button', handler: () => this.$refs.chartSettingsModal.close() }
+      ]
     }
   },
   async created () {
