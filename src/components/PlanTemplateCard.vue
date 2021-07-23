@@ -59,7 +59,7 @@ export default {
   methods: {
     editObjectives () {
       this.$router.push({
-        name: 'edit-plan-template-objectives', params: { objectId: this.item._id, item: this.item } 
+        name: 'edit-plan-template-objectives', params: { objectId: this.item._id } 
       })
     }
   },

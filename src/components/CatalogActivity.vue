@@ -426,8 +426,6 @@ export default {
     this.registerStyle('featureStyle', this.getEventStyle)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
     this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
-    // Handle plan
-    await this.refreshPlan()
     // Check if option has been subscribed
     this.$checkBillingOption('catalog')
   },
