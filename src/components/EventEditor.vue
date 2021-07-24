@@ -92,7 +92,6 @@ export default {
           let expiryDate = moment().utc().add({ days: this.object.expiryDuration })
           this.object.expireAt = expiryDate.toISOString()
         } 
-        console.log(this.object.expireAt)
         // Setup hasWorkflow tag
         this.object.hasWorkflow = !_.isNil(this.template.workflow)
         if (!_.isNil(this.longitude) && !_.isNil(this.latitude)) {
@@ -191,8 +190,9 @@ export default {
   },
   async created () { 
     // Build the editor. 
-    //If the event belongs to a plan we need to wait for the plan to be loaded
+    // Note that if the event belongs to a plan we need to wait for the plan to be loaded
     if (!this.hasPlan()) this.refresh()
+    else this.loadPlan()
     this.$on('applied', this.closeModal)
   },
   beforeDestroy () {

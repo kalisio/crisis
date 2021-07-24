@@ -1,5 +1,5 @@
 <template>
-  <q-btn-dropdown v-show="planId"
+  <q-btn-dropdown v-if="plan"
     class="q-pl-sm ellipsis-2-lines"
     :label="label"
     :icon="icon"
@@ -54,7 +54,7 @@ export default {
   inject: ['kActivity'],
   computed: {
     label () {
-      return (this.$q.screen.lt.md || !this.plan ? '' : this.plan.name)
+      return (this.$q.screen.gt.sm && this.plan ? this.plan.name : '')
     },
     icon () {
       return _.get(this.plan, 'icon.name', 'las la-stream')
