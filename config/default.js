@@ -496,24 +496,23 @@ module.exports = {
           { component: 'OrganisationMenu', mode: 'plan' },
           separator,
           plansAction(),
-          currentActivityStamp('las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL'),
-          midSeparator,
-          { 
-            id: 'archived-plan-sorter',
-            component: 'collection/KSorter', 
-            tooltip: 'ArchivedPlansActivity.SORT_PLANS',
-            options: [
-              { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
-              { icon: 'kdk:anticlockwise.png', value: { field: 'updatedAt', order: -1 }, default: true }
-            ]
-          }
+          currentActivityStamp('las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL'),         
         ],
         'filter': contextFilter('name')
       }
     },
     bottomPane: {
       content: [
-        { component: 'time/KTimeRange' }
+        { component: 'time/KTimeRange' },
+        { 
+          id: 'archived-plan-sorter',
+          component: 'collection/KSorter', 
+          tooltip: 'ArchivedPlansActivity.SORT_PLANS',
+          options: [
+            { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
+            { icon: 'kdk:anticlockwise.png', value: { field: 'updatedAt', order: -1 }, default: true }
+          ]
+        }
       ]
     },
     items: {
@@ -678,15 +677,6 @@ module.exports = {
           mapAction(),
           currentActivityStamp('las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
           midSeparator,
-          {
-            id: 'archived-plan-sorter',
-            component: 'collection/KSorter', 
-            tooltip: 'ArchivedPlansActivity.SORT_PLANS',
-            options: [
-              { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
-              { icon: 'kdk:anticlockwise.png', value: { field: 'updatedAt', order: -1 }, default: true }
-            ]
-          },
           { id: 'map-view', icon: 'las la-map-marked', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
           { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: 'onShowChart' },
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.EXPORT_DATA_LABEL', handler: 'downloadEventsData' },
@@ -717,7 +707,16 @@ module.exports = {
     },
     bottomPane: {
       content: [
-        { component: 'time/KTimeRange' }
+        { component: 'time/KTimeRange' },
+        {
+          id: 'archived-plan-sorter',
+          component: 'collection/KSorter', 
+          tooltip: 'ArchivedEventsActivity.SORT_EVENTS',
+          options: [
+            { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
+            { icon: 'kdk:anticlockwise.png', value: { field: 'updatedAt', order: -1 }, default: true }
+          ]
+        }
       ]
     },
     items: {

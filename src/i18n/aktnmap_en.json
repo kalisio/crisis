@@ -667,7 +667,8 @@
     "NO_COORDINATORS_LABEL": "No coordinators"
   },
   "ArchivedPlansActivity": {
-    "ARCHIVED_PLANS_LABEL": "Archived plans"
+    "ARCHIVED_PLANS_LABEL": "Archived plans",
+    "SORT_PLANS": "Sort plans"
   },
   "ArchivedPlanCard": {
     "OBJECTIVES_SECTION": "Objectives",

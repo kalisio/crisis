@@ -542,7 +542,8 @@
     "SHOW_ALL_LABEL": "Globalement",
     "EVENTS_LAYER_NAME": "Mes événements",
     "MATCHING_RESULTS": "{{total}} événements trouvés.",
-    "MAXIMUM_RESULTS": "Raffinez vos paramètres de recherches car certains résultats sont omis au-delà de {{max}} événements."
+    "MAXIMUM_RESULTS": "Raffinez vos paramètres de recherches car certains résultats sont omis au-delà de {{max}} événements.",
+    "SORT_EVENTS": "Trier les événements"
   },
   "ArchivedEventCard": {
     "DESCRIPTION_SECTION": "Description",
@@ -671,7 +672,8 @@
     "NO_COORDINATORS_LABEL": "Aucun coordonnateur"
   },
   "ArchivedPlansActivity": {
-    "ARCHIVED_PLANS_LABEL": "Archive"
+    "ARCHIVED_PLANS_LABEL": "Archive",
+    "SORT_PLANS": "Trier les plans"
   },
   "ArchivedPlanCard": {
     "OBJECTIVES_SECTION": "Objectifs",
