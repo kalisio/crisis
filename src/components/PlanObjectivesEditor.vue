@@ -10,7 +10,7 @@
         <k-panel id="plan-objectives-toolbar" :content="getToolbar()" :mode="mode" class="no-wrap" />
       </q-card-section>
       <q-card-section id="plan-objectives-list" v-if="mode === 'list'">
-        <k-list
+        <k-list ref="list"
           style="min-height: 50px; min-width: 200px"
           service="plan-objectives"
           :renderer="objectiveRenderer"
@@ -161,7 +161,13 @@ export default {
         this.savingObjective = false
         throw error
       }
-      this.mode = 'list'
+      // Create/Edit
+      if (this.mode !== 'list') {
+        this.mode = 'list'
+      } else { // Remove
+        // In this case as we don't really remove the object through the in-memory service we need to refresh the list
+        this.$refs.list.refreshCollection()
+      }
     },
     async onCreatePlanObjective () {
       const result = this.$refs.addForm.validate()
