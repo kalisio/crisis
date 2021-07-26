@@ -233,6 +233,8 @@ export default {
     // Extract objectives as we will map it using an in-memory service
     // so that we can use standard collection/form components
     this.updatePlanObjectivesServiceStore()
-  }
+    // Check whether the place has some objectives. Otherwise jump to the edit mode
+    if (_.isEmpty(this.object.objectives)) this.mode = 'add'
+  } 
 }
 </script>
