@@ -15,8 +15,8 @@
           service="plan-objectives"
           :renderer="objectiveRenderer"
           :nbItemsPerPage="8"
-          :base-query="sorter.query"
-          :filter-query="filter.query"
+          :base-query="baseQuery"
+          :filter-query="filterQuery"
         />
       </q-card-section>
       <q-card-section id="plan-objective-add" v-if="mode === 'add'">
@@ -55,6 +55,14 @@ export default {
     }
   },
   computed: {
+    baseQuery () {
+      let query = _.clone(this.sorter.query)
+      return query
+    },
+    filterQuery () {
+      let query = _.clone(this.filter.query)
+      return query
+    },
     title () {
       return _.get(this.object, 'name')
     },
@@ -64,7 +72,7 @@ export default {
       ]
       else if (this.mode === 'add') return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => { this.mode = 'list' } },
-        { id: 'add-plan-objective-button', label: 'ADD', renderer: 'form-button', handler: () => this.onCreatePlanObjective() }
+        { id: 'add-plan-objective-button', label: 'CREATE', renderer: 'form-button', handler: () => this.onCreatePlanObjective() }
       ]
       else return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => { this.mode = 'list' } },

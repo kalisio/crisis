@@ -642,7 +642,7 @@
   "PlansActivity": {
     "PLANS_LABEL": "Plans"
   },
-  "PlanObjectivesPlanEditor": {
+  "PlanObjectivesEditor": {
     "SORT": "Sort objectives",
     "ADD_OBJECTIVE": "Add a new objective",
     "EDIT_OBJECTIVE": "$t(EDIT)",
