@@ -15,8 +15,8 @@
           service="plan-objectives"
           :renderer="objectiveRenderer"
           :nbItemsPerPage="8"
-          :base-query="baseQuery"
-          :filter-query="filterQuery"
+          :base-query="{}"
+          :filter-query="{}"
         />
       </q-card-section>
       <q-card-section id="plan-objective-add" v-if="mode === 'add'">
@@ -55,14 +55,6 @@ export default {
     }
   },
   computed: {
-    baseQuery () {
-      let query = _.clone(this.sorter.query)
-      return query
-    },
-    filterQuery () {
-      let query = _.clone(this.filter.query)
-      return query
-    },
     title () {
       return _.get(this.object, 'name')
     },
@@ -106,16 +98,6 @@ export default {
     getToolbar () {
       return {
         list: [
-          {
-            component: 'collection/KSorter',
-            id: 'sorter-options',
-            tooltip: 'PlanObjectivesEditor.SORT',
-            options: [
-              { icon: 'las la-sort-alpha-down', value: { field: 'name', order: 1 }, default: true },
-              { icon: 'las la-sort-alpha-up', value: { field: 'name', order: -1 } }
-            ]
-          },
-          { component: 'collection/KFilter', style: 'max-width: 200px;' },
           { component: 'QSpace' },
           { id: 'add-plan-objective', icon: 'las la-plus-circle', tooltip: 'PlanObjectivesEditor.ADD_OBJECTIVE',
             size: '1rem', handler: () => { this.mode = 'add' } }
@@ -164,7 +146,9 @@ export default {
       let objectivesStore = _.get(this.object, 'objectives', [])
       // Jump from array to map for in memory service
       objectivesStore = _.keyBy(objectivesStore, 'name')
-      this.$api.getService('plan-objectives').store = objectivesStore
+      const service = this.$api.getService('plan-objectives')
+      // Update store with a fresh object otherwise it causes a weird bug in navigator
+      service.store = Object.assign({}, objectivesStore)
     },
     async updatePlanObjectives (objectives) {
       _.set(this.object, 'objectives', objectives)
