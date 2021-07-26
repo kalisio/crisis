@@ -27,7 +27,7 @@
           <!-- Objectives section -->
           <k-card-section>
             <template v-for="(objective, index) in plan.objectives">
-              <div :key="objective" class="row full-width items-center justify-between">
+              <div :key="objective.id" class="row full-width items-center justify-between">
                 <q-toggle v-model="objectiveFilters[index]" :label="objective.name" />
               </div>
             </template>
@@ -79,6 +79,7 @@ export default {
     plan: {
       handler () {
         if (this.plan) this.objectiveFilters = _.fill(Array(this.plan.objectives.length), false)
+        console.log(this.plan)
       }
     },
     objectiveFilters: {
