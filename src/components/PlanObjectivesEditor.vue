@@ -37,6 +37,7 @@
 
 <script>
 import _ from 'lodash'
+import { uid } from 'quasar'
 
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
@@ -172,7 +173,10 @@ export default {
     async onCreatePlanObjective () {
       const result = this.$refs.addForm.validate()
       if (result.isValid) {
-        const objective = result.values
+        let objective = result.values
+        // We generate a UID so that we can identify each objective uniquely,
+        // indeed names might be similar or be changed
+        objective.id = uid().toString()
         // Update objectives in-memory and in DB
         await this.updatePlanObjectives(_.get(this.object, 'objectives', []).concat(objective))
       }
@@ -180,16 +184,18 @@ export default {
     async onEditPlanObjective () {
       const result = this.$refs.editForm.validate()
       if (result.isValid) {
-        const objective = result.values
+        // Keep track of ID as it is lost in form
+        const objective = Object.assign({ id: this.editedObjective.id }, result.values)
         // Update objectives in-memory and in DB
         let objectives = _.get(this.object, 'objectives', [])
-        const index = _.findIndex(objectives, item => item.name === objective.name)
+        const index = _.findIndex(objectives, item => item.id === objective.id)
         objectives[index] = objective
         await this.updatePlanObjectives(objectives)
       }
     },
     async editPlanObjective (objective) {
       this.mode = 'edit'
+      this.editedObjective = objective
       this.setRefs(['editForm'])
       await this.loadRefs()
       await this.$refs.editForm.build()
@@ -198,7 +204,7 @@ export default {
     async removePlanObjective (objective) {
       // Update objectives in-memory and in DB
       let objectives = _.get(this.object, 'objectives', [])
-      _.remove(objectives, item => item.name === objective.name)
+      _.remove(objectives, item => item.id === objective.id)
       await this.updatePlanObjectives(objectives)
     }
   },
