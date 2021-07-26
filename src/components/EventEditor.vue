@@ -139,7 +139,7 @@ export default {
         // Take into account properties filtering
         if (_.has(schema.properties, 'objective')) {
           _.set(schema, 'properties.objective.field.options',
-            _.get(this.plan, 'objectives', []).map(objective => ({ label: objective.value, value: objective.value }))
+            _.get(this.plan, 'objectives', []).map(objective => ({ label: objective.name, value: objective.name }))
           )
         }
         _.unset(schema, 'properties.expireAt')

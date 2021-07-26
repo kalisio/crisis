@@ -230,7 +230,7 @@ module.exports = {
                   },
                   'edit/:objectId/objectives': {
                     name: 'edit-plan-objectives',
-                    component: 'ObjectivesEditor',
+                    component: 'PlanObjectivesEditor',
                     props: true
                   }
                 }
@@ -357,7 +357,7 @@ module.exports = {
                   },
                   'edit/:objectId/objectives': {
                     name: 'edit-plan-template-objectives',
-                    component: 'ObjectivesEditor',
+                    component: 'PlanObjectivesEditor',
                     props: true
                   }
                 },

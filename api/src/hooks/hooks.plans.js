@@ -4,7 +4,7 @@ import { getItems } from 'feathers-hooks-common'
 const debug = makeDebug('aktnmap:plans:hooks')
 
 export function isObjectiveEqual (objective1, objective2) {
-  return (objective1.value === objective2.value)
+  return (objective1.name === objective2.name)
 }
 
 export async function updateEventsObjective (hook) {
@@ -24,7 +24,7 @@ export async function updateEventsObjective (hook) {
     const eventsService = hook.app.getService('events', service.context)
     await Promise.all(
       removedObjectives.map(objective => 
-        eventsService.patch(null, { objective: null }, { query: { objective: objective.value } })
+        eventsService.patch(null, { objective: null }, { query: { objective: objective.name } })
       )
     )
   }

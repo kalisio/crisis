@@ -58,7 +58,6 @@
     "PLANS_DESCRIPTION_FIELD_LABEL": "Enter a description of this plan",
     "PLANS_COORDINATORS_FIELD_CREATE_LABEL": "Select plan coordinators (other than yourself)",
     "PLANS_COORDINATORS_FIELD_UPDATE_LABEL": "Select plan coordinators",
-    "PLANS_OBJECTIVES_FIELD_LABEL": "Enter the objectives of this plan",
     "PLANS_LOCATION_FIELD_LABEL": "Enter the location of this plan",
     "PLANS_UPDATE_OBJECTIVES_TITLE": "Update objectives ?",
     "PLAN_TEMPLATES_CREATE_TITLE": "Create a new plan template ?",
@@ -67,7 +66,11 @@
     "PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL": "Enter a description of this plan template",
     "PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL": "Enter the objectives of this plan template",
     "PLANS_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Select default plan coordinators",
-    "PLAN_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Select default plan coordinators"
+    "PLAN_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Select default plan coordinators",
+    "PLAN_OBJECTIVE_CREATE_TITLE": "Create a new objective ?",
+    "PLAN_OBJECTIVE_NAME_FIELD_LABEL": "Enter the name of this objective",
+    "PLAN_OBJECTIVE_DESCRIPTION_FIELD_LABEL": "Enter a description of this objective",
+    "PLAN_OBJECTIVE_LOCATION_FIELD_LABEL": "Enter the location of this objective"
   },
   "tours": {
     "side-nav": {
@@ -283,6 +286,8 @@
     "VIEW_CATALOG": "View map",
     "VIEW_ARCHIVED_EVENTS": "View logbook",
     "VIEW_ARCHIVED_PLANS": "View plans archive",
+    "CATALOG": "Map",
+    "ARCHIVED_EVENTS": "Logbook",
     "MEMBERS": "{{count}} Members",
     "VIEW_MEMBERS": "View members",
     "TAGS": "{{count}} Tags",
@@ -451,7 +456,6 @@
     "FILTER_PARTICIPANTS": "Select to filter participants with this status"
   },
   "EventsActivity": {
-    "MY_ORGANISATIONS": "My organisations",
     "EVENTS_LABEL": "My events",
     "SEARCH_EVENTS": "Search events",
     "SORT_EVENTS": "Sort events",
@@ -460,8 +464,8 @@
     "DONE_LABEL": "Done"
   },
   "EventCard": {
-    "COMMENT_SECTION": "Comment",
     "DESCRIPTION_SECTION": "Description",
+    "COMMENT_SECTION": "Comment",
     "OBJECTIVE_SECTION": "Objective",
     "UNDEFINED_OBJECTIVE_LABEL": "No objective",
     "LOCATION_SECTION": "Location",
@@ -500,7 +504,6 @@
     "VIEW_PARTICIPANTS": "View partcipants"
   },
   "ArchivedEventsActivity": {
-    "MAP_LABEL": "Map",
     "ASCENDING_SORT": "Oldest first",
     "DESCENDING_SORT": "Most recent first",
     "SORT_BY_LABEL": "by date",
@@ -540,7 +543,8 @@
     "SHOW_ALL_LABEL": "Globally",
     "EVENTS_LAYER_NAME": "My events",
     "MATCHING_RESULTS": "{{total}} events found.",
-    "MAXIMUM_RESULTS": "Please refine your search parameters because you miss some results beyond {{max}} events."
+    "MAXIMUM_RESULTS": "Please refine your search parameters because you miss some results beyond {{max}} events.",
+    "SORT_EVENTS": "Sort events"
   },
   "ArchivedEventCard": {
     "DESCRIPTION_SECTION": "Description",
@@ -550,6 +554,7 @@
     "UNDEFINED_LOCATION_LABEL": "No location",
     "PARTICIPANTS_SECTION": "Participants",
     "NO_PARTICIPANTS_LABEL": "No participants",
+    "COMMENT_SECTION": "Comment",
     "COORDINATORS_SECTION": "Coordinators",
     "CREATED_AT_LABEL": "Created at",
     "UPDATED_AT_LABEL": "Updated at",
@@ -637,6 +642,12 @@
   "PlansActivity": {
     "PLANS_LABEL": "Plans"
   },
+  "PlanObjectivesPlanEditor": {
+    "SORT": "Sort objectives",
+    "ADD_OBJECTIVE": "Add a new objective",
+    "EDIT_OBJECTIVE": "$t(EDIT)",
+    "REMOVE_OBJECTIVE": "$t(REMOVE)"
+  },
   "PlanCard": {
     "EDIT_ACTION": "$t(EDIT_LABEL)",
     "REMOVE_ACTION": "$t(REMOVE_LABEL)",
@@ -648,6 +659,7 @@
     "NO_LOCATION_LABEL": "Undefined location",
     "EVENTS_SECTION": "Events",
     "EVENTS": "{{count}} event(s)",
+    "VIEW_PLANS": "View plans",
     "VIEW_CATALOG": "View map",
     "VIEW_ARCHIVED_EVENTS": "View logbook"
   },

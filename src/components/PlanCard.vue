@@ -11,7 +11,7 @@
       <!-- Objectives section -->
       <k-card-section :title="$t('PlanCard.OBJECTIVES_SECTION')" :actions="objectivesActions">
         <div v-if="hasObjectives">
-          <k-chips-pane class="q-pl-sm" :chips="item.objectives" />
+          <k-chips-pane class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
         </div>
         <div v-else>
           {{ $t('PlanCard.NO_OBJECTIVES_LABEL')}}

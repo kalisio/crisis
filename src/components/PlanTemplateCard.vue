@@ -13,7 +13,7 @@
         :actions="objectivesActions" 
         :context="$props">
         <div v-if="hasObjectives">
-          <k-chips-pane class="q-pl-sm" :chips="item.objectives" />
+          <k-chips-pane class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
         </div>
         <div v-else>
           {{ $t('PlanTemplateCard.NO_OBJECTIVES_LABEL')}}

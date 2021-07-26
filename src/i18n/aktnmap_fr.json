@@ -59,7 +59,6 @@
     "PLANS_DESCRIPTION_FIELD_LABEL": "Saisissez une description de ce plan",
     "PLANS_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs du plan (autres que vous)",
     "PLANS_COORDINATORS_FIELD_UPDATE_LABEL": "Saisissez les coordinateurs du plan",
-    "PLANS_OBJECTIVES_FIELD_LABEL": "Saisissez les objectifs de ce plan",
     "PLANS_LOCATION_FIELD_LABEL": "Saisissez une localisation pour ce plan",
     "PLANS_UPDATE_OBJECTIVES_TITLE": "Mettre à jour les objectifs ?",
     "PLAN_TEMPLATES_CREATE_TITLE": "Créer un nouveau modèle de plan ?",
@@ -68,7 +67,11 @@
     "PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL": "Saisissez une description de ce modèle de plan",
     "PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL": "Saisissez les objectifs de ce modèle de plan",
     "PLAN_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs par défaut du plan",
-    "PLAN_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Saisissez les coordinateurs par défaut du plan"
+    "PLAN_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Saisissez les coordinateurs par défaut du plan",
+    "PLAN_OBJECTIVE_CREATE_TITLE": "Créér un nouvel objectif ?",
+    "PLAN_OBJECTIVE_NAME_FIELD_LABEL": "Saisissez le nom de cet objectif",
+    "PLAN_OBJECTIVE_DESCRIPTION_FIELD_LABEL": "Saisissez une description de cet objectif",
+    "PLAN_OBJECTIVE_LOCATION_FIELD_LABEL": "Saisissez une localisation pour cet objectif"
   },
   "tours": {
     "side-nav": {
@@ -640,6 +643,12 @@
   },
   "PlansActivity": {
     "PLANS_LABEL": "Plans"
+  },
+  "PlanObjectivesEditor": {
+    "SORT": "Trier les objectifs",
+    "ADD_OBJECTIVE": "Ajouter un nouvel objectif",
+    "EDIT_OBJECTIVE": "$t(EDIT)",
+    "REMOVE_OBJECTIVE": "$t(REMOVE)"
   },
   "PlanCard": {
     "EDIT_ACTION": "$t(EDIT_LABEL)",

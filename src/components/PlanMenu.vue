@@ -11,7 +11,7 @@
     menu-anchor="bottom middle"
     menu-self="top middle">
     <template v-slot:default>
-      <q-card class="bg-white" style="width: 300px;">
+      <q-card v-if="plan" class="bg-white" style="width: 300px;">
         <div class="row full-width justify-center items-center q-pa-md q-gutter-x-sm text-subtitle1 bg-grey-4">
           <k-avatar 
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'" 
@@ -28,7 +28,7 @@
           <k-card-section>
             <template v-for="(objective, index) in plan.objectives">
               <div :key="objective" class="row full-width items-center justify-between">
-                <q-toggle v-model="objectiveFilters[index]" :label="objective.value" />
+                <q-toggle v-model="objectiveFilters[index]" :label="objective.name" />
               </div>
             </template>
           </k-card-section>
