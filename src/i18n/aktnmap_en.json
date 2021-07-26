@@ -643,6 +643,9 @@
     "PLANS_LABEL": "Plans"
   },
   "PlanObjectivesEditor": {
+    "MANAGE": "Manage objectives - {{name}}",
+    "CREATE": "Add a new objective - {{name}}",
+    "EDIT": "Update objective {{name}}",
     "SORT": "Sort objectives",
     "ADD_OBJECTIVE": "Add a new objective",
     "EDIT_OBJECTIVE": "$t(EDIT)",

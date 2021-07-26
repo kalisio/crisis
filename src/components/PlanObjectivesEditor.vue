@@ -57,7 +57,9 @@ export default {
   },
   computed: {
     title () {
-      return _.get(this.object, 'name')
+      if (this.mode === 'list') return this.$t('PlanObjectivesEditor.MANAGE', { name: _.get(this.object, 'name') })
+      else if (this.mode === 'add') return this.$t('PlanObjectivesEditor.CREATE', { name: _.get(this.object, 'name') })
+      else return this.$t('PlanObjectivesEditor.EDIT', { name: this.editedObjective.name })
     },
     buttons () {
       if (this.mode === 'list') return [
@@ -178,7 +180,13 @@ export default {
         // indeed names might be similar or be changed
         objective.id = uid().toString()
         // Update objectives in-memory and in DB
-        await this.updatePlanObjectives(_.get(this.object, 'objectives', []).concat(objective))
+        let objectives = _.get(this.object, 'objectives', [])
+        // Check for unique name
+        if (_.find(objectives, item => item.name === objective.name)) {
+          this.$toast({ message: this.$t('errors.OBJECT_ID_ALREADY_TAKEN') })
+          return
+        }
+        await this.updatePlanObjectives(objectives.concat(objective))
       }
     },
     async onEditPlanObjective () {
@@ -188,6 +196,11 @@ export default {
         const objective = Object.assign({ id: this.editedObjective.id }, result.values)
         // Update objectives in-memory and in DB
         let objectives = _.get(this.object, 'objectives', [])
+        // Check for unique name
+        if (_.find(objectives, item => item.name === objective.name)) {
+          this.$toast({ message: this.$t('errors.OBJECT_ID_ALREADY_TAKEN') })
+          return
+        }
         const index = _.findIndex(objectives, item => item.id === objective.id)
         objectives[index] = objective
         await this.updatePlanObjectives(objectives)
