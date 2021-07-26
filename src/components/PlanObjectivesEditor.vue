@@ -9,7 +9,7 @@
       <q-card-section>
         <k-panel id="plan-objectives-toolbar" :content="getToolbar()" :mode="mode" class="no-wrap" />
       </q-card-section>
-      <q-card-section id="plan-objectives-list" v-if="mode === 'list'">
+      <q-card-section id="plan-objectives-list" v-show="mode === 'list'">
         <k-list ref="list"
           style="min-height: 50px; min-width: 200px"
           service="plan-objectives"
@@ -164,13 +164,10 @@ export default {
         this.savingObjective = false
         throw error
       }
-      // Create/Edit
-      if (this.mode !== 'list') {
-        this.mode = 'list'
-      } else { // Remove
-        // In this case as we don't really remove the object through the in-memory service we need to refresh the list
-        this.$refs.list.refreshCollection()
-      }
+      // After create or edit jump to the list mode
+      if (this.mode !== 'list') this.mode = 'list'
+      // Force the list to be refreshed 
+      this.$refs.list.refreshCollection()
     },
     async onCreatePlanObjective () {
       const result = this.$refs.addForm.validate()
@@ -233,7 +230,7 @@ export default {
     // Extract objectives as we will map it using an in-memory service
     // so that we can use standard collection/form components
     this.updatePlanObjectivesServiceStore()
-    // Check whether the place has some objectives. Otherwise jump to the edit mode
+    // Check whether the place has some objectives. Otherwise jump to the add mode
     if (_.isEmpty(this.object.objectives)) this.mode = 'add'
   } 
 }

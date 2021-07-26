@@ -204,11 +204,6 @@ module.exports = {
                     name: 'manage-layer-categories',
                     component: 'catalog/KLayerCategories',
                     tour: tours['catalog-categories']
-                  },
-                  'edit-plan/:objectId': {
-                    component: 'PlanEditor',
-                    props: true,
-                    meta: { schemaName: 'plans.update' }
                   }
                 }
               },
@@ -223,14 +218,14 @@ module.exports = {
                     props: true,
                     tour: tours['create-plan']
                   },
-                  'edit/:objectId/:schemaProperties?': {
-                    name: 'edit-plan',
-                    component: 'editor/KModalEditor',
-                    props: true
-                  },
                   'edit/:objectId/objectives': {
                     name: 'edit-plan-objectives',
                     component: 'PlanObjectivesEditor',
+                    props: true
+                  },
+                  'edit/:objectId/:schemaProperties?': {
+                    name: 'edit-plan',
+                    component: 'editor/KModalEditor',
                     props: true
                   }
                 }
@@ -262,11 +257,6 @@ module.exports = {
                     name: 'edit-event',
                     component: 'EventEditor',
                     props: true
-                  },
-                  'edit-plan/:objectId': {
-                    component: 'PlanEditor',
-                    props: true,
-                    meta: { schemaName: 'plans.update' }
                   }
                 },
                 tour: tours.events
@@ -280,11 +270,6 @@ module.exports = {
                     name: 'view-event',
                     component: 'viewer/KModalViewer',
                     props: true
-                  },
-                  'edit-plan/:objectId': {
-                    component: 'PlanEditor',
-                    props: true,
-                    meta: { schemaName: 'plans.update' }
                   }
                 },
                 tour: {
@@ -351,13 +336,13 @@ module.exports = {
                     props: true,
                     tour: tours['create-plan-templates']
                   },
-                  'edit/:objectId/:schemaProperties?': {
-                    component: 'editor/KModalEditor',
-                    props: true
-                  },
                   'edit/:objectId/objectives': {
                     name: 'edit-plan-template-objectives',
                     component: 'PlanObjectivesEditor',
+                    props: true
+                  },
+                  'edit/:objectId/:schemaProperties?': {
+                    component: 'editor/KModalEditor',
                     props: true
                   }
                 },
