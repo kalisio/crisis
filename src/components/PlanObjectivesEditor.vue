@@ -83,7 +83,7 @@ export default {
         component: 'collection/KItem',
         actions: [{
           id: 'edit-plan-objective',
-          icon: 'las la-file-alt',
+          icon: 'las la-edit',
           tooltip: 'PlanObjectivesEditor.EDIT_OBJECTIVE',
           handler: (context) => this.editPlanObjective(context.item)
         }, {

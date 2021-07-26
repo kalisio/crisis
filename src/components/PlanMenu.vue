@@ -79,15 +79,15 @@ export default {
     plan: {
       handler () {
         if (this.plan) this.objectiveFilters = _.fill(Array(this.plan.objectives.length), false)
-        console.log(this.plan)
       }
     },
     objectiveFilters: {
       handler () {
         if (!this.plan) return
         let filters = []
+        console.log(this.plan)
         for (let i = 0; i < this.objectiveFilters.length; i++) {
-          if (this.objectiveFilters[i]) filters.push(_.get(this.plan, `objectives[${i}].value`))
+          if (this.objectiveFilters[i]) filters.push(_.get(this.plan, `objectives[${i}].name`))
         }
         this.kActivity.objectiveFilters = filters
       }
