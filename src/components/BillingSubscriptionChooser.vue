@@ -43,7 +43,7 @@
 import { openURL, Dialog } from 'quasar'
 
 export default {
-  name: 'subscription-chooser',
+  name: 'billing-subscription-chooser',
   props: {
     billingObjectId: {
       type: String,

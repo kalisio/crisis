@@ -34,7 +34,7 @@
           -->
           <q-expansion-item id="basic-plan" header-class="text-primary" group="billing"
           :label="$t('BillingEditor.PLAN_TITLE')" default-opened>
-            <subscription-chooser 
+            <billing-subscription-chooser 
               :billingObjectId="objectId" 
               billingObjectService="organisations" 
               :quotas="quotas" 
@@ -47,7 +47,7 @@
           -->    
           <q-expansion-item id="optional-plans" header-class="text-primary" group="billing"
             :label="$t('BillingEditor.OPTIONS_TITLE')">
-            <options-chooser 
+            <billing-options-chooser 
             :billingObjectId="objectId" 
             billingObjectService="organisations" 
             :quotas="quotas" 
@@ -146,8 +146,8 @@ export default {
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-block'] = this.$load('frame/KBlock')
     this.$options.components['customer-editor'] = this.$load('CustomerEditor')
-    this.$options.components['subscription-chooser'] = this.$load('SubscriptionChooser')
-    this.$options.components['options-chooser'] = this.$load('OptionsChooser')
+    this.$options.components['billing-subscription-chooser'] = this.$load('BillingSubscriptionChooser')
+    this.$options.components['billing-options-chooser'] = this.$load('BillingOptionsChooser')
   },
   async created () {
     // Load available plans and Whenever the cabilities are updated, update plans as well
