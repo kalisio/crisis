@@ -695,7 +695,9 @@
     "GOTO_ARCHIVED_EVENTS": "View logbook"
   },
   "PlanMenu": {
-    "MANAGE_PLAN_ACTION": "Manage plan"
+    "VIEW_DESCRIPTION": "View description",
+    "VIEW_LOCATION": "View location",
+    "PERCENT_LABEL": "{{percent}}% done"
   },
   "OrganisationMenu": {
     "EVENTS_LABEL": "{{count}} event(s)",

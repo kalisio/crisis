@@ -693,11 +693,13 @@
     "LOCATION_SECTION": "Localisation",
     "NO_LOCATION_LABEL": "Aucune localisation",
     "COORDINATORS_SECTION": "Coordonnateurs",
-    "VIEW_LOCATION_MAP": "Voir la carte de localisation",
+    "VIEW_LOCATION_MAP": "Voir la localisation",
     "GOTO_ARCHIVED_EVENTS": "Voir la main courante"
   },
   "PlanMenu": {
-    "MANAGE_PLAN_ACTION": "Gérer le plan"
+    "VIEW_DESCRIPTION": "Voir la description",
+    "VIEW_LOCATION": "Voir la localisation",
+    "PERCENT_LABEL": "{{percent}}% réalisé"
   },
   "OrganisationMenu": {
     "EVENTS_LABEL": "{{count}} événement(s)",

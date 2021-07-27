@@ -38,7 +38,17 @@ const plansMixin = {
     getPlanObjectiveQuery () {
       if (_.isEmpty(this.objectiveFilters)) return {}
       else return { objective: { $in: this.objectiveFilters } }
-    }
+    },
+    async countEvents (query = {}) {
+      const eventsService = this.$api.getService('archived-events')
+      const response = await eventsService.find({ query: Object.assign(query, this.getPlanQuery()), $limit: 0 })
+      return response.total
+    },
+    async countClosedEvents (query = {}) {
+      const eventsService = this.$api.getService('archived-events')
+      const response = await eventsService.find({ query: Object.assign(query, { deletedAt: { $exists: true }}, this.getPlanQuery()), $limit: 0 })
+      return response.total
+    },
   },
   created () {
     this.refreshPlanId()
