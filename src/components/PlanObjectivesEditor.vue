@@ -193,7 +193,7 @@ export default {
         // Update objectives in-memory and in DB
         let objectives = _.get(this.object, 'objectives', [])
         // Check for unique name
-        if (_.find(objectives, item => item.name === objective.name)) {
+        if (_.find(objectives, item => item.name === objective.name && item.id !== objective.id)) {
           this.$toast({ message: this.$t('errors.OBJECT_ID_ALREADY_TAKEN') })
           return
         }
