@@ -15,19 +15,19 @@ export async function updateEventsObjective (hook) {
   const previousObjectives = _.get(hook, 'params.previousItem.objectives', [])
   const objectives = _.get(hook, 'data.objectives', [])
   // Find common objectives
-  let commonObjectives = _.intersectionWith(objectives, previousObjectives, isObjectiveEqual)
+  const commonObjectives = _.intersectionWith(objectives, previousObjectives, isObjectiveEqual)
   if (!_.isEmpty(commonObjectives)) {
     // Filter renamed objectives
-    commonObjectives = commonObjectives.filter(objective => {
+    const updatedObjectives = commonObjectives.filter(objective => {
       const previousObjective = _.find(previousObjectives, item => item.id === objective.id)
       return previousObjective.name !== objective.name
     })
-    debug('Updating objectives on events', commonObjectives)
+    debug('Updating objectives on events', updatedObjectives)
     // Update events accordingly
     const service = hook.service
     const eventsService = hook.app.getService('events', service.context)
     await Promise.all(
-      commonObjectives.map(objective => {
+      updatedObjectives.map(objective => {
         const previousObjective = _.find(previousObjectives, item => item.id === objective.id)
         eventsService.patch(null, { objective: objective.name }, { query: { objective: previousObjective.name } })
       })
