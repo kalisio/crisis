@@ -38,7 +38,6 @@
 <script>
 import _ from 'lodash'
 import { uid } from 'quasar'
-
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
@@ -82,7 +81,7 @@ export default {
       mode: 'list',
       savingObjective: false,
       objectiveRenderer: {
-        component: 'collection/KItem',
+        component: 'PlanObjectiveItem',
         actions: [{
           id: 'edit-plan-objective',
           icon: 'las la-edit',

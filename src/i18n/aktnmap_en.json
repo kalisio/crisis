@@ -660,6 +660,7 @@
     "LOCATION_SECTION": "Location",
     "VIEW_ACTION": "View",
     "NO_LOCATION_LABEL": "Undefined location",
+    "COORDINATORS_SECTION": "Coordinators",
     "EVENTS_SECTION": "Events",
     "EVENTS": "{{count}} event(s)",
     "VIEW_PLANS": "View plans",
@@ -690,6 +691,7 @@
     "LOCATION_SECTION": "Location",
     "NO_LOCATION_LABEL": "Undefined location",
     "VIEW_LOCATION_MAP": "View location map",
+    "COORDINATORS_SECTION": "Coordinators",
     "GOTO_ARCHIVED_EVENTS": "View logbook"
   },
   "PlanMenu": {

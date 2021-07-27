@@ -24,6 +24,16 @@
           <k-stamp :text="'PlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
         </div>
       </k-card-section>
+       <!-- coordinators section -->
+      <k-card-section 
+        :title="$t('PlanCard.COORDINATORS_SECTION')" 
+        :actions="coordinatorsActions" 
+        :context="$props">
+        <k-chips-pane 
+          class="q-pl-sm" 
+          :chips="item.coordinators" 
+          :valuePath="['profile.name', 'value', 'name']" />
+      </k-card-section>
       <!-- Events section -->
       <k-card-section :title="$t('PlanCard.EVENTS_SECTION')">
         <div class="full-width row justify-between items-center no-wrap">
@@ -74,6 +84,9 @@ export default {
     },
     locationActions () {
       return _.filter(this.itemActions, { scope: 'location' })
+    },
+    coordinatorsActions () {
+      return _.filter(this.itemActions, { scope: 'coordinators'})
     },
     canAccessCatalog () {
       return this.$can('update', 'catalog', this.contextId)

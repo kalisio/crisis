@@ -13,7 +13,10 @@
         :actions="participantsActions" 
         :context="$props">
         <div v-if="hasParticipants">
-          <k-chips-pane class="q-pl-sm" :chips="item.participants" valuePath="profile.name" />
+          <k-chips-pane 
+            class="q-pl-sm" 
+            :chips="item.participants" 
+            :valuePath="['profile.name', 'value', 'name']" />
         </div>
         <div v-else>
           {{ $t('EventTemplateCard.NO_PARTICIPANTS_LABEL')}}
@@ -25,7 +28,10 @@
         :actions="coordinatorsActions" 
         :context="$props">
         <div v-if="hasCoordinators">
-          <k-chips-pane class="q-pl-sm" :chips="item.coordinators" valuePath="profile.name" />
+          <k-chips-pane 
+            class="q-pl-sm" 
+            :chips="item.coordinators" 
+            :valuePath="['profile.name', 'value', 'name']" />
         </div>
         <div v-else>
           {{ $t('PlanTemplateCard.NO_COORDINATORS_LABEL')}}

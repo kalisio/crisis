@@ -43,6 +43,16 @@
           <k-stamp :text="'ArchivedPlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
         </div>
       </k-card-section>
+      <!-- coordinators section -->
+      <k-card-section 
+        :title="$t('ArchivedPlanCard.COORDINATORS_SECTION')" 
+        :hide-header="!isExpanded"
+        :context="$props">
+        <k-chips-pane 
+          class="q-pl-sm" 
+          :chips="item.coordinators" 
+          :valuePath="['profile.name', 'value', 'name']" />
+      </k-card-section>
     </template>
   </k-card>
 </template>

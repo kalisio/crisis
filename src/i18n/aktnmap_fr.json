@@ -662,6 +662,7 @@
     "LOCATION_SECTION": "Localisation",
     "VIEW_ACTION": "Visualiser",
     "NO_LOCATION_LABEL": "Aucune localisation",
+    "COORDINATORS_SECTION": "Coordonnateurs",
     "EVENTS_SECTION": "Evénements",
     "EVENTS": "{{count}} événements(s)",
     "VIEW_PLANS": "Voir les plans",
@@ -691,6 +692,7 @@
     "OBJECTIVES_SECTION": "Objectifs",
     "LOCATION_SECTION": "Localisation",
     "NO_LOCATION_LABEL": "Aucune localisation",
+    "COORDINATORS_SECTION": "Coordonnateurs",
     "VIEW_LOCATION_MAP": "Voir la carte de localisation",
     "GOTO_ARCHIVED_EVENTS": "Voir la main courante"
   },

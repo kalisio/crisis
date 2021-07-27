@@ -25,7 +25,10 @@
         :actions="coordinatorsActions" 
         :context="$props">
         <div v-if="hasCoordinators">
-          <k-chips-pane class="q-pl-sm" :chips="item.coordinators" valuePath="profile.name" />
+          <k-chips-pane 
+            class="q-pl-sm" 
+            :chips="item.coordinators" 
+            :valuePath="['profile.name', 'value', 'name']" />
         </div>
         <div v-else>
           {{ $t('PlanTemplateCard.NO_COORDINATORS_LABEL')}}
