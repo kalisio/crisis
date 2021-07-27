@@ -1,26 +1,12 @@
 <template>
-  <q-item>
-    <!--
-      Content section
-    -->
-    <slot name="item-content">
-      <q-item-section @click="onItemSelected('content')">
-        <q-item-label>{{ name }}
-          <q-tooltip>
-            {{ description }}
-          </q-tooltip>
-        </q-item-label>
-      </q-item-section>
-    </slot>
-    <!--
-      Actions section
-    -->
-    <slot name="item-actions">
-      <q-item-section side>
-        <k-panel id="item-actions" :content="itemActions" :context="$props" />
-      </q-item-section>
-    </slot>
-  </q-item>
+  <div class="row full-width justify-between">
+    <span>{{ name }}
+      <q-tooltip>
+        <span v-html="description" />
+      </q-tooltip>
+    </span>
+    <k-panel id="item-actions" :content="itemActions" :context="$props" />
+  </div>
 </template>
 
 <script>

@@ -24,7 +24,7 @@
           <k-stamp :text="'PlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
         </div>
       </k-card-section>
-       <!-- coordinators section -->
+      <!-- coordinators section -->
       <k-card-section 
         :title="$t('PlanCard.COORDINATORS_SECTION')" 
         :actions="coordinatorsActions" 
