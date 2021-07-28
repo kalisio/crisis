@@ -21,7 +21,12 @@
         :context="$props"
         :dense="dense"
       >
-        <k-chips-pane :chips="item.objectives" />
+        <div v-if="hasObjectives">
+          <k-chips-pane class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
+        </div>
+        <div v-else>
+          {{ $t('ArchivedPlanCard.NO_OBJECTIVES_LABEL')}}
+        </div>
       </k-card-section>
       <!-- location section -->
       <k-card-section 
@@ -77,6 +82,9 @@ export default {
         { component: 'QBadge', label: this.item.template, color: 'grey-7' },
         { component: 'QSpace' })
       return components
+    },
+    hasObjectives () {
+      return !_.isEmpty(this.item.objectives)
     }
   },
   data () {

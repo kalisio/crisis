@@ -688,6 +688,7 @@
   },
   "ArchivedPlanCard": {
     "OBJECTIVES_SECTION": "Objectives",
+    "NO_OBJECTIVES_LABEL": "No objectives",
     "LOCATION_SECTION": "Location",
     "NO_LOCATION_LABEL": "Undefined location",
     "VIEW_LOCATION_MAP": "View location map",

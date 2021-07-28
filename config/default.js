@@ -484,7 +484,8 @@ module.exports = {
           id: 'edit-objectives', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION', size: 'sm', 
           visible: 'canEditItem', handler: 'editObjectives', scope: 'objectives'
         },
-        editItemAction('PlanCard.EDIT_ACTION', 'location')
+        editItemAction('PlanCard.EDIT_ACTION', 'location'),
+        editItemAction('PlanCard.EDIT_ACTION', 'coordinators')
       ]
     }
   },

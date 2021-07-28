@@ -690,6 +690,7 @@
   },
   "ArchivedPlanCard": {
     "OBJECTIVES_SECTION": "Objectifs",
+    "NO_OBJECTIVES_LABEL": "Aucun objectif",
     "LOCATION_SECTION": "Localisation",
     "NO_LOCATION_LABEL": "Aucune localisation",
     "COORDINATORS_SECTION": "Coordonnateurs",
