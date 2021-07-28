@@ -82,9 +82,9 @@ function definePlanAbilities (subject, can, cannot) {
             can('service', organisation._id.toString() + '/archived-plans')
             can('read', 'plan-templates', { context: organisation._id })
             can('read', 'plans', { context: organisation._id })
-            can('read', 'archived-plans', { context: organisation._id })
             // A coordinator can manage his plans
             can('all', 'plans', { context: organisation._id, 'coordinators._id': subject._id })
+            can('all', 'archived-plans', { context: organisation._id, 'coordinators._id': subject._id })
           }
           if (subject.groups) {
             subject.groups.forEach(group => {

@@ -125,13 +125,13 @@ export default {
       return this.$can('service', 'plans', this.item._id)
     },
     canAccessArchivedPlans () {
-      return this.$can('service', 'archived-plans', this.item._id)
+      return this.$can('read', 'archived-plans', this.item._id)
     },
     canAccessCatalog () {
       return this.$can('update', 'catalog', this.item._id)
     },
     canAccessArchivedEvents () {
-      return this.$can('service', 'archived-events', this.item._id)
+      return this.$can('read', 'archived-events', this.item._id)
     },
     canAccessBilling () {
       return this.$can('update', 'organisations', null, { _id: this.item._id })

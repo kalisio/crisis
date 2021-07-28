@@ -12,7 +12,7 @@
     menu-self="top middle"
     @show="refreshPercentages">
     <template v-slot:default>
-      <q-card v-if="plan" class="bg-white" style="width: 400px;">
+      <q-card v-if="plan" class="bg-white" :style="computedStyle">
         <div class="row full-width justify-center items-center q-pa-md q-gutter-x-sm text-subtitle1 bg-grey-4">
           <k-avatar 
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'" 
@@ -71,6 +71,13 @@ export default {
   },
   inject: ['kActivity'],
   computed: {
+    computedStyle () {
+      if (this.$q.screen.lt.sm) return 'min-width: 100vw;'
+      if (this.$q.screen.lt.md) return 'min-width: 80vw;'
+      if (this.$q.screen.lt.lg) return 'min-width: 60vw;'
+      if (this.$q.screen.lt.xl) return 'min-width: 40vw;'
+      return 'min-width: 20vw;'
+    },
     label () {
       return (this.$q.screen.gt.sm && this.plan ? this.plan.name : '')
     },
