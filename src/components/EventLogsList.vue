@@ -85,7 +85,7 @@ export default {
         }, {
           id: 'location-map',
           component: 'frame/KPopupAction',
-          tooltip: 'EventLogsList.LOCATION_MAP',
+          tooltip: 'EventLogsList.VIEW_LOCATION',
           icon: 'las la-map-marker',
           content: [{ 
             component: 'KLocationMap', 

@@ -179,10 +179,9 @@ export default {
         })
         if (this.hasParticipants) components.push({
            id: 'participants-list', component: 'frame/KPopupAction', tooltip: 'EventCard.VIEW_PARTICIPANTS', icon: 'las la-user-friends', content: [
-            { component: 'frame/KChipsPane', chips: this.item.participants, valuePath: 'profile.name', class: 'q-pa-sm' }
+            { component: 'frame/KChipsPane', chips: this.item.participants, valuePath: ['profile.name', 'value', 'name'], class: 'q-pa-sm' }
           ]
         })
-       
       }
       return components
     },

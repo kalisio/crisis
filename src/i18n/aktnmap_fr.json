@@ -433,6 +433,7 @@
     "ALL_STEPS": "Toutes",
     "INTERACTION": "Sélectionnez une réponse pour filtrer les participants",
     "ALL_INTERACTIONS": "Toutes",
+    "VIEW_LOCATION": "Voir la localisation",
     "FOLLOW_UP_MODAL_TITLE": "Entrez votre choix",
     "FOLLOWUP_MODAL_CANCEL_BUTTON": "$t(CANCEL)",
     "FOLLOWUP_MODAL_APPLY_BUTTON": "$t(SAVE_LABEL)",

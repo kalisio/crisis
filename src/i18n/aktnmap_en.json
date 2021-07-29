@@ -431,6 +431,7 @@
     "ALL_STEPS": "All",
     "INTERACTION": "Select an interaction to filter participants",
     "ALL_INTERACTIONS": "All",
+    "VIEW_LOCATION": "View location",
     "FOLLOW_UP_MODAL_TITLE": "Enter your choice",
     "FOLLOWUP_MODAL_CANCEL_BUTTON": "$t(CANCEL)",
     "FOLLOWUP_MODAL_APPLY_BUTTON": "$t(SAVE_LABEL)",
