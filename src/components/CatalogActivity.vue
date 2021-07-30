@@ -317,7 +317,8 @@ export default {
         params: Object.assign({
           contextId: this.contextId,
           templateId: template._id,
-        }, this.eventParams)
+        }, this.eventParams),
+        query: this.planId ? { plan: this.planId} : {}
       })
     },
     onRemoveAlert (data) {
