@@ -144,11 +144,13 @@ export default {
     },
     async refreshPercentages () {
       this.objectivePercents = []
-      for (let i = 0; i < this.plan.objectives.length; ++i) {
-        const nbEvents = await this.countEvents({ objective: this.plan.objectives[i].name })
-        const nbClosedEvents = await this.countClosedEvents({ objective: this.plan.objectives[i].name })
-        const percent = nbEvents !== 0 ? Math.round((nbClosedEvents / nbEvents) * 100) : 0
-        this.objectivePercents.push(percent)
+      if (this.plan.objectives) {
+        for (let i = 0; i < this.plan.objectives.length; ++i) {
+          const nbEvents = await this.countEvents({ objective: this.plan.objectives[i].name })
+          const nbClosedEvents = await this.countClosedEvents({ objective: this.plan.objectives[i].name })
+          const percent = nbEvents !== 0 ? Math.round((nbClosedEvents / nbEvents) * 100) : 0
+          this.objectivePercents.push(percent)
+        }
       }
     }
   },
