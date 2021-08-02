@@ -264,12 +264,10 @@ export default {
       return true
     },
     getFollowUpButtons () {
-      return [{
-        id: 'save-button',
-        label: this.$t('EventCard.FOLLOWUP_MODAL_SAVE_BUTTON'),
-        renderer: 'form-button',
-        handler: () => this.logParticipantState()
-      }]
+      return [
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.$refs.followUpModal.close() },
+        { id: 'save-button', label: this.$t('EventCard.FOLLOWUP_MODAL_SAVE_BUTTON'), renderer: 'form-button', handler: () => this.logParticipantState() }
+      ]
     },
     getUploaderButtons () {
       return [{

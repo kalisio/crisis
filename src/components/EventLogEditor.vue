@@ -43,7 +43,7 @@ export default {
     getButtons () {
       return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
-        { id: 'save-button', label: this.$t('EventLogEditor.SAVE_BUTTON'), renderer: 'form-button', handler: () => this.logCoordinatorState()  }
+        { id: 'save-button', label: this.$t('EventLogEditor.SAVE_BUTTON'), renderer: 'form-button', handler: () => this.logCoordinatorState() }
       ]
     },
     getService () {
