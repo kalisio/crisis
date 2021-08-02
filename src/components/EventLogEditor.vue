@@ -1,5 +1,5 @@
 <template>
-  <k-modal :title="title" v-model="isModalOpened" @opened="$emit('opened')" @closed="$emit('closed')" :buttons="buttons()">
+  <k-modal :title="title" v-model="isModalOpened" @opened="$emit('opened')" @closed="$emit('closed')" :buttons="getButtons()">
     <div slot="modal-content">
       <k-form ref="form" :schema="schema"/>
     </div>
@@ -40,13 +40,11 @@ export default {
     }
   },
   methods: {
-    buttons () {
-      return [{
-        id: 'save-button',
-        label: this.$t('EventLogEditor.SAVE_BUTTON'),
-        renderer: 'form-button',
-        handler: () => this.logCoordinatorState()
-      }]
+    getButtons () {
+      return [
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
+        { id: 'save-button', label: this.$t('EventLogEditor.SAVE_BUTTON'), renderer: 'form-button', handler: () => this.logCoordinatorState()  }
+      ]
     },
     getService () {
       return this.$api.getService('event-logs', this.contextId)
