@@ -318,7 +318,8 @@ module.exports = {
                       return {
                         contextId: route.params.contextId,
                         objectId: route.params.objectId,
-                        perspective: 'workflow'
+                        perspective: 'workflow',
+                        perspectiveAsObject: false
                       } 
                     }
                   }
