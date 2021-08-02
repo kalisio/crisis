@@ -199,7 +199,7 @@ module.exports = {
   },
   authorisation: {
     cache: {
-      maxUsers: 1000
+      maxUsers: 100000
     }
   },
   organisations: {
