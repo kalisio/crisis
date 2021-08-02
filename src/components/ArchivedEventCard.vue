@@ -21,7 +21,7 @@
           :context="$props"
           :dense="dense"
         > 
-          <k-chips-pane v-if="item.objective" :chips="objective" />
+          <q-badge v-if="item.objective" :label="objective" color="grey-7" :multi-line="true"/>
           <div v-else>
             <k-stamp :text="'ArchivedEventCard.UNDEFINED_OBJECTIVE_LABEL'" direction="horizontal" />
           </div>
@@ -49,7 +49,7 @@
           :dense="dense"
         >
           <div v-if="hasParticipants">
-            <k-chips-pane class="q-pl-sm" :chips="item.participants" valuePath="profile.name" />
+            <k-chips-pane class="q-pl-sm" :chips="item.participants" value-path="profile.name" />
           </div>
           <div v-else>
             {{ $t('ArchivedEventCard.NO_PARTICIPANTS_LABEL')}}
@@ -62,7 +62,7 @@
           :context="$props"
           :dense="dense"
         >
-          <k-chips-pane class="q-pl-sm" :chips="item.coordinators" valuePath="profile.name" />
+          <k-chips-pane class="q-pl-sm" :chips="item.coordinators" value-path="profile.name" />
         </k-card-section>
         <!-- Timestamps section -->
         <k-card-section v-if="isExpanded" :dense="dense">

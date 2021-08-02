@@ -32,7 +32,7 @@
         <k-chips-pane 
           class="q-pl-sm" 
           :chips="item.coordinators" 
-          :valuePath="['profile.name', 'value', 'name']" />
+          :value-path="['profile.name', 'value', 'name']" />
       </k-card-section>
       <!-- Events section -->
       <k-card-section :title="$t('PlanCard.EVENTS_SECTION')">

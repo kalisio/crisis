@@ -24,7 +24,7 @@
     "EVENT_TEMPLATES_PARTICIPANTS_FIELD_LABEL": "Select event participants",
     "EVENT_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Select default event coordinators",
     "EVENT_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Select default event coordinators",
-    "EVENT_TEMPLATES_EXPIRY_DURATION_FIELD_LABEL": "Select a default event expiry duration",
+    "EVENT_TEMPLATES_EXPIRY_DURATION_FIELD_LABEL": "Select a default expiry duration in days before the event will automatically expire",
     "EVENT_TEMPLATES_LAYER_FIELD_LABEL": "Select a target data layer",
     "EVENT_TEMPLATES_WORKFLOW_UPDATE_TITLE": "Update workflow",
     "EVENT_TEMPLATES_WORKFLOW_TITLE_FIELD_LABEL": "Enter the title for this step",
