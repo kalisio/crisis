@@ -157,9 +157,9 @@ export function removeOrganisationServices (organisation) {
   removeEventLogService.call(app, { context: organisation })
   removeArchivedEventService.call(app, { context: organisation })
   removeArchivedEventLogService.call(app, { context: organisation })
-  removePlanTemplateService.call(app,  { context: organisation, db })
-  removePlanService.call(app,  { context: organisation, db })  
-  removeArchivedPlanService.call(app,  { context: organisation, db }) 
+  removePlanTemplateService.call(app,  { context: organisation })
+  removePlanService.call(app,  { context: organisation })  
+  removeArchivedPlanService.call(app,  { context: organisation }) 
 }
 
 export function processAlert (organisation) {
