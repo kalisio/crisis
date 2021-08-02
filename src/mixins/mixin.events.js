@@ -292,18 +292,15 @@ const eventsMixin = {
       }
     },
     hasRoleInEvent (user, roles) {
-      return _.findIndex(roles, role => {
-        if (role.service === 'members' && role._id === user._id) return true
-        if (role.service === 'groups' || role.service === 'organisations') {
-          if ([user].filter(sift({ [role.service + '._id']: user._id }))) return true
-        }
-        if (role.service === 'tags') {
-          if (user.tags) {
-            if (_.findIndex(user.tags, { _id: role._id } >= 0)) return true
-          }
+      return _.find(roles, role => {
+        if ((role.service === 'members') && (role._id === user._id)) return true
+        if ((role.service === 'groups') ||
+            (role.service === 'tags') ||
+            (role.service === 'organisations')) {
+          if ([user].find(sift({ [role.service + '._id']: role._id }))) return true
         }
         return false
-      }) >= 0
+      })
     },
     refreshUser () {
       const user = this.$store.get('user')
