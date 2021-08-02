@@ -418,7 +418,7 @@ module.exports = {
     devices: {
       actions: [
         { id: 'remove-device', tooltip: 'KDeviceCard.UNLINK_LABEL', icon: 'phonelink_erase', handler: 'removeDevice',
-          visible: { name: '$can', params: ['remove', 'devices', ':contextId', ':item'] } }
+          scope: 'header', visible: { name: '$can', params: ['remove', 'devices', ':contextId', ':item'] } }
       ]
     }
   },
