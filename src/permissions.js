@@ -26,6 +26,8 @@ function defineEventAbilities (subject, can, cannot) {
             // has the same ID than the org itself causing everybody accessing the event
             // can('read', 'events', { context: organisation._id, 'participants._id': organisation._id })
             // can('all', 'events', { context: organisation._id, 'coordinators._id': organisation._id })
+            can('read', 'archived-events', { context: organisation._id, 'participants._id': subject._id })
+            can('read', 'archived-events', { context: organisation._id, 'coordinators._id': subject._id })
           }
           if (subject.groups) {
             subject.groups.forEach(group => {
@@ -34,6 +36,8 @@ function defineEventAbilities (subject, can, cannot) {
                 can('read', 'events', { context: organisation._id, 'participants._id': group._id })
                 // A coordinator can manage events in which his group is a coordinator
                 can('all', 'events', { context: organisation._id, 'coordinators._id': group._id })
+                can('read', 'archived-events', { context: organisation._id, 'participants._id': group._id })
+                can('read', 'archived-events', { context: organisation._id, 'coordinators._id': group._id })
               }
             })
           }
@@ -44,23 +48,22 @@ function defineEventAbilities (subject, can, cannot) {
                 can('read', 'events', { context: organisation._id, 'participants._id': tag._id })
                 // A coordinator can manage events in which his tag is a coordinator
                 can('all', 'events', { context: organisation._id, 'coordinators._id': tag._id })
+                can('read', 'archived-events', { context: organisation._id, 'participants._id': tag._id })
+                can('read', 'archived-events', { context: organisation._id, 'coordinators._id': tag._id })
               }
             })
           }
           if (organisation._id) {
-            // A user can create event logs for himself and coordinator for everybody
-            // FIXME: hard to express this with the permission system
-            // can(['read', 'create'], 'event-logs', { context: organisation._id, 'participant': subject._id })
-            can(['read', 'create'], 'event-logs', { context: organisation._id })
+            // A user can create event logs for himself and coordinator for everybody within an event
+            // FIXME: hard to fully express this with the permission system
+            can(['read', 'create'], 'event-logs', { context: organisation._id, stakeholder: 'participant', participant: subject._id })
+            can(['read', 'create'], 'event-logs', { context: organisation._id, stakeholder: 'coordinator' })
+            can('read', 'archived-event-logs', { context: organisation._id })
           }
         }
         if (role >= permissions.Roles.manager) {
           if (organisation._id) {
-            // The unique identifier of a service is its path not its name.
-            // Indeed we have for instance a 'events' service in each organisation.
             can('all', 'event-templates', { context: organisation._id })
-            can('all', 'archived-events', { context: organisation._id })
-            can('all', 'archived-event-logs', { context: organisation._id })
           }
         }
       })
@@ -80,17 +83,18 @@ function definePlanAbilities (subject, can, cannot) {
             can('service', organisation._id.toString() + '/plans')
             can('service', organisation._id.toString() + '/plan-templates')
             can('service', organisation._id.toString() + '/archived-plans')
-            can('read', 'plan-templates', { context: organisation._id })
+            // A user should be able to at least get information about running plans
             can('read', 'plans', { context: organisation._id })
             // A coordinator can manage his plans
             can('all', 'plans', { context: organisation._id, 'coordinators._id': subject._id })
-            can('all', 'archived-plans', { context: organisation._id, 'coordinators._id': subject._id })
+            can('read', 'archived-plans', { context: organisation._id, 'coordinators._id': subject._id })
           }
           if (subject.groups) {
             subject.groups.forEach(group => {
               if (group._id && group.context && (group.context.toString() === organisation._id.toString())) {
                 // A coordinator can manage plans in which his group is a coordinator
                 can('all', 'plans', { context: organisation._id, 'coordinators._id': group._id })
+                can('read', 'archived-plans', { context: organisation._id, 'coordinators._id': group._id })
               }
             })
           }
@@ -99,6 +103,7 @@ function definePlanAbilities (subject, can, cannot) {
               if (tag._id && tag.context && (tag.context.toString() === organisation._id.toString())) {
                 // A coordinator can manage plans in which his tag is a coordinator
                 can('all', 'plans', { context: organisation._id, 'coordinators._id': tag._id })
+                can('read', 'archived-plans', { context: organisation._id, 'coordinators._id': tag._id })
               }
             })
           }
@@ -108,7 +113,6 @@ function definePlanAbilities (subject, can, cannot) {
             // A manager can create a plan
             can('create', 'plans', { context: organisation._id })
             can('all', 'plan-templates', { context: organisation._id })
-            can('all', 'archived-plans', { context: organisation._id })
           }
         }
       })

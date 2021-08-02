@@ -349,7 +349,7 @@ export default {
       if (this.isCoordinator) {
         let followUpAction = {
           id: 'event-logs', tooltip: this.$t('EventCard.EVENT_LOGS_LABEL'), icon: 'las la-users', scope: 'footer',
-          visible: this.$can('read', 'event-logs', this.contextId, this.item), handler: this.eventLogs
+          visible: this.$can('update', 'events', this.contextId, this.item), handler: this.eventLogs
         }
         const hasFollowUp = this.item.hasWorkflow && (this.nbParticipantsWaitingCoordination > 0)
         if (hasFollowUp) {
