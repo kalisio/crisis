@@ -292,7 +292,7 @@ const eventsMixin = {
       }
     },
     hasRoleInEvent (user, roles) {
-      return _.find(roles, role => {
+      return _.findIndex(roles, role => {
         if ((role.service === 'members') && (role._id === user._id)) return true
         if ((role.service === 'groups') ||
             (role.service === 'tags') ||
@@ -300,7 +300,7 @@ const eventsMixin = {
           if ([user].find(sift({ [role.service + '._id']: role._id }))) return true
         }
         return false
-      })
+      }) >= 0
     },
     refreshUser () {
       const user = this.$store.get('user')
