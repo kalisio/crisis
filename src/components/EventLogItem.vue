@@ -16,11 +16,11 @@
     <template slot="item-content">
       <q-item-section>
         <q-item-label>{{ getUserName(item) }}</q-item-label>
-        <q-item-label v-if="item.step" caption>{{ getUserComment(item) }}</q-item-label>
+        <q-item-label v-if="itemStep" caption>{{ getUserComment(item) }}</q-item-label>
       </q-item-section>
       <q-item-section>
-        <q-item-label v-if="item.step">{{ getUserState(item) }}</q-item-label>
-        <q-item-label v-else>{{ $t('EventLogItem.READ') }}</q-item-label>
+        <q-item-label v-if="itemStep">{{ getUserState(item) }}</q-item-label>
+        <q-item-label v-if="!itemStep">{{ $t('EventLogItem.READ') }}</q-item-label>
         <q-item-label v-if="createdAt" caption>{{ createdAt.toLocaleString() }}</q-item-label>
       </q-item-section>
     </template>
