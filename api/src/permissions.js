@@ -55,9 +55,9 @@ function defineEventAbilities (subject, can, cannot) {
           }
           if (organisation._id) {
             // A user can create event logs for himself and coordinator for everybody within an event
-            // FIXME: hard to fully express this with the permission system
-            can(['read', 'create'], 'event-logs', { context: organisation._id, stakeholder: 'participant', participant: subject._id })
-            can(['read', 'create'], 'event-logs', { context: organisation._id, stakeholder: 'coordinator' })
+            // FIXME: hard to fully express this with the permission system as rights about events
+            // are not stored on the user but on events because it can be archived and a results in a pretty large list
+            can(['read', 'create'], 'event-logs', { context: organisation._id })
             can('read', 'archived-event-logs', { context: organisation._id })
           }
         }
