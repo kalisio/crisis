@@ -8,7 +8,7 @@
       Item toggle
      -->
     <template slot="item-toggle">
-      <q-checkbox :disabled="!hasFollowUp" v-model="toggled" @input="onItemToggled(toggled)"/>
+      <q-checkbox :disable="!hasFollowUp" :disabled="!hasFollowUp" v-model="toggled" @input="onItemToggled(toggled)"/>
     </template>
     <!--
       Item content
