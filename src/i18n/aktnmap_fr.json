@@ -330,6 +330,7 @@
     "REMOVE_ALERT_ACTION": "Supprimer l'alerte",
     "CREATE_EVENT_TITLE": "Sélectionner un modèle d'événement",
     "CREATE_ALERT_TITLE": "Créer une nouvelle alerte ?",
+    "OBJECTIVES_LAYER": "Mes objectifs",
     "EVENTS_LAYER": "Mes événements",
     "ALERTS_LAYER": "Mes alertes",
     "ALERT_ACTIVE": "Alerte active",

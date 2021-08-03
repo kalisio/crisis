@@ -1,12 +1,13 @@
 import { setNow, discard } from 'feathers-hooks-common'
-import { hooks } from '@kalisio/kdk/core.api'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api'
+import { hooks as mapHooks } from '@kalisio/kdk/map.api'
 import { addCreatorAsCoordinator, checkPlansQuotas, updateEventsObjective, removeEventsPlan, archive } from '../../hooks'
 
 module.exports = {
   before: {
     all: [],
     find: [],
-    get: [],
+    get: [mapHooks.marshallSpatialQuery],
     create: [
       checkPlansQuotas,
       addCreatorAsCoordinator,
@@ -15,12 +16,12 @@ module.exports = {
     update: [
       discard('createdAt', 'updatedAt'),
       setNow('updatedAt'),
-      hooks.populatePreviousObject
+      coreHooks.populatePreviousObject
     ],
     patch: [
       discard('createdAt', 'updatedAt'),
       setNow('updatedAt'),
-      hooks.populatePreviousObject
+      coreHooks.populatePreviousObject
     ],
     remove: []
   },
@@ -28,7 +29,13 @@ module.exports = {
   after: {
     all: [],
     find: [],
-    get: [],
+    get: [mapHooks.asGeoJson({
+      longitudeProperty: 'location.longitude',
+      latitudeProperty: 'location.latitude',
+      geometryProperty: 'location',
+      asFeatureCollection: false,
+      dataPath: 'result.objectives'
+    })],
     create: [],
     update: [updateEventsObjective],
     patch: [updateEventsObjective],

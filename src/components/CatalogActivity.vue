@@ -98,6 +98,10 @@ export default {
   watch: {
     objectiveFilters: function () {
       this.events.refreshCollection()
+      this.refreshObjectivesLayer()
+    },
+    plan: function () {
+      this.refreshObjectivesLayer()
     }
   },
   methods: {
@@ -110,9 +114,10 @@ export default {
       await this.initializeMap()
       activityMixin.methods.configureActivity.call(this)
       this.setCurrentTime(moment.utc())
-      // Then update events/alerts
+      // Then update events, alerts, plan
       this.alerts.refreshCollection()
       this.events.refreshCollection()
+      this.refreshObjectivesLayer()
     },
     getFeatureActions (feature, layer) {
       let featureActions = []
@@ -185,7 +190,8 @@ export default {
           }
         })
       }
-      this.updateLayer(this.$t('CatalogActivity.EVENTS_LAYER'), { type: 'FeatureCollection', features: this.events.items })
+      this.updateLayer(this.$t('CatalogActivity.EVENTS_LAYER'),
+        { type: 'FeatureCollection', features: _.get(this.events, 'items', []) })
     },
     onEventCollectionRefreshed () {
       this.refreshEventsLayer()
@@ -212,7 +218,8 @@ export default {
           }
         })
       }
-      this.updateLayer(this.$t('CatalogActivity.ALERTS_LAYER'), { type: 'FeatureCollection', features: this.alerts.items })
+      this.updateLayer(this.$t('CatalogActivity.ALERTS_LAYER'),
+        { type: 'FeatureCollection', features: _.get(this.alerts, 'items', []) })
     },
     onAlertCollectionRefreshed () {
       this.refreshAlertsLayer()
@@ -220,6 +227,34 @@ export default {
       if (this.alerts.items.length > MAX_ITEMS) {
         this.$events.$emit('error', new Error(this.$t('errors.ALERTS_LIMIT')))
       }
+    },
+    async refreshObjectivesLayer () {
+      // Reload plan as we'd like to have objectives as GeoJson
+      await this.loadPlan({ geoJson: true, $select: ['objectives'] })
+      // Add a "virtual" layer for objectives if required
+      const layer = this.getLayerByName(this.$t('CatalogActivity.OBJECTIVES_LAYER'))
+      if (!layer) {
+        await this.addLayer({
+          name: this.$t('CatalogActivity.OBJECTIVES_LAYER'),
+          type: 'OverlayLayer',
+          icon: 'las la-bullseye',
+          featureId: 'id',
+          isSelectable: false,
+          leaflet: {
+            type: 'geoJson',
+            isVisible: true,
+            realtime: true,
+            popup: { pick: [] }
+          }
+        })
+      }
+      // Take care of any objective filter
+      let objectives = _.get(this.plan, 'objectives', [])
+      if (!_.isEmpty(this.objectiveFilters)) {
+        objectives = objectives.filter(sift({ name: { $in: this.objectiveFilters } }))
+      }
+      this.updateLayer(this.$t('CatalogActivity.OBJECTIVES_LAYER'),
+        { type: 'FeatureCollection', features: objectives })
     },
     getAlertStyle (feature, options) {
       if (options.name !== this.$t('CatalogActivity.ALERTS_LAYER')) return null
@@ -274,27 +309,39 @@ export default {
         }
       })
     },
-    getEventStyle (feature, options) {
+    getEventStyle (event, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
-      const color = kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color', 'blue'))
+      const color = kCoreUtils.getColorFromPalette(_.get(event, 'icon.color', 'blue'))
       return { 'color': color, 'fillColor': chroma(color).alpha(0.5).hex() } // Transparency
     },
-    getEventPopup (feature, layer, options) {
+    getEventPopup (event, layer, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
-      const description = _.get(feature, 'description')
+      const description = _.get(event, 'description')
       if (!description) return null
       const popup = L.popup({ autoPan: false }, layer)
       return popup.setContent(description)
     },
-    getEventTooltip (feature, layer, options) {
+    getEventTooltip (event, layer, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
       const tooltip = L.tooltip({ permanent: false }, layer)
-      const name = _.get(feature, 'name')
-      const date = new Date(_.get(feature, 'createdAt'))
+      const name = _.get(event, 'name')
+      const date = new Date(_.get(event, 'createdAt'))
       return tooltip.setContent('<b>' + name + '</b> - ' + this.formatDate(date))
+    },
+    getObjectivePopup (objective, layer, options) {
+      if (options.name !== this.$t('CatalogActivity.OBJECTIVES_LAYER')) return null
+
+      const description = _.get(objective, 'description')
+      return L.popup({ autoPan: false }, layer).setContent(description)
+    },
+    getObjectiveTooltip (objective, layer, options) {
+      if (options.name !== this.$t('CatalogActivity.OBJECTIVES_LAYER')) return null
+
+      const name = _.get(objective, 'name')
+      return L.tooltip({ permanent: false }, layer).setContent('<b>' + name + '</b>')
     },
     onSelectEventTemplateAction (data) {
       // Extract event location
@@ -318,7 +365,7 @@ export default {
           contextId: this.contextId,
           templateId: template._id,
         }, this.eventParams),
-        query: this.planId ? { plan: this.planId} : {}
+        query: this.planId ? { plan: this.planId } : {}
       })
     },
     onRemoveAlert (data) {
@@ -425,6 +472,8 @@ export default {
     this.registerStyle('popup', this.getEventPopup)
     this.registerStyle('markerStyle', this.getEventMarker)
     this.registerStyle('featureStyle', this.getEventStyle)
+    this.registerStyle('tooltip', this.getObjectiveTooltip)
+    this.registerStyle('popup', this.getObjectivePopup)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
     this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
     // Check if option has been subscribed

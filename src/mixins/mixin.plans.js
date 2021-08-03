@@ -23,9 +23,23 @@ const plansMixin = {
     hasPlanObjectives () {
       return (_.get(this.plan, 'objectives', []).length > 0)
     },
-    async loadPlan () {
-      if (!this.planId) this.plan = null
-      else this.plan = await this.$api.getService('plans', this.contextId).get(this.planId)
+    async loadPlan (query = {}) {
+      if (!this.planId) {
+        this.plan = null
+      } else {
+        this.plan = await this.$api.getService('plans', this.contextId).get(this.planId, { query })
+      }
+    },
+    onPlanUpdated (plan) {
+      if (this.plan && (plan._id === this.plan._id)) {
+        this.plan = plan
+      }
+    },
+    onPlanRemoved (plan) {
+      if (this.plan && (plan._id === this.plan._id)) {
+        this.plan = null
+        this.planId = null
+      }
     },
     getPlanQuery () {
       return {
@@ -52,6 +66,17 @@ const plansMixin = {
   },
   created () {
     this.refreshPlanId()
+    const plansService = this.$api.getService('plans', this.contextId)
+    // Keep track of changes once plan is loaded
+    plansService.on('patched', this.onPlanUpdated)
+    plansService.on('updated', this.onPlanUpdated)
+    plansService.on('removed', this.onPlanRemoved)
+  },
+  beforeDestroy () {
+    const plansService = this.$api.getService('plans', this.contextId)
+    plansService.off('patched', this.onPlanUpdated)
+    plansService.off('updated', this.onPlanUpdated)
+    plansService.off('removed', this.onPlanRemoved)
   }
 }
 

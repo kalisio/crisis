@@ -328,6 +328,7 @@
     "REMOVE_ALERT_ACTION": "Remove alert",
     "CREATE_EVENT_TITLE": "Select an event template",
     "CREATE_ALERT_TITLE": "Create a new alert ?",
+    "OBJECTIVES_LAYER": "My objectives",
     "EVENTS_LAYER": "My events",
     "ALERTS_LAYER": "My alerts",
     "ALERT_ACTIVE": "Active alert",
