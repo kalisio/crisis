@@ -407,7 +407,7 @@ export default {
     removeEvent () {
       Dialog.create({
         title: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: this.item.name }),
-        message: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: this.item.name }),
+        message: this.$t('EventCard.REMOVE_DIALOG_MESSAGE', { event: this.item.name }),
         html: true,
         ok: {
           label: this.$t('OK'),

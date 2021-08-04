@@ -101,12 +101,19 @@ export default {
     filterQuery () {
       let filter = {}
       if (this.selectedStep) {
-        Object.assign(filter, { lastInEvent: { $in: [true, false] }, step: this.selectedStep })
+        Object.assign(filter, {
+          lastInEvent: { $in: [true, false] },
+          step: this.selectedStep
+        })
         if (this.selectedInteraction) {
-          Object.assign(filter, { 'properties.interaction.value': this.selectedInteraction })
+          Object.assign(filter, {
+            'properties.interaction.value': this.selectedInteraction
+          })
         } else {
           const step = _.find(this.event.workflow, step => step.name === this.selectedStep)
-          if (step) Object.assign(filter, { 'properties.interaction.value': { $in: step.interaction.map(interaction => interaction.value) } })
+          if (step) Object.assign(filter, {
+            'properties.interaction.value': { $in: step.interaction.map(interaction => interaction.value) }
+          })
         }
       }
       return filter

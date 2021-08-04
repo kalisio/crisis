@@ -480,6 +480,7 @@ module.exports = {
         editItemAction('PlanCard.EDIT_ACTION', 'header', 'name'),
         removeItemAction('PlanCard.REMOVE_ACTION', 'header'),
         editItemAction('PlanCard.EDIT_ACTION', 'description'),
+        // Specific case of custom objective editor
         {
           id: 'edit-objectives', icon: 'las la-edit', tooltip: 'PlanCard.EDIT_ACTION', size: 'sm', 
           visible: 'canEditItem', handler: 'editObjectives', scope: 'objectives'
@@ -555,7 +556,12 @@ module.exports = {
     items: {
       actions: [
         editItemAction('EventCard.EDIT_ACTION', 'header', 'name'),
-        removeItemAction('EventCard.REMOVE_ACTION', 'header'),
+        // Specific case of event removal requiring notification
+        //removeItemAction('EventCard.REMOVE_ACTION', 'header'),
+        {
+          id: 'remove-item-header', scope: 'header', tooltip: 'EventCard.REMOVE_ACTION',
+          icon: 'las la-trash', size: 'sm', visible: 'canRemoveItem', handler: 'removeEvent'
+        },
         editItemAction('EventCard.EDIT_ACTION', 'description'),
         editItemAction('EventCard.EDIT_ACTION', 'objective'),
         editItemAction('EventCard.EDIT_ACTION', 'location'),
