@@ -64,6 +64,8 @@ function defineEventAbilities (subject, can, cannot) {
         if (role >= permissions.Roles.manager) {
           if (organisation._id) {
             can('all', 'event-templates', { context: organisation._id })
+            // FIXME: hard to fully express the fact that a plan coordinator should be able to access all archived events of the plan
+            can('all', 'archived-events', { context: organisation._id })
           }
         }
       })
