@@ -16,7 +16,7 @@ Il est possible de créer une alerte depuis le [catalogue cartographique](./cata
 
 Pour les prévisions météorologiques il vous suffit de faire un clic droit à la position où vous souhaitez surveiller les variations sur la carte. L'action vous permettant de créer une alerte <i class="las la-bell"></i> apparait alors dans le [menu contextuel](./catalog.md#menu-contextuel). De la même façon, elle apparait lors d'un clic droit sur la sonde où vous souhaitez surveiller les variations pour des données de mesures. Le composant permettant de paramétrer votre alerte est découpé en plusieurs sections:
   
-<i class="las la-clock la-2x"></i> La fréquence de vérification des conditions d'alerte ainsi que la plage temporelle d'analyse. Pour des mesures il s'agit de la plage de temps dans le passé au sein de laquelle sont recherchées les conditions de déclenchement. Pour les prévision météorologique il s'agit de la plage de temps dans le futur au sein de laquelle sont recherchées les conditions de déclenchement. 
+<i class="las la-clock la-2x"></i> La fréquence de vérification des conditions d'alerte ainsi que la plage temporelle d'analyse. Pour des mesures il s'agit de la plage de temps dans le passé au sein de laquelle sont recherchées les conditions de déclenchement. Pour les prévisions météorologiques il s'agit de la plage de temps dans le futur au sein de laquelle sont recherchées les conditions de déclenchement. 
 
 <i class="lab la-cloudversify la-2x"></i> Les conditions à satisfaire pour déclencher l'alerte sous la forme d'un seuil à (ou ne pas) dépasser pour chaque élément météorologique ou mesure d'intérêt parmi ceux disponibles.
 
