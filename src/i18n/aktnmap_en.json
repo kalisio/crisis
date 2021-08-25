@@ -512,6 +512,7 @@
   "ArchivedEventEntry": {
     "LOCATE_LABEL": "Location",
     "VIEW_LABEL": "Details",
+    "MAP_LABEL": "Map",    
     "BROWSE_MEDIA_LABEL": "$t(EventCard.BROWSE_MEDIA_LABEL)",
     "CREATED_AT_LABEL": "$t(EventCard.CREATED_AT_LABEL)",
     "UPDATED_AT_LABEL": "$t(EventCard.UPDATED_AT_LABEL)",
