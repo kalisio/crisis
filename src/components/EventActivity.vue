@@ -281,6 +281,10 @@ export default {
         this.$events.$emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
       }
       this.refreshParticipantsLayer()
+    },
+    goBack () {
+      if (this.archived) this.$router.push({ name: 'archived-events-activity' })
+      else this.$router.push({ name: 'events-activity' })
     }
   },
   created () {
