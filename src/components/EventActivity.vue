@@ -294,6 +294,10 @@ export default {
       // Manage the case the participant is not correctly populated
       this.items = _.uniqBy(this.items, (item) => _.get(item, 'participant._id', _.get(item, 'participant')))
       this.refreshParticipantsLayer()
+    },
+    goBack () {
+      if (this.archived) this.$router.push({ name: 'archived-events-activity' })
+      else this.$router.push({ name: 'events-activity' })
     }
   },
   created () {

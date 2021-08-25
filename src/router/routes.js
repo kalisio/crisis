@@ -223,7 +223,7 @@ module.exports = {
                     name: 'view-event',
                     component: 'viewer/KModalViewer',
                     props: true
-                  },
+                  }
                 },
                 tour: {
                   'archived-events-activity': tours['archived-events'],
