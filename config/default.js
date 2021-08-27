@@ -511,8 +511,8 @@ module.exports = {
           component: 'collection/KSorter', 
           tooltip: 'ArchivedPlansActivity.SORT_PLANS',
           options: [
-            { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
-            { icon: 'kdk:anticlockwise.png', value: { field: 'updatedAt', order: -1 }, default: true }
+            { icon: 'kdk:clockwise.png', value: { field: 'createdAt', order: 1 } },
+            { icon: 'kdk:anticlockwise.png', value: { field: 'createdAt', order: -1 }, default: true }
           ]
         }
       ]
@@ -720,8 +720,8 @@ module.exports = {
           component: 'collection/KSorter', 
           tooltip: 'ArchivedEventsActivity.SORT_EVENTS',
           options: [
-            { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
-            { icon: 'kdk:anticlockwise.png', value: { field: 'updatedAt', order: -1 }, default: true }
+            { icon: 'kdk:clockwise.png', value: { field: 'createdAt', order: 1 } },
+            { icon: 'kdk:anticlockwise.png', value: { field: 'createdAt', order: -1 }, default: true }
           ]
         }
       ]

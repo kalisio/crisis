@@ -189,28 +189,11 @@ export default {
       heatmap: false,
       byTemplate: false,
       heatmapRadius: 1,
+      //TODO
       sortBy: {
         label: this.$i18n.t('ArchivedEventsActivity.SORT_BY_CREATED_DATE_LABEL'),
         value: 'createdAt'
       },
-      sortOptions: [
-        {
-          label: this.$i18n.t('ArchivedEventsActivity.SORT_BY_CREATED_DATE_LABEL'),
-          value: 'createdAt'
-        },
-        {
-          label: this.$i18n.t('ArchivedEventsActivity.SORT_BY_UPDATED_DATE_LABEL'),
-          value: 'updatedAt'
-        },
-        {
-          label: this.$i18n.t('ArchivedEventsActivity.SORT_BY_DELETED_DATE_LABEL'),
-          value: 'deletedAt'
-        },
-        {
-          label: this.$i18n.t('ArchivedEventsActivity.SORT_BY_EXPIRED_DATE_LABEL'),
-          value: 'expireAt'
-        }
-      ],
       chartType: _.find(chartOptions, { value: 'pie' }),
       chartOptions,
       currentChart: 1,
