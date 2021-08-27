@@ -43,6 +43,13 @@ export default {
     }
   },
   computed: {
+    renderer () {
+      return _.merge({
+        component: 'ArchivedPlanCard',
+        service: 'archived-plans',
+        dense: this.$q.screen.lt.sm
+      }, this.activityOptions.items)
+    },
     baseQuery () {
       let query = _.clone(this.sorter.query)
       return query
@@ -51,11 +58,6 @@ export default {
   data () {
     return {
       // Make this configurable from app
-      renderer: _.merge({
-        component: 'ArchivedPlanCard',
-        service: 'archived-plans',
-        dense: true
-      }, this.activityOptions.items),
       filter: this.$store.get('filter'),
       sorter: this.$store.get('sorter'),
       height: undefined

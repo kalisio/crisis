@@ -15,13 +15,12 @@
     <template slot="card-content">
       <!-- Objectives section -->
       <k-card-section 
-        :key="item + '-objectives'"
-        :hide-header="!isExpanded"
+        v-if="isExpanded"
         :title="$t('ArchivedPlanCard.OBJECTIVES_SECTION')"
         :context="$props"
         :dense="dense"
       >
-        <div v-if="hasObjectives">
+        <div v-if="item.objectives">
           <k-chips-pane class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
         </div>
         <div v-else>
@@ -30,8 +29,7 @@
       </k-card-section>
       <!-- location section -->
       <k-card-section 
-        :key="item + '-location'"
-        :hide-header="!isExpanded"
+        v-if="isExpanded"
         :title="$t('ArchivedPlanCard.LOCATION_SECTION')" 
         :context="$props"
         :dense="dense"
@@ -50,8 +48,8 @@
       </k-card-section>
       <!-- coordinators section -->
       <k-card-section 
+        v-if="isExpanded"
         :title="$t('ArchivedPlanCard.COORDINATORS_SECTION')" 
-        :hide-header="!isExpanded"
         :context="$props">
         <k-chips-pane 
           class="q-pl-sm" 
@@ -90,9 +88,6 @@ export default {
       components.push({ component: 'QSpace '})
       components.concat(_.filter(this.itemActions, { scope: 'header' }))
       return components
-    },
-    hasObjectives () {
-      return !_.isEmpty(this.item.objectives)
     }
   },
   data () {

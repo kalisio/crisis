@@ -146,6 +146,13 @@ export default {
       if (!this.chartData.length || (this.nbValuesPerChart.value === 0)) return 1
       else return Math.ceil(this.chartData.length / this.nbValuesPerChart.value)
     },
+    renderer () {
+      return _.merge({
+        component: 'ArchivedEventCard',
+        service: 'archived-events',
+        dense: this.$q.screen.lt.sm
+      }, this.activityOptions.items)
+    },
     baseQuery () {
       return this.getPlanQuery()
     },
@@ -177,10 +184,6 @@ export default {
     }]
 
     return {
-      // Make this configurable from app
-      renderer: _.merge({
-        component: 'ArchivedEventCard',
-      }, this.activityOptions.items),
       filter: this.$store.get('filter'),
       topPane: this.$store.get('topPane'),
       heatmap: false,
