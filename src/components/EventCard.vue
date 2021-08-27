@@ -172,16 +172,6 @@ export default {
           component: 'QBadge', label: _.get(this.item, 'objective'), color: 'grey-7', multiLine: true
         })
         components.push({ component: 'QSpace '})
-        if (this.item.location) components.push({
-          id: 'location-map', component: 'frame/KPopupAction', tooltip: 'EventCard.VIEW_LOCATION_MAP', icon: 'las la-map-marker', content: [
-            this.getLocationMap()
-          ]
-        })
-        if (this.hasParticipants) components.push({
-           id: 'participants-list', component: 'frame/KPopupAction', tooltip: 'EventCard.VIEW_PARTICIPANTS', icon: 'las la-user-friends', content: [
-            { component: 'frame/KChipsPane', chips: this.item.participants, valuePath: ['profile.name', 'value', 'name'], class: 'q-pa-sm' }
-          ]
-        })
       }
       return components
     },

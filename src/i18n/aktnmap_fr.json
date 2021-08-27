@@ -551,6 +551,10 @@
     "SORT_EVENTS": "Trier les événements"
   },
   "ArchivedEventCard": {
+    "OPENED_LABEL": "Ouvert",
+    "UPDATED_AT_LABEL" : "Mise à jour le ",
+    "CLOSED_LABEL": "Clôturé",
+    "CLOSED_AT_LABEL": "Clôture lé ",
     "DESCRIPTION_SECTION": "Description",
     "OBJECTIVE_SECTION": "Objectif",
     "UNDEFINED_OBJECTIVE_LABEL": "Aucun objectif",    
@@ -562,8 +566,8 @@
     "COMMENT_SECTION": "Commentaire",
     "COORDINATORS_SECTION": "Coordonateurs",
     "CREATED_AT_LABEL": "Créé le",
-    "UPDATED_AT_LABEL": "Mis à jour le",
-    "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)"
+    "VIEW_MAP": "Voir la carte",
+    "BROWSE_MEDIA": "Voir les médias"
   },
   "EventTemplatesActivity": {
     "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)",
@@ -692,6 +696,10 @@
     "SORT_PLANS": "Trier les plans"
   },
   "ArchivedPlanCard": {
+    "OPENED_LABEL": "Ouvert",
+    "UPDATED_AT_LABEL" : "Mise à jour le ",
+    "CLOSED_LABEL": "Clôturé",
+    "CLOSED_AT_LABEL": "Clôture lé ",
     "OBJECTIVES_SECTION": "Objectifs",
     "NO_OBJECTIVES_LABEL": "Aucun objectif",
     "LOCATION_SECTION": "Localisation",

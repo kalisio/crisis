@@ -729,11 +729,11 @@ module.exports = {
     items: {
       actions: [
         { 
-          id: 'view-map', tooltip: 'ArchivedEventEntry.MAP_LABEL', icon: 'las la-map-marked-alt', handler: 'followUp',
+          id: 'view-map', tooltip: 'ArchivedEventCard.VIEW_MAP', icon: 'las la-map-marked-alt', handler: 'followUp',
           visible: { name: '$can', params: ['read', 'archived-events', ':contextId'] }, scope: 'footer'
         },
         { 
-          id: 'browse-media', tooltip: 'ArchivedEventEntry.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', handler: 'browseMedia',
+          id: 'browse-media', tooltip: 'ArchivedEventCard.BROWSE_MEDIA', icon: 'las la-photo-video', handler: 'browseMedia',
           visible: ['hasMedias', { name: '$can', params: ['read', 'archived-events', ':contextId'] }], scope: 'footer'
         }
       ]

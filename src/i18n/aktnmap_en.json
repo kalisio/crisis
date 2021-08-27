@@ -549,6 +549,10 @@
     "SORT_EVENTS": "Sort events"
   },
   "ArchivedEventCard": {
+    "OPENED_LABEL": "Opened",
+    "UPDATED_AT_LABEL" : "Updated at ",
+    "CLOSED_LABEL": "Closed",
+    "CLOSED_AT_LABEL": "Closed at ",
     "DESCRIPTION_SECTION": "Description",
     "OBJECTIVE_SECTION": "Objective",
     "UNDEFINED_OBJECTIVE_LABEL": "No objective",
@@ -559,9 +563,8 @@
     "NO_PARTICIPANTS_LABEL": "No participants",
     "COMMENT_SECTION": "Comment",
     "COORDINATORS_SECTION": "Coordinators",
-    "CREATED_AT_LABEL": "Created at",
-    "UPDATED_AT_LABEL": "Updated at",
-    "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)"
+    "VIEW_MAP": "View map",
+    "BROWSE_MEDIA": "View media"
   },
   "EventTemplatesActivity": {
     "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)",
@@ -690,6 +693,10 @@
     "SORT_PLANS": "Sort plans"
   },
   "ArchivedPlanCard": {
+    "OPENED_LABEL": "Opened",
+    "UPDATED_AT_LABEL" : "Updated at ",
+    "CLOSED_LABEL": "Closed",
+    "CLOSED_AT_LABEL": "Closed at ",
     "OBJECTIVES_SECTION": "Objectives",
     "NO_OBJECTIVES_LABEL": "No objectives",
     "LOCATION_SECTION": "Location",

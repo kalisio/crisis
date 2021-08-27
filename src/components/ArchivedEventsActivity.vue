@@ -180,7 +180,6 @@ export default {
       // Make this configurable from app
       renderer: _.merge({
         component: 'ArchivedEventCard',
-        dense: true
       }, this.activityOptions.items),
       filter: this.$store.get('filter'),
       topPane: this.$store.get('topPane'),

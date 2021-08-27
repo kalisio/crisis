@@ -15,15 +15,16 @@
        -->
       <template v-slot:card-content>
         <!-- Objective section -->
-        <k-card-section v-if="isExpanded"
+        <k-card-section 
+          v-if="isExpanded || item.objective"
           :key="item + '-objective'"
           :title="$t('ArchivedEventCard.OBJECTIVE_SECTION')" 
-          :context="$props"
+          :hideHeader="!isExpanded"
           :dense="dense"
         > 
           <q-badge v-if="item.objective" :label="objective" color="grey-7" :multi-line="true"/>
           <div v-else>
-            <k-stamp :text="'ArchivedEventCard.UNDEFINED_OBJECTIVE_LABEL'" direction="horizontal" />
+            <k-stamp text="ArchivedEventCard.UNDEFINED_OBJECTIVE_LABEL" direction="horizontal" />
           </div>
         </k-card-section>
         <!-- location section -->
@@ -38,7 +39,7 @@
             <k-popup-action id="location-map" icon="las la-map-marker" :content="[ getLocationMap() ]" />
           </div>
           <div v-else>
-            <k-stamp :text="'ArchivedEventCard.UNDEFINED_LOCATION_LABEL'" direction="horizontal" />
+            <k-stamp text="ArchivedEventCard.UNDEFINED_LOCATION_LABEL" direction="horizontal" />
           </div>
         </k-card-section>
         <!-- Participants section -->
@@ -64,18 +65,6 @@
         >
           <k-chips-pane class="q-pl-sm" :chips="item.coordinators" value-path="profile.name" />
         </k-card-section>
-        <!-- Timestamps section -->
-        <k-card-section v-if="isExpanded" :dense="dense">
-          <div v-if="createdAt || updatedAt">
-            <cite v-if="createdAt">
-              <small>{{$t('ArchivedEventCard.CREATED_AT_LABEL')}} {{createdAt.toLocaleString()}}</small>
-            </cite>
-            <br />
-            <cite v-if="updatedAt">
-              <small>{{$t('ArchivedEventCard.UPDATED_AT_LABEL')}} {{updatedAt.toLocaleString()}}</small>
-            </cite>
-          </div>
-        </k-card-section>
       </template>
     </k-card>
     <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
@@ -84,7 +73,7 @@
 
 <script>
 import _ from 'lodash'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
@@ -113,27 +102,18 @@ export default {
   },
   computed: {
     header () {
-      let components
-      if (this.isExpanded) {
-        components = _.filter(this.itemActions, { scope: 'header' })
-        components.splice(0, 0, { component: 'QSpace '})
+      let components = []
+      if (this.item.deletedAt) {
+        const deletedAtDate =  new Date(this.item.deletedAt).toLocaleString()
+        components.push({ component: 'QBadge', label: this.$t('ArchivedEventCard.CLOSED_LABEL'), color: 'black' }),
+        components.push({ component: 'frame/KStamp', text: this.$t('ArchivedEventCard.CLOSED_AT_LABEL') + deletedAtDate, textSize: '0.75rem', direction: 'horizontal' })
       } else {
-        components = []
-        if (this.item.objective) components.push({
-          component: 'QBadge', label: this.item.objective, color: 'grey-7', multiLine: true
-        })
-        components.push({ component: 'QSpace '})
-        if (this.item.location) components.push({
-          id: 'location-map', component: 'frame/KPopupAction', tooltip: 'ArchivedEventCard.LOCATION_SECTION', icon: 'las la-map-marker', content: [
-            this.getLocationMap()
-          ]
-        })
-        if (this.hasParticipants) components.push({
-           id: 'participants-list', component: 'frame/KPopupAction', tooltip: 'ArchivedEventCard.VIEW_PARTICIPANTS', icon: 'las la-user-friends', content: [
-            { component: 'frame/KChipsPane', chips: this.item.participants, valuePath: ['profile.name', 'value', 'name'], class: 'q-pa-sm' }
-          ]
-        })
+        const updatedAtDate =  new Date(this.item.updatedAt).toLocaleString()
+        components.push({ component: 'QBadge', label: this.$t('ArchivedEventCard.OPENED_LABEL'), color: 'green-7' })
+        components.push({ component: 'frame/KStamp', text: this.$t('ArchivedEventCard.UPDATED_AT_LABEL') + updatedAtDate, textSize: '0.75rem', direction: 'horizontal' })
       }
+      components.push({ component: 'QSpace '})
+      components.concat(_.filter(this.itemActions, { scope: 'header' }))
       return components
     },
     icon () {
