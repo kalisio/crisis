@@ -15,7 +15,7 @@
       <!--
         Events history: switch append-items on to activate infinite scroll
       -->
-      <div v-if="showHistory && height" class="row justify-center q-pa-lg">
+      <div v-if="showHistory && height" class="row justify-center q-pl-lg q-pr-none">
         <k-history
           style="padding-top: 80px;"
           id="history"
@@ -26,7 +26,7 @@
           :renderer="renderer" 
           :contextId="contextId" 
           :list-strategy="'smart'"
-          :height="height - 200">
+          :height="height - 124">
           <template slot="empty-history">
             <div class="absolute-center">
               <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
@@ -581,9 +581,6 @@ export default {
 </script>
 
 <style lang="stylus">
-body {
-  overflow: hidden; /* Hide scrollbars */
-}
 .chart {
   border: solid 1px lightgrey;
   border-radius: 8px;
