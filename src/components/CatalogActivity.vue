@@ -169,6 +169,17 @@ export default {
             label: this.$t('CatalogActivity.CREATE_EVENT_FEATURE_ACTION')
           })
         }
+        // Could be a population analysis
+        const populationService = this.$api.getService('population-insee')
+        if (populationService &&
+            (_.get(feature, 'geometry.type') === 'Polygon') || (_.get(feature, 'geometry.type') === 'MultiPolygon')) {
+          featureActions.push({
+            name: 'analyze-population',
+            icon: 'las la-users',
+            handler: this.onAnalyzePopulation,
+            label: this.$t('CatalogActivity.ANALYZE_POPULATION_FEATURE_ACTION')
+          })
+        }
       }
       return featureActions
     },
@@ -431,6 +442,55 @@ export default {
         }
         this.alertLayer = selectedLayer[0]
         this.$refs.alertModal.open()
+      }
+    },
+    async onAnalyzePopulation (data) {
+      const populationService = this.$api.getService('population-insee')
+      const properties = ['Ind', 'Ind_0_3','Ind_4_5', 'Ind_6_10', 'Ind_11_17', 'Ind_18_24',
+                          'Ind_25_39', 'Ind_40_54', 'Ind_55_64', 'Ind_65_79', 'Ind_80p']
+      // We aggregate all feature within the zone
+      const matchStage = {
+        geometry: {
+          $geoIntersects: {
+             $geometry: data.feature.geometry
+          }
+        }
+      }
+      let groupStage = {
+        _id: null
+      }
+      properties.forEach(property => {
+        groupStage[property] = { $sum: `$properties.${property}` }
+      })
+      // Now perform aggregation
+      const result = await populationService.find({ query: {
+        $aggregation: {
+          pipeline: [{
+            $match: matchStage
+          }, {
+            $group: groupStage
+          }]
+        }
+      }})
+      // Then display result
+      if (result.length) {
+        const formatter = new Intl.NumberFormat()
+        let html = ''
+        properties.forEach(property => {
+          const count = formatter.format(Math.round(result[0][property]))
+          html += this.$t(`PopulationClasses.${property}`) + `: ${count}</br>` 
+        })
+        await kCoreUtils.dialog({
+          title: this.$t('CatalogActivity.POPULATION_ANALYSIS'),
+          message: html,
+          html: true,
+          ok: {
+            label: this.$t('OK'),
+            flat: true
+          }
+        })
+      } else {
+        this.$toast({ message: this.$t('CatalogActivity.POPULATION_ANALYSIS_ERROR') })
       }
     },
     getTemplateModalButtons () {

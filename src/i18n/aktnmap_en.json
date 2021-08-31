@@ -72,6 +72,19 @@
     "PLAN_OBJECTIVE_DESCRIPTION_FIELD_LABEL": "Enter a description of this objective",
     "PLAN_OBJECTIVE_LOCATION_FIELD_LABEL": "Enter the location of this objective"
   },
+  "PopulationClasses": {
+    "Ind": "Total population",
+    "Ind_0_3": "< 3 years old",
+    "Ind_4_5": "4-5 years old",
+    "Ind_6_10": "6-10 years old",
+    "Ind_11_17": "11-17 years old",
+    "Ind_18_24": "18-24 years old",
+    "Ind_25_39": "25-39 years old",
+    "Ind_40_54": "40-54 years old",
+    "Ind_55_64": "55-64 years old",
+    "Ind_65_79": "65-79 years old",
+    "Ind_80p": "> 80 years old"
+  },
   "tours": {
     "side-nav": {
       "SIDENAV_LABEL": "Open the main menu any time using this handle.",
@@ -325,6 +338,7 @@
     "CREATE_WEATHER_ALERT_ACTION": "Create a weather alert",
     "CREATE_EVENT_FEATURE_ACTION": "Create an event on this object",
     "CREATE_EVENT_LOCATION_ACTION": "Create an event at this location",
+    "ANALYZE_POPULATION_FEATURE_ACTION": "Analyze population in this area",
     "REMOVE_ALERT_ACTION": "Remove alert",
     "CREATE_EVENT_TITLE": "Select an event template",
     "CREATE_ALERT_TITLE": "Create a new alert ?",
@@ -341,7 +355,9 @@
     "ALERT_GTE": "greater than threshold",
     "ALERT_LTE": "lower than threshold",
     "REMOVE_ALERT_DIALOG_TITLE": "Remove this alert ?",
-    "REMOVE_ALERT_DIALOG_MESSAGE": "Are you sure you want to remove this alert from your workspace ?"
+    "REMOVE_ALERT_DIALOG_MESSAGE": "Are you sure you want to remove this alert from your workspace ?",
+    "POPULATION_ANALYSIS": "Population analysis",
+    "POPULATION_ANALYSIS_ERROR": "Population analysis failed, please try again later or modify your parameters"
   },
   "AlertForm": {
     "TIME_PERIOD": "Analysis time period",

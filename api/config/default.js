@@ -20,6 +20,7 @@ const apiLimiterWhitelist = (service) =>
   service.path.includes('teleray') ||
   service.path.includes('vigicrues') ||
   service.path.includes('openradiation') ||
+  service.path.includes('population-insee') ||
   service.path.includes('arome') ||
   service.path.includes('arpege') ||
   service.path.includes('gfs')
