@@ -479,6 +479,7 @@
     "COORDINATORS_SECTION": "Coordonateurs",
     "CREATED_AT_LABEL": "Créé le",
     "UPDATED_AT_LABEL": "Mis à jour le",
+    "EXPIRE_AT_LABEL": "Expire le",
     "REMOVE_ACTION": "Clôturer",
     "EDIT_ACTION": "$t(EDIT_LABEL)",
     "FOLLOW_UP_LABEL": "Suivre",

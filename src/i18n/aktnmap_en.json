@@ -477,6 +477,7 @@
     "COORDINATORS_SECTION": "Coordinators",
     "CREATED_AT_LABEL": "Created at",
     "UPDATED_AT_LABEL": "Updated at",
+    "EXPIRE_AT_LABEL": "Expire at",
     "REMOVE_LABEL": "$t(REMOVE_LABEL)",
     "EDIT_LABEL": "$t(EDIT_LABEL)",
     "FOLLOW_UP_LABEL": "Follow up",

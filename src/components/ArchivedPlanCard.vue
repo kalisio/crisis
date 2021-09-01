@@ -20,12 +20,8 @@
         :context="$props"
         :dense="dense"
       >
-        <div v-if="item.objectives">
-          <k-chips-pane class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
-        </div>
-        <div v-else>
-          {{ $t('ArchivedPlanCard.NO_OBJECTIVES_LABEL')}}
-        </div>
+        <k-chips-pane v-if="item.objectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
+        <k-stamp v-else :text="'ArchivedPlanCard.NO_OBJECTIVES_LABEL'" direction="horizontal" />
       </k-card-section>
       <!-- location section -->
       <k-card-section 
@@ -34,27 +30,15 @@
         :context="$props"
         :dense="dense"
       >
-        <div v-if="item.location" class="row items-center justify-between no-wrap">
-          <k-text-area class="light-paragraph" :text="item.location.name" />
-          <k-popup-action 
-            id="location-map" 
-            icon="las la-map-marker" 
-            tooltip="ArchivedPlanCard.VIEW_LOCATION_MAP" 
-            :content="[ getLocationMap() ]" />
-        </div>
-        <div v-else>
-          <k-stamp :text="'ArchivedPlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
-        </div>
+        <k-location-map v-if="item.location" v-model="item.location" :editable="false" style="min-height: 220px;" />
+        <k-stamp v-else :text="'ArchivedPlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
       </k-card-section>
       <!-- coordinators section -->
       <k-card-section 
         v-if="isExpanded"
         :title="$t('ArchivedPlanCard.COORDINATORS_SECTION')" 
         :context="$props">
-        <k-chips-pane 
-          class="q-pl-sm" 
-          :chips="item.coordinators" 
-          :valuePath="['profile.name', 'value', 'name']" />
+        <k-chips-pane class="q-pl-sm" :chips="item.coordinators" :valuePath="['profile.name', 'value', 'name']" />
       </k-card-section>
     </template>
   </k-card>
@@ -112,7 +96,7 @@ export default {
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
     this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')
-    this.$options.components['k-popup-action'] = this.$load('frame/KPopupAction')
+    this.$options.components['k-location-map'] = this.$load('KLocationMap')
   }
 }
 </script>

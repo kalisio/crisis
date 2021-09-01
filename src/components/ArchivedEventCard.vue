@@ -16,35 +16,26 @@
       <template v-slot:card-content>
         <!-- Objective section -->
         <k-card-section 
-          v-if="isExpanded || item.objective"
-          :key="item + '-objective'"
+          v-if="isExpanded || objective"
           :title="$t('ArchivedEventCard.OBJECTIVE_SECTION')" 
           :hideHeader="!isExpanded"
           :dense="dense"
         > 
-          <q-badge v-if="item.objective" :label="objective" color="grey-7" :multi-line="true"/>
-          <div v-else>
-            <k-stamp text="ArchivedEventCard.UNDEFINED_OBJECTIVE_LABEL" direction="horizontal" />
-          </div>
+          <q-badge v-if="objective" :label="objective" color="grey-7" :multi-line="true"/>
+          <k-stamp v-else text="ArchivedEventCard.UNDEFINED_OBJECTIVE_LABEL" direction="horizontal" />
         </k-card-section>
         <!-- location section -->
-        <k-card-section v-if="isExpanded" 
-          :key="item + '-location'"
+        <k-card-section 
+          v-if="isExpanded" 
           :title="$t('ArchivedEventCard.LOCATION_SECTION')" 
           :context="$props"
           :dense="dense"
         >
-          <div v-if="item.location" class="row items-center justify-between no-wrap">
-            <k-text-area class="light-paragraph" :text="locationName" />
-            <k-popup-action id="location-map" icon="las la-map-marker" :content="[ getLocationMap() ]" />
-          </div>
-          <div v-else>
-            <k-stamp text="ArchivedEventCard.UNDEFINED_LOCATION_LABEL" direction="horizontal" />
-          </div>
+          <k-location-map v-if="item.location" v-model="item.location" :editable="false" style="min-height: 220px;" />
+          <k-stamp v-else text="ArchivedEventCard.UNDEFINED_LOCATION_LABEL" direction="horizontal" />
         </k-card-section>
         <!-- Participants section -->
         <k-card-section v-if="isExpanded"
-          :key="item + '-participants'"
           :title="$t('ArchivedEventCard.PARTICIPANTS_SECTION')" 
           :context="$props"
           :dense="dense"
@@ -64,6 +55,23 @@
           :dense="dense"
         >
           <k-chips-pane class="q-pl-sm" :chips="item.coordinators" value-path="profile.name" />
+        </k-card-section>
+        <!-- Timestamps section -->
+        <k-card-section 
+          v-if="isExpanded" 
+          :dense="dense">
+          <div v-if="createdAt || updatedAt || deletedAt">
+            <cite v-if="createdAt">
+              <small>{{ $t('ArchivedEventCard.CREATED_AT_LABEL') }} {{ createdAt.toLocaleString() }}</small>
+            </cite>
+            <br />
+            <cite v-if="deletedAt">
+              <small>{{ $t('ArchivedEventCard.CLOSED_AT_LABEL') }} {{ deletedAt.toLocaleString() }}</small>
+            </cite>
+            <cite v-else-if="updatedAt">
+              <small>{{ $t('ArchivedEventCard.UPDATED_AT_LABEL') }} {{ updatedAt.toLocaleString() }}</small>
+            </cite>
+          </div>
         </k-card-section>
       </template>
     </k-card>
@@ -103,14 +111,12 @@ export default {
   computed: {
     header () {
       let components = []
-      if (this.item.deletedAt) {
-        const deletedAtDate =  new Date(this.item.deletedAt).toLocaleString()
+      if (this.deletedAt) {
         components.push({ component: 'QBadge', label: this.$t('ArchivedEventCard.CLOSED_LABEL'), color: 'black' }),
-        components.push({ component: 'frame/KStamp', text: this.$t('ArchivedEventCard.CLOSED_AT_LABEL') + deletedAtDate, textSize: '0.75rem', direction: 'horizontal' })
+        components.push({ component: 'frame/KStamp', text: this.$t('ArchivedEventCard.CLOSED_AT_LABEL') + this.deletedAt.toLocaleString(), textSize: '0.75rem', direction: 'horizontal' })
       } else {
-        const updatedAtDate =  new Date(this.item.updatedAt).toLocaleString()
         components.push({ component: 'QBadge', label: this.$t('ArchivedEventCard.OPENED_LABEL'), color: 'green-7' })
-        components.push({ component: 'frame/KStamp', text: this.$t('ArchivedEventCard.UPDATED_AT_LABEL') + updatedAtDate, textSize: '0.75rem', direction: 'horizontal' })
+        components.push({ component: 'frame/KStamp', text: this.$t('ArchivedEventCard.UPDATED_AT_LABEL') + this.updatedAt.toLocaleString(), textSize: '0.75rem', direction: 'horizontal' })
       }
       components.push({ component: 'QSpace '})
       components.concat(_.filter(this.itemActions, { scope: 'header' }))
@@ -126,7 +132,7 @@ export default {
       return kCoreUtils.getIconName(this.item)
     },
     objective () {
-      return [this.item.objective]
+      return this.item.objective
     },
     locationName () {
       // Event generated from alert ?
@@ -140,6 +146,9 @@ export default {
     },
     updatedAt () {
       return this.item.updatedAt ? new Date(this.item.updatedAt) : null
+    },
+    deletedAt () {
+      return this.item.deletedAt ? new Date(this.item.deletedAt) : null
     }
   },
   data () {
@@ -188,7 +197,7 @@ export default {
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
     this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')
     this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
-    this.$options.components['k-popup-action'] = this.$load('frame/KPopupAction')
+    this.$options.components['k-location-map'] = this.$load('KLocationMap')
   },
   created () {
     // Required alias for the event logs mixin

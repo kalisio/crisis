@@ -10,29 +10,20 @@
     <template slot="card-content">
       <!-- Objectives section -->
       <k-card-section :title="$t('PlanCard.OBJECTIVES_SECTION')" :actions="objectivesActions">
-        <div v-if="hasObjectives">
-          <k-chips-pane class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
-        </div>
-        <div v-else>
-          {{ $t('PlanCard.NO_OBJECTIVES_LABEL')}}
-        </div>
+        <k-chips-pane v-if="hasObjectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
+        <k-stamp v-else :text="'PlanCard.NO_OBJECTIVES_LABEL'" direction="horizontal" />
       </k-card-section>
       <!-- location section -->
       <k-card-section :title="$t('PlanCard.LOCATION_SECTION')" :actions="locationActions" :context="$props">
         <k-location-map v-if="item.location" v-model="item.location" :editable="false" style="min-height: 220px;" />
-        <div v-else>
-          <k-stamp :text="'PlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
-        </div>
+        <k-stamp v-else :text="'PlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
       </k-card-section>
       <!-- coordinators section -->
       <k-card-section 
         :title="$t('PlanCard.COORDINATORS_SECTION')" 
         :actions="coordinatorsActions" 
         :context="$props">
-        <k-chips-pane 
-          class="q-pl-sm" 
-          :chips="item.coordinators" 
-          :value-path="['profile.name', 'value', 'name']" />
+        <k-chips-pane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
       </k-card-section>
       <!-- Events section -->
       <k-card-section :title="$t('PlanCard.EVENTS_SECTION')">
