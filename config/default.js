@@ -225,7 +225,7 @@ const baseLayers = {
   name: 'KCatalogPanel.BASE_LAYERS',
   icon: 'las la-layer-group',
   component: 'catalog/KBaseLayersSelector',
-  options: { exclusive: true, filter: { type: 'BaseLayer' } }
+  options: { filter: { type: 'BaseLayer' } }
 }
 const capturedLayers = {
   name: 'KCatalogPanel.CAPTURED_LAYERS',
@@ -247,10 +247,10 @@ const meteoLayers = {
 const defaultMapCatalog = {
   categories: [
     businessLayers,
-    baseLayers,
     capturedLayers,
     measureLayers,
-    meteoLayers
+    meteoLayers,
+    baseLayers
   ]
 }
 
