@@ -102,6 +102,11 @@ export default {
     }
   },
   watch: {
+    planId: {
+      async handler () {
+        this.loadPlan()
+      }
+    },
     plan: {
       handler () {
         if (this.plan) this.objectiveFilters = _.fill(Array(this.plan.objectives.length), false)
@@ -161,9 +166,6 @@ export default {
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
-  },
-  async created () {
-    await this.loadPlan()
   }
 }
 </script>
