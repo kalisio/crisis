@@ -29,6 +29,7 @@
 <script>
 import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import { permissions } from '@kalisio/kdk/core.common'
 
 const activityMixin = kCoreMixins.baseActivity()
 
@@ -59,6 +60,7 @@ export default {
     async configureActivity () {
       activityMixin.methods.configureActivity.call(this)
       // Fab actions
+      const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.contextId)      
       if (this.$can('create', 'plans', this.contextId)) {
         const actions = []
         const planTemplatesService = this.$api.getService('plan-templates')
@@ -77,16 +79,19 @@ export default {
           })
           const templates = response.data
           templates.forEach(template => {
-            // It is easier to access the DOM with template names, eg in tests, so we use it as action name whenever possible
-            // However we have to check about duplicated names
-            const doublons = templates.filter(otherTemplate => otherTemplate.name.toLowerCase() === template.name.toLowerCase())
-            actions.push({
-              id: 'create-' + (doublons.length > 1 ? template._id : template.name),
-              label: template.name,
-              icon: template.icon.name,
-              color: template.icon.color,
-              route: { name: 'create-plan', params: { contextId: this.contextId, templateId: template._id } }
-            })
+            const permissionRole = _.get(template, 'permission', 'member')
+            if (permissions.isSeniorRole(userRole, permissionRole)) {
+              // It is easier to access the DOM with template names, eg in tests, so we use it as action name whenever possible
+              // However we have to check about duplicated names
+              const doublons = templates.filter(otherTemplate => otherTemplate.name.toLowerCase() === template.name.toLowerCase())
+              actions.push({
+                id: 'create-' + (doublons.length > 1 ? template._id : template.name),
+                label: template.name,
+                icon: template.icon.name,
+                color: template.icon.color,
+                route: { name: 'create-plan', params: { contextId: this.contextId, templateId: template._id } }
+              })
+            }
           })
           offset = offset + batchSize
         }
@@ -100,6 +105,12 @@ export default {
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
+  },
+  created () {
+    this.$events.$on('user-changed', this.configureActivity)
+  },
+  beforeDestroy () {
+    this.$events.$off('user-changed', this.configureActivity)
   }
 }
 </script>
