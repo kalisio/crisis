@@ -36,6 +36,7 @@
     "EVENT_TEMPLATES_WORKFLOW_STAKEHOLDER_FIELD_LABEL": "Select the stakeholder (who is answering the question)",
     "EVENT_TEMPLATES_WORKFLOW_PARTICIPANT_LABEL": "Participant",
     "EVENT_TEMPLATES_WORKFLOW_COORDINATOR_LABEL": "Coordinator",
+    "EVENT_TEMPLATES_PERMISSION_FIELD_LABEL": "Choose who have the right to create an event from this template",
     "EVENTS_ADVANCED_SETTINGS": "Advanced settings",
     "EVENTS_CREATE_TITLE": "Create a new event ?",
     "EVENTS_NAME_FIELD_LABEL": "Enter the name of this event",
@@ -67,6 +68,7 @@
     "PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL": "Enter the objectives of this plan template",
     "PLANS_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Select default plan coordinators",
     "PLAN_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Select default plan coordinators",
+    "PLAN_TEMPLATES_PERMISSION_FIELD_LABEL": "Choose who have the right to create a plan from this template",
     "PLAN_OBJECTIVE_CREATE_TITLE": "Create a new objective ?",
     "PLAN_OBJECTIVE_NAME_FIELD_LABEL": "Enter the name of this objective",
     "PLAN_OBJECTIVE_DESCRIPTION_FIELD_LABEL": "Enter a description of this objective",
@@ -606,6 +608,7 @@
     "EXPIRY_DURATION_SECTION": "Expriy duration",
     "EXPIRY_DURATION_LABEL": "{{days}} days",
     "NO_EXPIRY_DURATION_LABEL": "No expriy duration",
+    "PERMISSION_SECTION": "Permission",
     "WORKFLOW_SECTION": "Workflow",
     "WORKFLOW_LABEL": "{{count}} step workflow",
     "NO_WORKFLOW_LABEL": "No workflow"
@@ -703,7 +706,8 @@
     "OBJECTIVES_SECTION": "Objectives",
     "NO_OBJECTIVES_LABEL": "No objectives",
     "COORDINATORS_SECTION": "Coordinators",
-    "NO_COORDINATORS_LABEL": "No coordinators"
+    "NO_COORDINATORS_LABEL": "No coordinators",
+    "PERMISSION_SECTION": "Permission"
   },
   "ArchivedPlansActivity": {
     "ARCHIVED_PLANS_LABEL": "Archived plans",

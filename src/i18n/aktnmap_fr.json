@@ -36,6 +36,7 @@
     "EVENT_TEMPLATES_WORKFLOW_STAKEHOLDER_FIELD_LABEL": "Sélectionnez la partie prenante (qui va répondre à la question)",
     "EVENT_TEMPLATES_WORKFLOW_PARTICIPANT_LABEL": "Participant",
     "EVENT_TEMPLATES_WORKFLOW_COORDINATOR_LABEL": "Coordonateur",
+    "EVENT_TEMPLATES_PERMISSION_FIELD_LABEL": "Choisissez qui a le droit de créer un événement depuis ce modèle",
     "EVENTS_ADVANCED_SETTINGS": "Paramètres avancés",
     "EVENTS_CREATE_TITLE": "Créer un nouvel événement ?",
     "EVENTS_NAME_FIELD_LABEL": "Saisissez le nom de l'événement",
@@ -68,6 +69,7 @@
     "PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL": "Saisissez les objectifs de ce modèle de plan",
     "PLAN_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Saisissez les coordinateurs par défaut du plan",
     "PLAN_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Saisissez les coordinateurs par défaut du plan",
+    "PLAN_TEMPLATES_PERMISSION_FIELD_LABEL": "Choisissez qui a le droit de créer un plan depuis ce modèle",
     "PLAN_OBJECTIVE_CREATE_TITLE": "Créér un nouvel objectif ?",
     "PLAN_OBJECTIVE_NAME_FIELD_LABEL": "Saisissez le nom de cet objectif",
     "PLAN_OBJECTIVE_DESCRIPTION_FIELD_LABEL": "Saisissez une description de cet objectif",
@@ -609,6 +611,7 @@
     "EXPIRY_DURATION_SECTION": "Durée d'expiration",
     "EXPIRY_DURATION_LABEL": "{{days}} jours",
     "NO_EXPIRY_DURATION_LABEL": "Aucune durée d'expiration",    
+    "PERMISSION_SECTION": "Permission",
     "WORKFLOW_SECTION": "Processus",
     "WORKFLOW_LABEL": "Processus en {{count}} étape(s)",
     "NO_WORKFLOW_LABEL": "Aucun processus"    
@@ -706,7 +709,8 @@
     "OBJECTIVES_SECTION": "Objectifs",
     "NO_OBJECTIVES_LABEL": "Aucun objectif",
     "COORDINATORS_SECTION": "Coordonnateurs",
-    "NO_COORDINATORS_LABEL": "Aucun coordonnateur"
+    "NO_COORDINATORS_LABEL": "Aucun coordonnateur",
+    "PERMISSION_SECTION": "Permission"
   },
   "ArchivedPlansActivity": {
     "ARCHIVED_PLANS_LABEL": "Archive",

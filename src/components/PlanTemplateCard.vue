@@ -34,6 +34,13 @@
           {{ $t('PlanTemplateCard.NO_COORDINATORS_LABEL')}}
         </div>
       </k-card-section>
+      <!-- Permission section -->
+      <k-card-section 
+        :title="$t('PlanTemplateCard.PERMISSION_SECTION')" 
+        :actions="permissionActions" 
+        :context="$props">
+        <q-badge :label="permission" color="grey-7" />
+      </k-card-section>
     </template>
   </k-card>
 </template>
@@ -57,6 +64,12 @@ export default {
     },
     hasCoordinators () {
       return !_.isEmpty(this.item.coordinators)
+    },
+    permission () {
+      return this.$t(_.upperCase(_.get(this.item, 'permission', 'member')))
+    },
+    permissionActions () {
+      return _.filter(this.itemActions, { scope: 'permission' })
     }
   },
   methods: {

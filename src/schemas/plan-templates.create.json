@@ -67,6 +67,14 @@
         "component": "form/KItemField",
         "label": "schemas.PLAN_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL"
       }
+    },
+    "permission": {
+      "type": "string",
+      "default": "member",
+      "field": {
+        "component": "form/KRoleField",
+        "label": "schemas.PLAN_TEMPLATES_PERMISSION_FIELD_LABEL"
+      }
     }
   },
   "required": ["name", "description"]

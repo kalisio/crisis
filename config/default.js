@@ -895,6 +895,7 @@ module.exports = {
         editItemAction('EventTemplateCard.EDIT_ACTION', 'participants'),
         editItemAction('EventTemplateCard.EDIT_ACTION', 'coordinators'),
         editItemAction('EventTemplateCard.EDIT_ACTION', 'expiryDuration'),
+        editItemAction('EventTemplateCard.EDIT_ACTION', 'permission'),
         addWorkflowAction('EventTemplateCard.ADD_WORKFLOW_ACTION'),
         editWorkflowAction('EventTemplateCard.EDIT_WORKFLOW_ACTION'),
         removeWorkflowAction('EventTemplateCard.REMOVE_WORKFLOW_ACTION'),
@@ -943,6 +944,7 @@ module.exports = {
           visible: 'canEditItem', handler: 'editObjectives', scope: 'objectives'
         },
         editItemAction('PlanTemplateCard.EDIT_ACTION', 'coordinators'),
+        editItemAction('EventTemplateCard.EDIT_ACTION', 'permission'),
         { 
           id: 'copy-plan-template', tooltip: 'PlanTemplateCard.COPY_ACTION', icon: 'las la-copy',
           visible: { name: '$can', params: ['update', 'plan-templates', ':contextId', ':item'] },

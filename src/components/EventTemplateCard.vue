@@ -49,6 +49,13 @@
           {{ $t('EventTemplateCard.NO_EXPIRY_DURATION_LABEL')}}
         </div>
       </k-card-section>
+      <!-- Permission section -->
+      <k-card-section 
+        :title="$t('EventTemplateCard.PERMISSION_SECTION')" 
+        :actions="permissionActions" 
+        :context="$props">
+        <q-badge :label="permission" color="grey-7" />
+      </k-card-section>
       <!-- Workflow section -->
       <k-card-section 
         :title="$t('EventTemplateCard.WORKFLOW_SECTION')" 
@@ -91,6 +98,12 @@ export default {
     },
     hasExpiryDuration () {
       return _.get(this.item, 'expiryDuration')
+    },
+    permission () {
+      return this.$t(_.upperCase(_.get(this.item, 'permission', 'member')))
+    },
+    permissionActions () {
+      return _.filter(this.itemActions, { scope: 'permission' })
     },
     workflowActions () {
       return _.filter(this.itemActions, { scope: 'workflow' })
