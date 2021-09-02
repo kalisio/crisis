@@ -68,7 +68,6 @@ function defineEventAbilities (subject, can, cannot, app) {
         if (role >= permissions.Roles.manager) {
           if (organisation._id) {
             can('all', 'event-templates', { context: organisation._id })
-            // FIXME: hard to fully express the fact that a plan coordinator should be able to access all archived events of the plan
             can('all', 'archived-events', { context: organisation._id })
           }
         }
@@ -89,8 +88,10 @@ function definePlanAbilities (subject, can, cannot, app) {
             can('service', organisation._id.toString() + '/plans')
             can('service', organisation._id.toString() + '/plan-templates')
             can('service', organisation._id.toString() + '/archived-plans')
-            // A user should be able to at least get information about running plans
-            can('read', 'plans', { context: organisation._id })
+            // A user can access the templates to create a plan
+            can('read', 'plan-templates', { context: organisation._id })
+            // A user can create plan and should be able to get information about running plans
+            can('create', 'plans', { context: organisation._id })
             // A coordinator can manage his plans
             can('all', 'plans', { context: organisation._id, 'coordinators._id': subject._id })
             can('read', 'archived-plans', { context: organisation._id, 'coordinators._id': subject._id })
@@ -116,13 +117,10 @@ function definePlanAbilities (subject, can, cannot, app) {
         }
         if (role >= permissions.Roles.manager) {
           if (organisation._id) {
-            // A manager can create a plan
-            can('create', 'plans', { context: organisation._id })
             can('all', 'plan-templates', { context: organisation._id })
+            can('read', 'archived-plans', { context: organisation._id })
           }
         }
-        // Check for plans the user is a coordinator to provide access to all archived events
-        // TODO
       })
     }
   }

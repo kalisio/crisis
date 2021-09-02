@@ -27,7 +27,7 @@ const plansMixin = {
       if (!this.planId) {
         this.plan = null
       } else {
-        this.plan = await this.$api.getService('plans', this.contextId).get(this.planId, { query })
+        this.plan = await this.$api.getService(this.planService, this.contextId).get(this.planId, { query })
       }
     },
     onPlanUpdated (plan) {
@@ -66,15 +66,17 @@ const plansMixin = {
     },
   },
   created () {
+    // Jump to archive whenever required
+    this.planService = (_.get(this.$route, 'name').includes('archived') ? 'archived-plans' : 'plans')
     this.refreshPlanId()
-    const plansService = this.$api.getService('plans', this.contextId)
+    const plansService = this.$api.getService(this.planService, this.contextId)
     // Keep track of changes once plan is loaded
     plansService.on('patched', this.onPlanUpdated)
     plansService.on('updated', this.onPlanUpdated)
     plansService.on('removed', this.onPlanRemoved)
   },
   beforeDestroy () {
-    const plansService = this.$api.getService('plans', this.contextId)
+    const plansService = this.$api.getService(this.planService, this.contextId)
     plansService.off('patched', this.onPlanUpdated)
     plansService.off('updated', this.onPlanUpdated)
     plansService.off('removed', this.onPlanRemoved)
