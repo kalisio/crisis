@@ -112,11 +112,9 @@ export default {
     header () {
       let components = []
       if (this.deletedAt) {
-        components.push({ component: 'QBadge', label: this.$t('ArchivedEventCard.CLOSED_LABEL'), color: 'black' }),
-        components.push({ component: 'frame/KStamp', text: this.$t('ArchivedEventCard.CLOSED_AT_LABEL') + this.deletedAt.toLocaleString(), textSize: '0.75rem', direction: 'horizontal' })
+        components.push({ component: 'QBadge', label: this.$t('ArchivedEventCard.CLOSED_LABEL'), color: 'black' })
       } else {
         components.push({ component: 'QBadge', label: this.$t('ArchivedEventCard.OPENED_LABEL'), color: 'green-7' })
-        components.push({ component: 'frame/KStamp', text: this.$t('ArchivedEventCard.UPDATED_AT_LABEL') + this.updatedAt.toLocaleString(), textSize: '0.75rem', direction: 'horizontal' })
       }
       components.push({ component: 'QSpace '})
       components.concat(_.filter(this.itemActions, { scope: 'header' }))

@@ -62,12 +62,10 @@ export default {
       let components = []
       if (this.item.deletedAt) {
         const deletedAtDate =  new Date(this.item.deletedAt).toLocaleString()
-        components.push({ component: 'QBadge', label: this.$t('ArchivedPlanCard.CLOSED_LABEL'), color: 'black' }),
-        components.push({ component: 'frame/KStamp', text: this.$t('ArchivedPlanCard.CLOSED_AT_LABEL') + deletedAtDate, textSize: '0.75rem', direction: 'horizontal' })
+        components.push({ component: 'QBadge', label: this.$t('ArchivedPlanCard.CLOSED_LABEL'), color: 'black' })
       } else {
         const updatedAtDate =  new Date(this.item.updatedAt).toLocaleString()
         components.push({ component: 'QBadge', label: this.$t('ArchivedPlanCard.OPENED_LABEL'), color: 'green-7' })
-        components.push({ component: 'frame/KStamp', text: this.$t('ArchivedPlanCard.UPDATED_AT_LABEL') + updatedAtDate, textSize: '0.75rem', direction: 'horizontal' })
       }
       components.push({ component: 'QSpace '})
       components.concat(_.filter(this.itemActions, { scope: 'header' }))

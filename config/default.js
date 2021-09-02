@@ -505,16 +505,7 @@ module.exports = {
     },
     bottomPane: {
       content: [
-        { component: 'time/KTimeRange' },
-        { 
-          id: 'archived-plan-sorter',
-          component: 'collection/KSorter', 
-          tooltip: 'ArchivedPlansActivity.SORT_PLANS',
-          options: [
-            { icon: 'kdk:clockwise.png', value: { field: 'createdAt', order: 1 } },
-            { icon: 'kdk:anticlockwise.png', value: { field: 'createdAt', order: -1 }, default: true }
-          ]
-        }
+        { component: 'time/KTimeRange' }
       ]
     },
     items: {
@@ -714,16 +705,7 @@ module.exports = {
     },
     bottomPane: {
       content: [
-        { component: 'time/KTimeRange' },
-        {
-          id: 'archived-plan-sorter',
-          component: 'collection/KSorter', 
-          tooltip: 'ArchivedEventsActivity.SORT_EVENTS',
-          options: [
-            { icon: 'kdk:clockwise.png', value: { field: 'createdAt', order: 1 } },
-            { icon: 'kdk:anticlockwise.png', value: { field: 'createdAt', order: -1 }, default: true }
-          ]
-        }
+        { component: 'time/KTimeRange' }
       ]
     },
     items: {
