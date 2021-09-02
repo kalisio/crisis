@@ -26,17 +26,22 @@ export default function (app) {
     }
   })
 
-  app.publish((data, hook) => {
+  app.publish(async (data, hook) => {
+    // We first filter built-in Feathers services like authentication
+    if (typeof hook.service.getPath !== 'function') {
+      return app.channel('authenticated').filter(connection => false)
+    }
     // Publish service events to authenticated users only
     // and take permissions into account
     const authorisationService = app.getService('authorisations')
-    return app.channel('authenticated').filter(connection => {
-      // We filter built-in Feathers services like authentication
-      if (typeof hook.service.getPath !== 'function') {
-        return false
-      }
-      // Build ability for user
-      const abilities = authorisationService.getAbilities(connection.user)
+    // Build ability for users
+    const usersAbilities = await Promise.all(app.channel('authenticated').connections.map(async connection => {
+      const abilities = await authorisationService.getAbilities(connection.user)
+      return abilities
+    }))
+    return app.channel('authenticated').filter((connection, index) => {
+      // Read abilities for user
+      const abilities = usersAbilities[index]
       const resourceType = hook.service.name
       const context = hook.service.context
       // Check for access to service fisrt

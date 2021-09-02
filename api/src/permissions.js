@@ -1,6 +1,10 @@
 import { permissions } from '@kalisio/kdk/core.common'
 
-function defineEventAbilities (subject, can, cannot) {
+// FIXME: this file is duplicated in the api folder
+// Indeed, permissions files are usually isomorphic files. However, when we tried to create a common folder
+// to share it between frontend/backend but experienced problems with webpack
+
+function defineEventAbilities (subject, can, cannot, app) {
   if (subject && subject._id) {
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {
@@ -73,7 +77,7 @@ function defineEventAbilities (subject, can, cannot) {
   }
 }
 
-function definePlanAbilities (subject, can, cannot) {
+function definePlanAbilities (subject, can, cannot, app) {
   if (subject && subject._id) {
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {
@@ -117,12 +121,14 @@ function definePlanAbilities (subject, can, cannot) {
             can('all', 'plan-templates', { context: organisation._id })
           }
         }
+        // Check for plans the user is a coordinator to provide access to all archived events
+        // TODO
       })
     }
   }
 }
 
-function defineBillingAbilities (subject, can, cannot) {
+function defineBillingAbilities (subject, can, cannot, app) {
   if (subject && subject._id) {
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {
@@ -139,10 +145,10 @@ function defineBillingAbilities (subject, can, cannot) {
 }
 
 // Hook computing contextual catalog, features, events, etc. abilities for a given user
-export function defineUserAbilities (subject, can, cannot) {
-  defineEventAbilities(subject, can, cannot)
-  definePlanAbilities(subject, can, cannot)
-  defineBillingAbilities(subject, can, cannot)
+export function defineUserAbilities (subject, can, cannot, app) {
+  defineEventAbilities(subject, can, cannot, app)
+  definePlanAbilities(subject, can, cannot, app)
+  defineBillingAbilities(subject, can, cannot, app)
 
   if (subject && subject._id) {
     if (subject.organisations) {
