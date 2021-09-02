@@ -47,7 +47,8 @@ const plansMixin = {
       }
     },
     refreshPlanId () {
-      this.planId = _.get(this.$route, 'query.plan', null)
+      const planId = _.get(this.$route, 'query.plan', null)
+      if (this.planId !== planId) this.planId = planId
     },
     getPlanObjectiveQuery () {
       if (_.isEmpty(this.objectiveFilters)) return {}

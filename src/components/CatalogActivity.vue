@@ -100,8 +100,15 @@ export default {
       this.events.refreshCollection()
       this.refreshObjectivesLayer()
     },
-    plan: function () {
-      this.refreshObjectivesLayer()
+    planId: {
+      async handler () {
+        await this.loadPlan({ geoJson: true, $select: ['objectives'] })
+      }
+    },
+    plan: {
+      handler () {
+        this.refreshObjectivesLayer()
+      }
     }
   },
   methods: {
@@ -240,8 +247,6 @@ export default {
       }
     },
     async refreshObjectivesLayer () {
-      // Reload plan as we'd like to have objectives as GeoJson
-      await this.loadPlan({ geoJson: true, $select: ['objectives'] })
       // Add a "virtual" layer for objectives if required
       const layer = this.getLayerByName(this.$t('CatalogActivity.OBJECTIVES_LAYER'))
       if (!layer) {

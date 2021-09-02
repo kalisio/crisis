@@ -104,7 +104,7 @@ export default {
   watch: {
     planId: {
       async handler () {
-        this.loadPlan()
+        await this.loadPlan()
       }
     },
     plan: {
