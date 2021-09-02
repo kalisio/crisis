@@ -56,7 +56,7 @@
       "services": [{
         "service": "members",
         "field": "profile.name",
-        "subfield": "email",
+        "description": "email",
         "baseQuery": {
           "$select": ["_id", "profile.name", "email"]
         },
@@ -67,7 +67,7 @@
       {
         "service": "groups",
         "field": "name",
-        "subfield": "description",
+        "description": "description",
         "baseQuery": {
           "$select": ["_id", "name", "description"]
         },
@@ -98,7 +98,7 @@
       "services": [{
         "service": "members",
         "field": "profile.name",
-        "subfield": "email",
+        "description": "email",
         "baseQuery": {
           "$select": ["_id", "email", "profile.name"]
         },

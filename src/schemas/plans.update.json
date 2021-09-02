@@ -36,7 +36,7 @@
       "services": [{
         "service": "members",
         "field": "profile.name",
-        "subfield": "email",
+        "description": "email",
         "baseQuery": {
           "$select": ["_id", "email", "profile.name"]
         },
