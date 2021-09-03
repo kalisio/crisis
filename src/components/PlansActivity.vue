@@ -64,34 +64,36 @@ export default {
       if (this.$can('create', 'plans', this.contextId)) {
         const actions = []
         const planTemplatesService = this.$api.getService('plan-templates')
-        let response = await planTemplatesService.find({
-          query: { $limit: 0 }
-        })
+        let response = await planTemplatesService.find({ query: { $limit: 0 } })
         const batchSize = 50
-        let batchCount = Math.floor(response.total, batchSize)
+        let batchCount = Math.floor(response.total / batchSize)
         const remainder = response.total % batchSize
         if (remainder > 0) batchCount++
         let offset = 0
         for (let i = 0; i < batchCount; i++) {
           response = await planTemplatesService.find({
-            query: { $skip: offset, $limit: batchSize },
-            $select: ['name', 'icon']
+             query: {
+              $or: [
+                { 'permission': { $exists: false } },
+                { 'permission': { $in: permissions.getJuniorRoles(userRole) } }
+              ],
+              $skip: offset, 
+              $limit: batchSize,
+              $select: ['name', 'icon']
+            }
           })
           const templates = response.data
           templates.forEach(template => {
-            const permissionRole = _.get(template, 'permission', 'member')
-            if (permissions.isSeniorRole(userRole, permissionRole)) {
-              // It is easier to access the DOM with template names, eg in tests, so we use it as action name whenever possible
-              // However we have to check about duplicated names
-              const doublons = templates.filter(otherTemplate => otherTemplate.name.toLowerCase() === template.name.toLowerCase())
-              actions.push({
-                id: 'create-' + (doublons.length > 1 ? template._id : template.name),
-                label: template.name,
-                icon: template.icon.name,
-                color: template.icon.color,
-                route: { name: 'create-plan', params: { contextId: this.contextId, templateId: template._id } }
-              })
-            }
+            // It is easier to access the DOM with template names, eg in tests, so we use it as action name whenever possible
+            // However we have to check about duplicated names
+            const doublons = templates.filter(otherTemplate => otherTemplate.name.toLowerCase() === template.name.toLowerCase())
+            actions.push({
+              id: 'create-' + (doublons.length > 1 ? template._id : template.name),
+              label: template.name,
+              icon: template.icon.name,
+              color: template.icon.color,
+              route: { name: 'create-plan', params: { contextId: this.contextId, templateId: template._id } }
+            })
           })
           offset = offset + batchSize
         }
