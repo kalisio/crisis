@@ -208,6 +208,17 @@ export default {
   },
   async created () {
     await this.updateCounts()
+    // Keep track of changes once loaded
+    const eventsService = this.$api.getService('events', this.item._id)
+    eventsService.on('created', this.updateCounts)
+    eventsService.on('patched', this.updateCounts)
+    eventsService.on('updated', this.updateCounts)
+  },
+  beforeDestroy () {
+    const eventsService = this.$api.getService('events', this.item._id)
+    eventsService.on('created', this.updateCounts)
+    eventsService.on('patched', this.updateCounts)
+    eventsService.on('updated', this.updateCounts)
   }
 }
 </script>

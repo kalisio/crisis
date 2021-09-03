@@ -118,10 +118,20 @@ export default {
   },
   async created () {
     this.$events.$on('user-changed', this.configureActivity)
-	// Build base query
+    // Build base query
     await this.updateBaseQuery()
+    // Keep track of changes once loaded
+    const eventsService = this.$api.getService('events', this.contextId)
+    eventsService.on('created', this.updateBaseQuery)
+    eventsService.on('patched', this.updateBaseQuery)
+    eventsService.on('updated', this.updateBaseQuery)
   },
   beforeDestroy () {
-    this.$events.$off('user-changed', this.configureActivity)  }
+    this.$events.$off('user-changed', this.configureActivity)
+    const eventsService = this.$api.getService('events', this.contextId)
+    eventsService.on('created', this.updateCounts)
+    eventsService.on('patched', this.updateCounts)
+    eventsService.on('updated', this.updateCounts)
+  }
 }
 </script>

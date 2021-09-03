@@ -83,6 +83,17 @@ export default {
   async created () {
     // Build base query
     await this.updateBaseQuery()
+    // Keep track of changes once loaded
+    const eventsService = this.$api.getService('events', this.contextId)
+    eventsService.on('created', this.updateBaseQuery)
+    eventsService.on('patched', this.updateBaseQuery)
+    eventsService.on('updated', this.updateBaseQuery)
+  },
+  beforeDestroy () {
+    const eventsService = this.$api.getService('events', this.contextId)
+    eventsService.on('created', this.updateCounts)
+    eventsService.on('patched', this.updateCounts)
+    eventsService.on('updated', this.updateCounts)
   }
 }
 </script>
