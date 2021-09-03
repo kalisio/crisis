@@ -13,7 +13,7 @@ import { Loading, Dialog } from 'quasar'
 import { permissions, mixins, beforeGuard } from '@kalisio/kdk/core.client'
 
 import config from 'config'
-import utils from '../utils'
+import * as utils from '../utils'
 
 export default {
   name: 'index',

@@ -91,6 +91,7 @@
 import logger from 'loglevel'
 import { permissions } from '@kalisio/kdk/core.common'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import * as utils from '../utils'
 
 export default {
   name: 'organisation-card',
@@ -158,6 +159,15 @@ export default {
       const response = await service.find({ query, $limit: 0 })
       return response.total
     },
+    async updateCounts () {
+      // Counts the number of orphan events
+      this.eventsCount = await this.countItems('events', { plan: { $eq: null } } )
+      // Then the number of plans the user has an event in
+      const values = await this.$api.getService('archived-events', this.item._id).find({
+        query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.item._id))
+      })
+      this.plansCount = await this.countItems('plans', { _id: { $in: values } })
+    },
     async loadBilling () {
       const organisationsService = this.$api.getService('organisations')
       const response = await organisationsService.get(this.item._id, { query: { $select: ['billing'] } })
@@ -197,9 +207,7 @@ export default {
     this.$options.components['k-action'] = this.$load('frame/KAction')
   },
   async created () {
-    // Counts the number of orphan events
-    this.eventsCount = await this.countItems('events', { plan: { $eq: null } } )
-    this.plansCount = await this.countItems('plans', { plan: { $eq: null } } )
+    await this.updateCounts()
   }
 }
 </script>

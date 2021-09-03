@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import sift from 'sift'
 import { Geolocation } from '@kalisio/kdk/map.client.map'
+import * as utils from '../utils'
 
 const eventsMixin = {
   data () {
@@ -291,24 +292,13 @@ const eventsMixin = {
         throw new Error('Cannot log state because form is not valid')
       }
     },
-    hasRoleInEvent (user, roles) {
-      return _.findIndex(roles, role => {
-        if ((role.service === 'members') && (role._id === user._id)) return true
-        if ((role.service === 'groups') ||
-            (role.service === 'tags') ||
-            (role.service === 'organisations')) {
-          if ([user].find(sift({ [role.service + '._id']: role._id }))) return true
-        }
-        return false
-      }) >= 0
-    },
     refreshUser () {
       const user = this.$store.get('user')
       if (user) {
         this.userId = user._id
         // Check user role in event
-        this.isParticipant = this.hasRoleInEvent(user, this.event.participants)
-        this.isCoordinator = this.hasRoleInEvent(user, this.event.coordinators)
+        this.isParticipant = utils.hasRoleInEvent(user, this.event.participants)
+        this.isCoordinator = utils.hasRoleInEvent(user, this.event.coordinators)
       }
     },
     uploaderOptions () {

@@ -57,6 +57,24 @@ export default {
       default: ''
     }
   },
+  data () {
+    return {
+      sorter: this.$store.get('sorter'),
+      filter: this.$store.get('filter'),
+      height: undefined
+    }
+  },
+  watch: {
+    async $route (to, from) {
+      // Need to refresh the fab because the plan has probably changed
+      await this.refreshFab()
+    },
+    plan: {
+      handler () {
+        this.refreshFab()
+      }
+    }
+  },
   computed: {
     renderer () {
       const dense = (this.planId ? true : this.$q.screen.lt.sm)
@@ -112,24 +130,6 @@ export default {
         },
         width: this.columnWidth
       }]
-    }
-  },
-  data () {
-    return {
-      sorter: this.$store.get('sorter'),
-      filter: this.$store.get('filter'),
-      height: undefined
-    }
-  },
-  watch: {
-    async $route (to, from) {
-      // Need to refresh the fab because the plan has probably changed
-      await this.refreshFab()
-    },
-    plan: {
-      handler () {
-        this.refreshFab()
-      }
     }
   },
   methods: {

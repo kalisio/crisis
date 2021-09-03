@@ -31,7 +31,7 @@ function defineEventAbilities (subject, can, cannot, app) {
             // can('read', 'events', { context: organisation._id, 'participants._id': organisation._id })
             // can('all', 'events', { context: organisation._id, 'coordinators._id': organisation._id })
             can('read', 'archived-events', { context: organisation._id, 'participants._id': subject._id })
-            can('read', 'archived-events', { context: organisation._id, 'coordinators._id': subject._id })
+            can('all', 'archived-events', { context: organisation._id, 'coordinators._id': subject._id })
           }
           if (subject.groups) {
             subject.groups.forEach(group => {
@@ -41,7 +41,7 @@ function defineEventAbilities (subject, can, cannot, app) {
                 // A coordinator can manage events in which his group is a coordinator
                 can('all', 'events', { context: organisation._id, 'coordinators._id': group._id })
                 can('read', 'archived-events', { context: organisation._id, 'participants._id': group._id })
-                can('read', 'archived-events', { context: organisation._id, 'coordinators._id': group._id })
+                can('all', 'archived-events', { context: organisation._id, 'coordinators._id': group._id })
               }
             })
           }
@@ -53,7 +53,7 @@ function defineEventAbilities (subject, can, cannot, app) {
                 // A coordinator can manage events in which his tag is a coordinator
                 can('all', 'events', { context: organisation._id, 'coordinators._id': tag._id })
                 can('read', 'archived-events', { context: organisation._id, 'participants._id': tag._id })
-                can('read', 'archived-events', { context: organisation._id, 'coordinators._id': tag._id })
+                can('all', 'archived-events', { context: organisation._id, 'coordinators._id': tag._id })
               }
             })
           }
@@ -95,6 +95,12 @@ function definePlanAbilities (subject, can, cannot, app) {
             // A coordinator can manage his plans
             can('all', 'plans', { context: organisation._id, 'coordinators._id': subject._id })
             can('read', 'archived-plans', { context: organisation._id, 'coordinators._id': subject._id })
+            // FIXME: A user can read running plans as we'd like it to see plans where he has an event
+            // Hard to express restrictions with current permissions system however as it will require
+            // request to the DB and to update abilities of all users involved in an event when creating/updating it.
+            // As a consequence filtering will be done at the frontend level for now.
+            can('read', 'plans', { context: organisation._id })
+            can('read', 'archived-plans', { context: organisation._id })
           }
           if (subject.groups) {
             subject.groups.forEach(group => {

@@ -3,7 +3,7 @@ import i18next from 'i18next'
 import VueI18next from '@panter/vue-i18next'
 import { Quasar } from 'quasar'
 import { utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import utils from '../utils'
+import * as utils from '../utils'
 import config from 'config'
 
 export default async ({ app, Vue }) => {
