@@ -3,7 +3,38 @@ import Vue from 'vue'
 import i18next from 'i18next'
 import VueI18next from '@panter/vue-i18next'
 
-function loadComponent (component) {
+export function hasRoleInEvent (user, roles) {
+  return _.findIndex(roles, role => {
+    if ((role.service === 'members') && (role._id === user._id)) return true
+    if ((role.service === 'groups') ||
+        (role.service === 'tags') ||
+        (role.service === 'organisations')) {
+      if ([user].find(sift({ [role.service + '._id']: role._id }))) return true
+    }
+    return false
+  }) >= 0
+}
+
+export function getEventsQuery (user, contextId) {
+  let ids = [user._id]
+  if (contextId) {
+    _.get(user, 'groups', []).forEach(group => {
+      if (group.context === contextId) ids.push(group._id)
+    })
+    _.get(user, 'tags', []).forEach(tag => {
+      if (tag.context === contextId) ids.push(tag._id)
+    })
+  }
+  return {
+    $or: [{
+      'participants._id': { $in: ids }
+    }, {
+      'coordinators._id': { $in: ids }
+    }]
+  }
+}
+
+export function loadComponent (component) {
   return () => {
     return import(`@kalisio/kdk/lib/core/client/components/${component}.vue`)
       .catch(errorCore => {
@@ -19,7 +50,7 @@ function loadComponent (component) {
   }
 }
 
-function loadSchema (schema) {
+export function loadSchema (schema) {
   return import(`@kalisio/kdk/lib/core/common/schemas/${schema}.json`)
     .catch(errorCore => {
       return import(`@kalisio/kdk/lib/map/common/schemas/${schema}.json`)
@@ -33,7 +64,7 @@ function loadSchema (schema) {
     })
 }
 
-function loadTranslation (module, locale) {
+export function loadTranslation (module, locale) {
   let translation = module + '_' + locale + '.json'
   return import(`@kalisio/kdk/lib/core/client/i18n/${translation}`)
     .catch(errorCore => {
@@ -47,7 +78,7 @@ function loadTranslation (module, locale) {
     })
 }
 
-function resolveAsset (asset) {
+export function resolveAsset (asset) {
   // If external URL simply use it
   if (asset.startsWith('http://') || asset.startsWith('https://')) return asset
   // Otherwise let webpack resolve asset
@@ -56,7 +87,7 @@ function resolveAsset (asset) {
 
 // We need this so that we can dynamically load the components
 // with a function that has previously been statically analyzed by the bundler (eg webpack)
-function load (name, type = 'component') {
+export function load (name, type = 'component') {
   switch (type) {
     case 'asset':
       return resolveAsset(name)
@@ -68,19 +99,19 @@ function load (name, type = 'component') {
   }
 }
 
-async function createComponent (component, options) {
+export async function createComponent (component, options) {
   const ComponentClass = await loadComponent(component)()
   const Component = Vue.extend(ComponentClass.default)
   return new Component(Object.assign({ i18n: new VueI18next(i18next) }, options))
 }
 
-async function createComponentVNode (component, options) {
+export async function createComponentVNode (component, options) {
   const ComponentClass = await loadComponent(component)()
   const Component = Vue.extend(ComponentClass.default)
   return this.$createElement(Component, Object.assign({ i18n: new VueI18next(i18next) }, options))
 }
 
-function buildRoutes (config) {
+export function buildRoutes (config) {
   function buildRoutesRecursively (config, routes, parentRoute) {
     _.forOwn(config, (value, key) => {
       // The key is always the path for the route
@@ -135,7 +166,7 @@ function buildRoutes (config) {
   return routes
 }
 
-function buildTours (config) {
+export function buildTours (config) {
   function buildToursRecursively (config, tours) {
     _.forOwn(config, (value, key) => {
       const name = _.get(value, 'name', _.get(value, 'path', key))
@@ -164,17 +195,3 @@ function buildTours (config) {
   buildToursRecursively(config, tours)
   return tours
 }
-
-let utils = {
-  loadComponent,
-  loadSchema,
-  loadTranslation,
-  resolveAsset,
-  load,
-  createComponent,
-  createComponentVNode,
-  buildRoutes,
-  buildTours
-}
-
-export default utils

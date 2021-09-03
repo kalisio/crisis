@@ -9,7 +9,7 @@
         service="plans" 
         :renderer="renderer" 
         :contextId="contextId"
-        :base-query="sorter.query" 
+        :base-query="baseQuery" 
         :filter-query="filter.query" 
         :list-strategy="'smart'">
         <template slot="empty-section">
@@ -30,6 +30,7 @@
 import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { permissions } from '@kalisio/kdk/core.common'
+import * as utils from '../utils'
 
 const activityMixin = kCoreMixins.baseActivity()
 
@@ -50,6 +51,7 @@ export default {
     return {
       sorter: this.$store.get('sorter'),
       filter: this.$store.get('filter'),
+      baseQuery: _.clone(this.$store.get('sorter')),
       // Make this configurable from app
       renderer: _.merge({
         component: 'PlanCard'
@@ -57,6 +59,14 @@ export default {
     }
   },
   methods: {
+    async updateBaseQuery () {
+      this.baseQuery = _.clone(this.sorter.query)
+      // We'd like to only display plans where the user has events
+      const values = await this.$api.getService('archived-events').find({
+        query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.contextId))
+      })
+      Object.assign(this.baseQuery, { _id: { $in: values } })
+    },
     async configureActivity () {
       activityMixin.methods.configureActivity.call(this)
       // Fab actions
@@ -108,11 +118,22 @@ export default {
     this.$options.components['k-grid'] = this.$load('collection/KGrid')
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
   },
-  created () {
+  async created () {
     this.$events.$on('user-changed', this.configureActivity)
+    // Build base query
+    await this.updateBaseQuery()
+    // Keep track of changes once loaded
+    const eventsService = this.$api.getService('events', this.contextId)
+    eventsService.on('created', this.updateBaseQuery)
+    eventsService.on('patched', this.updateBaseQuery)
+    eventsService.on('updated', this.updateBaseQuery)
   },
   beforeDestroy () {
     this.$events.$off('user-changed', this.configureActivity)
+    const eventsService = this.$api.getService('events', this.contextId)
+    eventsService.on('created', this.updateCounts)
+    eventsService.on('patched', this.updateCounts)
+    eventsService.on('updated', this.updateCounts)
   }
 }
 </script>

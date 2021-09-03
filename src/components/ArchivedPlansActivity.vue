@@ -32,6 +32,7 @@
 
 <script>
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import * as utils from '../utils'
 
 export default {
   name: 'archived-plans-activity',
@@ -49,10 +50,6 @@ export default {
         service: 'archived-plans',
         dense: this.$q.screen.lt.sm
       }, this.activityOptions.items)
-    },
-    baseQuery () {
-      let query = _.clone(this.sorter.query)
-      return query
     }
   },
   data () {
@@ -60,10 +57,19 @@ export default {
       // Make this configurable from app
       filter: this.$store.get('filter'),
       sorter: this.$store.get('sorter'),
+      baseQuery: _.clone(this.$store.get('sorter')),
       height: undefined
     }
   },
   methods: {
+    async updateBaseQuery () {
+      this.baseQuery = _.clone(this.sorter.query)
+      // We'd like to only display plans where the user has events
+      const values = await this.$api.getService('archived-events').find({
+        query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.contextId))
+      })
+      Object.assign(this.baseQuery, { _id: { $in: values } })
+    },
     onPageContentResized (size) {
       this.height = size.height - 110
     }
@@ -73,6 +79,21 @@ export default {
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-history'] = this.$load('collection/KHistory')
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
+  },
+  async created () {
+    // Build base query
+    await this.updateBaseQuery()
+    // Keep track of changes once loaded
+    const eventsService = this.$api.getService('events', this.contextId)
+    eventsService.on('created', this.updateBaseQuery)
+    eventsService.on('patched', this.updateBaseQuery)
+    eventsService.on('updated', this.updateBaseQuery)
+  },
+  beforeDestroy () {
+    const eventsService = this.$api.getService('events', this.contextId)
+    eventsService.on('created', this.updateCounts)
+    eventsService.on('patched', this.updateCounts)
+    eventsService.on('updated', this.updateCounts)
   }
 }
 </script>
