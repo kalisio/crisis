@@ -31,7 +31,7 @@ function defineEventAbilities (subject, can, cannot, app) {
             // can('read', 'events', { context: organisation._id, 'participants._id': organisation._id })
             // can('all', 'events', { context: organisation._id, 'coordinators._id': organisation._id })
             can('read', 'archived-events', { context: organisation._id, 'participants._id': subject._id })
-            can('all', 'archived-events', { context: organisation._id, 'coordinators._id': subject._id })
+            can('read', 'archived-events', { context: organisation._id, 'coordinators._id': subject._id })
           }
           if (subject.groups) {
             subject.groups.forEach(group => {
@@ -41,7 +41,7 @@ function defineEventAbilities (subject, can, cannot, app) {
                 // A coordinator can manage events in which his group is a coordinator
                 can('all', 'events', { context: organisation._id, 'coordinators._id': group._id })
                 can('read', 'archived-events', { context: organisation._id, 'participants._id': group._id })
-                can('all', 'archived-events', { context: organisation._id, 'coordinators._id': group._id })
+                can('read', 'archived-events', { context: organisation._id, 'coordinators._id': group._id })
               }
             })
           }
@@ -53,7 +53,7 @@ function defineEventAbilities (subject, can, cannot, app) {
                 // A coordinator can manage events in which his tag is a coordinator
                 can('all', 'events', { context: organisation._id, 'coordinators._id': tag._id })
                 can('read', 'archived-events', { context: organisation._id, 'participants._id': tag._id })
-                can('all', 'archived-events', { context: organisation._id, 'coordinators._id': tag._id })
+                can('read', 'archived-events', { context: organisation._id, 'coordinators._id': tag._id })
               }
             })
           }
@@ -68,7 +68,7 @@ function defineEventAbilities (subject, can, cannot, app) {
         if (role >= permissions.Roles.manager) {
           if (organisation._id) {
             can('all', 'event-templates', { context: organisation._id })
-            can('all', 'archived-events', { context: organisation._id })
+            can('read', 'archived-events', { context: organisation._id })
           }
         }
       })
