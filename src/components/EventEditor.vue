@@ -69,8 +69,9 @@ export default {
   methods: {
     getButtons () {
       return [
-        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
-        { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply()  }
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },        
+        { id: 'apply-and-notify-button', label: 'EventEditor.APPLY_AND_NOTIFY_BUTTON', outline: true, renderer: 'form-button', handler: () => this.onApplied(true) },
+        { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.onApplied(false)  },
       ]
     },
     async loadObject () {
@@ -161,15 +162,17 @@ export default {
     getBaseQuery (object) {
       // Overriden to handle notification messages
       const query = editorMixin.methods.getBaseQuery.call(this)
-      const notification = _.get(object, 'notification', true)
-      if (notification) {
+
+      //const notification = _.get(object, 'notification', true)
+      //if (notification) {
+      if (this.notify) {        
         if (this.getMode() === 'create') {
           query.notification = this.$t('EventNotifications.CREATE')
         } else if (this.getMode() === 'update') {
           query.notification = this.$t('EventNotifications.UPDATE')
         }
       }
-      _.unset(object, 'notification')
+      //_.unset(object, 'notification')
       return query
     },
     onFieldChanged (field, value) {
@@ -181,6 +184,10 @@ export default {
           delete this.object.workflow
         }
       }
+    },
+    onApplied (notify) {
+      this.notify = notify
+      this.apply()
     }
   },
   beforeCreate () {
