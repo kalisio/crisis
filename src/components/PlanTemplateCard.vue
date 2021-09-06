@@ -13,7 +13,7 @@
         :actions="objectivesActions" 
         :context="$props">
         <div v-if="hasObjectives">
-          <k-chips-pane class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
+          <k-chips-pane :chips="item.objectives" :value-path="'name'" />
         </div>
         <div v-else>
           {{ $t('PlanTemplateCard.NO_OBJECTIVES_LABEL')}}
@@ -26,7 +26,7 @@
         :context="$props">
         <div v-if="hasCoordinators">
           <k-chips-pane 
-            class="q-pl-sm" 
+
             :chips="item.coordinators" 
             :value-path="['profile.name', 'value', 'name']" />
         </div>
@@ -39,7 +39,7 @@
         :title="$t('PlanTemplateCard.PERMISSION_SECTION')" 
         :actions="permissionActions" 
         :context="$props">
-        <q-badge :label="permission" color="grey-7" />
+        <q-chip :label="permission" outline square dense color="grey-10" />
       </k-card-section>
     </template>
   </k-card>

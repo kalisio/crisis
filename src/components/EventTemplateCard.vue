@@ -14,7 +14,6 @@
         :context="$props">
         <div v-if="hasParticipants">
           <k-chips-pane 
-            class="q-pl-sm" 
             :chips="item.participants" 
             :value-path="['profile.name', 'value', 'name']" />
         </div>
@@ -29,7 +28,6 @@
         :context="$props">
         <div v-if="hasCoordinators">
           <k-chips-pane 
-            class="q-pl-sm" 
             :chips="item.coordinators" 
             :value-path="['profile.name', 'value', 'name']" />
         </div>
@@ -54,7 +52,7 @@
         :title="$t('EventTemplateCard.PERMISSION_SECTION')" 
         :actions="permissionActions" 
         :context="$props">
-        <q-badge :label="permission" color="grey-7" />
+        <q-chip :label="permission" outline square dense color="grey-10" />
       </k-card-section>
       <!-- Workflow section -->
       <k-card-section 
