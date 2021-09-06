@@ -130,17 +130,6 @@
         "component": "form/KItemField",
         "label": "schemas.EVENTS_COORDINATORS_FIELD_UPDATE_LABEL"
       }
-    },
-    "notification": {
-      "type": "boolean",
-      "group": "schemas.EVENTS_ADVANCED_SETTINGS",
-      "default": true,
-      "field": {
-        "component": "form/KToggleField",
-        "label": "schemas.EVENTS_NOTIFICATION_FIELD_UPDATE_LABEL",
-        "checked-icon": "notifications",
-        "unchecked-icon": "notifications_off"
-      }
     }
   },
   "required": ["name", "coordinators", "notification"]

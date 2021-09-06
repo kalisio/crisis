@@ -155,17 +155,6 @@
         "label": "schemas.EVENTS_HAS_WORKFLOW_FIELD_LABEL",
         "icon": "fa-retweet"
       }
-    },
-    "notification": {
-      "type": "boolean",
-      "group": "schemas.EVENTS_ADVANCED_SETTINGS",
-      "default": true,
-      "field": {
-        "component": "form/KToggleField",
-        "label": "schemas.EVENTS_NOTIFICATION_FIELD_CREATE_LABEL",
-        "checked-icon": "notifications",
-        "unchecked-icon": "notifications_off"
-      }
     }
   },
   "required": ["name", "hasWorkflow", "notification"]

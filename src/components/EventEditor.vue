@@ -68,9 +68,16 @@ export default {
   },
   methods: {
     getButtons () {
+      if (this.getMode() === 'create') {
+        return [
+          { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },        
+          { id: 'apply-button', label: this.applyButton, renderer: 'form-button', outline: true, handler: () => this.onApplied(false)  },
+          { id: 'apply-and-notify-button', label: 'EventEditor.CREATE_AND_NOTIFY_BUTTON', renderer: 'form-button', handler: () => this.onApplied(true) },
+        ]
+      }
       return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },        
-        { id: 'apply-and-notify-button', label: 'EventEditor.APPLY_AND_NOTIFY_BUTTON', outline: true, renderer: 'form-button', handler: () => this.onApplied(true) },
+        { id: 'apply-and-notify-button', label: 'EventEditor.UPDATE_AND_NOTIFY_BUTTON', outline: true, renderer: 'form-button', handler: () => this.onApplied(true) },
         { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.onApplied(false)  },
       ]
     },

@@ -635,7 +635,8 @@
     "REMOVE": "Clôturé"
   },
   "EventEditor": {
-    "APPLY_AND_NOTIFY_BUTTON": "Mettre à jour & notifier"
+    "CREATE_AND_NOTIFY_BUTTON": "Créer & notifier",
+    "UPDATE_AND_NOTIFY_BUTTON": "Mettre à jour & notifier"
   },
   "EventLogEditor": {
     "CLOSE_ACTION": "$t(CLOSE_LABEL)",
