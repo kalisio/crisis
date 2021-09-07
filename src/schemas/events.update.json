@@ -132,6 +132,6 @@
       }
     }
   },
-  "required": ["name", "coordinators", "notification"]
+  "required": ["name", "coordinators"]
 }
 

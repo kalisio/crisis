@@ -157,6 +157,6 @@
       }
     }
   },
-  "required": ["name", "hasWorkflow", "notification"]
+  "required": ["name", "hasWorkflow"]
 }
 
