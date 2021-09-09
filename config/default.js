@@ -60,8 +60,8 @@ const leftPane = function (tour) {
 const separator = { component: 'QSeparator', vertical: true, color: 'grey-5' }
 const midSeparator = { component: 'QSeparator', vertical: true, inset: true, color: 'grey-5', style: 'max-width: 1px; min-width: 1px;' }
 
-const currentActivityStamp = function (icon, text) {
-  return { component: 'frame/KStamp', icon, iconSize: 'sm', text, direction: 'horizontal', class: 'text-grey-7' }
+const currentActivityStamp = function (id, icon, text) {
+  return { id, component: 'frame/KStamp', icon, iconSize: 'sm', text, direction: 'horizontal', class: 'text-grey-7' }
 }
 
 const gotoActivityAction = function (service, icon, label, contextId) {
@@ -126,7 +126,7 @@ const planTemplatesAction = function (contextId = 'contextId') {
 
 const editItemAction = function (tooltip, scope = undefined, properties = undefined) {
   let id = 'edit-item'
-  if (scope) id += `${scope}`
+  if (scope) id += `-${scope}`
   return {
     id, scope, tooltip, icon: 'las la-edit', size: 'sm',
     visible: 'canEditItem', 
@@ -427,7 +427,7 @@ module.exports = {
     topPane: {
       content: {
         'default': [
-          currentActivityStamp('las la-grip-horizontal', 'KOrganisationsActivity.ORGANISATIONS_LABEL'),
+          currentActivityStamp('organisations', 'las la-grip-horizontal', 'KOrganisationsActivity.ORGANISATIONS_LABEL'),
           midSeparator,
           { id: 'organisation-sorter', component: 'collection/KSorter', tooltip: 'KOrganisationsActivity.SORT_ORGANISATIONS' },
           { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATIONS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
@@ -456,7 +456,7 @@ module.exports = {
         'default': [
           { component: 'OrganisationMenu', mode: 'plan' },
           separator,
-          currentActivityStamp('las la-stream', 'PlansActivity.PLANS_LABEL'),
+          currentActivityStamp('plans', 'las la-stream', 'PlansActivity.PLANS_LABEL'),
           archivedPlansAction(),
           midSeparator,
           { 
@@ -498,7 +498,7 @@ module.exports = {
           { component: 'OrganisationMenu', mode: 'plan' },
           separator,
           plansAction(),
-          currentActivityStamp('las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL'),         
+          currentActivityStamp('archived-plans', 'las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL'),         
         ],
         'filter': contextFilter('name')
       }
@@ -525,7 +525,7 @@ module.exports = {
           { component: 'OrganisationMenu', mode: 'run' },
           separator,
           { component: 'PlanMenu' },
-          currentActivityStamp('las la-fire', 'EventsActivity.EVENTS_LABEL'),
+          currentActivityStamp('events', 'las la-fire', 'EventsActivity.EVENTS_LABEL'),
           mapAction(), 
           archivedEventsAction(),
           midSeparator,
@@ -590,7 +590,7 @@ module.exports = {
           separator,
           { component: 'PlanMenu' },       
           eventsAction(),
-          currentActivityStamp('las la-map', 'Context.CATALOG'),
+          currentActivityStamp('catalog', 'las la-map', 'Context.CATALOG'),
           archivedEventsAction(),
           midSeparator,
           { component: 'KLocateUser' },
@@ -673,7 +673,7 @@ module.exports = {
           { component: 'PlanMenu' },
           eventsAction(),
           mapAction(),
-          currentActivityStamp('las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
+          currentActivityStamp('archived-events', 'las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
           midSeparator,
           { id: 'map-view', icon: 'las la-map-marked', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
           { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: 'onShowChart' },
@@ -735,7 +735,7 @@ module.exports = {
         'default': [
           { component: 'OrganisationMenu', mode: 'admin' },
           separator,
-          currentActivityStamp('las la-user-friends', 'KMembersActivity.MEMBERS_LABEL'),
+          currentActivityStamp('members', 'las la-user-friends', 'KMembersActivity.MEMBERS_LABEL'),
           tagsAction(),
           groupsAction(),
           eventTemplatesAction(),
@@ -803,7 +803,7 @@ module.exports = {
           { component: 'OrganisationMenu', mode: 'admin' },
           separator,          
           membersAction(),
-          currentActivityStamp('las la-tags', 'KTagsActivity.TAGS_LABEL'),
+          currentActivityStamp('tags', 'las la-tags', 'KTagsActivity.TAGS_LABEL'),
           groupsAction(),
           eventTemplatesAction(),
           planTemplatesAction(),
@@ -837,7 +837,7 @@ module.exports = {
           separator,
           membersAction(),
           tagsAction(),
-          currentActivityStamp('las la-sitemap', 'KGroupsActivity.GROUPS_LABEL'),
+          currentActivityStamp('groups', 'las la-sitemap', 'KGroupsActivity.GROUPS_LABEL'),
           eventTemplatesAction(),
           planTemplatesAction(),
           midSeparator,          
@@ -871,7 +871,7 @@ module.exports = {
           membersAction(),
           tagsAction(),
           groupsAction(),
-          currentActivityStamp('las la-fire', 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL'),
+          currentActivityStamp('event-templates', 'las la-fire', 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL'),
           planTemplatesAction(),
           midSeparator,
           { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
@@ -919,7 +919,7 @@ module.exports = {
           tagsAction(),
           groupsAction(),
           eventTemplatesAction(),
-          currentActivityStamp('las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL'),
+          currentActivityStamp('plan-templates', 'las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL'),
           midSeparator,
           { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } },

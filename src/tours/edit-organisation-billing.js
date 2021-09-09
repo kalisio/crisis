@@ -1,10 +1,4 @@
 module.exports = [{
-  target: '#billing',
-  content: 'tours.organisation.BILLING_LABEL',
-  params: {
-    placement: 'bottom'
-  }
-}, {
   target: '#customer-block',
   content: 'tours.organisation.CUSTOMER_LABEL',
   params: {
@@ -49,7 +43,7 @@ module.exports = [{
   content: 'tours.organisation.UPDATE_LABEL',
   params: {
     placement: 'left',
-    clickOnNext: '#close-action',
+    clickOnNext: '#close-button[1]',
     nextDelay: 500
   }
 }, {
@@ -89,21 +83,5 @@ module.exports = [{
   content: 'tours.organisation.CATALOG_PLAN_LABEL',
   params: {
     placement: 'top'
-  }
-}, {
-  target: '#properties',
-  link: 'tours.organisation.PROPERTIES_LABEL',
-  params: {
-    placement: 'bottom',
-    clickOnLink: '#properties',
-    tour: 'organisation-settings-activity/properties'
-  }
-}, {
-  target: '#danger-zone',
-  link: 'tours.organisation.DANGER_ZONE_LABEL',
-  params: {
-    placement: 'bottom',
-    clickOnLink: '#danger-zone',
-    tour: 'organisation-settings-activity/danger-zone'
   }
 }]

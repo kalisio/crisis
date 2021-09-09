@@ -103,7 +103,7 @@ By creating an organisation or a group you become the owner by default but you c
 
 ### <i class="las la-sitemap"></i> Group
 
-A **group** allows to *delegate* the management of a shared workspace limited to its members. Users outside the group will not see it, neither its members.
+A **group** allows to *delegate* the management of a shared workspace limited to its members. Users outside the group will not be able to interact with it.
 
 :point_right: You manage an organisation ? <tour-link text="How to manage your groups" path="home" :params="{ organisation: 'manager', route: 'groups-activity' }"/>
 

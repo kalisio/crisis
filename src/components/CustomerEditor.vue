@@ -110,12 +110,8 @@ export default {
     },
     getButtons () {
       return [
-        {
-          id: 'update-button',
-          label: this.$t('CustomerEditor.UPDATE_BUTTON'),
-          renderer: 'form-button',
-          color: 'primary',
-          handler: () => this.onUpdateClicked()
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },        
+        { id: 'update-button', label: this.$t('CustomerEditor.UPDATE_BUTTON'), renderer: 'form-button', color: 'primary', handler: () => this.onUpdateClicked()
         }
       ]
     },

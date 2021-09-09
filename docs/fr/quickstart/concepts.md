@@ -103,7 +103,7 @@ L'utilisateur qui créé une organisation ou un groupe en est par défaut le pro
 
 ### <i class="las la-sitemap"></i> Groupe
 
-Un **groupe** vous permet de *déléguer* la gestion d'un espace de travail restreint à ses membres. Les utilisateurs en dehors du groupe ne pourrons pas y accéder ni voir ses membres.
+Un **groupe** vous permet de *déléguer* la gestion d'un espace de travail restreint à ses membres. Les utilisateurs en dehors du groupe ne pourrons pas interagir avec lui.
 
 :point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos groupes" path="home" :params="{ organisation: 'manager', route: 'groups-activity' }"/>
 

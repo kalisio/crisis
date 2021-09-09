@@ -61,6 +61,14 @@ module.exports = [{
     clickOnLink: '#organisation-archived-events'
   }
 }, {
+  target: '#expand-action',
+  content: 'tours.organisations.MANAGEMENT_LABEL',
+  params: {
+    placement: 'top',
+    clickOnNext: '#expand-action',
+    clickOnPrevious: '#expand-action'
+  }
+}, {
   target: '#organisation-members',
   content: 'tours.organisations.MEMBERS_LABEL',
   link: 'tours.organisations.MEMBERS_LINK_LABEL',
@@ -86,30 +94,44 @@ module.exports = [{
   }
 }, {
   target: '#organisation-event-templates',
-  content: 'tours.organisations.TEMPLATES_LABEL',
-  link: 'tours.organisations.TEMPLATES_LINK_LABEL',
+  content: 'tours.organisations.EVENT_TEMPLATES_LABEL',
+  link: 'tours.organisations.EVENT_TEMPLATES_LINK_LABEL',
   params: {
     placement: 'right',
     clickOnLink: '#organisation-event-templates'
   }
 }, {
-  target: '#organisation-billing',
+  target: '#organisation-plan-templates',
+  content: 'tours.organisations.PLAN_TEMPLATES_LABEL',
+  link: 'tours.organisations.PLAN_TEMPLATES_LINK_LABEL',
+  params: {
+    placement: 'right',
+    clickOnLink: '#organisation-plan-templates'
+  }
+}, {
+  target: '#edit-billing',
+  content: 'tours.organisations.BILLING_LABEL',
+  link: 'tours.organisations.BILLING_LINK_LABEL',
+  params: {
+    placement: 'top',
+    clickOnLink: '#edit-billing'
+  }
+}, {
+  target: '#edit-item-description',
+  content: 'tours.organisations.DESCRIPTION_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#edit-item-header',
   content: 'tours.organisations.SETTINGS_LABEL',
   link: 'tours.organisations.SETTINGS_LINK_LABEL',
   params: {
-    placement: 'right',
-    clickOnLink: '#organisation-billing'
-  }
-}, {
-  target: '#edit-organisation',
-  content: 'tours.organisations.UPDATE_ORGANISATION_LABEL',
-  link: 'tours.organisations.SETTINGS_LINK_LABEL',
-  params: {
     placement: 'bottom',
-    clickOnLink: '#edit-organisation'
+    clickOnLink: '#edit-item-header'
   }
 }, {
-  target: '#remove-organisation',
+  target: '#remove-item-header',
   title: 'tours.organisations.REMOVE_ORGANISATION_LABEL',
   content: 'tours.organisations.REMOVE_CONFIRMATION_LABEL',
   params: {
