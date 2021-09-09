@@ -134,13 +134,13 @@ const editItemAction = function (tooltip, scope = undefined, properties = undefi
   }
 }
 
-const removeItemAction = function (tooltip, scope = undefined) {
+const removeItemAction = function (tooltip, scope = undefined, prompt = 'confirm') {
   let id = 'remove-item'
   if (scope) id += `-${scope}`
   return {
     id, scope, tooltip, icon: 'las la-trash', size: 'sm',
     visible: 'canRemoveItem',
-    handler: { name: 'removeItem', params: ['confirm'] }
+    handler: { name: 'removeItem', params: [prompt] }
   }
 }
 
@@ -444,7 +444,7 @@ module.exports = {
       component: 'OrganisationCard',
       actions: [
         editItemAction('OrganisationCard.EDIT_ACTION', 'header', "name,avatar,color"),
-        removeItemAction('OrganisationCard.REMOVE_ACTION', 'header'),
+        removeItemAction('OrganisationCard.REMOVE_ACTION', 'header', 'input'),
         editItemAction('OrganisationCard.EDIT_ACTION', 'description')
       ]
     }
@@ -547,8 +547,6 @@ module.exports = {
     items: {
       actions: [
         editItemAction('EventCard.EDIT_ACTION', 'header', 'name'),
-        // Specific case of event removal requiring notification
-        //removeItemAction('EventCard.REMOVE_ACTION', 'header'),
         {
           id: 'remove-item-header', scope: 'header', tooltip: 'EventCard.REMOVE_ACTION',
           icon: 'las la-trash', size: 'sm', visible: 'canRemoveItem', handler: 'removeEvent'

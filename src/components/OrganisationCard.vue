@@ -17,7 +17,10 @@
       Card content
      -->
     <div slot="card-content">
-      <k-card-section :title="$t('OrganisationCard.EVENTS_SECTION')">
+      <k-card-section 
+        :title="$t('OrganisationCard.EVENTS_SECTION')"
+        :hide-header="!isExpanded"
+      >
         <!-- Events section -->
         <div class="full-width row justify-between items-center no-wrap">
           <k-action 
@@ -41,7 +44,11 @@
         </div>
       </k-card-section>
       <!-- Plans section -->
-      <k-card-section v-if="canAccessPlans" :title="$t('OrganisationCard.PLANS_SECTION')">
+      <k-card-section 
+        v-if="canAccessPlans" 
+        :title="$t('OrganisationCard.PLANS_SECTION')"
+        :hide-header="!isExpanded"
+      >
         <div class="full-width row justify-between items-center no-wrap">
           <k-action 
             id= "organisation-plans"
@@ -115,11 +122,12 @@ export default {
   },
   computed: {
     header () {
-      let components = _.filter(this.itemActions, { scope: 'header' })
-      components.splice(0, 0, 
+      let components = [
         { component: 'QBadge', label: this.getUserRoleLabel(), color: 'grey-7' },
         { component: 'frame/KSpot', color: this.item.color, width: '20px', borderRadius: '5px' },
-        { component: 'QSpace' })
+        { component: 'QSpace' }
+      ]
+      if (this.isExpanded) components = components.concat(_.filter(this.itemActions, { scope: 'header' }))
       return components
     },
     canAccessPlans () {
