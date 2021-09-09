@@ -21,11 +21,11 @@ Vous pourrez ensuite suivre les instructions pas à pas <a href=""><i class="las
 ![tour](../../assets/Tour-FR.png)
 
 ::: tip Astuce
-Lorsque vous voyez un label *beta* sur un élément de l'interface utilisateur (par exemple sur un bouton), cela signifie que la fonctionnalité est actuellement en *bêta test*. C'est à dire qu'il s'agit d'une première version et qu'en vue de son amélioration nous receuillons les commentaires et suggestions de nos utilisateurs.
+Lorsque vous voyez un label *beta* sur un élément de l'interface utilisateur (par exemple sur un bouton), cela signifie que la fonctionnalité est actuellement en *bêta test*. C'est à dire qu'il s'agit d'une première version et qu'en vue de son amélioration nous recueillons les commentaires et suggestions de nos utilisateurs.
 :::
 
 ::: warning Attention
-Akt'n'Map s'améliore et évolue de façon continue. Aussi, ce qui s’affiche sur votre écran peut parfois diffèrer de ce que vous lirez et verrez dans cette documentation, mais les concepts clés restent les mêmes.
+Akt'n'Map s'améliore et évolue de façon continue. Aussi, ce qui s’affiche sur votre écran peut parfois différer de ce que vous lirez et verrez dans cette documentation, mais les concepts clés restent les mêmes.
 :::
 
 ## Activité
