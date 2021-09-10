@@ -133,37 +133,43 @@ export default {
             // TODO: manage a set of features
           }
         }
+        this.updateSchema()
       } else {
         // Otherwise proceed as usual to load the event object
         return kCoreMixins.objectProxy.methods.loadObject.call(this)
+      }
+    },
+    updateSchema () {
+      // Not yet loaded ?
+      if (!this.schema) return
+      // When a template is provided check for workflow availability
+      if (this.template) {
+        // Remove workflow from schema if not present in template
+        if (_.isNil(this.template.workflow)) {
+          _.unset(this.schema, 'properties.hasWorkflow')
+          _.pull(this.schema.required, 'hasWorkflow')
+        }
+      }
+      // When a plan is provide add objective edition and remove expiration date
+      if (!_.isEmpty(this.plan)) {
+        // Take into account properties filtering
+        if (_.has(this.schema.properties, 'objective')) {
+          _.set(this.schema, 'properties.objective.field.options',
+            _.get(this.plan, 'objectives', []).map(objective => ({ label: objective.name, value: objective.name }))
+          )
+        }
+        _.unset(this.schema, 'properties.expireAt')
+        _.pull(this.schema.required, 'expireAt')
+      } else {
+        _.unset(this.schema, 'properties.objective')
       }
     },
     async loadSchema () {
       // Call super
       // Start from schema and clone it because it will be shared by all editors
       let schema = _.cloneDeep(await kCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName()))
-      // When a plan is provide add objective edition and remove expiration date
-      if (!_.isEmpty(this.plan)) {
-        // Take into account properties filtering
-        if (_.has(schema.properties, 'objective')) {
-          _.set(schema, 'properties.objective.field.options',
-            _.get(this.plan, 'objectives', []).map(objective => ({ label: objective.name, value: objective.name }))
-          )
-        }
-        _.unset(schema, 'properties.expireAt')
-        _.pull(schema.required, 'expireAt')
-      } else {
-        _.unset(schema, 'properties.objective')
-      }
-      // When a template is provided check for workflow availability
-      if (this.template) {
-        // Remove workflow from schema if not present in template
-        if (_.isNil(this.template.workflow)) {
-          _.unset(schema, 'properties.hasWorkflow')
-          _.pull(schema.required, 'hasWorkflow')
-        }
-      }
       this.schema = schema
+      this.updateSchema()
       return this.schema
     },
     getBaseQuery (object) {
