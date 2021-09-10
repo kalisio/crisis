@@ -1,4 +1,4 @@
-# Logbook
+# <i class="las la-clipboard-list"></i> Logbook
 
 The **logbook** is a long-term archive of your [events](../quickstart/concepts.md#event). It offers a complete traceability of your events with relevant statistics through charts or maps.
 

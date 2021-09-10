@@ -2,7 +2,7 @@
 sidebarDepth: 3
 ---
 
-# Mapping catalog
+# <i class="las la-map"></i> Mapping catalog
 
 The catalog activity allows to visualise and interact with data on a digital map. Driven by today's most advanced web technologies, it enables tracking of geospatial assets in real-time.
 

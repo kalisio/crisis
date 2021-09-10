@@ -1,4 +1,4 @@
-# Main courante
+# <i class="las la-clipboard-list"></i> Main courante
 
 La **main courante** propose un archivage long-terme de vos [événements](../quickstart/concepts.md#evenement). Elle vous permet ainsi d'assurer une traçabilité complète de vos opérations et la production de statistiques sous forme de graphiques ou de cartes.
 

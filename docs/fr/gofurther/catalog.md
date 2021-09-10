@@ -2,7 +2,7 @@
 sidebarDepth: 3
 ---
 
-# Catalogue cartographique
+# <i class="las la-map"></i> Catalogue cartographique
 
 Le catalogue cartographique permet de visualiser et d'interagir avec une carte numérique. Grâce aux technologies web les plus avancées, il permet le suivi de données géospatiales en temps-réel.
 

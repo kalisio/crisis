@@ -1,4 +1,4 @@
-# Environmental alerts
+# <i class="las la-bell"></i> Environmental alerts
 
 **Environmental alerts** automatically generates an [event](../quickstart/concepts.md#event) whenever specific conditions are met within your region in our environmental data. Typically it can be:
 * dangerous meteorological conditions to identify like a wind speed greater than 100 Km/h in a given area,

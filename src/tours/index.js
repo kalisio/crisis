@@ -16,7 +16,7 @@ module.exports = {
   members: require('./core/members'),
   'add-member': require('./core/add-member'),
   'join-group': require('./core/join-group'),
-  'tag-member': require('./core/tag-member'),
+  'edit-member-tags': require('./core/edit-member-tags'),
   tags: require('./core/tags'),
   'side-nav': require('./side-nav'),
   events: require('./events'),

@@ -1,4 +1,4 @@
-# Alertes environnementales
+# <i class="las la-bell"></i> Alertes environnementales
 
 Les **alertes environnementales** permettent de générer un [événement](../quickstart/concepts.md#evenement) de façon automatique dès lors que des conditions spécifiques se rencontrent sur votre territoire au sein de nos données environnementales. Typiquement il s'agit de détecter:
 * des conditions météorologiques dangereuses à surveiller comme par exemple une vitesse de vent supérieure à 100 Km/h sur une zone sensible,

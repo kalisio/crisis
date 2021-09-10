@@ -143,7 +143,7 @@ The participants and coordinators of an event can be selected as:
   * tags.
 
 ::: tip
-By creating an event you become the coordinator by default but you can share this responsibility with others by make them a coordinator as well.
+By creating an event you become the coordinator by default but you can share this responsibility with others by adding them as a coordinator as well.
 :::
 
 The following figure shows a standard configuration in the application and how events can target different users at different levels:
@@ -185,7 +185,7 @@ A coordinator can update and close (i.e. destroy) an event, and change its set o
 
 His has also access to a *cartographic view* summarizing the position and state of each participant according to the [workflow](../gofurther/workflow.md).
 
-## Subscription plans
+## Subscriptions
 
 Each organisation is subscribed to a **basic plan** defining resource limits enforced to its members within the application.
 
