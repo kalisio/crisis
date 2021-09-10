@@ -37,10 +37,17 @@ module.exports = [{
     placement: 'right'
   }
 }, {
-  target: '#edit-event-template',
+  target: '#edit-item-header',
   content: 'tours.event-templates.UPDATE_TEMPLATE_LABEL',
   params: {
     placement: 'bottom'
+  }
+}, {
+  target: '#edit-item-description',
+  title: 'tours.event-templates.UPDATE_DESCRIPTION_LABEL',
+  content: 'tours.event-templates.UPDATE_PROPERTIES_LABEL',
+  params: {
+    placement: 'right'
   }
 }, {
   target: '#copy-event-template',
@@ -49,10 +56,30 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#remove-event-template',
+  target: '#remove-item-header',
   title: 'tours.event-templates.REMOVE_TEMPLATE_LABEL',
   content: 'tours.event-templates.REMOVE_CONFIRMATION_LABEL',
   params: {
     placement: 'left'
+  }
+}, {
+  target: '#add-item-workflow',
+  title: 'tours.event-templates.ADD_WORKFLOW_LABEL',
+  link: 'tours.event-templates.WORKFLOW_LINK_LABEL',
+  params: {
+    placement: 'top',
+    clickOnLink: '#add-item-workflow'
+  }
+}, {
+  target: '#edit-item-workflow',
+  title: 'tours.event-templates.EDIT_WORKFLOW_LABEL',
+  params: {
+    placement: 'top'
+  }
+}, {
+  target: '#remove-item-workflow',
+  title: 'tours.event-templates.REMOVE_WORKFLOW_LABEL',
+  params: {
+    placement: 'top'
   }
 }]

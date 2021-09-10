@@ -23,6 +23,7 @@ module.exports = {
   'create-event': require('./create-event'),
   'event-templates': require('./event-templates'),
   'create-event-templates': require('./create-event-templates'),
+  'edit-event-template-workflow': require('./edit-event-template-workflow'),
   catalog: require('./catalog'),
   'navigation-bar': require('./map/navigation-bar'),
   'favorite-views': require('./map/favorite-views'),

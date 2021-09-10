@@ -321,7 +321,8 @@ module.exports = {
                         perspective: 'workflow',
                         perspectiveAsObject: false
                       } 
-                    }
+                    },
+                    tour: tours['edit-event-template-workflow']
                   }
                 },
                 tour: tours['event-templates']

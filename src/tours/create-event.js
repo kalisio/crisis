@@ -50,6 +50,12 @@ module.exports = [{
     placement: 'top'
   }
 }, {
+  target: '#apply-and-notify-button',
+  content: 'tours.create-event.CREATE_EVENT_NOTIFICATION_LABEL',
+  params: {
+    placement: 'left'
+  }
+}, {
   target: '#apply-button',
   content: 'tours.create-event.CREATE_EVENT_LABEL',
   params: {

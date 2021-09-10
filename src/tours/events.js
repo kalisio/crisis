@@ -45,8 +45,13 @@ module.exports = [{
     placement: 'right'
   }
 }, {
+  target: '#event-logs',
+  title: 'tours.events.EVENT_LOGS_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
   target: '#follow-up',
-  title: 'tours.events.FOLLOW_UP_EVENT_LABEL',
   content: 'tours.events.FOLLOW_UP_ACTION_LABEL',
   params: {
     placement: 'bottom'
@@ -70,13 +75,28 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#edit-event',
+  target: '#expand-action',
+  content: 'tours.events.MANAGEMENT_LABEL',
+  params: {
+    placement: 'top',
+    clickOnNext: '#expand-action',
+    clickOnPrevious: '#expand-action'
+  }
+}, {
+  target: '#edit-item-header',
   content: 'tours.events.UPDATE_EVENT_LABEL',
   params: {
     placement: 'bottom'
   }
 }, {
-  target: '#remove-event',
+  target: '#edit-item-description',
+  title: 'tours.events.UPDATE_DESCRIPTION_LABEL',
+  content: 'tours.event-templates.UPDATE_PROPERTIES_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#remove-item-header',
   title: 'tours.events.REMOVE_EVENT_LABEL',
   content: 'tours.events.REMOVE_CONFIRMATION_LABEL',
   params: {
