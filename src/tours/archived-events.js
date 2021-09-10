@@ -1,31 +1,49 @@
 module.exports = [{
   target: '#archived-events',
   title: 'tours.archived-events.HISTORY_LABEL',
+  content: 'tours.archived-events.HISTORY_EVENTS_LABEL',
   params: {
     placement: 'bottom'
   }
 }, {
-  target: '#timerange',
-  title: 'tours.archived-events.TIME_RANGE_LABEL',
+  target: '#bottom-opener',
+  title: 'tours.archived-events.TIMELINE_LABEL',
   params: {
-    placement: 'bottom',
-    clickOnNext: '#timerange',
+    placement: 'top',
+    hoverClickOnNext: '#bottom-opener'
+  }
+}, {
+  target: '#start-time-action',
+  title: 'tours.archived-events.START_TIME_LABEL',
+  params: {
+    placement: 'top',
+    clickDelay: 500,
+    clickOnPrevious: '#start-time-action',
+    hoverClickOnPrevious: '#bottom-opener',
+    previousDelay: 500,
+    clickOnNext: '#start-time-action',
     nextDelay: 500
   }
 }, {
-  target: '#start-time-popup',
-  title: 'tours.archived-events.START_TIME_LABEL',
-  params: {
-    placement: 'left',
-    clickOnPrevious: '#timerange',
-    previousDelay: 500
-  }
-}, {
-  target: '#end-time-popup',
+  target: '#end-time-action',
   title: 'tours.archived-events.END_TIME_LABEL',
   params: {
-    placement: 'right',
-    clickOnNext: '#timerange',
+    placement: 'top',
+    clickDelay: 500,
+    clickOnPrevious: '#end-time-action',
+    previousDelay: 500,
+    clickOnNext: '#end-time-action',
+    nextDelay: 500
+  }
+}, {
+  target: '#timerange-selector',
+  title: 'tours.archived-events.TIMERANGE_LABEL',
+  params: {
+    placement: 'top',
+    clickDelay: 500,
+    clickOnPrevious: '#timerange-selector',
+    previousDelay: 500,
+    clickOnNext: '#timerange-selector',
     nextDelay: 500
   }
 }, {
@@ -35,13 +53,12 @@ module.exports = [{
     placement: 'bottom',
     clickOn: '#history-sort',
     clickDelay: 1000,
-    clickOnPrevious: '#timerange',
+    clickOnPrevious: '#timerange-selector',
     previousDelay: 500
   }
 }, {
-  target: '#archived-events',
+  target: 'div.q-card.q-card--bordered',
   title: 'tours.archived-events.HISTORY_SCROLL_LABEL',
-  content: 'tours.archived-events.HISTORY_EVENTS_LABEL',
   params: {
     placement: 'left',
     blockOnMiss: 'div.q-card.q-card--bordered'

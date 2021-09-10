@@ -257,9 +257,10 @@
     },
     "archived-events": {
       "HISTORY_LABEL": "Cette activité propose une vue historique de vos événements, apparaissant de façon séquentielle dans la plage de temps de votre choix.",
-      "TIME_RANGE_LABEL": "Utilisez ce bouton pour modifier la plage temporelle par défaut.",
+      "TIMELINE_LABEL": "Utilisez la ligne de temps pour modifier la plage temporelle par défaut.",
       "START_TIME_LABEL": "Choisissez dans le calendrier interactif l'année, le mois et le jour de début, définissant les plus récents événements qui seront visibles.",
       "END_TIME_LABEL": "Choisissez dans le calendrier interactif l'année, le mois et le jour de fin, définissant les plus anciens événements qui seront visibles.",
+      "TIMERANGE_LABEL": "Pour gagner du temps vous pouvez sélectionner une plage temporelle prédéfinie.",
       "SORT_LABEL": "Enfin choisissez d'afficher en premier les plus récents, ou les plus vieux, via ce bouton.",
       "HISTORY_SCROLL_LABEL": "Vous pouvez faire défiler vos événements en scrollant vers le bas de l'écran.",
       "HISTORY_EVENTS_LABEL": "Pour celà vous devez sélectionner une plage de temps faisant apparaître des événements.",

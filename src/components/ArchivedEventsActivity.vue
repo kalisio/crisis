@@ -549,7 +549,7 @@ export default {
     },
     getChartSettingsModalButtons () {
       return [
-        { id: 'close-buttons', label: 'CLOSE', renderer: 'form-button', handler: () => this.$refs.chartSettingsModal.close() }
+        { id: 'close-button', label: 'CLOSE', renderer: 'form-button', handler: () => this.$refs.chartSettingsModal.close() }
       ]
     }
   },

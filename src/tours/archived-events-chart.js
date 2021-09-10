@@ -32,7 +32,7 @@ module.exports = [{
   title: 'tours.archived-events.CHART_RENDER_LABEL',
   params: {
     placement: 'left',
-    clickOnNext: '#close-action',
+    clickOnNext: '#close-button',
     nextDelay: 500
   }
 }, {
