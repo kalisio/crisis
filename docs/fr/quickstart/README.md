@@ -14,5 +14,5 @@ Une fois [enregistré](./concepts.md#utilisateur) sur l'application vous pouvez 
 
 ## Disponibilité du service
 
-La disponibilité du service est mesurée comme le pourcentage de temps pendant lequel l'application est disponible sur une période donnée. RRendez-vous à tout moment sur notre [page Statping](https://statping.portal.kalisio.com/service/aktnmap) pour obtenir les dernières informations sur l'état du service.
+La disponibilité du service est mesurée comme le pourcentage de temps pendant lequel l'application est disponible sur une période donnée. Rendez-vous à tout moment [https://status.kalisio.com](https://status.kalisio.com) pour obtenir les dernières informations sur l'état du service.
 

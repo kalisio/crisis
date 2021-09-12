@@ -41,6 +41,7 @@ module.exports = {
         sidebar: {
           '/quickstart/': getQuickStartSidebar(),
           '/gofurther/': getGoFurtherSidebar(),
+          '/tutorials/': getTutorialsSidebar(),
           '/about/': getAboutSidebar(),
           '/api/': getAPISidebar()
         }
@@ -51,11 +52,13 @@ module.exports = {
         nav: [
           { text: 'Démarrer', link: '/fr/quickstart/' },
           { text: 'Aller plus loin', link: '/fr/gofurther/' },
+          { text: 'Didacticiels', link: '/fr/tutorials/' },
           { text: 'A propos', link: '/fr/about/' }
         ],
         sidebar: {
           '/fr/quickstart/': getQuickStartSidebar(),
           '/fr/gofurther/': getGoFurtherSidebar(),
+          '/fr/tutorials/': getTutorialsSidebar(),
           '/fr/about/': getAboutSidebar()
         }
       },
@@ -98,6 +101,12 @@ function getGoFurtherSidebar () {
     'catalog',
     'alert',
     'plan'
+  ]
+}
+
+function getTutorialsSidebar () {
+  return [
+    ''
   ]
 }
 

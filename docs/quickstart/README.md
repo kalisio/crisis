@@ -14,4 +14,4 @@ Once [registered](./concepts.md#user) to the application you can access all vers
 
 ## Service availability
 
-The service availability is measured as the percentage of time the application is available over a given period. Check back our [Statping page](https://statping.portal.kalisio.com/service/aktnmap) any time to get current status information.
+The service availability is measured as the percentage of time the application is available over a given period. Check [https://status.kalisio.com](https://status.kalisio.com) any time to get current status information.
