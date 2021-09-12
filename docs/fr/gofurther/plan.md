@@ -1,0 +1,34 @@
+# <i class="las la-stream"></i> Plan
+
+Un *ensemble d'événements liés à une situation* que l'on désire partager et traiter avec certains membres d'une organisation. Typiquement un plan de continuité d'activité, un plan d'opération interne, etc.
+
+::: tip Astuce
+L'utilisateur qui créé un plan en est par défaut le coordonateur mais il peut partager ou déléguer la gestion à d'autres.
+:::
+
+Un *objectif* est constitué d'un titre et d'une description, plus une éventuelle localisation (e.g. zone de danger à évacuer). Vous pouvez inclure dans la description riche des liens vers vos fiches réflexes, documents, etc. Chaque événement de votre plan pourra être associé à un objectif et les événements filtrés en fonction de vos objectifs dans chaque activité (liste d'événement, carte des événements, main courante).
+
+De plus, un plan propose un tableau Kanban de trois colonnes:
+* *A faire*: événements n'ayant encore aucun participants,
+* *En cours*: événements ayant au moins un participant et non encore clôturés,
+* *Clôturés*: événements clôturés.
+
+:point_right: Vous êtes prêt à activer un plan ? <tour-link text="Voir comment gérer vos plans" path="home" :params="{ organisation: 'member' }"/>
+
+::: warning Note
+Cette fonctionnalité requiert un abonnement spécifique, sans celui-ci vous ne pourrez y accéder.
+
+:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
+:::
+
+## Modèle de plan
+
+Un plan s'initie toujours à partir d'un **modèle** qui définit son contenu de base. Dans chaque modèle un titre, une description, et/ou des coordinateurs par défaut pourront être définis. Ainsi, lors de la création du plan, il ne reste qu'à compléter ou amender certains éléments au besoin tels que les objectifs.
+
+:point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos modèles" path="home" :params="{ organisation: 'manager', route: 'plan-templates-activity' }"/>
+
+::: details Voir aussi
+Comment entrer dans l'activité de gestion des modèles depuis le <tour-link text="tableau de bord" path="home/organisations"/>
+
+Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
+:::
