@@ -1,10 +1,14 @@
 # <i class="las la-stream"></i> Plan
 
-Un *ensemble d'événements liés à une situation* que l'on désire partager et traiter avec certains membres d'une organisation. Typiquement un plan de continuité d'activité, un plan d'opération interne, etc.
+Un *ensemble d'événements liés à une situation* que l'on désire partager et traiter avec certains membres d'une organisation. Typiquement un plan de continuité d'activité, un plan d'opération interne, etc. Un plan est généralement structuré autour d'objectifs à atteindre.
 
 ::: tip Astuce
 L'utilisateur qui créé un plan en est par défaut le coordonateur mais il peut partager ou déléguer la gestion à d'autres.
 :::
+
+Pour vous aider à suivre l'avancement de votre plan il est possible de:
+1. Définir les différents objectifs visés par le plan
+2. Suivre le niveau de progression des événements constituan le plan
 
 Un *objectif* est constitué d'un titre et d'une description, plus une éventuelle localisation (e.g. zone de danger à évacuer). Vous pouvez inclure dans la description riche des liens vers vos fiches réflexes, documents, etc. Chaque événement de votre plan pourra être associé à un objectif et les événements filtrés en fonction de vos objectifs dans chaque activité (liste d'événement, carte des événements, main courante).
 
