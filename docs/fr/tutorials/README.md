@@ -6,7 +6,7 @@ Cette section présente les fonctionnalités de base d'Akt'n'Map grâce à des d
 
 Au quotidien, ou lors de situations à risque, la principale utilisation d'Akt'n'Map consiste à partager et traiter des [événements](../quickstart/concepts.md#evenement) avec les membres appropriés de votre [organisation](../quickstart/concepts.md#organisation).
 
-Cette première vidéo illustre avec quelle facilité il est possible d'informer vos équipes, en quelques secondes, d'une opération à réaliser sur le terrain:
+Cette première vidéo illustre avec quelle simplicité il est possible d'informer vos équipes, en quelques secondes, d'une opération à réaliser sur le terrain:
 
 <iframe src="https://drive.google.com/file/d/1QwZkvWA1iR2V3GTdGGy8LcXElJKjzJpu/preview" width="640" height="480" allow="autoplay"></iframe>
 
@@ -42,6 +42,6 @@ Vos données cartographiques peuvent provenir de sources Open Data (e.g. téléc
 
 <iframe src="https://drive.google.com/file/d/1k2iNDkRziKSGxaucJToTdr_KOiPjuWmw/preview" width="640" height="480" allow="autoplay"></iframe>
 
-Vous pouvez également connecter Akt'n'Map directement à des flux OGC provenant de service tiers ou issus de votre SIG, comme l'illustre cette dernière vidéo:
+Vous pouvez également connecter Akt'n'Map directement à des flux OGC provenant de services tiers ou de votre SIG, comme l'illustre cette dernière vidéo:
 
 <iframe src="https://drive.google.com/file/d/1IWOjx9L6C8xri0iNsDWB2jpES5wsfOlM/preview" width="640" height="480" allow="autoplay"></iframe>
