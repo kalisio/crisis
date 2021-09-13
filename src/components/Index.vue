@@ -64,6 +64,8 @@ export default {
             name: _.get(this.$route, 'query.route', 'context'),
             params: Object.assign({
               contextId: organisation._id,
+              objectId: organisation._id, // Required for eg billing
+              title: organisation.name, // Required for eg billing
               page: _.get(this.$route, 'query.page')
             }, _.get(this.$route, 'params', {})),
             query: _.omit(_.get(this.$route, 'query', {}), ['organisation', 'page'])

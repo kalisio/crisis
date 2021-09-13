@@ -198,5 +198,5 @@ Bien que vous puissiez utiliser l'application gratuitement à des fins de test o
 De plus, si l'activité de votre association ou entreprise requiert l'utilisation de certaines de nos [fonctionnalités avancées](../gofurther/README.md) vous devez souscrire un ou plusieurs **abonnements additionels** pour les rendre disponibles à vos membres.
 
 ::: warning Note
-:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir les abonnements disponibles et comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
+:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir les abonnements disponibles et comment souscrire" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
 :::

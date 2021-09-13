@@ -22,7 +22,7 @@ De plus, un plan propose un tableau Kanban de trois colonnes:
 ::: warning Note
 Cette fonctionnalité requiert un abonnement spécifique, sans celui-ci vous ne pourrez y accéder.
 
-:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
+:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
 :::
 
 ::: details Voir aussi

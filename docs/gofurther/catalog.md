@@ -9,7 +9,7 @@ The catalog activity allows to visualise and interact with data on a digital map
 ::: warning Note
 This feature requires a specific subscription, it will not be available otherwise.
 
-:point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
+:point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
 :::
 
 ## Key concepts

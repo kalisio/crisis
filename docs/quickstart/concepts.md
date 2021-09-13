@@ -194,5 +194,5 @@ Although you can use the application freely for testing or private purpose (**br
 Moreover, if your business requires some of our [powerful advanced features](../gofurther/README.md) you need to subscribe to **additional plans** to make theses features available to your members.
 
 ::: warning Note
-:point_right: You own an organisation ? <tour-link text="What are the available plans and how to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
+:point_right: You own an organisation ? <tour-link text="What are the available plans and how to subscribe" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
 :::

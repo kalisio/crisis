@@ -9,7 +9,7 @@ Le catalogue cartographique permet de visualiser et d'interagir avec une carte n
 ::: warning Note
 Cette fonctionnalité requiert un abonnement spécifique, sans celui-ci vous ne pourrez y accéder.
 
-:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
+:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
 :::
 
 ## Concepts de base

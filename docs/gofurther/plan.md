@@ -22,7 +22,7 @@ Moreover, the plan provides you with a Kanban board composed of three columns:
 ::: warning Note
 This feature requires a specific subscription, it will not be available otherwise.
 
-:point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
+:point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
 :::
 
 ::: details See also
