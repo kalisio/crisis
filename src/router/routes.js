@@ -84,7 +84,14 @@ module.exports = {
               'edit-billing/:objectId': {
                 name: 'edit-organisation-billing',
                 component: 'BillingEditor',
-                props: true,
+                props: function (route) {
+                  return {
+                    objectId: route.params.objectId,
+                    title: route.params.title,
+                    perspective: 'billing',
+                    perspectiveAsObject: true
+                  } 
+                },
                 tour: tours['edit-organisation-billing']
               },
             }

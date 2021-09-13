@@ -22,10 +22,10 @@
                   :disable="properties.stripeId && !hasCustomer"
                   :icon="value.includes(option) ? 'las la-check-circle' : ''" 
                   @click="onOptionChanged(option, properties)">&nbsp;{{$t(value.includes(option) ? 'OptionsChooser.SUBSCRIBED' : 'OptionsChooser.SELECT')}}
-                  <q-tooltip v-if="properties.stripeId && !hasCustomer">
-                    {{$t('OptionsChooser.OPTION_DISABLED_TOOLTIP')}}
-                  </q-tooltip>
                 </q-btn>
+                <q-tooltip v-if="properties.stripeId && !hasCustomer">
+                  {{$t('OptionsChooser.OPTION_DISABLED_TOOLTIP')}}
+                </q-tooltip>
               </div>
               <div v-if="properties.url || properties.route">
                 <q-btn :id="option + '-action'" dense flat @click="onOptionClicked(option, properties)">{{$t('OptionsChooser.CLICK')}}</q-btn>

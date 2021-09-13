@@ -88,6 +88,9 @@ export default {
     eventsService.on('created', this.updateBaseQuery)
     eventsService.on('patched', this.updateBaseQuery)
     eventsService.on('updated', this.updateBaseQuery)
+    
+    // Check if option has been subscribed
+    this.$checkBillingOption('archiving')
   },
   beforeDestroy () {
     const eventsService = this.$api.getService('events', this.contextId)

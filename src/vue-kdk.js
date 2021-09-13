@@ -25,7 +25,7 @@ export default {
     Vue.prototype.$checkBillingOption = async function (option) {
       if (this.$config('flavor') === 'dev') return
       const perspective = await this.$api.getService('organisations')
-        .get(this.contextId, { query: { $select: ['billing'] } })
+        .get(this.contextId, { query: { $select: ['name', 'billing'] } })
       const options = _.get(perspective, 'billing.options', [])
       if (!_.find(options, { plan: option })) {
         Dialog.create({
@@ -33,8 +33,8 @@ export default {
           message: this.$t('errors.UNSUBSCRIBED_OPTION'),
           persistent: true
         }).onOk(() => {
-          this.$router.push({ name: 'organisation-settings-activity',
-            params: { page: 'billing', contextId: this.contextId } })
+          this.$router.push({ name: 'edit-organisation-billing',
+            params: { objectId: this.contextId, title: perspective.name } })
         })
       }
     }

@@ -427,10 +427,10 @@
     "catalog_PRICE": "99€ par mois",
     "catalog_DESCRIPTION": "Intégrez vos propres données géographiques",
     "catalog_DETAILS": "</br>Import GeoJson</br>Méta-données personnalisées</br>Edition ergonomique</br>Stylisation personnalisée</br></br>",
-    "archiving_LABEL": "Main courante",
+    "archiving_LABEL": "Main courante et plans",
     "archiving_PRICE": "99€ par mois",
-    "archiving_DESCRIPTION": "Archivage long-terme de vos événements",
-    "archiving_DETAILS": "</br>Recherche temporelle</br>Statistiques</br>Cartes de densité</br></br></br>"
+    "archiving_DESCRIPTION": "Archivage long-terme de vos actions",
+    "archiving_DETAILS": "</br>Plans d'actions personnalisés</br>Suivi d'avancement</br>Recherche temporelle</br>Statistiques</br></br></br>"
   },
   "help": {
     "SECTION": "Choisissez une partie de l'aide",

@@ -22,11 +22,11 @@
             <q-card-actions align="right">
               <div v-if="properties.stripeId || properties.default">
                 <q-btn :id="plan + '-action'" v-if="plan !== value" dense flat :disable="properties.stripeId && !hasCustomer" @click="onPlanChanged(plan, properties)">{{$t('SubscriptionChooser.SELECT')}}
-                  <q-tooltip v-if="properties.stripeId && !hasCustomer">
-                    {{$t('SubscriptionChooser.PLAN_DISABLED_TOOLTIP')}}
-                  </q-tooltip>
                 </q-btn>
-                <q-btn :id="plan + '-action'" icon="las la-check-circle" dense v-else flat disable>&nbsp;{{$t('SubscriptionChooser.CURRENT_PLAN')}}</q-btn>
+                <q-btn v-else :id="plan + '-action'" icon="las la-check-circle" dense flat disable>&nbsp;{{$t('SubscriptionChooser.CURRENT_PLAN')}}</q-btn>
+                <q-tooltip v-if="(plan !== value) && properties.stripeId && !hasCustomer">
+                  {{$t('SubscriptionChooser.PLAN_DISABLED_TOOLTIP')}}
+                </q-tooltip>
               </div>
               <div v-if="properties.url || properties.route">
                 <q-btn :id="plan + '-action'" dense flat @click="onPlanClicked(plan, properties)">{{$t('SubscriptionChooser.CLICK')}}</q-btn>

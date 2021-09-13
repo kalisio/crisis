@@ -425,10 +425,10 @@
     "catalog_PRICE": "99€ per month",
     "catalog_DESCRIPTION": "Manage your own geographic data",
     "catalog_DETAILS": "</br>GeoJson Import</br>Custom meta-data</br>User-friendly edition</br>Custom styling</br></br>",
-    "archiving_LABEL": "Logbook",
+    "archiving_LABEL": "Logbook & plans",
     "archiving_PRICE": "99€ per month",
-    "archiving_DESCRIPTION": "Long-term archiving of your events",
-    "archiving_DETAILS": "</br>Temporal filtering</br>Statistics</br>Heatmaps</br></br></br>"
+    "archiving_DESCRIPTION": "Long-term archiving of your actions",
+    "archiving_DETAILS": "<br/>Custom actions plans</br>Progress tracking</br>Temporal filtering</br>Statistics</br></br></br>"
   },
   "help": {
     "SECTION": "Select help section",
