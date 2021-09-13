@@ -1,3 +1,7 @@
+---
+sidebarDepth: 3
+---
+
 # Didacticiels Vidéo
 
 Cette section présente les fonctionnalités de base d'Akt'n'Map grâce à des didacticiels ou tutoriels vidéo.
