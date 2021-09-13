@@ -6,15 +6,21 @@ Cette section présente les fonctionnalités de base d'Akt'n'Map grâce à des d
 
 Au quotidien, ou lors de situations à risque, la principale utilisation d'Akt'n'Map consiste à partager et traiter des [événements](../quickstart/concepts.md#evenement) avec les membres appropriés de votre [organisation](../quickstart/concepts.md#organisation).
 
-Cette première vidéo illustre avec quelle simplicité il est possible d'informer vos équipes, en quelques secondes, d'une opération à réaliser sur le terrain:
+### Créez un événement
+
+Cette vidéo illustre avec quelle simplicité il est possible d'informer vos équipes, en quelques secondes, d'une opération à réaliser sur le terrain:
 
 <iframe src="https://drive.google.com/file/d/1QwZkvWA1iR2V3GTdGGy8LcXElJKjzJpu/preview" width="640" height="480" allow="autoplay"></iframe>
 
-La seconde vidéo illustre comment l'agent de terrain peut interagir en temp-réel avec le poste de commandement et remonter des informations d'aide à la décision:
+### Participez à un événement
+
+Cette vidéo illustre comment l'agent de terrain peut interagir en temp-réel avec le poste de commandement et remonter des informations d'aide à la décision:
 
 <iframe src="https://drive.google.com/file/d/1UYXrkflTxSf2FbKwxTbh8NJ7tmVgRRWF/preview" width="640" height="480" allow="autoplay"></iframe>
 
-Enfin, la troisième vidéo, illustre comment le poste de commandemment dispose d'une vue globale et contextualisée de la situation pour mener à bien les opérations de façon optimale:
+### Coordonnez un événement
+
+Cette vidéo illustre comment le poste de commandemment dispose d'une vue globale et contextualisée de la situation pour mener à bien les opérations de façon optimale:
 
 <iframe src="https://drive.google.com/file/d/1dTnTQU5pBD48gENYAXO0NtOZInX7jvVs/preview" width="640" height="480" allow="autoplay"></iframe>
 
@@ -30,7 +36,9 @@ Structurez vos équipes par l'intermédiaire d'[étiquettes](../quickstart/conce
 
 <iframe src="https://drive.google.com/file/d/1GLXJM4NAnNx-SotYesALBaCdOCwqxCDQ/preview" width="640" height="480" allow="autoplay"></iframe>
 
-Créez ensuite vos [modèles d'événements](../quickstart/concepts.md#modele-d-evenement) pour structurer la façon dont vous communiquerez avec vos équipes:
+### Préparez vos processus opérationnels
+
+Créez vos [modèles d'événements](../quickstart/concepts.md#modele-d-evenement) pour structurer la façon dont vous communiquerez avec vos équipes:
 
 <iframe src="https://drive.google.com/file/d/1IWOjx9L6C8xri0iNsDWB2jpES5wsfOlM/preview" width="640" height="480" allow="autoplay"></iframe>
 
