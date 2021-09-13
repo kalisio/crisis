@@ -18,7 +18,7 @@ module.exports = [{
   title: 'tours.archived-events.CHART_TYPE_LABEL',
   params: {
     placement: 'left',
-    clickOnPrevious: '#close-action',
+    clickOnPrevious: '#close-button',
     previousDelay: 500
   }
 }, {

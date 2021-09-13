@@ -235,9 +235,10 @@ module.exports = {
                     component: 'editor/KModalEditor',
                     props: true
                   }
-                }
+                },
+                tour: tours.plans
               },
-              'plans-archive': {
+              'archived-plans': {
                 name: 'archived-plans-activity',
                 component: 'ArchivedPlansActivity',
                 props: true,
@@ -247,7 +248,8 @@ module.exports = {
                     component: 'viewer/KModalViewer',
                     props: true
                   }
-                }
+                },
+                tour: tours['archived-plans']
               },
               'events': {
                 name: 'events-activity',
@@ -311,7 +313,7 @@ module.exports = {
                     name: 'create-event-template',
                     component: 'EventTemplateEditor',
                     props: true,
-                    tour: tours['create-event-templates']
+                    tour: tours['create-event-template']
                   },
                   'edit/:objectId/:schemaProperties?': {
                     name: 'edit-event-template',
@@ -343,7 +345,7 @@ module.exports = {
                     name: 'create-plan-template',
                     component: 'editor/KModalEditor',
                     props: true,
-                    tour: tours['create-plan-templates']
+                    tour: tours['create-plan-template']
                   },
                   'edit/:objectId/objectives': {
                     name: 'edit-plan-template-objectives',

@@ -1,6 +1,6 @@
 # <i class="las la-stream"></i> Plan
 
-Un *ensemble d'événements liés à une situation* que l'on désire partager et traiter avec certains membres d'une organisation. Typiquement un plan de continuité d'activité, un plan d'opération interne, etc. Un plan est généralement structuré autour d'objectifs à atteindre.
+Un *ensemble d'événements liés à une situation* que l'on désire gérer. Typiquement un plan de continuité d'activité, un plan d'opération interne, etc. Un plan est généralement structuré autour d'objectifs à atteindre.
 
 ::: tip Astuce
 L'utilisateur qui créé un plan en est par défaut le coordonateur mais il peut partager ou déléguer la gestion à d'autres.

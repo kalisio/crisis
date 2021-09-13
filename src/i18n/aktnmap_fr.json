@@ -120,7 +120,6 @@
       "ARCHIVED_EVENTS_LABEL": "Utilisez ce raccourci pour accéder à l'<b>historique</b> de vos événements.",
       "ARCHIVED_EVENTS_LINK_LABEL": "Voir l'historique",
       "MANAGEMENT_LABEL": "Accédez ici aux actions vous permettant de gérer votre organisation.",
-      "APP_BAR_ACTIONS_LABEL": "Les activités principales sont directement disponibles via la barre d'actions.",
       "OVERFLOW_MENU_LABEL": "Les autres activités disponibles sont accessibles via ce menu déroulant.",
       "MEMBERS_LABEL": "Accédez à l'activité qui vous permet de gérer les <b>membres</b> au sein de votre organisation.",
       "MEMBERS_LINK_LABEL": "Voir comment gérer les membres",
@@ -184,7 +183,8 @@
       "EVENT_DESCRIPTION_LABEL": "Choisissez une description détaillée pour votre événement.",
       "LOCATION_LABEL": "Déterminez la localisation de votre événement.",
       "GEOLOCATE_LABEL": "Utilisez votre position actuelle.",
-      "SHOW_MAP_LABEL": "Visualisez la localisation de votre événement sur une carte.",
+      "SHOW_MAP_LABEL": "Définissez la localisation de votre événement sur une carte.",
+      "DRAW_MAP_LABEL": "Tracez la zone de votre événement sur une carte.",
       "SEARCH_LABEL": "Effectuez une recherche par adresse.",
       "SEARCH_ADDRESS_LABEL": "Tapez tout ou partie de votre addresse et sélectionnez parmi les propositions.",
       "SELECT_PARTICIPANTS_LABEL": "Sélectionnez la liste des participants à l'événement.",
@@ -245,16 +245,6 @@
       "LAYER_LABEL": "Tapez <b>les premières lettres</b> du nom de la couche pour l'ajouter à la liste. Une fois ajoutée utilisez la croix pour la supprimer.",
       "CREATE_TEMPLATE_LABEL": "Confirmez la création de votre nouveau modèle."
     },
-    "catalog": {
-      "CATALOG_LABEL": "Cette activité vous permet de gérer le <b>catalogue cartographique</b> de votre organisation, c'est à dire une carte numérique de vos enjeux.",
-      "NAVIGATION_BAR_LINK_LABEL": "Parcourir les actions disponibles sur la barre comme la recherche d'un lieu",
-      "CATALOG_PANEL_LABEL": "Ouvrez à tout moment le catalogue de vos données cartographiques via cette poignée.",
-      "CATALOG_PANEL_LINK_LABEL": "Parcourir le catalogue",
-      "TIMELINE_LABEL": "Ouvrez à tout moment la ligne de temps via cette poignée.",
-      "TIMELINE_LINK_LABEL": "Parcourir la ligne de temps",
-      "FAB_LABEL": "Accéder rapidement aux actions relatives aux données cartographiques via ce bouton.",
-      "FAB_LINK_LABEL": "Voir les actions"
-    },
     "archived-events": {
       "HISTORY_LABEL": "Cette activité propose une vue historique de vos événements, apparaissant de façon séquentielle dans la plage de temps de votre choix.",
       "TIMELINE_LABEL": "Utilisez la ligne de temps pour modifier la plage temporelle par défaut.",
@@ -283,6 +273,84 @@
       "CHART_COUNT_PAGINATION_LABEL": "Si le nombre de modèles au total est trop important plusieurs graphiques seront générés et vous pourrez naviguer entre eux via les flèches latérales.",
       "CHART_RENDER_LABEL": "Enfin définissez la valeur à afficher: nombre d'événements, pourcentage d'événements ou nombre de participants.",
       "CHART_DOWNLOAD_LABEL": "Exportez les données de votre graphique au format CSV pour exploitation dans une application tierce."
+    },
+    "plans": {
+      "PLANS_LABEL": "Cette activité vous permet de gérer les <b>plans</b> au sein de votre organisation.",
+      "PLAN_DEFINITION_LABEL": "Un plan vous permet de gérer un ensemble d'événements liés à une situation.",
+      "SEARCH_LABEL": "Tapez tout ou partie d'un mot contenu dans le nom de vos plans au sein de la barre qui apparait pour effectuer une recherche.",
+      "SORT_LABEL": "Ordonnez vos plans par ordre alphabétique/chronologique ascendant ou descendant via ce bouton.",
+      "TEMPLATES_LABEL": "Avant de créer un plan vous devez créer au moins un <b>modèle</b>.",
+      "TEMPLATES_LINK_LABEL": "Voir comment gérer les modèles",
+      "SELECT_TEMPLATE_LABEL": "Lorsque vous souhaitez créer un plan sélectionnez simplement le <b>modèle</b> requis via le bouton.",
+      "CREATE_PLAN_LINK_LABEL": "Voir comment créer un plan",
+      "PLAN_CARD_LABEL": "Chaque plan est visible sous la forme d'une carte vous permettant d'accéder aux actions possibles.",
+      "MANAGEMENT_LABEL": "Accédez ici aux actions vous permettant de gérer votre plan.",
+      "UPDATE_PLAN_LABEL": "Modifiez l'intitulé de votre plan via cette action.",
+      "UPDATE_DESCRIPTION_LABEL": "Modifiez la description de votre plan via cette action.",
+      "UPDATE_PROPERTIES_LABEL": "De la même façon, modifiez les différentes propriétés de votre plan via l'action afférente, vous pourrez choisir d'envoyer d'une <b>notification</b> à tous les participants ou non.",
+      "REMOVE_PLAN_LABEL": "Supprimez votre plan via cette action.",
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)."
+    },
+    "create-plan": {
+      "PLAN_NAME_LABEL": "Choisissez le nom de votre plan.",
+      "PLAN_DESCRIPTION_LABEL": "Choisissez une description détaillée pour votre plan.",
+      "LOCATION_LABEL": "Déterminez la localisation de votre plan.",
+      "GEOLOCATE_LABEL": "Utilisez votre position actuelle.",
+      "SHOW_MAP_LABEL": "Définissez la localisation de votre plan sur une carte.",
+      "DRAW_MAP_LABEL": "Tracez la zone de votre plan sur une carte.",
+      "SEARCH_LABEL": "Effectuez une recherche par adresse.",
+      "SEARCH_ADDRESS_LABEL": "Tapez tout ou partie de votre addresse et sélectionnez parmi les propositions.",
+      "SELECT_COORDINATORS_LABEL": "Sélectionnez la liste des coordinateurs du plan.",
+      "COORDINATORS_LABEL": "Tapez <b>les premières lettres</b> du nom d'une personne, d'un groupe ou d'une étiquette pour l'ajouter à la liste. Une fois ajouté utilisez la croix pour supprimer le coordinateur.",
+      "CREATE_PLAN_LABEL": "Confirmez la création de votre nouveau plan."
+    },
+    "plan-templates": {
+      "TEMPLATES_LABEL": "Cette activité vous permet de gérer les <b>modèles</b> de plans au sein de votre organisation.",
+      "TEMPLATE_DEFINITION_LABEL": "Un modèle permet de définir le contenu récurrent d'un type de plan particulier.",
+      "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
+      "SEARCH_LABEL": "Tapez tout ou partie d'un mot contenu dans le nom de vos modèles au sein de la barre qui apparait pour effectuer une recherche.",
+      "SORT_LABEL": "Ordonnez vos modèles par ordre alphabétique ascendant ou descendant via ce bouton.",
+      "NEW_TEMPLATE_LABEL": "Créez un <b>nouveau modèle</b> via ce bouton.",
+      "CREATE_TEMPLATE_LINK_LABEL": "Voir comment créer un modèle",
+      "TEMPLATE_CARD_LABEL": "Chaque modèle est visible sous la forme d'une carte vous permettant d'accéder aux actions possibles.",
+      "OBJECTIVES_LABEL": "Gérez les objectifs de votre modèle en sélectionnant cette action.",
+      "UPDATE_TEMPLATE_LABEL": "Modifiez l'intitulé et l'icône de votre modèle via cette action.",
+      "UPDATE_DESCRIPTION_LABEL": "Modifiez la description de votre modèle via cette action.",
+      "UPDATE_PROPERTIES_LABEL": "De la même façon, modifiez les différentes propriétés de votre modèle via l'action afférente.",
+      "COPY_TEMPLATE_LABEL": "Gagnez du temps en créant un nouveau modèle à partir de celui-ci via cette action.",
+      "REMOVE_TEMPLATE_LABEL": "Supprimez votre modèle via cette action.",
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)"
+    },
+    "create-plan-template": {
+      "TEMPLATE_NAME_LABEL": "Choisissez le nom de votre modèle.",
+      "TEMPLATE_ICON_LABEL": "Choisissez une iconographie vous permettant d'identifier facilement le modèle.",
+      "SELECT_ICON_LABEL": "Sélectionnez votre icône dans notre vaste librairie.",
+      "SELECT_COLOR_LABEL": "Sélectionnez sa couleur au sein de notre palette.",
+      "TEMPLATE_DESCRIPTION_LABEL": "Choisissez une description détaillée pour votre modèle.",
+      "SELECT_COORDINATORS_LABEL": "Sélectionnez la liste des coordinateurs par défaut du plan.",
+      "COORDINATORS_LABEL": "Tapez <b>les premières lettres</b> du nom d'une personne, d'un groupe ou d'une étiquette pour l'ajouter à la liste. Une fois ajouté utilisez la croix pour supprimer le coordinateur.",
+      "PERMISSION_LABEL": "Sélectionnez le rôle ou niveau de droit requis pour créer un plan à partir de ce modèle.",
+      "CREATE_TEMPLATE_LABEL": "Confirmez la création de votre nouveau modèle."
+    },
+    "archived-plans": {
+      "HISTORY_LABEL": "Cette activité propose une vue historique de vos plans, apparaissant de façon séquentielle dans la plage de temps de votre choix.",
+      "TIMELINE_LABEL": "Utilisez la ligne de temps pour modifier la plage temporelle par défaut.",
+      "START_TIME_LABEL": "Choisissez dans le calendrier interactif l'année, le mois et le jour de début, définissant les plus récents plans qui seront visibles.",
+      "END_TIME_LABEL": "Choisissez dans le calendrier interactif l'année, le mois et le jour de fin, définissant les plus anciens plans qui seront visibles.",
+      "TIMERANGE_LABEL": "Pour gagner du temps vous pouvez sélectionner une plage temporelle prédéfinie.",
+      "SORT_LABEL": "Enfin choisissez d'afficher en premier les plus récents, ou les plus vieux, via ce bouton.",
+      "HISTORY_SCROLL_LABEL": "Vous pouvez faire défiler vos plans en scrollant vers le bas de l'écran.",
+      "HISTORY_PLANS_LABEL": "Pour celà vous devez sélectionner une plage de temps faisant apparaître des plans."
+    },
+    "catalog": {
+      "CATALOG_LABEL": "Cette activité vous permet de gérer le <b>catalogue cartographique</b> de votre organisation, c'est à dire une carte numérique de vos enjeux.",
+      "NAVIGATION_BAR_LINK_LABEL": "Parcourir les actions disponibles sur la barre comme la recherche d'un lieu",
+      "CATALOG_PANEL_LABEL": "Ouvrez à tout moment le catalogue de vos données cartographiques via cette poignée.",
+      "CATALOG_PANEL_LINK_LABEL": "Parcourir le catalogue",
+      "TIMELINE_LABEL": "Ouvrez à tout moment la ligne de temps via cette poignée.",
+      "TIMELINE_LINK_LABEL": "Parcourir la ligne de temps",
+      "FAB_LABEL": "Accéder rapidement aux actions relatives aux données cartographiques via ce bouton.",
+      "FAB_LINK_LABEL": "Voir les actions"
     }
   },
   "screen": {
@@ -321,15 +389,15 @@
     "VIEW_ARCHIVED_PLANS": "Voir l'archive de plans",
     "CATALOG": "Cartographie",
     "ARCHIVED_EVENTS": "Main courante",
-    "MEMBERS": "{{count}} membres",
+    "MEMBERS": "{{count}} membre(s)",
     "VIEW_MEMBERS": "Voir les membres",
-    "TAGS": "{{count}} étiquettes",
+    "TAGS": "{{count}} étiquette(s)",
     "VIEW_TAGS": "Voir les étiquettes",
-    "GROUPS": "{{count}} groupes",
+    "GROUPS": "{{count}} groupe(s)",
     "VIEW_GROUPS": "Voir les groupes",
-    "EVENT_TEMPLATES": "{{count}} modèles d'événement",
+    "EVENT_TEMPLATES": "{{count}} modèle(s) d'événement",
     "VIEW_EVENT_TEMPLATES": "Voir les modèles d'événement",
-    "PLAN_TEMPLATES": "{{count}} modèles de plan",
+    "PLAN_TEMPLATES": "{{count}} modèle(s) de plan",
     "VIEW_PLAN_TEMPLATES": "Voir les modèles de plan",    
     "MANAGE_SUBSCRIPTIONS": "Gérer vos abonnements",
     "EDIT_ACTION": "$t(EDIT_LABEL)",
@@ -495,7 +563,7 @@
   },
   "EventsActivity": {
     "EVENTS_LABEL": "$t(EVENTS_LABEL)",
-    "SEARCH_EVENTS": "Rechercher des évébnements",
+    "SEARCH_EVENTS": "Rechercher des événements",
     "SORT_EVENTS": "Trier les événements",
     "TODO_LABEL": "A faire",
     "DOING_LABEL": "En cours",
@@ -686,7 +754,9 @@
     "OPTION_DISABLED_TOOLTIP": "Merci de renseigner les informations de paiement pour souscrire aux options"
   },
   "PlansActivity": {
-    "PLANS_LABEL": "Plans"
+    "PLANS_LABEL": "Plans",
+    "SEARCH_PLANS": "Rechercher des plans",
+    "SORT_PLANS": "Trier les plans"
   },
   "PlanObjectivesEditor": {
     "MANAGE": "Gérer les objectifs - {{name}}",

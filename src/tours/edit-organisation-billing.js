@@ -17,7 +17,7 @@ module.exports = [{
   content: 'tours.organisation.CUSTOMER_EMAIL_LABEL',
   params: {
     placement: 'left',
-    clickOnPrevious: '#close-action',
+    clickOnPrevious: '#close-button[1]',
     previousDelay: 500
   }
 }, {

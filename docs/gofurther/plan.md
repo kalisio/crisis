@@ -1,6 +1,6 @@
 # <i class="las la-stream"></i> Plan
 
-A *set of events linked to a situation* to be shared between some members of an organisation. Typical plans are business continuity plans, internal operation plans, etc. A plan is usually designed according to a set of objectives.
+A *set of events linked to a situation* to be managed. Typical plans are business continuity plans, internal operation plans, etc. A plan is usually designed according to a set of objectives.
 
 ::: tip
 By creating a plan you become the coordinator by default but you can share this responsibility with others by adding them as a coordinator as well.

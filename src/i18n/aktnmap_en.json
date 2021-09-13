@@ -118,7 +118,6 @@
       "ARCHIVED_EVENTS_LABEL": "Use this shortcut to open the <b>history</b> of your events.",
       "ARCHIVED_EVENTS_LINK_LABEL": "How to explore the history of your events",
       "MANAGEMENT_LABEL": "Reveal actions to manage your organisation.",
-      "APP_BAR_ACTIONS_LABEL": "Main activities are available in the application bar.",
       "OVERFLOW_MENU_LABEL": "Other activities are available through this menu.",
       "MEMBERS_LABEL": "This entry allows to manage the <b>members</b> of your organisation.",
       "MEMBERS_LINK_LABEL": "How to manage members",
@@ -156,7 +155,6 @@
     "events": {
       "EVENTS_LABEL": "This activity allows to manage the <b>events</b> in your organisation.",
       "EVENT_DEFINITION_LABEL": "An event allows you to share information and photos as well as interacting with participants on the field.",
-      "APP_BAR_ACTIONS_LABEL": "$t(tours.APP_BAR_ACTIONS_LABEL)",
       "SEARCH_LABEL": "Type part of a word contained in the name of your events in the arising bar to perform a search.",
       "SORT_LABEL": "Sort your events by ascending or descending alphabetical/chronological order this button.",
       "TEMPLATES_LABEL": "Before creating an event you need to create at least one <b>model</b> using this activity.",
@@ -181,7 +179,8 @@
       "EVENT_DESCRIPTION_LABEL": "Enter a detailed description for your event.",
       "LOCATION_LABEL": "Define the location of your event.",
       "GEOLOCATE_LABEL": "Use your current position.",
-      "SHOW_MAP_LABEL": "Visualise the location of your event on a map.",
+      "SHOW_MAP_LABEL": "Define the location of your event on a map.",
+      "DRAW_MAP_LABEL": "Draw the area of your event on a map.",
       "SEARCH_LABEL": "Perform a search by address.",
       "SEARCH_ADDRESS_LABEL": "Enter the whole adress or part of it and select among the different results.",
       "SELECT_PARTICIPANTS_LABEL": "Select the participants of the event.",
@@ -243,16 +242,6 @@
       "LAYER_LABEL": "Typing <b>the first characters</b> of the layer name make it selectable. Once added remove it using the cross.",
       "CREATE_TEMPLATE_LABEL": "Confirm the creation of your new template."
     },
-    "catalog": {
-      "CATALOG_LABEL": "This activity allows to manage the <b>geographic catalog</b> of your organisation, i.e. a digital map of what matters to you.",
-      "NAVIGATION_BAR_LINK_LABEL": "Browse the available actions like location search",
-      "CATALOG_PANEL_LABEL": "Open the catalog any time using this handle.",
-      "CATALOG_PANEL_LINK_LABEL": "Browse the catalog",
-      "TIMELINE_LABEL": "Open the timeline any time using this handle.",
-      "TIMELINE_LINK_LABEL": "Browse the timeline",
-      "FAB_LABEL": "Quickly execute actions related to map data using this button.",
-      "FAB_LINK_LABEL": "Browse the actions"
-    },
     "archived-events": {
       "HISTORY_LABEL": "This activity provides a history view of your events displayed sequentially in a selected time range.",
       "TIMELINE_LABEL": "Use the timeline to change the default time range.",
@@ -281,6 +270,84 @@
       "CHART_COUNT_PAGINATION_LABEL": "If the total number of templates is too much large different charts will be generated and you will be able to navigate through using the arrows on the screen sides.",
       "CHART_RENDER_LABEL": "Last select the value to be displayed: events count, events percentage or participants count.",
       "CHART_DOWNLOAD_LABEL": "Export your chart data as a CSV file to use it in a thrid-party application if you'd like."
+    },
+    "plans": {
+      "PLANS_LABEL": "This activity allows to manage the <b>plans</b> in your organisation.",
+      "PLAN_DEFINITION_LABEL": "A plan allows you to manage a set of events linked to a situation.",
+      "SEARCH_LABEL": "Type part of a word contained in the name of your plans in the arising bar to perform a search.",
+      "SORT_LABEL": "Sort your plans by ascending or descending alphabetical/chronological order this button.",
+      "TEMPLATES_LABEL": "Before creating a plan you need to create at least one <b>model</b> using this activity.",
+      "TEMPLATES_LINK_LABEL": "How to manage models",
+      "SELECT_TEMPLATE_LABEL": "Whenever you want to create a new plan simply pick the right <b>template</b> using the action button.",
+      "CREATE_PLAN_LINK_LABEL": "How to create an plan",
+      "PLAN_CARD_LABEL": "Each plan is viewed as a card providing available actions.",
+      "MANAGEMENT_LABEL": "Reveal actions to manage your plan.",
+      "UPDATE_PLAN_LABEL": "Update the name and icon of your plan through this action.",
+      "UPDATE_DESCRIPTION_LABEL": "Update the description of your plan through this action.",
+      "UPDATE_PROPERTIES_LABEL": "Similarly, update the properties of your model through the action associated to each field, you can choose if this will send a <p>notification</b> to all participants or not.",
+      "REMOVE_PLAN_LABEL": "Remove your plan through this action.",
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)."
+    },
+    "create-plan": {
+      "EVENT_NAME_LABEL": "Choose a name for your plan.",
+      "EVENT_DESCRIPTION_LABEL": "Enter a detailed description for your plan.",
+      "LOCATION_LABEL": "Define the location of your plan.",
+      "GEOLOCATE_LABEL": "Use your current position.",
+      "SHOW_MAP_LABEL": "Define the location of your plan on a map.",
+      "DRAW_MAP_LABEL": "Draw the area of your plan on a map.",
+      "SEARCH_LABEL": "Perform a search by address.",
+      "SEARCH_ADDRESS_LABEL": "Enter the whole adress or part of it and select among the different results.",
+      "SELECT_COORDINATORS_LABEL": "Select the coordinators of the plan.",
+      "COORDINATORS_LABEL": "Typing <b>the first characters</b> of a user name, a group name or a tag name make it selectable. Once added remove it using the cross.",
+      "CREATE_PLAN_LABEL": "Confirm the creation of your new plan."
+    },
+    "plan-templates": {
+      "TEMPLATES_LABEL": "This activity allows to manage the plan <b>templates</b> in your organisation.",
+      "TEMPLATE_DEFINITION_LABEL": "A template allows to define the recurrent content of a specific plan type.",
+      "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
+      "SEARCH_LABEL": "Type part of a word contained in the name of your models in the arising bar to perform a search.",
+      "SORT_LABEL": "Sort your templates by ascending or descending alphabetical order this button.",
+      "NEW_TEMPLATE_LABEL": "Create a <b>new template</b> using this button.",
+      "CREATE_TEMPLATE_LINK_LABEL": "How to create a model",
+      "TEMPLATE_CARD_LABEL": "Each model is viewed as a card providing available actions.",
+      "OBJECTIVES_LABEL": "Manage the objectives of your model using this action.",
+      "UPDATE_TEMPLATE_LABEL": "Update the name and icon of your model through this action.",
+      "UPDATE_DESCRIPTION_LABEL": "Update the description of your model through this action.",
+      "UPDATE_PROPERTIES_LABEL": "Similarly, update the properties of your model through the action associated to each field.",
+      "COPY_TEMPLATE_LABEL": "Go fast by creatng a new model from this one through this action.",
+      "REMOVE_TEMPLATE_LABEL": "Remove your model through this action.",
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)"
+    },
+    "create-plan-template": {
+      "TEMPLATE_NAME_LABEL": "Choose a name for your model.",
+      "TEMPLATE_ICON_LABEL": "Choose an icon to easily recognize your model.",
+      "SELECT_ICON_LABEL": "Select the icon in our large library.",
+      "SELECT_COLOR_LABEL": "Select its color in our palette.",
+      "TEMPLATE_DESCRIPTION_LABEL": "Enter a detailed description for your model.",
+      "SELECT_COORDINATORS_LABEL": "Select the default coordinators of the event.",
+      "COORDINATORS_LABEL": "Typing <b>the first characters</b> of a user name, a group name or a tag name make it selectable. Once added remove it using the cross.",
+      "PERMISSION_LABEL": "Select the role or rights required to create plans from this model.",
+      "CREATE_TEMPLATE_LABEL": "Confirm the creation of your new template."
+    },
+    "archived-plans": {
+      "HISTORY_LABEL": "This activity provides a history view of your plans displayed sequentially in a selected time range.",
+      "TIMELINE_LABEL": "Use the timeline to change the default time range.",
+      "START_TIME_LABEL": "Using the interactive calendar select the start date defining the oldest plans that will be visible.",
+      "END_TIME_LABEL": "Using the interactive calendar select the end date defining the newest plans that will be visible.",
+      "TIMERANGE_LABEL": "For a quick setup select a predefined time range.",
+      "SORT_LABEL": "Last order plans oldest or newest first using this button.",
+      "HISTORY_SCROLL_LABEL": "Browse your plans by scrolling to the bottom of the screen.",
+      "HISTORY_PLANS_LABEL": "You first need to select a relevant time range to display some plans."
+    },
+    "catalog": {
+      "CATALOG_LABEL": "This activity allows to manage the <b>geographic catalog</b> of your organisation, i.e. a digital map of what matters to you.",
+      "NAVIGATION_BAR_LINK_LABEL": "Browse the available actions like location search",
+      "CATALOG_PANEL_LABEL": "Open the catalog any time using this handle.",
+      "CATALOG_PANEL_LINK_LABEL": "Browse the catalog",
+      "TIMELINE_LABEL": "Open the timeline any time using this handle.",
+      "TIMELINE_LINK_LABEL": "Browse the timeline",
+      "FAB_LABEL": "Quickly execute actions related to map data using this button.",
+      "FAB_LINK_LABEL": "Browse the actions"
     }
   },
   "screen": {
@@ -319,15 +386,15 @@
     "VIEW_ARCHIVED_PLANS": "View plans archive",
     "CATALOG": "Map",
     "ARCHIVED_EVENTS": "Logbook",
-    "MEMBERS": "{{count}} Members",
+    "MEMBERS": "{{count}} member(s)",
     "VIEW_MEMBERS": "View members",
-    "TAGS": "{{count}} Tags",
+    "TAGS": "{{count}} tag(s)",
     "VIEW_TAGS": "View tags",
-    "GROUPS": "{{count}} Groups",
+    "GROUPS": "{{count}} group(s)",
     "VIEW_GROUPS": "View groups",
-    "EVENT_TEMPLATES": "{{count}} Event templates",
+    "EVENT_TEMPLATES": "{{count}} event template(s)",
     "VIEW_EVENT_TEMPLATES": "View event templates",
-    "PLAN_TEMPLATES": "{{count}} Plan templates",
+    "PLAN_TEMPLATES": "{{count}} plan template(s)",
     "VIEW_PLAN_TEMPLATES": "View plan templates",
     "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions",
     "EDIT_ACTION": "$t(EDIT_LABEL)",
@@ -683,7 +750,9 @@
     "OPTION_DISABLED_TOOLTIP": "Please provide the payment information to subscribe to this option"
   },
   "PlansActivity": {
-    "PLANS_LABEL": "Plans"
+    "PLANS_LABEL": "Plans",
+    "SEARCH_PLANS": "Search plans",
+    "SORT_PLANS": "Sort plans"
   },
   "PlanObjectivesEditor": {
     "MANAGE": "Manage objectives - {{name}}",

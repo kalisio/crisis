@@ -22,8 +22,16 @@ module.exports = {
   events: require('./events'),
   'create-event': require('./create-event'),
   'event-templates': require('./event-templates'),
-  'create-event-templates': require('./create-event-templates'),
+  'create-event-template': require('./create-event-template'),
   'edit-event-template-workflow': require('./edit-event-template-workflow'),
+  'archived-events': require('./archived-events'),
+  'archived-events-chart': require('./archived-events-chart'),
+  'archived-events-map': require('./archived-events-map'),
+  plans: require('./plans'),
+  'create-plan': require('./create-plan'),
+  'plan-templates': require('./plan-templates'),
+  'create-plan-template': require('./create-plan-template'),
+  'archived-plans': require('./archived-plans'),
   catalog: require('./catalog'),
   'navigation-bar': require('./map/navigation-bar'),
   'favorite-views': require('./map/favorite-views'),
@@ -34,9 +42,6 @@ module.exports = {
   'connect-layer': require('./map/connect-layer'),
   'create-layer': require('./map/create-layer'),
   'timeline': require('./map/timeline'),
-  'fab': require('./map/fab'),
-  'archived-events': require('./archived-events'),
-  'archived-events-chart': require('./archived-events-chart'),
-  'archived-events-map': require('./archived-events-map')
+  'fab': require('./map/fab')
 }
 

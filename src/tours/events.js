@@ -91,7 +91,7 @@ module.exports = [{
 }, {
   target: '#edit-item-description',
   title: 'tours.events.UPDATE_DESCRIPTION_LABEL',
-  content: 'tours.event-templates.UPDATE_PROPERTIES_LABEL',
+  content: 'tours.events.UPDATE_PROPERTIES_LABEL',
   params: {
     placement: 'bottom'
   }

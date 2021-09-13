@@ -462,7 +462,7 @@ module.exports = {
           { 
             id: 'plan-sorter',
             component: 'collection/KSorter', 
-            tooltip: 'EventsActivity.SORT_EVENTS',
+            tooltip: 'PlansActivity.SORT_PLANS',
             options: [
               { icon: 'kdk:clockwise.png', value: { field: 'updatedAt', order: 1 } },
               { icon: 'kdk:anticlockwise.png', value: { field: 'updatedAt', order: -1 }, default: true },
@@ -470,7 +470,7 @@ module.exports = {
               { icon: 'las la-sort-alpha-up', value: { field: 'name', order: -1 } }
             ]
           },
-          { id: 'search-event', icon: 'las la-search', tooltip: 'EventsActivity.SEARCH_EVENTS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { id: 'search-plan', icon: 'las la-search', tooltip: 'PlansActivity.SEARCH_PLANS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
         ],
         'filter': contextFilter('name')
       }

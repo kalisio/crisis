@@ -3,8 +3,7 @@ module.exports = [{
   title: 'tours.event-templates.WORKFLOW_DEFINITION_LABEL',
   content: 'tours.event-templates.WORKFLOW_LABEL',
   params: {
-    placement: 'bottom',
-    clickOnPrevious: '#close-action'
+    placement: 'bottom'
   }
 }, {
   target: '#title-field',
@@ -71,8 +70,7 @@ module.exports = [{
   target: '#preview-step',
   title: 'tours.event-templates.WORKFLOW_PREVIEW_STEP_LABEL',
   params: {
-    placement: 'top',
-    clickOnNext: '#close-action'
+    placement: 'top'
   }
 }, {
   target: '#apply-button',
