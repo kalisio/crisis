@@ -87,4 +87,14 @@ module.exports = [{
     clickOnLink: '#chart-view',
     tour: 'archived-events-activity/chart'
   }
+}, {
+  target: '#organisation-menu',
+  title: 'tours.archived-events.ORGANISATION_MENU_LABEL',
+  params: {
+    placement: 'left',
+    clickOn: '#organisation-avatar',
+    clickDelay: 500,
+    clickOnPrevious: '#organisation-avatar',
+    previousDelay: 500
+  }
 }]

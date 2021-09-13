@@ -61,6 +61,22 @@ module.exports = [{
     clickOnLink: '#organisation-archived-events'
   }
 }, {
+  target: '#organisation-plans',
+  content: 'tours.organisations.PLANS_LABEL',
+  link: 'tours.organisations.PLANS_LINK_LABEL',
+  params: {
+    placement: 'right',
+    clickOnLink: '#organisation-plans'
+  }
+}, {
+  target: '#organisation-archived-plans',
+  content: 'tours.organisations.ARCHIVED_PLANS_LABEL',
+  link: 'tours.organisations.ARCHIVED_PLANS_LINK_LABEL',
+  params: {
+    placement: 'right',
+    clickOnLink: '#organisation-archived-plans'
+  }
+}, {
   target: '#expand-action',
   content: 'tours.organisations.MANAGEMENT_LABEL',
   params: {

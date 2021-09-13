@@ -1,6 +1,7 @@
 <template>
   <div v-if="organisation">
     <q-btn-dropdown 
+      id="organisation-menu"
       flat
       dense
       no-caps
@@ -10,6 +11,7 @@
       <template v-slot:label>
         <div>
           <k-avatar 
+            id="organisation-avatar"
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'" 
             :object="organisation" 
             :contextId="organisation._id"

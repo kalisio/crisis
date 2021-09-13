@@ -115,8 +115,10 @@
       "EVENTS_LINK_LABEL": "How to manage events",
       "CATALOG_LABEL": "Use this shortcut to manage the <b>geographic catalog</b> of your organisation.",
       "CATALOG_LINK_LABEL": "How to manage the catalog",
-      "ARCHIVED_EVENTS_LABEL": "Use this shortcut to open the <b>history</b> of your events.",
-      "ARCHIVED_EVENTS_LINK_LABEL": "How to explore the history of your events",
+      "PLANS_LABEL": "This activity allows to manage the <b>plans</b> in your organisation.",
+      "PLANS_LINK_LABEL": "How to manage plans",
+      "ARCHIVED_PLANS_LABEL": "Use this shortcut to open the <b>history</b> of your plans.",
+      "ARCHIVED_PLANS_LINK_LABEL": "How to explore the history of your plans",
       "MANAGEMENT_LABEL": "Reveal actions to manage your organisation.",
       "OVERFLOW_MENU_LABEL": "Other activities are available through this menu.",
       "MEMBERS_LABEL": "This entry allows to manage the <b>members</b> of your organisation.",
@@ -127,6 +129,7 @@
       "EVENT_TEMPLATES_LINK_LABEL": "How to manage templates",
       "PLAN_TEMPLATES_LABEL": "This activity allows to manage the plan <b>templates</b> in your organisation.",
       "PLAN_TEMPLATES_LINK_LABEL": "How to manage templates",
+      "DESCRIPTION_LABEL": "Update the description of your organisation.",
       "BILLING_LABEL": "This entry allows to manage the <b>subscriptions</b> of your organisation.",
       "BILLING_LINK_LABEL": "How to manage subscriptions",
       "SETTINGS_LABEL": "This entry allows to update the <b>settings</b> of your organisation (name, logo, etc.).",
@@ -136,7 +139,6 @@
     },
     "organisation": {
       "NAME_LABEL": "Update the name of your organisation.",
-      "DESCRIPTION_LABEL": "Update the description of your organisation.",
       "AVATAR_LABEL": "Update the logo of your organisation (256x256 or 512x512 image recommanded).",
       "COLOR_LABEL": "Update the brand color of your organisation.",
       "CUSTOMER_LABEL": "This section recaps your current method of payment.",
@@ -172,7 +174,8 @@
       "ADD_MEDIA_LABEL": "Join files to your event through this action, this will send a <p>notification</b> to all participants.",
       "EVENT_MAP_LABEL": "View the map of your event through this action.",
       "REMOVE_EVENT_LABEL": "Remove your event through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL), this will send a <p>notification</b> to all participants."
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL), this will send a <p>notification</b> to all participants.",
+      "ORGANISATION_MENU_LABEL": "Use the top dropdown menu to easily view the plans of your organisation."
     },
     "create-event": {
       "EVENT_NAME_LABEL": "Choose a name for your event.",
@@ -224,7 +227,8 @@
       "COPY_TEMPLATE_LABEL": "Go fast by creatng a new model from this one through this action.",
       "TEMPLATE_OVERFLOW_MENU_LABEL": "$t(tours.CARD_OVERFLOW_MENU_LABEL)",
       "REMOVE_TEMPLATE_LABEL": "Remove your model through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)"
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)",
+      "ORGANISATION_MENU_LABEL": "Use the top dropdown menu to easily view your events or the plans of your organisation."
     },
     "create-event-template": {
       "TEMPLATE_NAME_LABEL": "Choose a name for your model.",
@@ -269,7 +273,8 @@
       "CHART_COUNT_LABEL": "Then select the number of templates per chart.",
       "CHART_COUNT_PAGINATION_LABEL": "If the total number of templates is too much large different charts will be generated and you will be able to navigate through using the arrows on the screen sides.",
       "CHART_RENDER_LABEL": "Last select the value to be displayed: events count, events percentage or participants count.",
-      "CHART_DOWNLOAD_LABEL": "Export your chart data as a CSV file to use it in a thrid-party application if you'd like."
+      "CHART_DOWNLOAD_LABEL": "Export your chart data as a CSV file to use it in a thrid-party application if you'd like.",
+      "ORGANISATION_MENU_LABEL": "Use the top dropdown menu to easily view the plans of your organisation."
     },
     "plans": {
       "PLANS_LABEL": "This activity allows to manage the <b>plans</b> in your organisation.",
@@ -286,7 +291,8 @@
       "UPDATE_DESCRIPTION_LABEL": "Update the description of your plan through this action.",
       "UPDATE_PROPERTIES_LABEL": "Similarly, update the properties of your model through the action associated to each field, you can choose if this will send a <p>notification</b> to all participants or not.",
       "REMOVE_PLAN_LABEL": "Remove your plan through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)."
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL).",
+      "ORGANISATION_MENU_LABEL": "Use the top dropdown menu to easily view your events or manage your organisation."
     },
     "create-plan": {
       "EVENT_NAME_LABEL": "Choose a name for your plan.",
@@ -316,7 +322,8 @@
       "UPDATE_PROPERTIES_LABEL": "Similarly, update the properties of your model through the action associated to each field.",
       "COPY_TEMPLATE_LABEL": "Go fast by creatng a new model from this one through this action.",
       "REMOVE_TEMPLATE_LABEL": "Remove your model through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)"
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)",
+      "ORGANISATION_MENU_LABEL": "Use the top dropdown menu to easily view your events or the plans of your organisation."
     },
     "create-plan-template": {
       "TEMPLATE_NAME_LABEL": "Choose a name for your model.",
@@ -337,7 +344,8 @@
       "TIMERANGE_LABEL": "For a quick setup select a predefined time range.",
       "SORT_LABEL": "Last order plans oldest or newest first using this button.",
       "HISTORY_SCROLL_LABEL": "Browse your plans by scrolling to the bottom of the screen.",
-      "HISTORY_PLANS_LABEL": "You first need to select a relevant time range to display some plans."
+      "HISTORY_PLANS_LABEL": "You first need to select a relevant time range to display some plans.",
+      "ORGANISATION_MENU_LABEL": "Use the top dropdown menu to easily view your events or manage your organisation."
     },
     "catalog": {
       "CATALOG_LABEL": "This activity allows to manage the <b>geographic catalog</b> of your organisation, i.e. a digital map of what matters to you.",

@@ -63,4 +63,14 @@ module.exports = [{
     placement: 'left',
     blockOnMiss: 'div.q-card.q-card--bordered'
   }
+}, {
+  target: '#organisation-menu',
+  title: 'tours.archived-plans.ORGANISATION_MENU_LABEL',
+  params: {
+    placement: 'left',
+    clickOn: '#organisation-avatar',
+    clickDelay: 500,
+    clickOnPrevious: '#organisation-avatar',
+    previousDelay: 500
+  }
 }]

@@ -118,7 +118,11 @@
       "CATALOG_LABEL": "Utilisez ce raccourci pour accéder au <b>catalogue géographique</b> de votre organisation.",
       "CATALOG_LINK_LABEL": "Voir le catalogue",
       "ARCHIVED_EVENTS_LABEL": "Utilisez ce raccourci pour accéder à l'<b>historique</b> de vos événements.",
-      "ARCHIVED_EVENTS_LINK_LABEL": "Voir l'historique",
+      "ARCHIVED_EVENTS_LINK_LABEL": "Voir l'historique de vos événements",
+      "PLANS_LABEL": "Accédez aux activités qui vous permettent de gérer les <b>plans</b> au sein de votre organisation.",
+      "PLANS_LINK_LABEL": "Voir comment gérer les plans",
+      "ARCHIVED_PLANS_LABEL": "Utilisez ce raccourci pour accéder à l'<b>historique</b> de vos plans.",
+      "ARCHIVED_PLANS_LINK_LABEL": "Voir l'historique de vos plans",
       "MANAGEMENT_LABEL": "Accédez ici aux actions vous permettant de gérer votre organisation.",
       "OVERFLOW_MENU_LABEL": "Les autres activités disponibles sont accessibles via ce menu déroulant.",
       "MEMBERS_LABEL": "Accédez à l'activité qui vous permet de gérer les <b>membres</b> au sein de votre organisation.",
@@ -131,6 +135,7 @@
       "EVENT_TEMPLATES_LINK_LABEL": "Voir comment gérer les modèles",
       "PLAN_TEMPLATES_LABEL": "Accédez à l'activité qui vous permet de gérer les <b>modèles de plan</b> au sein de votre organisation.",
       "PLAN_TEMPLATES_LINK_LABEL": "Voir comment gérer les modèles",
+      "DESCRIPTION_LABEL": "Modifiez la description de votre organisation.",
       "BILLING_LABEL": "Accédez à l'activité qui vous permet de modifier vos <b>options d'abonnement</b>.",
       "BILLING_LINK_LABEL": "Voir comment gérer vos options",
       "SETTINGS_LABEL": "Modifiez le <b>paramétrage</b> de votre organisation (nom, logo, etc.).",
@@ -140,7 +145,6 @@
     },
     "organisation": {
       "NAME_LABEL": "Modifiez le nom de votre organisation.",
-      "DESCRIPTION_LABEL": "Modifiez la description de votre organisation.",
       "AVATAR_LABEL": "Modifiez le logo de votre organisation (image 256x256 ou 512x512 recommandée).",
       "COLOR_LABEL": "Modifiez la couleur de votre organisation.",
       "CUSTOMER_LABEL": "Cette zone récapitule votre moyen de paiement actuel.",
@@ -176,7 +180,8 @@
       "UPDATE_PROPERTIES_LABEL": "De la même façon, modifiez les différentes propriétés de votre événement via l'action afférente, vous pourrez choisir d'envoyer d'une <b>notification</b> à tous les participants ou non.",
       "EVENT_MAP_LABEL": "Accédez à la carte lié à votre événement via cette action.",
       "REMOVE_EVENT_LABEL": "Supprimez votre événement via cette action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL), ceci provoquera l'envoi d'une <b>notification</b> à tous les participants."
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL), ceci provoquera l'envoi d'une <b>notification</b> à tous les participants.",
+      "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement aux plans votre organisation."
     },
     "create-event": {
       "EVENT_NAME_LABEL": "Choisissez le nom de votre événement.",
@@ -227,7 +232,8 @@
       "UPDATE_PROPERTIES_LABEL": "De la même façon, modifiez les différentes propriétés de votre modèle via l'action afférente.",
       "COPY_TEMPLATE_LABEL": "Gagnez du temps en créant un nouveau modèle à partir de celui-ci via cette action.",
       "REMOVE_TEMPLATE_LABEL": "Supprimez votre modèle via cette action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)"
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)",
+      "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement à vos événements ou aux plans votre organisation."
     },
     "create-event-template": {
       "TEMPLATE_NAME_LABEL": "Choisissez le nom de votre modèle.",
@@ -272,7 +278,8 @@
       "CHART_COUNT_LABEL": "Choisissez ensuite le nombre de modèles à afficher par graphique.",
       "CHART_COUNT_PAGINATION_LABEL": "Si le nombre de modèles au total est trop important plusieurs graphiques seront générés et vous pourrez naviguer entre eux via les flèches latérales.",
       "CHART_RENDER_LABEL": "Enfin définissez la valeur à afficher: nombre d'événements, pourcentage d'événements ou nombre de participants.",
-      "CHART_DOWNLOAD_LABEL": "Exportez les données de votre graphique au format CSV pour exploitation dans une application tierce."
+      "CHART_DOWNLOAD_LABEL": "Exportez les données de votre graphique au format CSV pour exploitation dans une application tierce.",
+      "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement aux plans votre organisation."
     },
     "plans": {
       "PLANS_LABEL": "Cette activité vous permet de gérer les <b>plans</b> au sein de votre organisation.",
@@ -289,7 +296,8 @@
       "UPDATE_DESCRIPTION_LABEL": "Modifiez la description de votre plan via cette action.",
       "UPDATE_PROPERTIES_LABEL": "De la même façon, modifiez les différentes propriétés de votre plan via l'action afférente, vous pourrez choisir d'envoyer d'une <b>notification</b> à tous les participants ou non.",
       "REMOVE_PLAN_LABEL": "Supprimez votre plan via cette action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)."
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL).",
+      "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement à vos événements ou administrer votre organisation."
     },
     "create-plan": {
       "PLAN_NAME_LABEL": "Choisissez le nom de votre plan.",
@@ -319,7 +327,8 @@
       "UPDATE_PROPERTIES_LABEL": "De la même façon, modifiez les différentes propriétés de votre modèle via l'action afférente.",
       "COPY_TEMPLATE_LABEL": "Gagnez du temps en créant un nouveau modèle à partir de celui-ci via cette action.",
       "REMOVE_TEMPLATE_LABEL": "Supprimez votre modèle via cette action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)"
+      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)",
+      "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement à vos événements ou aux plans votre organisation."
     },
     "create-plan-template": {
       "TEMPLATE_NAME_LABEL": "Choisissez le nom de votre modèle.",
@@ -340,7 +349,8 @@
       "TIMERANGE_LABEL": "Pour gagner du temps vous pouvez sélectionner une plage temporelle prédéfinie.",
       "SORT_LABEL": "Enfin choisissez d'afficher en premier les plus récents, ou les plus vieux, via ce bouton.",
       "HISTORY_SCROLL_LABEL": "Vous pouvez faire défiler vos plans en scrollant vers le bas de l'écran.",
-      "HISTORY_PLANS_LABEL": "Pour celà vous devez sélectionner une plage de temps faisant apparaître des plans."
+      "HISTORY_PLANS_LABEL": "Pour celà vous devez sélectionner une plage de temps faisant apparaître des plans.",
+      "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement à vos événements ou administrer votre organisation."
     },
     "catalog": {
       "CATALOG_LABEL": "Cette activité vous permet de gérer le <b>catalogue cartographique</b> de votre organisation, c'est à dire une carte numérique de vos enjeux.",

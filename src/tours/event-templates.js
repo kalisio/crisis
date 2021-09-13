@@ -82,4 +82,14 @@ module.exports = [{
   params: {
     placement: 'top'
   }
+}, {
+  target: '#organisation-menu',
+  title: 'tours.event-templates.ORGANISATION_MENU_LABEL',
+  params: {
+    placement: 'left',
+    clickOn: '#organisation-avatar',
+    clickDelay: 500,
+    clickOnPrevious: '#organisation-avatar',
+    previousDelay: 500
+  }
 }]
