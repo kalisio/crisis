@@ -17,12 +17,18 @@ De plus, un plan propose un tableau Kanban de trois colonnes:
 * *En cours*: événements ayant au moins un participant et non encore clôturés,
 * *Clôturés*: événements clôturés.
 
-:point_right: Vous êtes prêt à activer un plan ? <tour-link text="Voir comment gérer vos plans" path="home" :params="{ organisation: 'member' }"/>
+:point_right: Vous êtes prêt à activer un plan ? <tour-link text="Voir comment gérer vos plans" path="home" :params="{ organisation: 'member', route: 'plans-activity' }"/>
 
 ::: warning Note
 Cette fonctionnalité requiert un abonnement spécifique, sans celui-ci vous ne pourrez y accéder.
 
 :point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
+:::
+
+::: details Voir aussi
+Comment entrer dans l'activité de gestion des plans depuis le <tour-link text="tableau de bord" path="home/organisations"/>
+
+Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
 :::
 
 ## Modèle de plan

@@ -155,7 +155,7 @@ A un évènement, Akt'n'Map permet d’associer :
   * des *photos* ou des *documents* afin de les partager entre les acteurs,
   * un **[processus](../gofurther/workflow.md)** définissant les interaction entre les participants et les coordonateurs.
 
-:point_right: Vous êtes prêt à partager de l'information ? <tour-link text="Voir comment gérer vos événements" path="home" :params="{ organisation: 'member' }"/>
+:point_right: Vous êtes prêt à partager de l'information ? <tour-link text="Voir comment gérer vos événements" path="home" :params="{ organisation: 'member', route: 'events-activity' }"/>
 
 ::: tip Astuce
 Gagnez du temps en localisant votre événement directement depuis votre [catalogue cartographique](../gofurther/catalog.md).

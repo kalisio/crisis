@@ -155,7 +155,7 @@ Akt'n'Map allows to attach to each event:
   * *pictures* or *documents* shared among participants,
   * a **[workflow](../gofurther/workflow.md)** defining interactions between participants and coordinators.
 
-:point_right: Ready to share some information ? <tour-link text="How to manage your events" path="home" :params="{ organisation: 'member' }"/>
+:point_right: Ready to share some information ? <tour-link text="How to manage your events" path="home" :params="{ organisation: 'member', route: 'events-activity' }"/>
 
 ### Event templates
 

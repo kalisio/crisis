@@ -17,12 +17,18 @@ Moreover, the plan provides you with a Kanban board composed of three columns:
 * *Doing*: events having participants but not yet closed,
 * *Done*: closed events.
 
-:point_right: Ready to activate a plan ? <tour-link text="How to manage your plans" path="home" :params="{ organisation: 'member' }"/>
+:point_right: Ready to activate a plan ? <tour-link text="How to manage your plans" path="home" :params="{ organisation: 'member', route: 'plans-activity' }"/>
 
 ::: warning Note
 This feature requires a specific subscription, it will not be available otherwise.
 
 :point_right: You own an organisation ? <tour-link text="How to subscribe" path="home" :params="{ organisation: 'owner', route: 'organisation-settings-activity', page: 'billing' }"/>
+:::
+
+::: details See also
+How to enter the plans activity from the <tour-link text="dashboard" path="home/organisations"/>
+
+How to display the dashboard from the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
 :::
 
 ## Plan templates
