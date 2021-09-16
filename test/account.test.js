@@ -31,7 +31,8 @@ describe(suite, () => {
 
   it('check-account-deletion-forbidden', async () => {
     await core.deleteAccount(page, user.name)
-    // TODO catch error messages
+    expect(runner.hasError()).to.true
+    runner.clearErrors()
   })
 
   it('delete-organisation', async () => {
@@ -44,6 +45,7 @@ describe(suite, () => {
   })
 
   after(async () => {
+    expect(runner.hasError()).to.false
     await runner.stop()
   })
 })
