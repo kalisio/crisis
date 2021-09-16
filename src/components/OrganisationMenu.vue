@@ -86,6 +86,7 @@
 <script>
 import { QBtnDropdown } from 'quasar'
 import mixins from '../mixins'
+import * as utils from '../utils'
 
 export default {
   name: 'organisation-menu',
@@ -151,6 +152,15 @@ export default {
       const service = this.$api.getService(serviceName, this.organisation._id)
       const response = await service.find({ query, $limit: 0 })
       return response.total
+    },
+    async updateCounts () {
+      // Counts the number of orphan events
+      this.eventsCount = await this.countItems('events', { plan: { $eq: null } } )
+      // Then the number of plans the user has an event in
+      const values = await this.$api.getService('archived-events', this.organisation._id).find({
+        query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.organisation._id))
+      })
+      this.plansCount = await this.countItems('plans', { _id: { $in: values } })
     }
   },
   beforeCreate () {
@@ -159,9 +169,18 @@ export default {
     this.$options.components['k-action'] = this.$load('frame/KAction')
   },
   async created () {
-    // Counts the number of orphan events
-    this.eventsCount = await this.countItems('events', { plan: { $eq: null } } )
-    this.plansCount = await this.countItems('plans', { plan: { $eq: null } } )
+    await this.updateCounts()
+    // Keep track of changes once loaded
+    const eventsService = this.$api.getService('events', this.organisation._id)
+    eventsService.on('created', this.updateCounts)
+    eventsService.on('patched', this.updateCounts)
+    eventsService.on('updated', this.updateCounts)
+  },
+  beforeDestroy () {
+    const eventsService = this.$api.getService('events', this.organisation._id)
+    eventsService.on('created', this.updateCounts)
+    eventsService.on('patched', this.updateCounts)
+    eventsService.on('updated', this.updateCounts)
   }
 }
 </script>
