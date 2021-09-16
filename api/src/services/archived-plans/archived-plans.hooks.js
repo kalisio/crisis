@@ -17,7 +17,7 @@ module.exports = {
     ],
     patch: [
       disallow('external'),
-      coreHooks.convertDates(['createdAt', 'updatedAt']),
+      coreHooks.convertDates(['createdAt', 'updatedAt'])
     ],
     remove: [disallow('external')]
   },

@@ -41,12 +41,12 @@ export async function updateEventsObjective (hook) {
     const service = hook.service
     const eventsService = hook.app.getService('events', service.context)
     await Promise.all(
-      removedObjectives.map(objective => 
+      removedObjectives.map(objective =>
         eventsService.patch(null, { objective: null }, { query: { objective: objective.name } })
       )
     )
   }
-  
+
   return hook
 }
 
@@ -59,6 +59,6 @@ export async function removeEventsPlan (hook) {
   const object = getItems(hook)
   const eventsService = hook.app.getService('events', service.context)
   await eventsService.remove(null, { query: { plan: object._id } })
-  
+
   return hook
 }
