@@ -56,14 +56,13 @@ export default {
     return {
       // Make this configurable from app
       filter: this.$store.get('filter'),
-      sorter: this.$store.get('sorter'),
-      baseQuery: _.clone(this.$store.get('sorter')),
+      baseQuery: { $sort: { createdAt: -1 } },
       height: undefined
     }
   },
   methods: {
     async updateBaseQuery () {
-      this.baseQuery = _.clone(this.sorter.query)
+      this.baseQuery = { $sort: { createdAt: -1 } }
       // We'd like to only display plans where the user has events
       const values = await this.$api.getService('archived-events').find({
         query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.contextId))
