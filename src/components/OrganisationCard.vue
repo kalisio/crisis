@@ -65,7 +65,8 @@
         </div>
       </k-card-section>
       <!-- Administation section -->
-      <k-card-section v-if="isExpanded" icon="las la-cog" :title="$t('OrganisationCard.STRUCTURE_SECTION')">
+      <k-card-section v-if="isExpanded" icon="las la-cog"
+        :title="isMember ? $t('OrganisationCard.INFORMATION_SECTION') : $t('OrganisationCard.ADMINISTRATION_SECTION')">
         <template v-for="element in structure">
           <div :key="element.key" class="full-width row justify-between items-center no-wrap q-pa-xs">
             <k-action
@@ -73,7 +74,7 @@
               :icon="element.icon"
               :label="$t(`OrganisationCard.${element.key}`, { count: counters[element.name] })"
               @triggered="routeTo(`${element.name}-activity`)" />
-            <q-badge :label="`${quotas[element.name]} max`" color="grey-7" />
+            <q-badge v-if="!isMember" :label="`${quotas[element.name]} max`" color="grey-7" />
           </div>
         </template>
         <q-separator />
@@ -150,6 +151,10 @@ export default {
       const options = _.get(this.billing, 'options')
       if (options)  return _.concat([plan], _.map(options, (option) => { return `options.${option.plan}` }))
       return [plan]
+    },
+    isMember () {
+      const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.item._id)
+      return permissions.isJuniorRole(userRole, 'manager')
     }
   },
   methods: {

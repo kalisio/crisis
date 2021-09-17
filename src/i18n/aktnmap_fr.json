@@ -412,7 +412,8 @@
     "MANAGE_SUBSCRIPTIONS": "Gérer vos abonnements",
     "EDIT_ACTION": "$t(EDIT_LABEL)",
     "REMOVE_ACTION": "$t(REMOVE_LABEL)",
-    "STRUCTURE_SECTION": "Administration",
+    "ADMINISTRATION_SECTION": "Gestion",
+    "INFORMATION_SECTION": "Informations",
     "SUBSCRIPTIONS_LABEL": "Abonnements"
   },
   "BillingEditor": {

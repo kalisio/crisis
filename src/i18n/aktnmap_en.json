@@ -407,7 +407,8 @@
     "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions",
     "EDIT_ACTION": "$t(EDIT_LABEL)",
     "REMOVE_ACTION": "$t(REMOVE_LABEL)",
-    "STRUCTURE_SECTION": "Administration",
+    "ADMINISTRATION_SECTION": "Management",
+    "INFORMATION_SECTION": "Informations",
     "SUBSCRIPTIONS_LABEL": "Subscriptions"
   },
   "BillingEditor": {
