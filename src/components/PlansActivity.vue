@@ -62,11 +62,14 @@ export default {
   methods: {
     async updateFilterQuery () {
       this.filterQuery = _.clone(this.filter.query)
-      // We'd like to only display plans where the user has events
-      const values = await this.$api.getService('archived-events').find({
-        query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.contextId))
-      })
-      Object.assign(this.filterQuery, { _id: { $in: values } })
+      const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.contextId)
+      // We'd like to only display plans where the user has events except if manager who can see all
+      if (permissions.isJuniorRole(userRole, 'manager')) {
+        const values = await this.$api.getService('archived-events').find({
+          query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.contextId))
+        })
+        Object.assign(this.filterQuery, { _id: { $in: values } })
+      }
     },
     async configureActivity () {
       activityMixin.methods.configureActivity.call(this)
