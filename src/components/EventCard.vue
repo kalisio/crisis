@@ -9,6 +9,26 @@
       :expandable="true"
       @expanded="isExpanded = true"
       @collapsed="isExpanded = false">
+      <template v-slot:card-description>
+        <!-- Description -->
+        <k-card-section
+          :title="$t('KCard.DESCRIPTION_SECTION')"
+          :actions="descriptionActions"
+          :hideHeader="!isExpanded"
+          :dense="dense"
+        >
+          <div v-if="hasDescription">
+            <div class="q-pa-sm event-card-description" 
+              v-bind:class="{ 'event-card-description-zoomed': zoomedDescription === true }"
+              @click="zoomedDescription =! zoomedDescription">
+              <k-text-area :text="item.description" :length="150" />
+            </div>
+          </div>
+          <div v-else>
+            {{ $t('KCard.NO_DESCRIPTION_LABEL')}}
+          </div>
+        </k-card-section>
+      </template>
       <!--
         Card content
        -->
@@ -60,7 +80,7 @@
           :dense="dense"> 
           <k-text-area class="light-paragraph" :text="comment" :length="100" />
         </k-card-section>           
-        <!-- location section -->
+        <!-- Location section -->
         <k-card-section 
           v-if="isExpanded" 
           :title="$t('EventCard.LOCATION_SECTION')" 
@@ -200,6 +220,12 @@ export default {
     iconName () {
       return kCoreUtils.getIconName(this.item)
     },
+    hasDescription () {
+      return !_.isEmpty(this.description)
+    },
+    descriptionActions () {
+      return _.filter(this.itemActions, { scope: 'description' })
+    },
     plan () {
       return this.item.plan
     },
@@ -269,7 +295,7 @@ export default {
       participantLabel: '',
       nbParticipantsWaitingCoordination: 0,
       coordinatorLabel: '',
-      zoomDescription: false,
+      zoomedDescription: false,
       isExpanded: false
     }
   },
