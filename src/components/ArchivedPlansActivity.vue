@@ -11,7 +11,7 @@
           service="archived-plans" 
           :append-items="true" 
           :base-query="baseQuery"
-          :filter-query="filter.query" 
+          :filter-query="filterQuery" 
           :renderer="renderer" 
           :contextId="contextId" 
           :height="height">
@@ -54,20 +54,18 @@ export default {
   },
   data () {
     return {
-      // Make this configurable from app
-      filter: this.$store.get('filter'),
       baseQuery: { $sort: { createdAt: -1 } },
+      filterQuery: {},
       height: undefined
     }
   },
   methods: {
-    async updateBaseQuery () {
-      this.baseQuery = { $sort: { createdAt: -1 } }
+    async updateFilterQuery () {
       // We'd like to only display plans where the user has events
       const values = await this.$api.getService('archived-events').find({
         query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.contextId))
       })
-      Object.assign(this.baseQuery, { _id: { $in: values } })
+      this.filterQuery = { _id: { $in: values } }
     },
     onPageContentResized (size) {
       this.height = size.height - 110
@@ -81,21 +79,21 @@ export default {
   },
   async created () {
     // Build base query
-    await this.updateBaseQuery()
+    await this.updateFilterQuery()
     // Keep track of changes once loaded
     const eventsService = this.$api.getService('events', this.contextId)
-    eventsService.on('created', this.updateBaseQuery)
-    eventsService.on('patched', this.updateBaseQuery)
-    eventsService.on('updated', this.updateBaseQuery)
+    eventsService.on('created', this.updateFilterQuery)
+    eventsService.on('patched', this.updateFilterQuery)
+    eventsService.on('updated', this.updateFilterQuery)
     
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },
   beforeDestroy () {
     const eventsService = this.$api.getService('events', this.contextId)
-    eventsService.on('created', this.updateCounts)
-    eventsService.on('patched', this.updateCounts)
-    eventsService.on('updated', this.updateCounts)
+    eventsService.off('created', this.updateFilterQuery)
+    eventsService.off('patched', this.updateFilterQuery)
+    eventsService.off('updated', this.updateFilterQuery)
   }
 }
 </script>

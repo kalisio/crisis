@@ -224,9 +224,9 @@ export default {
   },
   beforeDestroy () {
     const eventsService = this.$api.getService('events', this.item._id)
-    eventsService.on('created', this.updateCounts)
-    eventsService.on('patched', this.updateCounts)
-    eventsService.on('updated', this.updateCounts)
+    eventsService.off('created', this.updateCounts)
+    eventsService.off('patched', this.updateCounts)
+    eventsService.off('updated', this.updateCounts)
   }
 }
 </script>

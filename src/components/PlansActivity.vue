@@ -9,8 +9,8 @@
         service="plans" 
         :renderer="renderer" 
         :contextId="contextId"
-        :base-query="baseQuery" 
-        :filter-query="filter.query" 
+        :base-query="sorter.query" 
+        :filter-query="filterQuery" 
         :list-strategy="'smart'">
         <template slot="empty-section">
           <div class="absolute-center">
@@ -51,7 +51,8 @@ export default {
     return {
       sorter: this.$store.get('sorter'),
       filter: this.$store.get('filter'),
-      baseQuery: _.clone(this.$store.get('sorter')),
+      // Can't use a computed as we have async operations here
+      filterQuery: {},
       // Make this configurable from app
       renderer: _.merge({
         component: 'PlanCard'
@@ -59,13 +60,13 @@ export default {
     }
   },
   methods: {
-    async updateBaseQuery () {
-      this.baseQuery = _.clone(this.sorter.query)
+    async updateFilterQuery () {
+      this.filterQuery = _.clone(this.filter.query)
       // We'd like to only display plans where the user has events
       const values = await this.$api.getService('archived-events').find({
         query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.contextId))
       })
-      Object.assign(this.baseQuery, { _id: { $in: values } })
+      Object.assign(this.filterQuery, { _id: { $in: values } })
     },
     async configureActivity () {
       activityMixin.methods.configureActivity.call(this)
@@ -121,12 +122,13 @@ export default {
   async created () {
     this.$events.$on('user-changed', this.configureActivity)
     // Build base query
-    await this.updateBaseQuery()
+    await this.updateFilterQuery()
     // Keep track of changes once loaded
     const eventsService = this.$api.getService('events', this.contextId)
-    eventsService.on('created', this.updateBaseQuery)
-    eventsService.on('patched', this.updateBaseQuery)
-    eventsService.on('updated', this.updateBaseQuery)
+    eventsService.on('created', this.updateFilterQuery)
+    eventsService.on('patched', this.updateFilterQuery)
+    eventsService.on('updated', this.updateFilterQuery)
+    this.$events.$on('filter-changed', this.updateFilterQuery)
 
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
@@ -134,9 +136,10 @@ export default {
   beforeDestroy () {
     this.$events.$off('user-changed', this.configureActivity)
     const eventsService = this.$api.getService('events', this.contextId)
-    eventsService.on('created', this.updateCounts)
-    eventsService.on('patched', this.updateCounts)
-    eventsService.on('updated', this.updateCounts)
+    eventsService.off('created', this.updateFilterQuery)
+    eventsService.off('patched', this.updateFilterQuery)
+    eventsService.off('updated', this.updateFilterQuery)
+    this.$events.$off('filter-changed', this.updateFilterQuery)
   }
 }
 </script>
