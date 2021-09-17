@@ -1,6 +1,8 @@
-import { disallow } from 'feathers-hooks-common'
+import _ from 'lodash'
+import { disallow, iff } from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api'
 import { hooks as mapHooks } from '@kalisio/kdk/map.api'
+import { populatePlan, marshallPlanQuery } from '../../hooks'
 
 module.exports = {
   before: {
@@ -8,7 +10,7 @@ module.exports = {
       coreHooks.convertObjectIDs(['plan']),
       coreHooks.convertToString(['alert.conditions'])
     ],
-    find: [mapHooks.marshallSpatialQuery, coreHooks.marshallComparisonQuery, coreHooks.distinct],
+    find: [mapHooks.marshallSpatialQuery, coreHooks.marshallComparisonQuery, marshallPlanQuery, coreHooks.distinct],
     get: [],
     create: [
       disallow('external'),
@@ -30,12 +32,16 @@ module.exports = {
 
   after: {
     all: [coreHooks.convertToJson(['alert.conditions'])],
-    find: [mapHooks.asGeoJson({
-      longitudeProperty: 'location.longitude',
-      latitudeProperty: 'location.latitude',
-      geometryProperty: 'location',
-      asFeatureCollection: false
-    })],
+    find: [
+      // Not by default for performance reason
+      iff(hook => _.get(hook, 'params.planAsObject'), populatePlan),
+      mapHooks.asGeoJson({
+        longitudeProperty: 'location.longitude',
+        latitudeProperty: 'location.latitude',
+        geometryProperty: 'location',
+        asFeatureCollection: false
+      })
+    ],
     get: [],
     create: [],
     update: [],

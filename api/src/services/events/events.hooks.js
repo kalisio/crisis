@@ -1,8 +1,9 @@
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
 import _ from 'lodash'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api'
 import { hooks as mapHooks } from '@kalisio/kdk/map.api'
 import { setNow, discard, iff } from 'feathers-hooks-common'
-import { addCreatorAsCoordinator, processNotification, sendEventNotifications, checkEventsQuotas, archive } from '../../hooks'
+import { addCreatorAsCoordinator, processNotification, sendEventNotifications,
+         marshallPlanQuery, populatePlan, checkEventsQuotas, archive } from '../../hooks'
 
 module.exports = {
   before: {
@@ -10,7 +11,7 @@ module.exports = {
       coreHooks.convertObjectIDs(['layer', 'feature', 'alert._id', 'plan']),
       coreHooks.convertToString(['alert.conditions'])
     ],
-    find: [mapHooks.marshallSpatialQuery],
+    find: [mapHooks.marshallSpatialQuery, marshallPlanQuery],
     get: [],
     // Because expireAt comes from client convert it to Date object
     create: [
@@ -42,12 +43,16 @@ module.exports = {
 
   after: {
     all: [coreHooks.convertToJson(['alert.conditions'])],
-    find: [mapHooks.asGeoJson({
-      longitudeProperty: 'location.longitude',
-      latitudeProperty: 'location.latitude',
-      geometryProperty: 'location',
-      asFeatureCollection: false
-    })],
+    find: [
+      // Not by default for performance reason
+      iff(hook => _.get(hook, 'params.planAsObject'), populatePlan),
+      mapHooks.asGeoJson({
+        longitudeProperty: 'location.longitude',
+        latitudeProperty: 'location.latitude',
+        geometryProperty: 'location',
+        asFeatureCollection: false
+      })
+    ],
     get: [],
     create: [sendEventNotifications],
     update: [sendEventNotifications],

@@ -42,9 +42,11 @@ const plansMixin = {
       }
     },
     getPlanQuery () {
-      return {
-        plan: _.isEmpty(this.planId) ? { $eq: null } : this.planId
-      }
+      let query = {}
+      if (!_.isEmpty(this.planId)) Object.assign(query, {
+        plan: this.planId
+      })
+      return query
     },
     refreshPlanId () {
       const planId = _.get(this.$route, 'query.plan', null)

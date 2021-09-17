@@ -14,9 +14,30 @@
         Card content
        -->
       <template v-slot:card-content>
-        <!-- Objective section -->
+        <!-- Plan section is only visible in event logbook -->
         <k-card-section 
-          v-if="isExpanded || objective"
+          v-if="planName"
+          :title="$t('ArchivedEventCard.PLAN_SECTION')" 
+          :hideHeader="!isExpanded"
+          :actions="planActions" 
+          :context="$props"
+          :dense="dense"
+        >
+          <div class="row full-width items-center">
+          <q-badge :color="planColor" :multi-line="true">
+            {{ planName }}
+            <q-tooltip v-if="planDescription">
+              {{ planDescription }}
+            </q-tooltip>
+          </q-badge>
+          <q-space />
+          <k-panel v-if="!isExpanded" :content="planActions" :context="$props" />
+          <k-stamp v-if="!planName" :text="'ArchivedEventCard.UNDEFINED_PLAN_LABEL'" direction="horizontal" />
+          </div>
+        </k-card-section>
+        <!-- Objective section is only visible in plan logbook -->
+        <k-card-section 
+          v-if="plan && !planName && (isExpanded || objective)"
           :title="$t('ArchivedEventCard.OBJECTIVE_SECTION')" 
           :hideHeader="!isExpanded"
           :dense="dense"
@@ -24,7 +45,7 @@
           <q-badge v-if="objective" :label="objective" color="grey-7" :multi-line="true"/>
           <k-stamp v-else text="ArchivedEventCard.UNDEFINED_OBJECTIVE_LABEL" direction="horizontal" />
         </k-card-section>
-        <!-- location section -->
+        <!-- Location section -->
         <k-card-section 
           v-if="isExpanded" 
           :title="$t('ArchivedEventCard.LOCATION_SECTION')" 
@@ -129,6 +150,24 @@ export default {
     iconName () {
       return kCoreUtils.getIconName(this.item)
     },
+    plan () {
+      return this.item.plan
+    },
+    planName () {
+      // Plan is only populated when required
+      return _.get(this.item, 'plan.name')
+    },
+    planColor () {
+      // Plan is only populated when required
+      return _.get(this.item, 'plan.icon.color', 'grey-7')
+    },
+    planDescription () {
+      // Plan is only populated when required
+      return _.get(this.item, 'plan.description')
+    },
+    planActions () {
+      return _.filter(this.itemActions, { scope: 'plan' })
+    },
     objective () {
       return this.item.objective
     },
@@ -191,6 +230,7 @@ export default {
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
     this.$options.components['k-card'] = this.$load('collection/KCard')
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
+    this.$options.components['k-panel'] = this.$load('frame/KPanel')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
     this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')

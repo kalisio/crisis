@@ -154,8 +154,8 @@ export default {
       return response.total
     },
     async updateCounts () {
-      // Counts the number of orphan events
-      this.eventsCount = await this.countItems('events', { plan: { $eq: null } } )
+      // Counts the number of events (with and without plan)
+      this.eventsCount = await this.countItems('events')
       // Then the number of plans the user has an event in
       const values = await this.$api.getService('archived-events', this.organisation._id).find({
         query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.organisation._id))

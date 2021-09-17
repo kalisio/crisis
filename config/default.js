@@ -552,6 +552,11 @@ module.exports = {
           icon: 'las la-trash', size: 'sm', visible: 'canRemoveItem', handler: 'removeEvent'
         },
         editItemAction('EventCard.EDIT_ACTION', 'description'),
+        {
+          id: 'goto-plan', scope: 'plan', tooltip: 'EventCard.PLAN_ACTION', icon: 'las la-arrow-alt-circle-right', size: 'sm',
+          visible: ['item.plan._id'],
+          route: { name: 'events-activity', params: { contextId: ':contextId' }, query: { plan: ':item.plan._id' } }
+        },
         editItemAction('EventCard.EDIT_ACTION', 'objective'),
         editItemAction('EventCard.EDIT_ACTION', 'location'),
         editItemAction('EventCard.EDIT_ACTION', 'participants'),
@@ -711,6 +716,11 @@ module.exports = {
         { 
           id: 'view-map', tooltip: 'ArchivedEventCard.VIEW_MAP', icon: 'las la-map-marked-alt', handler: 'followUp',
           visible: { name: '$can', params: ['read', 'archived-events', ':contextId'] }, scope: 'footer'
+        },
+        {
+          id: 'goto-plan', scope: 'plan', tooltip: 'ArchivedEventCard.PLAN_ACTION', icon: 'las la-arrow-alt-circle-right', size: 'sm',
+          visible: ['item.plan._id'],
+          route: { name: 'archived-events-activity', params: { contextId: ':contextId' }, query: { plan: ':item.plan._id' } }
         },
         { 
           id: 'browse-media', tooltip: 'ArchivedEventCard.BROWSE_MEDIA', icon: 'las la-photo-video', handler: 'browseMedia',
