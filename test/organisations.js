@@ -26,8 +26,14 @@ export async function createOrganisation (page, name, description, wait = 1000) 
 
 export async function deleteOrganisation (page, name, wait = 1000) {
   await goToOrganisationsActivity(page)
-  await core.clickCardAction(page, name, 'expand-action', 1000) // wait for the card to be opened
+  await core.expandCard(page, name)
   await core.clickCardAction(page, name, 'remove-item-header')
   await core.type(page, '.q-dialog input', name)
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
+}
+
+export async function editOrganisationBilling (page, name, wait = 1000) {
+  await goToOrganisationsActivity(page)
+  await core.expandCard(page, name)
+  await core.clickCardAction(page, name, 'edit-billing', wait)
 }
