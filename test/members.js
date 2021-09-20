@@ -20,3 +20,9 @@ export async function memberExists (page, organisation, member) {
   await goToMembersActivity(page, organisation)
   return core.cardExists(page, member)
 }
+
+export async function removeMember (page,  organisation, member) {
+  await goToMembersActivity(page, organisation)
+  await core.clickCardAction(page, member, 'remove-member')
+  await core.click(page, '.q-dialog button:nth-child(2)')
+}

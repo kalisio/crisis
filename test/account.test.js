@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { core } from '@kalisio/kdk/test.client'
 import { countOrganisations, organisationExists, createOrganisation, deleteOrganisation, editOrganisationBilling } from './organisations'
-import { countMembers, memberExists } from './members'
+import { countMembers, memberExists, removeMember } from './members'
 
 const suite = 'account'
 
@@ -46,10 +46,15 @@ describe(suite, () => {
     expect(runner.hasError()).to.false
   })
 
-  it('check-organisation-has-one-member', async() => {
+  it('check-organisation-contains-user-only', async() => {
     expect(await countMembers(page, org.name) === 1).to.true
     expect(await memberExists(page, org.name, user.name)).to.true
     expect(runner.hasError()).to.false
+  })
+
+  it('check-member-removal-is-forbidden', async() => {
+    await removeMember(page, org.name, user.name)
+    expect(runner.hasError()).to.true
   })
 
   it('check-organisation-creation-is-forbidden', async () => {
