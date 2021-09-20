@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import { core } from '@kalisio/kdk/test.client'
 import { countOrganisations, organisationExists, createOrganisation, deleteOrganisation, editOrganisationBilling } from './organisations'
+import { countMembers, memberExists } from './members'
 
 const suite = 'account'
 
@@ -42,6 +43,12 @@ describe(suite, () => {
   it('check-user-has-one-organisation', async () => {
     expect(await organisationExists(page, user.name)).to.true
     expect(await countOrganisations(page) === 1).to.true
+    expect(runner.hasError()).to.false
+  })
+
+  it('check-organisation-has-one-member', async() => {
+    expect(await countMembers(page, org.name) === 1).to.true
+    expect(await memberExists(page, org.name, user.name)).to.true
     expect(runner.hasError()).to.false
   })
 
