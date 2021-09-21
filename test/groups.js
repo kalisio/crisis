@@ -1,9 +1,11 @@
 import { core } from '@kalisio/kdk/test.client'
 import { goToOrganisationsActivity } from './organisations'
 
-export async function goToGroupsActivity (page, wait = 2000) {
+export async function goToGroupsActivity (page, organisation, wait = 2000) {
   const url = page.url()
   if (!url.includes('groups')) {
+    // We can pass an object or a name
+    organisation = organisation.name || organisation
     await goToOrganisationsActivity(page, wait)
     await core.expandCard(page, organisation)
     await core.clickCardAction(page, organisation, 'organisation-groups')
@@ -17,6 +19,20 @@ export async function countGroups (page, organisation) {
 }
 
 export async function groupExists (page, organisation, group) {
-  await goToGroupssActivity(page, organisation)
+  await goToGroupsActivity(page, organisation)
   return core.cardExists(page, group)
+}
+
+export async function createGroup (page, organisation, group, wait = 1000) {
+  await goToGroupsActivity(page, organisation)
+  await core.clickAction(page, 'create-group')
+  await core.type(page, '#name-field', group.name)
+  await core.type(page, '#description-field', group.description)
+  await core.clickAction(page, 'apply-button', wait)
+}
+
+export async function removeGroup (page, organisation, group, wait = 1000) {
+  await goToGroupsActivity(page, organisation)
+  await core.clickCardAction(page, group.name, 'remove-item-header')
+  await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
