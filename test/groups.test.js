@@ -82,12 +82,12 @@ describe(suite, () => {
   })
 
   after(async () => {
+    await runner.stop()
     // First remove groups in case removal test failed
     await client.removeGroups(org)
     // Then members
     await client.removeMembers(org)
     // Then organisation/owner
     await client.removeOrganisation(org)
-    await runner.stop()
   })
 })
