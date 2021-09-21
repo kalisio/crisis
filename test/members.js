@@ -9,8 +9,7 @@ export async function goToMembersActivity (page, organisation, wait = 2000) {
   if (!url.includes('members')) {
     await goToOrganisationsActivity(page)
     await core.expandCard(page, organisationComponent, organisation)
-    await core.clickItemAction(page, organisationComponent, organisation, 'organisation-members')
-    await page.waitForTimeout(wait)
+    await core.clickItemAction(page, organisationComponent, organisation, 'organisation-members', wait)
   } 
 }
 
@@ -26,6 +25,6 @@ export async function memberExists (page, organisation, member) {
 
 export async function removeMember (page,  organisation, member) {
   await goToMembersActivity(page, organisation)
-  await core.clickitemAction(page, memberComponent, member, 'remove-member')
+  await core.clickItemAction(page, memberComponent, member, 'remove-member')
   await core.click(page, '.q-dialog button:nth-child(2)')
 }

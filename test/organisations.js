@@ -9,7 +9,6 @@ export async function goToOrganisationsActivity (page, wait = 2000) {
 
 export async function countOrganisations (page) {
   await goToOrganisationsActivity(page)
-  await page.waitForTimeout(2000)
   return core.countItems(page, organisationComponent)
 }
 

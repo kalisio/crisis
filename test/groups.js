@@ -2,7 +2,7 @@ import { core } from '@kalisio/kdk/test.client'
 import { goToOrganisationsActivity } from './organisations'
 
 const organisationComponent = 'OrganisationCard'
-const groupComponent = 'team/KMemberCard'
+const groupComponent = 'team/KGroupCard'
 
 export async function goToGroupsActivity (page, organisation, wait = 2000) {
   const url = page.url()
@@ -11,8 +11,7 @@ export async function goToGroupsActivity (page, organisation, wait = 2000) {
     organisation = organisation.name || organisation
     await goToOrganisationsActivity(page, wait)
     await core.expandCard(page, organisationComponent, organisation)
-    await core.clickItemAction(page, organisationComponent, organisation, 'organisation-groups')
-    await page.waitForTimeout(wait)
+    await core.clickItemAction(page, organisationComponent, organisation, 'organisation-groups', wait)
   }
 }
 
