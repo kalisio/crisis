@@ -40,7 +40,7 @@ describe(suite, () => {
     expect(runner.hasError()).to.false
   })
 
-  it('check-user-has-one-organisation', async () => {
+   it('check-user-has-one-organisation', async () => {
     expect(await organisationExists(page, user.name)).to.true
     expect(await countOrganisations(page) === 1).to.true
     expect(runner.hasError()).to.false
