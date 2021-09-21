@@ -55,12 +55,12 @@ describe(suite, () => {
         'akt\'n\'map-welcome': false
       }
     })
-    page = await runner.start()
     // Prepare structure for current run
     await client.createOrganisation(org)
     await client.createMembers(org)
     // Groups will be manually created by test
     //await client.createGroups(org)
+    page = await runner.start()
   })
 
   beforeEach(async () => {
@@ -82,12 +82,12 @@ describe(suite, () => {
   })
 
   after(async () => {
+    await runner.stop()
     // First remove groups in case removal test failed
     await client.removeGroups(org)
     // Then members
     await client.removeMembers(org)
     // Then organisation/owner
     await client.removeOrganisation(org)
-    await runner.stop()
   })
 })
