@@ -55,12 +55,12 @@ describe(suite, () => {
         'akt\'n\'map-welcome': false
       }
     })
-    page = await runner.start()
     // Prepare structure for current run
     await client.createOrganisation(org)
     await client.createMembers(org)
     // Groups will be manually created by test
     //await client.createGroups(org)
+    page = await runner.start()
   })
 
   beforeEach(async () => {
