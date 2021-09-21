@@ -7,6 +7,8 @@ const memberComponent = 'team/KMemberCard'
 export async function goToMembersActivity (page, organisation, wait = 2000) {
   const url = page.url()
   if (!url.includes('members')) {
+    // We can pass an object or a name
+    organisation = organisation.name || organisation
     await goToOrganisationsActivity(page)
     await core.expandCard(page, organisationComponent, organisation)
     await core.clickItemAction(page, organisationComponent, organisation, 'organisation-members', wait)
@@ -20,11 +22,11 @@ export async function countMembers (page, organisation) {
 
 export async function memberExists (page, organisation, member) {
   await goToMembersActivity(page, organisation)
-  return core.itemExists(page, memberComponent, member)
+  return core.itemExists(page, memberComponent, member.name)
 }
 
 export async function removeMember (page,  organisation, member) {
   await goToMembersActivity(page, organisation)
-  await core.clickItemAction(page, memberComponent, member, 'remove-member')
+  await core.clickItemAction(page, memberComponent, member.name, 'remove-member')
   await core.click(page, '.q-dialog button:nth-child(2)')
 }

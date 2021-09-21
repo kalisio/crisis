@@ -16,6 +16,10 @@ describe(suite, () => {
   let org = {
     name: user.name
   }
+  let newOrg = {
+    name: 'My new org',
+    description: 'A new org'
+  }
 
   before(async () => {
     runner = new core.Runner(suite, {
@@ -40,25 +44,25 @@ describe(suite, () => {
     expect(runner.hasError()).to.false
   })
 
-   it('check-user-has-one-organisation', async () => {
-    expect(await organisationExists(page, user.name)).to.true
+  it('check-user-has-one-organisation', async () => {
+    expect(await organisationExists(page, org)).to.true
     expect(await countOrganisations(page) === 1).to.true
     expect(runner.hasError()).to.false
   })
 
   it('check-organisation-contains-user-only', async() => {
-    expect(await countMembers(page, org.name) === 1).to.true
-    expect(await memberExists(page, org.name, user.name)).to.true
+    expect(await countMembers(page, org) === 1).to.true
+    expect(await memberExists(page, org, user)).to.true
     expect(runner.hasError()).to.false
   })
 
   it('check-member-removal-is-forbidden', async() => {
-    await removeMember(page, org.name, user.name)
+    await removeMember(page, org, user)
     expect(runner.hasError()).to.true
   })
 
   it('check-organisation-creation-is-forbidden', async () => {
-    await createOrganisation(page, 'My new org', 'My new organisation')    
+    await createOrganisation(page, newOrg)    
     await core.clickAction(page, 'cancel-button')    
     expect(runner.hasError()).to.true    
   })
@@ -77,14 +81,14 @@ describe(suite, () => {
   })
 
   it('edit-organisation-billing', async () => {
-    await editOrganisationBilling(page, org.name)
+    await editOrganisationBilling(page, org)
     await core.clickAction(page, 'close-button')
     await page.waitForTimeout(1000)
     expect(runner.hasError()).to.false
   })
 
   it('delete-organisation', async () => {
-    await deleteOrganisation(page, org.name)
+    await deleteOrganisation(page, org)
     expect(await countOrganisations(page) === 0).to.true
     expect(runner.hasError()).to.false
   })

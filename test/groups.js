@@ -22,7 +22,7 @@ export async function countGroups (page, organisation) {
 
 export async function groupExists (page, organisation, group) {
   await goToGroupsActivity(page, organisation)
-  return core.itemExists(page, groupComponent, group)
+  return core.itemExists(page, groupComponent, group.name)
 }
 
 export async function createGroup (page, organisation, group, wait = 1000) {

@@ -12,29 +12,29 @@ export async function countOrganisations (page) {
   return core.countItems(page, organisationComponent)
 }
 
-export async function organisationExists (page, name) {
+export async function organisationExists (page, organisation) {
   await goToOrganisationsActivity(page)
-  return core.itemExists(page, organisationComponent, name)
+  return core.itemExists(page, organisationComponent, organisation.name)
 }
 
-export async function createOrganisation (page, name, description, wait = 1000) {
+export async function createOrganisation (page, organisation, wait = 1000) {
   await goToOrganisationsActivity(page)
   await core.clickAction(page, 'create-organisation')
-  await core.type(page, '#name-field', name)
-  await core.type(page, '#description-field', description)
+  await core.type(page, '#name-field', organisation.name)
+  await core.type(page, '#description-field', organisation.description)
   await core.clickAction(page, 'apply-button', wait)
 }
 
-export async function deleteOrganisation (page, name, wait = 1000) {
+export async function deleteOrganisation (page, organisation, wait = 1000) {
   await goToOrganisationsActivity(page)
-  await core.expandCard(page, organisationComponent, name)
-  await core.clickItemAction(page, organisationComponent, name, 'remove-item-header')
-  await core.type(page, '.q-dialog input', name)
+  await core.expandCard(page, organisationComponent, organisation.name)
+  await core.clickItemAction(page, organisationComponent, organisation.name, 'remove-item-header')
+  await core.type(page, '.q-dialog input', organisation.name)
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
-export async function editOrganisationBilling (page, name, wait = 1000) {
+export async function editOrganisationBilling (page, organisation, wait = 1000) {
   await goToOrganisationsActivity(page)
-  await core.expandCard(page, organisationComponent, name)
-  await core.clickItemAction(page, organisationComponent, name, 'edit-billing', wait)
+  await core.expandCard(page, organisationComponent, organisation.name)
+  await core.clickItemAction(page, organisationComponent, organisation.name, 'edit-billing', wait)
 }
