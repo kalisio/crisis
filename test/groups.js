@@ -38,3 +38,8 @@ export async function removeGroup (page, organisation, group, wait = 1000) {
   await core.clickItemAction(page, groupComponent, group.name, 'remove-item-header')
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
+
+export async function goToGroupMembersActivity (page, organisation, wait = 2000) {
+  await goToGroupsActivity(page, organisation)
+  await core.clickItemAction(page, groupComponent, organisation, 'list-members', wait)
+}

@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { core } from '@kalisio/kdk/test.client'
 import { goToOrganisationsActivity } from './organisations'
 
@@ -23,6 +24,22 @@ export async function countMembers (page, organisation) {
 export async function memberExists (page, organisation, member) {
   await goToMembersActivity(page, organisation)
   return core.itemExists(page, memberComponent, member.name)
+}
+
+export async function joinGroup (page, organisation, group, member) {
+  await goToMembersActivity(page, organisation)
+  await core.clickItemAction(page, memberComponent, member.name, 'join-group')
+  await core.type(page, '#group-field', group.name)
+  await core.click(page, `#${_.kebabCase(group.name)}`)
+  await core.clickSelect(page, '#role-field', `#${member.permissions}`)
+  await core.click(page, '.q-dialog button:nth-child(2)')
+}
+
+export async function reissueMemberInvitation (page,  organisation, member) {
+  await goToMembersActivity(page, organisation)
+  await core.clickItemAction(page, memberComponent, member.name, 'reissue-invitation')
+  await core.type(page, '#email-field', member.email)
+  await core.click(page, '.q-dialog button:nth-child(2)')
 }
 
 export async function removeMember (page,  organisation, member) {

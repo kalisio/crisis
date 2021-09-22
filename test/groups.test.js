@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { expect } from 'chai'
 import { core } from '@kalisio/kdk/test.client'
 import * as groups from './groups'
+import * as members from './members'
 
 const suite = 'groups'
 
@@ -18,7 +19,7 @@ describe(suite, () => {
       email: 'group-owner-2@kalisio.xyz',
       password: 'Pass;word1',
       permissions: 'manager'
-    /*},{
+    },{
       name: 'Group manager 1',
       email: 'group-manager-1@kalisio.xyz',
       password: 'Pass;word1',
@@ -32,18 +33,20 @@ describe(suite, () => {
       name: 'Group member',
       email: 'group-member@kalisio.xyz',
       password: 'Pass;word1',
-      permissions: 'member'*/
+      permissions: 'member'
     }],
     groups: [{
       name: 'Group 1',
-      description: 'Group number 1'
-    }/*, {
+      description: 'Group number 1',
+    }, {
       name: 'Group 2',
       description: 'Group number 2'
-    }*/]
+    }]
   }
 
-  before(async () => {
+  before(async function () {
+    // Let enough time to process
+    this.timeout(60000)
     api = new core.Api()
     client = api.createClient()
     runner = new core.Runner(suite, {
@@ -67,18 +70,33 @@ describe(suite, () => {
     runner.clearErrors()
   })
 
-  it('org owner can create a group', async () => {
-    await core.login(page, org.owner.email, org.owner.password)
-    await core.closeSignupAlert(page)
-    await groups.createGroup(page, org, org.groups[0])
-    expect(await groups.countGroups(page, org) === 1).to.true
+  afterEach(async () => {
     expect(runner.hasError()).to.false
   })
 
+  it('org owner can create a group', async () => {
+    const group = _.find(org.groups, { name: 'Group 1' })
+    await core.login(page, org.owner.email, org.owner.password)
+    await core.closeSignupAlert(page)
+    await groups.createGroup(page, org, group)
+    expect(await groups.countGroups(page, org)).to.equal(1)
+    expect(await groups.groupExists (page, org, group)).to.be.true
+  })
+
+  it('group owner can add members to his group', async () => {
+    const group = _.find(org.groups, { name: 'Group 1' })
+    let member = _.find(org.members, { name: 'Group manager 2' })
+    await members.joinGroup(page, org, group, member)
+    member = _.find(org.members, { name: 'Group member' })
+    await members.joinGroup(page, org, group, member)
+    await groups.goToGroupMembersActivity(page, org)
+    expect(await members.countMembers(page, org)).to.equal(3)
+  })
+
   it('group owner can remove his group', async () => {
-    await groups.removeGroup(page, org, org.groups[0])
-    expect(await groups.countGroups(page, org) === 0).to.true
-    expect(runner.hasError()).to.false
+    const group = _.find(org.groups, { name: 'Group 1' })
+    await groups.removeGroup(page, org, group)
+    expect(await groups.countGroups(page, org)).to.equal(0)
   })
 
   after(async () => {

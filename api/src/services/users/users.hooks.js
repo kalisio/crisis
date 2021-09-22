@@ -15,7 +15,9 @@ module.exports = {
           const authConfig = hook.app.get('authentication')
           return coreHooks.setExpireAfter(authConfig.invitationExpireAfter || 2 * 24 * 60 * 60)(hook) // 48h in seconds
         },
-        coreHooks.generatePassword,
+        coreHooks.generatePassword({
+          suggestedPasswordField: 'suggestedPassword'
+        }),
         coreHooks.sendInvitationEmail,
         coreHooks.hashPassword()),
       coreHooks.addVerification,
