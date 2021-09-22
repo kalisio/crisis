@@ -26,12 +26,19 @@ export async function memberExists (page, organisation, member) {
   return core.itemExists(page, memberComponent, member.name)
 }
 
-export async function joinGroup (page, organisation, group, member) {
+export async function joinGroup (page, organisation, group, member, permissions) {
   await goToMembersActivity(page, organisation)
   await core.clickItemAction(page, memberComponent, member.name, 'join-group')
   await core.type(page, '#group-field', group.name)
   await core.click(page, `#${_.kebabCase(group.name)}`)
-  await core.clickSelect(page, '#role-field', `#${member.permissions}`)
+  await core.clickSelect(page, '#role-field', `#${permissions}`)
+  await core.click(page, '.q-dialog button:nth-child(2)')
+}
+
+export async function leaveGroup (page, organisation, group, member) {
+  await goToMembersActivity(page, organisation)
+  await core.clickItemAction(page, memberComponent, member.name, 'group-button')
+  await core.click(page, '#leave-group')
   await core.click(page, '.q-dialog button:nth-child(2)')
 }
 

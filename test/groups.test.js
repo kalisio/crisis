@@ -10,28 +10,18 @@ describe(suite, () => {
   let runner, page, api, client
   let org = {
     owner: {
-      name: 'Group owner 1',
-      email: 'group-owner-1@kalisio.xyz',
+      name: 'Owner',
+      email: 'owner@kalisio.xyz',
       password: 'Pass;word1'
     },
     members: [{
-      name: 'Group owner 2',
-      email: 'group-owner-2@kalisio.xyz',
-      password: 'Pass;word1',
-      permissions: 'manager'
-    },{
-      name: 'Group manager 1',
-      email: 'group-manager-1@kalisio.xyz',
+      name: 'Manager',
+      email: 'manager@kalisio.xyz',
       password: 'Pass;word1',
       permissions: 'manager'
     }, {
-      name: 'Group manager 2',
-      email: 'group-manager-2@kalisio.xyz',
-      password: 'Pass;word1',
-      permissions: 'manager'
-    }, {
-      name: 'Group member',
-      email: 'group-member@kalisio.xyz',
+      name: 'Member',
+      email: 'member@kalisio.xyz',
       password: 'Pass;word1',
       permissions: 'member'
     }],
@@ -76,24 +66,91 @@ describe(suite, () => {
 
   it('org owner can create a group', async () => {
     const group = _.find(org.groups, { name: 'Group 1' })
-    await core.login(page, org.owner.email, org.owner.password)
+    await core.login(page, org.owner)
     await core.closeSignupAlert(page)
     await groups.createGroup(page, org, group)
     expect(await groups.countGroups(page, org)).to.equal(1)
-    expect(await groups.groupExists (page, org, group)).to.be.true
+    expect(await groups.groupExists(page, org, group)).to.be.true
   })
 
-  it('group owner can add members to his group', async () => {
+  it('org owner can add members to his group', async () => {
     const group = _.find(org.groups, { name: 'Group 1' })
-    let member = _.find(org.members, { name: 'Group manager 2' })
-    await members.joinGroup(page, org, group, member)
-    member = _.find(org.members, { name: 'Group member' })
-    await members.joinGroup(page, org, group, member)
+    let member = _.find(org.members, { name: 'Manager' })
+    await members.joinGroup(page, org, group, member, 'manager')
+    member = _.find(org.members, { name: 'Member' })
+    await members.joinGroup(page, org, group, member, 'member')
     await groups.goToGroupMembersActivity(page, org, group)
     expect(await members.countMembers(page, org)).to.equal(3)
   })
 
-  it('group owner can remove his group', async () => {
+  it('org owner can remove members from his group', async () => {
+    const group = _.find(org.groups, { name: 'Group 1' })
+    let member = _.find(org.members, { name: 'Manager' })
+    await members.leaveGroup(page, org, group, member)
+    await groups.goToGroupMembersActivity(page, org, group)
+    expect(await members.countMembers(page, org)).to.equal(2)
+  })
+
+  it('last owner cannot be removed from group', async () => {
+    const group = _.find(org.groups, { name: 'Group 1' })
+    await members.leaveGroup(page, org, group, org.owner)
+    expect(await core.isToastVisible(page)).to.be.true
+    // This one generates an expected error message
+    runner.clearErrors()
+  })
+
+  it('org manager can create a group', async () => {
+    await core.logout(page)
+    const member = _.find(org.members, { name: 'Manager' })
+    await core.goToLoginScreen(page)
+    await core.login(page, member)
+    const group = _.find(org.groups, { name: 'Group 2' })
+    await groups.createGroup(page, org, group)
+    expect(await groups.countGroups(page, org)).to.equal(1)
+    expect(await groups.groupExists(page, org, group)).to.be.true
+  })
+
+  it('org manager can add members to his group', async () => {
+    const group = _.find(org.groups, { name: 'Group 2' })
+    const member = _.find(org.members, { name: 'Member' })
+    await members.joinGroup(page, org, group, member, 'manager')
+    await groups.goToGroupMembersActivity(page, org, group)
+    expect(await members.countMembers(page, org)).to.equal(2)
+  })
+
+  it('group manager can add members to his group', async () => {
+    const member = _.find(org.members, { name: 'Member' })
+    await core.logout(page)
+    await core.goToLoginScreen(page)
+    await core.login(page, member)
+    const group = _.find(org.groups, { name: 'Group 2' })
+    await members.joinGroup(page, org, group, org.owner, 'member')
+    await groups.goToGroupMembersActivity(page, org, group)
+    expect(await members.countMembers(page, org)).to.equal(3)
+  })
+
+  it('group manager can remove members from his group', async () => {
+    const group = _.find(org.groups, { name: 'Group 2' })
+    await members.leaveGroup(page, org, group, org.owner)
+    await groups.goToGroupMembersActivity(page, org, group)
+    expect(await members.countMembers(page, org)).to.equal(2)
+  })
+
+  it('org manager can remove his group', async () => {
+    const member = _.find(org.members, { name: 'Manager' })
+    await core.logout(page)
+    await core.goToLoginScreen(page)
+    await core.login(page, member)
+    const group = _.find(org.groups, { name: 'Group 2' })
+    await groups.removeGroup(page, org, group)
+    expect(await groups.countGroups(page, org)).to.equal(0)
+  })
+
+  it('org owner can remove his group', async () => {
+    await core.logout(page)
+    await core.goToLoginScreen(page)
+    await core.login(page, org.owner)
+    await core.closeSignupAlert(page)
     const group = _.find(org.groups, { name: 'Group 1' })
     await groups.removeGroup(page, org, group)
     expect(await groups.countGroups(page, org)).to.equal(0)

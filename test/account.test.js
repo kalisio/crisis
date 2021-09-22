@@ -37,8 +37,8 @@ describe(suite, () => {
 
   it('create-account', async () => {
     await core.goToRegisterScreen(page)
-    await core.register(page, user.name, user.email, user.password)
-    //await core.login(page, user.email, user.password)
+    await core.register(page, user)
+    //await core.login(page, user)
     await core.closeSignupAlert(page)
     await core.closeWelcomeDialog(page)
     expect(runner.hasError()).to.false

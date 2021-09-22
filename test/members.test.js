@@ -59,7 +59,7 @@ describe(suite, () => {
 
   it('org owner can invite members', async () => {
     let member = _.find(org.members, { name: 'Manager' })
-    await core.login(page, org.owner.email, org.owner.password)
+    await core.login(page, org.owner)
     await core.closeSignupAlert(page)
     // Member having an account
     await members.addMember(page, org, member)
