@@ -89,7 +89,7 @@ describe(suite, () => {
     await members.joinGroup(page, org, group, member)
     member = _.find(org.members, { name: 'Group member' })
     await members.joinGroup(page, org, group, member)
-    await groups.goToGroupMembersActivity(page, org)
+    await groups.goToGroupMembersActivity(page, org, group)
     expect(await members.countMembers(page, org)).to.equal(3)
   })
 
@@ -97,6 +97,7 @@ describe(suite, () => {
     const group = _.find(org.groups, { name: 'Group 1' })
     await groups.removeGroup(page, org, group)
     expect(await groups.countGroups(page, org)).to.equal(0)
+    await core.logout(page)
   })
 
   after(async () => {
