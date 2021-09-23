@@ -37,7 +37,7 @@ export async function joinGroup (page, organisation, group, member, permissions)
 
 export async function leaveGroup (page, organisation, group, member) {
   await goToMembersActivity(page, organisation)
-  await core.clickItemAction(page, memberComponent, member.name, 'group-button')
+  await core.clickItemAction(page, memberComponent, member.name, `${_.kebabCase(group.name)}-button`)
   await core.click(page, '#leave-group')
   await core.click(page, '.q-dialog button:nth-child(2)')
 }

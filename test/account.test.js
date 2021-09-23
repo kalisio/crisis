@@ -23,6 +23,7 @@ describe(suite, () => {
 
   before(async () => {
     runner = new core.Runner(suite, {
+      appName: 'aktnmap',
       browser: {
         slowMo: 1,
         args: ['--lang=fr']

@@ -37,9 +37,12 @@ describe(suite, () => {
   before(async function () {
     // Let enough time to process
     this.timeout(60000)
-    api = new core.Api()
+    api = new core.Api({
+      appName: 'aktnmap'
+    })
     client = api.createClient()
     runner = new core.Runner(suite, {
+      appName: 'aktnmap',
       browser: {
         slowMo: 1,
         args: ['--lang=fr']
