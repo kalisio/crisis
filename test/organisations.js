@@ -1,6 +1,6 @@
 import { core } from '@kalisio/kdk/test.client'
 
-const organisationComponent = 'OrganisationCard'
+export const organisationComponent = 'OrganisationCard'
 
 export async function goToOrganisationsActivity (page, wait = 2000) {
   const url = page.url()
