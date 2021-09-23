@@ -3,7 +3,7 @@ import { core } from '@kalisio/kdk/test.client'
 import { goToOrganisationsActivity } from './organisations'
 
 const organisationComponent = 'OrganisationCard'
-const memberComponent = 'team/KMemberCard'
+export const memberComponent = 'team/KMemberCard'
 
 export async function goToMembersActivity (page, organisation, wait = 2000) {
   const url = page.url()
@@ -24,6 +24,11 @@ export async function countMembers (page, organisation) {
 export async function memberExists (page, organisation, member) {
   await goToMembersActivity(page, organisation)
   return core.itemExists(page, memberComponent, member.name)
+}
+
+export async function memberActionExists (page, organisation, member, action) {
+  await goToMembersActivity(page, organisation)
+  return core.itemActionExists(page, memberComponent, member.name, action)
 }
 
 export async function joinGroup (page, organisation, group, member, permissions) {

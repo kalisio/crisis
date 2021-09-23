@@ -86,7 +86,28 @@ describe(suite, () => {
     expect(await members.countMembers(page, org)).to.equal(3)
   })
 
+  it('org member cannot edit his group', async () => {
+    const group = _.find(org.groups, { name: 'Group 1' })
+    const member = _.find(org.members, { name: 'Member' })
+    await core.logout(page)
+    await core.goToLoginScreen(page)
+    await core.login(page, member)
+    // No edition on group
+    expect(await groups.groupActionExists(page, org, group, 'edit-item-header')).to.be.false
+    expect(await groups.groupActionExists(page, org, group, 'edit-item-description')).to.be.false
+    expect(await groups.groupActionExists(page, org, group, 'remove-item-header')).to.be.false
+    // Neither on members
+    await members.goToMembersActivity(page, org)
+    expect(await members.memberActionExists(page, org, org.owner, 'join-group')).to.be.false
+    await core.clickItemAction(page, members.memberComponent, org.owner.name, `${_.kebabCase(group.name)}-button`)
+    expect(await core.elementExists(page, '#leave-group')).to.be.false
+  })
+
   it('org owner can remove members from his group', async () => {
+    await core.logout(page)
+    await core.goToLoginScreen(page)
+    await core.login(page, org.owner)
+    await core.closeSignupAlert(page)
     const group = _.find(org.groups, { name: 'Group 1' })
     let member = _.find(org.members, { name: 'Manager' })
     await members.leaveGroup(page, org, group, member)
@@ -94,8 +115,18 @@ describe(suite, () => {
     expect(await members.countMembers(page, org)).to.equal(2)
   })
 
-  it('last owner cannot be removed from group', async () => {
+  it('org owner can edit his group', async () => {
     const group = _.find(org.groups, { name: 'Group 1' })
+    await groups.editGroupName(page, org, group, 'New Group 1')
+    group.name = 'New Group 1'
+    expect(await groups.groupExists(page, org, group, 'name')).to.be.true
+    await groups.editGroupDescription(page, org, group, 'Group 1 description')
+    group.description = 'Group 1 description'
+    expect(await groups.groupExists(page, org, group, 'description')).to.be.true
+  })
+
+  it('last owner cannot be removed from group', async () => {
+    const group = _.find(org.groups, { name: 'New Group 1' })
     await members.leaveGroup(page, org, group, org.owner)
     expect(await core.isToastVisible(page)).to.be.true
     // This one generates an expected error message
@@ -139,12 +170,22 @@ describe(suite, () => {
     expect(await members.countMembers(page, org)).to.equal(2)
   })
 
+  it('group manager can edit his group', async () => {
+    const group = _.find(org.groups, { name: 'Group 2' })
+    await groups.editGroupName(page, org, group, 'New Group 2')
+    group.name = 'New Group 2'
+    expect(await groups.groupExists(page, org, group, 'name')).to.be.true
+    await groups.editGroupDescription(page, org, group, 'Group 2 description')
+    group.description = 'Group 2 description'
+    expect(await groups.groupExists(page, org, group, 'description')).to.be.true
+  })
+
   it('org manager can remove his group', async () => {
     const member = _.find(org.members, { name: 'Manager' })
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, member)
-    const group = _.find(org.groups, { name: 'Group 2' })
+    const group = _.find(org.groups, { name: 'New Group 2' })
     await groups.removeGroup(page, org, group)
     expect(await groups.countGroups(page, org)).to.equal(0)
   })
@@ -154,7 +195,7 @@ describe(suite, () => {
     await core.goToLoginScreen(page)
     await core.login(page, org.owner)
     await core.closeSignupAlert(page)
-    const group = _.find(org.groups, { name: 'Group 1' })
+    const group = _.find(org.groups, { name: 'New Group 1' })
     await groups.removeGroup(page, org, group)
     expect(await groups.countGroups(page, org)).to.equal(0)
     await core.logout(page)
