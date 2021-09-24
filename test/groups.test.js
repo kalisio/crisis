@@ -6,7 +6,7 @@ import * as members from './members'
 
 const suite = 'groups'
 
-describe(suite, () => {
+describe(`suite:${suite}`, () => {
   let runner, page, api, client
   let org = {
     owner: {

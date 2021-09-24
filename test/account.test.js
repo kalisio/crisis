@@ -5,7 +5,7 @@ import { countMembers, memberExists, removeMember } from './members'
 
 const suite = 'account'
 
-describe(suite, () => {
+describe(`suite:${suite}`, () => {
   let runner
   let page
   let user = {
@@ -36,67 +36,67 @@ describe(suite, () => {
     runner.clearErrors()
   })
 
-  it('create-account', async () => {
+  afterEach(async () => {
+    expect(runner.hasError()).to.false
+  })
+
+  it('create account', async () => {
     await core.goToRegisterScreen(page)
     await core.register(page, user)
     //await core.login(page, user)
     await core.closeSignupAlert(page)
     await core.closeWelcomeDialog(page)
-    expect(runner.hasError()).to.false
   })
 
-  it('check-user-has-one-organisation', async () => {
+  it('check user has one organisation', async () => {
     expect(await organisationExists(page, org)).to.true
     expect(await countOrganisations(page) === 1).to.true
-    expect(runner.hasError()).to.false
   })
 
-  it('check-organisation-contains-user-only', async() => {
+  it('check organisation contains user only', async() => {
     expect(await countMembers(page, org) === 1).to.true
     expect(await memberExists(page, org, user)).to.true
-    expect(runner.hasError()).to.false
   })
 
-  it('check-member-removal-is-forbidden', async() => {
+  it('check member removal is forbidden', async() => {
     await removeMember(page, org, user)
     expect(runner.hasError()).to.true
+    runner.clearErrors()
   })
 
-  it('check-organisation-creation-is-forbidden', async () => {
+  it('check organisation creation is forbidden', async () => {
     await createOrganisation(page, newOrg)    
     await core.clickAction(page, 'cancel-button')    
     expect(runner.hasError()).to.true    
+    runner.clearErrors()
   })
 
-  it.skip('check-account-deletion-is-forbidden', async () => {
+  it.skip('check account deletion is forbidden', async () => {
     await core.deleteAccount(page, user.name)
     expect(runner.hasError()).to.true
+    runner.clearErrors()
   })
 
-  it('update-profile', async () => {
+  it('update profile', async () => {
     await core.updateAccountProfile(page, 'My new name', runner.getDataPath('avatar.png'))
     user.name = 'My new name'
     await core.clickLeftOpener(page)
     expect(await runner.captureAndMatch('profile')).to.true
-    expect(runner.hasError()).to.false
   })
 
-  it('edit-organisation-billing', async () => {
+  it('edit organisation billing', async () => {
     await editOrganisationBilling(page, org)
     await core.clickAction(page, 'close-button')
     await page.waitForTimeout(1000)
-    expect(runner.hasError()).to.false
   })
 
-  it('delete-organisation', async () => {
+  it('delete organisation', async () => {
     await deleteOrganisation(page, org)
     expect(await countOrganisations(page) === 0).to.true
-    expect(runner.hasError()).to.false
   })
 
-  it('delete-account', async () => {
+  it('delete account', async () => {
     await core.deleteAccount(page, user.name)
-    expect(runner.hasError()).to.false
   })
 
   after(async () => {

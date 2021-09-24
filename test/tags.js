@@ -21,6 +21,11 @@ export async function countTags (page, organisation) {
 }
 
 export async function tagExists (page, organisation, tag) {
-  await goToMembersActivity(page, organisation)
+  await goToTagsActivity(page, organisation)
   return core.itemExists(page, tagComponent, tag.name)
+}
+
+export async function tagActionExists (page, organisation, tag, action) {
+  await goToTagsActivity(page, organisation)
+  return core.itemActionExists(page, tagComponent, tag.name, action)
 }

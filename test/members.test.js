@@ -5,7 +5,7 @@ import * as members from './members'
 
 const suite = 'members'
 
-describe(suite, () => {
+describe(`suite:${suite}`, () => {
   let runner, page, api, client
   let org = {
     owner: {
@@ -45,8 +45,6 @@ describe(suite, () => {
     })
     // Prepare structure for current run
     await client.createOrganisation(org)
-    // Organisation members will be manually added by test
-    //await client.createMembers(org)
     // Create members outside organisation
     await client.createUser(_.find(org.members, { name: 'Manager' }))
     page = await runner.start()
@@ -60,29 +58,32 @@ describe(suite, () => {
     expect(runner.hasError()).to.false
   })
 
-  it('org owner can invite members', async () => {
-    let member = _.find(org.members, { name: 'Manager' })
+  it('org owner can add members', async () => {
     await core.login(page, org.owner)
     await core.closeSignupAlert(page)
-    // Member having an account
+    // Add member as manager
+    let member = _.find(org.members, { name: 'Manager' })
     await members.addMember(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(2)
     expect(await members.memberExists (page, org, member)).to.be.true
+  })
+    
+  it('org owner can invite member', async () => {
     // Member without an account
-    member = _.find(org.members, { name: 'Member' })
+    let member = _.find(org.members, { name: 'Member' })
     await members.inviteMember(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(3)
     expect(await members.memberExists (page, org, member)).to.be.true
   })
 
-  it('org owner can reissue invitation', async () => {
+  it.skip('org owner can reissue invitation', async () => {
     const member = _.find(org.members, { name: 'Group owner 2' })
     await members.reissueMemberInvitation(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(4)
     expect(await members.memberExists (page, org, member)).to.be.true
   })
 
-  it('group owner can remove members', async () => {
+  it.skip('group owner can remove members', async () => {
     const member = _.find(org.members, { name: '' })
     await groups.removeMember(page, group)
     expect(await members.countMembers(page, org)).to.equal(1)
