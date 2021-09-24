@@ -8,7 +8,7 @@ export const memberComponent = 'team/KMemberCard'
 export async function clickRole (page, permissions, wait = 250) {
   let role = 1
   if (permissions === 'manager') role = 2
-  if (permissions === 'owner') role = 2
+  if (permissions === 'owner') role = 3
   const xpath=`(//div[@id="role-field"]//div[@role="radio"])[${role}]`
   const elements = await page.$x(xpath)
   if (elements.length > 0) {

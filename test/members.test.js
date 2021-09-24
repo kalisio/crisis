@@ -24,12 +24,12 @@ describe(`suite:${suite}`, () => {
       email: 'member@kalisio.xyz',
       password: 'Pass;word1',
       permissions: 'member'
-    }],
-    guest: {
+    }, {
       name: 'Guest',
       email: 'guest@kalisio.xyz',
-      permissions: 'manager'
-    }
+      password: 'Pass;word1',
+      permissions: 'owner'
+    }]
   }
 
   before(async function () {
@@ -80,18 +80,18 @@ describe(`suite:${suite}`, () => {
     expect(await members.memberExists (page, org, member)).to.be.true
   })
     
-  it.skip('org owner can invite member', async () => {
-    const guest = org.guest
+  it('org owner can invite member', async () => {
+    const guest = _.find(org.members, { name: 'Guest' })
     await members.inviteMember(page, org, guest)
     expect(await members.countMembers(page, org)).to.equal(4)
     expect(await members.memberExists (page, org, guest)).to.be.true
   })
 
-  it.skip('org owner can filter members', async () => {
+  it('org owner can filter members', async () => {
     // Owners
     let filter = { owner: true, manager: false, member: false, guest: false }
     await members.filterMembers(page, org, filter)
-    expect(await members.countMembers(page, org)).to.equal(1)
+    expect(await members.countMembers(page, org)).to.equal(2)
     expect(await members.memberExists (page, org, org.owner)).to.be.true
     // Managers
     filter = { owner: false, manager: true, member: false, guest: false }
@@ -107,11 +107,7 @@ describe(`suite:${suite}`, () => {
     filter = { owner: false, manager: false, member: false, guest: true }
     await members.filterMembers(page, org, filter)
     expect(await members.countMembers(page, org)).to.equal(1)
-    expect(await members.memberExists (page, org, _.find(org.members, { name: 'Manager' }))).to.be.true
-    // All
-    filter = { owner: true, manager: true, member: true, guest: true }
-    await members.filterMembers(page, org, filter)
-    expect(await members.countMembers(page, org)).to.equal(4)
+    expect(await members.memberExists (page, org, _.find(org.members, { name: 'Guest' }))).to.be.true
     // None
     filter = { owner: false, manager: false, member: false, guest: false }
     await members.filterMembers(page, org, filter)
@@ -142,7 +138,7 @@ describe(`suite:${suite}`, () => {
     await members.removeMember(page, org, manager)
     const member = _.find(org.members, { name: 'Member' })
     await members.removeMember(page, org, member)
-    expect(await members.countMembers(page, org)).to.equal(1)
+    expect(await members.countMembers(page, org)).to.equal(2)
   })
 
   after(async () => {
