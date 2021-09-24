@@ -35,7 +35,7 @@ export async function createGroup (page, organisation, group, wait = 1000) {
   await goToGroupsActivity(page, organisation)
   await core.clickAction(page, 'create-group')
   await core.type(page, '#name-field', group.name)
-  await core.type(page, '#description-field', group.description)
+  if (group.description) await core.type(page, '#description-field', group.description)
   await core.clickAction(page, 'apply-button', wait)
 }
 

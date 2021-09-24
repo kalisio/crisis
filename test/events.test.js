@@ -37,7 +37,7 @@ describe(`suite:${suite}`, () => {
       permission: 'member'
     }, {
       name: 'Manager template',
-      permission: 'member'
+      permission: 'manager'
     }]
   }
 
@@ -75,13 +75,59 @@ describe(`suite:${suite}`, () => {
     expect(runner.hasError()).to.false
   })
 
-  it('org manager can create an event template', async () => {
+  it('org manager can create event templates', async () => {
+    const member = _.find(org.members, { name: 'Manager' })
+    await core.login(page, member)
+    const memberTemplate = _.find(org.eventTemplates, { name: 'Member template' })
+    await events.createEventTemplate(page, org, memberTemplate)
+    const managerTemplate = _.find(org.eventTemplates, { name: 'Manager template' })
+    await events.createEventTemplate(page, org, managerTemplate)
+    expect(await events.countEventTemplates(page, org)).to.equal(2)
+    expect(await events.eventTemplateExists(page, org, memberTemplate)).to.be.true
+    expect(await events.eventTemplateExists(page, org, managerTemplate)).to.be.true
+  })
+
+  it('org member cannot edit event templates', async () => {
     const template = _.find(org.eventTemplates, { name: 'Member template' })
-    await core.login(page, org.owner)
-    await core.closeSignupAlert(page)
-    await events.createEventTemplate(page, org, template)
-    expect(await events.countEventTemplates(page, org)).to.equal(1)
+    const member = _.find(org.members, { name: 'Member' })
+    await core.logout(page)
+    await core.goToLoginScreen(page)
+    await core.login(page, member)
+    // No edition on template
     expect(await events.eventTemplateExists(page, org, template)).to.be.true
+    expect(await events.eventTemplateActionExists(page, org, template, 'edit-item-header')).to.be.false
+    expect(await events.eventTemplateActionExists(page, org, template, 'edit-item-description')).to.be.false
+    expect(await events.eventTemplateActionExists(page, org, template, 'remove-item-header')).to.be.false
+  })
+
+  it('org member cannot create event from templates without permissions', async () => {
+    const template = _.find(org.eventTemplates, { name: 'Member template' })
+    await events.goToEventsActivity(page, org)
+    // We should have a single action and no fab if a single template is found
+    //await core.clickAction(page, 'fab')
+    expect(await core.elementExists(page, `create-${template.name}`)).to.be.true
+  })
+
+  it('org manager can edit event templates', async () => {
+    const member = _.find(org.members, { name: 'Manager' })
+    await core.logout(page)
+    await core.goToLoginScreen(page)
+    await core.login(page, member)
+    const template = _.find(org.eventTemplates, { name: 'Member template' })
+    await events.editEventTemplateName(page, org, template, 'New Member template')
+    template.name = 'New Member template'
+    expect(await events.eventTemplateExists(page, org, template, 'name')).to.be.true
+    await events.editEventTemplateDescription(page, org, template, 'Member template description')
+    template.description = 'Member template description'
+    expect(await events.eventTemplateExists(page, org, template, 'description')).to.be.true
+  })
+
+  it('org manager can remove event templates', async () => {
+    let template = _.find(org.eventTemplates, { name: 'Member template' })
+    await events.removeEventTemplate(page, org, template)
+    template = _.find(org.eventTemplates, { name: 'Manager template' })
+    await events.removeEventTemplate(page, org, template)
+    expect(await events.countEventTemplates(page, org)).to.equal(0)
   })
 
   after(async () => {

@@ -3,8 +3,20 @@ import { core } from '@kalisio/kdk/test.client'
 import { goToOrganisationsActivity } from './organisations'
 
 const organisationComponent = 'OrganisationCard'
-export const eventComponent = 'team/EventCard'
-export const eventTemplateComponent = 'team/EventTemplateCard'
+export const eventComponent = 'EventCard'
+export const eventTemplateComponent = 'EventTemplateCard'
+
+export async function clickPermission (page, permissions, wait = 250) {
+  let index = 0
+  if (permissions === 'manager') index = 1
+  if (permissions === 'owner') index = 2
+  const xpath=`(//div[@id="role-field"]//div[@role="radio"])[${index}]`
+  const elements = await page.$x(xpath)
+  if (elements.length > 0) {
+    elements[0].click()
+    await page.waitForTimeout(wait)
+  }
+}
 
 export async function goToEventsActivity (page, organisation, wait = 2000) {
   const url = page.url()
@@ -57,19 +69,21 @@ export async function eventTemplateActionExists (page, organisation, template, a
   return core.itemActionExists(page, eventTemplateComponent, template.name, action)
 }
 
-export async function createEvent (page, organisation, event, wait = 1000) {
+export async function createEvent (page, organisation, event, template, wait = 1000) {
   await goToEventsActivity(page, organisation)
-  await core.clickAction(page, 'create-event')
+  await core.clickAction(page, 'fab')
+  await core.clickAction(page, `create-${template.name}`)
   await core.type(page, '#name-field', event.name)
-  await core.type(page, '#description-field', event.description)
+  if (event.description) await core.type(page, '#description-field', event.description)
   await core.clickAction(page, 'apply-button', wait)
 }
 
 export async function createEventTemplate (page, organisation, template, wait = 1000) {
   await goToEventTemplatesActivity(page, organisation)
-  await core.clickAction(page, 'create-template')
+  await core.clickAction(page, 'create-event-template')
   await core.type(page, '#name-field', template.name)
-  await core.type(page, '#description-field', template.description)
+  if (template.description) await core.type(page, '#description-field', template.description)
+  if (template.permission) await clickPermission(page, template.permission)
   await core.clickAction(page, 'apply-button', wait)
 }
 
@@ -107,7 +121,7 @@ export async function removeEvent (page, organisation, event, wait = 1000) {
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
-export async function removeTemplateEvent (page, organisation, template, wait = 1000) {
+export async function removeEventTemplate (page, organisation, template, wait = 1000) {
   await goToEventTemplatesActivity(page, organisation)
   await core.clickItemAction(page, eventTemplateComponent, template.name, 'remove-item-header')
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
