@@ -62,6 +62,13 @@ export async function inviteMember (page, organisation, member, wait = 5000) {
   await core.clickAction(page, 'add-button', wait)
 }
 
+export async function addTag (page, organisation, member, tag, wait = 1000) {
+  await goToMembersActivity(page, organisation)
+  await core.clickAction(page, 'edit-item-tags')
+  await core.type(page, '#tags-field',tag, true)
+  await core.clickAction(page, 'apply-button', wait)
+}
+
 export async function joinGroup (page, organisation, group, member, permissions) {
   await goToMembersActivity(page, organisation)
   await core.clickItemAction(page, memberComponent, member.name, 'join-group')

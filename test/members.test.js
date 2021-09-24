@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { expect } from 'chai'
 import { core } from '@kalisio/kdk/test.client'
 import * as members from './members'
+import * as tags from './tags'
 
 const suite = 'members'
 
@@ -68,7 +69,7 @@ describe(`suite:${suite}`, () => {
     expect(await members.memberExists (page, org, member)).to.be.true
   })
     
-  it('org owner can invite member', async () => {
+  it.skip('org owner can invite member', async () => {
     // Member without an account
     let member = _.find(org.members, { name: 'Member' })
     await members.inviteMember(page, org, member)
@@ -81,6 +82,12 @@ describe(`suite:${suite}`, () => {
     await members.reissueMemberInvitation(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(4)
     expect(await members.memberExists (page, org, member)).to.be.true
+  })
+
+  it('owner car tag members', async () => {
+    let member = _.find(org.members, { name: 'Manager' })
+    await members.addTag(page, org, member, 'manager')
+    expect(await tags.countTags(page, org)).to.equal(1)
   })
 
   it.skip('group owner can remove members', async () => {
