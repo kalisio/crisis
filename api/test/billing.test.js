@@ -56,15 +56,11 @@ describe('billing', () => {
     expect(subscriptionService).toExist()
   })
 
-  it('creates a test user', () => {
-    return userService.create({ email: 'test-user@test.org', name: 'test-user' }, { checkAuthorisation: true })
-      .then(user => {
-        userObject = user
-        return userService.find({ query: { 'profile.name': 'test-user' }, user: userObject, checkAuthorisation: true })
-      })
-      .then(users => {
-        expect(users.data.length > 0).beTrue()
-      })
+  it('creates a test user', async () => {
+    const user = await userService.create({ email: 'test-user@test.org', name: 'test-user' }, { checkAuthorisation: true })
+    userObject = user
+    const users = await userService.find({ query: { 'profile.name': 'test-user' }, user: userObject, checkAuthorisation: true })
+    expect(users.data.length > 0).beTrue()
   })
   // Let enough time to process
     .timeout(10000)

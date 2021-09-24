@@ -188,21 +188,22 @@ describe('aktnmap', () => {
       })
   })
   // Let enough time to process
-    .timeout(5000)
+    .timeout(10000)
 
-  it('cannot create multiple free organisations', () => {
-    return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
+  it('cannot create multiple free organisations', (done) => {
+    orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
       .catch(error => {
         expect(error).toExist()
         expect(error.name).to.equal('Forbidden')
+        done()
       })
   })
 
   // We cannot test billing in prod because we have our prod stripe config,
   // which requirs valid card numbers and will transfer money
   if (process.env.NODE_APP_INSTANCE !== 'prod') {
-    it('update billing information', () => {
-      return billingService.create({
+    it('update billing information', async () => {
+      const customer = await billingService.create({
         action: 'customer',
         email: userObject.email,
         billingObject: orgObject._id,
@@ -211,14 +212,12 @@ describe('aktnmap', () => {
       }, {
         user: userObject, checkAuthorisation: true
       })
-        .then(customer => {
-          expect(customer.email).toExist()
-        })
+      expect(customer.email).toExist()
     })
       .timeout(10000)
 
-    it('subscribe to the silver plan', () => {
-      return billingService.update(orgObject._id, {
+    it('subscribe to the silver plan', async () => {
+      const subscription = await billingService.update(orgObject._id, {
         action: 'subscription',
         plan: 'silver',
         billing: 'send_invoice',
@@ -227,29 +226,22 @@ describe('aktnmap', () => {
       }, {
         user: userObject, checkAuthorisation: true
       })
-        .then(subscription => {
-          subscriptionObject = subscription
-          expect(subscriptionObject.stripeId).toExist()
-          return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
-        })
-        .then(result => {
-          const billingPerspective = result.data[0].billing
-          expect(billingPerspective.subscription.plan).eq('silver')
-        })
+      subscriptionObject = subscription
+      expect(subscriptionObject.stripeId).toExist()
+      const result = await orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
+      const billingPerspective = result.data[0].billing
+      expect(billingPerspective.subscription.plan).eq('silver')
     })
       .timeout(10000)
 
-    it('can create a new free organisation', () => {
-      return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
-        .then(org => {
-          expect(org).toExist()
-          return orgService.remove(org._id, { user: userObject, checkAuthorisation: true })
-        })
+    it('can create a new free organisation', async () => {
+      const org = await orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
+      await orgService.remove(org._id, { user: userObject, checkAuthorisation: true })
     })
       .timeout(10000)
 
-    it('subscribe to the catalog option', () => {
-      return billingService.create({
+    it('subscribe to the catalog option', async () => {
+      const subscription = await billingService.create({
         action: 'subscription',
         plan: 'catalog',
         billing: 'send_invoice',
@@ -259,23 +251,19 @@ describe('aktnmap', () => {
       }, {
         user: userObject, checkAuthorisation: true
       })
-        .then(subscription => {
-          subscriptionObject = subscription
-          expect(subscriptionObject.stripeId).toExist()
-          return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
-        })
-        .then(result => {
-          const billingPerspective = result.data[0].billing
-          expect(billingPerspective.options).toExist()
-          expect(billingPerspective.options.length).to.equal(1)
-          expect(billingPerspective.options[0].plan).to.equal('catalog')
-          expect(billingPerspective.options[0].stripeId).to.equal(subscriptionObject.stripeId)
-        })
+      subscriptionObject = subscription
+      expect(subscriptionObject.stripeId).toExist()
+      const result = await orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
+      const billingPerspective = result.data[0].billing
+      expect(billingPerspective.options).toExist()
+      expect(billingPerspective.options.length).to.equal(1)
+      expect(billingPerspective.options[0].plan).to.equal('catalog')
+      expect(billingPerspective.options[0].stripeId).to.equal(subscriptionObject.stripeId)
     })
       .timeout(10000)
 
-    it('unsubscribe the paying option', () => {
-      return billingService.remove(orgObject._id, {
+    it('unsubscribe the paying option', async () => {
+      await billingService.remove(orgObject._id, {
         query: {
           action: 'subscription',
           plan: 'catalog',
@@ -285,19 +273,15 @@ describe('aktnmap', () => {
         user: userObject,
         checkAuthorisation: true
       })
-        .then(() => {
-          return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
-        })
-        .then(result => {
-          const billingPerspective = result.data[0].billing
-          expect(billingPerspective.options).toExist()
-          expect(billingPerspective.options.length).to.equal(0)
-        })
+      const result = await orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
+      const billingPerspective = result.data[0].billing
+      expect(billingPerspective.options).toExist()
+      expect(billingPerspective.options.length).to.equal(0)
     })
       .timeout(10000)
 
-    it('unsubscribe the paying plan', () => {
-      return billingService.remove(orgObject._id, {
+    it('unsubscribe the paying plan', async () => {
+      await billingService.remove(orgObject._id, {
         query: {
           action: 'subscription',
           billingObjectService: 'organisations',
@@ -306,22 +290,19 @@ describe('aktnmap', () => {
         user: userObject,
         checkAuthorisation: true
       })
-        .then(() => {
-          return orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
-        })
-        .then(result => {
-          const billingPerspective = result.data[0].billing
-          expect(billingPerspective.subscription).to.equal(null)
-        })
+      const result = await orgService.find({ query: { _id: orgObject._id, $select: ['billing'] }, user: userObject, checkAuthorisation: true })
+      const billingPerspective = result.data[0].billing
+      expect(billingPerspective.subscription).to.equal(null)
     })
       .timeout(10000)
 
     // See https://github.com/kalisio/aktnmap/issues/15
-    it('cannot create multiple free organisations', () => {
-      return orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
+    it('cannot create multiple free organisations', (done) => {
+      orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
         .catch(error => {
           expect(error).toExist()
           expect(error.name).to.equal('Forbidden')
+          done()
         })
     })
   }
@@ -477,32 +458,26 @@ describe('aktnmap', () => {
     return Promise.all([operation, events])
   })
   // Let enough time to process
-    .timeout(15000)
+    .timeout(30000)
 
-  it('invites a member to join the organisation', () => {
+  it('invites a member to join the organisation', async () => {
     const sponsor = { id: userObject._id, organisationId: orgObject._id, roleGranted: 'member' }
-    return userService.create({ email: gmailUser.replace('com', 'xyz'), name: 'test-user-3', sponsor: sponsor }, { checkAuthorisation: true })
-      .then(user => {
-        memberObject = user
-        expect(memberObject.organisations).toExist()
-        expect(userObject.organisations.length === 1).beTrue()
-        expect(memberObject.organisations[0]._id.toString()).to.equal(orgObject._id.toString())
-        expect(memberObject.organisations[0].permissions).to.equal('member')
-        return devicesService.update(memberDevice.registrationId, memberDevice, { user: memberObject, checkAuthorisation: true })
-      })
-      .then(device => {
-        return userService.get(memberObject._id, { user: memberObject, checkAuthorisation: true })
-      })
-      .then(user => {
-      // Update user with its device
-        memberObject = user
-        expect(memberObject.devices).toExist()
-        expect(memberObject.devices.length === 1).beTrue()
-        expect(memberObject.devices[0].registrationId).to.equal(memberDevice.registrationId)
-        expect(memberObject.devices[0].platform).to.equal(memberDevice.platform)
-        expect(memberObject.devices[0].arn).toExist()
-        expect(memberObject.devices[0].lastActivity).toExist()
-      })
+    let user = await userService.create({ email: gmailUser.replace('com', 'xyz'), name: 'test-user-3', sponsor: sponsor }, { checkAuthorisation: true })
+    memberObject = user
+    expect(memberObject.organisations).toExist()
+    expect(userObject.organisations.length === 1).beTrue()
+    expect(memberObject.organisations[0]._id.toString()).to.equal(orgObject._id.toString())
+    expect(memberObject.organisations[0].permissions).to.equal('member')
+    const device = await devicesService.update(memberDevice.registrationId, memberDevice, { user: memberObject, checkAuthorisation: true })
+    user = await userService.get(memberObject._id, { user: memberObject, checkAuthorisation: true })
+    // Update user with its device
+    memberObject = user
+    expect(memberObject.devices).toExist()
+    expect(memberObject.devices.length === 1).beTrue()
+    expect(memberObject.devices[0].registrationId).to.equal(memberDevice.registrationId)
+    expect(memberObject.devices[0].platform).to.equal(memberDevice.platform)
+    expect(memberObject.devices[0].arn).toExist()
+    expect(memberObject.devices[0].lastActivity).toExist()
   })
   // Let enough time to process
     .timeout(15000)

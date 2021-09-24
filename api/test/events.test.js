@@ -87,36 +87,24 @@ describe('events', () => {
   // Let enough time to process
     .timeout(5000)
 
-  it('creates a test user', () => {
-    return userService.create({ email: 'test@test.org', name: 'test-user' }, { checkAuthorisation: true })
-      .then(user => {
-        userObject = user
-        return userService.find({ query: { 'profile.name': 'test-user' }, checkAuthorisation: true, user: userObject })
-      })
-      .then(users => {
-        expect(users.data.length > 0).beTrue()
-      })
+  it('creates a test user', async () => {
+    const user = await userService.create({ email: 'test@test.org', name: 'test-user' }, { checkAuthorisation: true })
+    userObject = user
+    const users = await userService.find({ query: { 'profile.name': 'test-user' }, checkAuthorisation: true, user: userObject })
+    expect(users.data.length > 0).beTrue()
   })
   // Let enough time to process
     .timeout(15000)
 
-  it('creates a org manager', () => {
-    return userService.create({ email: 'manager@test.org', name: 'org-manager' }, { checkAuthorisation: true })
-      .then(user => {
-        orgManagerObject = user
-        return userService.find({ query: { 'profile.name': 'org-manager' }, checkAuthorisation: true, user: orgManagerObject })
-      })
-      .then(users => {
-        expect(users.data.length > 0).beTrue()
-        return devicesService.update(managerDevice.registrationId, managerDevice, { user: orgManagerObject })
-      })
-      .then(device => {
-        return userService.get(orgManagerObject._id)
-      })
-      .then(user => {
-      // Update user with registered device
-        orgManagerObject = user
-      })
+  it('creates a org manager', async () => {
+    let user = await userService.create({ email: 'manager@test.org', name: 'org-manager' }, { checkAuthorisation: true })
+    orgManagerObject = user
+    const users = await userService.find({ query: { 'profile.name': 'org-manager' }, checkAuthorisation: true, user: orgManagerObject })
+    expect(users.data.length > 0).beTrue()
+    const device = await devicesService.update(managerDevice.registrationId, managerDevice, { user: orgManagerObject })
+    user = await userService.get(orgManagerObject._id)
+    // Update user with registered device
+    orgManagerObject = user
   })
   // Let enough time to process
     .timeout(15000)
@@ -143,56 +131,40 @@ describe('events', () => {
   // Let enough time to process
     .timeout(15000)
 
-  it('creates a org user', () => {
-    return userService.create({ email: 'user@test.org', name: 'org-user' }, { checkAuthorisation: true })
-      .then(user => {
-        orgUserObject = user
-        return userService.find({ query: { 'profile.name': 'org-user' }, checkAuthorisation: true, user: orgUserObject })
-      })
-      .then(users => {
-        expect(users.data.length > 0).beTrue()
-        return authorisationService.create({
-          scope: 'organisations',
-          permissions: 'member',
-          subjects: orgUserObject._id.toString(),
-          subjectsService: 'users',
-          resource: orgObject._id.toString(),
-          resourcesService: 'organisations'
-        }, {
-          user: orgManagerObject,
-          checkAuthorisation: true
-        })
-      })
-      .then(authorisation => {
-        expect(authorisation).toExist()
-        return userService.find({ query: { 'profile.name': orgUserObject.name }, checkAuthorisation: true, user: orgManagerObject })
-      })
-      .then(users => {
-        expect(users.data.length > 0).beTrue()
-        // Update user with authorisations
-        orgUserObject = users.data[0]
-        expect(orgUserObject.organisations[0].permissions).to.deep.equal('member')
-        return devicesService.update(memberDevice.registrationId, memberDevice, { user: orgUserObject })
-      })
-      .then(device => {
-        return userService.get(orgUserObject._id)
-      })
-      .then(user => {
-      // Update user with registered device
-        orgUserObject = user
-      })
+  it('creates a org user', async () => {
+    let user = await userService.create({ email: 'user@test.org', name: 'org-user' }, { checkAuthorisation: true })
+    orgUserObject = user
+    let users = await userService.find({ query: { 'profile.name': 'org-user' }, checkAuthorisation: true, user: orgUserObject })
+    expect(users.data.length > 0).beTrue()
+    const authorisation = await authorisationService.create({
+      scope: 'organisations',
+      permissions: 'member',
+      subjects: orgUserObject._id.toString(),
+      subjectsService: 'users',
+      resource: orgObject._id.toString(),
+      resourcesService: 'organisations'
+    }, {
+      user: orgManagerObject,
+      checkAuthorisation: true
+    })
+    expect(authorisation).toExist()
+    users = await userService.find({ query: { 'profile.name': orgUserObject.name }, checkAuthorisation: true, user: orgManagerObject })
+    expect(users.data.length > 0).beTrue()
+    // Update user with authorisations
+    orgUserObject = users.data[0]
+    expect(orgUserObject.organisations[0].permissions).to.deep.equal('member')
+    const device = await devicesService.update(memberDevice.registrationId, memberDevice, { user: orgUserObject })
+    user = await userService.get(orgUserObject._id)
+    // Update user with registered device
+    orgUserObject = user
   })
   // Let enough time to process
     .timeout(15000)
 
-  it('org manager can create event template', () => {
-    return eventTemplateService.create({ title: 'template' }, { user: orgManagerObject, checkAuthorisation: true })
-      .then(template => {
-        return eventTemplateService.find({ query: { title: 'template' }, user: orgManagerObject, checkAuthorisation: true })
-      })
-      .then(templates => {
-        expect(templates.data.length > 0).beTrue()
-      })
+  it('org manager can create event template', async () => {
+    const template = await eventTemplateService.create({ title: 'template' }, { user: orgManagerObject, checkAuthorisation: true })
+    const templates = await eventTemplateService.find({ query: { title: 'template' }, user: orgManagerObject, checkAuthorisation: true })
+    expect(templates.data.length > 0).beTrue()
   })
   // Let enough time to process
     .timeout(5000)
