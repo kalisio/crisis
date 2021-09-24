@@ -63,7 +63,7 @@ describe(`suite:${suite}`, () => {
     await core.login(page, org.owner)
     await core.closeSignupAlert(page)
     // Add member as manager
-    let member = _.find(org.members, { name: 'Manager' })
+    const member = _.find(org.members, { name: 'Manager' })
     await members.addMember(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(2)
     expect(await members.memberExists (page, org, member)).to.be.true
@@ -71,7 +71,7 @@ describe(`suite:${suite}`, () => {
     
   it.skip('org owner can invite member', async () => {
     // Member without an account
-    let member = _.find(org.members, { name: 'Member' })
+    const member = _.find(org.members, { name: 'Member' })
     await members.inviteMember(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(3)
     expect(await members.memberExists (page, org, member)).to.be.true
@@ -85,14 +85,20 @@ describe(`suite:${suite}`, () => {
   })
 
   it('owner car tag members', async () => {
-    let member = _.find(org.members, { name: 'Manager' })
+    const member = _.find(org.members, { name: 'Manager' })
     await members.addTag(page, org, member, 'manager')
     expect(await tags.countTags(page, org)).to.equal(1)
   })
 
-  it.skip('group owner can remove members', async () => {
-    const member = _.find(org.members, { name: '' })
-    await groups.removeMember(page, group)
+  it('owner car remove tags', async () => {
+    const member = _.find(org.members, { name: 'Manager' })
+    await members.removeTag(page, org, member, 'manager')
+    expect(await tags.countTags(page, org)).to.equal(0)
+  })
+
+  it('owner can remove member', async () => {
+    const member = _.find(org.members, { name: 'Manager' })
+    await members.removeMember(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(1)
   })
 

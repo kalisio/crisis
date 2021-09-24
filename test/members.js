@@ -62,29 +62,6 @@ export async function inviteMember (page, organisation, member, wait = 5000) {
   await core.clickAction(page, 'add-button', wait)
 }
 
-export async function addTag (page, organisation, member, tag, wait = 1000) {
-  await goToMembersActivity(page, organisation)
-  await core.clickAction(page, 'edit-item-tags')
-  await core.type(page, '#tags-field',tag, true)
-  await core.clickAction(page, 'apply-button', wait)
-}
-
-export async function joinGroup (page, organisation, group, member, permissions) {
-  await goToMembersActivity(page, organisation)
-  await core.clickItemAction(page, memberComponent, member.name, 'join-group')
-  await core.type(page, '#group-field', group.name)
-  await core.click(page, `#${_.kebabCase(group.name)}`)
-  await core.clickSelect(page, '#role-field', `#${permissions}`)
-  await core.click(page, '.q-dialog button:nth-child(2)')
-}
-
-export async function leaveGroup (page, organisation, group, member) {
-  await goToMembersActivity(page, organisation)
-  await core.clickItemAction(page, memberComponent, member.name, `${_.kebabCase(group.name)}-button`)
-  await core.click(page, '#leave-group')
-  await core.click(page, '.q-dialog button:nth-child(2)')
-}
-
 export async function reissueMemberInvitation (page,  organisation, member) {
   await goToMembersActivity(page, organisation)
   await core.clickItemAction(page, memberComponent, member.name, 'reissue-invitation')
@@ -92,8 +69,43 @@ export async function reissueMemberInvitation (page,  organisation, member) {
   await core.click(page, '.q-dialog button:nth-child(2)')
 }
 
-export async function removeMember (page,  organisation, member) {
+export async function removeMember (page,  organisation, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
   await core.clickItemAction(page, memberComponent, member.name, 'remove-member')
-  await core.click(page, '.q-dialog button:nth-child(2)')
+  await core.click(page, '.q-dialog button:nth-child(2)', wait)
+}
+
+export async function addTag (page, organisation, member, tag, wait = 2000) {
+  await goToMembersActivity(page, organisation)
+  await core.clickItemAction(page, memberComponent, member.name, 'edit-item-tags', 500)
+  await core.type(page, '#tags-field',tag, true, 500)
+  await core.clickAction(page, 'apply-button', wait)
+}
+
+export async function removeTag (page, organisation, member, tag, wait = 2000) {
+  await goToMembersActivity(page, organisation)
+  await core.clickItemAction(page, memberComponent, member.name, 'edit-item-tags', 500)
+  const xpath = `//div[contains(@class, "q-dialog")]//div[contains(@class, "q-chip row") and contains(., "${tag}")]//i`
+  const elements = await page.$x(xpath)
+  if (elements.length > 0) {
+    elements[0].click()
+    await page.waitForTimeout(1000)
+  }
+  await core.clickAction(page, 'apply-button', wait)
+}
+
+export async function joinGroup (page, organisation, group, member, permissions, wait = 2000) {
+  await goToMembersActivity(page, organisation)
+  await core.clickItemAction(page, memberComponent, member.name, 'join-group')
+  await core.type(page, '#group-field', group.name)
+  await core.click(page, `#${_.kebabCase(group.name)}`)
+  await core.clickSelect(page, '#role-field', `#${permissions}`)
+  await core.click(page, '.q-dialog button:nth-child(2)', wait)
+}
+
+export async function leaveGroup (page, organisation, group, member, wait = 2000) {
+  await goToMembersActivity(page, organisation)
+  await core.clickItemAction(page, memberComponent, member.name, `${_.kebabCase(group.name)}-button`)
+  await core.click(page, '#leave-group')
+  await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
