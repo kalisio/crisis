@@ -109,3 +109,20 @@ export async function leaveGroup (page, organisation, group, member, wait = 2000
   await core.click(page, '#leave-group')
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
+
+export async function filterMembers (page, organisation, filter, wait = 2000) {
+  await goToMembersActivity(page, organisation)
+  await core.clickTopPaneAction(page, 'member-filter')
+  const options = ['owner', 'manager', 'member', 'guest']
+  for (let i = 0; i < options.length; ++i) {
+    const xpath=`(//div[contains(@class,"q-menu")]//div[@role="checkbox"])[${i + 1}]`
+    const elements = await page.$x(xpath)
+    if (elements.length > 0) {
+      const isCheckedHandle = await elements[0].getProperty('ariaChecked')
+      const isChecked = (await isCheckedHandle.jsonValue() === 'true')
+      const check = _.get(filter, options[i], false)
+      if (check !== isChecked) elements[0].click()
+    }
+  }
+  await core.clickTopPaneAction(page, 'member-filter', wait)
+}

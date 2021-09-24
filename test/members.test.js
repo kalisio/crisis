@@ -24,7 +24,12 @@ describe(`suite:${suite}`, () => {
       email: 'member@kalisio.xyz',
       password: 'Pass;word1',
       permissions: 'member'
-    }]
+    }],
+    guest: {
+      name: 'Guest',
+      email: 'guest@kalisio.xyz',
+      permissions: 'manager'
+    }
   }
 
   before(async function () {
@@ -48,6 +53,7 @@ describe(`suite:${suite}`, () => {
     await client.createOrganisation(org)
     // Create members outside organisation
     await client.createUser(_.find(org.members, { name: 'Manager' }))
+    await client.createUser(_.find(org.members, { name: 'Member' }))
     page = await runner.start()
   })
 
@@ -62,19 +68,54 @@ describe(`suite:${suite}`, () => {
   it('org owner can add members', async () => {
     await core.login(page, org.owner)
     await core.closeSignupAlert(page)
-    // Add member as manager
-    const member = _.find(org.members, { name: 'Manager' })
-    await members.addMember(page, org, member)
+    // Add manager
+    const manager = _.find(org.members, { name: 'Manager' })
+    await members.addMember(page, org, manager)
     expect(await members.countMembers(page, org)).to.equal(2)
+    expect(await members.memberExists (page, org, manager)).to.be.true
+    // Add member
+    const member = _.find(org.members, { name: 'Member' })
+    await members.addMember(page, org, member)
+    expect(await members.countMembers(page, org)).to.equal(3)
     expect(await members.memberExists (page, org, member)).to.be.true
   })
     
   it.skip('org owner can invite member', async () => {
-    // Member without an account
-    const member = _.find(org.members, { name: 'Member' })
-    await members.inviteMember(page, org, member)
-    expect(await members.countMembers(page, org)).to.equal(3)
-    expect(await members.memberExists (page, org, member)).to.be.true
+    const guest = org.guest
+    await members.inviteMember(page, org, guest)
+    expect(await members.countMembers(page, org)).to.equal(4)
+    expect(await members.memberExists (page, org, guest)).to.be.true
+  })
+
+  it.skip('org owner can filter members', async () => {
+    // Owners
+    let filter = { owner: true, manager: false, member: false, guest: false }
+    await members.filterMembers(page, org, filter)
+    expect(await members.countMembers(page, org)).to.equal(1)
+    expect(await members.memberExists (page, org, org.owner)).to.be.true
+    // Managers
+    filter = { owner: false, manager: true, member: false, guest: false }
+    await members.filterMembers(page, org, filter)
+    expect(await members.countMembers(page, org)).to.equal(1)
+    expect(await members.memberExists (page, org, _.find(org.members, { name: 'Manager' }))).to.be.true
+    // Members
+    filter = { owner: false, manager: false, member: true, guest: false }
+    await members.filterMembers(page, org, filter)
+    expect(await members.countMembers(page, org)).to.equal(1)
+    expect(await members.memberExists (page, org, _.find(org.members, { name: 'Member' }))).to.be.true
+    // Guest
+    filter = { owner: false, manager: false, member: false, guest: true }
+    await members.filterMembers(page, org, filter)
+    expect(await members.countMembers(page, org)).to.equal(1)
+    expect(await members.memberExists (page, org, _.find(org.members, { name: 'Manager' }))).to.be.true
+    // All
+    filter = { owner: true, manager: true, member: true, guest: true }
+    await members.filterMembers(page, org, filter)
+    expect(await members.countMembers(page, org)).to.equal(4)
+    // None
+    filter = { owner: false, manager: false, member: false, guest: false }
+    await members.filterMembers(page, org, filter)
+    expect(await members.countMembers(page, org)).to.equal(4)
   })
 
   it.skip('org owner can reissue invitation', async () => {
@@ -86,18 +127,20 @@ describe(`suite:${suite}`, () => {
 
   it('owner car tag members', async () => {
     const member = _.find(org.members, { name: 'Manager' })
-    await members.addTag(page, org, member, 'manager')
+    await members.addTag(page, org, member, 'tag')
     expect(await tags.countTags(page, org)).to.equal(1)
   })
 
   it('owner car remove tags', async () => {
     const member = _.find(org.members, { name: 'Manager' })
-    await members.removeTag(page, org, member, 'manager')
+    await members.removeTag(page, org, member, 'tag')
     expect(await tags.countTags(page, org)).to.equal(0)
   })
 
-  it('owner can remove member', async () => {
-    const member = _.find(org.members, { name: 'Manager' })
+  it('owner can remove members', async () => {
+    const manager = _.find(org.members, { name: 'Manager' })
+    await members.removeMember(page, org, manager)
+    const member = _.find(org.members, { name: 'Member' })
     await members.removeMember(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(1)
   })
