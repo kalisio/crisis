@@ -105,7 +105,7 @@ describe(`suite:${suite}`, () => {
     await events.goToEventsActivity(page, org)
     // We should have a single action and no fab if a single template is found
     //await core.clickAction(page, 'fab')
-    expect(await core.elementExists(page, `create-${template.name}`)).to.be.true
+    expect(await core.elementExists(page, `#create-${_.kebabCase(template.name)}`)).to.be.true
   })
 
   it('org manager can edit event templates', async () => {
@@ -123,9 +123,10 @@ describe(`suite:${suite}`, () => {
   })
 
   it('org manager can remove event templates', async () => {
-    let template = _.find(org.eventTemplates, { name: 'Member template' })
+    let template = _.find(org.eventTemplates, { name: 'New Member template' })
     await events.removeEventTemplate(page, org, template)
     template = _.find(org.eventTemplates, { name: 'Manager template' })
+    expect(await events.countEventTemplates(page, org)).to.equal(1)
     await events.removeEventTemplate(page, org, template)
     expect(await events.countEventTemplates(page, org)).to.equal(0)
   })

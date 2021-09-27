@@ -102,7 +102,7 @@ export default {
             // However we have to check about duplicated names
             const doublons = templates.filter(otherTemplate => otherTemplate.name.toLowerCase() === template.name.toLowerCase())
             actions.push({
-              id: 'create-' + (doublons.length > 1 ? template._id : template.name),
+              id: 'create-' + (doublons.length > 1 ? template._id : _.kebabCase(template.name)),
               label: template.name,
               icon: template.icon.name,
               color: template.icon.color,

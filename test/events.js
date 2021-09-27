@@ -9,11 +9,12 @@ const organisationComponent = 'OrganisationCard'
 export const eventComponent = 'EventCard'
 export const eventTemplateComponent = 'EventTemplateCard'
 
-export async function clickPermission (page, permissions, wait = 250) {
-  let index = 0
-  if (permissions === 'manager') index = 1
-  if (permissions === 'owner') index = 2
-  const xpath=`(//div[@id="role-field"]//div[@role="radio"])[${index}]`
+export async function clickPermission (page, permission, wait = 250) {
+
+  let index = 1
+  if (permission === 'manager') index = 2
+  if (permission === 'owner') index = 3
+  const xpath=`(//div[@id="permission-field"]//div[@role="radio"])[${index}]`
   const elements = await page.$x(xpath)
   if (elements.length > 0) {
     elements[0].click()
@@ -74,7 +75,7 @@ export async function eventTemplateActionExists (page, organisation, template, a
   return core.itemActionExists(page, eventTemplateComponent, template.name, action)
 }
 
-export async function createEvent (page, organisation, event, template, wait = 1000) {
+export async function createEvent (page, organisation, event, template, wait = 2000) {
   await goToEventsActivity(page, organisation)
   await core.clickAction(page, 'fab')
   await core.clickAction(page, `create-${template.name}`)
@@ -83,7 +84,7 @@ export async function createEvent (page, organisation, event, template, wait = 1
   await core.clickAction(page, 'apply-button', wait)
 }
 
-export async function createEventTemplate (page, organisation, template, wait = 1000) {
+export async function createEventTemplate (page, organisation, template, wait = 2000) {
   await goToEventTemplatesActivity(page, organisation)
   await core.clickAction(page, 'create-event-template')
   await core.type(page, '#name-field', template.name)
@@ -92,41 +93,41 @@ export async function createEventTemplate (page, organisation, template, wait = 
   await core.clickAction(page, 'apply-button', wait)
 }
 
-export async function editEventName (page, organisation, event, name, wait = 1000) {
+export async function editEventName (page, organisation, event, name, wait = 2000) {
   await goToEventsActivity(page, organisation)
   await core.clickItemAction(page, eventComponent, event.name, 'edit-item-header')
   await core.type(page, '#name-field', name, false, true)
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
-export async function editEventTemplateName (page, organisation, template, name, wait = 1000) {
+export async function editEventTemplateName (page, organisation, template, name, wait = 2000) {
   await goToEventTemplatesActivity(page, organisation)
   await core.clickItemAction(page, eventTemplateComponent, template.name, 'edit-item-header')
   await core.type(page, '#name-field', name, false, true)
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
-export async function editEventDescription (page, organisation, event, description, wait = 1000) {
+export async function editEventDescription (page, organisation, event, description, wait = 2000) {
   await goToEventsActivity(page, organisation)
   await core.clickItemAction(page, eventComponent, event.name, 'edit-item-description')
   await core.type(page, '#description-field', description, false, true)
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
-export async function editEventTemplateDescription (page, organisation, template, description, wait = 1000) {
+export async function editEventTemplateDescription (page, organisation, template, description, wait = 2000) {
   await goToEventTemplatesActivity(page, organisation)
   await core.clickItemAction(page, eventTemplateComponent, template.name, 'edit-item-description')
   await core.type(page, '#description-field', description, false, true)
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
-export async function removeEvent (page, organisation, event, wait = 1000) {
+export async function removeEvent (page, organisation, event, wait = 2000) {
   await goToEventsActivity(page, organisation)
   await core.clickItemAction(page, eventComponent, event.name, 'remove-item-header')
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
-export async function removeEventTemplate (page, organisation, template, wait = 1000) {
+export async function removeEventTemplate (page, organisation, template, wait = 2000) {
   await goToEventTemplatesActivity(page, organisation)
   await core.clickItemAction(page, eventTemplateComponent, template.name, 'remove-item-header')
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
