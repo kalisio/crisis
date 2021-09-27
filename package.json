@@ -95,6 +95,7 @@
     "chartjs-plugin-labels": "^1.1.0",
     "chroma-js": "^2.0.2",
     "cross-env": "^5.2.0",
+    "debug": "^4.1.0",
     "email-validator": "^2.0.4",
     "fastclick": "^1.0.6",
     "feathers-authentication-management": "^1.0.0",

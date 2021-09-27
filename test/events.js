@@ -1,6 +1,9 @@
 import _ from 'lodash'
+import makeDebug from 'debug'
 import { core } from '@kalisio/kdk/test.client'
 import { goToOrganisationsActivity } from './organisations'
+
+const debug = makeDebug('aktnmap:test:events')
 
 const organisationComponent = 'OrganisationCard'
 export const eventComponent = 'EventCard'
@@ -24,6 +27,7 @@ export async function goToEventsActivity (page, organisation, wait = 2000) {
     // We can pass an object or a name
     organisation = organisation.name || organisation
     await goToOrganisationsActivity(page, wait)
+    debug(`Navigating to events activity`)
     await core.clickItemAction(page, organisationComponent, organisation, 'organisation-events', wait)
   }
 }
@@ -34,6 +38,7 @@ export async function goToEventTemplatesActivity (page, organisation, wait = 200
     // We can pass an object or a name
     organisation = organisation.name || organisation
     await goToOrganisationsActivity(page, wait)
+    debug(`Navigating to event templates activity`)
     await core.expandCard(page, organisationComponent, organisation)
     await core.clickItemAction(page, organisationComponent, organisation, 'organisation-event-templates', wait)
   }

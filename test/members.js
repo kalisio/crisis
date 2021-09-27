@@ -1,6 +1,9 @@
 import _ from 'lodash'
+import makeDebug from 'debug'
 import { core } from '@kalisio/kdk/test.client'
 import { goToOrganisationsActivity } from './organisations'
+
+const debug = makeDebug('aktnmap:test:members')
 
 const organisationComponent = 'OrganisationCard'
 export const memberComponent = 'team/KMemberCard'
@@ -23,6 +26,7 @@ export async function goToMembersActivity (page, organisation, wait = 2000) {
     // We can pass an object or a name
     organisation = organisation.name || organisation
     await goToOrganisationsActivity(page)
+    debug(`Navigating to members activity`)
     await core.expandCard(page, organisationComponent, organisation)
     await core.clickItemAction(page, organisationComponent, organisation, 'organisation-members', wait)
   } 

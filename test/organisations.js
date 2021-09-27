@@ -1,10 +1,16 @@
+import makeDebug from 'debug'
 import { core } from '@kalisio/kdk/test.client'
 
-export const organisationComponent = 'OrganisationCard'
+const debug = makeDebug('aktnmap:test:events')
+
+export const organisationComponent = 'organisations'
 
 export async function goToOrganisationsActivity (page, wait = 2000) {
   const url = page.url()
-  if (!url.includes('organisations')) await core.clickLeftPaneAction(page, 'my-organisations', wait)
+  if (!url.includes('organisations')) {
+    debug(`Navigating to organisations activity`)
+    await core.clickLeftPaneAction(page, 'my-organisations', wait)
+  }
 }
 
 export async function countOrganisations (page) {
