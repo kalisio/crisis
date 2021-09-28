@@ -7,6 +7,7 @@ const debug = makeDebug('aktnmap:test:events')
 
 const organisationComponent = 'OrganisationCard'
 export const eventComponent = 'EventCard'
+export const eventLogComponent = 'EventLogItem'
 export const eventTemplateComponent = 'EventTemplateCard'
 
 export async function clickPermission (page, permission, wait = 250) {
@@ -33,6 +34,11 @@ export async function goToEventsActivity (page, organisation, wait = 2000) {
   }
 }
 
+export async function goToEventLogs (page, organisation, event, wait = 2000) {
+  await goToEventsActivity(page, organisation)
+  await core.clickItemAction(page, eventComponent, event.name, 'event-logs')  
+}
+
 export async function goToEventTemplatesActivity (page, organisation, wait = 2000) {
   const url = page.url()
   if (!url.includes('event-templates')) {
@@ -50,6 +56,11 @@ export async function countEvents (page, organisation) {
   return core.countItems(page, eventComponent)
 }
 
+export async function countEventLogs (page, organisation, event) {
+  await goToEventLogs(page, organisation, event)
+  return core.countItems(page, eventLogComponent)
+}
+
 export async function countEventTemplates (page, organisation) {
   await goToEventTemplatesActivity(page, organisation)
   return core.countItems(page, eventTemplateComponent)
@@ -58,6 +69,11 @@ export async function countEventTemplates (page, organisation) {
 export async function eventExists (page, organisation, event, property = 'name') {
   await goToEventsActivity(page, organisation)
   return core.itemExists(page, eventComponent, _.get(event, property))
+}
+
+export async function eventLogExists (page, organisation, event, eventLog, property = 'name') {
+  await goToEventLogs(page, organisation, event)
+  return core.itemExists(page, eventLogComponent, _.get(eventLog, property))
 }
 
 export async function eventTemplateExists (page, organisation, template, property = 'name') {
@@ -70,17 +86,35 @@ export async function eventActionExists (page, organisation, event, action) {
   return core.itemActionExists(page, eventComponent, event.name, action)
 }
 
+export async function eventLogActionExists (page, organisation, event, eventLog, action) {
+  await goToEventLogs(page, organisation, event)
+  return core.itemActionExists(page, eventLogComponent, eventLog.name, action)
+}
+
 export async function eventTemplateActionExists (page, organisation, template, action) {
   await goToEventTemplatesActivity(page, organisation)
   return core.itemActionExists(page, eventTemplateComponent, template.name, action)
 }
 
-export async function createEvent (page, organisation, event, template, wait = 2000) {
+export async function createEvent (page, organisation, template, event, wait = 2000) {
   await goToEventsActivity(page, organisation)
-  await core.clickAction(page, 'fab')
-  await core.clickAction(page, `create-${template.name}`)
-  await core.type(page, '#name-field', event.name)
-  if (event.description) await core.type(page, '#description-field', event.description)
+  // Open FAB if it does exist
+  const fab = await core.elementExists(page, '#fab')
+  if (fab) await core.clickAction(page, 'fab')
+  await core.clickAction(page, `create-${_.kebabCase(template.name)}`)
+  // We can use default setup from template or override
+  if (event.name) await core.type(page, '#name-field', event.name, false, true)
+  if (event.description) await core.type(page, '#description-field', event.description, false, true)
+  if (event.participants) {
+    for (let i = 0; i < event.participants.length; i++) {
+      const participant = event.participants[i]
+      await core.type(page, '#participants-field', participant.name)
+      await core.click(page, `#${_.kebabCase(participant.name)}`)
+    }
+  }
+  if (event.coordinators) {
+    // TODO
+  }
   await core.clickAction(page, 'apply-button', wait)
 }
 

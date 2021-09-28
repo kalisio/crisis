@@ -89,17 +89,20 @@ export default {
         // We don't keep ref/link for simplicity and making archived events will be self-consistent
         // No need to keep track of templates that have been removed, etc.
         this.object.template = this.template.name
-        // Remove id so that event has its own
+        // Remove id so that event has its own not the one from template
         delete this.object._id
+        // Remove properties only useful in templates
+        delete this.object.permission
         // Setup the plan if defined
         if (this.hasPlan()) {
           this.object.plan = this.planId
         }
-        // Setup expiry date
+        // Setup expiry date from template
         if (this.object.expiryDuration) {
           let expiryDate = moment().utc().add({ days: this.object.expiryDuration })
           this.object.expireAt = expiryDate.toISOString()
-        } 
+          delete this.object.expiryDuration
+        }
         // Setup hasWorkflow tag
         this.object.hasWorkflow = !_.isNil(this.template.workflow)
         if (!_.isNil(this.longitude) && !_.isNil(this.latitude)) {
