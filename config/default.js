@@ -241,6 +241,11 @@ const meteoLayers = {
   component: 'catalog/KWeatherLayersSelector',
   options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } }
 }
+const demographyLayers = {
+  name: 'KCatalogPanel.DEMOGRAPHY_LAYERS',
+  icon: 'las la-users',
+  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['demography'] } } }
+}
 
 const defaultMapCatalog = {
   categories: [
@@ -248,6 +253,7 @@ const defaultMapCatalog = {
     capturedLayers,
     measureLayers,
     meteoLayers,
+    demographyLayers,
     baseLayers
   ]
 }

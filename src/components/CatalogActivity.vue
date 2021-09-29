@@ -177,7 +177,7 @@ export default {
           })
         }
         // Could be a population analysis
-        const populationService = this.$api.getService('population-insee')
+        const populationService = this.$api.getService('population')
         if (populationService &&
             (_.get(feature, 'geometry.type') === 'Polygon') || (_.get(feature, 'geometry.type') === 'MultiPolygon')) {
           featureActions.push({
@@ -450,7 +450,7 @@ export default {
       }
     },
     async onAnalyzePopulation (data) {
-      const populationService = this.$api.getService('population-insee')
+      const populationService = this.$api.getService('population')
       const properties = ['Ind', 'Ind_0_3','Ind_4_5', 'Ind_6_10', 'Ind_11_17', 'Ind_18_24',
                           'Ind_25_39', 'Ind_40_54', 'Ind_55_64', 'Ind_65_79', 'Ind_80p']
       // We aggregate all feature within the zone
