@@ -282,7 +282,7 @@ module.exports = {
     } : undefined)
   },
   mapillary: {
-    clientID: process.env.MAPILLARY_TOKEN
+    token: process.env.MAPILLARY_TOKEN
   },
   geocoder: {
     providers: [{ provider: 'opendatafrance' }, { provider: 'openstreetmap' }]
