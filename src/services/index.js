@@ -4,12 +4,21 @@ import kCore from '@kalisio/kdk/core.client'
 import kMap from '@kalisio/kdk/map.client.map'
 import usersHooks from './users.hooks'
 
+function siftMatcher (originalQuery) {
+  // Filter out specific operators others than the reserved ones (starting by $),
+  // which are already filtered by core matcher
+  const keysToOmit = ['planAsObject']
+  return _.omit(originalQuery, ...keysToOmit)
+}
+
 export default function () {
   const api = this
 
   // Set up our plugin services
   try {
     api.configure(kCore)
+    // Declare our matcher
+    api.registerMatcher(siftMatcher)
     // Add hooks to automatically check uniqueness when creating a new user
     api.getService('users').hooks(usersHooks)
     api.configure(kMap)
