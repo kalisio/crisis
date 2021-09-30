@@ -36,7 +36,11 @@ export async function goToEventsActivity (page, organisation, wait = 2000) {
 
 export async function goToEventLogs (page, organisation, event, wait = 2000) {
   await goToEventsActivity(page, organisation)
-  await core.clickItemAction(page, eventComponent, event.name, 'event-logs')  
+  await core.clickItemAction(page, eventComponent, event.name, 'event-logs', wait)
+}
+
+export async function closeEventLogs (page, wait = 2000) {
+  await core.click(page, '.q-dialog #close-action', wait)
 }
 
 export async function goToEventTemplatesActivity (page, organisation, wait = 2000) {
@@ -58,7 +62,9 @@ export async function countEvents (page, organisation) {
 
 export async function countEventLogs (page, organisation, event) {
   await goToEventLogs(page, organisation, event)
-  return core.countItems(page, eventLogComponent)
+  const count = await core.countItems(page, eventLogComponent)
+  await closeEventLogs(page)
+  return count
 }
 
 export async function countEventTemplates (page, organisation) {
@@ -66,19 +72,24 @@ export async function countEventTemplates (page, organisation) {
   return core.countItems(page, eventTemplateComponent)
 }
 
-export async function eventExists (page, organisation, event, property = 'name') {
+export async function eventExists (page, organisation, event, property) {
   await goToEventsActivity(page, organisation)
-  return core.itemExists(page, eventComponent, _.get(event, property))
+  // Can provide an object with a property to match or a text input
+  return core.itemExists(page, eventComponent, property ? _.get(event, property) : event)
 }
 
-export async function eventLogExists (page, organisation, event, eventLog, property = 'name') {
+export async function eventLogExists (page, organisation, event, eventLog, property) {
   await goToEventLogs(page, organisation, event)
-  return core.itemExists(page, eventLogComponent, _.get(eventLog, property))
+  // Can provide an object with a property to match or a text input
+  const exists = await core.itemExists(page, eventLogComponent, property ? _.get(eventLog, property) : event)
+  await closeEventLogs(page)
+  return exists
 }
 
-export async function eventTemplateExists (page, organisation, template, property = 'name') {
+export async function eventTemplateExists (page, organisation, template, property) {
   await goToEventTemplatesActivity(page, organisation)
-  return core.itemExists(page, eventTemplateComponent, _.get(template, property))
+  // Can provide an object with a property to match or a text input
+  return core.itemExists(page, eventTemplateComponent, property ? _.get(template, property) : event)
 }
 
 export async function eventActionExists (page, organisation, event, action) {
@@ -127,6 +138,32 @@ export async function createEventTemplate (page, organisation, template, wait = 
   await core.clickAction(page, 'apply-button', wait)
 }
 
+export async function createEventTemplateWorkflow (page, organisation, template, wait = 2000) {
+  await goToEventTemplatesActivity(page, organisation)
+  await core.clickItemAction(page, eventTemplateComponent, template.name, 'add-item-workflow')
+  for (let i = 0; i < template.workflow.length; i++) {
+    const step = template.workflow[i]
+    await core.type(page, '#title-field', step.title)
+    if (step.stakeholder) await core.clickSelect(page, '#stakeholder-field', `#${step.stakeholder}`)
+    if (step.description) await core.type(page, '#description-field', step.description)
+    const interactions = _.get(step, 'interaction', [])
+    for (let j = 0; j < interactions.length; j++) {
+      const interaction = interactions[j]
+      await core.type(page, '#interaction-field', interaction.value, true)
+    }
+    const ends = _.get(step, 'end', [])
+    for (let j = 0; j < ends.length; j++) {
+      const end = ends[j]
+      await core.clickSelect(page, '#end-field', `#${end}`)
+    }
+    // Jump to next step
+    if (i < template.workflow.length - 1) {
+      await core.click(page, '#add-step')
+    }
+  }
+  await core.clickAction(page, 'apply-button', wait)
+}
+
 export async function editEventName (page, organisation, event, name, wait = 2000) {
   await goToEventsActivity(page, organisation)
   await core.clickItemAction(page, eventComponent, event.name, 'edit-item-header')
@@ -155,6 +192,40 @@ export async function editEventTemplateDescription (page, organisation, template
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
+export async function editEventTemplateWorkflow (page, organisation, template, description, wait = 2000) {
+  await goToEventTemplatesActivity(page, organisation)
+  await core.clickItemAction(page, eventTemplateComponent, template.name, 'edit-item-workflow')
+  for (let i = 0; i < template.workflow.length; i++) {
+    const step = template.workflow[i]
+    await core.type(page, '#title-field', step.title, false, true)
+    if (step.description) await core.type(page, '#description-field', step.description, false, true)
+    // TODO: interaction/end
+    // Jump to next step
+    if (i < template.workflow.length - 1) {
+      await core.click(page, '#next-step')
+    }
+  }
+  await core.clickAction(page, 'apply-button', wait)
+}
+
+export async function logEventStep (page, organisation, event, step, wait = 2000) {
+  await goToEventsActivity(page, organisation)
+  await core.clickItemAction(page, eventComponent, event.name, 'follow-up')
+  await core.clickSelect(page, '#interaction-field', `#${step.value}`)
+  if (step.comment) await core.type(page, '#comment-field', step.comment)
+  await core.click(page, '.q-dialog button:nth-child(2)', wait)
+}
+
+export async function logParticipantEventStep (page, organisation, event, member, step, wait = 2000) {
+  await goToEventsActivity(page, organisation)
+  await core.clickItemAction(page, eventComponent, event.name, 'event-logs', wait)
+  await core.clickItemAction(page, eventLogComponent, member.name, 'follow-up')
+  await core.clickSelect(page, '#interaction-field', `#${step.value}`)
+  if (step.comment) await core.type(page, '#comment-field', step.comment)
+  await core.click(page, '.q-dialog button:nth-child(2)', wait)
+  await closeEventLogs(page)
+}
+
 export async function removeEvent (page, organisation, event, wait = 2000) {
   await goToEventsActivity(page, organisation)
   await core.clickItemAction(page, eventComponent, event.name, 'remove-item-header')
@@ -167,3 +238,8 @@ export async function removeEventTemplate (page, organisation, template, wait = 
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
+export async function removeEventTemplateWorkflow (page, organisation, template, wait = 2000) {
+  await goToEventTemplatesActivity(page, organisation)
+  await core.clickItemAction(page, eventTemplateComponent, template.name, 'remove-item-workflow')
+  await core.click(page, '.q-dialog button:nth-child(2)', wait)
+}

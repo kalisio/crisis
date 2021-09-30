@@ -99,8 +99,8 @@ describe(`suite:${suite}`, () => {
     const managerTemplate = _.find(org.eventTemplates, { name: 'Manager template' })
     await events.createEventTemplate(page, org, managerTemplate)
     expect(await events.countEventTemplates(page, org)).to.equal(2)
-    expect(await events.eventTemplateExists(page, org, memberTemplate)).to.be.true
-    expect(await events.eventTemplateExists(page, org, managerTemplate)).to.be.true
+    expect(await events.eventTemplateExists(page, org, memberTemplate, 'name')).to.be.true
+    expect(await events.eventTemplateExists(page, org, managerTemplate, 'name')).to.be.true
   })
 
   it('org manager can create events from templates', async () => {
@@ -123,7 +123,7 @@ describe(`suite:${suite}`, () => {
     await core.goToLoginScreen(page)
     await core.login(page, member)
     // No edition on template
-    expect(await events.eventTemplateExists(page, org, template)).to.be.true
+    expect(await events.eventTemplateExists(page, org, template, 'name')).to.be.true
     expect(await events.eventTemplateActionExists(page, org, template, 'edit-item-header')).to.be.false
     expect(await events.eventTemplateActionExists(page, org, template, 'edit-item-description')).to.be.false
     expect(await events.eventTemplateActionExists(page, org, template, 'remove-item-header')).to.be.false
@@ -148,8 +148,7 @@ describe(`suite:${suite}`, () => {
     const memberEvent = _.find(org.events, { name: 'Member event' })
     // Participant follow-up
     const nbLogs = await events.countEventLogs(page, org, memberEvent)
-    const memberLogExists = await events.eventLogExists(page, org, memberEvent, { name: 'Member' })
-    await core.click(page, '.q-dialog #close-action', 2000)
+    const memberLogExists = await events.eventLogExists(page, org, memberEvent, 'Member')
     // We check after closing the modal so that if the test fail we are in a "neutral" state
     expect(nbLogs).to.equal(1)
     expect(memberLogExists).to.be.true
@@ -159,13 +158,13 @@ describe(`suite:${suite}`, () => {
     const memberEvent = _.find(org.events, { name: 'Member event' })
     const managerEvent = _.find(org.events, { name: 'Manager event' })
     // Edition allowed on event if coordinator
-    expect(await events.eventExists(page, org, memberEvent)).to.be.true
+    expect(await events.eventExists(page, org, memberEvent, 'name')).to.be.true
     await core.expandCard(page, events.eventComponent, memberEvent.name)
     expect(await events.eventActionExists(page, org, memberEvent, 'edit-item-header')).to.be.true
     expect(await events.eventActionExists(page, org, memberEvent, 'edit-item-description')).to.be.true
     expect(await events.eventActionExists(page, org, memberEvent, 'remove-item-header')).to.be.true
     // Edition disalloed on event if not coordinator
-    expect(await events.eventExists(page, org, managerEvent)).to.be.true
+    expect(await events.eventExists(page, org, managerEvent, 'name')).to.be.true
     await core.expandCard(page, events.eventComponent, managerEvent.name)
     expect(await events.eventActionExists(page, org, managerEvent, 'edit-item-header')).to.be.false
     expect(await events.eventActionExists(page, org, managerEvent, 'edit-item-description')).to.be.false
@@ -208,7 +207,9 @@ describe(`suite:${suite}`, () => {
     expect(await events.countEventTemplates(page, org)).to.equal(0)
   })
 
-  after(async () => {
+  after(async function () {
+    // Let enough time to process
+    this.timeout(60000)
     await runner.stop()
     // First remove groups in case removal test failed
     await client.removeGroups(org)

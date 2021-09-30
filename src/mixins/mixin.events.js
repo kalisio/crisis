@@ -220,6 +220,7 @@ const eventsMixin = {
           field: {
             component: 'form/KSelectField',
             helper: step.description,
+            valueField: 'value',
             options
           }
         }
