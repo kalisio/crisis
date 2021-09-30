@@ -28,7 +28,7 @@ describe(`suite:${suite}`, () => {
       name: 'Guest',
       email: 'guest@kalisio.xyz',
       password: 'Pass;word1',
-      permissions: 'owner'
+      permissions: 'manager'
     }]
   }
 
@@ -91,12 +91,12 @@ describe(`suite:${suite}`, () => {
     // Owners
     let filter = { owner: true, manager: false, member: false, guest: false }
     await members.filterMembers(page, org, filter)
-    expect(await members.countMembers(page, org)).to.equal(2)
+    expect(await members.countMembers(page, org)).to.equal(1)
     expect(await members.memberExists (page, org, org.owner)).to.be.true
     // Managers
     filter = { owner: false, manager: true, member: false, guest: false }
     await members.filterMembers(page, org, filter)
-    expect(await members.countMembers(page, org)).to.equal(1)
+    expect(await members.countMembers(page, org)).to.equal(2)
     expect(await members.memberExists (page, org, _.find(org.members, { name: 'Manager' }))).to.be.true
     // Members
     filter = { owner: false, manager: false, member: true, guest: false }
@@ -114,23 +114,11 @@ describe(`suite:${suite}`, () => {
     expect(await members.countMembers(page, org)).to.equal(4)
   })
 
-  it.skip('org owner can reissue invitation', async () => {
-    const member = _.find(org.members, { name: 'Group owner 2' })
-    await members.reissueMemberInvitation(page, org, member)
+  it('org owner can reissue invitation', async () => {
+    const guest = _.find(org.members, { name: 'Guest' })
+    await members.reissueMemberInvitation(page, org, guest)
     expect(await members.countMembers(page, org)).to.equal(4)
-    expect(await members.memberExists (page, org, member)).to.be.true
-  })
-
-  it('owner car tag members', async () => {
-    const member = _.find(org.members, { name: 'Manager' })
-    await members.addTag(page, org, member, 'tag')
-    expect(await tags.countTags(page, org)).to.equal(1)
-  })
-
-  it('owner car remove tags', async () => {
-    const member = _.find(org.members, { name: 'Manager' })
-    await members.removeTag(page, org, member, 'tag')
-    expect(await tags.countTags(page, org)).to.equal(0)
+    expect(await members.memberExists (page, org, guest)).to.be.true
   })
 
   it('owner can remove members', async () => {

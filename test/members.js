@@ -66,11 +66,10 @@ export async function inviteMember (page, organisation, member, wait = 5000) {
   await core.clickAction(page, 'add-button', wait)
 }
 
-export async function reissueMemberInvitation (page,  organisation, member) {
+export async function reissueMemberInvitation (page,  organisation, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
   await core.clickItemAction(page, memberComponent, member.name, 'reissue-invitation')
-  await core.type(page, '#email-field', member.email)
-  await core.click(page, '.q-dialog button:nth-child(2)')
+  await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
 export async function removeMember (page,  organisation, member, wait = 2000) {
@@ -79,21 +78,21 @@ export async function removeMember (page,  organisation, member, wait = 2000) {
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
-export async function addTag (page, organisation, member, tag, wait = 2000) {
+export async function editTags (page, organisation, member, tagsToAdd, tagsToRemove = [], wait = 2000) {
   await goToMembersActivity(page, organisation)
   await core.clickItemAction(page, memberComponent, member.name, 'edit-item-tags', 500)
-  await core.type(page, '#tags-field',tag, true, 500)
-  await core.clickAction(page, 'apply-button', wait)
-}
-
-export async function removeTag (page, organisation, member, tag, wait = 2000) {
-  await goToMembersActivity(page, organisation)
-  await core.clickItemAction(page, memberComponent, member.name, 'edit-item-tags', 500)
-  const xpath = `//div[contains(@class, "q-dialog")]//div[contains(@class, "q-chip row") and contains(., "${tag}")]//i`
-  const elements = await page.$x(xpath)
-  if (elements.length > 0) {
-    elements[0].click()
-    await page.waitForTimeout(1000)
+  for (const tag of tagsToRemove) {
+    debug(`Remove tag ${tag.value}`)
+    const xpath = `//div[contains(@class, "q-dialog")]//div[contains(@class, "q-chip row") and contains(., "${tag.value}")]//i`
+    const elements = await page.$x(xpath)
+    if (elements.length > 0) {
+      elements[0].click()
+      await page.waitForTimeout(500)
+    }
+  }
+  for (const tag of tagsToAdd) {
+    debug(`Add tag ${tag.value}`)
+    await core.type(page, '#tags-field', tag.value, true, false, 500)
   }
   await core.clickAction(page, 'apply-button', wait)
 }
