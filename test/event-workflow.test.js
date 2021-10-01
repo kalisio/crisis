@@ -6,8 +6,9 @@ import * as events from './events'
 const suite = 'event-workflow'
 
 const AWAITING_PARTICIPANT = 'Le coordinateur est en attente de votre action'
+const AWAITING_COORDINATOR = 'En attente du coordinateur'
 const NOT_AWAITING_COORDINATION = 'Aucun participant en attente de coordination'
-const AWAITING_COORDINATION = ' participants en attente de coordination'
+const AWAITING_COORDINATION = 'participants en attente de coordination'
 
 describe(`suite:${suite}`, () => {
   let runner, page, api, client
@@ -150,6 +151,7 @@ describe(`suite:${suite}`, () => {
   })
 
   it('org manager can manage his workflow steps', async () => {
+    const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
     let workflowStep = _.find(org.eventLogs, { name: 'Manager step 1' })
     await events.logEventStep(page, org, workflowEvent, workflowStep)
@@ -159,8 +161,9 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventExists(page, org, workflowStep, 'comment')).to.be.true
     // Waiting for coordination on second step
     workflowStep = workflowTemplate.workflow[1]
-    expect(await events.eventExists(page, org, workflowStep, 'title')).to.be.true
+    expect(await events.eventExists(page, org, AWAITING_COORDINATOR)).to.be.true
     expect(await events.eventExists(page, org, AWAITING_COORDINATION)).to.be.true
+    expect(await events.eventExists(page, org, workflowStep, 'title')).to.be.true
   })
 
   it('org member can manage his workflow steps', async () => {
@@ -168,24 +171,26 @@ describe(`suite:${suite}`, () => {
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, member)
+    const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
     // Waiting for first step
     let workflowStep = workflowTemplate.workflow[0]
-    expect(await events.eventExists(page, org, workflowStep, 'title')).to.be.true
+    expect(await events.eventExists(page, org, AWAITING_COORDINATION)).to.be.false
+    expect(await events.eventExists(page, org, NOT_AWAITING_COORDINATION)).to.be.false
     expect(await events.eventExists(page, org, AWAITING_PARTICIPANT)).to.be.true
-    expect(await events.eventExists(page, org, NOT_AWAITING_COORDINATION)).to.be.true
+    expect(await events.eventExists(page, org, workflowStep, 'title')).to.be.true
     workflowStep = _.find(org.eventLogs, { name: 'Member step 1' })
     await events.logEventStep(page, org, workflowEvent, workflowStep)
     // Not waiting for first step anymore
     expect(await events.eventExists(page, org, AWAITING_PARTICIPANT)).to.be.false
-    expect(await events.eventExists(page, org, NOT_AWAITING_COORDINATION)).to.be.false
-    expect(await events.eventExists(page, org, AWAITING_COORDINATION)).to.be.false
     expect(await events.eventExists(page, org, workflowStep, 'value')).to.be.true
     expect(await events.eventExists(page, org, workflowStep, 'comment')).to.be.true
     // Waiting for coordination on second step
     workflowStep = workflowTemplate.workflow[1]
+    expect(await events.eventExists(page, org, AWAITING_COORDINATOR)).to.be.true
+    expect(await events.eventExists(page, org, NOT_AWAITING_COORDINATION)).to.be.false
+    expect(await events.eventExists(page, org, AWAITING_COORDINATION)).to.be.false
     expect(await events.eventExists(page, org, workflowStep, 'title')).to.be.true
-    expect(await events.eventExists(page, org, AWAITING_COORDINATION)).to.be.true
   })
 
   it('org manager can list participants workflow steps', async () => {
@@ -195,6 +200,7 @@ describe(`suite:${suite}`, () => {
     await core.login(page, member)
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
     let workflowStep = _.find(org.eventLogs, { name: 'Manager step 1' })
+    await events.goToEventLogs (page, org, workflowEvent)
     expect(await events.eventLogExists(page, org, workflowEvent, member.name)).to.be.true
     expect(await events.eventLogExists(page, org, workflowEvent, workflowStep, 'value')).to.be.true
     expect(await events.eventLogExists(page, org, workflowEvent, workflowStep, 'comment')).to.be.true
@@ -206,9 +212,12 @@ describe(`suite:${suite}`, () => {
   })
 
   it('org manager can manage participants workflow steps', async () => {
+    await events.closeEventLogs (page)
     const member = _.find(org.members, { name: 'Member' })
+    const workflowEvent = _.find(org.events, { name: 'Workflow event' })
     const workflowStep = _.find(org.eventLogs, { name: 'Member step 2' })
     await events.logParticipantEventStep(page, org, workflowEvent, member, workflowStep)
+    await events.goToEventLogs (page, org, workflowEvent)
     expect(await events.eventLogExists(page, org, workflowEvent, workflowStep, 'value')).to.be.true
     expect(await events.eventLogExists(page, org, workflowEvent, workflowStep, 'comment')).to.be.true
     // No more coordination to be performed
@@ -216,6 +225,7 @@ describe(`suite:${suite}`, () => {
   })
 
   it('org manager can edit event template with workflow', async () => {
+    await events.closeEventLogs (page)
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
     // TODO: make edition more complete
     workflowTemplate.workflow.forEach(step => {

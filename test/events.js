@@ -61,9 +61,7 @@ export async function countEvents (page, organisation) {
 }
 
 export async function countEventLogs (page, organisation, event) {
-  await goToEventLogs(page, organisation, event)
   const count = await core.countItems(page, eventLogComponent)
-  await closeEventLogs(page)
   return count
 }
 
@@ -81,7 +79,7 @@ export async function eventExists (page, organisation, event, property) {
 export async function eventLogExists (page, organisation, event, eventLog, property) {
   await goToEventLogs(page, organisation, event)
   // Can provide an object with a property to match or a text input
-  const exists = await core.itemExists(page, eventLogComponent, property ? _.get(eventLog, property) : event)
+  const exists = await core.itemExists(page, eventLogComponent, property ? _.get(eventLog, property) : eventLog)
   await closeEventLogs(page)
   return exists
 }
@@ -152,10 +150,7 @@ export async function createEventTemplateWorkflow (page, organisation, template,
       await core.type(page, '#interaction-field', interaction.value, true)
     }
     const ends = _.get(step, 'end', [])
-    for (let j = 0; j < ends.length; j++) {
-      const end = ends[j]
-      await core.clickSelect(page, '#end-field', `#${end}`)
-    }
+    await core.clickSelect(page, '#end-field', ends.map(end => `#${end}`))
     // Jump to next step
     if (i < template.workflow.length - 1) {
       await core.click(page, '#add-step')
@@ -217,7 +212,7 @@ export async function logEventStep (page, organisation, event, step, wait = 2000
 }
 
 export async function logParticipantEventStep (page, organisation, event, member, step, wait = 2000) {
-  await goToEventsActivity(page, organisation)
+  await goToEventLogs (page, organisation, event)
   await core.clickItemAction(page, eventComponent, event.name, 'event-logs', wait)
   await core.clickItemAction(page, eventLogComponent, member.name, 'follow-up')
   await core.clickSelect(page, '#interaction-field', `#${step.value}`)
@@ -228,6 +223,7 @@ export async function logParticipantEventStep (page, organisation, event, member
 
 export async function removeEvent (page, organisation, event, wait = 2000) {
   await goToEventsActivity(page, organisation)
+  await core.expandCard(page, eventComponent, event.name)
   await core.clickItemAction(page, eventComponent, event.name, 'remove-item-header')
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }

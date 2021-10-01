@@ -147,8 +147,10 @@ describe(`suite:${suite}`, () => {
   it('org member can manage event logs', async () => {
     const memberEvent = _.find(org.events, { name: 'Member event' })
     // Participant follow-up
+    await events.goToEventLogs (page, org, memberEvent)
     const nbLogs = await events.countEventLogs(page, org, memberEvent)
     const memberLogExists = await events.eventLogExists(page, org, memberEvent, 'Member')
+    await events.closeEventLogs (page)
     // We check after closing the modal so that if the test fail we are in a "neutral" state
     expect(nbLogs).to.equal(1)
     expect(memberLogExists).to.be.true
