@@ -28,7 +28,7 @@ describe(`suite:${suite}`, () => {
       name: 'Guest',
       email: 'guest@kalisio.xyz',
       password: 'Pass;word1',
-      permissions: 'manager'
+      permissions: 'owner'
     }]
   }
 
