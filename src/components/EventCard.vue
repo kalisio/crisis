@@ -71,8 +71,8 @@
           :context="$props"
           :dense="dense" 
         >
-          <div v-if="participantLabel">{{ participantLabel }}</div>
-          <div v-if="coordinatorLabel">{{ coordinatorLabel }}</div>
+          <div v-if="participantLabel" v-html="participantLabel"></div>
+          <div v-if="coordinatorLabel" v-html="coordinatorLabel"></div>
         </k-card-section>
         <!-- Comment section -->
         <k-card-section v-if="comment"
