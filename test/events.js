@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import makeDebug from 'debug'
-import { core } from '@kalisio/kdk/test.client'
+import { core, map } from '@kalisio/kdk/test.client'
 import { goToOrganisationsActivity } from './organisations'
 
 const debug = makeDebug('aktnmap:test:events')
@@ -43,6 +43,15 @@ export async function closeEventLogs (page, wait = 2000) {
   await core.click(page, '.q-dialog #close-action', wait)
 }
 
+export async function goToEventMap (page, organisation, event, wait = 2000) {
+  await goToEventsActivity(page, organisation)
+  await core.clickItemAction(page, eventComponent, event.name, 'event-map', wait)
+}
+
+export async function closeEventMap (page, wait = 2000) {
+  await core.clickTopPaneAction(page, 'back', wait)
+}
+
 export async function goToEventTemplatesActivity (page, organisation, wait = 2000) {
   const url = page.url()
   if (!url.includes('event-templates')) {
@@ -77,11 +86,8 @@ export async function eventExists (page, organisation, event, property) {
 }
 
 export async function eventLogExists (page, organisation, event, eventLog, property) {
-  await goToEventLogs(page, organisation, event)
   // Can provide an object with a property to match or a text input
-  const exists = await core.itemExists(page, eventLogComponent, property ? _.get(eventLog, property) : eventLog)
-  await closeEventLogs(page)
-  return exists
+  return await core.itemExists(page, eventLogComponent, property ? _.get(eventLog, property) : eventLog)
 }
 
 export async function eventTemplateExists (page, organisation, template, property) {
@@ -214,7 +220,7 @@ export async function logEventStep (page, organisation, event, step, wait = 2000
 export async function logParticipantEventStep (page, organisation, event, member, step, wait = 2000) {
   await goToEventLogs (page, organisation, event)
   await core.clickItemAction(page, eventComponent, event.name, 'event-logs', wait)
-  await core.clickItemAction(page, eventLogComponent, member.name, 'follow-up')
+  await core.clickItemAction(page, eventLogComponent, member.name, 'follow-up', wait)
   await core.clickSelect(page, '#interaction-field', `#${step.value}`)
   if (step.comment) await core.type(page, '#comment-field', step.comment)
   await core.click(page, '.q-dialog button:nth-child(2)', wait)

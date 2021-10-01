@@ -2,7 +2,7 @@
   <k-catalog :layers="layers" :layerCategories="layerCategories"
     :forecastModels="forecastModels" :forecastModelHandlers="forecastModelHandlers" :forecastModel="forecastModel" >
     <div slot="footer" >
-      <q-expansion-item icon="las la-user" header-class="text-primary" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">
+      <q-expansion-item icon="las la-user" header-class="text-primary" :id="participants" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">
         <template v-for="participant in participants">
           <div class="row justify-between no-wrap" style="overflow: auto" :key="participant._id">
             <div class="col-auto self-center">
