@@ -1,6 +1,7 @@
 import makeDebug from 'debug'
 import { core } from '@kalisio/kdk/test.client'
 import { goToOrganisationsActivity } from './organisations'
+import { click } from '@kalisio/kdk/lib/test/client/core'
 
 const debug = makeDebug('aktnmap:test:tags')
 
@@ -39,19 +40,28 @@ export async function canEditTag (page, organisation, tag) {
   return tagActionExists(page, organisation, tag, 'edit-item-header') 
 }
 
-export async function editTagValue (page, organisation, tag, value, wait = 1000) {
+export async function editTag (page, organisation, tag, value, icon = null, wait = 1000) {
   await goToTagsActivity(page, organisation)
-  await core.clickItemAction(page, tagComponent, tag.value, 'edit-item-header')
+  await core.clickItemAction(page, tagComponent, tag.value, 'edit-item-header', 1000)
   await core.type(page, '#value-field', value, false, true)
-  await core.click(page, '.q-dialog button:nth-child(2)', wait)
+  if (icon) {
+    await core.clickAction(page, 'icon-chooser-button')
+    await core.chooseIcon(page, icon.name, icon.color)
+  } else {
+    const clearXPath = '(//div[contains(@class, "q-dialog")]//i[contains(@class, "cursor-pointer")])[2]'
+    const elements = await page.$x(clearXPath)
+    if (elements.length > 0) {
+      elements[0].click()
+    }
+  }
+  await core.click(page, '.q-dialog #apply-button', wait)
 }
 
-export async function editTagIcon (page, organisation, tag, icon, wait = 1000) {
+export async function editTagDescription (page, organisation, tag, description, wait = 1000) {
   await goToTagsActivity(page, organisation)
-  await core.clickItemAction(page, tagComponent, tag.value, 'edit-item-header')
-  await core.clickAction(page, 'icon-chooser-button')
-  await core.chooseIcon(page, icon.name, icon.color)
-  await core.click(page, '.q-dialog button:nth-child(2)', wait)
+  await core.clickItemAction(page, tagComponent, tag.value, 'edit-item-description', 1000)
+  await core.type(page, '#description-field', description, false, true)
+  await core.click(page, '.q-dialog #apply-button', wait)
 }
 
 export async function listMembers (page, organisation, tag) {

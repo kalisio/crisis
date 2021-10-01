@@ -26,14 +26,14 @@ describe(`suite:${suite}`, () => {
       permissions: 'member'
     }]
   }
-  const red = {
-    value: 'red'
+  const apple = {
+    value: 'apple'
   }
-  const orange = {
-    value: 'orange'
+  const banana = {
+    value: 'banana'
   }
-  const yellow = {
-    value: 'yellow'
+  const strawberry = {
+    value: 'strawberry'
   }
 
   before(async function () {
@@ -67,21 +67,21 @@ describe(`suite:${suite}`, () => {
     expect(runner.hasError()).to.false
   })
 
-  it('owner car tag members', async () => {
+  it('owner can tag members', async () => {
     const owner = org.owner
     const manager = _.find(org.members, { name: 'Manager' })
     const member = _.find(org.members, { name: 'Member' })
     await core.login(page, owner)
     await core.closeSignupAlert(page)
     expect(await tags.countTags(page, org)).to.equal(0)
-    await members.editTags(page, org, owner, [red])
-    await members.editTags(page, org, manager, [orange])
-    await members.editTags(page, org, member, [yellow])
+    await members.editTags(page, org, owner, [apple])
+    await members.editTags(page, org, manager, [banana])
+    await members.editTags(page, org, member, [strawberry])
     expect(await tags.countTags(page, org)).to.equal(3)
-    expect(await tags.tagExists(page, org, red)).to.true
-    expect(await tags.tagExists(page, org, orange)).to.true
-    expect(await tags.tagExists(page, org, yellow)).to.true
-    await tags.listMembers(page, org, red)
+    expect(await tags.tagExists(page, org, apple)).to.true
+    expect(await tags.tagExists(page, org, banana)).to.true
+    expect(await tags.tagExists(page, org, strawberry)).to.true
+    await tags.listMembers(page, org, apple)
     expect(await members.countMembers(page, org)).to.equal(1)
     await core.logout(page)
     await core.goToLoginScreen(page)
@@ -94,25 +94,38 @@ describe(`suite:${suite}`, () => {
     const member = _.find(org.members, { name: 'Member' })
     await core.login(page, manager)
     expect(await tags.countTags(page, org)).to.equal(3)
-    await members.editTags(page, org, owner, [red])
-    await members.editTags(page, org, manager, [red])
-    await members.editTags(page, org, member, [red, orange], [yellow], 3000)
+    await members.editTags(page, org, owner, [apple])
+    await members.editTags(page, org, manager, [apple])
+    await members.editTags(page, org, member, [apple, banana], [strawberry], 3000)
     expect(await tags.countTags(page, org)).to.equal(2)
-    await tags.listMembers(page, org, red)
+    await tags.listMembers(page, org, apple)
+    expect(await runner.captureAndMatch('members-with-apple-tag')).to.true
     expect(await members.countMembers(page, org)).to.equal(3)
   })
   .timeout(60000)
 
-  it('manager can edit tags', async () => {
-    await tags.editTagValue(page, org, red, 'dark red')
-    red.name = 'dark red'
-    await tags.editTagIcon(page, org, red, { name: 'fa-angry', color: 'red'})
-    await tags.listMembers(page, org, red)
+  it('manager can edit tag', async () => {
+    await tags.editTag(page, org, apple, 'green apple', { name: 'fa-apple', color: 'green'})
+    apple.value = 'green apple'
+    await tags.editTagDescription(page, org, apple, 'A green apple tag')
+    expect(await runner.captureAndMatch('green-apple-tag')).to.true
+    await tags.listMembers(page, org, apple)
+    expect(await runner.captureAndMatch('members-with-green-icon-apple-tag')).to.true
     expect(await members.countMembers(page, org)).to.equal(3)
+    await tags.editTag(page, org, apple, 'apple')
+    await tags.listMembers(page, org, apple)
+    expect(await runner.captureAndMatch('members-with-apple-tag')).to.true
+  })
+  .timeout(60000)
+
+  it('manager cannot edit tag with existing value', async () => {
+    await tags.editTag(page, org, apple, 'banana', null)
+    expect(await core.isToastVisible(page)).to.be.true
+    await core.click(page, '.q-dialog #cancel-button', 500)
+    runner.clearErrors()
     await core.logout(page)
     await core.goToLoginScreen(page)
   })
-  .timeout(60000)
 
   it('member cannot tag members', async () => {
     const owner = org.owner
@@ -122,9 +135,12 @@ describe(`suite:${suite}`, () => {
     expect(await members.memberActionExists(page, org, owner, 'edit-item-tags')).to.false
     expect(await members.memberActionExists(page, org, manager, 'edit-item-tags')).to.false
     expect(await members.memberActionExists(page, org, member, 'edit-item-tags')).to.false
+  })
+
+  it('member cannot edit tag', async () => {
     expect(await tags.countTags(page, org)).to.equal(2)
-    expect(await tags.canEditTag(page, org, red)).to.false
-    expect(await tags.canEditTag(page, org, orange)).to.false
+    expect(await tags.canEditTag(page, org, apple)).to.false
+    expect(await tags.canEditTag(page, org, banana)).to.false
     await core.logout(page)
     await core.goToLoginScreen(page)
   })
