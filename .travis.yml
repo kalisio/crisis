@@ -62,7 +62,7 @@ jobs:
     - nvm install 12.16
     - yes | sdkmanager "platforms;android-29"
     - npm install -g yarn
-    - curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
+    - curl -k -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
     - unzip rclone-current-linux-amd64.zip
     - cd rclone-*-linux-amd64 && sudo cp rclone /usr/bin/ && cd ..
     - sudo chown root:root /usr/bin/rclone
