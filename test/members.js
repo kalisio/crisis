@@ -47,6 +47,22 @@ export async function memberActionExists (page, organisation, member, action) {
   return core.itemActionExists(page, memberComponent, member.name, action)
 }
 
+export async function canEditMember (page, organisation, member) {
+  // Do no take into account the join-group action as a group must exists
+  return await memberActionExists(page, organisation, member, 'edit-member-role')
+    && await memberActionExists(page, organisation, member, 'remove-member')
+    && await memberActionExists(page, organisation, member, 'edit-item-tags')
+}
+
+export async function canReinviteGuest (page, organisation, guest) {
+  return await memberActionExists(page, organisation, guest, 'reissue-invitation')
+}
+
+export async function canAddMember (page, organisation) {
+  await goToMembersActivity(page, organisation)
+  return await core.elementExists(page, '#add-member')
+}
+
 export async function addMember (page, organisation, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
   await core.clickAction(page, 'add-member')
@@ -76,6 +92,10 @@ export async function removeMember (page,  organisation, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
   await core.clickItemAction(page, memberComponent, member.name, 'remove-member')
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
+}
+
+export async function canEdit (page, organisation, member) {
+  return await core.elementExists(page, '')
 }
 
 export async function editTags (page, organisation, member, tagsToAdd, tagsToRemove = [], wait = 2000) {

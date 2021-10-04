@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { expect } from 'chai'
 import { core } from '@kalisio/kdk/test.client'
 import * as members from './members'
-import * as tags from './tags'
+import * as organisations from './organisations'
 
 const suite = 'members'
 
@@ -112,20 +112,60 @@ describe(`suite:${suite}`, () => {
     filter = { owner: false, manager: false, member: false, guest: false }
     await members.filterMembers(page, org, filter)
     expect(await members.countMembers(page, org)).to.equal(4)
+    await core.logout(page)
+    await core.goToLoginScreen(page)
   })
 
-  it.skip('org owner can reissue invitation', async () => {
+  it('member cannot manage org', async () => {
+    const manager = _.find(org.members, { name: 'Manager' })
+    const member = _.find(org.members, { name: 'Member' })
     const guest = _.find(org.members, { name: 'Guest' })
-    await members.reissueMemberInvitation(page, org, guest)
+    await core.login(page, member)
+    await core.closeSignupAlert(page)
+    expect(await organisations.countOrganisations(page)).to.equal(2)
     expect(await members.countMembers(page, org)).to.equal(4)
-    expect(await members.memberExists (page, org, guest)).to.be.true
+    expect(await members.canAddMember(page, org)).to.be.false
+    expect(await members.canEditMember(page, org, member)).to.be.false
+    expect(await members.canEditMember(page, org, manager)).to.be.false
+    expect(await members.canEditMember(page, org, guest)).to.be.false
+    expect(await members.canReinviteGuest(page, org, guest)).to.be.false
+    expect(await members.canEditMember(page, org, org.owner)).to.be.false
+    await core.logout(page)
+    await core.goToLoginScreen(page)
   })
 
-  it('owner can remove members', async () => {
+  it('manager can manage org', async () => {
+    const manager = _.find(org.members, { name: 'Manager' })
+    const member = _.find(org.members, { name: 'Member' })
+    const guest = _.find(org.members, { name: 'Guest' })
+    await core.login(page, manager)
+    await core.closeSignupAlert(page)
+    expect(await organisations.countOrganisations(page)).to.equal(2)
+    expect(await members.countMembers(page, org)).to.equal(4)
+    expect(await members.canAddMember(page, org)).to.be.true
+    expect(await members.canEditMember(page, org, manager)).to.be.true
+    expect(await members.canEditMember(page, org, member)).to.be.true
+    expect(await members.canEditMember(page, org, guest)).to.be.false
+    expect(await members.canReinviteGuest(page, org, guest)).to.be.true
+    expect(await members.canEditMember(page, org, org.owner)).to.be.true
+    await members.removeMember(page, org, member)
+    expect(await members.countMembers(page, org)).to.equal(3)
+  })
+
+  it('manager cannot remove owner', async () => {
+    const owner = org.owner
+    await members.removeMember(page, org, owner)
+    expect(await core.isToastVisible(page)).to.be.true
+    runner.clearErrors()
+    await core.logout(page)
+    await core.goToLoginScreen(page)
+  })
+
+  it('owner can remove manager', async () => {
+    await core.login(page, org.owner)
+    await core.closeSignupAlert(page)
     const manager = _.find(org.members, { name: 'Manager' })
     await members.removeMember(page, org, manager)
-    const member = _.find(org.members, { name: 'Member' })
-    await members.removeMember(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(2)
   })
 

@@ -3,7 +3,7 @@ import { core } from '@kalisio/kdk/test.client'
 
 const debug = makeDebug('aktnmap:test:events')
 
-export const organisationComponent = 'organisations'
+export const organisationComponent = 'OrganisationCard'
 
 export async function goToOrganisationsActivity (page, wait = 2000) {
   const url = page.url()
