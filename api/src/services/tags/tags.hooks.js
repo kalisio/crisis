@@ -1,5 +1,6 @@
 import { when } from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api'
+import { updateEventTemplateResource } from '../../hooks'
 
 module.exports = {
   before: {
@@ -13,7 +14,10 @@ module.exports = {
   },
 
   after: {
-    all: [],
+    all: [
+      updateEventTemplateResource('participants'),
+      updateEventTemplateResource('coordinators')
+    ],
     find: [],
     get: [],
     // We create topics for members tag only, check if tag is really created or just its count increased

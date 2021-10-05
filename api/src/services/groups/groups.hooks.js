@@ -1,5 +1,5 @@
 import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { checkGroupsQuotas } from '../../hooks'
+import { checkGroupsQuotas, updateEventTemplateResource } from '../../hooks'
 
 module.exports = {
   before: {
@@ -13,18 +13,23 @@ module.exports = {
   },
 
   after: {
-    all: [],
+    all: [
+      updateEventTemplateResource('participants'),
+      updateEventTemplateResource('coordinators')
+    ],
     find: [],
     get: [],
     create: [
       coreHooks.createTopic(),
-      coreHooks.createGroupAuthorisations],
+      coreHooks.createGroupAuthorisations
+    ],
     update: [],
     patch: [],
     remove: [
       coreHooks.setAsDeleted,
       coreHooks.removeGroupAuthorisations,
-      coreHooks.removeTopic()]
+      coreHooks.removeTopic()
+    ]
   },
 
   error: {
