@@ -120,7 +120,7 @@ export async function createEvent (page, organisation, template, event, wait = 2
   if (event.name) await core.type(page, '#name-field', event.name, false, true)
   if (event.description) await core.type(page, '#description-field', event.description, false, true)
   // Geolocate on map by default
-  const xpath = `//div[@id="location-input"]//div[@role="radio"][2]`
+  const xpath = `(//div[@id="location-input"]//div[@role="radio"])[2]`
   const locationElements = await page.$x(xpath)
   if (locationElements.length > 0) {
     locationElements[0].click()

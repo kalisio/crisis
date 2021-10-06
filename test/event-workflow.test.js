@@ -107,11 +107,11 @@ describe(`suite:${suite}`, () => {
     page = await runner.start()
   })
 
-  beforeEach(async () => {
+  beforeEach(() => {
     runner.clearErrors()
   })
 
-  afterEach(async () => {
+  afterEach(() => {
     expect(runner.hasError()).to.false
   })
 
