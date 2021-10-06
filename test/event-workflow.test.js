@@ -215,20 +215,18 @@ describe(`suite:${suite}`, () => {
   })
 
   it('org manager can manage participants workflow steps', async () => {
-    await events.closeEventLogs (page)
     const member = _.find(org.members, { name: 'Member' })
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
     const workflowStep = _.find(org.eventLogs, { name: 'Member step 2' })
     await events.logParticipantEventStep(page, org, workflowEvent, member, workflowStep)
-    // No more coordination to be performed
-    expect(await events.eventExists(page, org, NOT_AWAITING_COORDINATION)).to.be.true
-    await events.goToEventLogs (page, org, workflowEvent)
     expect(await events.eventLogExists(page, org, workflowEvent, workflowStep, 'value')).to.be.true
     expect(await events.eventLogExists(page, org, workflowEvent, workflowStep, 'comment')).to.be.true
+    await events.closeEventLogs (page)
+    // No more coordination to be performed
+    expect(await events.eventExists(page, org, NOT_AWAITING_COORDINATION)).to.be.true
   })
 
   it('org manager can view event map', async () => {
-    await events.closeEventLogs (page)
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
     await events.goToEventMap(page, org, workflowEvent)
     // No more coordination to be performed

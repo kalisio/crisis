@@ -102,7 +102,6 @@ export async function eventActionExists (page, organisation, event, action) {
 }
 
 export async function eventLogActionExists (page, organisation, event, eventLog, action) {
-  await goToEventLogs(page, organisation, event)
   return core.itemActionExists(page, eventLogComponent, eventLog.name, action)
 }
 
@@ -120,6 +119,12 @@ export async function createEvent (page, organisation, template, event, wait = 2
   // We can use default setup from template or override
   if (event.name) await core.type(page, '#name-field', event.name, false, true)
   if (event.description) await core.type(page, '#description-field', event.description, false, true)
+  // Geolocate on map by default
+  const xpath = `//div[@id="location-input"]//div[@role="radio"][2]`
+  const locationElements = await page.$x(xpath)
+  if (locationElements.length > 0) {
+    locationElements[0].click()
+  }
   if (event.participants) {
     for (let i = 0; i < event.participants.length; i++) {
       const participant = event.participants[i]
@@ -218,13 +223,11 @@ export async function logEventStep (page, organisation, event, step, wait = 2000
 }
 
 export async function logParticipantEventStep (page, organisation, event, member, step, wait = 2000) {
-  await goToEventLogs (page, organisation, event)
-  await core.clickItemAction(page, eventComponent, event.name, 'event-logs', wait)
   await core.clickItemAction(page, eventLogComponent, member.name, 'follow-up', wait)
   await core.clickSelect(page, '#interaction-field', `#${step.value}`)
   if (step.comment) await core.type(page, '#comment-field', step.comment)
-  await core.click(page, '.q-dialog button:nth-child(2)', wait)
-  await closeEventLogs(page)
+  // As we have two dialogs on top of each others
+  await core.clickXPath(page, '//div[contains(@class, "q-dialog fullscreen")][2]//button[2]')
 }
 
 export async function removeEvent (page, organisation, event, wait = 2000) {
