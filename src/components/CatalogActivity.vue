@@ -36,7 +36,7 @@ import sift from 'sift'
 import Vue from 'vue'
 import { Dialog } from 'quasar'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
 
 const activityMixin = kCoreMixins.baseActivity()
@@ -55,7 +55,6 @@ export default {
     kMapMixins.infobox,
     kMapMixins.style,
     kMapMixins.weacast,
-    kMapMixins.time,
     kMapMixins.context,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
@@ -120,7 +119,7 @@ export default {
       // Wait until map is ready
       await this.initializeMap()
       activityMixin.methods.configureActivity.call(this)
-      this.setCurrentTime(moment.utc())
+      Time.setCurrentTime(moment.utc())
       // Then update events, alerts, plan
       this.alerts.refreshCollection()
       this.events.refreshCollection()

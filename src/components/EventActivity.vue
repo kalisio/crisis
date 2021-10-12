@@ -24,7 +24,7 @@
 import _ from 'lodash'
 import L from 'leaflet'
 import chroma from 'chroma-js'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
@@ -47,7 +47,6 @@ export default {
     kMapMixins.infobox,
     kMapMixins.style,
     kMapMixins.weacast,
-    kMapMixins.time,
     kMapMixins.activity,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
@@ -101,7 +100,7 @@ export default {
       this.event = await this.$api.getService(this.archived ? 'archived-events' : 'events', this.contextId).get(this.objectId)
       this.refreshUser()
       // If we'd like to only work in real-time
-      //this.setCurrentTime(moment.utc())
+      //Time.setCurrentTime(moment.utc())
       activityMixin.methods.configureActivity.call(this)
       const color = kCoreUtils.getColorFromPalette(_.get(this.event, 'icon.color', 'blue'))
       const icon = kCoreUtils.getIconName(this.event) || 'fas fa-circle'
