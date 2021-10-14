@@ -517,6 +517,12 @@ export default {
         }
       })
       return new Component({ propsData: props })
+    },
+    onEditStartEvent (event) {
+      this.setTopPaneMode('edit-layer-data')
+    },
+    onEditStopEvent (event) {
+      this.setTopPaneMode('default')
     }
   },
   async created () {
@@ -552,10 +558,14 @@ export default {
       $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
     }, this.getPlanQuery()), () => this.getPlanObjectiveQuery(), { nbItemsPerPage: 0 })
     this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
+    this.$on('edit-start', this.onEditStartEvent)
+    this.$on('edit-stop', this.onEditStopEvent)
   },
   beforeDestroy () {
     this.alerts.$off('collection-refreshed', this.onAlertCollectionRefreshed)
     this.events.$off('collection-refreshed', this.onEventCollectionRefreshed)
+    this.$off('edit-start', this.onEditStartEvent)
+    this.$off('edit-stop', this.onEditStopEvent)
   }
 }
 </script>

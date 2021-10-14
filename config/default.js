@@ -625,6 +625,11 @@ module.exports = {
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { component: 'KSearchLocation' }
+        ],
+        'edit-layer-data': [
+          { id: 'accept', icon: 'las la-arrow-left', handler: { name: 'onEndLayerEdition', params: ['accept'] } },
+          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          { component: 'KLayerEditionToolbar' }
         ]
       }
     },
