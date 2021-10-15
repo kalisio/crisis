@@ -1,7 +1,7 @@
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 
 module.exports = {
-  base: '/aktnmap/',
+  base: '/',
   title: `Akt'n'Map`,
   description: 'Situational intelligence solution to inform and coordinate fieldworkers',
   head: [
