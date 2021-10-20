@@ -176,7 +176,7 @@ export default {
               route: { 
                 name: 'create-event', 
                 params: { contextId: this.contextId, templateId: template._id }, 
-                query: this.planId ? { plan: this.planId } : {} 
+                query: { plan: this.planId }
               }
             })
           })

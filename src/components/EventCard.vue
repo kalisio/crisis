@@ -488,14 +488,22 @@ export default {
         if (properties) this.$refs.form.fill(properties)
         else this.$refs.form.clear()
       } else if (this.isCoordinator) {
-        this.$router.push({ name: 'event-activity', params: { objectId: this.item._id, contextId: this.contextId } })
+        this.$router.push({ name: 'event-activity',
+          params: { objectId: this.item._id, contextId: this.contextId },
+          // Depending if event is in a plan we get it as ID or object
+          query: { plan: _.get(this.item, 'plan._id', _.get(this.item, 'plan')) }
+        })
       }
     },
     async eventLogs () {
       this.$refs.eventLogsModal.open()
     },
     viewMap () {
-      this.$router.push({ name: 'event-activity', params: { objectId: this.item._id, contextId: this.contextId } })
+      this.$router.push({ name: 'event-activity',
+        params: { objectId: this.item._id, contextId: this.contextId },
+        // Depending if event is in a plan we get it as ID or object
+        query: { plan: _.get(this.item, 'plan._id', _.get(this.item, 'plan')) }
+      })
     },
     async refreshParticipantState (logs) {
       // As we also update the previous log state in the backend the refresh can be raised
