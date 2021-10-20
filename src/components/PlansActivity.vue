@@ -68,7 +68,13 @@ export default {
         const values = await this.$api.getService('archived-events').find({
           query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.contextId))
         })
-        Object.assign(this.filterQuery, { _id: { $in: values } })
+        // Or he his a coordinator of
+        Object.assign(this.filterQuery, {
+          $or: [
+            { _id: { $in: values } },
+            utils.getPlansQuery(this.$store.get('user'), this.contextId)
+          ]
+        })
       }
     },
     async configureActivity () {
@@ -131,6 +137,7 @@ export default {
     eventsService.on('created', this.updateFilterQuery)
     eventsService.on('patched', this.updateFilterQuery)
     eventsService.on('updated', this.updateFilterQuery)
+    eventsService.on('removed', this.updateFilterQuery)
     this.$events.$on('filter-changed', this.updateFilterQuery)
 
     // Check if option has been subscribed
@@ -142,6 +149,7 @@ export default {
     eventsService.off('created', this.updateFilterQuery)
     eventsService.off('patched', this.updateFilterQuery)
     eventsService.off('updated', this.updateFilterQuery)
+    eventsService.off('removed', this.updateFilterQuery)
     this.$events.$off('filter-changed', this.updateFilterQuery)
   }
 }
