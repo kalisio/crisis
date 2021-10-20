@@ -85,6 +85,7 @@
 
 <script>
 import { QBtnDropdown } from 'quasar'
+import { permissions } from '@kalisio/kdk/core.common'
 import mixins from '../mixins'
 import * as utils from '../utils'
 
@@ -156,11 +157,22 @@ export default {
     async updateCounts () {
       // Counts the number of events (with and without plan)
       this.eventsCount = await this.countItems('events')
-      // Then the number of plans the user has an event in
-      const values = await this.$api.getService('archived-events', this.organisation._id).find({
-        query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.organisation._id))
-      })
-      this.plansCount = await this.countItems('plans', { _id: { $in: values } })
+      // Then the number of plans the user has an event in except if manager who can see all
+      const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.organisation._id)
+      let query = {}
+      if (permissions.isJuniorRole(userRole, 'manager')) {
+        const values = await this.$api.getService('archived-events', this.organisation._id).find({
+          query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.organisation._id))
+        })
+        // Or he his a coordinator of
+        query = {
+          $or: [
+            { _id: { $in: values } },
+            utils.getPlansQuery(this.$store.get('user'), this.organisation._id)
+          ]
+        }
+      }
+      this.plansCount = await this.countItems('plans', query)
     }
   },
   beforeCreate () {
@@ -175,12 +187,24 @@ export default {
     eventsService.on('created', this.updateCounts)
     eventsService.on('patched', this.updateCounts)
     eventsService.on('updated', this.updateCounts)
+    eventsService.on('removed', this.updateCounts)
+    const plansService = this.$api.getService('plans', this.organisation._id)
+    plansService.on('created', this.updateCounts)
+    plansService.on('patched', this.updateCounts)
+    plansService.on('updated', this.updateCounts)
+    plansService.on('removed', this.updateCounts)
   },
   beforeDestroy () {
     const eventsService = this.$api.getService('events', this.organisation._id)
     eventsService.off('created', this.updateCounts)
     eventsService.off('patched', this.updateCounts)
     eventsService.off('updated', this.updateCounts)
+    eventsService.off('removed', this.updateCounts)
+    const plansService = this.$api.getService('plans', this.organisation._id)
+    plansService.off('created', this.updateCounts)
+    plansService.off('patched', this.updateCounts)
+    plansService.off('updated', this.updateCounts)
+    plansService.off('removed', this.updateCounts)
   }
 }
 </script>

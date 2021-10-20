@@ -34,6 +34,21 @@ export function getEventsQuery (user, contextId) {
   }
 }
 
+export function getPlansQuery (user, contextId) {
+  let ids = [user._id]
+  if (contextId) {
+    _.get(user, 'groups', []).forEach(group => {
+      if (group.context === contextId) ids.push(group._id)
+    })
+    _.get(user, 'tags', []).forEach(tag => {
+      if (tag.context === contextId) ids.push(tag._id)
+    })
+  }
+  return {
+    'coordinators._id': { $in: ids }
+  }
+}
+
 export function loadComponent (component) {
   return () => {
     return import(`@kalisio/kdk/lib/core/client/components/${component}.vue`)
