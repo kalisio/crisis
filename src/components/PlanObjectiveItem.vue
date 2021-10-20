@@ -1,10 +1,10 @@
 <template>
-  <div class="row full-width justify-between">
-    <span>{{ name }}
+  <div class="row full-width justify-between no-wrap">
+    <div class="ellipsis" style="max-width: 60vw">{{ name }}
       <q-tooltip>
         <span v-html="description" />
       </q-tooltip>
-    </span>
+    </div>
     <k-panel id="item-actions" :content="itemActions" :context="$props" />
   </div>
 </template>
