@@ -27,20 +27,22 @@
             id= "organisation-events"
             icon= "las la-fire"
             :label="$t('OrganisationCard.EVENTS_LABEL', { count: eventsCount })"
-            @triggered="routeTo('events-activity')" />
-          <q-space />
-          <k-action 
-            v-if="canAccessCatalog"
-            id= "organisation-catalog"
-            icon= "las la-map"
-            :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
-            @triggered="routeTo('catalog-activity')"  />
-          <k-action
-            v-if="canAccessArchivedEvents"
-            id= "organisation-archived-events"
-            icon= "las la-clipboard-list"
-            :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
-            @triggered="routeTo('archived-events-activity')"   />
+            @triggered="routeTo('events-activity')" 
+            style="max-width: 60%" />
+          <div>
+            <k-action 
+              v-if="canAccessCatalog"
+              id= "organisation-catalog"
+              icon= "las la-map"
+              :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
+              @triggered="routeTo('catalog-activity')"  />
+            <k-action
+              v-if="canAccessArchivedEvents"
+              id= "organisation-archived-events"
+              icon= "las la-clipboard-list"
+              :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
+              @triggered="routeTo('archived-events-activity')"   />
+          </div>
         </div>
       </k-card-section>
       <!-- Plans section -->
@@ -54,8 +56,8 @@
             id= "organisation-plans"
             icon= "las la-stream"
             :label="$t('OrganisationCard.PLANS_LABEL', { count: plansCount })"
-            @triggered="routeTo('plans-activity')" />
-          <q-space />
+            @triggered="routeTo('plans-activity')" 
+            style="max-width: 75%" />
           <k-action
             v-if="canAccessArchivedPlans"
             id= "organisation-archived-plans"
@@ -65,32 +67,37 @@
         </div>
       </k-card-section>
       <!-- Administation section -->
-      <k-card-section v-if="isExpanded" icon="las la-cog"
-        :title="isMember ? $t('OrganisationCard.INFORMATION_SECTION') : $t('OrganisationCard.ADMINISTRATION_SECTION')">
-        <template v-for="element in structure">
-          <div :key="element.key" class="full-width row justify-between items-center no-wrap q-pa-xs">
-            <k-action
-              :id="`organisation-${element.name}`"
-              :icon="element.icon"
-              :label="$t(`OrganisationCard.${element.key}`, { count: counters[element.name] })"
-              @triggered="routeTo(`${element.name}-activity`)" />
-            <q-badge v-if="!isMember" :label="`${quotas[element.name]} max`" color="grey-7" />
+      <div v-if="isExpanded">
+        <!-- Organisation section -->
+        <k-card-section :title="isMember ? $t('OrganisationCard.INFORMATION_SECTION') : $t('OrganisationCard.ADMINISTRATION_SECTION')">
+          <div class="q-pb-sm">
+            <template v-for="element in structure">
+              <div :key="element.key" class="full-width row justify-between items-center no-wrap">
+                <k-action
+                  :id="`organisation-${element.name}`"
+                  :icon="element.icon"
+                  :label="$t(`OrganisationCard.${element.key}`, { count: counters[element.name] })"
+                  @triggered="routeTo(`${element.name}-activity`)" 
+                  style="max-width: 75%" />
+                <q-badge v-if="!isMember" :label="`${quotas[element.name]} max`" color="grey-7" />
+              </div>
+            </template>
           </div>
-        </template>
-        <q-separator />
+        </k-card-section>
+        <!-- Billing section -->
         <k-card-section v-if="canAccessBilling" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{ 
           id: 'edit-billing', icon: 'las la-edit', size: 'sm', tooltip: 'OrganisationCard.EDIT_ACTION', 
           route: { name: 'edit-organisation-billing', params: { objectId: item._id, title: item.name } } 
         }]">
-              <div class="row items-center">
-              <template v-for="subscription in subscriptions">
-                <div :key="subscription" class="q-pl-sm">
-                  <q-badge :label="$t(`${subscription}_LABEL`)" color="grey-7" />
-                </div>
-              </template>
-            </div>
+            <div class="row items-center">
+            <template v-for="subscription in subscriptions">
+              <div :key="subscription" class="q-pl-sm">
+                <q-badge :label="$t(`${subscription}_LABEL`)" color="grey-7" />
+              </div>
+            </template>
+          </div>
         </k-card-section>
-      </k-card-section>
+      </div>
     </div>
   </k-card>
 </template>
