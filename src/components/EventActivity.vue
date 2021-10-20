@@ -285,8 +285,11 @@ export default {
       this.refreshParticipantsLayer()
     },
     goBack () {
-      if (this.archived) this.$router.push({ name: 'archived-events-activity' })
-      else this.$router.push({ name: 'events-activity' })
+      if (this.archived) {
+        this.$router.push({ name: 'archived-events-activity', query: { plan: this.planId } })
+      } else {
+        this.$router.push({ name: 'events-activity', query: { plan: this.planId } })
+      }
     }
   },
   created () {

@@ -210,13 +210,18 @@ export default {
     followUp () {
       this.$router.push({ name: 'event-activity',
         params: { objectId: this.item._id, contextId: this.contextId },
-        query: { archived: true } })
+        // Depending if event is in a plan we get it as ID or object
+        query: { archived: true, plan: _.get(this.item, 'plan._id', _.get(this.item, 'plan')) } })
     },
     browseMedia () {
       this.$refs.mediaBrowser.show(this.item.attachments)
     },
     viewMap () {
-      this.$router.push({ name: 'event-activity', params: { objectId: this.item._id, contextId: this.contextId } })
+      this.$router.push({ name: 'event-activity',
+        params: { objectId: this.item._id, contextId: this.contextId },
+        // Depending if event is in a plan we get it as ID or object
+        query: { plan: _.get(this.item, 'plan._id', _.get(this.item, 'plan')) }
+      })
     },
     refresh () {
       this.refreshUser()
