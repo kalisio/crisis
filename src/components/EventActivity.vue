@@ -159,8 +159,8 @@ export default {
       if (this.hasStateUserInteraction(item.previous)) {
         return (this.getUserInteraction(item.previous) === this.filter.interaction)
       }
-      // If same step but no interaction found filter if rquired
-      return _.get(this.filter, 'interaction')
+      // If same step but no interaction found, filter if required
+      return !_.get(this.filter, 'interaction')
     },
     async refreshParticipantsLayer () {
       // Create an empty layer used as a container for participants when required
@@ -265,8 +265,11 @@ export default {
           step: step.name,
           interaction: undefined
         }
-        if (this.hasStateUserInteraction(participant)) this.filter.interaction = this.getUserInteraction(participant)
-        else if (this.hasStateUserInteraction(participant.previous)) this.filter.interaction = this.getUserInteraction(participant.previous)
+        if (this.hasStateUserInteraction(participant)) {
+          this.filter.interaction = this.getUserInteraction(participant)
+        } else if (this.hasStateUserInteraction(participant.previous)) {
+          this.filter.interaction = this.getUserInteraction(participant.previous)
+        }
       } else {
         this.filter = null
       }
