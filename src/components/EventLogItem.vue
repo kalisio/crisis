@@ -81,7 +81,7 @@ export default {
     if (this.item.geometry) {
       let locationMapAction = _.find(this.itemActions, action => action.id === 'location-map')
       // Update location of the generic action to reflect current item location in map
-      if (locationMapAction) _.set(locationMapAction, 'content[0].value', _.pick(this.item, ['geometry']))
+      if (locationMapAction) _.set(locationMapAction, 'content[0].value', _.get(this.item, 'geometry'))
     }
     
   }

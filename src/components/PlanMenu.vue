@@ -13,7 +13,7 @@
     @show="refreshPercentages">
     <template v-slot:default>
       <q-card v-if="plan" class="bg-white" :style="computedStyle">
-        <div class="row full-width justify-center items-center q-pa-md q-gutter-x-sm text-subtitle1 bg-grey-4">
+        <div class="row full-width justify-center items-center q-pa-md q-gutter-x-sm text-subtitle1 bg-grey-6 text-white">
           <k-avatar 
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'" 
             :object="plan" 
@@ -39,7 +39,7 @@
                     size="24px"
                     :thickness="0.25"
                     color="primary"
-                    track-color="grey-4"
+                    track-color="grey-5"
                   >
                     <q-tooltip>
                       {{ $t('PlanMenu.PERCENT_LABEL', { percent: objectivePercents[index] }) }}
@@ -131,7 +131,7 @@ export default {
           component: 'frame/KTextArea', 
           text: objective.description,
           length: 8192,
-          class: 'q-pa-sm bg-grey-4'
+          class: 'q-pa-sm bg-grey-5'
         }]
       })
       if (objective.location) actions.push({

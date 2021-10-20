@@ -68,7 +68,13 @@ export default {
         const values = await this.$api.getService('archived-events').find({
           query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.contextId))
         })
-        this.filterQuery = { _id: { $in: values } }
+        // Or he his a coordinator of
+        this.filterQuery = {
+          $or: [
+            { _id: { $in: values } },
+            utils.getPlansQuery(this.$store.get('user'), this.contextId)
+          ]
+        }
       }
     },
     onPageContentResized (size) {
@@ -89,6 +95,7 @@ export default {
     eventsService.on('created', this.updateFilterQuery)
     eventsService.on('patched', this.updateFilterQuery)
     eventsService.on('updated', this.updateFilterQuery)
+    eventsService.on('removed', this.updateFilterQuery)
     
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
@@ -98,6 +105,7 @@ export default {
     eventsService.off('created', this.updateFilterQuery)
     eventsService.off('patched', this.updateFilterQuery)
     eventsService.off('updated', this.updateFilterQuery)
+    eventsService.off('removed', this.updateFilterQuery)
   }
 }
 </script>
