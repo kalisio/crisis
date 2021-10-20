@@ -780,7 +780,7 @@
   },
   "PlanCard": {
     "EDIT_ACTION": "$t(EDIT_LABEL)",
-    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
+    "REMOVE_ACTION": "Close",
     "DESCRIPTION_SECTION": "Description",
     "OBJECTIVES_SECTION": "Objectives",
     "NO_OBJECTIVES_LABEL": "No objectives",

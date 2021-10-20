@@ -13,7 +13,7 @@
     @show="refreshPercentages">
     <template v-slot:default>
       <q-card v-if="plan" class="bg-white" :style="computedStyle">
-        <div class="row full-width justify-center items-center q-pa-md q-gutter-x-sm text-subtitle1 bg-grey-4">
+        <div class="row full-width justify-center items-center q-pa-md q-gutter-x-sm text-subtitle1 bg-grey-6 text-white">
           <k-avatar 
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'" 
             :object="plan" 
