@@ -5,8 +5,8 @@ import * as events from './events'
 
 const suite = 'event-workflow'
 
-const AWAITING_PARTICIPANT = 'Le coordinateur est en attente de votre action'
-const AWAITING_COORDINATOR = 'En attente du coordinateur'
+const AWAITING_PARTICIPANT = 'Le coordonnateur est en attente de votre action'
+const AWAITING_COORDINATOR = 'En attente du coordonnateur'
 const NOT_AWAITING_COORDINATION = 'Aucun participant en attente de coordination'
 const AWAITING_COORDINATION = 'participants en attente de coordination'
 

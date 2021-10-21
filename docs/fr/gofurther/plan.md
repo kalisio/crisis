@@ -3,7 +3,7 @@
 Un *ensemble d'événements liés à une situation* que l'on désire gérer. Typiquement un plan de continuité d'activité, un plan d'opération interne, etc. Un plan est généralement structuré autour d'objectifs à atteindre.
 
 ::: tip Astuce
-L'utilisateur qui créé un plan en est par défaut le coordonateur mais il peut partager ou déléguer la gestion à d'autres.
+L'utilisateur qui créé un plan en est par défaut le coordonnateur mais il peut partager ou déléguer la gestion à d'autres.
 :::
 
 Pour vous aider à suivre l'avancement de votre plan il est possible de:
@@ -33,7 +33,7 @@ Comment afficher le tableau de bord depuis le <tour-link text="menu principal" p
 
 ## Modèle de plan
 
-Un plan s'initie toujours à partir d'un **modèle** qui définit son contenu de base. Dans chaque modèle un titre, une description, et/ou des coordinateurs par défaut pourront être définis. Ainsi, lors de la création du plan, il ne reste qu'à compléter ou amender certains éléments au besoin tels que les objectifs.
+Un plan s'initie toujours à partir d'un **modèle** qui définit son contenu de base. Dans chaque modèle un titre, une description, et/ou des coordonnateurs par défaut pourront être définis. Ainsi, lors de la création du plan, il ne reste qu'à compléter ou amender certains éléments au besoin tels que les objectifs.
 
 :point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos modèles" path="home" :params="{ organisation: 'manager', route: 'plan-templates-activity' }"/>
 
