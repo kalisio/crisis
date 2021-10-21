@@ -276,8 +276,14 @@ export default {
       this.refreshParticipantsLayer()
     },
     onCollectionRefreshed () {
-      // Process logs to make it usable as a more conveninet object by adding icon, etc.
+      // Process logs to make it usable as a more conveient object by adding icon, etc.
+      // It will also avoid any doublon in case of data duplication
+      const count = this.items.length
       this.items = this.processStates(this.items)
+      // Update total count accordingly
+      if (count > this.items.length) {
+        this.nbTotalItems -= (count - this.items.length)
+      }
       // We do not manage pagination now
       if (this.items.length < this.nbTotalItems) {
         this.$events.$emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
