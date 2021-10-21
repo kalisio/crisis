@@ -20,7 +20,7 @@
       </template>
       <template v-slot:default>
         <q-card class="bg-white" style="width: 300px;">
-          <div class="row full-width justify-center q-pa-md text-subtitle1 bg-grey-6 text-white">
+          <div class="row full-width justify-center q-pa-md text-subtitle1 bg-grey-4">
             {{ organisation.name }}
           </div>
           <k-card-section v-if="hasEventsSection"> 

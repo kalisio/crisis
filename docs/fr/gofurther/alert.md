@@ -23,7 +23,7 @@ Pour les prévisions météorologiques il vous suffit de faire un clic droit à 
 <i class="las la-bell la-2x"></i> Le modèle d'événement à créer lorsque l'alerte est déclenchée, tout en précisant s'il doit également être automatiquement clôturé lorsque l'alerte n'est plus active.
 
 ::: warning Note
-Etant donné que l'événement sera automatiquement créé par l'application lorsque les conditions de l'alerte seront rencontrées, le modèle doit contenir au moins un participant et un coordonateur.
+Etant donné que l'événement sera automatiquement créé par l'application lorsque les conditions de l'alerte seront rencontrées, le modèle doit contenir au moins un participant et un coordonnateur.
 :::
 
 ![Archivage](../../assets/Alert-FR.png)

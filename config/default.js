@@ -484,7 +484,7 @@ module.exports = {
         editItemAction('PlanCard.EDIT_ACTION', 'header', 'name'),
         {
           id: 'remove-item-header', scope: 'header', tooltip: 'PlanCard.REMOVE_ACTION',
-          icon: 'las la-check-circle', size: 'sm', visible: 'canRemoveItem', handler: 'removeEvent'
+          icon: 'las la-check-circle', size: 'sm', visible: 'canRemoveItem', handler: { name: 'removeItem', params: ['confirm'] }
         },
         editItemAction('PlanCard.EDIT_ACTION', 'description'),
         // Specific case of custom objective editor

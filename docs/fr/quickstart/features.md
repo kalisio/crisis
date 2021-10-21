@@ -16,7 +16,7 @@ Vous pouvez notifier des membres de façon individuelle, des groupes ou des memb
 
 Définissez votre propre processus de communication pour mobiliser vos équipes.
 
-Le principe de communication est bilatéral et permet aux coordonateurs de connaitre le statut des participants en temps réel tout au long de l'événement.
+Le principe de communication est bilatéral et permet aux coordonnateurs de connaitre le statut des participants en temps réel tout au long de l'événement.
 
 ## <i class="las la-map-marked-alt"></i> Géolocalisez en temps réel
 
