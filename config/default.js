@@ -26,7 +26,15 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
 }
 // Override defaults if env provided
 if (process.env.SUBDOMAIN) {
-  domain = 'https://aktnmap.' + process.env.SUBDOMAIN
+  // In prod we use a generic domain which is routed towards the actual domain,
+  // e.g. aktnmap.kalisio.com => aktnmap.prod.kalisio.com
+  // This allow us to switch our production domain transparently (blue/green deployment)
+  // notably because the app domain is "hardcoded" in the mobile app configuration
+  if (process.env.NODE_APP_INSTANCE === 'prod') {
+    domain = 'https://aktnmap.kalisio.com'
+  } else {
+    domain = 'https://aktnmap.' + process.env.SUBDOMAIN
+  }
 }
 // On a developer machine will do domain = gateway = localhost
 const gateway = domain.replace('aktnmap', 'api')
