@@ -1,5 +1,79 @@
 # Changelog
 
+## [prod-v1.2.0](https://github.com/kalisio/aktnmap/tree/prod-v1.2.0) (2021-10-23)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.4...prod-v1.2.0)
+
+**Implemented enhancements:**
+
+- Make plan management available as an option [\#297](https://github.com/kalisio/aktnmap/issues/297)
+- Population analysis feature [\#282](https://github.com/kalisio/aktnmap/issues/282)
+- Homogenize modal rendering [\#278](https://github.com/kalisio/aktnmap/issues/278)
+- Homogenizes card rendering [\#273](https://github.com/kalisio/aktnmap/issues/273)
+- When suppressing a group or a tag event templates should be updated [\#263](https://github.com/kalisio/aktnmap/issues/263)
+- Provide capabilities to manage plans [\#261](https://github.com/kalisio/aktnmap/issues/261)
+- Provide more information on the event template card [\#256](https://github.com/kalisio/aktnmap/issues/256)
+- Allow to navigate to the operation view when managing an organisation [\#251](https://github.com/kalisio/aktnmap/issues/251)
+- Add ability to select the event templates available according to role [\#243](https://github.com/kalisio/aktnmap/issues/243)
+- Make notifications related to event updates more ease to skip [\#241](https://github.com/kalisio/aktnmap/issues/241)
+- Allow to define a default expiry date in the event template [\#240](https://github.com/kalisio/aktnmap/issues/240)
+- Create a participants list component to be used in event activity and event card [\#229](https://github.com/kalisio/aktnmap/issues/229)
+- Improve tests [\#119](https://github.com/kalisio/aktnmap/issues/119)
+
+**Fixed bugs:**
+
+- Logbook : OnMouseOver label not showing right label for cartography [\#290](https://github.com/kalisio/aktnmap/issues/290)
+- Manual event creation popup : HTML layout codes are visible + typo [\#287](https://github.com/kalisio/aktnmap/issues/287)
+- Role in event is not correctly detected when using tags or groups [\#281](https://github.com/kalisio/aktnmap/issues/281)
+- The back button on the event activity should route back to the previous activity [\#280](https://github.com/kalisio/aktnmap/issues/280)
+- Cannot install phonegap-plugin-push anymore [\#93](https://github.com/kalisio/aktnmap/issues/93)
+
+**Closed issues:**
+
+- Stuck in the cartography when removing my account from event management [\#292](https://github.com/kalisio/aktnmap/issues/292)
+- Logbook : filters + icons/color to give more visibility between closed and open events [\#291](https://github.com/kalisio/aktnmap/issues/291)
+- Allow to edit closed event process steps [\#288](https://github.com/kalisio/aktnmap/issues/288)
+
+**Merged pull requests:**
+
+- build\(deps\): bump prismjs from 1.24.0 to 1.25.0 in /docs [\#299](https://github.com/kalisio/aktnmap/pull/299) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump url-parse from 1.5.1 to 1.5.3 in /docs [\#293](https://github.com/kalisio/aktnmap/pull/293) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update alert.md [\#286](https://github.com/kalisio/aktnmap/pull/286) ([kazemar](https://github.com/kazemar))
+- Update concepts.md [\#285](https://github.com/kalisio/aktnmap/pull/285) ([kazemar](https://github.com/kazemar))
+- build\(deps\): bump path-parse from 1.0.6 to 1.0.7 in /docs [\#284](https://github.com/kalisio/aktnmap/pull/284) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump path-parse from 1.0.6 to 1.0.7 [\#283](https://github.com/kalisio/aktnmap/pull/283) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump prismjs from 1.23.0 to 1.24.0 in /docs [\#277](https://github.com/kalisio/aktnmap/pull/277) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump color-string from 1.5.4 to 1.5.5 in /docs [\#276](https://github.com/kalisio/aktnmap/pull/276) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump postcss from 7.0.35 to 7.0.36 in /docs [\#271](https://github.com/kalisio/aktnmap/pull/271) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump ws from 6.2.1 to 6.2.2 in /docs [\#268](https://github.com/kalisio/aktnmap/pull/268) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [prod-v1.1.4](https://github.com/kalisio/aktnmap/tree/prod-v1.1.4) (2021-07-15)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.3...prod-v1.1.4)
+
+**Implemented enhancements:**
+
+- Add a dedicated editor for event workflow [\#272](https://github.com/kalisio/aktnmap/issues/272)
+- Events or plans should be located using any geometry type [\#270](https://github.com/kalisio/aktnmap/issues/270)
+
+**Fixed bugs:**
+
+- Meteorological alerts not checked correctly [\#279](https://github.com/kalisio/aktnmap/issues/279)
+- Missing participants when displaying the map of an archived event [\#275](https://github.com/kalisio/aktnmap/issues/275)
+- The back button on the event map of an archived event targets the events activity [\#274](https://github.com/kalisio/aktnmap/issues/274)
+
+## [prod-v1.1.3](https://github.com/kalisio/aktnmap/tree/prod-v1.1.3) (2021-06-08)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.2...prod-v1.1.3)
+
+**Implemented enhancements:**
+
+- Too much request on the organisations dashboard [\#236](https://github.com/kalisio/aktnmap/issues/236)
+
+**Fixed bugs:**
+
+- Changing the role for a group is no more working [\#267](https://github.com/kalisio/aktnmap/issues/267)
+
 ## [prod-v1.1.2](https://github.com/kalisio/aktnmap/tree/prod-v1.1.2) (2021-05-13)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.1...prod-v1.1.2)
@@ -18,7 +92,6 @@
 - Participant shown twice on event activity with workflow [\#247](https://github.com/kalisio/aktnmap/issues/247)
 - iOS app does not respect Apple app privacy guideline [\#239](https://github.com/kalisio/aktnmap/issues/239)
 - Empty business category in mapping activities [\#237](https://github.com/kalisio/aktnmap/issues/237)
-- Cannot create an event without a workflow  in a random way [\#212](https://github.com/kalisio/aktnmap/issues/212)
 - Remove automated object ID population in card route handler [\#22](https://github.com/kalisio/aktnmap/issues/22)
 
 ## [prod-v1.1.1](https://github.com/kalisio/aktnmap/tree/prod-v1.1.1) (2021-05-04)
@@ -42,7 +115,6 @@
 - Highlight when a search filter is enabled [\#159](https://github.com/kalisio/aktnmap/issues/159)
 - Allow to assign an avatar to an organisation [\#140](https://github.com/kalisio/aktnmap/issues/140)
 - Allow to filter the guests who have not validated their invitation [\#123](https://github.com/kalisio/aktnmap/issues/123)
-- Provide a report when inviting a list of users [\#112](https://github.com/kalisio/aktnmap/issues/112)
 - Allow to create an event targeting a set of map features [\#214](https://github.com/kalisio/aktnmap/issues/214)
 - Allow to create events targeting a feature or location on map [\#75](https://github.com/kalisio/aktnmap/issues/75)
 
@@ -62,6 +134,16 @@
 - build\(deps\): bump elliptic from 6.5.3 to 6.5.4 in /docs [\#223](https://github.com/kalisio/aktnmap/pull/223) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps\): bump elliptic from 6.5.0 to 6.5.4 [\#222](https://github.com/kalisio/aktnmap/pull/222) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps\): bump prismjs from 1.22.0 to 1.23.0 in /docs [\#219](https://github.com/kalisio/aktnmap/pull/219) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump ini from 1.3.5 to 1.3.7 [\#209](https://github.com/kalisio/aktnmap/pull/209) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump node-fetch from 2.6.0 to 2.6.1 [\#177](https://github.com/kalisio/aktnmap/pull/177) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump lodash from 4.17.15 to 4.17.20 in /docs [\#175](https://github.com/kalisio/aktnmap/pull/175) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump http-proxy from 1.18.0 to 1.18.1 in /docs [\#167](https://github.com/kalisio/aktnmap/pull/167) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps-dev\): bump mongodb from 3.1.4 to 3.1.13 [\#162](https://github.com/kalisio/aktnmap/pull/162) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump showdown from 1.9.0 to 1.9.1 [\#161](https://github.com/kalisio/aktnmap/pull/161) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump elliptic from 6.5.2 to 6.5.3 in /docs [\#157](https://github.com/kalisio/aktnmap/pull/157) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump lodash from 4.17.15 to 4.17.19 [\#149](https://github.com/kalisio/aktnmap/pull/149) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump websocket-extensions from 0.1.3 to 0.1.4 in /docs [\#138](https://github.com/kalisio/aktnmap/pull/138) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump acorn from 6.4.0 to 6.4.1 in /docs [\#137](https://github.com/kalisio/aktnmap/pull/137) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [prod-v1.0.1](https://github.com/kalisio/aktnmap/tree/prod-v1.0.1) (2021-01-27)
 
@@ -70,20 +152,16 @@
 **Implemented enhancements:**
 
 - Keep track of currently activated layers [\#204](https://github.com/kalisio/aktnmap/issues/204)
+- Graphs about archived events contain a null type [\#203](https://github.com/kalisio/aktnmap/issues/203)
 
 **Fixed bugs:**
 
 - Slow operations related to organization management [\#208](https://github.com/kalisio/aktnmap/issues/208)
 - Graphs about archived events can be empty [\#205](https://github.com/kalisio/aktnmap/issues/205)
-- Graphs about archived events contain a null type [\#203](https://github.com/kalisio/aktnmap/issues/203)
 - Weather layers not available in event activity [\#202](https://github.com/kalisio/aktnmap/issues/202)
 - Monitoring of distributed services on multiple instances [\#199](https://github.com/kalisio/aktnmap/issues/199)
 - Removing a device from user profile causes app to crash [\#192](https://github.com/kalisio/aktnmap/issues/192)
 - Uploading a photo in the dashboard from a mobile using the dedicated action raises an error [\#168](https://github.com/kalisio/aktnmap/issues/168)
-
-**Merged pull requests:**
-
-- build\(deps\): bump ini from 1.3.5 to 1.3.7 [\#209](https://github.com/kalisio/aktnmap/pull/209) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [prod-v1.0.0](https://github.com/kalisio/aktnmap/tree/prod-v1.0.0) (2020-11-12)
 
@@ -91,6 +169,7 @@
 
 **Implemented enhancements:**
 
+- Upgrade phonegap-plugin-push [\#196](https://github.com/kalisio/aktnmap/issues/196)
 -  Prohibit the modification of a tag once created [\#188](https://github.com/kalisio/aktnmap/issues/188)
 - Improve capabilities to include distributed services [\#176](https://github.com/kalisio/aktnmap/issues/176)
 - Remove authentication from OAuth providers in default configuration [\#166](https://github.com/kalisio/aktnmap/issues/166)
@@ -109,6 +188,8 @@
 - Add organisation options management [\#118](https://github.com/kalisio/aktnmap/issues/118)
 - Tag required features as "beta" [\#117](https://github.com/kalisio/aktnmap/issues/117)
 - Allow to zoom on an image when browsing the medias [\#114](https://github.com/kalisio/aktnmap/issues/114)
+- Move feathers-sync adapter to Redis [\#113](https://github.com/kalisio/aktnmap/issues/113)
+- Provide a report when inviting a list of users [\#112](https://github.com/kalisio/aktnmap/issues/112)
 - On mobile allow to enlarge the content of an event card  [\#106](https://github.com/kalisio/aktnmap/issues/106)
 - Migrate to the new kdk module [\#97](https://github.com/kalisio/aktnmap/issues/97)
 - Simulate MongoDB Stitch archiving function in dev [\#96](https://github.com/kalisio/aktnmap/issues/96)
@@ -125,7 +206,6 @@
 - Alert regularly closed then reopen on long activation period [\#201](https://github.com/kalisio/aktnmap/issues/201)
 - Location field not correctly filled in event created from an alert [\#200](https://github.com/kalisio/aktnmap/issues/200)
 - Alerts still checked once destroyed [\#197](https://github.com/kalisio/aktnmap/issues/197)
-- Upgrade phonegap-plugin-push [\#196](https://github.com/kalisio/aktnmap/issues/196)
 - Cannot register devices running iOS 13 [\#193](https://github.com/kalisio/aktnmap/issues/193)
 - Web app does not work anymore on Safari - iOS 10.3 [\#191](https://github.com/kalisio/aktnmap/issues/191)
 - Browse media button not available after adding a media [\#190](https://github.com/kalisio/aktnmap/issues/190)
@@ -161,7 +241,6 @@
 - Once authenticated returning on the base URL does not link to the home page [\#122](https://github.com/kalisio/aktnmap/issues/122)
 - Errors raised twice on the client when catched [\#116](https://github.com/kalisio/aktnmap/issues/116)
 - Invited users are not removed when the invitation link expires [\#115](https://github.com/kalisio/aktnmap/issues/115)
-- Move feathers-sync adapter to Redis [\#113](https://github.com/kalisio/aktnmap/issues/113)
 - Can't upload a media on iPad [\#79](https://github.com/kalisio/aktnmap/issues/79)
 - The name of the groups on the member card are not updated when modifying the group name [\#54](https://github.com/kalisio/aktnmap/issues/54)
 - Default interaction value not correctly selected in log form [\#102](https://github.com/kalisio/aktnmap/issues/102)
@@ -170,25 +249,13 @@
 
 - Disable ability to create events targeting specific map features [\#145](https://github.com/kalisio/aktnmap/issues/145)
 
-**Merged pull requests:**
-
-- build\(deps\): bump node-fetch from 2.6.0 to 2.6.1 [\#177](https://github.com/kalisio/aktnmap/pull/177) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump lodash from 4.17.15 to 4.17.20 in /docs [\#175](https://github.com/kalisio/aktnmap/pull/175) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump http-proxy from 1.18.0 to 1.18.1 in /docs [\#167](https://github.com/kalisio/aktnmap/pull/167) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps-dev\): bump mongodb from 3.1.4 to 3.1.13 [\#162](https://github.com/kalisio/aktnmap/pull/162) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump showdown from 1.9.0 to 1.9.1 [\#161](https://github.com/kalisio/aktnmap/pull/161) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump elliptic from 6.5.2 to 6.5.3 in /docs [\#157](https://github.com/kalisio/aktnmap/pull/157) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump lodash from 4.17.15 to 4.17.19 [\#149](https://github.com/kalisio/aktnmap/pull/149) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump websocket-extensions from 0.1.3 to 0.1.4 in /docs [\#138](https://github.com/kalisio/aktnmap/pull/138) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump acorn from 6.4.0 to 6.4.1 in /docs [\#137](https://github.com/kalisio/aktnmap/pull/137) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Add license scan report and status [\#91](https://github.com/kalisio/aktnmap/pull/91) ([fossabot](https://github.com/fossabot))
-
 ## [v0.7.3](https://github.com/kalisio/aktnmap/tree/v0.7.3) (2019-09-08)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/v0.7.2...v0.7.3)
 
 **Implemented enhancements:**
 
+- Optimize bundle size [\#82](https://github.com/kalisio/aktnmap/issues/82)
 - Catalog data integration in event activity [\#81](https://github.com/kalisio/aktnmap/issues/81)
 - Allow organisations to manage their own map data catalog [\#52](https://github.com/kalisio/aktnmap/issues/52)
 
@@ -196,7 +263,6 @@
 
 - Tags cannot be edited on members [\#85](https://github.com/kalisio/aktnmap/issues/85)
 - Cannot deploy as root [\#83](https://github.com/kalisio/aktnmap/issues/83)
-- Optimize bundle size [\#82](https://github.com/kalisio/aktnmap/issues/82)
 - On production mode, mobile applications are named AktnMap-prod [\#78](https://github.com/kalisio/aktnmap/issues/78)
 
 ## [v0.7.2](https://github.com/kalisio/aktnmap/tree/v0.7.2) (2019-05-15)
@@ -352,4 +418,4 @@
 
 
 
-\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
