@@ -54,7 +54,7 @@
     "EVENTS_NOTIFICATION_FIELD_UPDATE_LABEL": "Notifier les participants de la mise à jour",
     "EVENTS_LOG_TITLE": "Entrez votre choix",
     "EVENTS_LOG_COMMENT_FIELD_LABEL": "Saisissez votre commentaire pour cette étape",
-    "PLANS_CREATE_TITLE": "Créér un nouveau plan ?",
+    "PLANS_CREATE_TITLE": "Créer un nouveau plan ?",
     "PLANS_UPDATE_TITLE": "Mettre à jour le plan ?",
     "PLANS_NAME_FIELD_LABEL": "Saisissez le nom de ce plan",
     "PLANS_DESCRIPTION_FIELD_LABEL": "Saisissez une description de ce plan",
@@ -181,7 +181,7 @@
       "EVENT_MAP_LABEL": "Accédez à la carte lié à votre événement via cette action.",
       "REMOVE_EVENT_LABEL": "Supprimez votre événement via cette action.",
       "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL), ceci provoquera l'envoi d'une <b>notification</b> à tous les participants.",
-      "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement aux plans votre organisation."
+      "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement aux plans de votre organisation."
     },
     "create-event": {
       "EVENT_NAME_LABEL": "Choisissez le nom de votre événement.",
@@ -843,7 +843,7 @@
     "PLANS_LABEL": "{{count}} plan(s)",
     "VIEW_CATALOG": "Voir la carte",
     "VIEW_ARCHIVED_EVENTS": "Voir la main courante",
-    "VIEW_ARCHIVED_PLANS": "Voir l'arvhive des plans",
+    "VIEW_ARCHIVED_PLANS": "Voir l'archive des plans",
     "MANAGE_ORGANISATION": "Gérer l'organisation"
   }
 }
