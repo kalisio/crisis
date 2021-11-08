@@ -246,6 +246,8 @@ export default {
       }
     },
     async refreshObjectivesLayer () {
+      // If no active plan no objective to visualize
+      if (!this.planId) return
       // Add a "virtual" layer for objectives if required
       const layer = this.getLayerByName(this.$t('CatalogActivity.OBJECTIVES_LAYER'))
       if (!layer) {
