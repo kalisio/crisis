@@ -55,7 +55,7 @@ export default {
   },
   data () {
     return {
-      baseQuery: { $sort: { createdAt: -1 } },
+      baseQuery: { $sort: { updateddAt: -1 } },
       filterQuery: {},
       height: undefined
     }

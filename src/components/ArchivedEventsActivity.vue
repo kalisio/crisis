@@ -154,7 +154,7 @@ export default {
       }, this.activityOptions.items)
     },
     baseQuery () {
-      let query = { $sort: { createdAt: -1 } }
+      let query = { $sort: { updatedAt: -1 } }
       // When displaying events of all plans we'd like to have the plan object directly to ease processing
       if (!this.planId) Object.assign(query, { planAsObject: true })
       Object.assign(query, this.getPlanQuery())
