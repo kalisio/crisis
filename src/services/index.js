@@ -44,6 +44,9 @@ export default function () {
         matcher: api.matcher
       })
     })
+    // Restore previous settings if any
+    const settingsService = api.getService('settings')
+    if (settingsService) settingsService.restoreSettings()
   } catch (error) {
     logger.error(error.message)
   }
