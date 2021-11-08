@@ -12,7 +12,8 @@
           :append-items="true" 
           :base-query="baseQuery"
           :filter-query="filterQuery" 
-          :renderer="renderer" 
+          :renderer="renderer"
+          date-field="updatedAt"
           :contextId="contextId" 
           :height="height">
           <template slot="empty-history">
