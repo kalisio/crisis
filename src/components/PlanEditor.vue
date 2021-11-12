@@ -47,7 +47,7 @@ export default {
         if (!this.template) this.template = await this.$api.getService('plan-templates').get(this.templateId)
         this.object = Object.assign({}, this.template)
         // Keep track of template based on its name for statistics
-        // We don't keep ref/link for simplicity and making archived events will be self-consistent
+        // We don't keep ref/link for simplicity and make archived plans self-consistent
         // No need to keep track of templates that have been removed, etc.
         this.object.template = this.template.name
         // Remove id so that event has its own
