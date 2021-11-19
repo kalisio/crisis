@@ -1,4 +1,4 @@
-// This function is responsible for archiving events and should be activated with triggers on required collections
+// This function is responsible for archiving plans and should be activated with triggers on required collections
 exports = async function(dbEvent) {
   const id = dbEvent.documentKey._id
   const dbName = dbEvent.ns.db
