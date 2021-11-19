@@ -270,6 +270,8 @@ export default {
       this.templates = (this.byTemplate ?
         _.uniq(this.items.map(item => item.template)) :
         [ this.$t('ArchivedEventsActivity.EVENTS_LAYER_NAME') ])
+      // Filter events without a location
+      const events = _.filter(this.items, item => _.get(item, 'geometry'))
       for (let i = 0; i < this.templates.length; i++) {
         const template = this.templates[i]
         if (this.heatmap) {
@@ -286,7 +288,7 @@ export default {
           })
           // Then update it
           await this.updateHeatmap(template, { type: 'FeatureCollection',
-            features: this.byTemplate ? _.filter(this.items, { template }) : this.items })
+            features: this.byTemplate ? _.filter(events, { template }) : events })
         } else {
           // Create an empty layer used as a container for events
           await this.addLayer({
@@ -303,7 +305,7 @@ export default {
             }
           })// Then update it
           await this.updateLayer(template, { type: 'FeatureCollection',
-            features: this.byTemplate ? _.filter(this.items, { template }) : this.items })
+            features: this.byTemplate ? _.filter(events, { template }) : events })
         }
       }
       // Zoom on first layer
