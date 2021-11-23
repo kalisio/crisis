@@ -44,7 +44,7 @@ module.exports = {
     all: [],
     find: [populatePreviousLog, populateParticipant],
     get: [],
-    create: [updatePreviousLog, sendStateNotifications],
+    create: [updatePreviousLog, sendStateNotifications, populatePreviousLog, populateParticipant],
     update: [],
     patch: [],
     remove: []
