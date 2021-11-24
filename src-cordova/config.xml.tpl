@@ -12,8 +12,8 @@
   <allow-intent href="sms:*"/>
   <allow-intent href="mailto:*"/>
   <allow-intent href="geo:*"/>
-  <preference name="android-minSdkVersion" value="22"/>
-  <preference name="android-targetSdkVersion" value="29"/>
+  <preference name="android-minSdkVersion" value="23"/>
+  <preference name="android-targetSdkVersion" value="30"/>
   <preference name="permissions" value="none"/>
   <preference name="orientation" value="default"/>
   <preference name="target-device" value="universal"/>
