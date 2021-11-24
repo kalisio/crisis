@@ -630,10 +630,10 @@
     debug "^4.1.0"
     uuid "^8.2.0"
 
-"@kalisio/kdk@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@kalisio/kdk/-/kdk-1.4.0.tgz#203441950ea3f42aa5c33d398eafa31395209d73"
-  integrity sha512-6cySVncrEAK3GcxmCa1hEQ8DRRJeQ4i3cbwdkN+tjl3wdT3WSWhps4KVnIy5N2qSKxcwg94RVtPNWrOjuqNtxQ==
+"@kalisio/kdk@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@kalisio/kdk/-/kdk-1.4.1.tgz#224200a1cab4679a39298f0141790211ff0957ca"
+  integrity sha512-rXleta4o57K3z8QqyWXBzdrVUVar885RrON6pWf9gz3aFSwDA+oIakv+EXhVyxmEsvP+Vs4wFXP4LyL8v1OjpA==
   dependencies:
     "@feathersjs/authentication" "https://github.com/kalisio/authentication.git"
     "@feathersjs/authentication-jwt" "^2.0.1"
@@ -6447,9 +6447,9 @@ passport-oauth2@1.x.x, passport-oauth2@^1.4.0:
     uid2 "0.0.x"
     utils-merge "1.x.x"
 
-"passport-openidconnect@git+https://github.com/kalisio/passport-openidconnect.git":
+"passport-openidconnect@https://github.com/kalisio/passport-openidconnect":
   version "0.0.2"
-  resolved "git+https://github.com/kalisio/passport-openidconnect.git#82d9f0653334a0538b2c3dc2a8119eefc2eca237"
+  resolved "https://github.com/kalisio/passport-openidconnect#82d9f0653334a0538b2c3dc2a8119eefc2eca237"
   dependencies:
     oauth "0.9.x"
     passport-strategy "1.x.x"
