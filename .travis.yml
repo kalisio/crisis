@@ -54,13 +54,13 @@ jobs:
       - tools
       - tools  # Include again to work around travis not using the latest, see: https://github.com/travis-ci/travis-ci/issues/6193
       - platform-tools
-      - build-tools-29.0.0
-      - android-29
+      - build-tools-30.0.0
+      - android-30
     licenses:
       - '.+'
     before_install:
     - nvm install 12.16
-    - yes | sdkmanager "platforms;android-29"
+    - yes | sdkmanager "platforms;android-30"
     - npm install -g yarn
     - curl -k -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
     - unzip rclone-current-linux-amd64.zip
