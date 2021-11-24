@@ -24,6 +24,7 @@
 import _ from 'lodash'
 import L from 'leaflet'
 import chroma from 'chroma-js'
+import centroid from '@turf/centroid'
 import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
@@ -106,13 +107,15 @@ export default {
       const icon = kCoreUtils.getIconName(this.event) || 'fas fa-circle'
       // Located event ?
       if (this.hasLocationGeometry()) {
+        const feature = { type: 'Feature', geometry: this.event.location }
         // Add event layer
-        const layer = L.geoJson({ type: 'Feature', geometry: this.event.location }, {
+        const layer = L.geoJson(feature, {
           style: () => ({ 'color': color, 'fillColor': chroma(color).alpha(0.5).hex() }) // Transparency
         })
         this.map.addLayer(layer)
         // Recenter map
-        this.center(this.event.location.longitude, this.event.location.latitude, 15)
+        const location = centroid(feature)
+        this.center(_.get(location, 'geometry.coordinates[0]'), _.get(location, 'geometry.coordinates[1]'), 15)
       } else if (this.hasLocation()) {
         // Add event marker
         const marker = L.marker([this.event.location.latitude, this.event.location.longitude], {
