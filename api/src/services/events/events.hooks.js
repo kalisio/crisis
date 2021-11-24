@@ -2,8 +2,10 @@ import _ from 'lodash'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api'
 import { hooks as mapHooks } from '@kalisio/kdk/map.api'
 import { setNow, discard, iff } from 'feathers-hooks-common'
-import { addCreatorAsCoordinator, processNotification, sendEventNotifications,
-         marshallPlanQuery, populatePlan, checkEventsQuotas, archive } from '../../hooks'
+import {
+  addCreatorAsCoordinator, processNotification, sendEventNotifications,
+  marshallPlanQuery, populatePlan, checkEventsQuotas, archive
+} from '../../hooks'
 
 module.exports = {
   before: {

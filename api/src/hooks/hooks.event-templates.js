@@ -19,20 +19,20 @@ export function updateEventTemplateResource (resourceScope) {
     })
     // Update each template
     await Promise.all(templates.map(template => {
-      let resources = _.get(template, resourceScope, [])
+      const resources = _.get(template, resourceScope, [])
       let updateTemplate = false
       // Check for removal or update
       if (hook.method === 'remove') {
         const removedResources = _.remove(resources, resource => resource._id && (resource._id.toString() === hook.result._id.toString()))
         updateTemplate = (removedResources.length > 0)
       } else {
-        let resource = _.find(resources, { _id: hook.result._id })
+        const resource = _.find(resources, { _id: hook.result._id })
         if (resource) {
           Object.assign(resource, hook.result)
           updateTemplate = true
         }
       }
-      
+
       // In case of matching resource update template object
       if (updateTemplate) {
         debug(`Updating resources on scope ${resourceScope} for event template ${template._id} of organisation ` + hook.result._id)

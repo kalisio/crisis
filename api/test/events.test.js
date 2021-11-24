@@ -101,7 +101,7 @@ describe('events', () => {
     orgManagerObject = user
     const users = await userService.find({ query: { 'profile.name': 'org-manager' }, checkAuthorisation: true, user: orgManagerObject })
     expect(users.data.length > 0).beTrue()
-    const device = await devicesService.update(managerDevice.registrationId, managerDevice, { user: orgManagerObject })
+    await devicesService.update(managerDevice.registrationId, managerDevice, { user: orgManagerObject })
     user = await userService.get(orgManagerObject._id)
     // Update user with registered device
     orgManagerObject = user
@@ -153,7 +153,7 @@ describe('events', () => {
     // Update user with authorisations
     orgUserObject = users.data[0]
     expect(orgUserObject.organisations[0].permissions).to.deep.equal('member')
-    const device = await devicesService.update(memberDevice.registrationId, memberDevice, { user: orgUserObject })
+    await devicesService.update(memberDevice.registrationId, memberDevice, { user: orgUserObject })
     user = await userService.get(orgUserObject._id)
     // Update user with registered device
     orgUserObject = user
@@ -162,7 +162,7 @@ describe('events', () => {
     .timeout(15000)
 
   it('org manager can create event template', async () => {
-    const template = await eventTemplateService.create({ title: 'template' }, { user: orgManagerObject, checkAuthorisation: true })
+    await eventTemplateService.create({ title: 'template' }, { user: orgManagerObject, checkAuthorisation: true })
     const templates = await eventTemplateService.find({ query: { title: 'template' }, user: orgManagerObject, checkAuthorisation: true })
     expect(templates.data.length > 0).beTrue()
   })

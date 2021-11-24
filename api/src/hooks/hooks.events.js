@@ -80,8 +80,8 @@ export const populatePlan = populate({
   schema: hook => {
     const service = hook.service
     // Target archived or live service ?
-    const plansService = (!service.name.startsWith('archived-') ?
-      hook.app.getService('plans', service.context) : hook.app.getService('archived-plans', service.context))
+    const plansService = (!service.name.startsWith('archived-')
+      ? hook.app.getService('plans', service.context) : hook.app.getService('archived-plans', service.context))
     return {
       include: [
         {
