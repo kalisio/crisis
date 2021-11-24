@@ -54,8 +54,7 @@
   "standard": {
     "parser": "babel-eslint",
     "plugins": [
-      "testcafe",
-      "html"
+      "vue"
     ],
     "sourceType": "module",
     "globals": [
@@ -150,6 +149,7 @@
   },
   "devDependencies": {
     "@quasar/app": "1.1.4",
+    "babel-eslint": "^10.0.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "chai": "^4.3.4",
@@ -166,7 +166,6 @@
     "eslint": "^4.4.1",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.9.0",
-    "eslint-plugin-testcafe": "^0.2.1",
     "eslint-plugin-vue": "^5.2.3",
     "esm": "^3.2.25",
     "eventsource-polyfill": "^0.9.6",

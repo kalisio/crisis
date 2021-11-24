@@ -468,7 +468,7 @@ describe('aktnmap', () => {
     expect(userObject.organisations.length === 1).beTrue()
     expect(memberObject.organisations[0]._id.toString()).to.equal(orgObject._id.toString())
     expect(memberObject.organisations[0].permissions).to.equal('member')
-    const device = await devicesService.update(memberDevice.registrationId, memberDevice, { user: memberObject, checkAuthorisation: true })
+    await devicesService.update(memberDevice.registrationId, memberDevice, { user: memberObject, checkAuthorisation: true })
     user = await userService.get(memberObject._id, { user: memberObject, checkAuthorisation: true })
     // Update user with its device
     memberObject = user
