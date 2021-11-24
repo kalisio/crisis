@@ -1,5 +1,24 @@
 # Changelog
 
+## [prod-v1.2.1](https://github.com/kalisio/aktnmap/tree/prod-v1.2.1) (2021-11-24)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.2.0...prod-v1.2.1)
+
+**Implemented enhancements:**
+
+- Upgrade Android target API level to 30 \(Android 11\) [\#315](https://github.com/kalisio/aktnmap/issues/315)
+- It should be possible to use an existing feature as event location [\#310](https://github.com/kalisio/aktnmap/issues/310)
+
+**Fixed bugs:**
+
+- The heatmap in the archived events activity does not work [\#314](https://github.com/kalisio/aktnmap/issues/314)
+- Incomplete status in participant list [\#309](https://github.com/kalisio/aktnmap/issues/309)
+- Add Mongo Atlas function to archive plans [\#308](https://github.com/kalisio/aktnmap/issues/308)
+- Saved user settings are erased by default values [\#307](https://github.com/kalisio/aktnmap/issues/307)
+- Objectives layer always displayed in the catalog activity [\#306](https://github.com/kalisio/aktnmap/issues/306)
+- Scrolling on the archived events activity loads too much events in the wrong sort order [\#305](https://github.com/kalisio/aktnmap/issues/305)
+- Archived event activity does not show participants/coordinators [\#304](https://github.com/kalisio/aktnmap/issues/304)
+
 ## [prod-v1.2.0](https://github.com/kalisio/aktnmap/tree/prod-v1.2.0) (2021-10-23)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.4...prod-v1.2.0)
@@ -115,6 +134,7 @@
 - Highlight when a search filter is enabled [\#159](https://github.com/kalisio/aktnmap/issues/159)
 - Allow to assign an avatar to an organisation [\#140](https://github.com/kalisio/aktnmap/issues/140)
 - Allow to filter the guests who have not validated their invitation [\#123](https://github.com/kalisio/aktnmap/issues/123)
+- Provide a report when inviting a list of users [\#112](https://github.com/kalisio/aktnmap/issues/112)
 - Allow to create an event targeting a set of map features [\#214](https://github.com/kalisio/aktnmap/issues/214)
 - Allow to create events targeting a feature or location on map [\#75](https://github.com/kalisio/aktnmap/issues/75)
 
@@ -140,7 +160,6 @@
 - build\(deps\): bump http-proxy from 1.18.0 to 1.18.1 in /docs [\#167](https://github.com/kalisio/aktnmap/pull/167) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps-dev\): bump mongodb from 3.1.4 to 3.1.13 [\#162](https://github.com/kalisio/aktnmap/pull/162) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps\): bump showdown from 1.9.0 to 1.9.1 [\#161](https://github.com/kalisio/aktnmap/pull/161) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump elliptic from 6.5.2 to 6.5.3 in /docs [\#157](https://github.com/kalisio/aktnmap/pull/157) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps\): bump lodash from 4.17.15 to 4.17.19 [\#149](https://github.com/kalisio/aktnmap/pull/149) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps\): bump websocket-extensions from 0.1.3 to 0.1.4 in /docs [\#138](https://github.com/kalisio/aktnmap/pull/138) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps\): bump acorn from 6.4.0 to 6.4.1 in /docs [\#137](https://github.com/kalisio/aktnmap/pull/137) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -189,7 +208,6 @@
 - Tag required features as "beta" [\#117](https://github.com/kalisio/aktnmap/issues/117)
 - Allow to zoom on an image when browsing the medias [\#114](https://github.com/kalisio/aktnmap/issues/114)
 - Move feathers-sync adapter to Redis [\#113](https://github.com/kalisio/aktnmap/issues/113)
-- Provide a report when inviting a list of users [\#112](https://github.com/kalisio/aktnmap/issues/112)
 - On mobile allow to enlarge the content of an event card  [\#106](https://github.com/kalisio/aktnmap/issues/106)
 - Migrate to the new kdk module [\#97](https://github.com/kalisio/aktnmap/issues/97)
 - Simulate MongoDB Stitch archiving function in dev [\#96](https://github.com/kalisio/aktnmap/issues/96)
@@ -414,6 +432,7 @@
 
 **Merged pull requests:**
 
+- build\(deps\): bump elliptic from 6.5.2 to 6.5.3 in /docs [\#157](https://github.com/kalisio/aktnmap/pull/157) ([dependabot[bot]](https://github.com/apps/dependabot))
 - \[Snyk\] Fix for 1 vulnerable dependencies [\#13](https://github.com/kalisio/aktnmap/pull/13) ([snyk-bot](https://github.com/snyk-bot))
 
 
