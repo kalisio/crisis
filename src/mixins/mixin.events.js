@@ -23,6 +23,9 @@ const eventsMixin = {
     hasLocationGeometry () {
       return (_.has(this.event, 'location.type') && (_.get(this.event, 'location.type') !== 'Point'))
     },
+    hasAnyLocation () {
+      return this.hasLocation() || this.hasLocationGeometry()
+    },
     hasMedias () {
       return _.has(this.event, 'attachments') && (this.event.attachments.length > 0)
     },

@@ -588,12 +588,12 @@ module.exports = {
         },
         { 
           id: 'event-map', tooltip: 'EventCard.MAP_LABEL', icon: 'las la-map-marked-alt',
-          visible: ['hasLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
+          visible: ['hasAnyLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
           handler:  'viewMap', scope: 'footer'
         },
         { 
           id: 'navigate', tooltip: 'EventCard.NAVIGATE_LABEL', icon: 'las la-location-arrow', 
-          visible: ['hasLocation', 'canNavigate', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
+          visible: ['hasAnyLocation', 'canNavigate', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
           handler: 'launchNavigation', scope: 'footer'
         }
       ]
