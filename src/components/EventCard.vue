@@ -174,6 +174,7 @@
 <script>
 import _ from 'lodash'
 import moment from 'moment'
+import centroid from '@turf/centroid'
 import { Dialog } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
@@ -453,8 +454,14 @@ export default {
       })
     },
     launchNavigation () {
-      const longitude = this.item.location.longitude
-      const latitude = this.item.location.latitude
+      let longitude = _.get(this.item, 'location.longitude')
+      let latitude = _.get(this.item, 'location.latitude')
+      // Use centroid for lines/polygons
+      if (this.hasLocationGeometry()) {
+        const location = centroid({ type: 'Feature', geometry: _.get(this.item, 'location') })
+        longitude = _.get(location, 'geometry.coordinates[0]')
+        latitude = _.get(location, 'geometry.coordinates[1]')
+      }
       this.navigate(longitude, latitude)
     },
     removeEvent () {
