@@ -137,6 +137,12 @@ export default {
       } else {
         components.push({ component: 'QBadge', label: this.$t('ArchivedEventCard.OPENED_LABEL'), color: 'green-7' })
       }
+      if (this.participantsCount > 0) {
+        components.push({
+          id: this.item._id + '-participants', icon: 'las la-user', label: this.participantsCount.toString(),
+          tooltip: this.$t('ArchivedEventCard.PARTICIPANT_COUNT_LABEL'), size: '0.75rem'
+        })
+      }
       components.push({ component: 'QSpace '})
       components.concat(_.filter(this.itemActions, { scope: 'header' }))
       return components
@@ -191,7 +197,8 @@ export default {
   data () {
     return {
       zoomDescription: false,
-      isExpanded: false
+      isExpanded: false,
+      participantsCount: 0
     }
   },
   methods: {
@@ -223,10 +230,19 @@ export default {
         query: { plan: _.get(this.item, 'plan._id', _.get(this.item, 'plan')) }
       })
     },
-    refresh () {
+    async refresh () {
       this.refreshUser()
       if (this.userId) {
         if (this.item.alert) this.loadAlertLayer(this.item.alert)
+        const eventLogsService = this.$api.getService('archived-event-logs', this.contextId)
+        const result = await eventLogsService.find({
+          query: {
+            $aggregate: true,
+            event: this.item._id,
+            lastInEvent: true
+          }
+        })
+        if (result.length > 0) this.participantsCount = result[0].count
       }
     }
   },
