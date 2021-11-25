@@ -177,10 +177,6 @@ export default {
     objective () {
       return this.item.objective
     },
-    locationName () {
-      // Event generated from alert ?
-      return (this.item.alert ? this.getAlertLocationName(this.item.alert) : _.get(this.item, 'location.name', ''))
-    },
     hasParticipants () {
       return !_.isEmpty(this.item.participants)
     },
@@ -202,10 +198,6 @@ export default {
     }
   },
   methods: {
-    getDescription () {
-      // Event generated from alert ?
-      return this.item.alert ? this.getAlertDetailsAsHtml(this.item.alert) : this.item.description
-    },    
     getLocationMap () {
       return { 
         component: 'KLocationMap', 
@@ -233,7 +225,11 @@ export default {
     async refresh () {
       this.refreshUser()
       if (this.userId) {
-        if (this.item.alert) this.loadAlertLayer(this.item.alert)
+        if (this.item.alert) {
+          this.loadAlertLayer(this.item.alert)
+          // When created from alert automatically fill the description in if not overriden by user content
+          if (!this.item.description) this.item.description = this.getAlertDetailsAsHtml(this.item.alert)
+        }
         const eventLogsService = this.$api.getService('archived-event-logs', this.contextId)
         const result = await eventLogsService.find({
           query: {

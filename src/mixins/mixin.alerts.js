@@ -14,7 +14,8 @@ const alertsMixin = {
       const hasError = _.get(alert, 'status.error')
       const checkedAt = new Date(_.get(alert, 'status.checkedAt'))
       let triggeredAt = new Date(_.get(alert, 'status.triggeredAt'))
-      let html = ''
+      let html = this.getAlertLocationName(alert)
+      if (html) html += '</br>'
       _.forOwn(alert.conditions, (value, key) => {
         // Get corresponding variable
         const variable = _.find(_.get(alert, 'layer.variables'), { name: key })
