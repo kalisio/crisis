@@ -345,8 +345,19 @@ export default {
 
       const tooltip = L.tooltip({ permanent: false }, layer)
       const name = _.get(event, 'name')
-      const date = new Date(_.get(event, 'createdAt'))
-      return tooltip.setContent('<b>' + name + '</b> - ' + this.formatDate(date))
+      const createdAt = (_.has(event, 'createdAt') ? new Date(_.get(event, 'createdAt')) : null)
+      const updatedAt = (_.has(event, 'updatedAt') ? new Date(_.get(event, 'updatedAt')) : null)
+      const deletedAt = (_.has(event, 'deletedAt') ? new Date(_.get(event, 'deletedAt')) : null)
+      let html = '<b>' + name + '</b></br>'
+      if (createdAt) {
+        html += this.$t('CatalogActivity.CREATED_AT_LABEL') + ' ' + createdAt.toLocaleString() + '</br>'
+      }
+      if (deletedAt) {
+        html += this.$t('CatalogActivity.CLOSED_AT_LABEL') + ' ' + deletedAt.toLocaleString()
+      } else {
+        html += this.$t('CatalogActivity.UPDATED_AT_LABEL') + ' ' + updatedAt.toLocaleString()
+      }
+      return tooltip.setContent(html)
     },
     getObjectivePopup (objective, layer, options) {
       if (options.name !== this.$t('CatalogActivity.OBJECTIVES_LAYER')) return null

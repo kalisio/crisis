@@ -40,6 +40,23 @@
         :context="$props">
         <k-chips-pane class="q-pl-sm" :chips="item.coordinators" :valuePath="['profile.name', 'value', 'name']" />
       </k-card-section>
+      <!-- Timestamps section -->
+      <k-card-section 
+        v-if="isExpanded" 
+        :dense="dense">
+        <div v-if="createdAt || updatedAt || deletedAt">
+          <cite v-if="createdAt">
+            <small>{{ $t('ArchivedPlanCard.CREATED_AT_LABEL') }} {{ createdAt.toLocaleString() }}</small>
+          </cite>
+          <br />
+          <cite v-if="deletedAt">
+            <small>{{ $t('ArchivedPlanCard.CLOSED_AT_LABEL') }} {{ deletedAt.toLocaleString() }}</small>
+          </cite>
+          <cite v-else-if="updatedAt">
+            <small>{{ $t('ArchivedPlanCard.UPDATED_AT_LABEL') }} {{ updatedAt.toLocaleString() }}</small>
+          </cite>
+        </div>
+      </k-card-section>
     </template>
   </k-card>
 </template>
@@ -70,6 +87,15 @@ export default {
       components.push({ component: 'QSpace '})
       components.concat(_.filter(this.itemActions, { scope: 'header' }))
       return components
+    },
+    createdAt () {
+      return this.item.createdAt ? new Date(this.item.createdAt) : null
+    },
+    updatedAt () {
+      return this.item.updatedAt ? new Date(this.item.updatedAt) : null
+    },
+    deletedAt () {
+      return this.item.deletedAt ? new Date(this.item.deletedAt) : null
     }
   },
   data () {
