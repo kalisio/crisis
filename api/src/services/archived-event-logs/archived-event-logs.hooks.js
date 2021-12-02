@@ -33,10 +33,11 @@ module.exports = {
       iff(hook => !_.get(hook, 'params.query.$aggregate'), populatePreviousLog)
     ],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
+    // Avoid emitting events as in production we use Mongo Realm to fill the collection, which does not emit events unlike services
+    create: [coreHooks.skipEvents],
+    update: [coreHooks.skipEvents],
+    patch: [coreHooks.skipEvents],
+    remove: [coreHooks.skipEvents]
   },
 
   error: {

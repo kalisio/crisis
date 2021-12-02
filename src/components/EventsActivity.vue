@@ -190,6 +190,13 @@ export default {
     },
     async onUserChanged () {
       await this.refreshFab()
+    },
+    onEventRemoved () {
+      // Retrieve archived events collection
+      const board = this.$refs.eventsBoard
+      const column = board.getColumn('done')
+      // Force a refresh
+      column.refreshCollection()
     }
   },
   beforeCreate () {
@@ -201,9 +208,20 @@ export default {
   },
   created () {
     this.$events.$on('user-changed', this.refreshFab)
+    // Keep track of changes once loaded
+    // Indeed, archived events do not emit real-time service events
+    // so that we need to manually update the archived events collection
+    if (this.planId) {
+      const eventsService = this.$api.getService('events', this.contextId)
+      eventsService.on('removed', this.onEventRemoved)
+    }
   },
   beforeDestroy () {
     this.$events.$off('user-changed', this.refreshFab)
+    if (this.planId) {
+      const eventsService = this.$api.getService('events', this.contextId)
+      eventsService.off('removed', this.onEventRemoved)
+    }
   }
 }
 </script>
