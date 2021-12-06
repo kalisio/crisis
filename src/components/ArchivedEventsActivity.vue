@@ -88,7 +88,7 @@ import Chart from 'chart.js'
 import 'chartjs-plugin-labels'
 import Papa from 'papaparse'
 import { QSlider } from 'quasar'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
@@ -261,6 +261,11 @@ export default {
           'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
       }, this.baseQuery)
     },
+    getCollectionFilterQuery () {
+      const query = _.clone(this.filterQuery)
+      Object.assign(query, _.clone(Time.getRangeQuery()))
+      return query
+    },
     getCollectionPaginationQuery () {
       // No pagination on map items
       return {}
@@ -386,6 +391,13 @@ export default {
     onHeatmapRadius (radius) {
       this.refreshEventsLayers()
     },
+    onTimeRangeChanged () {
+      // Refresh layer data
+      if (this.showMap) this.refreshCollection()
+      // Refresh chart data
+      else if (this.showChart) this.refreshChart()
+      // History automatically takes care of time range
+    },
     onPageContentResized (size) {
       this.height = size.height - 48
     },
@@ -403,15 +415,19 @@ export default {
       let data
       if (this.render.value === 'participants') {
         const response = await this.loadLogsService()
-          .find({ query: Object.assign({ $aggregate: 'template', lastInEvent: true }, this.baseQuery) })
+          .find({ query: Object.assign({ $aggregate: 'template', lastInEvent: true },
+            this.baseQuery, { createdAt: { $gte: Time.getRange().start.format(), $lte: Time.getRange().end.format() } }) })
         data = response.map(item => ({ value: item._id, count: item.count }))
       } else {
         data = await Promise.all(this.values.map(async value => {
           const response = await this.getService()
-            .find({ query: Object.assign({ $limit: 0, template: value }, this.baseQuery) })
+            .find({ query: Object.assign({ $limit: 0, template: value }, this.baseQuery, this.filterQuery, Time.getRangeQuery()) })
           return { value, count: response.total }
         }))
       }
+      const query = _.clone(this.filterQuery)
+      Object.assign(query, _.clone(Time.getRangeQuery()))
+
       // No need to display zero values
       data = data.filter(item => item.count > 0)
       // Sort data so that we don't have charts mixing large and small numbers when paginating, go large first
@@ -579,10 +595,12 @@ export default {
   },
   mounted () {
     this.$on('collection-refreshed', this.onCollectionRefreshed)
+    this.$events.$on('time-range-changed', this.onTimeRangeChanged)
   },
   beforeDestroy () {
     if (this.chart) this.chart.destroy()
     this.$off('collection-refreshed', this.onCollectionRefreshed)
+    this.$events.$off('time-range-changed', this.onTimeRangeChanged)
   }
 }
 </script>
