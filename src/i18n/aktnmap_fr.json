@@ -740,8 +740,7 @@
     "REMOVE": "Clôturé"
   },
   "EventEditor": {
-    "CREATE_AND_NOTIFY_BUTTON": "Créer & notifier",
-    "UPDATE_AND_NOTIFY_BUTTON": "Mettre à jour & notifier"
+    "NOTIFY": "Notifier les participants"
   },
   "EventLogEditor": {
     "CLOSE_ACTION": "$t(CLOSE_LABEL)",

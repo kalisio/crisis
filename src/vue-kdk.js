@@ -38,7 +38,7 @@ export default {
         })
       }
     }
-    // FIXME: This is used for testing purpose, don't know how to access this from testcafe otherwise
+    // FIXME: This is used for testing purpose, don't know how to access this from puppeteer otherwise
     global.$layout = Vue.prototype.$layout
     global.$store = Vue.prototype.$store
     global.$api = Vue.prototype.$api

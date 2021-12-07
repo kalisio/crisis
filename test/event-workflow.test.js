@@ -230,7 +230,7 @@ describe(`suite:${suite}`, () => {
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
     await events.goToEventMap(page, org, workflowEvent)
     // No more coordination to be performed
-    await core.clickRightOpener(page)
+    /*await core.clickRightOpener(page)
     await map.clickLayerCategory(page, 'participants')
     /* TODO
     const member = _.find(org.members, { name: 'Manager' })
