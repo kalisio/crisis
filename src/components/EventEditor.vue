@@ -13,6 +13,9 @@
         :objectId="objectId" 
         :schema="schema" 
         @field-changed="onFieldChanged" />
+      <div class="row full-width justify-end">
+        <q-checkbox :label="$t('EventEditor.NOTIFY')" v-model="notify" />
+      </div>
     </div>
   </k-modal>
 </template>
@@ -23,11 +26,15 @@ import moment from 'moment'
 import centroid from '@turf/centroid'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
+import { QCheckbox } from 'quasar'
 
 const editorMixin = kCoreMixins.baseEditor(['eventForm'])
 
 export default {
   name: 'event-editor',
+  components: {
+    QCheckbox
+  },
   mixins: [
     kCoreMixins.baseModal,
     kCoreMixins.service,
@@ -66,19 +73,24 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      notify: true
+    }
+  },
   methods: {
     getButtons () {
       if (this.getMode() === 'create') {
+        this.notify = true
         return [
           { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },        
-          { id: 'apply-button', label: this.applyButton, renderer: 'form-button', outline: true, handler: () => this.onApplied(false)  },
-          { id: 'apply-and-notify-button', label: 'EventEditor.CREATE_AND_NOTIFY_BUTTON', renderer: 'form-button', handler: () => this.onApplied(true) },
+          { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply()  }
         ]
       }
+      this.notify = false
       return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },        
-        { id: 'apply-and-notify-button', label: 'EventEditor.UPDATE_AND_NOTIFY_BUTTON', outline: true, renderer: 'form-button', handler: () => this.onApplied(true) },
-        { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.onApplied(false)  },
+        { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply()  },
       ]
     },
     async loadObject () {
@@ -200,10 +212,6 @@ export default {
           delete this.object.workflow
         }
       }
-    },
-    onApplied (notify) {
-      this.notify = notify
-      this.apply()
     }
   },
   beforeCreate () {
