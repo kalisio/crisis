@@ -37,7 +37,10 @@ jobs:
     node_js:
     - '12.16'
     install: true
-    script: cd docs && yarn install && yarn build 
+    script:
+    - cd docs && yarn install && yarn build
+    - cd .vuepress/dist
+    - echo 'aktnmap.com' > CNAME
     deploy:
       provider: pages
       local-dir: docs/.vuepress/dist
