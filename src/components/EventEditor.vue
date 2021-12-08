@@ -75,19 +75,17 @@ export default {
   },
   data () {
     return {
-      notify: true
+      notify: undefined
     }
   },
   methods: {
     getButtons () {
       if (this.getMode() === 'create') {
-        this.notify = true
         return [
           { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },        
           { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply()  }
         ]
       }
-      this.notify = false
       return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },        
         { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply()  },
@@ -225,6 +223,9 @@ export default {
     if (!this.hasPlan()) this.refresh()
     else this.loadPlan()
     this.$on('applied', this.closeModal)
+    // Setup notify option
+    if (this.getMode() === 'create') this.notify = true
+    else this.notify = false
   },
   beforeDestroy () {
     this.$off('applied', this.closeModal)
