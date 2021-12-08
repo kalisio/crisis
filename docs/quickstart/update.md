@@ -18,9 +18,13 @@ When we update our online services your mobile application might display a messa
 
 ### Android
 
-When a new version is available follow this procedure to update:
+When a new version is available follow one of these procedures to update depending on your Android version:
 
 ![android-update](../assets/Android-Update-EN.png)
+
+Or:
+
+![android-update](../assets/Android-Update-Previous-EN.png)
 
 ### iOS
 

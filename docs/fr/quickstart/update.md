@@ -18,9 +18,13 @@ Lorque nous mettons à jour nos services votre application mobile peut afficher 
 
 ### Android
 
-Lorsqu'une nouvelle version est disponible vous pouvez la mettre à jour en suivant cette procédure:
+Lorsqu'une nouvelle version est disponible vous pouvez la mettre à jour en suivant l'une de ces procédures suivant votre version d'Android:
 
 ![android-update](../../assets/Android-Update-FR.png)
+
+Ou:
+
+![android-update](../../assets/Android-Update-Previous-FR.png)
 
 ### iOS
 
