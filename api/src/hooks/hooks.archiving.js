@@ -6,7 +6,8 @@ export async function archive (hook) {
   if ((hook.method === 'get' || hook.method === 'find')) return hook
 
   const service = hook.service
-  const object = getItems(hook)
+  // Avoid polluting source object as we modify it
+  const object = _.cloneDeep(getItems(hook))
   // Delete or anonymize required fields
   if (object && object.participants && Array.isArray(object.participants)) {
     object.participants.forEach(participant => {
