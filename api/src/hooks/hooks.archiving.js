@@ -7,6 +7,25 @@ export async function archive (hook) {
 
   const service = hook.service
   const object = getItems(hook)
+  // Delete or anonymize required fields
+  if (object && object.participants && Array.isArray(object.participants)) {
+    object.participants.forEach(participant => {
+      if (participant.email || participant.profile) {
+        delete participant.name
+        delete participant.email
+        delete participant.profile
+      }
+    })
+  }
+  if (object && object.coordinators && Array.isArray(object.coordinators)) {
+    object.coordinators.forEach(coordinator => {
+      if (coordinator.email || coordinator.profile) {
+        delete coordinator.name
+        delete coordinator.email
+        delete coordinator.profile
+      }
+    })
+  }
   const query = _.get(hook, 'params.query', {})
   const archivingService = hook.app.getService(`archived-${service.name}`, service.context)
   if (archivingService) {
