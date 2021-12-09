@@ -1,6 +1,6 @@
 # Terms of Service
 
-This website is owned and operated by Kalisio SAS ("Kalisio", "we" or “us”). By using the site, the mobile application, services provided on the site, or content we make available to you through the services (collectively, "Services"), you agree to be bound by the following Terms of Service.
+This website and related mobile application is owned and operated by Kalisio SAS ("Kalisio", "we" or “us”). By using the site, the mobile application, services provided on the site, or content we make available to you through the services (collectively, "Services"), you agree to be bound by the following Terms of Service.
 
 **IF YOU DO NOT AGREE TO THIS TERMS, PLEASE DO NOT USE THE SERVICES.**
 
@@ -50,13 +50,13 @@ The Services have certain soft and hard limits. Hard limits are automatically en
 
 We take several measures to keep our infrastructure and your data secure.
 
-We serve our website and APIs exclusively via HTTPS ensuring all private data exchanged is always transmitted over [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security).
+We serve our website and APIs exclusively via HTTPS ensuring all private data exchanged is always transmitted over [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security). We rely on [Let's Encrypt](https://letsencrypt.org/) to automatically generate and renew TLS certificates.
 
 We protect your login from brute force attacks with rate limiting. We store passwords in a secure fashion, all passwords are filtered from all our logs and are one-way encrypted in the database using [bcrypt](https://github.com/dcodeIO/bcrypt.js). We enforce a password policy and password complexity rules to discourage easy to guess passwords. We implement a secure password recovery mechanism.
 
-Our infrastructure, including storage, runs inside data centers designed and operated by [Amazon Web Services](https://aws.amazon.com/security/) (AWS). AWS data centers feature state of the art environmental security controls to safeguard against fires, power loss, and adverse weather conditions. Physical access to these facilities is highly restricted and they are monitored by professional security personnel. 
+Our infrastructure, including storage, runs inside data centers designed and operated by [OVH](https://www.ovh.com/fr/protection-donnees-personnelles/securite.xml) with some additional [Amazon Web Services](https://aws.amazon.com/security/) (AWS). These data centers are located in France and feature state of the art environmental security controls to safeguard against fires, power loss, and adverse weather conditions. Physical access to these facilities is highly restricted and they are monitored by professional security personnel. 
 
-Our systems run recent stable versions of Linux and our applications run recent stable version of [Node.js](https://nodejs.org). We monitor documented threats from public security research databases using [Snyk](https://snyk.io) and we run automated vulnerability scanners at regular intervals. We monitor system metrics and services health with automated alarms. 
+Our systems run recent stable versions of Linux and our applications run recent stable version of [Node.js](https://nodejs.org). We monitor documented threats from public security research databases using [Dependabot](https://docs.github.com/en/code-security/supply-chain-security/managing-vulnerabilities-in-your-projects-dependencies/about-dependabot-security-updates) and we run automated vulnerability scanners at regular intervals. We monitor system metrics and services health with automated alarms. 
 
 Our database run recent stable versions of [MongoDB](https://www.mongodb.com/). We take snapshots of the database each day and securely move them to a separate data center so that we can restore them elsewhere as needed.
 
@@ -87,9 +87,9 @@ Either the collected data does not include personal data, therefore it does not 
 
 ### Cookies and similar technologies
 
-We use [JWT](https://jwt.io/) and [Web storage](https://en.wikipedia.org/wiki/Web_storage) to keep you logged in. A JWT is a token that our web server stores on your computer or mobile device, which is send to us when you return to our Services. The tokens we sets are essential for the operation of the Services. By using our Services, you agree that we can place these types of tokens on your computer or device otherwise you will not be able to log in or use the Services.
+We use [JWT](https://jwt.io/) and [Web storage](https://en.wikipedia.org/wiki/Web_storage) to keep you logged in. A JWT is a token that our Services store on your computer or mobile device, which is send to us when you return to our Services. The tokens we sets are essential for the operation of the Services. By using our Services, you agree that we can place these types of tokens on your computer or device otherwise you will not be able to log in or use the Services.
 
-We use cookies to log you in with third-party identity providers like Google using [OAuth](https://en.wikipedia.org/wiki/OAuth). A cookie is a small piece of text that our web server stores on your computer or mobile device, which your browser sends to us when you return to our site.
+We use cookies to log you in with third-party identity providers like Google using [OAuth](https://en.wikipedia.org/wiki/OAuth). A cookie is a small piece of text that our Services store on your computer or mobile device, which your browser sends to us when you return to our Services.
  
 ### Automatically Collected Information
  
@@ -130,13 +130,15 @@ The types of data we collect directly from you may include:
 
 #### Information about Others
 
-If you choose to invite a person to use the Services, we will ask you for that person’s email address, and automatically send an invitation. We store the information you provide to send the invitation and to automatically register the user wether if your invitation is accepted or not. However, the user will be prompted to accept these Terms on his first login and his account will be automatically deleted if it does not.
+If you choose to invite a person to use the Services, we will ask you for that person’s email address, and automatically send an invitation. We store the information you provide to send the invitation and to automatically register the user wether if your invitation is accepted or not. However, the user will be prompted to accept these Terms on his first login and his account will be automatically deleted if it does not or without response after a period of time (typically seven days).
 
 #### Payment Information
 
 If you are subscribed to one of our Commercial Plans, we will utilize a third party credit card payment processing company to collect payment information, including your credit card number, billing address and phone number. The third party service provider, and not us, stores your payment information on our behalf.
 
 ### Data Retention and Deletion
+
+We reserve the right to automatically delete inactive organisations from the Services. Inactive organisations are organisations that do not contain other members except their owner or without any new published content over a specified period of time (typically one year).
 
 We will retain personal information for as long as your account is active or as needed to provide you the Services. We don’t automatically delete inactive user accounts, so unless you choose to delete your account, we will retain your account information indefinitely. If you would like to cancel your account you may do so using the Services.
 
@@ -189,3 +191,4 @@ We may revise fee rates for the Services from time to time and will provide you 
 ## History
 
 * **16/05/2018**: Initial version
+* **09/12/2021**: Updated version with section about inactive organisations
