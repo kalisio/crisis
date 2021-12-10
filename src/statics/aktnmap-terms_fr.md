@@ -42,7 +42,7 @@ Si vous avez été invité à rejoindre une organisation par un autre utilisateu
 
 Les limitations sont définies par organisation. Seuls les propriétaires d'une organisation peuvent modifier ses paramètres concernant les limitations.
 
-Vous ne pouvez utiliser les Services qu'à des fins non commerciales lorsque votre organisation n'est abonnée à aucun de nos Plans commerciaux. Si votre organisation est abonnée à nos plans commerciaux, vous pouvez également utiliser les services à des fins commerciales.
+Vous ne pouvez utiliser les Services qu'à des fins non commerciales lorsque votre organisation n'est abonnée à aucun de nos abonnements commerciaux. Si votre organisation est abonnée à nos abonnements commerciaux, vous pouvez également utiliser les services à des fins commerciales.
 
 Les Services ont certaines limites souples et strictes. Les limites strictes sont automatiquement appliquées par les Services. Les limites souples sont des ressources consommables que vous vous engagez à ne pas dépasser. Votre utilisation des Services est soumise à des limitations de quota définies par l'abonnement que vous avez souscrit pour chaque organisation détenue et des frais supplémentaires peuvent s'appliquer.
 
@@ -156,7 +156,7 @@ Hormis Votre Contenu, tout le contenu affiché sur le site ou accessible via les
 
 ## Frais
 
-L'augmentation du quota de ressources des Services nécessite un paiement par organisation. Tous les frais ne sont pas remboursables, sauf indication contraire expresse ou disposition contraire de la loi applicable. Seuls les propriétaires d'une organisation sont en mesure de gérer l'abonnement à l'un de nos plans commerciaux et les informations de paiement associées.
+L'augmentation du quota de ressources des Services nécessite un paiement par organisation. Tous les frais ne sont pas remboursables, sauf indication contraire expresse ou disposition contraire de la loi applicable. Seuls les propriétaires d'une organisation sont en mesure de gérer l'abonnement à l'un de nos abonnements commerciaux et les informations de paiement associées.
 
 Vous paierez tous les frais applicables à leur échéance et nous autoriserez à facturer ces frais en utilisant le mode de paiement que vous avez choisi. Nous facturerons des taxes lorsque la loi l'exigera. Vous êtes responsable de fournir des informations de facturation complètes et exactes. Nous pouvons suspendre ou mettre fin à votre utilisation des Services si les frais sont en souffrance.
 
