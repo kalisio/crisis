@@ -162,6 +162,49 @@ export function removeOrganisationServices (organisation) {
   removeArchivedPlanService.call(app, { context: organisation })
 }
 
+async function isOrganisationInactive(organisation, db, duration) {
+  // Organisations created before duration from now could be tagged as inactive
+  // Depending on the duration format we might have negative or positive values
+  const inactiveDate = (duration.asMilliseconds() > 0 ? moment.utc().subtract(duration) : moment.utc().add(duration))
+  // Get creation date
+  const creationDate = moment.utc(organisation._id.getTimestamp())
+  if (creationDate.isAfter(inactiveDate)) return false
+  // Get stats
+  const infos = await db.stats()
+  // Is empty ?
+  return (infos.objects === 0)
+}
+
+export async function checkInactiveOrganisations (app) {
+  let duration = _.get(app.get('organisations'), 'inactivityDuration')
+  if (!duration) return
+  duration = moment.duration(duration)
+  if (!moment.isDuration(duration)) return
+  const orgsService = app.getService('organisations')
+  const usersService = app.getService('users')
+  debug('Checking for inactive organisations with the following duration:', duration.humanize())
+  const organisations = await orgsService.find({ paginate: false })
+  for (let i = 0; i < organisations.length; i++) {
+    const organisation = organisations[i]
+    // Get org DB
+    const db = app.db.client.db(organisation._id.toString())
+    // Check if active
+    const isInactive = await isOrganisationInactive(organisation, db, duration)
+    if (isInactive) {
+      // Find owner if any
+      const owners = await usersService.find({ query: {
+        'organisations._id': organisation._id,
+        'organisations.permissions': 'owner'
+      }})
+      const owner = _.get(owners, 'data[0]')
+      // Remove inactive organisation anyway in case of orphan organisation
+      debug('Removing inactive organisations with ID ', organisation._id)
+      if (owner) debug('Using owner with ID ', owner._id)
+      await orgsService.remove(organisation._id.toString(), { user: owner })
+    }
+  }
+}
+
 export function processAlert (organisation) {
   return async function (alert) {
     const app = this
@@ -295,7 +338,7 @@ export default async function () {
     orgsService.registerOrganisationServicesHook({
       createOrganisationServices, removeOrganisationServices
     })
-    // Reinstanciated app services for all axisting organisations
+    // Reinstanciated app services for all existing organisations
     await orgsService.configureOrganisations()
   } catch (error) {
     app.logger.error(error.message)

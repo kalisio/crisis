@@ -204,7 +204,7 @@ module.exports = {
     }
   },
   organisations: {
-    // nothing for now but required to create the service
+    inactivityDuration: (process.env.NODE_ENV === 'development' ? 'P-7D' : 'P-1Y')
   },
   quotas: {
     global: {
