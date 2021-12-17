@@ -1,13 +1,11 @@
-import distribution from '@kalisio/feathers-distributed'
-import { kalisio } from '@kalisio/kdk/core.api'
-
 import fs from 'fs-extra'
 import https from 'https'
 import proxyMiddleware from 'http-proxy-middleware'
-
 import express from '@feathersjs/express'
 import sync from 'feathers-sync'
-import services from './services'
+import distribution from '@kalisio/feathers-distributed'
+import { kalisio } from '@kalisio/kdk/core.api'
+import services, { checkInactiveOrganisations } from './services'
 import middlewares from './app.middlewares'
 import hooks from './app.hooks'
 import channels from './app.channels'
@@ -61,6 +59,9 @@ export class Server {
     app.configure(channels)
     // Configure middlewares - always has to be last
     app.configure(middlewares)
+    // Check for inactive organisations
+    // Need to do this after all hooks have been initialized
+    await checkInactiveOrganisations(app)
 
     // Last lauch server
     const httpsConfig = app.get('https')
