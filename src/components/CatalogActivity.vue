@@ -129,11 +129,11 @@ export default {
       let featureActions = []
       // When clicked on map
       if (!feature) {
-        // We can initiate an event
+        // We can initiate an event from location
         featureActions.push({
           name: 'create-event',
           icon: 'las la-fire',
-          handler: this.onSelectEventTemplateAction,
+          handler: this.onSelectEventTemplateForLocationAction,
           label: this.$t('CatalogActivity.CREATE_EVENT_LOCATION_ACTION')
         })
         // Check if weather layer activated
@@ -164,14 +164,22 @@ export default {
             label: this.$t('CatalogActivity.REMOVE_ALERT_ACTION')
           })
         }
+        // We can initiate an event from location and feature
+        featureActions.push({
+          name: 'create-event',
+          icon: 'las la-fire',
+          handler: this.onSelectEventTemplateForLocationAction,
+          label: this.$t('CatalogActivity.CREATE_EVENT_LOCATION_ACTION')
+        })
         // Could be an internal feature or external one (eg WFS layer)
         let id = _.get(layer, 'featureId', '_id')
         id = _.get(feature, 'properties.' + id, _.get(feature, id))
-        if (id) { // Only on saved features
+        // For point geometry it's actually the same as creating from location so don't show it twice
+        if (id && (_.get(feature, 'geometry.type') !== 'Point')) { // Only on saved features
           featureActions.push({
-            name: 'create-event',
-            icon: 'las la-fire',
-            handler: this.onSelectEventTemplateAction,
+            name: 'create-feature-event',
+            icon: 'las la-expand',
+            handler: this.onSelectEventTemplateForFeatureAction,
             label: this.$t('CatalogActivity.CREATE_EVENT_FEATURE_ACTION')
           })
         }
@@ -371,18 +379,19 @@ export default {
       const name = _.get(objective, 'name')
       return L.tooltip({ permanent: false }, layer).setContent('<b>' + name + '</b>')
     },
-    onSelectEventTemplateAction (data) {
+    onSelectEventTemplateForLocationAction (data) {
       // Extract event location
-      if (data.feature) {
-        this.eventParams = {
-          layerId: data.feature.layer,
-          featureId: data.feature._id
-        }
-      } else {
-        this.eventParams = {
-          longitude: data.latlng.lng,
-          latitude: data.latlng.lat
-        }
+      this.eventParams = {
+        longitude: data.latlng.lng,
+        latitude: data.latlng.lat
+      }
+      this.$refs.templateModal.open()
+    },
+    onSelectEventTemplateForFeatureAction (data) {
+      // Extract event location
+      this.eventParams = {
+        layerId: data.feature.layer,
+        featureId: data.feature._id
       }
       this.$refs.templateModal.open()
     },
