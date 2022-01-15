@@ -180,7 +180,7 @@
     "opn": "^5.0.0",
     "pixelmatch": "^5.2.0",
     "pngjs": "^5.0.0",
-    "shelljs": "^0.8.1",
+    "shelljs": "^0.8.5",
     "shx": "^0.3.2",
     "sns-mobile": "https://github.com/kalisio/sns-mobile",
     "standard": "^14.0.0",
