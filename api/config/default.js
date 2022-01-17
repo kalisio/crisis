@@ -13,17 +13,7 @@ const API_PREFIX = '/api'
 let nbRequestsPerMinute = 60 * 4
 let nbAuthenticationRequestsPerMinute = 10
 // Whitelist features services from rate limiting as they use a lot of concurrent requests
-const apiLimiterWhitelist = (service) =>
-  service.path.includes('features') ||
-  service.path.includes('hubeau') ||
-  service.path.includes('openaq') ||
-  service.path.includes('teleray') ||
-  service.path.includes('vigicrues') ||
-  service.path.includes('openradiation') ||
-  service.path.includes('population') ||
-  service.path.includes('arome') ||
-  service.path.includes('arpege') ||
-  service.path.includes('gfs')
+const apiLimiterWhitelist = (service) => service.path.includes('features') || (service.key === 'kano') || (service.key === 'weacast')
 // Global API limiter
 let apiLimiter = {
   http: {
