@@ -519,6 +519,27 @@ describe('aktnmap', () => {
   // Let enough time to process
     .timeout(10000)
 
+  it('cannot update member from external clients', async () => {
+    try {
+      await client.service(server.app.get('apiPath') + '/users').update(memberObject._id.toString(), { name: 'new name' })
+    } catch (error) {
+      expect(error).toExist()
+      expect(error.name).to.equal('MethodNotAllowed')
+    }
+  })
+
+  it('cannot update member permissions without using authorisations service', async () => {
+    try {
+      const result = await client.service(server.app.get('apiPath') + '/users').patch(memberObject._id.toString(), { groups: [] })
+      assert.fail('error not thrown')
+    } catch (error) {
+      expect(error).toExist()
+      expect(error.name).to.equal('BadRequest')
+    }
+  })
+  // Let enough time to process
+    .timeout(5000)
+
   it('creates a member tag', () => {
     const operation = memberService.patch(memberObject._id.toString(), { // We need at least devices for subscription
       tags: [{ value: 'test-member', scope: 'members' }],

@@ -1,4 +1,4 @@
-import { iff, iffElse, when } from 'feathers-hooks-common'
+import { iff, iffElse, when, disallow, isProvider, preventChanges } from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api'
 import { checkInvitationsQuotas } from '../../hooks'
 
@@ -23,8 +23,12 @@ module.exports = {
       coreHooks.addVerification,
       coreHooks.convertDates(['expireAt'])
     ],
-    update: [coreHooks.convertDates(['expireAt'])],
-    patch: [coreHooks.convertDates(['expireAt'])],
+    update: [disallow('external')],
+    patch: [
+      iff(isProvider('external'), preventChanges('organisations')),
+      iff(isProvider('external'), preventChanges('groups')),
+      coreHooks.convertDates(['expireAt'])
+    ],
     remove: [coreHooks.preventRemoveUser]
   },
 
@@ -37,7 +41,7 @@ module.exports = {
       iffElse(hook => hook.result.sponsor, coreHooks.joinOrganisation, coreHooks.createPrivateOrganisation),
       coreHooks.removeVerification
     ],
-    update: [coreHooks.removeVerification],
+    update: [],
     patch: [coreHooks.removeVerification],
     remove: [
       coreHooks.setAsDeleted,
