@@ -355,7 +355,7 @@ export default async function () {
       const defaultUser = defaultUsers[i]
       const createdUser = _.find(users, user => user.email === defaultUser.email)
       if (!createdUser) {
-        app.logger.info('Initializing default user (email = ' + defaultUser.email + ', password = ' + defaultUser.password + ')')
+        app.logger.info('Initializing default user (email = ' + defaultUser.email + ')')
         const user = await usersService.create(_.omit(defaultUser, 'device'))
         // Register user device if any
         if (defaultUser.device) {

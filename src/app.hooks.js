@@ -6,7 +6,6 @@ import * as permissions from './permissions'
 // Register all default hooks for authorisation
 // Default rules for all users
 corePermissions.defineAbilities.registerHook(corePermissions.defineUserAbilities)
-corePermissions.defineAbilities.registerHook(corePermissions.defineUserAbilities)
 corePermissions.defineAbilities.registerHook(mapPermissions.defineUserAbilities)
 // Then rules for organisations
 corePermissions.defineAbilities.registerHook(corePermissions.defineOrganisationAbilities)

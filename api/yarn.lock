@@ -588,10 +588,10 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
-"@kalisio/feathers-distributed@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@kalisio/feathers-distributed/-/feathers-distributed-1.0.4.tgz#53f9ab1377bd440e3d5f7c76f29d9792a427e967"
-  integrity sha512-5lPI3OtYnj1WOVfAESFPAcagseSamFfrHzGWU42Z6viMkJ+ycKxo8XkxweRjBkF0OQYwWzp0nXam7bLaAfLwzg==
+"@kalisio/feathers-distributed@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@kalisio/feathers-distributed/-/feathers-distributed-1.0.5.tgz#39d4c44bd30b71f5bd99b457f26d16e6f5b76081"
+  integrity sha512-bEpIhHJZGbVC51PDxDKRPolHYxm4PCUaYzCtLvTBxiy8IUcf5PJVliXO0Uya9hTVM4g71bBKIzd44EyiLG5xbg==
   dependencies:
     "@feathersjs/commons" "^1.4.0"
     "@feathersjs/errors" "^3.3.0"
@@ -613,6 +613,7 @@
     "@feathersjs/express" "^1.2.3"
     "@feathersjs/feathers" "^3.3.1"
     "@feathersjs/socketio" "^3.2.2"
+    "@geoman-io/leaflet-geoman-free" "^2.11.1"
     abort-controller "^3.0.0"
     aws-sdk "^2.200.0"
     body-parser "^1.17.1"
@@ -649,7 +650,7 @@
     password-generator "^2.2.0"
     password-validator "^4.0.0"
     s3-blob-store "2.1.0"
-    sanitize-html "^1.27.1"
+    sanitize-html "^2.3.2"
     sift "^8.0.0"
     sns-mobile "https://github.com/kalisio/sns-mobile"
     superagent "^5.1.0"
