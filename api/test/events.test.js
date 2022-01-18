@@ -1,11 +1,15 @@
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
+import request from 'superagent'
+import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import core, { kalisio, hooks as coreHooks, permissions as corePermissions } from '@kalisio/kdk/core.api'
 import * as permissions from '../src/permissions'
 import { createOrganisationServices, removeOrganisationServices } from '../src/services'
+import webhooks from '../src/app.webhooks'
 
 describe('events', () => {
-  let app, userService, userObject, orgManagerObject, orgObject, orgUserObject, orgService,
+  let app, server, port, baseUrl, accessToken,
+    userService, userObject, orgManagerObject, orgObject, orgUserObject, orgService,
     authorisationService, devicesService, pusherService, sns,
     storageService, storageObject, eventService, eventObject, eventTemplateService, eventLogService,
     archivedEventService, archivedEventLogService
@@ -35,7 +39,7 @@ describe('events', () => {
     app = kalisio()
     // Register authorisation/log hook
     app.hooks({
-      before: { all: [coreHooks.authorise] },
+      before: { all: [coreHooks.authorise], find: [fuzzySearch()] },
       error: { all: coreHooks.log }
     })
     // Add hooks for contextual services
@@ -49,6 +53,9 @@ describe('events', () => {
         })
       }
     })
+
+    port = app.get('port')
+    baseUrl = `http://localhost:${app.get('port')}${app.get('apiPath')}`
 
     return app.db.connect()
   })
@@ -83,6 +90,16 @@ describe('events', () => {
     })
     authorisationService = app.getService('authorisations')
     expect(authorisationService).toExist()
+  })
+  // Let enough time to process
+    .timeout(5000)
+
+  it('launch the server for webhooks', (done) => {
+    // Register webhooks
+    app.configure(webhooks)
+    // Now app is configured launch the server
+    server = app.listen(port)
+    server.once('listening', _ => done())
   })
   // Let enough time to process
     .timeout(5000)
@@ -132,7 +149,7 @@ describe('events', () => {
     .timeout(15000)
 
   it('creates a org user', async () => {
-    let user = await userService.create({ email: 'user@test.org', name: 'org-user' }, { checkAuthorisation: true })
+    let user = await userService.create({ email: 'user@test.org', name: 'org-user', password: 'Pass;word1' }, { checkAuthorisation: true })
     orgUserObject = user
     let users = await userService.find({ query: { 'profile.name': 'org-user' }, checkAuthorisation: true, user: orgUserObject })
     expect(users.data.length > 0).beTrue()
@@ -162,30 +179,104 @@ describe('events', () => {
     .timeout(15000)
 
   it('org manager can create event template', async () => {
-    await eventTemplateService.create({ title: 'template' }, { user: orgManagerObject, checkAuthorisation: true })
-    const templates = await eventTemplateService.find({ query: { title: 'template' }, user: orgManagerObject, checkAuthorisation: true })
-    expect(templates.data.length > 0).beTrue()
+    await eventTemplateService.create({
+      name: 'template',
+      description: 'manager template',
+      participants: [{ _id: orgManagerObject._id, service: 'members' }]
+    }, { user: orgManagerObject, checkAuthorisation: true })
+    const templates = await eventTemplateService.find({ query: { name: 'template' }, user: orgManagerObject, checkAuthorisation: true })
+    expect(templates.data.length).to.equal(1)
   })
   // Let enough time to process
     .timeout(5000)
 
   it('members can access event templates service', async () => {
     const templates = await eventTemplateService.find({ query: {}, user: orgUserObject, checkAuthorisation: true })
-    expect(templates.data.length > 0).beTrue()
+    expect(templates.data.length).to.equal(1)
   })
 
   it('members cannot create event template', async () => {
     try {
-      await eventTemplateService.create({ title: 'member-template' }, { user: orgUserObject, checkAuthorisation: true })
+      await eventTemplateService.create({
+        name: 'member-template',
+        description: 'member template'
+      }, { user: orgUserObject, checkAuthorisation: true })
     } catch (error) {
       expect(error).toExist()
     }
   })
 
+  it('authenticates a user to get access token for webhook', async () => {
+    const response = await request
+      .post(`${baseUrl}/authentication`)
+      .send({ email: 'user@test.org', password: 'Pass;word1', strategy: 'local' })
+    accessToken = response.body.accessToken
+    expect(accessToken).toExist()
+  })
+  // Let enough time to process
+    .timeout(10000)
+
+  it('unauthorized service cannot be accessed through webhooks', (done) => {
+    request
+      .post(`${baseUrl}/webhooks/events`)
+      .set('Authorization', 'Bearer ' + accessToken)
+      .set('Content-Type', 'application/json')
+      .send({ service: 'authorisations' })
+      .catch(data => {
+        const error = data.response.body
+        expect(error).toExist()
+        expect(error.name).to.equal('Forbidden')
+        done()
+      })
+  })
+
+  it('unauthorized operation cannot be accessed through webhooks', (done) => {
+    request
+      .post(`${baseUrl}/webhooks/events`)
+      .set('Authorization', 'Bearer ' + accessToken)
+      .set('Content-Type', 'application/json')
+      .send({ service: 'events', operation: 'remove' })
+      .catch(data => {
+        const error = data.response.body
+        expect(error).toExist()
+        expect(error.name).to.equal('Forbidden')
+        done()
+      })
+  })
+
+  it('authorized user can create events from webhook', () => {
+    const operation = request
+      .post(`${baseUrl}/webhooks/events`)
+      .set('Authorization', 'Bearer ' + accessToken)
+      .set('Content-Type', 'application/json')
+      .send({ context: orgObject._id.toString(),
+              data: { template: 'template', name: 'webhook event' } })
+      .then(response => {
+        const result = response.body
+        expect(result._id).toExist()
+        expect(result.name).to.equal('webhook event')
+        expect(result.description).to.equal('manager template')
+        expect(result.participants).toExist()
+        return eventService.remove(result._id)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    const event = new Promise((resolve, reject) => {
+      sns.once('messageSent', (endpointArn, messageId) => {
+        expect(orgManagerObject.devices[0].arn).to.equal(endpointArn)
+        resolve()
+      })
+    })
+    return Promise.all([operation, event])
+  })
+  // Let enough time to process
+    .timeout(10000)
+
   it('org member can create event', () => {
     const operation = eventService.create({
-      title: 'member event',
-      template: 'template1',
+      name: 'member event',
+      template: 'template',
       participants: [{ _id: orgManagerObject._id, service: 'members' }]
     },
     {
@@ -195,7 +286,7 @@ describe('events', () => {
     })
       .then(event => {
         eventObject = event
-        return eventService.find({ query: { title: 'member event' }, user: orgUserObject, checkAuthorisation: true })
+        return eventService.find({ query: { name: 'member event' }, user: orgUserObject, checkAuthorisation: true })
       })
       .then(events => {
         expect(events.data.length > 0).beTrue()
@@ -217,7 +308,7 @@ describe('events', () => {
 
   it('org member can update event', () => {
     const operation = eventService.patch(eventObject._id, {
-      title: 'updated member event'
+      name: 'updated member event'
     }, {
       notification: 'event updated',
       user: orgUserObject,
@@ -225,7 +316,7 @@ describe('events', () => {
     })
       .then(event => {
         eventObject = event
-        return eventService.find({ query: { title: 'updated member event' }, user: orgUserObject, checkAuthorisation: true })
+        return eventService.find({ query: { name: 'updated member event' }, user: orgUserObject, checkAuthorisation: true })
       })
       .then(events => {
         expect(events.data.length > 0).beTrue()
@@ -247,7 +338,7 @@ describe('events', () => {
       user: orgUserObject,
       checkAuthorisation: true
     })
-    const events = await eventService.find({ query: { title: 'updated member event' }, user: orgUserObject, checkAuthorisation: true })
+    const events = await eventService.find({ query: { name: 'updated member event' }, user: orgUserObject, checkAuthorisation: true })
     expect(events.data.length === 0).beTrue()
   })
   // Let enough time to process
@@ -255,8 +346,8 @@ describe('events', () => {
 
   it('org manager can create event', () => {
     const operation = eventService.create({
-      title: 'event',
-      template: 'template2',
+      name: 'event',
+      template: 'template',
       participants: [{ _id: orgUserObject._id, service: 'members' }]
     },
     {
@@ -266,7 +357,7 @@ describe('events', () => {
     })
       .then(event => {
         eventObject = event
-        return eventService.find({ query: { title: 'event' }, user: orgManagerObject, checkAuthorisation: true })
+        return eventService.find({ query: { name: 'event' }, user: orgManagerObject, checkAuthorisation: true })
       })
       .then(events => {
         expect(events.data.length > 0).beTrue()
@@ -323,7 +414,7 @@ describe('events', () => {
 
   it('event coordinators can update events', () => {
     const operation = eventService.patch(eventObject._id, {
-      title: 'updated event'
+      name: 'updated event'
     }, {
       notification: 'event updated',
       user: orgManagerObject,
@@ -331,7 +422,7 @@ describe('events', () => {
     })
       .then(event => {
         eventObject = event
-        return eventService.find({ query: { title: 'updated event' }, user: orgManagerObject, checkAuthorisation: true })
+        return eventService.find({ query: { name: 'updated event' }, user: orgManagerObject, checkAuthorisation: true })
       })
       .then(events => {
         expect(events.data.length > 0).beTrue()
@@ -357,7 +448,7 @@ describe('events', () => {
       resourcesService: 'events'
     })
     expect(storageObject.size).to.equal(content.length)
-    const events = await eventService.find({ query: { title: 'updated event' }, user: orgManagerObject, checkAuthorisation: true })
+    const events = await eventService.find({ query: { name: 'updated event' }, user: orgManagerObject, checkAuthorisation: true })
     expect(events.data.length > 0).beTrue()
     eventObject = events.data[0]
     expect(eventObject.attachments).toExist()
@@ -409,7 +500,7 @@ describe('events', () => {
 
   it('events and logs are replicated in archive', async () => {
     const events = await archivedEventService.find({ query: {}, user: orgManagerObject, checkAuthorisation: true })
-    expect(events.data.length).to.equal(2)
+    expect(events.data.length).to.equal(3)
     const logs = await archivedEventLogService.find({ query: {}, user: orgManagerObject, checkAuthorisation: true })
     expect(logs.data.length).to.equal(2)
   })
@@ -431,7 +522,7 @@ describe('events', () => {
       checkAuthorisation: true
     })
     expect(result.length).to.equal(1)
-    expect(result[0]._id).to.equal('template2')
+    expect(result[0]._id).to.equal('template')
     expect(result[0].count).to.equal(2)
   })
   // Let enough time to process
@@ -445,7 +536,7 @@ describe('events', () => {
     })
       .then(event => {
         eventObject = event
-        return eventService.find({ query: { title: 'updated event' }, user: orgManagerObject, checkAuthorisation: true })
+        return eventService.find({ query: { name: 'updated event' }, user: orgManagerObject, checkAuthorisation: true })
       })
       .then(events => {
         expect(events.data.length === 0).beTrue()

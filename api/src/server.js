@@ -9,6 +9,7 @@ import services, { checkInactiveOrganisations } from './services'
 import middlewares from './app.middlewares'
 import hooks from './app.hooks'
 import channels from './app.channels'
+import webhooks from './app.webhooks'
 
 export class Server {
   constructor () {
@@ -59,6 +60,8 @@ export class Server {
     app.configure(channels)
     // Configure middlewares - always has to be last
     app.configure(middlewares)
+    // Register webhooks
+    app.configure(webhooks)
     // Check for inactive organisations
     // Need to do this after all hooks have been initialized
     await checkInactiveOrganisations(app)
