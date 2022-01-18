@@ -8,8 +8,13 @@ export default async function () {
   // Create webhook for events
   app.createWebhook('events', {
     filter: { service: { $in: ['events'] }, operation: 'create' },
-    // Pre processor used to make events service implicit
+    // Pre processor used to make some information implicit in payload
     preprocessor: async (req, res, payload) => {
+      // Organisation alias
+      if (payload.organisation) {
+        payload.context = payload.organisation
+        delete payload.organisation
+      }
       if (!payload.service) payload.service = 'events'
       if (!payload.operation) payload.operation = 'create'
     },
