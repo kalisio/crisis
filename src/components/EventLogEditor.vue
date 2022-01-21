@@ -1,8 +1,12 @@
 <template>
-  <k-modal :title="title" v-model="isModalOpened" @opened="$emit('opened')" @closed="$emit('closed')" :buttons="getButtons()">
-    <div slot="modal-content">
-      <k-form ref="form" :schema="schema"/>
-    </div>
+  <k-modal 
+    :title="title" 
+    v-model="isModalOpened" 
+    @opened="$emit('opened')" 
+    @closed="$emit('closed')" 
+    :buttons="getButtons()"
+  >
+    <k-form ref="form" :schema="schema"/>
   </k-modal>
 </template>
 

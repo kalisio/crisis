@@ -5,58 +5,57 @@
     :maximized="true"
     v-model="isModalOpened" 
     @opened="$emit('opened')" 
-    @closed="$emit('closed')">
-    <div slot="modal-content">
-      <div class="q-pa-md column q-gutter-md">
+    @closed="$emit('closed')"
+  >
+    <div class="q-pa-md column q-gutter-md">
+      <!-- 
+        Customer information section
+      -->    
+      <k-block
+        id="customer-block"
+        :color="customerBlockColor" 
+        :title="$t('BillingEditor.CUSTOMER_BLOCK_TITLE')"
+        :text="customerBlockText"
+        :action="$t('BillingEditor.CUSTOMER_BLOCK_ACTION')"
+        :disabled="!isUserVerified"
+        @action-triggered="onUpdateCustomer" />
+      <customer-editor 
+        id="customer-editor"
+        ref="customerEditor" 
+        @customer-updated="onCustomerUpdated" 
+        :billingObjectId="objectId" 
+        billingObjectService="organisations" />
+      <q-card>
+        <q-card-section class="text-grey bg-grey-2">
+          {{$t('BillingEditor.OPTIONS_BLOCK_TITLE')}}
+        </q-card-section>
         <!-- 
-          Customer information section
-        -->    
-        <k-block
-          id="customer-block"
-          :color="customerBlockColor" 
-          :title="$t('BillingEditor.CUSTOMER_BLOCK_TITLE')"
-          :text="customerBlockText"
-          :action="$t('BillingEditor.CUSTOMER_BLOCK_ACTION')"
-          :disabled="!isUserVerified"
-          @action-triggered="onUpdateCustomer" />
-        <customer-editor 
-          id="customer-editor"
-          ref="customerEditor" 
-          @customer-updated="onCustomerUpdated" 
-          :billingObjectId="objectId" 
-          billingObjectService="organisations" />
-        <q-card>
-          <q-card-section class="text-grey bg-grey-2">
-            {{$t('BillingEditor.OPTIONS_BLOCK_TITLE')}}
-          </q-card-section>
-          <!-- 
-            Plan subscription section 
-          -->
-          <q-expansion-item id="basic-plan" header-class="text-primary" group="billing"
-          :label="$t('BillingEditor.PLAN_TITLE')" default-opened>
-            <billing-subscription-chooser 
-              :billingObjectId="objectId" 
-              billingObjectService="organisations" 
-              :quotas="quotas" 
-              :plans="plans" 
-              v-model="currentPlan" 
-              :hasCustomer="customer !== undefined" />
-          </q-expansion-item>
-          <!-- 
-            Options information secion
-          -->    
-          <q-expansion-item id="optional-plans" header-class="text-primary" group="billing"
-            :label="$t('BillingEditor.OPTIONS_TITLE')">
-            <billing-options-chooser 
+          Plan subscription section 
+        -->
+        <q-expansion-item id="basic-plan" header-class="text-primary" group="billing"
+        :label="$t('BillingEditor.PLAN_TITLE')" default-opened>
+          <billing-subscription-chooser 
             :billingObjectId="objectId" 
             billingObjectService="organisations" 
             :quotas="quotas" 
-            :options="options" 
-            v-model="currentOptions" 
+            :plans="plans" 
+            v-model="currentPlan" 
             :hasCustomer="customer !== undefined" />
-          </q-expansion-item>
-        </q-card>
-      </div>
+        </q-expansion-item>
+        <!-- 
+          Options information secion
+        -->    
+        <q-expansion-item id="optional-plans" header-class="text-primary" group="billing"
+          :label="$t('BillingEditor.OPTIONS_TITLE')">
+          <billing-options-chooser 
+          :billingObjectId="objectId" 
+          billingObjectService="organisations" 
+          :quotas="quotas" 
+          :options="options" 
+          v-model="currentOptions" 
+          :hasCustomer="customer !== undefined" />
+        </q-expansion-item>
+      </q-card>
     </div>
   </k-modal>
 </template>

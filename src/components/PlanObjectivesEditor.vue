@@ -4,8 +4,9 @@
     :buttons="buttons" 
     v-model="isModalOpened"
     @opened="$emit('opened')"
-    @closed="$emit('closed')">
-    <div slot="modal-content" class="column xs-gutter">
+    @closed="$emit('closed')"
+  >
+    <div class="column xs-gutter">
       <q-card-section>
         <k-panel id="plan-objectives-toolbar" :content="getToolbar()" :mode="mode" class="no-wrap" />
       </q-card-section>

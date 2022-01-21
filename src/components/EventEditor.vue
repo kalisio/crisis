@@ -5,17 +5,17 @@
     v-model="isModalOpened"
     @opened="$emit('opened')"
     @closed="$emit('closed')">
-    <div slot="modal-content" class="column xs-gutter">
-      <k-form 
-        ref="eventForm"
-        :class="{ 'light-dimmed': applyInProgress }" 
-        :contextId="contextId" 
-        :objectId="objectId" 
-        :schema="schema" 
-        @field-changed="onFieldChanged" />
-      <div class="row full-width justify-end">
-        <q-checkbox :label="$t('EventEditor.NOTIFY')" v-model="notify" />
-      </div>
+    <div class="column xs-gutter">
+        <k-form 
+          ref="eventForm"
+          :class="{ 'light-dimmed': applyInProgress }" 
+          :contextId="contextId" 
+          :objectId="objectId" 
+          :schema="schema" 
+          @field-changed="onFieldChanged" />
+        <div class="row full-width justify-end">
+          <q-checkbox :label="$t('EventEditor.NOTIFY')" v-model="notify" />
+        </div>
     </div>
   </k-modal>
 </template>

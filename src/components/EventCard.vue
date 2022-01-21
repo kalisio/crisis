@@ -141,28 +141,33 @@
     <!--
       Follow up modal
     -->
-    <k-modal ref="followUpModal" v-if="hasParticipantInteraction" :title="followUpTitle" :buttons="getFollowUpButtons()">
-      <div slot="modal-content">
-        <k-form ref="form" :schema="schema"/>
-      </div>
+    <k-modal ref="followUpModal" v-if="hasParticipantInteraction" 
+      :title="followUpTitle" 
+      :buttons="getFollowUpButtons()"
+    >
+      <k-form ref="form" :schema="schema"/>
     </k-modal>
     <!--
       Upload modal
     -->
-    <k-modal ref="uploaderModal" :buttons="getUploaderButtons()" >
-      <div slot="modal-content">
-        <k-uploader ref="uploader" :resource="item._id" :base-query="uploaderQuery()"
-          :options="uploaderOptions()" @uploader-ready="initializeMedias"/>
-      </div>
+    <k-modal ref="uploaderModal" 
+      :buttons="getUploaderButtons()"
+    >
+      <k-uploader ref="uploader" 
+        :resource="item._id" 
+        :base-query="uploaderQuery()"
+        :options="uploaderOptions()" 
+        @uploader-ready="initializeMedias"/>
     </k-modal>
     <!--
       Logs modal
     -->
-    <k-modal ref="eventLogsModal" :title="$t('EventCard.EVENT_LOGS_MODAL_TITLE')"
-      :toolbar="getEventLogsToolbar()" :buttons="getEventLogsButtons()" >
-      <div slot="modal-content">
-        <event-logs-list ref="eventLogsList" :contextId="contextId" :event="item"/>
-      </div>
+    <k-modal ref="eventLogsModal" 
+      :title="$t('EventCard.EVENT_LOGS_MODAL_TITLE')"
+      :toolbar="getEventLogsToolbar()" 
+      :buttons="getEventLogsButtons()"
+    >
+      <event-logs-list ref="eventLogsList" :contextId="contextId" :event="item"/>
     </k-modal>
     <!--
       Media browser

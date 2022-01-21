@@ -29,10 +29,11 @@
     <!--
       Follow up modal
     -->
-    <k-modal ref="followUpModal" :title="followUpTitle" :buttons="getFollowUpButtons()">
-      <div slot="modal-content">
-        <k-form ref="form" :schema="schema"/>
-      </div>
+    <k-modal ref="followUpModal" 
+      :title="followUpTitle" 
+      :buttons="getFollowUpButtons()"
+    >
+      <k-form ref="form" :schema="schema"/>
     </k-modal>
   </div>
 </template>
