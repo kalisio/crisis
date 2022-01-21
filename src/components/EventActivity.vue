@@ -7,10 +7,11 @@
       </div>
 
       <k-modal ref="uploaderModal">
-        <div slot="modal-content">
-          <k-uploader ref="uploader" :resource="objectId" :base-query="uploaderQuery()"
-            :options="uploaderOptions()" @uploader-ready="initializeMedias"/>
-        </div>
+        <k-uploader ref="uploader" 
+          :resource="objectId" 
+          :base-query="uploaderQuery()"
+          :options="uploaderOptions()" 
+          @uploader-ready="initializeMedias" />
       </k-modal>
 
       <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />

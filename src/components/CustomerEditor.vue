@@ -1,36 +1,40 @@
 <template>
-  <k-modal :title="$t('CustomerEditor.TITLE')" v-model="isModalOpened" @opened="$emit('opened')" @closed="$emit('closed')" :buttons="getButtons()">
-    <div slot="modal-content">
-      <div class="column">
-        <div>
-          <k-form ref="form" :schema="getSchema()" @form-ready="onFormReady"/>
-        </div>
-        <div>
-          <div>&nbsp;</div>
-          <p v-html="$t('CustomerEditor.BILLING_METHOD_MESSAGE')" />
-          <div v-if="hasCard" class="row no-margin">
-            <div class="col-11 self-center">
-              <span>&nbsp;</span>
-              <q-icon name="las la-credit-card" />
-              <span>&nbsp;{{customer.card.brand}}</span>
-              <span>&nbsp;XXXX-{{customer.card.last4}}</span>
-            </div>
-            <div class="col-1">
-              <q-btn id="clear-card-button" flat round color="grey-7" @click="onCardCleared">
-                <q-icon name="las la-times-circle" />
-              </q-btn>
-            </div>
+  <k-modal 
+    :title="$t('CustomerEditor.TITLE')" 
+    v-model="isModalOpened" 
+    @opened="$emit('opened')" 
+    @closed="$emit('closed')" 
+    :buttons="getButtons()"
+  >
+    <div class="column">
+      <div>
+        <k-form ref="form" :schema="getSchema()" @form-ready="onFormReady"/>
+      </div>
+      <div>
+        <div>&nbsp;</div>
+        <p v-html="$t('CustomerEditor.BILLING_METHOD_MESSAGE')" />
+        <div v-if="hasCard" class="row no-margin">
+          <div class="col-11 self-center">
+            <span>&nbsp;</span>
+            <q-icon name="las la-credit-card" />
+            <span>&nbsp;{{customer.card.brand}}</span>
+            <span>&nbsp;XXXX-{{customer.card.last4}}</span>
           </div>
-          <div v-else class="row no-margin">
-            <div class="col-11 self-center">
-              <card id="payment-card" class='k-stripe-card'
-              :stripe="$config('stripe.secretKey')"
-              :options="$config('stripe.options')"
-              @change='onCardUpdated' />
-            </div>
-            <div class="col-1 self-center">
-              <q-spinner v-show="isCreatingCard" color="grey-7" size="24px" />
-            </div>
+          <div class="col-1">
+            <q-btn id="clear-card-button" flat round color="grey-7" @click="onCardCleared">
+              <q-icon name="las la-times-circle" />
+            </q-btn>
+          </div>
+        </div>
+        <div v-else class="row no-margin">
+          <div class="col-11 self-center">
+            <card id="payment-card" class='k-stripe-card'
+            :stripe="$config('stripe.secretKey')"
+            :options="$config('stripe.options')"
+            @change='onCardUpdated' />
+          </div>
+          <div class="col-1 self-center">
+            <q-spinner v-show="isCreatingCard" color="grey-7" size="24px" />
           </div>
         </div>
       </div>

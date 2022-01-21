@@ -4,8 +4,9 @@
     :buttons="buttons" 
     v-model="isModalOpened"
     @opened="$emit('opened')"
-    @closed="$emit('closed')">
-    <div slot="modal-content" class="column xs-gutter">
+    @closed="$emit('closed')"
+  >
+    <div class="column xs-gutter">
       <!-- Form to be used for workflow property -->
       <event-template-workflow-form :class="{ 'light-dimmed': applyInProgress }" ref="form" :schema="schema" />
       <q-spinner-cube color="primary" class="fixed-center" v-if="applyInProgress" size="4em"/>

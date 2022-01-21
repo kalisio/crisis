@@ -4,8 +4,9 @@
     :buttons="buttons" 
     v-model="isModalOpened"
     @opened="$emit('opened')"
-    @closed="$emit('closed')">
-    <div slot="modal-content" class="column xs-gutter">
+    @closed="$emit('closed')"
+  >
+    <div class="column xs-gutter">
       <!-- Form to be used for standard properties -->
       <k-form :class="{ 'light-dimmed': applyInProgress }" ref="form" :schema="schema" />
       <!-- Toggle used to copy the source template workflow on creation -->

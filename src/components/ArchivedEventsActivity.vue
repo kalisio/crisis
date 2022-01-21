@@ -61,8 +61,9 @@
         id="chart-settings-modal" 
         :title="$t('ArchivedEventsActivity.CHART_SETTINGS_MODAL_TITLE')"
         :buttons="getChartSettingsModalButtons()"
-        ref="chartSettingsModal">
-        <div slot="modal-content">
+        ref="chartSettingsModal"
+      >
+        <div>
           <q-select id="chart-type" v-model="chartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')"
           :options="chartOptions" @input="refreshChart"/>
           <q-select id="count-per-chart" v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')"

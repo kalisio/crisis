@@ -4,11 +4,9 @@
     :buttons="getButtons()" 
     v-model="isModalOpened"
     @opened="$emit('opened')"
-    @closed="$emit('closed')">
-    <div slot="modal-content" class="column xs-gutter">
-      <k-form :class="{ 'light-dimmed': applyInProgress }" ref="planForm"
-        :contextId="contextId" :objectId="objectId" :schema="schema" />
-    </div>
+    @closed="$emit('closed')"
+  >
+    <k-form ref="planForm":contextId="contextId" :objectId="objectId" :schema="schema" />
   </k-modal>
 </template>
 

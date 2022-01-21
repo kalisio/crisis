@@ -10,7 +10,7 @@
         :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
         :buttons="getTemplateModalButtons()" 
         :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }">
-        <k-list ref="templates" slot="modal-content" service="event-templates" :contextId="contextId"
+        <k-list ref="templates" service="event-templates" :contextId="contextId"
           :list-strategy="'smart'" @selection-changed="onCreateEvent" />
       </k-modal>
 
@@ -18,7 +18,7 @@
         :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
         :buttons="getAlertModalButtons()" 
         :options="{}">
-        <div slot="modal-content">
+        <div>
           <alert-form :class="{ 'light-dimmed': inProgress }" ref="alertForm"
             :layer="alertLayer" :feature="alertFeature" :forecastModel="forecastModel"/>
         </div>
