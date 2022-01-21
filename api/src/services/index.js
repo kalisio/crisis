@@ -3,7 +3,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import pointOnFeature from '@turf/point-on-feature'
 import makeDebug from 'debug'
-import kCore, { createObjectID } from '@kalisio/kdk/core.api'
+import kCore, { createObjectID, permissions } from '@kalisio/kdk/core.api'
 import kMap, {
   createFeaturesService, removeFeaturesService,
   createCatalogService, removeCatalogService,
@@ -324,6 +324,25 @@ export default async function () {
           // Remove related cron-based task whenever an alert is removed
           service.on('removed', removeAlert(service.getContextId()).bind(app))
         }
+      }
+      // Make remote services compliant with our internal app services so that permissions can be used
+      if (service.key === 'kano' || service.key === 'weacast') {
+        // Remote service are registered according to their path, ie with API prefix (but without trailing /)
+        let remoteService = app.service(service.path)
+        // Get name from service path without api prefix
+        const name = service.path.replace(app.get('apiPath').substring(1) + '/', '')
+        remoteService.name = name
+        // As remote services have no context, from the internal point of view path = name
+        // Unfortunately this property is already set and used by feathers-distributed and should not be altered
+        //remoteService.path = name
+        remoteService.app = app
+        remoteService.getPath = function (withApiPrefix) { return (withApiPrefix ? app.get('apiPath') + '/' + name : name) }
+        // Register default permissions for it
+        permissions.defineAbilities.registerHook((subject, can, cannot) => {
+          can('service', name)
+          can('read', name)
+          if (name === 'probes') can('create', name)
+        })
       }
     })
     await app.configure(kCore)
