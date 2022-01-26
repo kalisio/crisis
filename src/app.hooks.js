@@ -1,3 +1,4 @@
+import _ from 'lodash'
 // Application hooks that run for every service
 import { permissions as corePermissions, hooks as coreHooks } from '@kalisio/kdk/core.client'
 import { permissions as mapPermissions } from '@kalisio/kdk/map.common'
@@ -21,7 +22,14 @@ export default {
     get: [],
     create: [],
     update: [],
-    patch: [],
+    // Changes are not authorized on authorisations
+    patch: [ (hook) => {
+      if (_.get(hook, 'service.path', '').endsWith('users') ||
+          _.get(hook, 'service.path', '').endsWith('members')) {
+        delete _.unset(hook, 'data.organisations')
+        delete _.unset(hook, 'data.groups')
+      }
+    }],
     remove: []
   },
 
