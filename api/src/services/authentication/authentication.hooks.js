@@ -16,7 +16,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [coreHooks.verifyGuest, coreHooks.consentGuest, iff(hook => process.env.API_GATEWAY, async hook => {
+    create: [coreHooks.verifyGuest, coreHooks.consentGuest, iff(hook => process.env.API_GATEWAY_URL, async hook => {
       const config = hook.app.get('authentication')
       if (!config) return hook
       // Default appId for Akt'n'Map used to access the gateway

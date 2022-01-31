@@ -37,7 +37,7 @@ if (process.env.SUBDOMAIN) {
   }
 }
 // On a developer machine will do domain = gateway = localhost
-const gateway = domain.replace('aktnmap', 'api')
+const gateway = (process.env.API_GATEWAY_URL ? process.env.API_GATEWAY_URL : domain.replace('aktnmap', 'api'))
 
 const contextHelp = function (tour) {
   return Object.assign({
