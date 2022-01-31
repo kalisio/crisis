@@ -6,8 +6,7 @@ import { countMembers, memberExists, removeMember } from './members'
 const suite = 'account'
 
 describe(`suite:${suite}`, () => {
-  let runner
-  let page
+  let runner, page, api, client
   let user = {
     name: 'My name',
     email: 'my.name@kalisio.xyz',
@@ -22,6 +21,10 @@ describe(`suite:${suite}`, () => {
   }
 
   before(async () => {
+    api = new core.Api({
+      appName: 'aktnmap'
+    })
+    client = api.createClient()
     runner = new core.Runner(suite, {
       appName: 'aktnmap',
       browser: {
@@ -101,5 +104,6 @@ describe(`suite:${suite}`, () => {
 
   after(async () => {
     await runner.stop()
+    await client.removeUser(user)
   })
 })
