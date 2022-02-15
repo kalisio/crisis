@@ -76,7 +76,7 @@ describe(`suite:${suite}`, () => {
     expect(await groups.groupExists(page, org, group)).to.be.true
   })
 
-  it('org owner can add members to his group', async () => {
+  it('org owner can add members to a group', async () => {
     const group = _.find(org.groups, { name: 'Group 1' })
     let member = _.find(org.members, { name: 'Manager' })
     await members.joinGroup(page, org, group, member, 'manager')
@@ -103,7 +103,7 @@ describe(`suite:${suite}`, () => {
     expect(await core.elementExists(page, '#leave-group')).to.be.false
   })
 
-  it('org owner can remove members from his group', async () => {
+  it('org owner can remove members from a group', async () => {
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, org.owner)
@@ -115,7 +115,7 @@ describe(`suite:${suite}`, () => {
     expect(await members.countMembers(page, org)).to.equal(2)
   })
 
-  it('org owner can edit his group', async () => {
+  it('org owner can edit a group', async () => {
     const group = _.find(org.groups, { name: 'Group 1' })
     await groups.editGroupName(page, org, group, 'New Group 1')
     group.name = 'New Group 1'
@@ -125,12 +125,13 @@ describe(`suite:${suite}`, () => {
     expect(await groups.groupExists(page, org, group, 'description')).to.be.true
   })
 
-  it('last owner cannot be removed from group', async () => {
+  // Now managers can manage all groups it can be left empty
+  it('last member can be removed from a group', async () => {
     const group = _.find(org.groups, { name: 'New Group 1' })
     await members.leaveGroup(page, org, group, org.owner)
-    expect(await core.isToastVisible(page)).to.be.true
+    expect(await core.isToastVisible(page)).to.be.false
     // This one generates an expected error message
-    runner.clearErrors()
+    //runner.clearErrors()
   })
 
   it('org manager can create a group', async () => {
@@ -144,7 +145,7 @@ describe(`suite:${suite}`, () => {
     expect(await groups.groupExists(page, org, group)).to.be.true
   })
 
-  it('org manager can add members to his group', async () => {
+  it('org manager can add members to a group', async () => {
     const group = _.find(org.groups, { name: 'Group 2' })
     const member = _.find(org.members, { name: 'Member' })
     await members.joinGroup(page, org, group, member, 'manager')
@@ -172,6 +173,18 @@ describe(`suite:${suite}`, () => {
 
   it('group manager can edit his group', async () => {
     const group = _.find(org.groups, { name: 'Group 2' })
+    // No edition on group
+    expect(await groups.groupActionExists(page, org, group, 'edit-item-header')).to.be.false
+    expect(await groups.groupActionExists(page, org, group, 'edit-item-description')).to.be.false
+    expect(await groups.groupActionExists(page, org, group, 'remove-item-header')).to.be.false
+  })
+
+  it('org manager can edit a group', async () => {
+    const member = _.find(org.members, { name: 'Manager' })
+    await core.logout(page)
+    await core.goToLoginScreen(page)
+    await core.login(page, member)
+    const group = _.find(org.groups, { name: 'Group 2' })
     await groups.editGroupName(page, org, group, 'New Group 2')
     group.name = 'New Group 2'
     expect(await groups.groupExists(page, org, group, 'name')).to.be.true
@@ -180,17 +193,13 @@ describe(`suite:${suite}`, () => {
     expect(await groups.groupExists(page, org, group, 'description')).to.be.true
   })
 
-  it('org manager can remove his group', async () => {
-    const member = _.find(org.members, { name: 'Manager' })
-    await core.logout(page)
-    await core.goToLoginScreen(page)
-    await core.login(page, member)
+  it('org manager can remove a group', async () => {
     const group = _.find(org.groups, { name: 'New Group 2' })
     await groups.removeGroup(page, org, group)
     expect(await groups.countGroups(page, org)).to.equal(0)
   })
 
-  it('org owner can remove his group', async () => {
+  it('org owner can remove a group', async () => {
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, org.owner)
