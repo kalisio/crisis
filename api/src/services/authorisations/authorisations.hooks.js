@@ -22,7 +22,8 @@ module.exports = {
     update: [],
     patch: [],
     remove: [
-      coreHooks.preventEscalation,
+      // No escalation possible on groups as there are only group managers now (no more owners)
+      when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations', coreHooks.preventEscalation),
       // Except when the resource is deleted by a owner check to keep at least one
       when(hook => hook.params.resource && !hook.params.resource.deleted,
         coreHooks.preventRemovingLastOwner('organisations')),
