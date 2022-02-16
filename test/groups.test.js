@@ -130,8 +130,8 @@ describe(`suite:${suite}`, () => {
     const group = _.find(org.groups, { name: 'New Group 1' })
     const member = _.find(org.members, { name: 'Member' })
     await members.leaveGroup(page, org, group, member)
-    expect(await core.isToastVisible(page)).to.be.false
     // This one generates an expected error message
+    //expect(await core.isToastVisible(page)).to.be.true
     //runner.clearErrors()
   })
 
@@ -142,7 +142,7 @@ describe(`suite:${suite}`, () => {
     await core.login(page, member)
     const group = _.find(org.groups, { name: 'Group 2' })
     await groups.createGroup(page, org, group)
-    expect(await groups.countGroups(page, org)).to.equal(1)
+    expect(await groups.countGroups(page, org)).to.equal(2)
     expect(await groups.groupExists(page, org, group)).to.be.true
   })
 
@@ -197,7 +197,7 @@ describe(`suite:${suite}`, () => {
   it('org manager can remove a group', async () => {
     const group = _.find(org.groups, { name: 'New Group 2' })
     await groups.removeGroup(page, org, group)
-    expect(await groups.countGroups(page, org)).to.equal(0)
+    expect(await groups.countGroups(page, org)).to.equal(1)
   })
 
   it('org owner can remove a group', async () => {
