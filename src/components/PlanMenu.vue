@@ -109,7 +109,7 @@ export default {
     },
     plan: {
       handler () {
-        if (this.plan) this.objectiveFilters = _.fill(Array(this.plan.objectives.length), false)
+        if (this.plan) this.objectiveFilters = _.fill(Array(_.size(this.plan.objectives), false))
       }
     },
     objectiveFilters: {
