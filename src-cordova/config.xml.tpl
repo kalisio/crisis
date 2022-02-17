@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="$PACKAGE_ID" version="1.4.0" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER" xmlns:android="http://schemas.android.com/apk/res/android">
+<widget id="$PACKAGE_ID" version="1.3.0" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER" xmlns:android="http://schemas.android.com/apk/res/android">
   <name>$TITLE</name>
   <description>Akt'n'Map application</description>
   <icon src="res/icons/icon.png"/>
