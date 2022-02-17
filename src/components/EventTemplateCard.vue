@@ -1,20 +1,20 @@
 <template>
-  <k-card 
+  <k-card
     v-bind="$props"
-    :actions="itemActions" 
+    :actions="itemActions"
     :bind-actions="false">
     <!--
       Card content
      -->
     <template slot="card-content">
        <!-- Participants section -->
-      <k-card-section 
-        :title="$t('EventTemplateCard.PARTICIPANTS_SECTION')" 
-        :actions="participantsActions" 
+      <k-card-section
+        :title="$t('EventTemplateCard.PARTICIPANTS_SECTION')"
+        :actions="participantsActions"
         :context="$props">
         <div v-if="hasParticipants">
-          <k-chips-pane 
-            :chips="item.participants" 
+          <k-chips-pane
+            :chips="item.participants"
             :value-path="['profile.name', 'value', 'name']" />
         </div>
         <div v-else>
@@ -22,13 +22,13 @@
         </div>
       </k-card-section>
       <!-- Coordinators section -->
-      <k-card-section 
-        :title="$t('PlanTemplateCard.COORDINATORS_SECTION')" 
-        :actions="coordinatorsActions" 
+      <k-card-section
+        :title="$t('PlanTemplateCard.COORDINATORS_SECTION')"
+        :actions="coordinatorsActions"
         :context="$props">
         <div v-if="hasCoordinators">
-          <k-chips-pane 
-            :chips="item.coordinators" 
+          <k-chips-pane
+            :chips="item.coordinators"
             :value-path="['profile.name', 'value', 'name']" />
         </div>
         <div v-else>
@@ -36,9 +36,9 @@
         </div>
       </k-card-section>
       <!-- Expiry duration section -->
-      <k-card-section 
-        :title="$t('EventTemplateCard.EXPIRY_DURATION_SECTION')" 
-        :actions="expiryDurationActions" 
+      <k-card-section
+        :title="$t('EventTemplateCard.EXPIRY_DURATION_SECTION')"
+        :actions="expiryDurationActions"
         :context="$props">
         <div v-if="hasExpiryDuration">
           {{ $t('EventTemplateCard.EXPIRY_DURATION_LABEL', { days: item.expiryDuration }) }}
@@ -48,16 +48,16 @@
         </div>
       </k-card-section>
       <!-- Permission section -->
-      <k-card-section 
-        :title="$t('EventTemplateCard.PERMISSION_SECTION')" 
-        :actions="permissionActions" 
+      <k-card-section
+        :title="$t('EventTemplateCard.PERMISSION_SECTION')"
+        :actions="permissionActions"
         :context="$props">
         <q-chip :label="permission" outline square dense color="grey-10" />
       </k-card-section>
       <!-- Workflow section -->
-      <k-card-section 
-        :title="$t('EventTemplateCard.WORKFLOW_SECTION')" 
-        :actions="workflowActions" 
+      <k-card-section
+        :title="$t('EventTemplateCard.WORKFLOW_SECTION')"
+        :actions="workflowActions"
         :context="$props">
          <div v-if="hasWorkflow">
            {{ $t('EventTemplateCard.WORKFLOW_LABEL', { count: item.workflow.length }) }}
@@ -73,7 +73,7 @@
 <script>
 import _ from 'lodash'
 import { Dialog } from 'quasar'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
   name: 'event-template-card',

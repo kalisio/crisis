@@ -14,7 +14,7 @@ export async function goToGroupsActivity (page, organisation, wait = 2000) {
     // We can pass an object or a name
     organisation = organisation.name || organisation
     await goToOrganisationsActivity(page, wait)
-    debug(`Navigating to groups activity`)
+    debug('Navigating to groups activity')
     await core.expandCard(page, organisationComponent, organisation)
     await core.clickItemAction(page, organisationComponent, organisation, 'organisation-groups', wait)
   }
@@ -22,17 +22,20 @@ export async function goToGroupsActivity (page, organisation, wait = 2000) {
 
 export async function countGroups (page, organisation) {
   await goToGroupsActivity(page, organisation)
-  return core.countItems(page, groupComponent)
+  const count = await core.countItems(page, groupComponent)
+  return count
 }
 
 export async function groupExists (page, organisation, group, property = 'name') {
   await goToGroupsActivity(page, organisation)
-  return core.itemExists(page, groupComponent, _.get(group, property))
+  const exists = await core.itemExists(page, groupComponent, _.get(group, property))
+  return exists
 }
 
 export async function groupActionExists (page, organisation, group, action) {
   await goToGroupsActivity(page, organisation)
-  return core.itemActionExists(page, groupComponent, group.name, action)
+  const exists = await core.itemActionExists(page, groupComponent, group.name, action)
+  return exists
 }
 
 export async function createGroup (page, organisation, group, wait = 1000) {

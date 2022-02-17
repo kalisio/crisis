@@ -3,7 +3,7 @@ import * as pages from '../test/page-models'
 import Subtitle from './subtitle'
 
 fixture`Basic`// declare the fixture
-  .page`${pages.getUrl()}`  // specify the start page
+  .page`${pages.getUrl()}` // specify the start page
   // test.before/test.after overrides fixture.beforeEach/fixture.afterEach hook,
   // so implement one in your test if you'd like another behaviour
   .beforeEach(async test => {

@@ -1,7 +1,7 @@
 <template>
   <k-modal
-    :title="title" 
-    :buttons="buttons" 
+    :title="title"
+    :buttons="buttons"
     v-model="isModalOpened"
     @opened="$emit('opened')"
     @closed="$emit('closed')"
@@ -62,17 +62,21 @@ export default {
       else return this.$t('PlanObjectivesEditor.EDIT', { name: this.editedObjective.name })
     },
     buttons () {
-      if (this.mode === 'list') return [
-        { id: 'close-button', label: 'CLOSE', renderer: 'form-button', handler: () => this.closeModal() }
-      ]
-      else if (this.mode === 'add') return [
-        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => { this.mode = 'list' } },
-        { id: 'add-plan-objective-button', label: 'CREATE', renderer: 'form-button', handler: () => this.onCreatePlanObjective() }
-      ]
-      else return [
-        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => { this.mode = 'list' } },
-        { id: 'add-plan-objective-button', label: 'UPDATE', renderer: 'form-button', handler: () => this.onEditPlanObjective() }
-      ]
+      if (this.mode === 'list') {
+        return [
+          { id: 'close-button', label: 'CLOSE', renderer: 'form-button', handler: () => this.closeModal() }
+        ]
+      } else if (this.mode === 'add') {
+        return [
+          { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => { this.mode = 'list' } },
+          { id: 'add-plan-objective-button', label: 'CREATE', renderer: 'form-button', handler: () => this.onCreatePlanObjective() }
+        ]
+      } else {
+        return [
+          { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => { this.mode = 'list' } },
+          { id: 'add-plan-objective-button', label: 'UPDATE', renderer: 'form-button', handler: () => this.onEditPlanObjective() }
+        ]
+      }
     }
   },
   data () {
@@ -102,8 +106,13 @@ export default {
       return {
         list: [
           { component: 'QSpace' },
-          { id: 'add-plan-objective', icon: 'las la-plus-circle', tooltip: 'PlanObjectivesEditor.ADD_OBJECTIVE',
-            size: '1rem', handler: () => { this.mode = 'add' } }
+          {
+            id: 'add-plan-objective',
+            icon: 'las la-plus-circle',
+            tooltip: 'PlanObjectivesEditor.ADD_OBJECTIVE',
+            size: '1rem',
+            handler: () => { this.mode = 'add' }
+          }
         ],
         edit: [],
         add: []
@@ -126,14 +135,14 @@ export default {
             }
           },
           description: {
-            type: 'string', 
+            type: 'string',
             field: {
               component: 'form/KTextareaField',
               label: 'schemas.PLAN_OBJECTIVE_DESCRIPTION_FIELD_LABEL'
             }
           },
           location: {
-            type: 'object', 
+            type: 'object',
             field: {
               component: 'form/KLocationField',
               label: 'schemas.PLAN_OBJECTIVE_LOCATION_FIELD_LABEL',
@@ -166,18 +175,18 @@ export default {
       }
       // After create or edit jump to the list mode
       if (this.mode !== 'list') this.mode = 'list'
-      // Force the list to be refreshed 
+      // Force the list to be refreshed
       this.$refs.list.refreshCollection()
     },
     async onCreatePlanObjective () {
       const result = this.$refs.addForm.validate()
       if (result.isValid) {
-        let objective = result.values
+        const objective = result.values
         // We generate a UID so that we can identify each objective uniquely,
         // indeed names might be similar or be changed
         objective.id = uid().toString()
         // Update objectives in-memory and in DB
-        let objectives = _.get(this.object, 'objectives', [])
+        const objectives = _.get(this.object, 'objectives', [])
         // Check for unique name
         if (_.find(objectives, item => item.name === objective.name)) {
           this.$toast({ message: this.$t('errors.OBJECT_ID_ALREADY_TAKEN') })
@@ -192,7 +201,7 @@ export default {
         // Keep track of ID as it is lost in form
         const objective = Object.assign({ id: this.editedObjective.id }, result.values)
         // Update objectives in-memory and in DB
-        let objectives = _.get(this.object, 'objectives', [])
+        const objectives = _.get(this.object, 'objectives', [])
         // Check for unique name
         if (_.find(objectives, item => item.name === objective.name && item.id !== objective.id)) {
           this.$toast({ message: this.$t('errors.OBJECT_ID_ALREADY_TAKEN') })
@@ -213,7 +222,7 @@ export default {
     },
     async removePlanObjective (objective) {
       // Update objectives in-memory and in DB
-      let objectives = _.get(this.object, 'objectives', [])
+      const objectives = _.get(this.object, 'objectives', [])
       _.remove(objectives, item => item.id === objective.id)
       await this.updatePlanObjectives(objectives)
     }
@@ -232,6 +241,6 @@ export default {
     this.updatePlanObjectivesServiceStore()
     // Check whether the place has some objectives. Otherwise jump to the add mode
     if (_.isEmpty(this.object.objectives)) this.mode = 'add'
-  } 
+  }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <k-modal
-    :title="editorTitle" 
-    :buttons="getButtons()" 
+    :title="editorTitle"
+    :buttons="getButtons()"
     v-model="isModalOpened"
     @opened="$emit('opened')"
     @closed="$emit('closed')"
@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import { mixins } from '@kalisio/kdk/core.client'
 
 const editorMixin = mixins.baseEditor(['planForm'])
@@ -36,7 +35,7 @@ export default {
     getButtons () {
       return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
-        { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply()  }
+        { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
       ]
     },
     async loadObject () {

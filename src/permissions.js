@@ -153,7 +153,7 @@ export function defineUserAbilities (subject, can, cannot, app) {
   defineEventAbilities(subject, can, cannot, app)
   definePlanAbilities(subject, can, cannot, app)
   defineBillingAbilities(subject, can, cannot, app)
-  
+
   if (subject && subject._id) {
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {

@@ -8,19 +8,21 @@ export const organisationComponent = 'OrganisationCard'
 export async function goToOrganisationsActivity (page, wait = 2000) {
   const url = page.url()
   if (!url.includes('organisations')) {
-    debug(`Navigating to organisations activity`)
+    debug('Navigating to organisations activity')
     await core.clickLeftPaneAction(page, 'my-organisations', wait)
   }
 }
 
 export async function countOrganisations (page) {
   await goToOrganisationsActivity(page)
-  return core.countItems(page, organisationComponent)
+  const count = await core.countItems(page, organisationComponent)
+  return count
 }
 
 export async function organisationExists (page, organisation) {
   await goToOrganisationsActivity(page)
-  return core.itemExists(page, organisationComponent, organisation.name)
+  const exists = await core.itemExists(page, organisationComponent, organisation.name)
+  return exists
 }
 
 export async function createOrganisation (page, organisation, wait = 1000) {

@@ -8,13 +8,13 @@
         <k-history
           v-if="height"
           id="history"
-          service="archived-plans" 
-          :append-items="true" 
+          service="archived-plans"
+          :append-items="true"
           :base-query="baseQuery"
-          :filter-query="filterQuery" 
+          :filter-query="filterQuery"
           :renderer="renderer"
           date-field="updatedAt"
-          :contextId="contextId" 
+          :contextId="contextId"
           :height="height">
           <template slot="empty-history">
             <div class="absolute-center">
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { permissions } from '@kalisio/kdk/core.common'
 import * as utils from '../utils'
@@ -97,7 +98,7 @@ export default {
     eventsService.on('patched', this.updateFilterQuery)
     eventsService.on('updated', this.updateFilterQuery)
     eventsService.on('removed', this.updateFilterQuery)
-    
+
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },

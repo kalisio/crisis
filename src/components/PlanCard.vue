@@ -1,8 +1,8 @@
 <template>
-  <k-card 
-    v-bind="$props" 
-    :header="header" 
-    :actions="itemActions" 
+  <k-card
+    v-bind="$props"
+    :header="header"
+    :actions="itemActions"
     :bind-actions="false">
     <!--
       Card content
@@ -19,22 +19,22 @@
         <k-stamp v-else :text="'PlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
       </k-card-section>
       <!-- coordinators section -->
-      <k-card-section 
-        :title="$t('PlanCard.COORDINATORS_SECTION')" 
-        :actions="coordinatorsActions" 
+      <k-card-section
+        :title="$t('PlanCard.COORDINATORS_SECTION')"
+        :actions="coordinatorsActions"
         :context="$props">
         <k-chips-pane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
       </k-card-section>
       <!-- Events section -->
       <k-card-section :title="$t('PlanCard.EVENTS_SECTION')">
         <div class="full-width row justify-between items-center no-wrap">
-          <k-action 
+          <k-action
             id= "plan-events"
             icon= "las la-fire"
             :label="$t('PlanCard.EVENTS', { count: eventsCount })"
             :route="{ name: 'events-activity', params: { contextId }, query: { plan: item._id } }" />
           <q-space />
-          <k-action 
+          <k-action
             v-if="canAccessCatalog"
             id= "plan-catalog"
             icon= "las la-map"
@@ -61,8 +61,8 @@ export default {
   mixins: [kCoreMixins.baseItem],
   computed: {
     header () {
-      let components = _.filter(this.itemActions, { scope: 'header' })
-      components.splice(0, 0, 
+      const components = _.filter(this.itemActions, { scope: 'header' })
+      components.splice(0, 0,
         { component: 'QBadge', label: this.item.template, color: 'grey-7' },
         { component: 'QSpace' })
       return components
@@ -77,7 +77,7 @@ export default {
       return _.filter(this.itemActions, { scope: 'location' })
     },
     coordinatorsActions () {
-      return _.filter(this.itemActions, { scope: 'coordinators'})
+      return _.filter(this.itemActions, { scope: 'coordinators' })
     },
     canAccessCatalog () {
       return this.$can('update', 'catalog', this.contextId)
@@ -97,12 +97,12 @@ export default {
   methods: {
     editObjectives () {
       this.$router.push({
-        name: 'edit-plan-objectives', params: { objectId: this.item._id } 
+        name: 'edit-plan-objectives', params: { objectId: this.item._id }
       })
     }
   },
   beforeCreate () {
-     // Load the required components
+    // Load the required components
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
     this.$options.components['k-card'] = this.$load('collection/KCard')
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')

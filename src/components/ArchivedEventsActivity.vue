@@ -19,13 +19,13 @@
         <k-history
           style="padding-top: 80px;"
           id="history"
-          service="archived-events" 
-          :append-items="true" 
+          service="archived-events"
+          :append-items="true"
           :base-query="baseQuery"
-          :filter-query="filterQuery" 
-          :renderer="renderer" 
+          :filter-query="filterQuery"
+          :renderer="renderer"
           date-field="updatedAt"
-          :contextId="contextId" 
+          :contextId="contextId"
           :list-strategy="'smart'"
           :height="height - 124">
           <template slot="empty-history">
@@ -57,8 +57,8 @@
         <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
           icon="las la-chevron-right" class="absolute-right" @click="onNextChart" />
       </div>
-      <k-modal 
-        id="chart-settings-modal" 
+      <k-modal
+        id="chart-settings-modal"
         :title="$t('ArchivedEventsActivity.CHART_SETTINGS_MODAL_TITLE')"
         :buttons="getChartSettingsModalButtons()"
         ref="chartSettingsModal"
@@ -83,7 +83,6 @@
 <script>
 import _ from 'lodash'
 import L from 'leaflet'
-import moment from 'moment'
 import chroma from 'chroma-js'
 import Chart from 'chart.js'
 import 'chartjs-plugin-labels'
@@ -156,14 +155,14 @@ export default {
       }, this.activityOptions.items)
     },
     baseQuery () {
-      let query = { $sort: { createdAt: -1 } }
+      const query = { $sort: { createdAt: -1 } }
       // When displaying events of all plans we'd like to have the plan object directly to ease processing
       if (!this.planId && this.showHistory) Object.assign(query, { planAsObject: true })
       Object.assign(query, this.getPlanQuery())
       return query
     },
     filterQuery () {
-      let query = _.clone(this.filter.query)
+      const query = _.clone(this.filter.query)
       Object.assign(query, this.getPlanObjectiveQuery())
       return query
     }
@@ -171,7 +170,7 @@ export default {
   data () {
     const chartTypes = ['pie', 'polarArea', 'radar', 'bar']
     const chartOptions = chartTypes.map(
-        type => ({ value: type, label: this.$i18n.t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`) }))
+      type => ({ value: type, label: this.$i18n.t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`) }))
     const paginationOptions = [{
       value: 0, label: this.$i18n.t('ArchivedEventsActivity.ALL_VALUES')
     }, {
@@ -195,7 +194,7 @@ export default {
       heatmap: false,
       byTemplate: false,
       heatmapRadius: 1,
-      //TODO
+      // TODO
       sortBy: {
         label: this.$i18n.t('ArchivedEventsActivity.SORT_BY_CREATED_DATE_LABEL'),
         value: 'createdAt'
@@ -218,7 +217,7 @@ export default {
       activityMixin.methods.configureActivity.call(this)
     },
     async getCatalogLayers () {
-      let layers = await kMapMixins.activity.methods.getCatalogLayers.call(this)
+      const layers = await kMapMixins.activity.methods.getCatalogLayers.call(this)
       // We only want base layers
       return _.filter(layers, { type: 'BaseLayer' })
     },
@@ -257,7 +256,9 @@ export default {
     getCollectionBaseQuery () {
       // No pagination in this case (map) and filter required data
       return Object.assign({
-        geoJson: true, $skip: 0, $limit: MAX_EVENTS,
+        geoJson: true,
+        $skip: 0,
+        $limit: MAX_EVENTS,
         $select: ['_id', 'name', 'description', 'icon', 'template', 'location',
           'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
       }, this.baseQuery)
@@ -273,9 +274,9 @@ export default {
     },
     async refreshEventsLayers () {
       await this.clearEventsLayers()
-      this.templates = (this.byTemplate ?
-        _.uniq(this.items.map(item => item.template)) :
-        [ this.$t('ArchivedEventsActivity.EVENTS_LAYER_NAME') ])
+      this.templates = (this.byTemplate
+        ? _.uniq(this.items.map(item => item.template))
+        : [this.$t('ArchivedEventsActivity.EVENTS_LAYER_NAME')])
       // Filter events without a location
       const events = _.filter(this.items, item => _.get(item, 'geometry'))
       for (let i = 0; i < this.templates.length; i++) {
@@ -293,8 +294,10 @@ export default {
             }, this.getHeatmapOptions())
           })
           // Then update it
-          await this.updateHeatmap(template, { type: 'FeatureCollection',
-            features: this.byTemplate ? _.filter(events, { template }) : events })
+          await this.updateHeatmap(template, {
+            type: 'FeatureCollection',
+            features: this.byTemplate ? _.filter(events, { template }) : events
+          })
         } else {
           // Create an empty layer used as a container for events
           await this.addLayer({
@@ -310,12 +313,14 @@ export default {
               isVisible: true
             }
           })// Then update it
-          await this.updateLayer(template, { type: 'FeatureCollection',
-            features: this.byTemplate ? _.filter(events, { template }) : events })
+          await this.updateLayer(template, {
+            type: 'FeatureCollection',
+            features: this.byTemplate ? _.filter(events, { template }) : events
+          })
         }
       }
       // Zoom on first layer
-      if (this.templates.length > 0 ) this.zoomToLayer(this.templates[0])
+      if (this.templates.length > 0) this.zoomToLayer(this.templates[0])
     },
     async clearEventsLayers () {
       for (let i = 0; i < this.templates.length; i++) {
@@ -416,8 +421,10 @@ export default {
       let data
       if (this.render.value === 'participants') {
         const response = await this.loadLogsService()
-          .find({ query: Object.assign({ $aggregate: 'template', lastInEvent: true },
-            this.baseQuery, { createdAt: { $gte: Time.getRange().start.format(), $lte: Time.getRange().end.format() } }) })
+          .find({
+            query: Object.assign({ $aggregate: 'template', lastInEvent: true },
+              this.baseQuery, { createdAt: { $gte: Time.getRange().start.format(), $lte: Time.getRange().end.format() } })
+          })
         data = response.map(item => ({ value: item._id, count: item.count }))
       } else {
         data = await Promise.all(this.values.map(async value => {
@@ -440,10 +447,10 @@ export default {
       const start = (this.currentChart - 1) * this.nbValuesPerChart.value
       const end = (this.nbValuesPerChart.value > 0 ? start + this.nbValuesPerChart.value : this.chartData.length)
       const colors = _.shuffle(chroma.scale('Spectral').colors(end - start))
-      //const title = this.$t('ArchivedEventsActivity.CHART_TITLE') + ' - ' + this.$t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`)
+      // const title = this.$t('ArchivedEventsActivity.CHART_TITLE') + ' - ' + this.$t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`)
       let title = this.$t('ArchivedEventsActivity.CHART_TITLE')
       if (this.nbCharts > 1) title += ` (${this.currentChart}/${this.nbCharts})`
-      let config = {
+      const config = {
         type,
         data: {
           labels: this.values.slice(start, end),
@@ -453,7 +460,7 @@ export default {
         },
         options: {
           responsive: true,
-          title:{
+          title: {
             display: true,
             text: title
           }
@@ -487,10 +494,10 @@ export default {
         _.set(config, 'options.scales.xAxes[0].ticks.minRotation', 70)
         _.set(config, 'options.scales.yAxes[0].ticks.beginAtZero', true)
         _.set(config, 'options.scales.yAxes[0].ticks.precision', 0)
-        //_.set(config, 'options.plugins.labels.fontSize', 0)
+        // _.set(config, 'options.plugins.labels.fontSize', 0)
       } else if (type === 'polarArea') {
         // FIXME: does not work in this case
-        //_.set(config, 'options.scale.display', false)
+        // _.set(config, 'options.scale.display', false)
       }
 
       return config
@@ -528,10 +535,10 @@ export default {
     async downloadEventsData () {
       let data, mimeType
       if (this.showMap) {
-        let geoJson = this.toGeoJson(this.$t('ArchivedEventsActivity.EVENTS_LAYER_NAME'))
+        const geoJson = this.toGeoJson(this.$t('ArchivedEventsActivity.EVENTS_LAYER_NAME'))
         geoJson.features = geoJson.features.map(feature => {
           // Move required event information into properties
-          let properties = _.omit(feature, ['type', 'geometry', 'icon', 'layer', 'properties',
+          const properties = _.omit(feature, ['type', 'geometry', 'icon', 'layer', 'properties',
             'participants', 'coordinators', 'workflow', 'hasWorkflow'])
           return Object.assign({ properties }, _.pick(feature, ['type', 'geometry']))
         })
@@ -541,9 +548,10 @@ export default {
         // Make full request to avoid pagination and filter required data
         const response = await this.getService().find({
           query: Object.assign({
-            $skip: 0, $limit: MAX_EVENTS,
+            $skip: 0,
+            $limit: MAX_EVENTS,
             $select: ['_id', 'name', 'description', 'template', 'location',
-                      'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
+              'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
           }, this.baseQuery)
         })
         // Check if overpass max limit
@@ -566,10 +574,10 @@ export default {
         mimeType = 'text/csv;charset=utf-8;'
         data = Papa.unparse(json)
       }
-      
-      kCoreUtils.downloadAsBlob(data, (this.showMap ?
-        this.$t('ArchivedEventsActivity.MAP_EXPORT_FILE') :
-        this.$t('ArchivedEventsActivity.EVENTS_EXPORT_FILE')), mimeType)
+
+      kCoreUtils.downloadAsBlob(data, (this.showMap
+        ? this.$t('ArchivedEventsActivity.MAP_EXPORT_FILE')
+        : this.$t('ArchivedEventsActivity.EVENTS_EXPORT_FILE')), mimeType)
     },
     getChartSettingsModalButtons () {
       return [
@@ -583,14 +591,14 @@ export default {
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-history'] = this.$load('collection/KHistory')
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
-    
+
     this.registerStyle('tooltip', this.getEventTooltip)
     this.registerStyle('popup', this.getEventPopup)
     this.registerStyle('markerStyle', this.getEventMarker)
-    
+
     // Initialize private properties
     this.templates = []
-  
+
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },

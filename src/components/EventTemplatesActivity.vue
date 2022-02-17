@@ -4,13 +4,13 @@
       <!--
         Templates collection
       -->
-      <k-grid 
+      <k-grid
         ref="eventTemplatesGrid"
-        service="event-templates" 
-        :renderer="renderer" 
+        service="event-templates"
+        :renderer="renderer"
         :contextId="contextId"
-        :base-query="sorter.query" 
-        :filter-query="filter.query" 
+        :base-query="sorter.query"
+        :filter-query="filter.query"
         :list-strategy="'smart'">
         <template slot="empty-section">
           <div class="absolute-center">

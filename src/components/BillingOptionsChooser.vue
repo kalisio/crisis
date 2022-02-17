@@ -20,7 +20,7 @@
               <div v-if="properties.stripeId">
                 <q-btn :id="option + '-action'" dense flat
                   :disable="properties.stripeId && !hasCustomer"
-                  :icon="value.includes(option) ? 'las la-check-circle' : ''" 
+                  :icon="value.includes(option) ? 'las la-check-circle' : ''"
                   @click="onOptionChanged(option, properties)">&nbsp;{{$t(value.includes(option) ? 'OptionsChooser.SUBSCRIBED' : 'OptionsChooser.SELECT')}}
                 </q-btn>
                 <q-tooltip v-if="properties.stripeId && !hasCustomer">
@@ -78,9 +78,9 @@ export default {
       // Ask confimation
       Dialog.create({
         title: this.$t('OptionsChooser.CONFIRM_DIALOG_TITLE'),
-        message: isRemoved ?
-          this.$t('OptionsChooser.CONFIRM_DIALOG_UNSUBSCRIBE_MESSAGE', { option: 'options.' + option + '_LABEL' }) :
-          this.$t('OptionsChooser.CONFIRM_DIALOG_SUBSCRIBE_MESSAGE', { option: 'options.' + option + '_LABEL' }),
+        message: isRemoved
+          ? this.$t('OptionsChooser.CONFIRM_DIALOG_UNSUBSCRIBE_MESSAGE', { option: 'options.' + option + '_LABEL' })
+          : this.$t('OptionsChooser.CONFIRM_DIALOG_SUBSCRIBE_MESSAGE', { option: 'options.' + option + '_LABEL' }),
         html: true,
         ok: {
           label: this.$t('OK'),
