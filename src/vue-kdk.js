@@ -1,16 +1,16 @@
 import _ from 'lodash'
 import { Dialog } from 'quasar'
 import config from 'config'
-import { utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { utils as kCoreUtils, Store, Layout, Events } from '@kalisio/kdk/core.client'
 import * as utils from './utils'
-import { Store, Layout, Events } from '@kalisio/kdk/core.client'
+
 import { Geolocation } from '@kalisio/kdk/map.client.map'
 
 export default {
   install (Vue, options) {
     // Inject in Vue the Kalisio features
     Vue.prototype.$store = Store
-    Vue.prototype.$layout = Layout    
+    Vue.prototype.$layout = Layout
     Vue.prototype.$events = Events
     Vue.prototype.$api = options.api
     Vue.prototype.$can = options.api.can
@@ -33,8 +33,10 @@ export default {
           message: this.$t('errors.UNSUBSCRIBED_OPTION'),
           persistent: true
         }).onOk(() => {
-          this.$router.push({ name: 'edit-organisation-billing',
-            params: { objectId: this.contextId, title: perspective.name } })
+          this.$router.push({
+            name: 'edit-organisation-billing',
+            params: { objectId: this.contextId, title: perspective.name }
+          })
         })
       }
     }

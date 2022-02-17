@@ -1,9 +1,9 @@
 <template>
-  <k-modal 
-    :title="$t('CustomerEditor.TITLE')" 
-    v-model="isModalOpened" 
-    @opened="$emit('opened')" 
-    @closed="$emit('closed')" 
+  <k-modal
+    :title="$t('CustomerEditor.TITLE')"
+    v-model="isModalOpened"
+    @opened="$emit('opened')"
+    @closed="$emit('closed')"
     :buttons="getButtons()"
   >
     <div class="column">
@@ -114,9 +114,8 @@ export default {
     },
     getButtons () {
       return [
-        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },        
-        { id: 'update-button', label: this.$t('CustomerEditor.UPDATE_BUTTON'), renderer: 'form-button', color: 'primary', handler: () => this.onUpdateClicked()
-        }
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
+        { id: 'update-button', label: this.$t('CustomerEditor.UPDATE_BUTTON'), renderer: 'form-button', color: 'primary', handler: () => this.onUpdateClicked() }
       ]
     },
     async open (customer, purchasers) {

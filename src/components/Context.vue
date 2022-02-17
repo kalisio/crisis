@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { Theme, mixins } from '@kalisio/kdk/core.client'
 
 export default {

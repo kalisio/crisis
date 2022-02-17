@@ -4,13 +4,13 @@
       <!--
         Templates collection
       -->
-      <k-grid 
+      <k-grid
         ref="plansGrid"
-        service="plans" 
-        :renderer="renderer" 
+        service="plans"
+        :renderer="renderer"
         :contextId="contextId"
-        :base-query="sorter.query" 
-        :filter-query="filterQuery" 
+        :base-query="sorter.query"
+        :filter-query="filterQuery"
         :list-strategy="'smart'">
         <template slot="empty-section">
           <div class="absolute-center">
@@ -40,7 +40,7 @@ export default {
   props: {
     contextId: {
       type: String,
-      default: '',
+      default: ''
     },
     mode: {
       type: String,
@@ -80,7 +80,7 @@ export default {
     async configureActivity () {
       activityMixin.methods.configureActivity.call(this)
       // Fab actions
-      const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.contextId)      
+      const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.contextId)
       if (this.$can('create', 'plans', this.contextId)) {
         const actions = []
         const planTemplatesService = this.$api.getService('plan-templates')
@@ -92,12 +92,12 @@ export default {
         let offset = 0
         for (let i = 0; i < batchCount; i++) {
           response = await planTemplatesService.find({
-             query: {
+            query: {
               $or: [
-                { 'permission': { $exists: false } },
-                { 'permission': { $in: permissions.getJuniorRoles(userRole) } }
+                { permission: { $exists: false } },
+                { permission: { $in: permissions.getJuniorRoles(userRole) } }
               ],
-              $skip: offset, 
+              $skip: offset,
               $limit: batchSize,
               $select: ['name', 'icon']
             }

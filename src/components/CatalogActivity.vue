@@ -8,7 +8,7 @@
 
       <k-modal ref="templateModal"
         :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
-        :buttons="getTemplateModalButtons()" 
+        :buttons="getTemplateModalButtons()"
         :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }">
         <k-list ref="templates" service="event-templates" :contextId="contextId"
           :list-strategy="'smart'" @selection-changed="onCreateEvent" />
@@ -16,7 +16,7 @@
 
       <k-modal ref="alertModal"
         :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
-        :buttons="getAlertModalButtons()" 
+        :buttons="getAlertModalButtons()"
         :options="{}">
         <div>
           <alert-form :class="{ 'light-dimmed': inProgress }" ref="alertForm"
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+import L from 'leaflet'
 import moment from 'moment'
 import chroma from 'chroma-js'
 import sift from 'sift'
@@ -126,7 +128,7 @@ export default {
       this.refreshObjectivesLayer()
     },
     getFeatureActions (feature, layer) {
-      let featureActions = []
+      const featureActions = []
       // When clicked on map
       if (!feature) {
         // We can initiate an event from location
@@ -140,12 +142,14 @@ export default {
         const selectedLayer = _.values(this.layers).filter(sift({
           isVisible: true, type: 'OverlayLayer', tags: { $in: ['weather'] }
         }))
-        if (selectedLayer.length > 0) featureActions.push({
-          name: 'create-alert',
-          icon: 'las la-bell',
-          handler: this.onCreateWeatherAlertAction,
-          label: this.$t('CatalogActivity.CREATE_WEATHER_ALERT_ACTION')
-        })
+        if (selectedLayer.length > 0) {
+          featureActions.push({
+            name: 'create-alert',
+            icon: 'las la-bell',
+            handler: this.onCreateWeatherAlertAction,
+            label: this.$t('CatalogActivity.CREATE_WEATHER_ALERT_ACTION')
+          })
+        }
       } else if (!this.isLayerEdited(layer.name)) { // Not in edition mode
         // Only on feature services targeting non-user data
         if (layer.variables) {
@@ -185,8 +189,7 @@ export default {
         }
         // Could be a population analysis
         const populationService = this.$api.getService('population')
-        if (populationService &&
-            (_.get(feature, 'geometry.type') === 'Polygon') || (_.get(feature, 'geometry.type') === 'MultiPolygon')) {
+        if (populationService && ((_.get(feature, 'geometry.type') === 'Polygon') || (_.get(feature, 'geometry.type') === 'MultiPolygon'))) {
           featureActions.push({
             name: 'analyze-population',
             icon: 'las la-users',
@@ -287,8 +290,8 @@ export default {
       const isActive = _.get(feature, 'status.active')
       const hasError = _.get(feature, 'status.error')
       return {
-        'color': (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green')),
-        'fillColor': (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green')),
+        color: (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green')),
+        fillColor: (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green'))
       }
     },
     getAlertMarker (feature, latlng, options) {
@@ -338,7 +341,7 @@ export default {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
       const color = kCoreUtils.getColorFromPalette(_.get(event, 'icon.color', 'blue'))
-      return { 'color': color, 'fillColor': chroma(color).alpha(0.5).hex() } // Transparency
+      return { color: color, fillColor: chroma(color).alpha(0.5).hex() } // Transparency
     },
     getEventPopup (event, layer, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
@@ -400,7 +403,7 @@ export default {
         name: 'create-event',
         params: Object.assign({
           contextId: this.contextId,
-          templateId: template._id,
+          templateId: template._id
         }, this.eventParams),
         query: { plan: this.planId }
       })
@@ -440,13 +443,13 @@ export default {
       try {
         // Add notification prefix to be used at creation,
         // Indeed, as alerting is a background process it will not be able to easily guess the user locale
-        let alert = Object.assign(result.values, {
+        const alert = Object.assign(result.values, {
           notification: {
             create: this.$t('EventNotifications.CREATE'),
             remove: this.$t('EventNotifications.REMOVE')
           }
         })
-        alert = await this.$api.getService('alerts').create(alert)
+        await this.$api.getService('alerts').create(alert)
       } catch (_) {
       }
       this.inProgress = false
@@ -460,7 +463,8 @@ export default {
       if (selectedLayer.length > 0) {
         this.alertFeature = {
           geometry: {
-            type: 'Point', coordinates: [
+            type: 'Point',
+            coordinates: [
               data.latlng.lng,
               data.latlng.lat
             ]
@@ -472,39 +476,41 @@ export default {
     },
     async onAnalyzePopulation (data) {
       const populationService = this.$api.getService('population')
-      const properties = ['Ind', 'Ind_0_3','Ind_4_5', 'Ind_6_10', 'Ind_11_17', 'Ind_18_24',
-                          'Ind_25_39', 'Ind_40_54', 'Ind_55_64', 'Ind_65_79', 'Ind_80p']
+      const properties = ['Ind', 'Ind_0_3', 'Ind_4_5', 'Ind_6_10', 'Ind_11_17', 'Ind_18_24',
+        'Ind_25_39', 'Ind_40_54', 'Ind_55_64', 'Ind_65_79', 'Ind_80p']
       // We aggregate all feature within the zone
       const matchStage = {
         geometry: {
           $geoIntersects: {
-             $geometry: data.feature.geometry
+            $geometry: data.feature.geometry
           }
         }
       }
-      let groupStage = {
+      const groupStage = {
         _id: null
       }
       properties.forEach(property => {
         groupStage[property] = { $sum: `$properties.${property}` }
       })
       // Now perform aggregation
-      const result = await populationService.find({ query: {
-        $aggregation: {
-          pipeline: [{
-            $match: matchStage
-          }, {
-            $group: groupStage
-          }]
+      const result = await populationService.find({
+        query: {
+          $aggregation: {
+            pipeline: [{
+              $match: matchStage
+            }, {
+              $group: groupStage
+            }]
+          }
         }
-      }})
+      })
       // Then display result
       if (result.length) {
         const formatter = new Intl.NumberFormat()
         let html = ''
         properties.forEach(property => {
           const count = formatter.format(Math.round(result[0][property]))
-          html += this.$t(`PopulationClasses.${property}`) + `: ${count}</br>` 
+          html += this.$t(`PopulationClasses.${property}`) + `: ${count}</br>`
         })
         await kCoreUtils.dialog({
           title: this.$t('CatalogActivity.POPULATION_ANALYSIS'),
@@ -576,7 +582,9 @@ export default {
       () => ({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }), () => ({}), { nbItemsPerPage: 0 })
     this.alerts.$on('collection-refreshed', this.onAlertCollectionRefreshed)
     this.events = this.configureCollection('events', () => Object.assign({
-      geoJson: true, $skip: 0, $limit: MAX_ITEMS,
+      geoJson: true,
+      $skip: 0,
+      $limit: MAX_ITEMS,
       $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
     }, this.getPlanQuery()), () => this.getPlanObjectiveQuery(), { nbItemsPerPage: 0 })
     this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
@@ -600,6 +608,6 @@ export default {
     cursor: wait;
   }
   .position-cursor {
-    cursor: url('../statics/position-cursor.png'), auto; 
+    cursor: url('../statics/position-cursor.png'), auto;
   }
 </style>

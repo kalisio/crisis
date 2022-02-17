@@ -8,7 +8,7 @@ const plansMixin = {
       objectiveFilters: []
     }
   },
-  watch:{
+  watch: {
     $route (to, from) {
       this.refreshPlanId()
     }
@@ -42,10 +42,12 @@ const plansMixin = {
       }
     },
     getPlanQuery () {
-      let query = {}
-      if (!_.isEmpty(this.planId)) Object.assign(query, {
-        plan: this.planId
-      })
+      const query = {}
+      if (!_.isEmpty(this.planId)) {
+        Object.assign(query, {
+          plan: this.planId
+        })
+      }
       return query
     },
     refreshPlanId () {
@@ -63,9 +65,9 @@ const plansMixin = {
     },
     async countClosedEvents (query = {}) {
       const eventsService = this.$api.getService('archived-events')
-      const response = await eventsService.find({ query: Object.assign(query, { deletedAt: { $exists: true }}, this.getPlanQuery()), $limit: 0 })
+      const response = await eventsService.find({ query: Object.assign(query, { deletedAt: { $exists: true } }, this.getPlanQuery()), $limit: 0 })
       return response.total
-    },
+    }
   },
   created () {
     // Jump to archive whenever required

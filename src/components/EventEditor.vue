@@ -1,17 +1,17 @@
 <template>
   <k-modal
-    :title="editorTitle" 
-    :buttons="getButtons()" 
+    :title="editorTitle"
+    :buttons="getButtons()"
     v-model="isModalOpened"
     @opened="$emit('opened')"
     @closed="$emit('closed')">
     <div class="column xs-gutter">
-        <k-form 
+        <k-form
           ref="eventForm"
-          :class="{ 'light-dimmed': applyInProgress }" 
-          :contextId="contextId" 
-          :objectId="objectId" 
-          :schema="schema" 
+          :class="{ 'light-dimmed': applyInProgress }"
+          :contextId="contextId"
+          :objectId="objectId"
+          :schema="schema"
           @field-changed="onFieldChanged" />
         <div class="row full-width justify-end">
           <q-checkbox :label="$t('EventEditor.NOTIFY')" v-model="notify" />
@@ -82,17 +82,17 @@ export default {
     getButtons () {
       if (this.getMode() === 'create') {
         return [
-          { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },        
-          { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply()  }
+          { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
+          { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
         ]
       }
       return [
-        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },        
-        { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply()  },
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
+        { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
       ]
     },
     async loadObject () {
-       if (this.templateId) {
+      if (this.templateId) {
         if (!this.template) this.template = await this.$api.getService('event-templates').get(this.templateId)
         this.object = Object.assign({}, this.template)
         // Keep track of template based on its name for statistics
@@ -109,7 +109,7 @@ export default {
         }
         // Setup expiry date from template
         if (this.object.expiryDuration) {
-          let expiryDate = moment().utc().add({ days: this.object.expiryDuration })
+          const expiryDate = moment().utc().add({ days: this.object.expiryDuration })
           this.object.expireAt = expiryDate.toISOString()
           delete this.object.expiryDuration
         }
@@ -118,7 +118,7 @@ export default {
         if (!_.isNil(this.longitude) && !_.isNil(this.latitude)) {
           this.object.location = { longitude: this.longitude, latitude: this.latitude }
         } else if (this.layerId) {
-          const layer = await this.$api.getService('catalog').get(this.layerId)
+          // const layer = await this.$api.getService('catalog').get(this.layerId)
           // Keep track of layer/feature ID
           this.object.layer = this.layerId
           if (this.featureId) {
@@ -180,7 +180,7 @@ export default {
     async loadSchema () {
       // Call super
       // Start from schema and clone it because it will be shared by all editors
-      let schema = _.cloneDeep(await kCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName()))
+      const schema = _.cloneDeep(await kCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName()))
       this.schema = schema
       this.updateSchema()
       return this.schema
@@ -189,16 +189,16 @@ export default {
       // Overriden to handle notification messages
       const query = editorMixin.methods.getBaseQuery.call(this)
 
-      //const notification = _.get(object, 'notification', true)
-      //if (notification) {
-      if (this.notify) {        
+      // const notification = _.get(object, 'notification', true)
+      // if (notification) {
+      if (this.notify) {
         if (this.getMode() === 'create') {
           query.notification = this.$t('EventNotifications.CREATE')
         } else if (this.getMode() === 'update') {
           query.notification = this.$t('EventNotifications.UPDATE')
         }
       }
-      //_.unset(object, 'notification')
+      // _.unset(object, 'notification')
       return query
     },
     onFieldChanged (field, value) {
@@ -217,8 +217,8 @@ export default {
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-form'] = this.$load('form/KForm')
   },
-  async created () { 
-    // Build the editor. 
+  async created () {
+    // Build the editor.
     // Note that if the event belongs to a plan we need to wait for the plan to be loaded
     if (!this.hasPlan()) this.refresh()
     else this.loadPlan()

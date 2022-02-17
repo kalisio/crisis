@@ -1,23 +1,23 @@
 const tours = require('../tours')
 
 module.exports = {
-  '/' : {
+  '/': {
     name: 'index',
     component: 'Index',
     // By default all child routes are considered unauthenticated,
     // will be overriden when required
     meta: { unauthenticated: true },
     children: {
-      'terms': 'Terms',
-      'login': {
+      terms: 'Terms',
+      login: {
         component: 'authentication/KLogin',
         tour: tours.login
       },
-      'logout': {
+      logout: {
         component: 'authentication/KLogout',
         meta: { authenticated: true }
       },
-      'register': {
+      register: {
         component: 'authentication/KRegister',
         tour: tours.register
       },
@@ -49,7 +49,7 @@ module.exports = {
         component: 'account/KChangeIdentity',
         meta: { authenticated: true }
       },
-      'home': {
+      home: {
         // The name of the route has to be set the default child
         name: '',
         component: 'layout/KHome',
@@ -62,14 +62,14 @@ module.exports = {
             tour: tours['side-nav'],
             redirect: { name: 'organisations-activity' }
           },
-          'organisations': {
+          organisations: {
             name: 'organisations-activity',
             component: 'team/KOrganisationsActivity',
             tour: {
-              'organisations-activity': tours['organisations']
+              'organisations-activity': tours.organisations
             },
             children: {
-              'create': {
+              create: {
                 name: 'create-organisation',
                 component: 'editor/KModalEditor',
                 props: true,
@@ -90,10 +90,10 @@ module.exports = {
                     title: route.params.title,
                     perspective: 'billing',
                     perspectiveAsObject: true
-                  } 
+                  }
                 },
                 tour: tours['edit-organisation-billing']
-              },
+              }
             }
           },
           'account/:page': {
@@ -101,8 +101,8 @@ module.exports = {
             component: 'account/KAccountActivity',
             props: true,
             tour: {
-              'profile': tours['account-profile'],
-              'security': tours['account-security'],
+              profile: tours['account-profile'],
+              security: tours['account-security'],
               'danger-zone': tours['account-dz']
             }
           },
@@ -119,12 +119,12 @@ module.exports = {
                 redirect: { name: 'events-activity' },
                 tour: tours.context
               },
-              'members': {
-                name: 'members-activity', 
-                component: 'team/KMembersActivity', 
+              members: {
+                name: 'members-activity',
+                component: 'team/KMembersActivity',
                 props: true,
                 children: {
-                  'add': {
+                  add: {
                     name: 'add-member',
                     component: 'team/KAddMember',
                     props: true,
@@ -151,7 +151,7 @@ module.exports = {
                 },
                 tour: tours.members
               },
-              'tags': {
+              tags: {
                 name: 'tags-activity',
                 component: 'team/KTagsActivity',
                 props: true,
@@ -160,16 +160,16 @@ module.exports = {
                     name: 'edit-tag',
                     component: 'editor/KModalEditor',
                     props: true
-                  },
+                  }
                 },
                 tour: tours.tags
               },
-              'groups': {
+              groups: {
                 name: 'groups-activity',
                 component: 'team/KGroupsActivity',
                 props: true,
                 children: {
-                  'create': {
+                  create: {
                     name: 'create-group',
                     component: 'editor/KModalEditor',
                     props: true,
@@ -193,8 +193,8 @@ module.exports = {
                   'favorite-views': tours['favorite-views'],
                   'catalog-panel': tours['catalog-panel'],
                   'catalog-categories': tours['catalog-categories'],
-                  'timeline': tours['timeline'],
-                  'fab': tours['fab']
+                  timeline: tours.timeline,
+                  fab: tours.fab
                 },
                 children: {
                   add: {
@@ -214,7 +214,7 @@ module.exports = {
                   }
                 }
               },
-              'plans': {
+              plans: {
                 name: 'plans-activity',
                 component: 'PlansActivity',
                 props: true,
@@ -251,7 +251,7 @@ module.exports = {
                 },
                 tour: tours['archived-plans']
               },
-              'events': {
+              events: {
                 name: 'events-activity',
                 component: 'EventsActivity',
                 props: true,
@@ -283,8 +283,8 @@ module.exports = {
                 },
                 tour: {
                   'archived-events-activity': tours['archived-events'],
-                  'map': tours['archived-events-map'],
-                  'chart': tours['archived-events-chart']
+                  map: tours['archived-events-map'],
+                  chart: tours['archived-events-chart']
                 }
               },
               'events/:objectId/:south?/:west?/:north?/:east?': {
@@ -297,7 +297,7 @@ module.exports = {
                     component: 'EventLogEditor',
                     props: true
                   },
-                  'edit': {
+                  edit: {
                     name: 'edit-map-event',
                     component: 'EventEditor',
                     props: true
@@ -329,7 +329,7 @@ module.exports = {
                         objectId: route.params.objectId,
                         perspective: 'workflow',
                         perspectiveAsObject: false
-                      } 
+                      }
                     },
                     tour: tours['edit-event-template-workflow']
                   }

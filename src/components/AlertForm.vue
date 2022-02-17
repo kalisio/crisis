@@ -98,13 +98,13 @@ export default {
       return (this.layer ? this.layer.variables : [])
     },
     weatherPeriodOptions () {
-      return this.generatePeriodOptions([60, 3*60, 6*60, 12*60, 24*60, 48*60, 72*60, 96*60])
+      return this.generatePeriodOptions([60, 3 * 60, 6 * 60, 12 * 60, 24 * 60, 48 * 60, 72 * 60, 96 * 60])
     },
     measurePeriodOptions () {
-      return this.generatePeriodOptions([15, 30, 60, 3*60, 6*60, 12*60, 24*60, 48*60, 72*60, 96*60])
+      return this.generatePeriodOptions([15, 30, 60, 3 * 60, 6 * 60, 12 * 60, 24 * 60, 48 * 60, 72 * 60, 96 * 60])
     },
     frequencyOptions () {
-      return this.generateFrequencyOptions([15, 30, 60, 2*60, 3*60, 6*60, 12*60, 24*60])
+      return this.generateFrequencyOptions([15, 30, 60, 2 * 60, 3 * 60, 6 * 60, 12 * 60, 24 * 60])
     }
   },
   data () {
@@ -248,9 +248,9 @@ export default {
     async fill (values) {
       logger.debug('Filling alert form', values)
       // Future for forecast, past for measure
-      this.period.start = this.isWeather ?
-        _.get(values, 'period.start.minutes') :
-        -_.get(values, 'period.start.minutes')
+      this.period.start = this.isWeather
+        ? _.get(values, 'period.start.minutes')
+        : -_.get(values, 'period.start.minutes')
       this.period.end = _.get(values, 'period.end.minutes')
       this.frequency = this.cronToFrequency(values.cron)
       this.conditions = new Array(this.variables.length)
@@ -311,9 +311,10 @@ export default {
           if (defaultModel || otherModel) {
             values.elements = _.get(this.layer, 'meteoElements')
           }
+        } else {
+          // Weacast weather layers
+          values.elements = _.get(this.layer, 'leaflet.elements')
         }
-        // Weacast weather layers
-        else values.elements = _.get(this.layer, 'leaflet.elements')
       }
       this.variables.forEach((variable, index) => {
         const conditions = this.conditions[index]
@@ -321,8 +322,8 @@ export default {
         if (conditions.isActive) {
           if (this.isRange(variable)) {
             _.set(values, `conditions.${variable.name}`, {
-              '$gte': conditions.threshold.min,
-              '$lte': conditions.threshold.max
+              $gte: conditions.threshold.min,
+              $lte: conditions.threshold.max
             })
           } else {
             _.set(values, `conditions.${variable.name}`, {
@@ -339,8 +340,8 @@ export default {
       _.set(values, 'layer', _.pick(this.layer, ['_id', 'name', 'i18n', 'service', 'featureId', 'featureLabel', 'variables']))
       // Add reference to feature service whenever required
       if (this.layer.service) {
-        _.set(values, 'feature', this.layer.featureId ?
-          _.get(this.feature, 'properties.' + this.layer.featureId) : this.feature._id)
+        _.set(values, 'feature', this.layer.featureId
+          ? _.get(this.feature, 'properties.' + this.layer.featureId) : this.feature._id)
       }
       // Setup style if any provided, except if templated as it would require
       // a complex mapping with the underlying feature

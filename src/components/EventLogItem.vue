@@ -1,6 +1,6 @@
 <template>
-  <k-item 
-    v-bind="$props" 
+  <k-item
+    v-bind="$props"
     :options="{ toggle: true }"
     :actions="itemActions"
     :bind-actions="false">
@@ -61,7 +61,7 @@ export default {
     }
   },
   beforeCreate () {
-     // Load the required components
+    // Load the required components
     this.$options.components['k-item'] = this.$load('collection/KItem')
   },
   created () {
@@ -72,18 +72,17 @@ export default {
     this.hasFollowUp = !this.archived && this.itemStep &&
       this.waitingInteraction(this.itemStep, this.item, 'coordinator')
     if (this.hasFollowUp) {
-      let followUpAction = _.find(this.itemActions, action => action.id === 'follow-up')
+      const followUpAction = _.find(this.itemActions, action => action.id === 'follow-up')
       // Update tooltip of the generic action to reflect current item state in tooltip
       if (followUpAction) followUpAction.tooltip = this.getUserFollowUp(this.item)
     } else {
       _.remove(this.itemActions, action => action.id === 'follow-up')
     }
     if (this.item.geometry) {
-      let locationMapAction = _.find(this.itemActions, action => action.id === 'location-map')
+      const locationMapAction = _.find(this.itemActions, action => action.id === 'location-map')
       // Update location of the generic action to reflect current item location in map
       if (locationMapAction) _.set(locationMapAction, 'content[0].value', _.get(this.item, 'geometry'))
     }
-    
   }
 }
 </script>

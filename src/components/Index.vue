@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import logger from 'loglevel'
 import { Loading, Dialog } from 'quasar'
 import { permissions, mixins, beforeGuard } from '@kalisio/kdk/core.client'
@@ -59,7 +60,7 @@ export default {
         })
         if (organisation) {
           // Stop any running tour as we will redirect
-          //this.$refs.tour.getTour().stop()
+          // this.$refs.tour.getTour().stop()
           this.$router.replace({
             name: _.get(this.$route, 'query.route', 'context'),
             params: Object.assign({
@@ -122,10 +123,10 @@ export default {
         }
       })
       // Display error message if we have been banned from the server
-      this.$api.socket.on('rate-limit', (error) => {
+      this.$api.socket.on('rate-limit', () => {
         Dialog.create({
           title: this.$t('Index.ALERT'),
-          title: this.$t('Index.REFUSED'),
+          message: this.$t('Index.REFUSED'),
           html: true,
           ok: {
             label: this.$t('Index.RETRY'),

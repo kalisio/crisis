@@ -1,16 +1,16 @@
 <template>
-  <k-card 
+  <k-card
     v-bind="$props"
-    :actions="itemActions" 
+    :actions="itemActions"
     :bind-actions="false">
     <!--
       Card content
      -->
     <template slot="card-content">
       <!-- Objectives section -->
-      <k-card-section 
-        :title="$t('PlanTemplateCard.OBJECTIVES_SECTION')" 
-        :actions="objectivesActions" 
+      <k-card-section
+        :title="$t('PlanTemplateCard.OBJECTIVES_SECTION')"
+        :actions="objectivesActions"
         :context="$props">
         <div v-if="hasObjectives">
           <k-chips-pane :chips="item.objectives" :value-path="'name'" />
@@ -20,14 +20,14 @@
         </div>
       </k-card-section>
       <!-- coordinators section -->
-      <k-card-section 
-        :title="$t('PlanTemplateCard.COORDINATORS_SECTION')" 
-        :actions="coordinatorsActions" 
+      <k-card-section
+        :title="$t('PlanTemplateCard.COORDINATORS_SECTION')"
+        :actions="coordinatorsActions"
         :context="$props">
         <div v-if="hasCoordinators">
-          <k-chips-pane 
+          <k-chips-pane
 
-            :chips="item.coordinators" 
+            :chips="item.coordinators"
             :value-path="['profile.name', 'value', 'name']" />
         </div>
         <div v-else>
@@ -35,9 +35,9 @@
         </div>
       </k-card-section>
       <!-- Permission section -->
-      <k-card-section 
-        :title="$t('PlanTemplateCard.PERMISSION_SECTION')" 
-        :actions="permissionActions" 
+      <k-card-section
+        :title="$t('PlanTemplateCard.PERMISSION_SECTION')"
+        :actions="permissionActions"
         :context="$props">
         <q-chip :label="permission" outline square dense color="grey-10" />
       </k-card-section>
@@ -47,20 +47,20 @@
 
 <script>
 import _ from 'lodash'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
   name: 'plan-template-card',
   mixins: [kCoreMixins.baseItem],
   computed: {
     objectivesActions () {
-      return _.filter(this.itemActions, { scope: 'objectives'})
+      return _.filter(this.itemActions, { scope: 'objectives' })
     },
     hasObjectives () {
       return !_.isEmpty(this.item.objectives)
     },
     coordinatorsActions () {
-      return _.filter(this.itemActions, { scope: 'coordinators'})
+      return _.filter(this.itemActions, { scope: 'coordinators' })
     },
     hasCoordinators () {
       return !_.isEmpty(this.item.coordinators)
@@ -75,7 +75,7 @@ export default {
   methods: {
     editObjectives () {
       this.$router.push({
-        name: 'edit-plan-template-objectives', params: { objectId: this.item._id } 
+        name: 'edit-plan-template-objectives', params: { objectId: this.item._id }
       })
     }
   },

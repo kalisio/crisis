@@ -552,7 +552,9 @@
     "FOLLOWUP_MODAL_APPLY_ALL_BUTTON": "$t(SAVE_LABEL) for selected",
     "EVENT_LOGS_EXPORT_FILE": "Participants.csv",
     "MATCHING_RESULTS": "{{total}} participants found.",
-    "MAXIMUM_RESULTS": "Please refine your filter because you miss some results beyond {{max}} participants."
+    "MAXIMUM_RESULTS": "Please refine your filter because you miss some results beyond {{max}} participants.",
+    "UNMATCHING_STEPS": "Unmatching steps",
+    "CANNOT_LOG_UNMATCHING_STEPS": "Cannot apply action to participants at different steps."
   },
   "EventActivity": {
     "ADD_MEDIA_LABEL": "Add media",

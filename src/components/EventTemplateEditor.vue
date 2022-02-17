@@ -1,7 +1,7 @@
 <template>
-  <k-modal ref="modal" 
-    :title="editorTitle" 
-    :buttons="buttons" 
+  <k-modal ref="modal"
+    :title="editorTitle"
+    :buttons="buttons"
     v-model="isModalOpened"
     @opened="$emit('opened')"
     @closed="$emit('closed')"
@@ -43,8 +43,8 @@ export default {
   computed: {
     buttons () {
       return [
-        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true,  handler: () => this.closeModal() },
-        { id: 'apply-button', label: this.applyButton, renderer: 'form-button',  handler: () => this.apply() }
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
+        { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
       ]
     }
   },

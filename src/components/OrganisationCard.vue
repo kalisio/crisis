@@ -1,8 +1,8 @@
 <template>
-  <k-card 
-    v-bind="$props" 
+  <k-card
+    v-bind="$props"
     :header="header"
-    :actions="itemActions" 
+    :actions="itemActions"
     :bind-actions="false"
     :expandable="true"
     @expanded="onExpanded"
@@ -17,20 +17,20 @@
       Card content
      -->
     <div slot="card-content">
-      <k-card-section 
+      <k-card-section
         :title="$t('OrganisationCard.EVENTS_SECTION')"
         :hide-header="!isExpanded"
       >
         <!-- Events section -->
         <div class="full-width row justify-between items-center no-wrap">
-          <k-action 
+          <k-action
             id= "organisation-events"
             icon= "las la-fire"
             :label="$t('OrganisationCard.EVENTS_LABEL', { count: eventsCount })"
-            @triggered="routeTo('events-activity')" 
+            @triggered="routeTo('events-activity')"
             style="max-width: 60%" />
           <div>
-            <k-action 
+            <k-action
               v-if="canAccessCatalog"
               id= "organisation-catalog"
               icon= "las la-map"
@@ -46,17 +46,17 @@
         </div>
       </k-card-section>
       <!-- Plans section -->
-      <k-card-section 
-        v-if="canAccessPlans" 
+      <k-card-section
+        v-if="canAccessPlans"
         :title="$t('OrganisationCard.PLANS_SECTION')"
         :hide-header="!isExpanded"
       >
         <div class="full-width row justify-between items-center no-wrap">
-          <k-action 
+          <k-action
             id= "organisation-plans"
             icon= "las la-stream"
             :label="$t('OrganisationCard.PLANS_LABEL', { count: plansCount })"
-            @triggered="routeTo('plans-activity')" 
+            @triggered="routeTo('plans-activity')"
             style="max-width: 75%" />
           <k-action
             v-if="canAccessArchivedPlans"
@@ -77,7 +77,7 @@
                   :id="`organisation-${element.name}`"
                   :icon="element.icon"
                   :label="$t(`OrganisationCard.${element.key}`, { count: counters[element.name] })"
-                  @triggered="routeTo(`${element.name}-activity`)" 
+                  @triggered="routeTo(`${element.name}-activity`)"
                   style="max-width: 75%" />
                 <q-badge v-if="!isMember" :label="`${quotas[element.name]} max`" color="grey-7" />
               </div>
@@ -85,9 +85,9 @@
           </div>
         </k-card-section>
         <!-- Billing section -->
-        <k-card-section v-if="canAccessBilling" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{ 
-          id: 'edit-billing', icon: 'las la-edit', size: 'sm', tooltip: 'OrganisationCard.EDIT_ACTION', 
-          route: { name: 'edit-organisation-billing', params: { objectId: item._id, title: item.name } } 
+        <k-card-section v-if="canAccessBilling" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{
+          id: 'edit-billing', icon: 'las la-edit', size: 'sm', tooltip: 'OrganisationCard.EDIT_ACTION',
+          route: { name: 'edit-organisation-billing', params: { objectId: item._id, title: item.name } }
         }]">
             <div class="row items-center">
             <template v-for="subscription in subscriptions">
@@ -103,6 +103,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import logger from 'loglevel'
 import { permissions } from '@kalisio/kdk/core.common'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
@@ -119,7 +120,7 @@ export default {
       billing: null,
       quotas: {},
       counters: {},
-      structure: [ 
+      structure: [
         { key: 'MEMBERS', name: 'members', icon: 'las la-user-friends' },
         { key: 'TAGS', name: 'tags', icon: 'las la-tag' },
         { key: 'GROUPS', name: 'groups', icon: 'las la-sitemap' },
@@ -156,7 +157,7 @@ export default {
     subscriptions () {
       const plan = `plans.${_.get(this.billing, 'subscription.plan')}`
       const options = _.get(this.billing, 'options')
-      if (options)  return _.concat([plan], _.map(options, (option) => { return `options.${option.plan}` }))
+      if (options) return _.concat([plan], _.map(options, (option) => { return `options.${option.plan}` }))
       return [plan]
     },
     isMember () {
@@ -231,7 +232,7 @@ export default {
     }
   },
   beforeCreate () {
-     // Load the required components
+    // Load the required components
     this.$options.components['k-card'] = this.$load('collection/KCard')
     this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
@@ -265,4 +266,3 @@ export default {
   }
 }
 </script>
-

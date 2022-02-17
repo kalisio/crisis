@@ -5,7 +5,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [ coreHooks.checkUnique ],
+    create: [coreHooks.checkUnique],
     update: [],
     patch: [],
     remove: []

@@ -1,5 +1,6 @@
 import _ from 'lodash'
-import { expect } from 'chai'
+import chai, { util, expect } from 'chai'
+import chailint from 'chai-lint'
 import { core } from '@kalisio/kdk/test.client'
 import * as groups from './groups'
 import * as members from './members'
@@ -8,7 +9,7 @@ const suite = 'groups'
 
 describe(`suite:${suite}`, () => {
   let runner, page, api, client
-  let org = {
+  const org = {
     owner: {
       name: 'Owner',
       email: 'owner@kalisio.xyz',
@@ -27,7 +28,7 @@ describe(`suite:${suite}`, () => {
     }],
     groups: [{
       name: 'Group 1',
-      description: 'Group number 1',
+      description: 'Group number 1'
     }, {
       name: 'Group 2',
       description: 'Group number 2'
@@ -35,6 +36,8 @@ describe(`suite:${suite}`, () => {
   }
 
   before(async function () {
+    chailint(chai, util)
+    
     // Let enough time to process
     this.timeout(60000)
     api = new core.Api({
@@ -55,7 +58,7 @@ describe(`suite:${suite}`, () => {
     await client.createOrganisation(org)
     await client.createMembers(org)
     // Groups will be manually created by test
-    //await client.createGroups(org)
+    // await client.createGroups(org)
     page = await runner.start()
   })
 
@@ -64,7 +67,7 @@ describe(`suite:${suite}`, () => {
   })
 
   afterEach(() => {
-    expect(runner.hasError()).to.false
+    expect(runner.hasError()).beFalse()
   })
 
   it('org owner can create a group', async () => {
@@ -73,7 +76,7 @@ describe(`suite:${suite}`, () => {
     await core.closeSignupAlert(page)
     await groups.createGroup(page, org, group)
     expect(await groups.countGroups(page, org)).to.equal(1)
-    expect(await groups.groupExists(page, org, group)).to.be.true
+    expect(await groups.groupExists(page, org, group)).beTrue()
   })
 
   it('org owner can add members to a group', async () => {
@@ -93,14 +96,14 @@ describe(`suite:${suite}`, () => {
     await core.goToLoginScreen(page)
     await core.login(page, member)
     // No edition on group
-    expect(await groups.groupActionExists(page, org, group, 'edit-item-header')).to.be.false
-    expect(await groups.groupActionExists(page, org, group, 'edit-item-description')).to.be.false
-    expect(await groups.groupActionExists(page, org, group, 'remove-item-header')).to.be.false
+    expect(await groups.groupActionExists(page, org, group, 'edit-item-header')).beFalse()
+    expect(await groups.groupActionExists(page, org, group, 'edit-item-description')).beFalse()
+    expect(await groups.groupActionExists(page, org, group, 'remove-item-header')).beFalse()
     // Neither on members
     await members.goToMembersActivity(page, org)
-    expect(await members.memberActionExists(page, org, org.owner, 'join-group')).to.be.false
+    expect(await members.memberActionExists(page, org, org.owner, 'join-group')).beFalse()
     await core.clickItemAction(page, members.memberComponent, org.owner.name, `${_.kebabCase(group.name)}-button`)
-    expect(await core.elementExists(page, '#leave-group')).to.be.false
+    expect(await core.elementExists(page, '#leave-group')).beFalse()
   })
 
   it('org owner can remove members from a group', async () => {
@@ -119,10 +122,10 @@ describe(`suite:${suite}`, () => {
     const group = _.find(org.groups, { name: 'Group 1' })
     await groups.editGroupName(page, org, group, 'New Group 1')
     group.name = 'New Group 1'
-    expect(await groups.groupExists(page, org, group, 'name')).to.be.true
+    expect(await groups.groupExists(page, org, group, 'name')).beTrue()
     await groups.editGroupDescription(page, org, group, 'Group 1 description')
     group.description = 'Group 1 description'
-    expect(await groups.groupExists(page, org, group, 'description')).to.be.true
+    expect(await groups.groupExists(page, org, group, 'description')).beTrue()
   })
 
   // Now managers can manage all groups it can be left empty
@@ -131,8 +134,8 @@ describe(`suite:${suite}`, () => {
     const member = _.find(org.members, { name: 'Member' })
     await members.leaveGroup(page, org, group, member)
     // This one generates an expected error message
-    //expect(await core.isToastVisible(page)).to.be.true
-    //runner.clearErrors()
+    // expect(await core.isToastVisible(page)).beTrue()
+    // runner.clearErrors()
   })
 
   it('org manager can create a group', async () => {
@@ -143,7 +146,7 @@ describe(`suite:${suite}`, () => {
     const group = _.find(org.groups, { name: 'Group 2' })
     await groups.createGroup(page, org, group)
     expect(await groups.countGroups(page, org)).to.equal(2)
-    expect(await groups.groupExists(page, org, group)).to.be.true
+    expect(await groups.groupExists(page, org, group)).beTrue()
   })
 
   it('org manager can add members to a group', async () => {
@@ -175,9 +178,9 @@ describe(`suite:${suite}`, () => {
   it('group manager cannot edit his group', async () => {
     const group = _.find(org.groups, { name: 'Group 2' })
     // No edition on group
-    expect(await groups.groupActionExists(page, org, group, 'edit-item-header')).to.be.false
-    expect(await groups.groupActionExists(page, org, group, 'edit-item-description')).to.be.false
-    expect(await groups.groupActionExists(page, org, group, 'remove-item-header')).to.be.false
+    expect(await groups.groupActionExists(page, org, group, 'edit-item-header')).beFalse()
+    expect(await groups.groupActionExists(page, org, group, 'edit-item-description')).beFalse()
+    expect(await groups.groupActionExists(page, org, group, 'remove-item-header')).beFalse()
   })
 
   it('org manager can edit a group', async () => {
@@ -188,10 +191,10 @@ describe(`suite:${suite}`, () => {
     const group = _.find(org.groups, { name: 'Group 2' })
     await groups.editGroupName(page, org, group, 'New Group 2')
     group.name = 'New Group 2'
-    expect(await groups.groupExists(page, org, group, 'name')).to.be.true
+    expect(await groups.groupExists(page, org, group, 'name')).beTrue()
     await groups.editGroupDescription(page, org, group, 'Group 2 description')
     group.description = 'Group 2 description'
-    expect(await groups.groupExists(page, org, group, 'description')).to.be.true
+    expect(await groups.groupExists(page, org, group, 'description')).beTrue()
   })
 
   it('org manager can remove a group', async () => {

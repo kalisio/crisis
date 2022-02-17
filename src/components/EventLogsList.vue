@@ -14,11 +14,11 @@
     -->
     <k-list
       ref="list"
-      :service="getServiceName()" 
-      :renderer="renderer" 
+      :service="getServiceName()"
+      :renderer="renderer"
       :contextId="contextId"
-      :base-query="baseQuery" 
-      :filter-query="filterQuery" 
+      :base-query="baseQuery"
+      :filter-query="filterQuery"
       :list-strategy="'smart'"
       @toggle-changed="onItemToggled"
       @collection-refreshed="onCollectionRefreshed">
@@ -29,8 +29,8 @@
     <!--
       Follow up modal
     -->
-    <k-modal ref="followUpModal" 
-      :title="followUpTitle" 
+    <k-modal ref="followUpModal"
+      :title="followUpTitle"
       :buttons="getFollowUpButtons()"
     >
       <k-form ref="form" :schema="schema"/>
@@ -88,9 +88,9 @@ export default {
           component: 'frame/KPopupAction',
           tooltip: 'EventLogsList.VIEW_LOCATION',
           icon: 'las la-map-marker',
-          content: [{ 
-            component: 'KLocationMap', 
-            editable: false, 
+          content: [{
+            component: 'KLocationMap',
+            editable: false,
             style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;'
           }]
         }]
@@ -100,7 +100,7 @@ export default {
       return { lastInEvent: true, event: this.event._id, $sort: { createdAt: -1 } }
     },
     filterQuery () {
-      let filter = {}
+      const filter = {}
       if (this.selectedStep) {
         Object.assign(filter, {
           lastInEvent: { $in: [true, false] },
@@ -112,18 +112,20 @@ export default {
           })
         } else {
           const step = _.find(this.event.workflow, step => step.name === this.selectedStep)
-          if (step) Object.assign(filter, {
-            'properties.interaction.value': { $in: step.interaction.map(interaction => interaction.value) }
-          })
+          if (step) {
+            Object.assign(filter, {
+              'properties.interaction.value': { $in: step.interaction.map(interaction => interaction.value) }
+            })
+          }
         }
       }
       return filter
     },
     stepOptions () {
-      let stepOptions = [{
+      const stepOptions = [{
         value: '', label: this.$i18n.t('EventLogsList.ALL_STEPS')
       }]
-      return  stepOptions.concat(this.event.workflow.map(step => ({ value: step.name, label: step.title })))
+      return stepOptions.concat(this.event.workflow.map(step => ({ value: step.name, label: step.title })))
     },
     interactionOptions () {
       let interactionOptions = [{
@@ -131,8 +133,10 @@ export default {
       }]
       if (this.selectedStep) {
         const step = _.find(this.event.workflow, step => step.name === this.selectedStep)
-        if (step) interactionOptions = interactionOptions.concat(
-          step.interaction.map(interaction => ({ value: interaction.value, label: interaction.value })))
+        if (step) {
+          interactionOptions = interactionOptions.concat(
+            step.interaction.map(interaction => ({ value: interaction.value, label: interaction.value })))
+        }
       }
       return interactionOptions
     },
@@ -167,7 +171,8 @@ export default {
     },
     getFollowUpButtons () {
       return [{
-        id: 'cancel-button', outline: true,
+        id: 'cancel-button',
+        outline: true,
         label: this.$t('EventLogsList.FOLLOWUP_MODAL_CANCEL_BUTTON'),
         renderer: 'form-button',
         handler: () => this.$refs.followUpModal.close()
@@ -200,8 +205,8 @@ export default {
         const participantStep = this.getWorkflowStep(participants[i])
         if (participantStep.name !== this.selectedParticipantStep.name) {
           await kCoreUtils.dialog({
-            title: this.$t('EventLogsList.MATCHING_RESULTS', { total: response.total }),
-            message: this.$t('EventLogsList.MAXIMUM_RESULTS', { max: MAX_EVENT_LOGS }),
+            title: this.$t('EventLogsList.UNMATCHING_STEPS'),
+            message: this.$t('EventLogsList.CANNOT_LOG_UNMATCHING_STEPS'),
             ok: {
               label: this.$t('CLOSE'),
               flat: true
@@ -248,7 +253,7 @@ export default {
         return _.pick(item, properties)
       })
       const data = Papa.unparse(json)
-      
+
       kCoreUtils.downloadAsBlob(data, this.$t('EventLogsList.EVENT_LOGS_EXPORT_FILE'), 'text/csv;charset=utf-8;')
     }
   },

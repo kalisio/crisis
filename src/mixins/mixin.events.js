@@ -1,11 +1,10 @@
 import _ from 'lodash'
-import sift from 'sift'
 import { Geolocation } from '@kalisio/kdk/map.client.map'
 import * as utils from '../utils'
 
 const eventsMixin = {
   data () {
-    let data = {
+    const data = {
       userId: '',
       isParticipant: false,
       isCoordinator: false,
@@ -139,7 +138,7 @@ const eventsMixin = {
       this.$router.push({ name: 'event-log', params: { logId: participantId } })
     },
     // Helper function to process logs as usual objects by adding an icon/coment property extracted from feature properties
-    processStates(states) {
+    processStates (states) {
       states.forEach(state => {
         state.icon = this.getUserIcon(state, this.getWorkflowStep(state) || {}) // Take care when no workflow
       })
@@ -208,7 +207,7 @@ const eventsMixin = {
         // https://forum.vuejs.org/t/solved-using-standalone-version-but-getting-failed-to-mount-component-template-or-render-function-not-defined/19569/2
         if (this.baseLogSchema.default) this.baseLogSchema = this.baseLogSchema.default
       }
-      let schema = _.cloneDeep(this.baseLogSchema)
+      const schema = _.cloneDeep(this.baseLogSchema)
       // Then add step interactions
       if (this.hasStepFeatureInteraction(step)) {
         if (this.layerSchema) {
@@ -280,7 +279,7 @@ const eventsMixin = {
       const result = form.validate()
       if (result.isValid) {
         // Directly store as GeoJson objects
-        let log = await this.createParticipantLog(step, state)
+        const log = await this.createParticipantLog(step, state)
         _.merge(log.properties, result.values)
         if (this.hasStateFeatureInteraction(log) && this.event.feature) {
           // Use feature geometry instead of user position in this case

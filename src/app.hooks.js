@@ -17,13 +17,13 @@ corePermissions.defineAbilities.registerHook(permissions.defineUserAbilities)
 
 export default {
   before: {
-    all: [ coreHooks.log, coreHooks.emit ],
+    all: [coreHooks.log, coreHooks.emit],
     find: [],
     get: [],
     create: [],
     update: [],
     // Changes are not authorized on authorisations
-    patch: [ (hook) => {
+    patch: [(hook) => {
       if (_.get(hook, 'service.path', '').endsWith('users') ||
           _.get(hook, 'service.path', '').endsWith('members')) {
         delete _.unset(hook, 'data.organisations')
@@ -34,7 +34,7 @@ export default {
   },
 
   after: {
-    all: [ coreHooks.log, coreHooks.emit ],
+    all: [coreHooks.log, coreHooks.emit],
     find: [],
     get: [],
     create: [],
@@ -44,7 +44,7 @@ export default {
   },
 
   error: {
-    all: [ coreHooks.log, coreHooks.emit ],
+    all: [coreHooks.log, coreHooks.emit],
     find: [],
     get: [],
     create: [],
