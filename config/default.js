@@ -781,8 +781,8 @@ module.exports = {
           { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBERS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('profile.name', [
-          { service: 'groups', field: 'name', baseQuery: {}, icon: 'las la-sitemap' },
-          { service: 'tags', field: 'value', baseQuery: {}, icon: 'las la-tag' }
+          { service: 'groups', field: 'name', baseQuery: {}, icon: { name: 'las la-sitemap' } },
+          { service: 'tags', field: 'value', baseQuery: {}, icon: { name: 'las la-tag' } }
         ])
       }
     },
