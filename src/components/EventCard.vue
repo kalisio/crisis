@@ -1,9 +1,9 @@
 <template>
   <div>
-    <k-card 
-      v-bind="$props" 
-      :header="header" 
-      :actions="itemActions" 
+    <k-card
+      v-bind="$props"
+      :header="header"
+      :actions="itemActions"
       :bind-actions="false"
       :dense="dense"
       :expandable="true"
@@ -18,7 +18,7 @@
           :dense="dense"
         >
           <div v-if="hasDescription">
-            <div class="q-pa-sm event-card-description" 
+            <div class="q-pa-sm event-card-description"
               v-bind:class="{ 'event-card-description-zoomed': zoomedDescription === true }"
               @click="zoomedDescription =! zoomedDescription">
               <k-text-area :text="item.description" :length="150" />
@@ -34,11 +34,11 @@
        -->
       <template v-slot:card-content>
         <!-- Plan section is only visible in event dashbord -->
-        <k-card-section 
+        <k-card-section
           v-if="planName"
-          :title="$t('EventCard.PLAN_SECTION')" 
+          :title="$t('EventCard.PLAN_SECTION')"
           :hideHeader="!isExpanded"
-          :actions="planActions" 
+          :actions="planActions"
           :context="$props"
           :dense="dense"
         >
@@ -55,53 +55,53 @@
           </div>
         </k-card-section>
         <!-- Objective section is only visible in plan dashbord -->
-        <k-card-section 
+        <k-card-section
           v-if="plan && !planName && (isExpanded || objective)"
-          :title="$t('EventCard.OBJECTIVE_SECTION')" 
+          :title="$t('EventCard.OBJECTIVE_SECTION')"
           :hideHeader="!isExpanded"
-          :actions="objectiveActions" 
+          :actions="objectiveActions"
           :context="$props"
           :dense="dense"
-        > 
+        >
           <q-badge v-if="objective" :label="objective" color="grey-7" :multi-line="true" />
           <k-stamp v-else :text="'EventCard.UNDEFINED_OBJECTIVE_LABEL'" direction="horizontal" />
         </k-card-section>
         <!-- Interaction section -->
         <k-card-section v-if="participantLabel || coordinatorLabel"
           :context="$props"
-          :dense="dense" 
+          :dense="dense"
         >
           <div v-if="participantLabel" v-html="participantLabel"></div>
           <div v-if="coordinatorLabel" v-html="coordinatorLabel"></div>
         </k-card-section>
         <!-- Comment section -->
         <k-card-section v-if="comment"
-          :title="$t('EventCard.COMMENT_SECTION')" 
-          :dense="dense"> 
+          :title="$t('EventCard.COMMENT_SECTION')"
+          :dense="dense">
           <k-text-area class="light-paragraph" :text="comment" :length="100" />
-        </k-card-section>           
+        </k-card-section>
         <!-- Location section -->
-        <k-card-section 
-          v-if="isExpanded" 
-          :title="$t('EventCard.LOCATION_SECTION')" 
-          :actions="locationActions" 
+        <k-card-section
+          v-if="isExpanded"
+          :title="$t('EventCard.LOCATION_SECTION')"
+          :actions="locationActions"
           :context="$props"
           :dense="dense">
           <k-location-map v-if="item.location" v-model="item.location" :editable="false" style="min-height: 220px;" />
           <k-stamp v-else :text="'PlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
         </k-card-section>
         <!-- Participants section -->
-        <k-card-section 
+        <k-card-section
           v-if="isExpanded"
-          :title="$t('EventCard.PARTICIPANTS_SECTION')" 
-          :actions="participantsActions" 
+          :title="$t('EventCard.PARTICIPANTS_SECTION')"
+          :actions="participantsActions"
           :context="$props"
           :dense="dense"
         >
           <div v-if="hasParticipants">
-            <k-chips-pane 
-              class="q-pl-sm" 
-              :chips="item.participants" 
+            <k-chips-pane
+              class="q-pl-sm"
+              :chips="item.participants"
               :value-path="['profile.name', 'value', 'name']" />
           </div>
           <div v-else>
@@ -109,15 +109,15 @@
           </div>
         </k-card-section>
         <!-- Coordinators section -->
-        <k-card-section v-if="isExpanded"       
-          :title="$t('EventCard.COORDINATORS_SECTION')" 
-          :actions="coordinatorsActions" 
+        <k-card-section v-if="isExpanded"
+          :title="$t('EventCard.COORDINATORS_SECTION')"
+          :actions="coordinatorsActions"
           :context="$props"
           :dense="dense"
         >
-          <k-chips-pane 
-            class="q-pl-sm" 
-            :chips="item.coordinators" 
+          <k-chips-pane
+            class="q-pl-sm"
+            :chips="item.coordinators"
             :value-path="['profile.name', 'value', 'name']" />
         </k-card-section>
         <!-- Timestamps section -->
@@ -141,8 +141,8 @@
     <!--
       Follow up modal
     -->
-    <k-modal ref="followUpModal" v-if="hasParticipantInteraction" 
-      :title="followUpTitle" 
+    <k-modal ref="followUpModal" v-if="hasParticipantInteraction"
+      :title="followUpTitle"
       :buttons="getFollowUpButtons()"
     >
       <k-form ref="form" :schema="schema"/>
@@ -150,21 +150,21 @@
     <!--
       Upload modal
     -->
-    <k-modal ref="uploaderModal" 
+    <k-modal ref="uploaderModal"
       :buttons="getUploaderButtons()"
     >
-      <k-uploader ref="uploader" 
-        :resource="item._id" 
+      <k-uploader ref="uploader"
+        :resource="item._id"
         :base-query="uploaderQuery()"
-        :options="uploaderOptions()" 
+        :options="uploaderOptions()"
         @uploader-ready="initializeMedias"/>
     </k-modal>
     <!--
       Logs modal
     -->
-    <k-modal ref="eventLogsModal" 
+    <k-modal ref="eventLogsModal"
       :title="$t('EventCard.EVENT_LOGS_MODAL_TITLE')"
-      :toolbar="getEventLogsToolbar()" 
+      :toolbar="getEventLogsToolbar()"
       :buttons="getEventLogsButtons()"
     >
       <event-logs-list ref="eventLogsList" :contextId="contextId" :event="item"/>
@@ -212,7 +212,7 @@ export default {
     header () {
       let components = []
       if (this.isExpanded) {
-        components.push({ component: 'QSpace '})
+        components.push({ component: 'QSpace ' })
         components = components.concat(_.filter(this.itemActions, { scope: 'header' }))
       }
       return components
@@ -283,7 +283,7 @@ export default {
     updatedAt () {
       return this.item.updatedAt ? new Date(this.item.updatedAt) : null
     },
-    expireAt () { 
+    expireAt () {
       return this.item.expireAt ? new Date(this.item.expireAt) : null
     },
     coordinatatorsActions () {
@@ -303,11 +303,11 @@ export default {
   },
   methods: {
     getLocationMap () {
-      return { 
-        component: 'KLocationMap', 
-        value: this.item.location, 
-        editable: false, 
-        style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;' 
+      return {
+        component: 'KLocationMap',
+        value: this.item.location,
+        editable: false,
+        style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;'
       }
     },
     canCapturePhoto () {
@@ -382,10 +382,13 @@ export default {
                       (this.waitingInteraction(this.participantStep, this.participantState, 'participant') ||
                        this.waitingInteraction(this.participantStep, this.participantState, 'coordinator'))
         if (hasFollowUp) {
-          let followUpAction = {
-            id: 'follow-up', icon: 'las la-comment', scope: 'footer', 
+          const followUpAction = {
+            id: 'follow-up',
+            icon: 'las la-comment',
+            scope: 'footer',
             badge: { floating: true, color: 'red', transparent: true, icon: { name: 'las la-exclamation', size: '12px' } },
-            visible: this.$can('read', 'events', this.contextId, this.item), handler: this.followUp
+            visible: this.$can('read', 'events', this.contextId, this.item),
+            handler: this.followUp
           }
           if (this.waitingInteraction(this.participantStep, this.participantState, 'participant')) {
             followUpAction.tooltip = this.participantStep.title + ' : ' + this.$t('EventCard.ACTION_REQUIRED_WARNING')
@@ -396,9 +399,13 @@ export default {
         }
       }
       if (this.isCoordinator) {
-        let followUpAction = {
-          id: 'event-logs', tooltip: this.$t('EventCard.EVENT_LOGS_LABEL'), icon: 'las la-users', scope: 'footer',
-          visible: this.$can('update', 'events', this.contextId, this.item), handler: this.eventLogs
+        const followUpAction = {
+          id: 'event-logs',
+          tooltip: this.$t('EventCard.EVENT_LOGS_LABEL'),
+          icon: 'las la-users',
+          scope: 'footer',
+          visible: this.$can('update', 'events', this.contextId, this.item),
+          handler: this.eventLogs
         }
         const hasFollowUp = this.item.hasWorkflow && (this.nbParticipantsWaitingCoordination > 0)
         if (hasFollowUp) {
@@ -410,8 +417,12 @@ export default {
       // Find the add media action and push the browse media action just after
       const index = _.findIndex(this.itemActions, (action) => action.id === 'add-media')
       this.itemActions.splice(index + 1, 0, {
-        id: 'browse-media', tooltip: 'EventCard.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', scope: 'footer',
-        handler: this.browseMedia, badge: { label: this.mediasCount().toString(), floating: true },
+        id: 'browse-media',
+        tooltip: 'EventCard.BROWSE_MEDIA_LABEL',
+        icon: 'las la-photo-video',
+        scope: 'footer',
+        handler: this.browseMedia,
+        badge: { label: this.mediasCount().toString(), floating: true },
         visible: this.hasMedias() && this.$can('read', 'events', this.contextId, this.item)
       })
     },
@@ -444,9 +455,15 @@ export default {
       kCoreUtils.createThumbnail(photoDataUri, 200, 200, 50, async thumbnailDataUri => {
         // Store once everything has been computed
         await storageService.create({ id: id + '.thumbnail', uri: thumbnailDataUri })
-        await storageService.create({ id, uri: photoDataUri, name,
-          resourcesService: 'events', resource: this.item._id, field: 'attachments',
-          notification: this.$t('EventNotifications.UPDATE_MEDIA') })
+        await storageService.create({
+          id,
+          uri: photoDataUri,
+          name,
+          resourcesService: 'events',
+          resource: this.item._id,
+          field: 'attachments',
+          notification: this.$t('EventNotifications.UPDATE_MEDIA')
+        })
         this.refresh()
       })
     },
@@ -492,7 +509,8 @@ export default {
         if (properties) this.$refs.form.fill(properties)
         else this.$refs.form.clear()
       } else if (this.isCoordinator) {
-        this.$router.push({ name: 'event-activity',
+        this.$router.push({
+          name: 'event-activity',
           params: { objectId: this.item._id, contextId: this.contextId },
           // Depending if event is in a plan we get it as ID or object
           query: { plan: _.get(this.item, 'plan._id', _.get(this.item, 'plan')) }
@@ -503,7 +521,8 @@ export default {
       this.$refs.eventLogsModal.open()
     },
     viewMap () {
-      this.$router.push({ name: 'event-activity',
+      this.$router.push({
+        name: 'event-activity',
         params: { objectId: this.item._id, contextId: this.contextId },
         // Depending if event is in a plan we get it as ID or object
         query: { plan: _.get(this.item, 'plan._id', _.get(this.item, 'plan')) }

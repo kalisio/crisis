@@ -1,5 +1,6 @@
 import _ from 'lodash'
-import { expect } from 'chai'
+import chai, { util, expect } from 'chai'
+import chailint from 'chai-lint'
 import { core } from '@kalisio/kdk/test.client'
 import * as events from './events'
 
@@ -7,7 +8,7 @@ const suite = 'events'
 
 describe(`suite:${suite}`, () => {
   let runner, page, api, client
-  let org = {
+  const org = {
     owner: {
       name: 'Owner',
       email: 'owner@kalisio.xyz',
@@ -30,7 +31,7 @@ describe(`suite:${suite}`, () => {
     }],
     groups: [{
       name: 'Group',
-      description: 'A group',
+      description: 'A group'
     }],
     eventTemplates: [{
       name: 'Member template',
@@ -56,6 +57,8 @@ describe(`suite:${suite}`, () => {
   }
 
   before(async function () {
+    chailint(chai, util)
+    
     // Let enough time to process
     this.timeout(60000)
     api = new core.Api({
@@ -64,7 +67,7 @@ describe(`suite:${suite}`, () => {
     client = api.createClient()
     runner = new core.Runner(suite, {
       appName: 'aktnmap',
-      geolocation: { latitude: 43.10, longitude:1.71 },
+      geolocation: { latitude: 43.10, longitude: 1.71 },
       browser: {
         slowMo: 1,
         args: ['--lang=fr'],
@@ -88,7 +91,7 @@ describe(`suite:${suite}`, () => {
   })
 
   afterEach(() => {
-    expect(runner.hasError()).to.false
+    expect(runner.hasError()).beFalse()
   })
 
   it('org manager can create event templates', async () => {
@@ -99,8 +102,8 @@ describe(`suite:${suite}`, () => {
     const managerTemplate = _.find(org.eventTemplates, { name: 'Manager template' })
     await events.createEventTemplate(page, org, managerTemplate)
     expect(await events.countEventTemplates(page, org)).to.equal(2)
-    expect(await events.eventTemplateExists(page, org, memberTemplate, 'name')).to.be.true
-    expect(await events.eventTemplateExists(page, org, managerTemplate, 'name')).to.be.true
+    expect(await events.eventTemplateExists(page, org, memberTemplate, 'name')).beTrue()
+    expect(await events.eventTemplateExists(page, org, managerTemplate, 'name')).beTrue()
   })
 
   it('org manager can create events from templates', async () => {
@@ -112,8 +115,8 @@ describe(`suite:${suite}`, () => {
     const managerEvent = _.find(org.events, { name: 'Manager event' })
     await events.createEvent(page, org, managerTemplate, managerEvent)
     expect(await events.countEvents(page, org)).to.equal(1)
-    expect(await events.eventExists(page, org, managerTemplate, 'description')).to.be.true
-    expect(await events.eventExists(page, org, managerEvent, 'name')).to.be.true
+    expect(await events.eventExists(page, org, managerTemplate, 'description')).beTrue()
+    expect(await events.eventExists(page, org, managerEvent, 'name')).beTrue()
   })
 
   it('org member cannot edit event templates', async () => {
@@ -123,18 +126,18 @@ describe(`suite:${suite}`, () => {
     await core.goToLoginScreen(page)
     await core.login(page, member)
     // No edition on template
-    expect(await events.eventTemplateExists(page, org, template, 'name')).to.be.true
-    expect(await events.eventTemplateActionExists(page, org, template, 'edit-item-header')).to.be.false
-    expect(await events.eventTemplateActionExists(page, org, template, 'edit-item-description')).to.be.false
-    expect(await events.eventTemplateActionExists(page, org, template, 'remove-item-header')).to.be.false
+    expect(await events.eventTemplateExists(page, org, template, 'name')).beTrue()
+    expect(await events.eventTemplateActionExists(page, org, template, 'edit-item-header')).beFalse()
+    expect(await events.eventTemplateActionExists(page, org, template, 'edit-item-description')).beFalse()
+    expect(await events.eventTemplateActionExists(page, org, template, 'remove-item-header')).beFalse()
   })
 
   it('org member cannot create event from templates without permissions', async () => {
     const template = _.find(org.eventTemplates, { name: 'Member template' })
     await events.goToEventsActivity(page, org)
     // We should have a single action and no fab if a single template is found
-    //await core.clickAction(page, 'fab')
-    expect(await core.elementExists(page, `#create-${_.kebabCase(template.name)}`)).to.be.true
+    // await core.clickAction(page, 'fab')
+    expect(await core.elementExists(page, `#create-${_.kebabCase(template.name)}`)).beTrue()
   })
 
   it('org member can create events from templates', async () => {
@@ -147,37 +150,37 @@ describe(`suite:${suite}`, () => {
   it('org member can manage event logs', async () => {
     const memberEvent = _.find(org.events, { name: 'Member event' })
     // Participant follow-up
-    await events.goToEventLogs (page, org, memberEvent)
+    await events.goToEventLogs(page, org, memberEvent)
     const nbLogs = await events.countEventLogs(page, org, memberEvent)
     const memberLogExists = await events.eventLogExists(page, org, memberEvent, 'Member')
-    await events.closeEventLogs (page)
+    await events.closeEventLogs(page)
     // We check after closing the modal so that if the test fail we are in a "neutral" state
     expect(nbLogs).to.equal(1)
-    expect(memberLogExists).to.be.true
+    expect(memberLogExists).beTrue()
   })
 
   it('org member can edit his events', async () => {
     const memberEvent = _.find(org.events, { name: 'Member event' })
     const managerEvent = _.find(org.events, { name: 'Manager event' })
     // Edition allowed on event if coordinator
-    expect(await events.eventExists(page, org, memberEvent, 'name')).to.be.true
+    expect(await events.eventExists(page, org, memberEvent, 'name')).beTrue()
     await core.expandCard(page, events.eventComponent, memberEvent.name)
-    expect(await events.eventActionExists(page, org, memberEvent, 'edit-item-header')).to.be.true
-    expect(await events.eventActionExists(page, org, memberEvent, 'edit-item-description')).to.be.true
-    expect(await events.eventActionExists(page, org, memberEvent, 'remove-item-header')).to.be.true
+    expect(await events.eventActionExists(page, org, memberEvent, 'edit-item-header')).beTrue()
+    expect(await events.eventActionExists(page, org, memberEvent, 'edit-item-description')).beTrue()
+    expect(await events.eventActionExists(page, org, memberEvent, 'remove-item-header')).beTrue()
     // Edition disalloed on event if not coordinator
-    expect(await events.eventExists(page, org, managerEvent, 'name')).to.be.true
+    expect(await events.eventExists(page, org, managerEvent, 'name')).beTrue()
     await core.expandCard(page, events.eventComponent, managerEvent.name)
-    expect(await events.eventActionExists(page, org, managerEvent, 'edit-item-header')).to.be.false
-    expect(await events.eventActionExists(page, org, managerEvent, 'edit-item-description')).to.be.false
-    expect(await events.eventActionExists(page, org, managerEvent, 'remove-item-header')).to.be.false
+    expect(await events.eventActionExists(page, org, managerEvent, 'edit-item-header')).beFalse()
+    expect(await events.eventActionExists(page, org, managerEvent, 'edit-item-description')).beFalse()
+    expect(await events.eventActionExists(page, org, managerEvent, 'remove-item-header')).beFalse()
     // Edition
     await events.editEventName(page, org, memberEvent, 'New Member event')
     memberEvent.name = 'New Member event'
-    expect(await events.eventExists(page, org, memberEvent, 'name')).to.be.true
+    expect(await events.eventExists(page, org, memberEvent, 'name')).beTrue()
     await events.editEventDescription(page, org, memberEvent, 'Member event description')
     memberEvent.description = 'Member event description'
-    expect(await events.eventExists(page, org, memberEvent, 'description')).to.be.true
+    expect(await events.eventExists(page, org, memberEvent, 'description')).beTrue()
   })
 
   it('org member can remove his events', async () => {
@@ -194,10 +197,10 @@ describe(`suite:${suite}`, () => {
     const template = _.find(org.eventTemplates, { name: 'Member template' })
     await events.editEventTemplateName(page, org, template, 'New Member template')
     template.name = 'New Member template'
-    expect(await events.eventTemplateExists(page, org, template, 'name')).to.be.true
+    expect(await events.eventTemplateExists(page, org, template, 'name')).beTrue()
     await events.editEventTemplateDescription(page, org, template, 'Member template description')
     template.description = 'Member template description'
-    expect(await events.eventTemplateExists(page, org, template, 'description')).to.be.true
+    expect(await events.eventTemplateExists(page, org, template, 'description')).beTrue()
   })
 
   it('org manager can remove event templates', async () => {

@@ -14,9 +14,9 @@
     <template v-slot:default>
       <q-card v-if="plan" class="bg-white" :style="computedStyle">
         <div class="row full-width justify-center items-center q-pa-md q-gutter-x-sm text-subtitle1 bg-grey-4">
-          <k-avatar 
-            :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'" 
-            :object="plan" 
+          <k-avatar
+            :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'"
+            :object="plan"
             :contextId="organisation._id"
             size="sm" />
           <div>
@@ -109,13 +109,13 @@ export default {
     },
     plan: {
       handler () {
-        if (this.plan) this.objectiveFilters = _.fill(Array(this.plan.objectives.length), false)
+        if (this.plan) this.objectiveFilters = _.fill(Array(_.size(this.plan.objectives), false))
       }
     },
     objectiveFilters: {
       handler () {
         if (!this.plan) return
-        let filters = []
+        const filters = []
         for (let i = 0; i < this.objectiveFilters.length; i++) {
           if (this.objectiveFilters[i]) filters.push(_.get(this.plan, `objectives[${i}].name`))
         }
@@ -125,23 +125,35 @@ export default {
   },
   methods: {
     getObjectiveActions (objective) {
-      let actions = []
-      if (objective.description) actions.push({
-        id: 'show-objective-description', component: 'frame/KPopupAction', tooltip: 'PlanMenu.VIEW_DESCRIPTION', icon: 'las la-file-alt', content: [{ 
-          component: 'frame/KTextArea', 
-          text: objective.description,
-          length: 8192,
-          class: 'q-pa-sm bg-grey-5'
-        }]
-      })
-      if (objective.location) actions.push({
-        id: 'show-objective-location', component: 'frame/KPopupAction', tooltip: 'PlanMenu.VIEW_LOCATION', icon: 'las la-map-marker', content: [{ 
-          component: 'KLocationMap', 
-          value: objective.location, 
-          editable: false, 
-          style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;' 
-        }]
-      })
+      const actions = []
+      if (objective.description) {
+        actions.push({
+          id: 'show-objective-description',
+          component: 'frame/KPopupAction',
+          tooltip: 'PlanMenu.VIEW_DESCRIPTION',
+          icon: 'las la-file-alt',
+          content: [{
+            component: 'frame/KTextArea',
+            text: objective.description,
+            length: 8192,
+            class: 'q-pa-sm bg-grey-5'
+          }]
+        })
+      }
+      if (objective.location) {
+        actions.push({
+          id: 'show-objective-location',
+          component: 'frame/KPopupAction',
+          tooltip: 'PlanMenu.VIEW_LOCATION',
+          icon: 'las la-map-marker',
+          content: [{
+            component: 'KLocationMap',
+            value: objective.location,
+            editable: false,
+            style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;'
+          }]
+        })
+      }
       return actions
     },
     onManagePlan () {

@@ -7,11 +7,11 @@
       <k-grid
         v-if="!planId"
         ref="eventsGrid"
-        service="events" 
-        :renderer="renderer" 
+        service="events"
+        :renderer="renderer"
         :contextId="contextId"
-        :base-query="baseQuery" 
-        :filter-query="filterQuery" 
+        :base-query="baseQuery"
+        :filter-query="filterQuery"
         :list-strategy="'smart'">
         <template slot="empty-section">
           <div class="absolute-center">
@@ -22,7 +22,7 @@
       <k-board
         v-else-if="height"
         ref="eventsBoard"
-        :columns="boardColumns" 
+        :columns="boardColumns"
         :height="height" />
       <!--
         Router view to enable routing to modals
@@ -78,17 +78,17 @@ export default {
   computed: {
     renderer () {
       const dense = (this.planId ? true : this.$q.screen.lt.sm)
-      return _.merge({component: 'EventCard', dense }, this.activityOptions.items)
+      return _.merge({ component: 'EventCard', dense }, this.activityOptions.items)
     },
     baseQuery () {
-      let query = _.clone(this.sorter.query)
+      const query = _.clone(this.sorter.query)
       // When displaying events of all plans we'd like to have the plan object directly to ease processing
       if (!this.planId) Object.assign(query, { planAsObject: true })
       Object.assign(query, this.getPlanQuery())
       return query
     },
     filterQuery () {
-      let query = _.clone(this.filter.query)
+      const query = _.clone(this.filter.query)
       Object.assign(query, this.getPlanObjectiveQuery())
       return query
     },
@@ -105,8 +105,8 @@ export default {
           service: 'events',
           renderer: this.renderer,
           contextId: this.contextId,
-          baseQuery: Object.assign({ participants: { $eq: [] }}, this.baseQuery),
-          filterQuery: this.filterQuery,
+          baseQuery: Object.assign({ participants: { $eq: [] } }, this.baseQuery),
+          filterQuery: this.filterQuery
         },
         width: this.columnWidth
       }, {
@@ -116,7 +116,7 @@ export default {
           service: 'events',
           renderer: this.renderer,
           contextId: this.contextId,
-          baseQuery: Object.assign({ participants: { $ne: [] }}, this.baseQuery),
+          baseQuery: Object.assign({ participants: { $ne: [] } }, this.baseQuery),
           filterQuery: this.filterQuery
         },
         width: this.columnWidth
@@ -125,9 +125,9 @@ export default {
         value: 'done',
         props: {
           service: 'archived-events',
-          renderer: {component: 'ArchivedEventCard', dense: true },
+          renderer: { component: 'ArchivedEventCard', dense: true },
           contextId: this.contextId,
-          baseQuery: Object.assign({ deletedAt: { $exists: true }}, this.baseQuery),
+          baseQuery: Object.assign({ deletedAt: { $exists: true } }, this.baseQuery),
           filterQuery: this.filterQuery
         },
         width: this.columnWidth
@@ -151,14 +151,13 @@ export default {
         if (remainder > 0) batchCount++
         let offset = 0
         for (let i = 0; i < batchCount; i++) {
-          const filter = 'owner'
           response = await eventTemplatesService.find({
             query: {
               $or: [
-                { 'permission': { $exists: false } },
-                 { 'permission': { $in: permissions.getJuniorRoles(userRole) } }
+                { permission: { $exists: false } },
+                { permission: { $in: permissions.getJuniorRoles(userRole) } }
               ],
-              $skip: offset, 
+              $skip: offset,
               $limit: batchSize,
               $select: ['name', 'icon']
             }
@@ -173,9 +172,9 @@ export default {
               label: template.name,
               icon: template.icon.name,
               color: template.icon.color,
-              route: { 
-                name: 'create-event', 
-                params: { contextId: this.contextId, templateId: template._id }, 
+              route: {
+                name: 'create-event',
+                params: { contextId: this.contextId, templateId: template._id },
                 query: { plan: this.planId }
               }
             })

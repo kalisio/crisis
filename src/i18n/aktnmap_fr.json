@@ -557,7 +557,9 @@
     "FOLLOWUP_MODAL_APPLY_ALL_BUTTON": "$t(SAVE_LABEL) pour la sélection",
     "EVENT_LOGS_EXPORT_FILE": "Participants.csv",
     "MATCHING_RESULTS": "{{total}} participants trouvés.",
-    "MAXIMUM_RESULTS": "Raffinez votre filtre car certains résultats sont omis au-delà de {{max}} participants."
+    "MAXIMUM_RESULTS": "Raffinez votre filtre car certains résultats sont omis au-delà de {{max}} participants.",
+    "UNMATCHING_STEPS": "Etapes différentes",
+    "CANNOT_LOG_UNMATCHING_STEPS": "Impossible de réaliser l'action pour des participants à différentes étapes."
   },
   "EventActivity": {
     "ADD_MEDIA_LABEL": "Ajouter un média",

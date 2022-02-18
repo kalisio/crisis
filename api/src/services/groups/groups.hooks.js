@@ -21,7 +21,8 @@ module.exports = {
     get: [],
     create: [
       coreHooks.createTopic(),
-      coreHooks.createGroupAuthorisations
+      // Groups can now be created as empty because org managers can manage all groups
+      //coreHooks.createGroupAuthorisations
     ],
     update: [],
     patch: [],

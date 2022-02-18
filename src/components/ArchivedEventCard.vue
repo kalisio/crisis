@@ -1,12 +1,12 @@
 <template>
   <div>
-    <k-card 
-      v-bind="$props" 
-      :header="header" 
-      :actions="itemActions" 
+    <k-card
+      v-bind="$props"
+      :header="header"
+      :actions="itemActions"
       :bind-actions="false"
       :dense="dense"
-      :expandable="true"      
+      :expandable="true"
       @expanded="isExpanded = true"
       @collapsed="isExpanded = false"
     >
@@ -15,11 +15,11 @@
        -->
       <template v-slot:card-content>
         <!-- Plan section is only visible in event logbook -->
-        <k-card-section 
+        <k-card-section
           v-if="planName"
-          :title="$t('ArchivedEventCard.PLAN_SECTION')" 
+          :title="$t('ArchivedEventCard.PLAN_SECTION')"
           :hideHeader="!isExpanded"
-          :actions="planActions" 
+          :actions="planActions"
           :context="$props"
           :dense="dense"
         >
@@ -36,19 +36,19 @@
           </div>
         </k-card-section>
         <!-- Objective section is only visible in plan logbook -->
-        <k-card-section 
+        <k-card-section
           v-if="plan && !planName && (isExpanded || objective)"
-          :title="$t('ArchivedEventCard.OBJECTIVE_SECTION')" 
+          :title="$t('ArchivedEventCard.OBJECTIVE_SECTION')"
           :hideHeader="!isExpanded"
           :dense="dense"
-        > 
+        >
           <q-badge v-if="objective" :label="objective" color="grey-7" :multi-line="true"/>
           <k-stamp v-else text="ArchivedEventCard.UNDEFINED_OBJECTIVE_LABEL" direction="horizontal" />
         </k-card-section>
         <!-- Location section -->
-        <k-card-section 
-          v-if="isExpanded" 
-          :title="$t('ArchivedEventCard.LOCATION_SECTION')" 
+        <k-card-section
+          v-if="isExpanded"
+          :title="$t('ArchivedEventCard.LOCATION_SECTION')"
           :context="$props"
           :dense="dense"
         >
@@ -57,7 +57,7 @@
         </k-card-section>
         <!-- Participants section -->
         <k-card-section v-if="isExpanded"
-          :title="$t('ArchivedEventCard.PARTICIPANTS_SECTION')" 
+          :title="$t('ArchivedEventCard.PARTICIPANTS_SECTION')"
           :context="$props"
           :dense="dense"
         >
@@ -71,15 +71,15 @@
         <!-- Coordinators section -->
         <k-card-section v-if="isExpanded"
           :key="item + '-coordinators'"
-          :title="$t('ArchivedEventCard.COORDINATORS_SECTION')" 
+          :title="$t('ArchivedEventCard.COORDINATORS_SECTION')"
           :context="$props"
           :dense="dense"
         >
           <k-chips-pane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
         </k-card-section>
         <!-- Timestamps section -->
-        <k-card-section 
-          v-if="isExpanded" 
+        <k-card-section
+          v-if="isExpanded"
           :dense="dense">
           <div v-if="createdAt || updatedAt || deletedAt">
             <cite v-if="createdAt">
@@ -102,7 +102,7 @@
 
 <script>
 import _ from 'lodash'
-import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
@@ -131,7 +131,7 @@ export default {
   },
   computed: {
     header () {
-      let components = []
+      const components = []
       if (this.deletedAt) {
         components.push({ component: 'QBadge', label: this.$t('ArchivedEventCard.CLOSED_LABEL'), color: 'black' })
       } else {
@@ -139,11 +139,14 @@ export default {
       }
       if (this.participantsCount > 0) {
         components.push({
-          id: this.item._id + '-participants', icon: 'las la-user', label: this.participantsCount.toString(),
-          tooltip: this.$t('ArchivedEventCard.PARTICIPANT_COUNT_LABEL'), size: '0.75rem'
+          id: this.item._id + '-participants',
+          icon: 'las la-user',
+          label: this.participantsCount.toString(),
+          tooltip: this.$t('ArchivedEventCard.PARTICIPANT_COUNT_LABEL'),
+          size: '0.75rem'
         })
       }
-      components.push({ component: 'QSpace '})
+      components.push({ component: 'QSpace ' })
       components.concat(_.filter(this.itemActions, { scope: 'header' }))
       return components
     },
@@ -199,24 +202,27 @@ export default {
   },
   methods: {
     getLocationMap () {
-      return { 
-        component: 'KLocationMap', 
-        value: this.item.location, 
-        editable: false, 
-        style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;' 
+      return {
+        component: 'KLocationMap',
+        value: this.item.location,
+        editable: false,
+        style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;'
       }
     },
     followUp () {
-      this.$router.push({ name: 'event-activity',
+      this.$router.push({
+        name: 'event-activity',
         params: { objectId: this.item._id, contextId: this.contextId },
         // Depending if event is in a plan we get it as ID or object
-        query: { archived: true, plan: _.get(this.item, 'plan._id', _.get(this.item, 'plan')) } })
+        query: { archived: true, plan: _.get(this.item, 'plan._id', _.get(this.item, 'plan')) }
+      })
     },
     browseMedia () {
       this.$refs.mediaBrowser.show(this.item.attachments)
     },
     viewMap () {
-      this.$router.push({ name: 'event-activity',
+      this.$router.push({
+        name: 'event-activity',
         params: { objectId: this.item._id, contextId: this.contextId },
         // Depending if event is in a plan we get it as ID or object
         query: { plan: _.get(this.item, 'plan._id', _.get(this.item, 'plan')) }

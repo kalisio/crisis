@@ -2,7 +2,7 @@ module.exports = {
   login: require('./core/login'),
   'send-reset-password': require('./core/send-reset-password'),
   register: require('./core/register'),
-  'organisations': require('./organisations'),
+  organisations: require('./organisations'),
   'create-organisation': require('./core/create-organisation'),
   'edit-organisation': require('./edit-organisation'),
   'edit-organisation-billing': require('./edit-organisation-billing'),
@@ -41,7 +41,6 @@ module.exports = {
   'import-layer': require('./map/import-layer'),
   'connect-layer': require('./map/connect-layer'),
   'create-layer': require('./map/create-layer'),
-  'timeline': require('./map/timeline'),
-  'fab': require('./map/fab')
+  timeline: require('./map/timeline'),
+  fab: require('./map/fab')
 }
-

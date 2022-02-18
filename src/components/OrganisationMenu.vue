@@ -1,6 +1,6 @@
 <template>
   <div v-if="organisation">
-    <q-btn-dropdown 
+    <q-btn-dropdown
       id="organisation-menu"
       flat
       dense
@@ -10,10 +10,10 @@
       menu-self="top middle">
       <template v-slot:label>
         <div>
-          <k-avatar 
+          <k-avatar
             id="organisation-avatar"
-            :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'" 
-            :object="organisation" 
+            :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'"
+            :object="organisation"
             :contextId="organisation._id"
             :size="$q.screen.lt.sm ? '1.5rem' : '2rem'" />
         </div>
@@ -23,16 +23,16 @@
           <div class="row full-width justify-center q-pa-md text-subtitle1 bg-grey-4">
             {{ organisation.name }}
           </div>
-          <k-card-section v-if="hasEventsSection"> 
+          <k-card-section v-if="hasEventsSection">
             <!-- Events section -->
             <div class="full-width row justify-between items-center no-wrap">
-              <k-action 
+              <k-action
                 id= "organisation-events"
                 icon= "las la-fire"
                 :label="$t('OrganisationMenu.EVENTS_LABEL', { count: eventsCount })"
                 @triggered="routeTo('events-activity')" />
               <q-space />
-              <k-action 
+              <k-action
                 v-if="canAccessCatalog"
                 id= "organisation-catalog"
                 icon= "las la-map"
@@ -49,7 +49,7 @@
           <!-- Plans section -->
           <k-card-section v-if="hasPlansSection && canAccessPlans">
             <div class="full-width row justify-between items-center no-wrap">
-              <k-action 
+              <k-action
                 id= "organisation-plans"
                 icon= "las la-stream"
                 :label="$t('OrganisationMenu.PLANS_LABEL', { count: plansCount })"
@@ -71,7 +71,7 @@
                 icon= "las la-cog"
                 size="md"
                 :label="$t('OrganisationMenu.MANAGE_ORGANISATION')"
-                @triggered="routeTo('members-activity')" 
+                @triggered="routeTo('members-activity')"
                 :propagate="false" />
             </div>
           </k-card-section>
@@ -80,7 +80,7 @@
     </q-btn-dropdown>
   </div>
 </template>
-  
+
 </template>
 
 <script>
@@ -116,13 +116,13 @@ export default {
   },
   computed: {
     hasEventsSection () {
-      return this.mode === 'admin' || 
-             this.mode === 'plan' || 
+      return this.mode === 'admin' ||
+             this.mode === 'plan' ||
              (this.mode === 'run' && this.planId)
     },
     hasPlansSection () {
       return this.mode === 'admin' ||
-             this.mode !== 'plan' || 
+             this.mode !== 'plan' ||
              (this.mode === 'run' && !this.planId)
     },
     hasManageSection () {
@@ -208,5 +208,3 @@ export default {
   }
 }
 </script>
-
-

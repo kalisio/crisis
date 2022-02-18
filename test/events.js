@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import makeDebug from 'debug'
-import { core, map } from '@kalisio/kdk/test.client'
+import { core } from '@kalisio/kdk/test.client'
 import { goToOrganisationsActivity } from './organisations'
 
 const debug = makeDebug('aktnmap:test:events')
@@ -11,11 +11,10 @@ export const eventLogComponent = 'EventLogItem'
 export const eventTemplateComponent = 'EventTemplateCard'
 
 export async function clickPermission (page, permission, wait = 250) {
-
   let index = 1
   if (permission === 'manager') index = 2
   if (permission === 'owner') index = 3
-  const xpath=`(//div[@id="permission-field"]//div[@role="radio"])[${index}]`
+  const xpath = `(//div[@id="permission-field"]//div[@role="radio"])[${index}]`
   const elements = await page.$x(xpath)
   if (elements.length > 0) {
     elements[0].click()
@@ -29,7 +28,7 @@ export async function goToEventsActivity (page, organisation, wait = 2000) {
     // We can pass an object or a name
     organisation = organisation.name || organisation
     await goToOrganisationsActivity(page, wait)
-    debug(`Navigating to events activity`)
+    debug('Navigating to events activity')
     await core.clickItemAction(page, organisationComponent, organisation, 'organisation-events', wait)
   }
 }
@@ -58,7 +57,7 @@ export async function goToEventTemplatesActivity (page, organisation, wait = 200
     // We can pass an object or a name
     organisation = organisation.name || organisation
     await goToOrganisationsActivity(page, wait)
-    debug(`Navigating to event templates activity`)
+    debug('Navigating to event templates activity')
     await core.expandCard(page, organisationComponent, organisation)
     await core.clickItemAction(page, organisationComponent, organisation, 'organisation-event-templates', wait)
   }
@@ -66,7 +65,8 @@ export async function goToEventTemplatesActivity (page, organisation, wait = 200
 
 export async function countEvents (page, organisation) {
   await goToEventsActivity(page, organisation)
-  return core.countItems(page, eventComponent)
+  const count = await core.countItems(page, eventComponent)
+  return count
 }
 
 export async function countEventLogs (page, organisation, event) {
@@ -76,38 +76,45 @@ export async function countEventLogs (page, organisation, event) {
 
 export async function countEventTemplates (page, organisation) {
   await goToEventTemplatesActivity(page, organisation)
-  return core.countItems(page, eventTemplateComponent)
+  const count = await core.countItems(page, eventTemplateComponent)
+  return count
 }
 
 export async function eventExists (page, organisation, event, property) {
   await goToEventsActivity(page, organisation)
   // Can provide an object with a property to match or a text input
-  return core.itemExists(page, eventComponent, property ? _.get(event, property) : event)
+  const exists = await core.itemExists(page, eventComponent, property ? _.get(event, property) : event)
+  return exists
 }
 
 export async function eventLogExists (page, organisation, event, eventLog, property) {
   // Can provide an object with a property to match or a text input
-  return await core.itemExists(page, eventLogComponent, property ? _.get(eventLog, property) : eventLog)
+  const exists = await core.itemExists(page, eventLogComponent, property ? _.get(eventLog, property) : eventLog)
+  return exists
 }
 
 export async function eventTemplateExists (page, organisation, template, property) {
   await goToEventTemplatesActivity(page, organisation)
   // Can provide an object with a property to match or a text input
-  return core.itemExists(page, eventTemplateComponent, property ? _.get(template, property) : event)
+  const exists = await core.itemExists(page, eventTemplateComponent, property ? _.get(template, property) : template)
+  return exists
 }
 
 export async function eventActionExists (page, organisation, event, action) {
   await goToEventsActivity(page, organisation)
-  return core.itemActionExists(page, eventComponent, event.name, action)
+  const exists = await core.itemActionExists(page, eventComponent, event.name, action)
+  return exists
 }
 
 export async function eventLogActionExists (page, organisation, event, eventLog, action) {
-  return core.itemActionExists(page, eventLogComponent, eventLog.name, action)
+  const exists = await core.itemActionExists(page, eventLogComponent, eventLog.name, action)
+  return exists
 }
 
 export async function eventTemplateActionExists (page, organisation, template, action) {
   await goToEventTemplatesActivity(page, organisation)
-  return core.itemActionExists(page, eventTemplateComponent, template.name, action)
+  const exists = await core.itemActionExists(page, eventTemplateComponent, template.name, action)
+  return exists
 }
 
 export async function createEvent (page, organisation, template, event, wait = 2000) {
@@ -120,7 +127,7 @@ export async function createEvent (page, organisation, template, event, wait = 2
   if (event.name) await core.type(page, '#name-field', event.name, false, true)
   if (event.description) await core.type(page, '#description-field', event.description, false, true)
   // Geolocate on map by default
-  const xpath = `(//div[@id="location-input"]//div[@role="radio"])[2]`
+  const xpath = '(//div[@id="location-input"]//div[@role="radio"])[2]'
   const locationElements = await page.$x(xpath)
   if (locationElements.length > 0) {
     locationElements[0].click()

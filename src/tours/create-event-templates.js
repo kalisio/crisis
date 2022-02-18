@@ -62,15 +62,15 @@ module.exports = [{
   params: {
     placement: 'top'
   }
-}/*, {
+}, /*, {
   target: '#layer-field',
   title: 'tours.create-event-template.SELECT_LAYER_LABEL',
   content: 'tours.create-event-template.LAYER_LABEL',
   params: {
     placement: 'top'
   }
-}*/
-, {
+} */
+{
   target: '#apply-button',
   content: 'tours.create-event-template.CREATE_TEMPLATE_LABEL',
   params: {

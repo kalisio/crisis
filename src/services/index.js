@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import logger from 'loglevel'
 import memory from 'feathers-memory'
 import kCore from '@kalisio/kdk/core.client'

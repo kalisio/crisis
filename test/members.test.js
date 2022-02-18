@@ -1,5 +1,6 @@
 import _ from 'lodash'
-import { expect } from 'chai'
+import chai, { util, expect } from 'chai'
+import chailint from 'chai-lint'
 import { core } from '@kalisio/kdk/test.client'
 import * as members from './members'
 import * as organisations from './organisations'
@@ -8,7 +9,7 @@ const suite = 'members'
 
 describe(`suite:${suite}`, () => {
   let runner, page, api, client
-  let org = {
+  const org = {
     owner: {
       name: 'Owner',
       email: 'owner@kalisio.xyz',
@@ -33,6 +34,8 @@ describe(`suite:${suite}`, () => {
   }
 
   before(async function () {
+    chailint(chai, util)
+    
     // Let enough time to process
     this.timeout(60000)
     api = new core.Api({
@@ -62,7 +65,7 @@ describe(`suite:${suite}`, () => {
   })
 
   afterEach(() => {
-    expect(runner.hasError()).to.false
+    expect(runner.hasError()).beFalse()
   })
 
   it('org owner can add members', async () => {
@@ -72,19 +75,19 @@ describe(`suite:${suite}`, () => {
     const manager = _.find(org.members, { name: 'Manager' })
     await members.addMember(page, org, manager)
     expect(await members.countMembers(page, org)).to.equal(2)
-    expect(await members.memberExists (page, org, manager)).to.be.true
+    expect(await members.memberExists(page, org, manager)).beTrue()
     // Add member
     const member = _.find(org.members, { name: 'Member' })
     await members.addMember(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(3)
-    expect(await members.memberExists (page, org, member)).to.be.true
+    expect(await members.memberExists(page, org, member)).beTrue()
   })
-    
+
   it('org owner can invite member', async () => {
     const guest = _.find(org.members, { name: 'Guest' })
     await members.inviteMember(page, org, guest)
     expect(await members.countMembers(page, org)).to.equal(4)
-    expect(await members.memberExists (page, org, guest)).to.be.true
+    expect(await members.memberExists(page, org, guest)).beTrue()
   })
 
   it('org owner can filter members', async () => {
@@ -92,22 +95,22 @@ describe(`suite:${suite}`, () => {
     let filter = { owner: true, manager: false, member: false, guest: false }
     await members.filterMembers(page, org, filter)
     expect(await members.countMembers(page, org)).to.equal(2)
-    expect(await members.memberExists (page, org, org.owner)).to.be.true
+    expect(await members.memberExists(page, org, org.owner)).beTrue()
     // Managers
     filter = { owner: false, manager: true, member: false, guest: false }
     await members.filterMembers(page, org, filter)
     expect(await members.countMembers(page, org)).to.equal(1)
-    expect(await members.memberExists (page, org, _.find(org.members, { name: 'Manager' }))).to.be.true
+    expect(await members.memberExists(page, org, _.find(org.members, { name: 'Manager' }))).beTrue()
     // Members
     filter = { owner: false, manager: false, member: true, guest: false }
     await members.filterMembers(page, org, filter)
     expect(await members.countMembers(page, org)).to.equal(1)
-    expect(await members.memberExists (page, org, _.find(org.members, { name: 'Member' }))).to.be.true
+    expect(await members.memberExists(page, org, _.find(org.members, { name: 'Member' }))).beTrue()
     // Guest
     filter = { owner: false, manager: false, member: false, guest: true }
     await members.filterMembers(page, org, filter)
     expect(await members.countMembers(page, org)).to.equal(1)
-    expect(await members.memberExists (page, org, _.find(org.members, { name: 'Guest' }))).to.be.true
+    expect(await members.memberExists(page, org, _.find(org.members, { name: 'Guest' }))).beTrue()
     // None
     filter = { owner: false, manager: false, member: false, guest: false }
     await members.filterMembers(page, org, filter)
@@ -124,12 +127,12 @@ describe(`suite:${suite}`, () => {
     await core.closeSignupAlert(page)
     expect(await organisations.countOrganisations(page)).to.equal(2)
     expect(await members.countMembers(page, org)).to.equal(4)
-    expect(await members.canAddMember(page, org)).to.be.false
-    expect(await members.canEditMember(page, org, member)).to.be.false
-    expect(await members.canEditMember(page, org, manager)).to.be.false
-    expect(await members.canEditMember(page, org, guest)).to.be.false
-    expect(await members.canReinviteGuest(page, org, guest)).to.be.false
-    expect(await members.canEditMember(page, org, org.owner)).to.be.false
+    expect(await members.canAddMember(page, org)).beFalse()
+    expect(await members.canEditMember(page, org, member)).beFalse()
+    expect(await members.canEditMember(page, org, manager)).beFalse()
+    expect(await members.canEditMember(page, org, guest)).beFalse()
+    expect(await members.canReinviteGuest(page, org, guest)).beFalse()
+    expect(await members.canEditMember(page, org, org.owner)).beFalse()
     await core.logout(page)
     await core.goToLoginScreen(page)
   })
@@ -142,12 +145,12 @@ describe(`suite:${suite}`, () => {
     await core.closeSignupAlert(page)
     expect(await organisations.countOrganisations(page)).to.equal(2)
     expect(await members.countMembers(page, org)).to.equal(4)
-    expect(await members.canAddMember(page, org)).to.be.true
-    expect(await members.canEditMember(page, org, manager)).to.be.true
-    expect(await members.canEditMember(page, org, member)).to.be.true
-    expect(await members.canEditMember(page, org, guest)).to.be.false
-    expect(await members.canReinviteGuest(page, org, guest)).to.be.true
-    expect(await members.canEditMember(page, org, org.owner)).to.be.true
+    expect(await members.canAddMember(page, org)).beTrue()
+    expect(await members.canEditMember(page, org, manager)).beTrue()
+    expect(await members.canEditMember(page, org, member)).beTrue()
+    expect(await members.canEditMember(page, org, guest)).beFalse()
+    expect(await members.canReinviteGuest(page, org, guest)).beTrue()
+    expect(await members.canEditMember(page, org, org.owner)).beTrue()
     await members.removeMember(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(3)
   })
@@ -155,7 +158,7 @@ describe(`suite:${suite}`, () => {
   it('manager cannot remove owner', async () => {
     const owner = org.owner
     await members.removeMember(page, org, owner)
-    expect(await core.isToastVisible(page)).to.be.true
+    expect(await core.isToastVisible(page)).beTrue()
     runner.clearErrors()
     await core.logout(page)
     await core.goToLoginScreen(page)

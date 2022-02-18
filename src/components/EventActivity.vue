@@ -7,10 +7,10 @@
       </div>
 
       <k-modal ref="uploaderModal">
-        <k-uploader ref="uploader" 
-          :resource="objectId" 
+        <k-uploader ref="uploader"
+          :resource="objectId"
           :base-query="uploaderQuery()"
-          :options="uploaderOptions()" 
+          :options="uploaderOptions()"
           @uploader-ready="initializeMedias" />
       </k-modal>
 
@@ -26,7 +26,7 @@ import _ from 'lodash'
 import L from 'leaflet'
 import chroma from 'chroma-js'
 import centroid from '@turf/centroid'
-import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
@@ -44,7 +44,7 @@ export default {
     kCoreMixins.refsResolver(['map']),
     activityMixin,
     kCoreMixins.baseCollection,
-    kMapMixins.featureSelection,    
+    kMapMixins.featureSelection,
     kMapMixins.featureService,
     kMapMixins.infobox,
     kMapMixins.style,
@@ -102,7 +102,7 @@ export default {
       this.event = await this.$api.getService(this.archived ? 'archived-events' : 'events', this.contextId).get(this.objectId)
       this.refreshUser()
       // If we'd like to only work in real-time
-      //Time.setCurrentTime(moment.utc())
+      // Time.setCurrentTime(moment.utc())
       activityMixin.methods.configureActivity.call(this)
       const color = kCoreUtils.getColorFromPalette(_.get(this.event, 'icon.color', 'blue'))
       const icon = kCoreUtils.getIconName(this.event) || 'fas fa-circle'
@@ -111,7 +111,7 @@ export default {
         const feature = { type: 'Feature', geometry: this.event.location }
         // Add event layer
         const layer = L.geoJson(feature, {
-          style: () => ({ 'color': color, 'fillColor': chroma(color).alpha(0.5).hex() }) // Transparency
+          style: () => ({ color: color, fillColor: chroma(color).alpha(0.5).hex() }) // Transparency
         })
         this.map.addLayer(layer)
         // Recenter map
@@ -345,6 +345,6 @@ export default {
     cursor: wait;
   }
   .position-cursor {
-    cursor: url('../statics/position-cursor.png'), auto; 
+    cursor: url('../statics/position-cursor.png'), auto;
   }
 </style>

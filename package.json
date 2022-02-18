@@ -52,18 +52,38 @@
     "clean-sns": "node ./tools/clean-sns"
   },
   "standard": {
-    "parser": "babel-eslint",
+    "parser": "vue-eslint-parser",
+    "parserOptions": {
+      "parser": "babel-eslint",
+      "allowImportExportEverywhere": true,
+      "ecmaVersion": 2019,
+      "sourceType": "module"
+    },
     "plugins": [
       "vue"
     ],
-    "sourceType": "module",
+    "env": [
+      "mocha"
+    ],
+    "ignore": [
+      "src/statics"
+    ],
     "globals": [
       "DEV",
       "PROD",
       "__THEME",
-      "cordova",
       "test",
-      "fixture"
+      "fixture",
+      "fetch",
+      "cordova",
+      "location",
+      "FileReader",
+      "LocalFileSystem",
+      "mime",
+      "atob",
+      "URL",
+      "Blob",
+      "Event"
     ]
   },
   "dependencies": {
@@ -126,7 +146,7 @@
     "lodash": "^4.17.21",
     "loglevel": "^1.6.0",
     "mapillary-js": "^4.0.0",
-    "mathjs": "^5.7.0",
+    "mathjs": "^10.1.1",
     "mime-types-browser": "^0.0.3",
     "moment": "^2.24.0",
     "node-fetch": "^2.6.7",
@@ -157,6 +177,7 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "chai": "^4.3.4",
+    "chai-lint": "^0.1.1",
     "clui": "^0.3.6",
     "colors": "^1.1.2",
     "commander": "^2.15.0",
