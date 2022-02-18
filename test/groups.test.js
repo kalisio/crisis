@@ -82,9 +82,9 @@ describe(`suite:${suite}`, () => {
   it('org owner can add members to a group', async () => {
     const group = _.find(org.groups, { name: 'Group 1' })
     let member = _.find(org.members, { name: 'Manager' })
-    await members.joinGroup(page, org, group, member, 'manager')
-    member = _.find(org.members, { name: 'Member' })
     await members.joinGroup(page, org, group, member, 'member')
+    member = _.find(org.members, { name: 'Member' })
+    await members.joinGroup(page, org, group, member, 'manager')
     await groups.goToGroupMembersActivity(page, org, group)
     expect(await members.countMembers(page, org)).to.equal(2)
   })
