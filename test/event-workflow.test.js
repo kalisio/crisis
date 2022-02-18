@@ -245,10 +245,10 @@ describe(`suite:${suite}`, () => {
     member = _.find(org.members, { name: 'Member' })
     expect(await events.eventParticipantExists(page, org, workflowEvent, member.name)).beTrue()
     */
+    await events.closeEventMap(page)
   })
 
   it('org manager can edit event template with workflow', async () => {
-    await events.closeEventMap(page)
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
     // TODO: make edition more complete
     workflowTemplate.workflow.forEach(step => {

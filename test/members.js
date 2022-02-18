@@ -131,7 +131,9 @@ export async function joinGroup (page, organisation, group, member, permissions,
   await core.clickItemAction(page, memberComponent, member.name, 'join-group')
   await core.type(page, '#group-field', group.name)
   await core.click(page, `#${_.kebabCase(group.name)}`)
-  await core.clickSelect(page, '#role-field', `#${permissions}`)
+  if (permissions === 'manager') {
+    await core.click(page, '#role-field')
+  }
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
