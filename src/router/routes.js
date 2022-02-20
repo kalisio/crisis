@@ -197,7 +197,7 @@ module.exports = {
                   fab: tours.fab
                 },
                 children: {
-                  add: {
+                  'add-layer': {
                     name: 'add-layer',
                     component: 'catalog/KAddLayer',
                     tour: {
@@ -206,6 +206,11 @@ module.exports = {
                       'connect-layer': tours['connect-layer'],
                       'create-layer': tours['create-layer']
                     }
+                  },
+                  'create-view': {
+                    name: 'create-map-view',
+                    component: 'catalog/KCreateView',
+                    tour: tours['create-view']
                   },
                   categories: {
                     name: 'manage-layer-categories',

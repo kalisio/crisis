@@ -1,6 +1,7 @@
 <template>
-  <k-catalog :layers="layers" :layerCategories="layerCategories"
-    :forecastModels="forecastModels" :forecastModelHandlers="forecastModelHandlers" :forecastModel="forecastModel" >
+  <k-layers-panel
+    :layers="filteredLayers" 
+    :layerCategories="filteredCategories">
     <div slot="footer" >
       <q-expansion-item icon="las la-user" header-class="text-primary" id="participants" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">
         <template v-for="participant in participants">
@@ -27,7 +28,7 @@
         </template>
       </q-expansion-item>
     </div>
-  </k-catalog>
+  </k-layers-panel>
 </template>
 
 <script>
@@ -70,6 +71,14 @@ export default {
       required: true
     }
   },
+  computed: {
+    filteredLayers () {
+     return []
+    },
+    filteredCategories () {
+      return []
+    }
+  },
   methods: {
     participantIconName (participant) {
       return kCoreUtils.getIconName(participant)
@@ -88,7 +97,7 @@ export default {
     // Loads the required components
     this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
     this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
-    this.$options.components['k-catalog'] = this.$load('catalog/KCatalog')
+    this.$options.components['k-layers-panel'] = this.$load('catalog/KLayersPanel')
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
   }

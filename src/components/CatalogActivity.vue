@@ -206,6 +206,7 @@ export default {
       if (!layer) {
         await this.addLayer({
           name: this.$t('CatalogActivity.EVENTS_LAYER'),
+          scope: 'activity',
           type: 'OverlayLayer',
           icon: 'las la-fire',
           featureId: '_id',
@@ -234,6 +235,7 @@ export default {
       if (!layer) {
         await this.addLayer({
           name: this.$t('CatalogActivity.ALERTS_LAYER'),
+          scope: 'activity',
           type: 'OverlayLayer',
           icon: 'las la-bell',
           featureId: '_id',
@@ -264,6 +266,7 @@ export default {
       if (!layer) {
         await this.addLayer({
           name: this.$t('CatalogActivity.OBJECTIVES_LAYER'),
+          scope: 'activity',
           type: 'OverlayLayer',
           icon: 'las la-bullseye',
           featureId: 'id',

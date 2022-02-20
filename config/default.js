@@ -45,6 +45,7 @@ const contextHelp = function (tour) {
   }, tour ? { handler: { name: 'launchTour', params: [tour] } } : { handler: 'launchTour' })
 }
 
+// Left pane
 const leftPane = function (tour) {
   return {
     content: [
@@ -61,6 +62,34 @@ const leftPane = function (tour) {
       { id: 'logout', icon: 'las la-sign-out-alt', label: 'leftPane.LOGOUT', route: { name: 'logout' }, renderer: 'item' }
     ]
   }
+}
+
+// Catalog tababr
+function catalogTabbar (views, activeView) {
+  const tabbar = {
+    id: 'catalog-tabbar', component: 'frame/KPanel', class: 'q-pa-sm', actionRenderer: 'tab', content: []
+  }
+  if (views.includes('user-layers')) tabbar.content.push({
+    id: 'user-layers', label: 'KUserLayersPanel.LAYERS_LABEL', color: 'grey-7', toggle: { color: 'primary' }, 
+    toggled: activeView === 'user-layers' ? true : false,
+    handler: { name: 'setRightPaneMode', params: ['map'] } 
+  })
+  if (views.includes('event-participants')) tabbar.content.push({
+    id: 'event-participant-tab', label: 'EventActivityPanel.PARTICIPANTS_LABEL', color: 'grey-7', toggle: { color: 'primary' },
+    toggled: activeView === 'event-participants' ? true : false,
+    handler: { name: 'setRightPaneMode', params: ['event-participants'] } 
+  })
+  if (views.includes('user-views')) tabbar.content.push({
+    id: 'user-views-tab', label: 'KViewsPanel.VIEWS_LABEL', color: 'grey-7', toggle: { color: 'primary' },
+    toggled: activeView === 'user-views' ? true : false,
+    handler: { name: 'setRightPaneMode', params: ['user-views'] } 
+  })
+  if (views.includes('catalog-layers')) tabbar.content.push({
+    id: 'catalog-layers-tab', label: 'KCatalogLayersPanel.LAYERS_LABEL', color: 'grey-7', toggle: { color: 'primary' },
+    toggled: activeView === 'catalog-layers' ? true : false,
+    handler: { name: 'setRightPaneMode', params: ['catalog-layers'] } 
+  })
+  return tabbar
 }
 
 const separator = { component: 'QSeparator', vertical: true, color: 'grey-5' }
@@ -606,12 +635,6 @@ module.exports = {
           { component: 'KLocateUser' },
           { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
           {
-            id: 'manage-favorite-views', component: 'menu/KMenu', icon: 'star_border', persistent: true, autoClose: false, tooltip: 'KFavoriteViews.FAVORITE_VIEWS_LABEL',
-            content: [
-              { component: 'KFavoriteViews' }
-            ]
-          },
-          {
             id: 'tools', component: 'menu/KMenu', icon: 'las la-wrench', tooltip: 'mixins.activity.TOOLS', actionRenderer: 'item',
             content: [
               { id: 'measure-tool', icon: 'las la-ruler-combined', label: 'KMeasureTool.TOOL_BUTTON_LABEL', handler: { name: 'setTopPaneMode', params: ['measure-tool'] } },
@@ -645,17 +668,28 @@ module.exports = {
       }
     },
     rightPane: {
-      content: [{
-        component: 'catalog/KCatalog', bind: '$data'
-      }, {
-        component: 'QSpace'
-      }, {
-        component: 'frame/KPanel',
-        content: [
-          { id: 'manage-layer-categories', icon: 'las la-cog', label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
-            route: { name: 'manage-layer-categories', params: { south: ':south', north: ':north', west: ':west', east: ':east' }, query: { layers: ':layers' } } }
+      content: {
+        'map': [
+          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-layers'),
+          { id: 'user-layers', component: 'catalog/KUserLayersPanel', bind: '$data' },
+          { component: 'QSpace' },
+          { id: 'catalog-footer', component: 'frame/KPanel', content: [{
+              id: 'manage-layer-categories',
+              icon: 'las la-cog',
+              label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
+              route: { name: 'manage-layer-categories', params: { south: ':south', north: ':north', west: ':west', east: ':east' }, query: { layers: ':layers' } } 
+            }]
+          }
+        ],
+        'user-views': [
+          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-views'),
+          { id: 'user-views', component: 'catalog/KViewsPanel' },
+        ],
+        'catalog-layers': [
+          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'catalog-layers'),
+          { id: 'system-layers', component: 'catalog/KCatalogLayersPanel', bind: '$data', scope: 'user' }
         ]
-      }]
+      }
     },
     bottomPane: {
       content: [
@@ -674,6 +708,8 @@ module.exports = {
     },
     fab: {
       actions: [
+        { id: 'create-view', icon: 'las la-star', label: 'mixins.activity.CREATE_VIEW',
+          route: { name: 'create-map-view', params: { south: ':south', north: ':north', west: ':west', east: ':east' }, query: { layers: ':layers' } } },
         { id: 'add-layer', icon: 'las la-plus', label: 'mixins.activity.ADD_LAYER',
           route: { name: 'add-layer', params: { south: ':south', north: ':north', west: ':west', east: ':east' }, query: { layers: ':layers' } } },
         { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'onProbeLocation' }
@@ -722,7 +758,26 @@ module.exports = {
     rightPane: {
       content: {
         'history': [],
-        'map': [ { component: 'catalog/KCatalog', bind: '$data' } ],
+        'map': [
+          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-layers'),
+          { id: 'user-layers', component: 'catalog/KUserLayersPanel', bind: '$data' },
+          { component: 'QSpace' },
+          { id: 'catalog-footer', component: 'frame/KPanel', content: [{
+              id: 'manage-layer-categories',
+              icon: 'las la-cog',
+              label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
+              route: { name: 'manage-layer-categories', params: { south: ':south', north: ':north', west: ':west', east: ':east' }, query: { layers: ':layers' } } 
+            }]
+          }
+        ],
+        'user-views': [
+          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-views'),
+          { id: 'user-views', component: 'catalog/KViewsPanel' },
+        ],
+        'catalog-layers': [
+          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'catalog-layers'),
+          { id: 'system-layers', component: 'catalog/KCatalogLayersPanel', bind: '$data', scope: 'user' }
+        ],
         'chart': []
       }
     },
@@ -1021,9 +1076,24 @@ module.exports = {
       }
     },
     rightPane: {
-      content: [
-        { component: 'EventActivityPanel', bind: '$data' }
-      ]
+      content: {
+        'map': [
+          catalogTabbar(['user-layers', 'event-participants'], 'user-layers'),
+          { id: 'user-layers', component: 'catalog/KUserLayersPanel', bind: '$data' },
+          { component: 'QSpace' },
+          { id: 'catalog-footer', component: 'frame/KPanel', content: [{
+              id: 'manage-layer-categories',
+              icon: 'las la-cog',
+              label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
+              route: { name: 'manage-layer-categories', params: { south: ':south', north: ':north', west: ':west', east: ':east' }, query: { layers: ':layers' } } 
+            }]
+          }
+        ],
+        'event-participants': [
+          catalogTabbar(['user-layers', 'event-participants'], 'event-participants'),
+          { id: 'event-participants', component: 'EventActivityPanel', bind: '$data' }
+        ]
+      }
     },
     bottomPane: {
       content: [

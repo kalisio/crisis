@@ -286,6 +286,7 @@ export default {
           await this.addLayer({
             name: template,
             label: template,
+            scope: 'activity',
             type: 'OverlayLayer',
             icon: 'las la-fire',
             leaflet: Object.assign({
@@ -303,6 +304,7 @@ export default {
           await this.addLayer({
             name: template,
             label: template,
+            scope: 'activity',
             type: 'OverlayLayer',
             icon: 'las la-fire',
             isSelectable: false,

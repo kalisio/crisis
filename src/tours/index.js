@@ -34,13 +34,13 @@ module.exports = {
   'archived-plans': require('./archived-plans'),
   catalog: require('./catalog'),
   'navigation-bar': require('./map/navigation-bar'),
-  'favorite-views': require('./map/favorite-views'),
   'catalog-panel': require('./map/catalog-panel'),
   'catalog-categories': require('./map/catalog-categories'),
   'add-layer': require('./map/add-layer'),
   'import-layer': require('./map/import-layer'),
   'connect-layer': require('./map/connect-layer'),
   'create-layer': require('./map/create-layer'),
+  'create-view': require('./map/create-view'),  
   timeline: require('./map/timeline'),
   fab: require('./map/fab')
 }

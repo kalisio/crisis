@@ -173,6 +173,7 @@ export default {
         await this.addLayer({
           name: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
           label: this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'),
+          scope: 'activity',
           type: 'OverlayLayer',
           icon: 'fas fa-user',
           featureId: (this.archived ? 'participant' : 'participant._id'),
