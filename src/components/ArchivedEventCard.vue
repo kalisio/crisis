@@ -271,9 +271,9 @@ export default {
     this.$events.$off('user-changed', this.refresh)
   }
 }
-</script>
+</script> 
 
-<style>
+<style lang="scss">
   .event-card-description {
     transition: font-size .2s;
   }

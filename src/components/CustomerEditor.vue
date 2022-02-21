@@ -181,8 +181,8 @@ export default {
 }
 </script>
 
-<style>
-.k-stripe-card {
-  margin: 8px;
-}
+<style lang="scss">
+  .k-stripe-card {
+    margin: 8px;
+  }
 </style>

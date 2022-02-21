@@ -710,7 +710,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   .event-card-description {
     transition: font-size .2s;
   }

@@ -23,7 +23,7 @@ module.exports = function (ctx) {
     ],
 
     css: [
-      'app.styl'
+      'app.scss'
     ],
 
     extras: [
