@@ -136,6 +136,7 @@
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
   <!--plugin name="phonegap-plugin-push" spec="~2.3.0"/-->
+  <!-- for rebuild purpose -->
   <plugin name="@havesource/cordova-plugin-push" spec="1.0.0"/>
   <engine name="android" spec="~9.0.0"/>
   <engine name="ios" spec="~5.1.1"/>
