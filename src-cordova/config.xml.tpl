@@ -65,8 +65,8 @@
     <splash density="port-xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>
   </platform>
   <platform name="ios">
-    <hook src="hooks/ios-update-pods.sh" type="before_platform_add"/>
-    <hook src="hooks/ios-run-pods.sh" type="after_platform_add"/>
+    <!--hook src="hooks/ios-update-pods.sh" type="before_platform_add"/-->
+    <!--hook src="hooks/ios-run-pods.sh" type="after_platform_add"/-->
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
     <feature name="CDVWKWebViewEngine">
@@ -135,7 +135,8 @@
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
-  <plugin name="phonegap-plugin-push" spec="~2.3.0"/>
+  <!--plugin name="phonegap-plugin-push" spec="~2.3.0"/-->
+  <plugin name="@havesource/cordova-plugin-push" spec="1.0.0"/>
   <engine name="android" spec="~9.0.0"/>
   <engine name="ios" spec="~5.1.1"/>
 </widget>
