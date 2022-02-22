@@ -71,7 +71,7 @@ travis_fold end "build"
 travis_fold start "deploy"
 
 # Deploy the IPA to the AppleStore
-xcrun altool --upload-app -f "./src-cordova/platforms/ios/build/device/$TITLE.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log 2>&1
+xcrun altool --upload-app -t ios -f "./src-cordova/platforms/ios/build/device/$TITLE.ipa" -u "$APPLE_ID" -p "$APPLE_APP_PASSWORD" > ios.deploy.log 2>&1
 EXIT_CODE=$?
 # Copy the log whatever the result
 rclone copy ios.deploy.log scw:kalisio-builds/${BUILD_BUCKET}/ios.deploy.log

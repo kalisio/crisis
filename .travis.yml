@@ -2,7 +2,7 @@ notifications:
   email: false
   slack:
     rooms:
-      secure: S3xDhrrLgQ1DSBgc42M9wkJzmqYlv/FSeKhcOxDVspy8s/N2N4z4JCGpuX3RYIPEHNIaao9gTvQJ5Ddoq5hCppXncyKsmH4NvDVQ1JdjTRk5KXp6SC0mJvJ7Vh4pKhcpJu87sh9dZs9Io6VqqG/bGpcjt9SFgVz/n24DPKgeREa351GorhncFmnG3ZtItHGe5a7n5V9sM3g5uLUf0ELPew6iPvkyx5xNvyMfMrgcJDbXKHQR6S5xvp7Pw/GkXGVR7d1nQElKMsDOlEiui+l2ctRFo0ZnNGoVzvLGKygkw717Q6k215Gq7x/eZI5//Kidwxra0ks7NYhYhzayRiy+pJ2ZYH3N8c5KL6xbVzyNn8LpP733Ra48oJZK+yjk77TAIkwvBsoH0p1Hc1fi12fdgrhACHa48zy/ILMcnGILfX5BOjVwpPy2dUbiKQHmClrq4Fe+t9vK11wqEjJr/bm2WfmbqEudWn3Kb1Vpk5ZohNZuhXcqJ/PdT9ns9ac8jNHxP3mAiCulOQbRNFq95ZjYQuMscKzlw18WUNyfi/5hsMCKgi78Kbg5Bzia1SieF0w+uo3qHDNIEPiuQevrSc0zGLUaPn+G4O08tx75Gxjg23/leBvn36qv2rXG1+RjL7saj00S2sTSKEB9rXWf8unE19Rh2gXDg4Asxyr63nOLBBI=
+    - secure: S3xDhrrLgQ1DSBgc42M9wkJzmqYlv/FSeKhcOxDVspy8s/N2N4z4JCGpuX3RYIPEHNIaao9gTvQJ5Ddoq5hCppXncyKsmH4NvDVQ1JdjTRk5KXp6SC0mJvJ7Vh4pKhcpJu87sh9dZs9Io6VqqG/bGpcjt9SFgVz/n24DPKgeREa351GorhncFmnG3ZtItHGe5a7n5V9sM3g5uLUf0ELPew6iPvkyx5xNvyMfMrgcJDbXKHQR6S5xvp7Pw/GkXGVR7d1nQElKMsDOlEiui+l2ctRFo0ZnNGoVzvLGKygkw717Q6k215Gq7x/eZI5//Kidwxra0ks7NYhYhzayRiy+pJ2ZYH3N8c5KL6xbVzyNn8LpP733Ra48oJZK+yjk77TAIkwvBsoH0p1Hc1fi12fdgrhACHa48zy/ILMcnGILfX5BOjVwpPy2dUbiKQHmClrq4Fe+t9vK11wqEjJr/bm2WfmbqEudWn3Kb1Vpk5ZohNZuhXcqJ/PdT9ns9ac8jNHxP3mAiCulOQbRNFq95ZjYQuMscKzlw18WUNyfi/5hsMCKgi78Kbg5Bzia1SieF0w+uo3qHDNIEPiuQevrSc0zGLUaPn+G4O08tx75Gxjg23/leBvn36qv2rXG1+RjL7saj00S2sTSKEB9rXWf8unE19Rh2gXDg4Asxyr63nOLBBI=
     on_success: always
     on_failure: always
 
@@ -83,7 +83,7 @@ jobs:
   - stage: IOS
     os: osx
     language: objective-c
-    osx_image: xcode12
+    osx_image: xcode13.2
     before_install:
     - nvm install 12.16
     - npm install -g yarn
