@@ -12,7 +12,5 @@
 
 #pod setup
 
-sudo gem uninstall cocoapods
-sudo gem install cocoapods -v 1.8.0
 
 
