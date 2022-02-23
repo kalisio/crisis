@@ -661,7 +661,7 @@ module.exports = {
           { component: 'KLayerEditionToolbar' }
         ],
         'measure-tool': [
-          { id: 'accept', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
+          { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { component: 'KMeasureTool' }
         ]
