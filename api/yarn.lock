@@ -572,7 +572,7 @@
     lodash "^4.17.20"
     radix-router "^3.0.1"
 
-"@geoman-io/leaflet-geoman-free@2.11.3", "@geoman-io/leaflet-geoman-free@^2.11.1":
+"@geoman-io/leaflet-geoman-free@2.11.3":
   version "2.11.3"
   resolved "https://registry.yarnpkg.com/@geoman-io/leaflet-geoman-free/-/leaflet-geoman-free-2.11.3.tgz#480164ab76c2b2a885003e0c111284f3c3160a36"
   integrity sha512-LsiurEgKEHBcTnAVl8h7EfS5V/doCuxePzPE9SnfrhtJBN7IzP6UwkEo35Agwko+BnIuw/o2bE4F7irvKwQzjw==
@@ -611,10 +611,10 @@
     debug "^4.1.0"
     uuid "^8.2.0"
 
-"@kalisio/kdk@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@kalisio/kdk/-/kdk-1.4.2.tgz#ff36c388086c175a5674ca46000cc948e03ada8e"
-  integrity sha512-7a3himwNvYXw3FwpIyBjCy5E1ioP38yk8a0pJMp1lyWoXuhNo4za8q3xzt+anDMVUdC52Z5rIZIOuTdVyxWI6A==
+"@kalisio/kdk@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@kalisio/kdk/-/kdk-1.6.0.tgz#5ec75bec36223f471a9f1e1c46083993ff23343b"
+  integrity sha512-CBCzq+qJ/MFENpJphGk/mvjSX7sC2L7IGjTUYNSMq4CU+vBTdQeg/pMEAVAtYqhkxle5EBZQbpYjyXMNgufVPA==
   dependencies:
     "@feathersjs/authentication" "https://github.com/kalisio/authentication.git"
     "@feathersjs/authentication-jwt" "^2.0.1"
@@ -625,7 +625,6 @@
     "@feathersjs/express" "^1.2.3"
     "@feathersjs/feathers" "^3.3.1"
     "@feathersjs/socketio" "^3.2.2"
-    "@geoman-io/leaflet-geoman-free" "^2.11.1"
     abort-controller "^3.0.0"
     aws-sdk "^2.200.0"
     body-parser "^1.17.1"
