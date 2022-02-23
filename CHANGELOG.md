@@ -1,20 +1,11 @@
 # Changelog
 
-## [Unreleased](https://github.com/kalisio/aktnmap/tree/HEAD)
-
-[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.3.0...HEAD)
-
-**Merged pull requests:**
-
-- build\(deps\): bump url-parse from 1.5.3 to 1.5.7 in /docs [\#363](https://github.com/kalisio/aktnmap/pull/363) ([dependabot[bot]](https://github.com/apps/dependabot))
-
 ## [prod-v1.3.0](https://github.com/kalisio/aktnmap/tree/prod-v1.3.0) (2022-02-23)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.2.2...prod-v1.3.0)
 
 **Implemented enhancements:**
 
-- Enhance catalog layout [\#365](https://github.com/kalisio/aktnmap/issues/365)
 - Organisation managers should be able to manage all groups [\#357](https://github.com/kalisio/aktnmap/issues/357)
 - Update configuration to include units management [\#355](https://github.com/kalisio/aktnmap/issues/355)
 - Provide measurements capabilities [\#353](https://github.com/kalisio/aktnmap/issues/353)
