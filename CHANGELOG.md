@@ -1,5 +1,49 @@
 # Changelog
 
+## [Unreleased](https://github.com/kalisio/aktnmap/tree/HEAD)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.3.0...HEAD)
+
+**Merged pull requests:**
+
+- build\(deps\): bump url-parse from 1.5.3 to 1.5.7 in /docs [\#363](https://github.com/kalisio/aktnmap/pull/363) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [prod-v1.3.0](https://github.com/kalisio/aktnmap/tree/prod-v1.3.0) (2022-02-23)
+
+[Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.2.2...prod-v1.3.0)
+
+**Implemented enhancements:**
+
+- Enhance catalog layout [\#365](https://github.com/kalisio/aktnmap/issues/365)
+- Organisation managers should be able to manage all groups [\#357](https://github.com/kalisio/aktnmap/issues/357)
+- Update configuration to include units management [\#355](https://github.com/kalisio/aktnmap/issues/355)
+- Provide measurements capabilities [\#353](https://github.com/kalisio/aktnmap/issues/353)
+- Allow to import shapefiles [\#352](https://github.com/kalisio/aktnmap/issues/352)
+- Ease service distribution configuration [\#338](https://github.com/kalisio/aktnmap/issues/338)
+- Creating an event on top of a feature in the map should allow to select a location [\#334](https://github.com/kalisio/aktnmap/issues/334)
+- Automatically remove inactive organisations [\#238](https://github.com/kalisio/aktnmap/issues/238)
+- Prevent user authorisations to be updated externally through the API [\#179](https://github.com/kalisio/aktnmap/issues/179)
+- Add a webhook to be able to create events for an organisation [\#103](https://github.com/kalisio/aktnmap/issues/103)
+
+**Fixed bugs:**
+
+- Archived event activity not available on organisation card for members [\#358](https://github.com/kalisio/aktnmap/issues/358)
+- Mapillary widget is not resized when switching to fullscreen [\#347](https://github.com/kalisio/aktnmap/issues/347)
+- Distributed kano/weacast services should not allow external updates [\#341](https://github.com/kalisio/aktnmap/issues/341)
+- Hide the quotas in the organisation card if the user is a member [\#332](https://github.com/kalisio/aktnmap/issues/332)
+- Updating the user like his profile causes different issues [\#29](https://github.com/kalisio/aktnmap/issues/29)
+
+**Merged pull requests:**
+
+- build\(deps\): bump follow-redirects from 1.14.7 to 1.14.8 in /docs [\#360](https://github.com/kalisio/aktnmap/pull/360) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump node-fetch from 2.6.1 to 2.6.7 in /api [\#350](https://github.com/kalisio/aktnmap/pull/350) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump node-fetch from 2.6.1 to 2.6.7 [\#349](https://github.com/kalisio/aktnmap/pull/349) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps-dev\): bump shelljs from 0.7.8 to 0.8.5 in /api [\#345](https://github.com/kalisio/aktnmap/pull/345) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps-dev\): bump shelljs from 0.8.1 to 0.8.5 [\#344](https://github.com/kalisio/aktnmap/pull/344) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump follow-redirects from 1.13.1 to 1.14.7 in /docs [\#342](https://github.com/kalisio/aktnmap/pull/342) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump mermaid from 8.13.5 to 8.13.8 in /docs [\#336](https://github.com/kalisio/aktnmap/pull/336) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump mermaid from 8.8.4 to 8.13.5 in /docs [\#333](https://github.com/kalisio/aktnmap/pull/333) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [prod-v1.2.2](https://github.com/kalisio/aktnmap/tree/prod-v1.2.2) (2021-12-10)
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.2.1...prod-v1.2.2)
@@ -7,7 +51,6 @@
 **Implemented enhancements:**
 
 - Timesamps section is missing in archived plan card [\#325](https://github.com/kalisio/aktnmap/issues/325)
-- Upgrade Android target API level to 30 \(Android 11\) [\#315](https://github.com/kalisio/aktnmap/issues/315)
 - Translate terms [\#23](https://github.com/kalisio/aktnmap/issues/23)
 
 **Fixed bugs:**
@@ -26,6 +69,7 @@
 
 **Implemented enhancements:**
 
+- Upgrade Android target API level to 30 \(Android 11\) [\#315](https://github.com/kalisio/aktnmap/issues/315)
 - It should be possible to use an existing feature as event location [\#310](https://github.com/kalisio/aktnmap/issues/310)
 
 **Fixed bugs:**
@@ -105,6 +149,10 @@
 
 [Full Changelog](https://github.com/kalisio/aktnmap/compare/prod-v1.1.2...prod-v1.1.3)
 
+**Implemented enhancements:**
+
+- Too much request on the organisations dashboard [\#236](https://github.com/kalisio/aktnmap/issues/236)
+
 **Fixed bugs:**
 
 - Changing the role for a group is no more working [\#267](https://github.com/kalisio/aktnmap/issues/267)
@@ -139,7 +187,6 @@
 
 **Implemented enhancements:**
 
-- Too much request on the organisations dashboard [\#236](https://github.com/kalisio/aktnmap/issues/236)
 - Allow to assign  a color to an organisation [\#231](https://github.com/kalisio/aktnmap/issues/231)
 - Allow to sort collection based activities [\#230](https://github.com/kalisio/aktnmap/issues/230)
 - Add an events layer in the catalog activity [\#228](https://github.com/kalisio/aktnmap/issues/228)
@@ -177,7 +224,6 @@
 - build\(deps\): bump http-proxy from 1.18.0 to 1.18.1 in /docs [\#167](https://github.com/kalisio/aktnmap/pull/167) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps-dev\): bump mongodb from 3.1.4 to 3.1.13 [\#162](https://github.com/kalisio/aktnmap/pull/162) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps\): bump showdown from 1.9.0 to 1.9.1 [\#161](https://github.com/kalisio/aktnmap/pull/161) ([dependabot[bot]](https://github.com/apps/dependabot))
-- build\(deps\): bump elliptic from 6.5.2 to 6.5.3 in /docs [\#157](https://github.com/kalisio/aktnmap/pull/157) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps\): bump lodash from 4.17.15 to 4.17.19 [\#149](https://github.com/kalisio/aktnmap/pull/149) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps\): bump websocket-extensions from 0.1.3 to 0.1.4 in /docs [\#138](https://github.com/kalisio/aktnmap/pull/138) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps\): bump acorn from 6.4.0 to 6.4.1 in /docs [\#137](https://github.com/kalisio/aktnmap/pull/137) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -198,6 +244,7 @@
 - Weather layers not available in event activity [\#202](https://github.com/kalisio/aktnmap/issues/202)
 - Monitoring of distributed services on multiple instances [\#199](https://github.com/kalisio/aktnmap/issues/199)
 - Removing a device from user profile causes app to crash [\#192](https://github.com/kalisio/aktnmap/issues/192)
+- Uploading a photo in the dashboard from a mobile using the dedicated action raises an error [\#168](https://github.com/kalisio/aktnmap/issues/168)
 
 ## [prod-v1.0.0](https://github.com/kalisio/aktnmap/tree/prod-v1.0.0) (2020-11-12)
 
@@ -258,7 +305,6 @@
 - Map button not available after updating event location [\#171](https://github.com/kalisio/aktnmap/issues/171)
 - Special characters displayed as HTML codes in event editor title [\#170](https://github.com/kalisio/aktnmap/issues/170)
 - Notifications not sent with a process of two steps [\#169](https://github.com/kalisio/aktnmap/issues/169)
-- Uploading a photo in the dashboard from a mobile using the dedicated action raises an error [\#168](https://github.com/kalisio/aktnmap/issues/168)
 - Access-control related issues when managing organisations [\#165](https://github.com/kalisio/aktnmap/issues/165)
 - Event activity is blocked after closing the media browser [\#154](https://github.com/kalisio/aktnmap/issues/154)
 - Tiled weather layers do not work [\#151](https://github.com/kalisio/aktnmap/issues/151)
@@ -279,7 +325,6 @@
 - Invited users are not removed when the invitation link expires [\#115](https://github.com/kalisio/aktnmap/issues/115)
 - Can't upload a media on iPad [\#79](https://github.com/kalisio/aktnmap/issues/79)
 - The name of the groups on the member card are not updated when modifying the group name [\#54](https://github.com/kalisio/aktnmap/issues/54)
-- Default interaction value not correctly selected in log form [\#102](https://github.com/kalisio/aktnmap/issues/102)
 
 **Closed issues:**
 
@@ -380,6 +425,7 @@
 **Fixed bugs:**
 
 - Search bar does not work properly [\#35](https://github.com/kalisio/aktnmap/issues/35)
+- Application does not work on Huawei P8 Android 5 [\#28](https://github.com/kalisio/aktnmap/issues/28)
 
 ## [v0.6.4](https://github.com/kalisio/aktnmap/tree/v0.6.4) (2018-11-29)
 
@@ -418,7 +464,6 @@
 
 **Fixed bugs:**
 
-- Application does not work on Huawei P8 Android 5 [\#28](https://github.com/kalisio/aktnmap/issues/28)
 - Updating the user profile removes all his permissions [\#27](https://github.com/kalisio/aktnmap/issues/27)
 
 **Closed issues:**
@@ -450,6 +495,7 @@
 
 **Merged pull requests:**
 
+- build\(deps\): bump elliptic from 6.5.2 to 6.5.3 in /docs [\#157](https://github.com/kalisio/aktnmap/pull/157) ([dependabot[bot]](https://github.com/apps/dependabot))
 - \[Snyk\] Fix for 1 vulnerable dependencies [\#13](https://github.com/kalisio/aktnmap/pull/13) ([snyk-bot](https://github.com/snyk-bot))
 
 
