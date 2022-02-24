@@ -90,15 +90,15 @@ Rights are cumulative, a owner (respectively manager) owns all rights of a manag
 :::
 
 The manager of an organisation can:
-  * manage **members** of this organisation,
-  * create **groups** within this organisation and manage members of these groups.
+  * manage **members** of this organisation (add, remove),
+  * manage **groups** of this organisation (create, update, add or remove members, remove).
   
 The owner can as well detroy the organisation and manage payment means.
 
-The manager of a group can manage **members** of this group. The owner can as well detroy the group.
+The manager of a group can manage **members** of this group.
 
 ::: tip
-By creating an organisation or a group you become the owner by default but you can share this responsibility with others by assigning them new rights on this organisation or group.
+By creating an organisation you become the owner by default but you can share this responsibility with others by assigning them new rights on this organisation.
 :::
 
 ### <i class="las la-sitemap"></i> Group
