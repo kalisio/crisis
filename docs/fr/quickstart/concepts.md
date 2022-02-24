@@ -90,15 +90,15 @@ Les droits sont cumulatifs, c'est à dire qu'un propriétaire (respectivement ge
 :::
 
 Le gestionnaire d'une organisation peut donc:
-  * gérer les **membres** au sein de cette organisation,
-  * créer des **groupes** au sein de cette organisation.
+  * gérer les **membres** au sein de cette organisation (ajout, suppression),
+  * gérer les **groupes** au sein de cette organisation (création, mise à jour, ajout et suppression des membres, destruction).
 
 Le propriétaire peut également détruire l'organisation et gérer les moyens de paiements.
 
-Le gestionnaire d'un groupe peut gérer les **membres** au sein de ce groupe et le modifier. Le propriétaire peut également détruire le groupe.
+Le gestionnaire d'un groupe peut gérer les **membres** au sein de ce groupe.
 
 ::: tip Astuce
-L'utilisateur qui créé une organisation ou un groupe en est par défaut le propriétaire mais il peut partager ou déléguer la gestion à d'autres.
+L'utilisateur qui créé une organisation en est par défaut le propriétaire mais il peut partager ou déléguer la gestion à d'autres.
 :::
 
 ### <i class="las la-sitemap"></i> Groupe
