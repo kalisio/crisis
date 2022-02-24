@@ -327,6 +327,7 @@ export default async function () {
       }
       // Make remote services compliant with our internal app services so that permissions can be used
       if (service.key === 'kano' || service.key === 'weacast') {
+        debug('Configuring remote service', service)
         // Remote service are registered according to their path, ie with API prefix (but without trailing /)
         let remoteService = app.service(service.path)
         // Get name from service path without api prefix
@@ -338,6 +339,7 @@ export default async function () {
         remoteService.app = app
         remoteService.getPath = function (withApiPrefix) { return (withApiPrefix ? app.get('apiPath') + '/' + name : name) }
         // Register default permissions for it
+        debug('Registering permissions for remote service ', name)
         permissions.defineAbilities.registerHook((subject, can, cannot) => {
           can('service', name)
           can('read', name)
