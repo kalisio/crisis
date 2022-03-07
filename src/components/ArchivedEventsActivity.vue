@@ -48,9 +48,7 @@
       -->
       <div v-show="showChart" class="row justify-center text-center q-ma-none q-pa-none" >
         <q-page-sticky position="top" :offset="[0, 60]">
-        <div style="width: 90vw">
-          <canvas class="chart" id="chart" ref="chart"></canvas>
-        </div>
+        <k-stats-chart ref="chart" :style="chartStyle" />
         </q-page-sticky>
         <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
           icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
@@ -64,8 +62,8 @@
         ref="chartSettingsModal"
       >
         <div>
-          <q-select id="chart-type" v-model="chartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')"
-          :options="chartOptions" @input="refreshChart"/>
+          <q-select id="chart-type" v-model="selectedChartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')"
+          :options="availableChartTypes" @input="refreshChart"/>
           <q-select id="count-per-chart" v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')"
             :options="paginationOptions" @input="refreshChartAndPagination"/>
           <q-select id="chart-render" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')"
@@ -84,10 +82,8 @@
 import _ from 'lodash'
 import L from 'leaflet'
 import chroma from 'chroma-js'
-import Chart from 'chart.js'
-import 'chartjs-plugin-labels'
 import Papa from 'papaparse'
-import { QSlider } from 'quasar'
+import { colors, QSlider } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
@@ -143,6 +139,10 @@ export default {
     showHistory () {
       return this.mode === 'history'
     },
+    chartStyle () {
+      const min = Math.min(this.$q.screen.width, this.$q.screen.height)
+      return `width: ${min * .75}px;`
+    },
     nbCharts () {
       if (!this.chartData.length || (this.nbValuesPerChart.value === 0)) return 1
       else return Math.ceil(this.chartData.length / this.nbValuesPerChart.value)
@@ -168,8 +168,7 @@ export default {
     }
   },
   data () {
-    const chartTypes = ['pie', 'polarArea', 'radar', 'bar']
-    const chartOptions = chartTypes.map(
+    const availableChartTypes = ['pie', 'polarArea', 'radar', 'bar'].map(
       type => ({ value: type, label: this.$i18n.t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`) }))
     const paginationOptions = [{
       value: 0, label: this.$i18n.t('ArchivedEventsActivity.ALL_VALUES')
@@ -199,8 +198,13 @@ export default {
         label: this.$i18n.t('ArchivedEventsActivity.SORT_BY_CREATED_DATE_LABEL'),
         value: 'createdAt'
       },
-      chartType: _.find(chartOptions, { value: 'pie' }),
-      chartOptions,
+      availableChartTypes,
+      selectedChartType: _.find(availableChartTypes, { value: 'pie' }),
+      chartType: null,
+      chartLabels: [],
+      chartDatasets: [],
+      chartOptions: {},
+      chartData: [],
       currentChart: 1,
       nbValuesPerChart: _.find(paginationOptions, { value: 10 }),
       paginationOptions,
@@ -448,71 +452,66 @@ export default {
     getChartOptions (type) {
       const start = (this.currentChart - 1) * this.nbValuesPerChart.value
       const end = (this.nbValuesPerChart.value > 0 ? start + this.nbValuesPerChart.value : this.chartData.length)
-      const colors = _.shuffle(chroma.scale('Spectral').colors(end - start))
-      // const title = this.$t('ArchivedEventsActivity.CHART_TITLE') + ' - ' + this.$t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`)
       let title = this.$t('ArchivedEventsActivity.CHART_TITLE')
       if (this.nbCharts > 1) title += ` (${this.currentChart}/${this.nbCharts})`
-      const config = {
-        type,
-        data: {
-          labels: this.values.slice(start, end),
-          datasets: [{
-            data: this.chartData.slice(start, end)
-          }]
-        },
-        options: {
-          responsive: true,
-          title: {
-            display: true,
-            text: title
-          }
+
+      this.chartLabels = this.values.slice(start, end),
+      this.chartDatasets = [{
+        data: this.chartData.slice(start, end)
+      }]
+      this.chartOptions = {
+        responsive: true,
+        title: {
+        display: true,
+          text: title
         }
       }
       // ticks.precision = 0 means round displayed values to integers
-      if (type === 'radar') {
-        _.set(config, 'options.legend.display', false)
-        _.set(config, 'data.datasets[0].fill', true)
-        _.set(config, 'data.datasets[0].borderColor', colors[0])
-        _.set(config, 'data.datasets[0].backgroundColor', chroma(colors[0]).alpha(0.5).hex())
-        _.set(config, 'data.datasets[0].pointBorderColor', '#fff')
-        _.set(config, 'data.datasets[0].pointBackgroundColor', colors[0])
-        _.set(config, 'options.scale.ticks.beginAtZero', true)
-        _.set(config, 'options.scale.ticks.precision', 0)
-      } else {
-        _.set(config, 'data.datasets[0].backgroundColor', colors)
-        _.set(config, 'options.plugins.labels.render',
-          this.render.value === 'percentage' ? 'percentage' : 'value')
-        _.set(config, 'options.plugins.labels.position', 'border')
-        _.set(config, 'options.plugins.labels.overlap', false)
-        _.set(config, 'options.plugins.labels.showActualPercentages', true)
-        _.set(config, 'options.plugins.labels.precision', 0)
-        _.set(config, 'options.plugins.labels.textShadow', true)
-        _.set(config, 'options.plugins.labels.fontSize', 24)
-        _.set(config, 'options.plugins.labels.fontColor', (type === 'bar' ? '#000' : '#fff'))
+      if (this.chartType === 'radar') {
+        const color = colors.getBrand('primary')
+        const backgroundColor = colors.getBrand('accent')
+        _.set(this.chartDatasets[0], 'fill', true)
+        _.set(this.chartDatasets[0], 'borderColor', color)
+        _.set(this.chartDatasets[0], 'backgroundColor', backgroundColor)
+        _.set(this.chartDatasets[0], 'pointBorderColor', '#fff')
+        _.set(this.chartDatasets[0], 'pointBackgroundColor', color)
+        _.set(this.chartOptions, 'plugins.legend.display', false)        
+        _.set(this.chartOptions, 'scales[0].ticks.beginAtZero', true)
+        _.set(this.chartOptions, 'scales[0].ticks.precision', 0)
       }
-      if (type === 'bar') {
-        _.set(config, 'options.legend.display', false)
-        _.set(config, 'options.scales.xAxes[0].ticks.maxRotation', 90)
-        _.set(config, 'options.scales.xAxes[0].ticks.minRotation', 70)
-        _.set(config, 'options.scales.yAxes[0].ticks.beginAtZero', true)
-        _.set(config, 'options.scales.yAxes[0].ticks.precision', 0)
-        // _.set(config, 'options.plugins.labels.fontSize', 0)
-      } else if (type === 'polarArea') {
-        // FIXME: does not work in this case
-        // _.set(config, 'options.scale.display', false)
+      if (this.chartType === 'bar') {
+        _.set(this.chartOptions, 'plugins.legend.display', false)
+        _.set(this.chartOptions, 'scales.x.ticks.maxRotation', 90)
+        _.set(this.chartOptions, 'scales.x.ticks.minRotation', 70)
+        _.set(this.chartOptions, 'scales.y.ticks.beginAtZero', true)
+        _.set(this.chartOptions, 'scales.y.ticks.precision', 0)
+      } else if (this.chartType === 'polarArea') {
+        
+        // FIXME: does not work 
+        // _.set(chartOptions, '.scale.display', false)
       }
-
-      return config
     },
     async refreshChart () {
-      // Destroy previous graph if any
-      if (this.chart) this.chart.destroy()
+      this.chartType = this.selectedChartType.value
       // Retrieve data
       await this.getChartData()
-      // We need to force a refresh so that the computed props are correctly updated by Vuejs
-      await this.$nextTick()
-      this.chart = new Chart(this.$refs.chart.getContext('2d'),
-        this.getChartOptions(this.chartType.value))
+       // Update chart options
+      const start = (this.currentChart - 1) * this.nbValuesPerChart.value
+      const end = (this.nbValuesPerChart.value > 0 ? start + this.nbValuesPerChart.value : this.chartData.length)
+      let title = this.$t('ArchivedEventsActivity.CHART_TITLE')
+      if (this.nbCharts > 1) title += ` (${this.currentChart}/${this.nbCharts})`
+      // Update the chart
+      this.$refs.chart.update({ 
+        type: this.selectedChartType.value,
+        data: {
+          labels: this.values.slice(start, end),
+          datasets:  [{
+            data: this.chartData.slice(start, end),
+            colorScale: 'Accent'
+          }]
+        },
+        options: {}
+      })
     },
     async refreshChartAndPagination () {
       this.currentChart = 1
@@ -593,6 +592,7 @@ export default {
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-history'] = this.$load('collection/KHistory')
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
+    this.$options.components['k-stats-chart'] = this.$load('chart/KStatsChart')
 
     this.registerStyle('tooltip', this.getEventTooltip)
     this.registerStyle('popup', this.getEventPopup)
