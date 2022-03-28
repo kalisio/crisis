@@ -24,7 +24,7 @@
           :base-query="baseQuery"
           :filter-query="filterQuery"
           :renderer="renderer"
-          date-field="updatedAt"
+          date-field="createdAt"
           :contextId="contextId"
           :list-strategy="'smart'"
           :height="height - 124">
