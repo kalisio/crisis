@@ -251,50 +251,6 @@ let defaultMapOptions = {
   }
 }
 
-const businessLayers = {
-  name: 'KCatalogPanel.BUSINESS_LAYERS',
-  icon: 'las la-briefcase',
-  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['business'] } } }
-}
-const baseLayers = {
-  name: 'KCatalogPanel.BASE_LAYERS',
-  icon: 'las la-layer-group',
-  component: 'catalog/KBaseLayersSelector',
-  options: { filter: { type: 'BaseLayer' } }
-}
-const capturedLayers = {
-  name: 'KCatalogPanel.CAPTURED_LAYERS',
-  icon: 'las la-street-view',
-  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['captured'] } } }
-}
-const measureLayers = {
-  name: 'KCatalogPanel.MEASURE_LAYERS',
-  icon: 'las la-map-pin',
-  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['measure'] } } }
-}
-const meteoLayers = {
-  name: 'KCatalogPanel.METEO_LAYERS',
-  icon: 'las la-cloud-sun-rain',
-  component: 'catalog/KWeatherLayersSelector',
-  options: { exclusive: true, filter: { type: 'OverlayLayer', tags: { $in: ['weather'] } } }
-}
-const demographyLayers = {
-  name: 'KCatalogPanel.DEMOGRAPHY_LAYERS',
-  icon: 'las la-users',
-  options: { exclusive: false, filter: { type: 'OverlayLayer', tags: { $in: ['demography'] } } }
-}
-
-const defaultMapCatalog = {
-  categories: [
-    businessLayers,
-    capturedLayers,
-    measureLayers,
-    meteoLayers,
-    demographyLayers,
-    baseLayers
-  ]
-}
-
 const widgets = [
   { id: 'information-box', icon: 'las la-digital-tachograph', component: 'widget/KInformationBox', bind: '$data.selection' },
   { id: 'time-series', icon: 'las la-chart-line', component: 'widget/KTimeSeries', bind: '$data' },
@@ -716,7 +672,6 @@ module.exports = {
       ]
     },
     engine: defaultMapOptions,
-    catalog: defaultMapCatalog,
     layers: {
       actions: layerActions
     },
@@ -804,7 +759,6 @@ module.exports = {
       ]
     },
     engine: defaultMapOptions,
-    catalog: { categories: [baseLayers] },
     layers: {
       actions: layerActions,
       filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
@@ -1121,7 +1075,6 @@ module.exports = {
       ]
     },
     engine: defaultMapOptions,
-    catalog: defaultMapCatalog,
     layers: {
       actions: layerActions,
       filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
