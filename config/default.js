@@ -497,7 +497,17 @@ module.exports = {
     },
     bottomPane: {
       content: [
-        { component: 'time/KTimeRange' }
+        { id: 'absolute-time-range', component: 'time/KAbsoluteTimeRange', class: 'q-pa-sm text-body1' },
+        midSeparator,
+        {
+          id: 'relative-time-ranges',
+          component: 'menu/KMenu',
+          icon: 'las la-history',
+          content: [{
+            component: 'time/KRelativeTimeRanges',
+            ranges: ['last-day', 'last-2-days', 'last-3-days', 'last-week', 'last-2-weeks', 'last-month', 'last-2-months', 'last-3-months', 'last-6-months', 'last-year']
+          }]
+        }
       ]
     },
     items: {
@@ -738,7 +748,17 @@ module.exports = {
     },
     bottomPane: {
       content: [
-        { component: 'time/KTimeRange' }
+        { id: 'absolute-time-range', component: 'time/KAbsoluteTimeRange', class: 'q-pa-sm text-body1' },
+        midSeparator,
+        {
+          id: 'relative-time-ranges',
+          component: 'menu/KMenu',
+          icon: 'las la-history',
+          content: [{
+            component: 'time/KRelativeTimeRanges',
+            ranges: ['last-hour', 'last-2-hours', 'last-3-hours', 'last-6-hours', 'last-12-hours', 'last-day', 'last-week', 'last-month', 'last-3-months', 'last-6-months', 'last-year']
+          }]
+        }
       ]
     },
     items: {

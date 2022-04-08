@@ -80,8 +80,8 @@
 
 <script>
 import _ from 'lodash'
+import moment from 'moment'
 import L from 'leaflet'
-import chroma from 'chroma-js'
 import Papa from 'papaparse'
 import { colors, QSlider } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
@@ -586,30 +586,37 @@ export default {
       ]
     }
   },
-  async created () {
-    // Load the required components
+  beforeCreate () {
     this.$options.components['k-page'] = this.$load('layout/KPage')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-history'] = this.$load('collection/KHistory')
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
     this.$options.components['k-stats-chart'] = this.$load('chart/KStatsChart')
-
+  },
+  async created () {
+    // Resgister map styles
     this.registerStyle('tooltip', this.getEventTooltip)
     this.registerStyle('popup', this.getEventPopup)
     this.registerStyle('markerStyle', this.getEventMarker)
-
     // Initialize private properties
     this.templates = []
-
+    // Setup current time to now
+    this.currentTime = Time.getCurrentTime()
+    Time.setCurrentTime(moment.now())
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },
   mounted () {
+    // Setup listeners
     this.$on('collection-refreshed', this.onCollectionRefreshed)
     this.$events.$on('time-range-changed', this.onTimeRangeChanged)
   },
   beforeDestroy () {
+    // Release the chart if nay
     if (this.chart) this.chart.destroy()
+    // Restore the current time
+    Time.setCurrentTime(this.currentTime)
+    // Releases listeners
     this.$off('collection-refreshed', this.onCollectionRefreshed)
     this.$events.$off('time-range-changed', this.onTimeRangeChanged)
   }

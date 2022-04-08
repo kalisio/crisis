@@ -33,7 +33,8 @@
 
 <script>
 import _ from 'lodash'
-import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import moment from 'moment'
+import { mixins as kCoreMixins, Time } from '@kalisio/kdk/core.client'
 import { permissions } from '@kalisio/kdk/core.common'
 import * as utils from '../utils'
 
@@ -90,6 +91,9 @@ export default {
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
   },
   async created () {
+    // Setup current time to now
+    this.currentTime = Time.getCurrentTime()
+    Time.setCurrentTime(moment.now())
     // Build base query
     await this.updateFilterQuery()
     // Keep track of changes once loaded
@@ -98,11 +102,13 @@ export default {
     eventsService.on('patched', this.updateFilterQuery)
     eventsService.on('updated', this.updateFilterQuery)
     eventsService.on('removed', this.updateFilterQuery)
-
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },
   beforeDestroy () {
+    // Restore the current time
+    Time.setCurrentTime(this.currentTime)
+    // Releases listeners
     const eventsService = this.$api.getService('events', this.contextId)
     eventsService.off('created', this.updateFilterQuery)
     eventsService.off('patched', this.updateFilterQuery)
