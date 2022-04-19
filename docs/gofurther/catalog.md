@@ -108,6 +108,18 @@ AROME, operational at Météo-France since December 2008, which was designed to 
 
 Global Forecast System (GFS) is a weather forecast model produced by the National Centers for Environmental Prediction (NCEP), are also available. The entire globe is covered by the GFS at a base horizontal resolution of 18 miles (28 kilometers) between grid points, which is used by the operational forecasters who predict weather out to 16 days in the future.
 
+### Demography
+
+Based on [FiLoSoFi](https://www.insee.fr/fr/statistiques/6215217) data from the Institut national de la statistique et des études économiques (INSEE), we provide demography information like the number of inhabitants per km² (i.e. population density) or the number of inhabitants per age and tile (1km or 200m).
+
+![FILOSOFI](../assets/filosofi.png)
+
+### Administrative boundaries
+
+[ADMIN EXPRESS](https://geoservices.ign.fr/adminexpress), produced by IGN, provide the French administrative levels (town, departement, region...).
+
+![ADMIN EXPRESS](../assets/adminexpress.png)
+
 ## Components
 
 Each component can be shown/hidden through a handle on the different side of the view:
@@ -169,9 +181,11 @@ Using the FAB you can:
 
 ### Contextual menu
 
-A *right-click* on the map or on a feature will display a contextual menu with an action <i class="las la-fire"/> to create an [event](../quickstart/concepts.md#event) at this specific location.
+A *right-click* or a prologed touch on the map or on a feature will display a contextual menu with an action <i class="las la-fire"/> to create an [event](../quickstart/concepts.md#event) at this specific location or based on its geometry.
 
 If the target feature comes from a measure layer or you right-click on a location of the map after activating a weather data layer (e.g. wind) you can also <i class="las la-bell"/> [setup an alert](./alert.md).
+
+Last but not least, it's possible to perform a <i class="las la-users"/> population analysis on a polygon element. This analysys allow to compute the number of inhabitants, per age, possibly impacted by an event in the zone.
 
 ### Layer actions
 

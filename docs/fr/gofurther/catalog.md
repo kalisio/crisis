@@ -132,6 +132,18 @@ Pour une présentation plus détaillée de ces deux modèles, reportez vous à l
 
 ![GFS](../../assets/gfs.jpg)
 
+### Données démographiques
+
+Sur la base des données [FiLoSoFi](https://www.insee.fr/fr/statistiques/6215217) de l'Institut national de la statistique et des études économiques (INSEE) nous proposons des informations démographiques telles que le nombre d'individus par km² (i.e. densité de population) ou le nombre d'individus par classe d'age et par carreau (1km ou 200m).
+
+![FILOSOFI](../../assets/filosofi.png)
+
+### Données administratives
+
+[ADMIN EXPRESS](https://geoservices.ign.fr/adminexpress), produit par l'IGN, propose le découpage administratif du territoire français (commune, arrondissement départemental, département, région...).
+
+![ADMIN EXPRESS](../../assets/adminexpress.png)
+
 ## Composants graphiques
 
 Chaque composant peut être affiché/caché par l'intermédiaire de poignées visible sur les différents côtés de l'écran:
@@ -193,9 +205,11 @@ En utilisant ce bouton vous pouvez:
 
 ### Menu contextuel
 
-Un *clic droit* sur la carte ou un élément de la carte affiche un menu contextuel avec une action <i class="las la-fire"/> permettant de créer un [événement](../quickstart/concepts.md#evenement) localisé à cet endroit.
+Un *clic droit* ou un appui tactile prolongé sur la carte affiche un menu contextuel avec une action <i class="las la-fire"/> permettant de créer un [événement](../quickstart/concepts.md#evenement) localisé à cet endroit. S'il existe un élément sous-jacent provenant d'une couche d'entités géographiques l'événement pourra également utiliser la géométrie de l'entité en question pour sa localisation.
 
 Si l'élément provient d'une couche de mesures environnementales, ou que vous cliquez sur la carte à une position précise après avoir activé un élément météorologique (e.g. la vent), vous pouvez également <i class="las la-bell"/> [définir une alerte](./alert.md).
+
+Enfin, il est possible de <i class="las la-users"/> réaliser une analyse démographique sur un élément géographique de type surfacique. Cette analyse permet de calculer le nombre de personnes, par classe d'age, pouvant être impactées par un événement survenant dans la zone en question.
 
 ### Actions des couches
 
