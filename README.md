@@ -2,12 +2,12 @@
 
 ## Akt'n'Map application
 
+[![Latest Release](https://img.shields.io/github/v/tag/kalisio/aktnmap?sort=semver&label=latest)](https://github.com/kalisio/aktnmap/releases)
 [![Build Status](https://app.travis-ci.com/kalisio/aktnmap.svg?branch=master)](https://app.travis-ci.com/kalisio/aktnmap)
 [![Code Climate](https://codeclimate.com/github/kalisio/aktnmap/badges/gpa.svg)](https://codeclimate.com/github/kalisio/aktnmap)
 [![Test Coverage](https://codeclimate.com/github/kalisio/aktnmap/badges/coverage.svg)](https://codeclimate.com/github/kalisio/aktnmap/coverage)
-[![Dependency Status](https://img.shields.io/david/kalisio/aktnmap.svg?style=flat-square)](https://david-dm.org/kalisio/aktnmap)
 [![Documentation](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://kalisio.github.io/aktnmap/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/kalisio/aktnmap.svg?style=plastic)](https://hub.docker.com/r/kalisio/aktnmap/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/kalisio/aktnmap.svg)](https://hub.docker.com/r/kalisio/aktnmap/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkalisio%2Faktnmap.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkalisio%2Faktnmap?ref=badge_shield)
 
 For more information please visit our websites:
