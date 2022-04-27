@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import moment from 'moment'
 import { ObjectID } from 'mongodb'
 import { BadRequest } from '@feathersjs/errors'
 
@@ -43,6 +44,12 @@ export default async function () {
       // We don't keep ref/link for simplicity and making archived events will be self-consistent
       // No need to keep track of templates that have been removed, etc.
       data.template = template.name
+      // Setup expiry date from template
+      if (data.expiryDuration) {
+        const expiryDate = moment().utc().add({ days: data.expiryDuration })
+        data.expireAt = expiryDate.toISOString()
+        delete data.expiryDuration
+      }
       // Event notification must be passed as query param
       params.notification = _.get(data, 'notification', true) // Default is to notify
       delete data.notification
