@@ -8,7 +8,7 @@ export default async function () {
 
   // Create webhook for events
   app.createWebhook('events', {
-    filter: { service: { $in: ['events'] }, operation: 'create' },
+    filter: { service: { $in: ['events'] }, operation: { $in: ['create', 'patch', 'remove'] } },
     // Pre processor used to make some information implicit in payload
     preprocessor: async (req, res, payload) => {
       // Organisation alias
