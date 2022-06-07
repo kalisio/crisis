@@ -21,6 +21,7 @@ export default async function () {
     },
     // Post processor used to find template by matching names
     postprocessor: async (service, args, payload) => {
+      if (payload.operation !== 'create') return
       // Arguments for create operation are [data, params]
       let data = args[0]
       let params = args[1]
