@@ -66,7 +66,7 @@
     "PLAN_TEMPLATES_ICON_FIELD_LABEL": "Select an icon to represent this template",
     "PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL": "Enter a description of this plan template",
     "PLAN_TEMPLATES_OBJECTIVES_FIELD_LABEL": "Enter the objectives of this plan template",
-    "PLANS_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Select default plan coordinators",
+    "PLAN_TEMPLATES_COORDINATORS_FIELD_CREATE_LABEL": "Select default plan coordinators",
     "PLAN_TEMPLATES_COORDINATORS_FIELD_UPDATE_LABEL": "Select default plan coordinators",
     "PLAN_TEMPLATES_PERMISSION_FIELD_LABEL": "Choose who have the right to create a plan from this template",
     "PLAN_OBJECTIVE_CREATE_TITLE": "Create a new objective ?",
