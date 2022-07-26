@@ -1,7 +1,7 @@
-import { iff } from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
+import commonHooks from 'feathers-hooks-common'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
     find: [],
@@ -16,7 +16,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [coreHooks.verifyGuest, coreHooks.consentGuest, iff(hook => process.env.API_GATEWAY_URL, async hook => {
+    create: [coreHooks.verifyGuest, coreHooks.consentGuest, commonHooks.iff(hook => process.env.API_GATEWAY_URL, async hook => {
       const config = hook.app.get('authentication')
       if (!config) return hook
       // Default appId for Akt'n'Map used to access the gateway

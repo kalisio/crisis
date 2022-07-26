@@ -1,21 +1,21 @@
 import _ from 'lodash'
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { when } from 'feathers-hooks-common'
-import { checkMembersQuotas, preventRemovingCustomer } from '../../hooks'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import commonHooks from 'feathers-hooks-common'
+import { checkMembersQuotas, preventRemovingCustomer } from '../../hooks/index.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
     find: [],
     get: [],
     create: [
       // No escalation possible on groups as there are only group managers now (no more owners)
-      when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations', coreHooks.preventEscalation),
-      when(hook => hook.params.resource,
+      commonHooks.when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations', coreHooks.preventEscalation),
+      commonHooks.when(hook => hook.params.resource,
         coreHooks.preventRemovingLastOwner('organisations')),
         // Groups can now be left as empty because org managers can manage all groups
         //coreHooks.preventRemovingLastOwner('groups')),
-      when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations',
+      commonHooks.when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations',
         checkMembersQuotas,
         preventRemovingCustomer)
     ],
@@ -23,16 +23,16 @@ module.exports = {
     patch: [],
     remove: [
       // No escalation possible on groups as there are only group managers now (no more owners)
-      when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations', coreHooks.preventEscalation),
+      commonHooks.when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations', coreHooks.preventEscalation),
       // Except when the resource is deleted by a owner check to keep at least one
-      when(hook => hook.params.resource && !hook.params.resource.deleted,
+      commonHooks.when(hook => hook.params.resource && !hook.params.resource.deleted,
         coreHooks.preventRemovingLastOwner('organisations')),
         // Groups can now be left as empty because org managers can manage all groups
         //coreHooks.preventRemovingLastOwner('groups')),
       // Remove also auhorisations for all org groups/tags when removing authorisation on org
       // Need to be done in a before and not a after hook because otherwise the user has been
       // removed from the member service and will not be available anymore for subsequent operations
-      when(hook => _.get(hook.params, 'query.scope') === 'organisations',
+      commonHooks.when(hook => _.get(hook.params, 'query.scope') === 'organisations',
         preventRemovingCustomer,
         coreHooks.removeOrganisationTagsAuthorisations,
         coreHooks.removeOrganisationGroupsAuthorisations)

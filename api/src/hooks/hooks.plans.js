@@ -1,6 +1,8 @@
 import _ from 'lodash'
 import makeDebug from 'debug'
-import { getItems } from 'feathers-hooks-common'
+import commonHooks from 'feathers-hooks-common'
+
+const { getItems } = commonHooks
 const debug = makeDebug('aktnmap:plans:hooks')
 
 export function isObjectiveEqual (objective1, objective2) {

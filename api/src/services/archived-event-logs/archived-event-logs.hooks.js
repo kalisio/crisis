@@ -1,10 +1,10 @@
 import _ from 'lodash'
-import { disallow, populate, iff } from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { hooks as mapHooks } from '@kalisio/kdk/map.api'
-import { countParticipants } from '../../hooks'
+import commonHooks from 'feathers-hooks-common'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import { hooks as mapHooks } from '@kalisio/kdk/map.api.js'
+import { countParticipants } from '../../hooks/index.js'
 
-const populatePreviousLog = populate({
+const populatePreviousLog = commonHooks.populate({
   schema: hook => {
     return {
       include: [
@@ -14,15 +14,15 @@ const populatePreviousLog = populate({
   }
 })
 
-module.exports = {
+export default {
   before: {
     all: [coreHooks.convertObjectIDs(['participant', 'event'])],
     find: [mapHooks.marshallSpatialQuery, coreHooks.marshallComparisonQuery, countParticipants],
     get: [],
-    create: [disallow('external'), coreHooks.convertDates(['createdAt', 'expireAt'])],
-    update: [disallow('external'), coreHooks.convertDates(['createdAt', 'expireAt'])],
-    patch: [disallow('external'), coreHooks.convertDates(['createdAt', 'expireAt'])],
-    remove: [disallow('external')]
+    create: [commonHooks.disallow('external'), coreHooks.convertDates(['createdAt', 'expireAt'])],
+    update: [commonHooks.disallow('external'), coreHooks.convertDates(['createdAt', 'expireAt'])],
+    patch: [commonHooks.disallow('external'), coreHooks.convertDates(['createdAt', 'expireAt'])],
+    remove: [commonHooks.disallow('external')]
   },
 
   after: {
@@ -30,7 +30,7 @@ module.exports = {
     // Due to anonymization in archive we don't populate participant
     find: [
       // Skip regular hooks on aggregation
-      iff(hook => !_.get(hook, 'params.query.$aggregate'), populatePreviousLog)
+      commonHooks.iff(hook => !_.get(hook, 'params.query.$aggregate'), populatePreviousLog)
     ],
     get: [],
     // Avoid emitting events as in production we use Mongo Realm to fill the collection, which does not emit events unlike services

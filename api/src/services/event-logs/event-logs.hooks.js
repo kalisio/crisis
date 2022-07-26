@@ -1,8 +1,8 @@
-import { setNow, populate } from 'feathers-hooks-common'
-import { hooks } from '@kalisio/kdk/core.api'
-import { addLogDefaults, sendStateNotifications, linkWithPreviousLog, updatePreviousLog, archive } from '../../hooks'
+import commonHooks from 'feathers-hooks-common'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import { addLogDefaults, sendStateNotifications, linkWithPreviousLog, updatePreviousLog, archive } from '../../hooks/index.js'
 
-const populatePreviousLog = populate({
+const populatePreviousLog = commonHooks.populate({
   schema: hook => {
     return {
       include: [
@@ -12,7 +12,7 @@ const populatePreviousLog = populate({
   }
 })
 
-const populateParticipant = populate({
+const populateParticipant = commonHooks.populate({
   schema: hook => {
     const usersService = hook.app.getService('users')
     return {
@@ -29,12 +29,12 @@ const populateParticipant = populate({
   }
 })
 
-module.exports = {
+const hooks = {
   before: {
-    all: [hooks.convertObjectIDs(['participant', 'event'])],
+    all: [coreHooks.convertObjectIDs(['participant', 'event'])],
     find: [],
     get: [],
-    create: [setNow('createdAt'), addLogDefaults, linkWithPreviousLog],
+    create: [commonHooks.setNow('createdAt'), addLogDefaults, linkWithPreviousLog],
     update: [],
     patch: [],
     remove: []
@@ -64,5 +64,7 @@ module.exports = {
 // Add archiving feature
 // This is only in dev/preprod mode, in prod this feature is managed by MongoDB Stitch
 if (process.env.NODE_APP_INSTANCE !== 'prod') {
-  module.exports.after.all.push(archive)
+  hooks.after.all.push(archive)
 }
+
+export default hooks

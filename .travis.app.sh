@@ -22,15 +22,10 @@ travis_fold end "provision"
 #
 travis_fold start "build"
 
-# Build the api
-cd api && yarn build
-check_code $? "Building the api"
-
-# Build the client
-cd .. && yarn build
-BUILD_CODE=$? 
+yarn build
+EXIT_CODE=$? 
 tail -n 24 build.log
-check_code $BUILD_CODE "Builing the client" 
+check_code $EXIT_CODE "Builing the client" 
 
 # Log in to docker before building the app because of rate limiting
 docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
@@ -38,7 +33,7 @@ check_code $? "Connecting to Docker"
 
 # Create an archive to speed docker build process and build the image
 cd ../..
-tar -zcf kalisio.tgz kalisio
+tar --exclude='kalisio/aktnmap/test' -zcf kalisio.tgz kalisio
 docker build --build-arg APP=$APP --build-arg FLAVOR=$FLAVOR --build-arg BUILD_NUMBER=$BUILD_NUMBER -f dockerfile -t kalisio/$APP:$TAG . 
 check_code $? "Building the app docker image"
 

@@ -1,7 +1,7 @@
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { checkGroupsQuotas, updateEventTemplateResource } from '../../hooks'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import { checkGroupsQuotas, updateEventTemplateResource } from '../../hooks/index.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
     find: [],

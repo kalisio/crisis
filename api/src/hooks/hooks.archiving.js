@@ -1,5 +1,6 @@
 import _ from 'lodash'
-import { getItems } from 'feathers-hooks-common'
+import commonHooks from 'feathers-hooks-common'
+const { getItems } = commonHooks
 
 export async function archive (hook) {
   // Only applicable to write operations

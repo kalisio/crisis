@@ -1,9 +1,9 @@
-import { setNow, discard } from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { hooks as mapHooks } from '@kalisio/kdk/map.api'
-import { addCreatorAsCoordinator, checkPlansQuotas, updateEventsObjective, removeEventsPlan, archive } from '../../hooks'
+import commonHooks from 'feathers-hooks-common'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import { hooks as mapHooks } from '@kalisio/kdk/map.api.js'
+import { addCreatorAsCoordinator, checkPlansQuotas, updateEventsObjective, removeEventsPlan, archive } from '../../hooks/index.js'
 
-module.exports = {
+const hooks = {
   before: {
     all: [],
     find: [],
@@ -11,16 +11,16 @@ module.exports = {
     create: [
       checkPlansQuotas,
       addCreatorAsCoordinator,
-      setNow('createdAt', 'updatedAt')
+      commonHooks.setNow('createdAt', 'updatedAt')
     ],
     update: [
-      discard('createdAt', 'updatedAt'),
-      setNow('updatedAt'),
+      commonHooks.discard('createdAt', 'updatedAt'),
+      commonHooks.setNow('updatedAt'),
       coreHooks.populatePreviousObject
     ],
     patch: [
-      discard('createdAt', 'updatedAt'),
-      setNow('updatedAt'),
+      commonHooks.discard('createdAt', 'updatedAt'),
+      commonHooks.setNow('updatedAt'),
       coreHooks.populatePreviousObject
     ],
     remove: []
@@ -56,5 +56,7 @@ module.exports = {
 // Add archiving feature
 // This is only in dev/preprod mode, in prod this feature is managed by MongoDB Stitch
 if (process.env.NODE_APP_INSTANCE !== 'prod') {
-  module.exports.after.all.push(archive)
+  hooks.after.all.push(archive)
 }
+
+export default hooks

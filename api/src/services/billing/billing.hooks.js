@@ -1,15 +1,15 @@
-import { when } from 'feathers-hooks-common'
-import { preventUnverifiedUser, populateBillingObject, unpopulateBillingObject } from '../../hooks'
+import commonHooks from 'feathers-hooks-common'
+import { preventUnverifiedUser, populateBillingObject, unpopulateBillingObject } from '../../hooks/index.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [when(hook => hook.params.provider, preventUnverifiedUser), populateBillingObject],
-    update: [when(hook => hook.params.provider, preventUnverifiedUser), populateBillingObject],
+    create: [commonHooks.when(hook => hook.params.provider, preventUnverifiedUser), populateBillingObject],
+    update: [commonHooks.when(hook => hook.params.provider, preventUnverifiedUser), populateBillingObject],
     patch: [],
-    remove: [when(hook => hook.params.provider, preventUnverifiedUser), populateBillingObject]
+    remove: [commonHooks.when(hook => hook.params.provider, preventUnverifiedUser), populateBillingObject]
   },
 
   after: {

@@ -1,6 +1,6 @@
-import { checkEventTemplatesQuotas } from '../../hooks'
+import { checkEventTemplatesQuotas } from '../../hooks/index.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
     find: [],

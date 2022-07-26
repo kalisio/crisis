@@ -1,4 +1,4 @@
-module.exports = function (app, options) {
+export default function (app, options) {
   const db = options.db || app.db
   options.Model = db.collection('plan-templates')
   // Collation provided in query ensure sorting to be case insensitive w.r.t. user's language

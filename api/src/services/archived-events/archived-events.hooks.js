@@ -1,10 +1,10 @@
 import _ from 'lodash'
-import { disallow, iff } from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { hooks as mapHooks } from '@kalisio/kdk/map.api'
-import { populatePlan, marshallPlanQuery } from '../../hooks'
+import commonHooks from 'feathers-hooks-common'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import { hooks as mapHooks } from '@kalisio/kdk/map.api.js'
+import { populatePlan, marshallPlanQuery } from '../../hooks/index.js'
 
-module.exports = {
+export default {
   before: {
     all: [
       coreHooks.convertObjectIDs(['plan']),
@@ -13,28 +13,28 @@ module.exports = {
     find: [mapHooks.marshallSpatialQuery, coreHooks.marshallComparisonQuery, marshallPlanQuery, coreHooks.distinct],
     get: [],
     create: [
-      disallow('external'),
+      commonHooks.disallow('external'),
       coreHooks.convertDates(['createdAt', 'updatedAt', 'expireAt']),
       coreHooks.convertObjectIDs(['layer', 'feature'])
     ],
     update: [
-      disallow('external'),
+      commonHooks.disallow('external'),
       coreHooks.convertDates(['createdAt', 'updatedAt', 'expireAt']),
       coreHooks.convertObjectIDs(['layer', 'feature'])
     ],
     patch: [
-      disallow('external'),
+      commonHooks.disallow('external'),
       coreHooks.convertDates(['createdAt', 'updatedAt', 'expireAt']),
       coreHooks.convertObjectIDs(['layer', 'feature'])
     ],
-    remove: [disallow('external')]
+    remove: [commonHooks.disallow('external')]
   },
 
   after: {
     all: [coreHooks.convertToJson(['alert.conditions'])],
     find: [
       // Not by default for performance reason
-      iff(hook => _.get(hook, 'params.planAsObject'), populatePlan),
+      commonHooks.iff(hook => _.get(hook, 'params.planAsObject'), populatePlan),
       mapHooks.asGeoJson({
         longitudeProperty: 'location.longitude',
         latitudeProperty: 'location.latitude',

@@ -2,10 +2,10 @@ import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import request from 'superagent'
 import fuzzySearch from 'feathers-mongodb-fuzzy-search'
-import core, { kalisio, hooks as coreHooks, permissions as corePermissions } from '@kalisio/kdk/core.api'
-import * as permissions from '../src/permissions'
-import { createOrganisationServices, removeOrganisationServices } from '../src/services'
-import webhooks from '../src/app.webhooks'
+import core, { kdk, hooks as coreHooks, permissions as corePermissions } from '@kalisio/kdk/core.api.js'
+import * as permissions from '../../common/permissions.mjs'
+import { createOrganisationServices, removeOrganisationServices } from '../src/services/index.js'
+import webhooks from '../src/app.webhooks.js'
 
 describe('events', () => {
   let app, server, port, baseUrl, accessToken,
@@ -36,10 +36,10 @@ describe('events', () => {
     // Then rules for events
     corePermissions.defineAbilities.registerHook(permissions.defineUserAbilities)
 
-    app = kalisio()
+    app = kdk()
     // Register authorisation/log hook
     app.hooks({
-      before: { all: [coreHooks.authorise], find: [fuzzySearch()] },
+      before: { all: [coreHooks.authorise], find: [fuzzySearch({ fields: ['name'] })] },
       error: { all: coreHooks.log }
     })
     // Add hooks for contextual services
@@ -94,12 +94,12 @@ describe('events', () => {
   // Let enough time to process
     .timeout(5000)
 
-  it('launch the server for webhooks', (done) => {
+  it('launch the server for webhooks', async () => {
     // Register webhooks
     app.configure(webhooks)
     // Now app is configured launch the server
-    server = app.listen(port)
-    server.once('listening', _ => done())
+    server = await app.listen(port)
+    await new Promise(resolve => server.once('listening', () => resolve()))
   })
   // Let enough time to process
     .timeout(5000)
@@ -128,6 +128,7 @@ describe('events', () => {
 
   it('creates the org', async () => {
     orgObject = await orgService.create({ name: 'test-org' }, { user: orgManagerObject, checkAuthorisation: true })
+    console.log(orgObject)
     // This should create a service for organisation storage
     storageService = app.getService('storage', orgObject)
     expect(storageService).toExist()

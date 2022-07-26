@@ -1,6 +1,8 @@
 import _ from 'lodash'
-import { populate } from 'feathers-hooks-common'
 import makeDebug from 'debug'
+import commonHooks from 'feathers-hooks-common'
+
+const { populate } = commonHooks
 const debug = makeDebug('aktnmap:events:hooks')
 
 export function processNotification (hook) {

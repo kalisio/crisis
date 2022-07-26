@@ -1,4 +1,4 @@
-module.exports = function (app, options) {
+export default function (app, options) {
   const db = options.db || app.db
   options.Model = db.collection('events')
   // Expire at a given date

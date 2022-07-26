@@ -4,16 +4,16 @@ import proxyMiddleware from 'http-proxy-middleware'
 import express from '@feathersjs/express'
 import sync from 'feathers-sync'
 import distribution from '@kalisio/feathers-distributed'
-import { kalisio } from '@kalisio/kdk/core.api'
-import services, { checkInactiveOrganisations } from './services'
-import middlewares from './app.middlewares'
-import hooks from './app.hooks'
-import channels from './app.channels'
-import webhooks from './app.webhooks'
+import { kdk } from '@kalisio/kdk/core.api.js'
+import services, { checkInactiveOrganisations } from './services/index.js'
+import middlewares from './app.middlewares.js'
+import hooks from './app.hooks.js'
+import channels from './app.channels.js'
+import webhooks from './app.webhooks.js'
 
 export class Server {
   constructor () {
-    const app = kalisio()
+    const app = kdk()
     this.app = app
 
     // Listen to distributed services
@@ -84,4 +84,26 @@ export class Server {
     }
     return expressServer
   }
+}
+
+export function createServer () {
+  let server = new Server()
+
+  const config = server.app.get('logs')
+  const logPath = _.get(config, 'DailyRotateFile.dirname')
+  if (logPath) {
+    // This will ensure the log directory does exist
+    fs.ensureDirSync(logPath)
+  }
+
+  process.on('unhandledRejection', (reason, p) =>
+    server.app.logger.error('Unhandled Rejection: ', reason)
+  )
+
+  return server
+}
+
+export async function runServer (server) {
+  await server.run()
+  server.app.logger.info(`Server with pid ${process.pid} started listening`)
 }

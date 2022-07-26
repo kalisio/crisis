@@ -1,25 +1,27 @@
 import path from 'path'
 import _ from 'lodash'
+import fs from 'fs-extra'
+import { fileURLToPath } from 'url'
 import moment from 'moment'
 import pointOnFeature from '@turf/point-on-feature'
 import makeDebug from 'debug'
-import kCore, { createObjectID, permissions } from '@kalisio/kdk/core.api'
+import kCore, { createObjectID, permissions } from '@kalisio/kdk/core.api.js'
 import kMap, {
   createFeaturesService, removeFeaturesService,
   createCatalogService, removeCatalogService,
   createAlertsService, removeAlertsService
-} from '@kalisio/kdk/map.api'
-import packageInfo from '../../package.json'
+} from '@kalisio/kdk/map.api.js'
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const modelsPath = path.join(__dirname, '..', 'models')
 const servicesPath = path.join(__dirname, '..', 'services')
 const debug = makeDebug('aktnmap:services')
 
-export function createEventService (options = {}) {
+export async function createEventService (options = {}) {
   const app = this
 
   debug('Creating events service with options', options)
-  app.createService('events', Object.assign({
+  await app.createService('events', Object.assign({
     servicesPath,
     modelsPath,
     paginate: { default: 20, max: 5000 }
@@ -30,11 +32,11 @@ export function removeEventService (options) {
   // TODO
 }
 
-export function createEventTemplateService (options = {}) {
+export async function createEventTemplateService (options = {}) {
   const app = this
 
   debug('Creating event templates service with options', options)
-  app.createService('event-templates', Object.assign({
+  await app.createService('event-templates', Object.assign({
     servicesPath,
     modelsPath
   }, options))
@@ -44,11 +46,11 @@ export function removeEventTemplateService (options) {
   // TODO
 }
 
-export function createEventLogService (options = {}) {
+export async function createEventLogService (options = {}) {
   const app = this
 
   debug('Creating event logs service with options', options)
-  app.createService('event-logs', Object.assign({
+  await app.createService('event-logs', Object.assign({
     servicesPath,
     modelsPath,
     paginate: { default: 1000, max: 5000 }
@@ -59,11 +61,11 @@ export function removeEventLogService (options) {
   // TODO
 }
 
-export function createArchivedEventService (options = {}) {
+export async function createArchivedEventService (options = {}) {
   const app = this
 
   debug('Creating archived events service with options', options)
-  app.createService('archived-events', Object.assign({
+  await app.createService('archived-events', Object.assign({
     servicesPath,
     modelsPath,
     paginate: { default: 20, max: 5000 }
@@ -74,11 +76,11 @@ export function removeArchivedEventService (options) {
   // TODO
 }
 
-export function createArchivedEventLogService (options = {}) {
+export async function createArchivedEventLogService (options = {}) {
   const app = this
 
   debug('Creating archived event logs service with options', options)
-  app.createService('archived-event-logs', Object.assign({
+  await app.createService('archived-event-logs', Object.assign({
     servicesPath,
     modelsPath,
     paginate: { default: 1000, max: 5000 }
@@ -89,11 +91,11 @@ export function removeArchivedEventLogService (options) {
   // TODO
 }
 
-export function createPlanTemplateService (options = {}) {
+export async function createPlanTemplateService (options = {}) {
   const app = this
 
   debug('Creating plan templates service with options', options)
-  app.createService('plan-templates', Object.assign({
+  await app.createService('plan-templates', Object.assign({
     servicesPath,
     modelsPath
   }, options))
@@ -103,11 +105,11 @@ export function removePlanTemplateService (options) {
   // TODO
 }
 
-export function createPlanService (options = {}) {
+export async function createPlanService (options = {}) {
   const app = this
 
   debug('Creating plans service with options', options)
-  app.createService('plans', Object.assign({
+  await app.createService('plans', Object.assign({
     servicesPath,
     modelsPath
   }, options))
@@ -117,11 +119,11 @@ export function removePlanService (options) {
   // TODO
 }
 
-export function createArchivedPlanService (options = {}) {
+export async function createArchivedPlanService (options = {}) {
   const app = this
 
   debug('Creating archived plans service with options', options)
-  app.createService('archived-plans', Object.assign({
+  await app.createService('archived-plans', Object.assign({
     servicesPath,
     modelsPath,
     paginate: { default: 20, max: 5000 }
@@ -289,6 +291,7 @@ export default async function () {
 
   // Set up our plugin services
   try {
+    const packageInfo = fs.readJsonSync(path.join(__dirname, '../../package.json'))
     app.use(app.get('apiPath') + '/capabilities', (req, res, next) => {
       const response = {
         name: 'aktnmap',
@@ -305,7 +308,7 @@ export default async function () {
       }
       res.json(response)
     })
-    app.on('service', service => {
+    app.on('service', async service => {
       // Add app-specific hooks to required services initialized externally
       if (service.name === 'users' ||
           service.name === 'authorisations' ||
@@ -317,7 +320,7 @@ export default async function () {
           service.name === 'devices' ||
           service.name === 'features' ||
           service.name === 'alerts') {
-        app.configureService(service.name, service, servicesPath)
+        await app.configureService(service.name, service, servicesPath)
         if (service.name === 'alerts') {
           // Create related event whenever an alert is activated
           service.on('patched', processAlert(service.getContextId()).bind(app))
@@ -350,9 +353,9 @@ export default async function () {
     await app.configure(kCore)
     // This one is created by feathers under the hood so we cannot configure using the previous event listener,
     // which will only emit our own services
-    app.configureService('authentication', app.getService('authentication'), servicesPath)
+    await app.configureService('authentication', app.getService('authentication'), servicesPath)
     await app.configure(kMap)
-    app.createService('billing', { servicesPath })
+    await app.createService('billing', { servicesPath })
 
     const orgsService = app.getService('organisations')
     // Register services hook for organisations

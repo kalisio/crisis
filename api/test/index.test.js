@@ -1,15 +1,18 @@
 import _ from 'lodash'
 import fs from 'fs-extra'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import feathers from '@feathersjs/client'
 import io from 'socket.io-client'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
-import { createGmailClient } from './utils'
-import server from '../src/main'
+import { createGmailClient } from './utils.js'
+import { createServer, runServer } from '../src/server.js'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 describe('aktnmap', () => {
-  let expressServer, userService, userObject, memberObject, orgService, orgObject, authorisationService, devicesService, pusherService, billingService, sns,
+  let server, expressServer, userService, userObject, memberObject, orgService, orgObject, authorisationService, devicesService, pusherService, billingService, sns,
     mailerService, memberService, tagService, tagObject, memberTagObject, groupService, groupObject, gmailClient, gmailUser,
     subscriptionObject, client, password
   const now = new Date()
@@ -35,11 +38,12 @@ describe('aktnmap', () => {
     chailint(chai, util)
   })
 
-  it('is ES6 compatible', () => {
-    expect(typeof server).to.equal('object')
+  it('is ES module compatible', () => {
+    expect(typeof createServer).to.equal('object')
   })
 
   it('initialize the server/client', async () => {
+    server = createServer()
     expressServer = await server.run()
     client = feathers()
     const socket = io(server.app.get('domain'), {
@@ -200,7 +204,7 @@ describe('aktnmap', () => {
   })
 
   // We cannot test billing in prod because we have our prod stripe config,
-  // which requirs valid card numbers and will transfer money
+  // which requires valid card numbers and will transfer money
   if (process.env.NODE_APP_INSTANCE !== 'prod') {
     it('update billing information', async () => {
       const customer = await billingService.create({

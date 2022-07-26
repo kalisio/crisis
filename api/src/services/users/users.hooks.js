@@ -1,14 +1,14 @@
-import { iff, iffElse, when, disallow, isProvider, preventChanges } from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { checkInvitationsQuotas } from '../../hooks'
+import commonHooks from 'feathers-hooks-common'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import { checkInvitationsQuotas } from '../../hooks/index.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
     find: [],
     get: [],
     create: [
-      when(hook => hook.data.sponsor,
+      commonHooks.when(hook => hook.data.sponsor,
         checkInvitationsQuotas,
         (hook) => {
           // Read invitation expiration from config if any
@@ -23,10 +23,10 @@ module.exports = {
       coreHooks.addVerification,
       coreHooks.convertDates(['expireAt'])
     ],
-    update: [disallow('external')],
+    update: [commonHooks.disallow('external')],
     patch: [
-      iff(isProvider('external'), preventChanges('organisations')),
-      iff(isProvider('external'), preventChanges('groups')),
+      commonHooks.iff(commonHooks.isProvider('external'), commonHooks.preventChanges('organisations')),
+      commonHooks.iff(commonHooks.isProvider('external'), commonHooks.preventChanges('groups')),
       coreHooks.convertDates(['expireAt'])
     ],
     remove: [coreHooks.preventRemoveUser]
@@ -37,8 +37,8 @@ module.exports = {
     find: [coreHooks.removeVerification],
     get: [coreHooks.removeVerification],
     create: [
-      iff(hook => !hook.result.sponsor, coreHooks.sendVerificationEmail),
-      iffElse(hook => hook.result.sponsor, coreHooks.joinOrganisation, coreHooks.createPrivateOrganisation),
+      commonHooks.iff(hook => !hook.result.sponsor, coreHooks.sendVerificationEmail),
+      commonHooks.iffElse(hook => hook.result.sponsor, coreHooks.joinOrganisation, coreHooks.createPrivateOrganisation),
       coreHooks.removeVerification
     ],
     update: [],

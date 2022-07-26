@@ -1,9 +1,11 @@
 import _ from 'lodash'
 import moment from 'moment'
-import { ObjectID } from 'mongodb'
+import mongodb from 'mongodb'
 import { BadRequest } from '@feathersjs/errors'
 
-export default async function () {
+const { ObjectID } = mongodb
+
+export default function () {
   const app = this
 
   // Create webhook for events

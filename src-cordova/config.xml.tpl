@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="$PACKAGE_ID" version="1.4.0" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER" xmlns:android="http://schemas.android.com/apk/res/android">
+<widget id="$PACKAGE_ID" version="2.0.0" ios-CFBundleVersion="$BUILD_NUMBER" android-versionCode="$BUILD_NUMBER" xmlns:android="http://schemas.android.com/apk/res/android">
   <name>$TITLE</name>
   <description>Akt'n'Map application</description>
   <icon src="res/icons/icon.png"/>
@@ -65,8 +65,6 @@
     <splash density="port-xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>
   </platform>
   <platform name="ios">
-    <!--hook src="hooks/ios-update-pods.sh" type="before_platform_add"/-->
-    <!--hook src="hooks/ios-run-pods.sh" type="after_platform_add"/-->
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
     <feature name="CDVWKWebViewEngine">
@@ -74,8 +72,8 @@
     </feature>
     <preference name="WKWebViewOnly" value="true"/>
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine"/>
-    <preference name="AllowBackForwardNavigationGestures" value="true" />
-    <preference name="Allow3DTouchLinkPreview" value="false" />
+    <preference name="AllowBackForwardNavigationGestures" value="true"/>
+    <preference name="Allow3DTouchLinkPreview" value="false"/>
     <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
       <string>Need to access your position to build meaningful events</string>
     </edit-config>
@@ -136,11 +134,9 @@
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
-  <!--plugin name="phonegap-plugin-push" spec="~2.3.0"/-->
-  <!-- for rebuild purpose -->
   <plugin name="@havesource/cordova-plugin-push" spec="1.0.0"/>
-  <plugin name="cordova-plugin-wkwebview-engine"  source="npm" /> 
-  <plugin name="cordova-plugin-wkwebview-file-xhr"  source="npm" /> 
+  <plugin name="cordova-plugin-wkwebview-engine" source="npm"/>
+  <plugin name="cordova-plugin-wkwebview-file-xhr" source="npm"/>
   <engine name="android" spec="~9.0.0"/>
   <engine name="ios" spec="~5.1.1"/>
 </widget>
