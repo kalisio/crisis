@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import fs from 'fs-extra'
 import https from 'https'
 import proxyMiddleware from 'http-proxy-middleware'
@@ -87,7 +88,7 @@ export class Server {
 }
 
 export function createServer () {
-  let server = new Server()
+  const server = new Server()
 
   const config = server.app.get('logs')
   const logPath = _.get(config, 'DailyRotateFile.dirname')
@@ -104,6 +105,7 @@ export function createServer () {
 }
 
 export async function runServer (server) {
-  await server.run()
+  const expressServer = await server.run()
   server.app.logger.info(`Server with pid ${process.pid} started listening`)
+  return expressServer
 }

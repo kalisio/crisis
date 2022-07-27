@@ -19,7 +19,7 @@ export default {
           suggestedPasswordField: 'suggestedPassword'
         }),
         coreHooks.sendInvitationEmail,
-        coreHooks.hashPassword()),
+        coreHooks.hashPassword('password')),
       coreHooks.addVerification,
       coreHooks.convertDates(['expireAt'])
     ],

@@ -23,7 +23,6 @@ export default {
       coreHooks.createOrganisationServices,
       coreHooks.createTopic(),
       coreHooks.createOrganisationAuthorisations,
-      // coreHooks.createSubscribersGroup,
       subscribeDefaultPlan
     ],
     update: [],

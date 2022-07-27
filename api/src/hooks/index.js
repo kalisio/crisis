@@ -2,9 +2,6 @@ import { createObjectID } from '@kalisio/kdk/core.api.js'
 import makeDebug from 'debug'
 const debug = makeDebug('aktnmap:hooks')
 
-// We faced a bug in babel so that transform-runtime with export * from 'x' generates import statements in transpiled code
-// Tracked here : https://github.com/babel/babel/issues/2877
-// We tested the workaround given here https://github.com/babel/babel/issues/2877#issuecomment-270700000 with success so far
 export * from './hooks.quotas.js'
 export * from './hooks.billing.js'
 export * from './hooks.events.js'

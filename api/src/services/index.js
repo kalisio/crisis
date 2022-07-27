@@ -134,19 +134,19 @@ export function removeArchivedPlanService (options) {
   // TODO
 }
 
-export function createOrganisationServices (organisation, db) {
+export async function createOrganisationServices (organisation, db) {
   const app = this
-  createCatalogService.call(app, { context: organisation, db })
-  createFeaturesService.call(app, { collection: 'features', context: organisation, db })
-  createAlertsService.call(app, { context: organisation, db })
-  createEventService.call(app, { context: organisation, db })
-  createEventTemplateService.call(app, { context: organisation, db })
-  createEventLogService.call(app, { context: organisation, db })
-  createArchivedEventService.call(app, { context: organisation, db })
-  createArchivedEventLogService.call(app, { context: organisation, db })
-  createPlanTemplateService.call(app, { context: organisation, db })
-  createPlanService.call(app, { context: organisation, db })
-  createArchivedPlanService.call(app, { context: organisation, db })
+  await createCatalogService.call(app, { context: organisation, db })
+  await createFeaturesService.call(app, { collection: 'features', context: organisation, db })
+  await createAlertsService.call(app, { context: organisation, db })
+  await createEventService.call(app, { context: organisation, db })
+  await createEventTemplateService.call(app, { context: organisation, db })
+  await createEventLogService.call(app, { context: organisation, db })
+  await createArchivedEventService.call(app, { context: organisation, db })
+  await createArchivedEventLogService.call(app, { context: organisation, db })
+  await createPlanTemplateService.call(app, { context: organisation, db })
+  await createPlanService.call(app, { context: organisation, db })
+  await createArchivedPlanService.call(app, { context: organisation, db })
 }
 
 export function removeOrganisationServices (organisation) {
@@ -164,7 +164,7 @@ export function removeOrganisationServices (organisation) {
   removeArchivedPlanService.call(app, { context: organisation })
 }
 
-async function isOrganisationInactive(organisation, db, duration) {
+async function isOrganisationInactive (organisation, db, duration) {
   // Organisations created before duration from now could be tagged as inactive
   // Depending on the duration format we might have negative or positive values
   const inactiveDate = (duration.asMilliseconds() > 0 ? moment.utc().subtract(duration) : moment.utc().add(duration))
@@ -194,10 +194,12 @@ export async function checkInactiveOrganisations (app) {
     const isInactive = await isOrganisationInactive(organisation, db, duration)
     if (isInactive) {
       // Find owner if any
-      const owners = await usersService.find({ query: {
-        'organisations._id': organisation._id,
-        'organisations.permissions': 'owner'
-      }})
+      const owners = await usersService.find({
+        query: {
+          'organisations._id': organisation._id,
+          'organisations.permissions': 'owner'
+        }
+      })
       const owner = _.get(owners, 'data[0]')
       // Remove inactive organisation anyway in case of orphan organisation
       debug('Removing inactive organisations with ID ', organisation._id)
@@ -332,13 +334,13 @@ export default async function () {
       if (service.key === 'kano' || service.key === 'weacast') {
         debug('Configuring remote service', service)
         // Remote service are registered according to their path, ie with API prefix (but without trailing /)
-        let remoteService = app.service(service.path)
+        const remoteService = app.service(service.path)
         // Get name from service path without api prefix
         const name = service.path.replace(app.get('apiPath').substring(1) + '/', '')
         remoteService.name = name
         // As remote services have no context, from the internal point of view path = name
         // Unfortunately this property is already set and used by feathers-distributed and should not be altered
-        //remoteService.path = name
+        // remoteService.path = name
         remoteService.app = app
         remoteService.getPath = function (withApiPrefix) { return (withApiPrefix ? app.get('apiPath') + '/' + name : name) }
         // Register default permissions for it

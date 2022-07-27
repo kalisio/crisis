@@ -35,7 +35,8 @@ export async function sendEventNotifications (hook) {
       }
       const title = hook.result.name
       const body = (typeof notification === 'string'
-        ? notification : (hook.result.description ? hook.result.description : ''))
+        ? notification
+        : (hook.result.description ? hook.result.description : ''))
       publishPromises.push(pusherService.create({
         action: 'message',
         // The notification contains the event title + a given prefix
@@ -83,7 +84,8 @@ export const populatePlan = populate({
     const service = hook.service
     // Target archived or live service ?
     const plansService = (!service.name.startsWith('archived-')
-      ? hook.app.getService('plans', service.context) : hook.app.getService('archived-plans', service.context))
+      ? hook.app.getService('plans', service.context)
+      : hook.app.getService('archived-plans', service.context))
     return {
       include: [
         {

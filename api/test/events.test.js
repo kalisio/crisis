@@ -84,8 +84,8 @@ describe('events', () => {
     })
     orgService.hooks({
       after: {
-        create: [coreHooks.createOrganisationAuthorisations],
-        remove: [coreHooks.removeOrganisationAuthorisations]
+        create: [coreHooks.createOrganisationServices, coreHooks.createOrganisationAuthorisations],
+        remove: [coreHooks.removeOrganisationAuthorisations, coreHooks.removeOrganisationServices]
       }
     })
     authorisationService = app.getService('authorisations')
@@ -96,7 +96,7 @@ describe('events', () => {
 
   it('launch the server for webhooks', async () => {
     // Register webhooks
-    app.configure(webhooks)
+    await app.configure(webhooks)
     // Now app is configured launch the server
     server = await app.listen(port)
     await new Promise(resolve => server.once('listening', () => resolve()))
@@ -128,7 +128,6 @@ describe('events', () => {
 
   it('creates the org', async () => {
     orgObject = await orgService.create({ name: 'test-org' }, { user: orgManagerObject, checkAuthorisation: true })
-    console.log(orgObject)
     // This should create a service for organisation storage
     storageService = app.getService('storage', orgObject)
     expect(storageService).toExist()
@@ -230,13 +229,20 @@ describe('events', () => {
         done()
       })
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('unauthorized operation cannot be accessed through webhooks', (done) => {
     request
       .post(`${baseUrl}/webhooks/events`)
       .set('Authorization', 'Bearer ' + accessToken)
       .set('Content-Type', 'application/json')
-      .send({ service: 'events', operation: 'remove' })
+      .send({
+        context: orgObject._id.toString(),
+        id: 'xxx',
+        service: 'events',
+        operation: 'update'
+      })
       .catch(data => {
         const error = data.response.body
         expect(error).toExist()
@@ -244,14 +250,18 @@ describe('events', () => {
         done()
       })
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('authorized user can create events from webhook', () => {
     const operation = request
       .post(`${baseUrl}/webhooks/events`)
       .set('Authorization', 'Bearer ' + accessToken)
       .set('Content-Type', 'application/json')
-      .send({ context: orgObject._id.toString(),
-              data: { template: 'template', name: 'webhook event' } })
+      .send({
+        context: orgObject._id.toString(),
+        data: { template: 'template', name: 'webhook event' }
+      })
       .then(response => {
         const result = response.body
         expect(result._id).toExist()

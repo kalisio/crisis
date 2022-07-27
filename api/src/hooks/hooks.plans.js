@@ -31,7 +31,7 @@ export async function updateEventsObjective (hook) {
     await Promise.all(
       updatedObjectives.map(objective => {
         const previousObjective = _.find(previousObjectives, item => item.id === objective.id)
-        eventsService.patch(null, { objective: objective.name }, { query: { objective: previousObjective.name } })
+        return eventsService.patch(null, { objective: objective.name }, { query: { objective: previousObjective.name } })
       })
     )
   }
