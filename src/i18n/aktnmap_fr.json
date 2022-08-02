@@ -629,6 +629,10 @@
     "VIEW_LOCATION_MAP": "Voir la localisation",
     "VIEW_PARTICIPANTS": "Voir les participants"
   },
+  "EventFilter": {
+    "OPEN": "Ouvert",
+    "CLOSED": "Fermé"
+  },
   "ArchivedEventsActivity": {
     "ASCENDING_SORT": "Plus vieux d'abord",
     "DESCENDING_SORT": "Plus récent d'abord",

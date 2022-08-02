@@ -624,6 +624,10 @@
     "VIEW_LOCATION_MAP": "View location map",
     "VIEW_PARTICIPANTS": "View partcipants"
   },
+  "EventFilter": {
+    "OPEN": "Open",
+    "CLOSED": "Closed"
+  },
   "ArchivedEventsActivity": {
     "ASCENDING_SORT": "Oldest first",
     "DESCENDING_SORT": "Most recent first",
