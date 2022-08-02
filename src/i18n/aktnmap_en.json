@@ -251,11 +251,12 @@
       "TIMELINE_LABEL": "Use the timeline to change the default time range.",
       "START_TIME_LABEL": "Using the interactive calendar select the start date defining the oldest events that will be visible.",
       "END_TIME_LABEL": "Using the interactive calendar select the end date defining the newest events that will be visible.",
-      "TIMERANGE_LABEL": "For a quick setup select a predefined time range.",
+      "TIME_RANGES_LABEL": "For a quick setup select a predefined time range.",
       "SORT_LABEL": "Last order events oldest or newest first using this button.",
       "HISTORY_SCROLL_LABEL": "Browse your events by scrolling to the bottom of the screen.",
       "HISTORY_EVENTS_LABEL": "You first need to select a relevant time range to display some events.",
       "HISTORY_DOWNLOAD_LABEL": "Export your events as a CSV file to use it in a thrid-party application if you'd like.",
+      "HISTORY_FILTER_LABEL": "Filter the status of displayed events if you'd like.",
       "MAP_VIEW_LABEL": "Switch to a map view of your events using this button.",
       "MAP_VIEW_LINK_LABEL": "How to configure your map",
       "BY_TEMPLATE_LABEL": "By default all events are grouped together but you can group them according to your templates using this button.",
@@ -623,6 +624,10 @@
     "FOLLOWUP_MODAL_SAVE_BUTTON": "$t(SAVE_LABEL)",
     "VIEW_LOCATION_MAP": "View location map",
     "VIEW_PARTICIPANTS": "View partcipants"
+  },
+  "EventFilter": {
+    "OPEN": "Open",
+    "CLOSED": "Closed"
   },
   "ArchivedEventsActivity": {
     "ASCENDING_SORT": "Oldest first",
