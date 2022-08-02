@@ -60,15 +60,3 @@ export async function countLogbookClosedItems (page, organisation, wait = 2000) 
   const count = await core.countFunction(page, componentStatus)
   return count
 } */
-
-/* export async function countLogbookActiveEvents (page, organisation) {
-  await goToLogbook(page, organisation)
-  const count = await core.countLogbookItems(page, 'Opened')
-  return count
-}
-
-export async function countLogbookClosedEvents (page, organisation) {
-  await goToLogbook(page, organisation)
-  const count = await core.countLogbookItems(page, 'Closed')
-  return count
-} */
