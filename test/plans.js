@@ -73,8 +73,7 @@ export async function createPlan (page, organisation, template, event, wait = 20
 
 export async function createPlanTemplate (page, organisation, template, wait = 2000) {
     await goToPlanTemplatesActivity(page, organisation)
-    await core.clickAction(page, 'expand-action')
-    await core.clickAction(page, 'organisation-plan-templates')
+    await core.clickAction(page, 'create-plan-template')
     await core.type(page, '#name-field', template.name)
     if (template.description) await core.type(page, '#description-field', template.description)
     if (template.coordinators) await core.type(page, '#coordinators-field', template.coordinators)
