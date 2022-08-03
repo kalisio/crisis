@@ -124,13 +124,12 @@ describe(`suite:${suite}`, () => {
   it('logbook shows 1 active event', async () => {
     await logbooks.goToLogbook(page, org)
     await page.waitForTimeout(2000)
-    expect(await logbooks.countLogbookOpenedItems(page, org)).to.equal(1)
+    expect(await logbooks.countLogbookOpenedEvents(page, org)).to.equal(1)
   })
 
   it('logbook shows 1 closed event', async () => {
     await page.waitForTimeout(2000)
-    expect(await logbooks.countLogbookClosedItems(page, org)).to.equal(1)
-    //expect(await logbooks.countLogbookEventsTest(page, org, 'closed')).to.equal(1)
+    expect(await logbooks.countLogbookClosedEvents(page, org)).to.equal(1)
   })
 
   after(async function () {

@@ -98,10 +98,9 @@ describe(`suite:${suite}`, () => {
   it('org manager can create plan templates', async () => {
     const member = _.find(org.members, { name: 'Owner' })
     await core.login(page, member)
-    //Ci-dessous : problème pour créer un modèle de plan
+    await core.closeSignupAlert(page)
     const planTemplate = _.find(org.planTemplates, { name: 'Manager plan template' })
     await plans.createPlanTemplate(page, org, planTemplate)
-    //await page.waitForTimeout(30000)
     expect(await plans.countPlanTemplates(page, org)).to.equal(1)
     expect(await plans.planTemplateExists(page, org, planTemplate, 'name')).beTrue()
   })

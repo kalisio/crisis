@@ -7,8 +7,7 @@ const debug = makeDebug('aktnmap:test:tags')
 const organisationComponent = 'OrganisationCard'
 
 export const logbookComponent = 'ArchivedEventCard'
-export const logbookActiveComponent = 'Opened'
-export const logbookClosedComponent = 'Closed'
+export const logbookBadgeComponent = 'QBadge'
 
 export async function goToLogbook (page, organisation, wait = 2000) {
   const url = page.url()
@@ -27,36 +26,21 @@ export async function countLogbookEvents (page, organisation) {
   return count
 }
 
-export async function countLogbookOpenedItems (page, organisation, wait = 2000) {
+export async function countLogbookBadges (page, status) {
+  const color = (status === 'Opened' ? 'bg-black' : 'bg-green')
+  return core.countElements(page, `//div[contains(@component, "${logbookBadgeComponent}") and contains(@class, "${color}")]`)
+}
+
+export async function countLogbookOpenedEvents (page, organisation, wait = 2000) {
   await goToLogbook(page, organisation)
   page.waitForTimeout(wait)
-  const count = await core.countLogbookItems(page, 'Opened')
+  const count = await countLogbookBadges(page, 'Opened')
   return count
 }
 
-export async function countLogbookClosedItems (page, organisation, wait = 2000) {
+export async function countLogbookClosedEvents (page, organisation, wait = 2000) {
   await goToLogbook(page, organisation)
   page.waitForTimeout(wait)
-  const count = await core.countLogbookItems(page, 'Closed')
+  const count = await countLogbookBadges(page, 'Closed')
   return count
 }
-
-/* export async function countLogbookEventsTest (page, organisation, status) {
-  await goToLogbook(page, organisation)
-  let componentStatus
-  let countFunction
-  if (status === 'opened') {
-    componentStatus = 'Opened'
-    countFunction = 'countLogbookItems'
-  }
-  else if (status === 'closed') {
-    componentStatus = 'Closed'
-    countFunction = 'countLogbookItems'
-  }
-  else if (status === 'all') {
-    componentStatus = 'ArchivedEventCard'
-    countFunction = 'countLogbookEvents'
-  }
-  const count = await core.countFunction(page, componentStatus)
-  return count
-} */
