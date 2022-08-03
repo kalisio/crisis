@@ -13,37 +13,40 @@ module.exports = [{
     hoverClickOnNext: '#bottom-opener'
   }
 }, {
-  target: '#start-time-action',
-  title: 'tours.archived-events.START_TIME_LABEL',
+  target: '#start-date',
+  title: 'tours.archived-events.START_DATE_LABEL',
+  content: 'tours.archived-events.START_TIME_LABEL',
   params: {
     placement: 'top',
     clickDelay: 500,
-    clickOnPrevious: '#start-time-action',
+    clickOnPrevious: '#start-date',
     hoverClickOnPrevious: '#bottom-opener',
     previousDelay: 500,
-    clickOnNext: '#start-time-action',
+    clickOnNext: '#start-date',
     nextDelay: 500
   }
 }, {
-  target: '#end-time-action',
-  title: 'tours.archived-events.END_TIME_LABEL',
+  target: '#end-date',
+  title: 'tours.archived-events.END_DATE_LABEL',
+  content: 'tours.archived-events.END_TIME_LABEL',
   params: {
     placement: 'top',
     clickDelay: 500,
-    clickOnPrevious: '#end-time-action',
+    clickOnPrevious: '#end-date',
     previousDelay: 500,
-    clickOnNext: '#end-time-action',
+    clickOnNext: '#end-date',
     nextDelay: 500
   }
 }, {
-  target: '#timerange-selector',
-  title: 'tours.archived-events.TIMERANGE_LABEL',
+  target: '#relative-time-ranges',
+  title: 'tours.archived-events.TIME_RANGES_LABEL',
   params: {
     placement: 'top',
+    clickOn: '#relative-time-ranges',
     clickDelay: 500,
-    clickOnPrevious: '#timerange-selector',
+    clickOnPrevious: '#relative-time-ranges',
     previousDelay: 500,
-    clickOnNext: '#timerange-selector',
+    clickOnNext: '#relative-time-ranges',
     nextDelay: 500
   }
 }, {
@@ -68,6 +71,18 @@ module.exports = [{
   title: 'tours.archived-events.HISTORY_DOWNLOAD_LABEL',
   params: {
     placement: 'bottom'
+  }
+}, {
+  target: '#event-filter',
+  title: 'tours.archived-events.HISTORY_FILTER_LABEL',
+  params: {
+    placement: 'bottom',
+    clickOn: '#event-filter',
+    clickDelay: 500,
+    clickOnPrevious: '#event-filter',
+    previousDelay: 500,
+    clickOnNext: '#event-filter',
+    nextDelay: 500
   }
 }, {
   target: '#map-view',
