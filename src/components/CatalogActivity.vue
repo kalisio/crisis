@@ -594,7 +594,7 @@ export default {
     this.$on('edit-start', this.onEditStartEvent)
     this.$on('edit-stop', this.onEditStopEvent)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     this.alerts.$off('collection-refreshed', this.onAlertCollectionRefreshed)
     this.events.$off('collection-refreshed', this.onEventCollectionRefreshed)
     this.$off('edit-start', this.onEditStartEvent)

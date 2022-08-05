@@ -611,7 +611,7 @@ export default {
     this.$on('collection-refreshed', this.onCollectionRefreshed)
     this.$events.$on('time-range-changed', this.onTimeRangeChanged)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     // Release the chart if nay
     if (this.chart) this.chart.destroy()
     // Restore the current time

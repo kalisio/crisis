@@ -65,7 +65,7 @@ export default {
     this.refresh()
     this.$on('applied', this.closeModal)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     this.$off('applied', this.closeModal)
   }
 }

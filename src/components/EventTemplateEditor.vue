@@ -86,7 +86,7 @@ export default {
     this.$options.components['k-form'] = this.$load('form/KForm')
     this.$on('applied', this.closeModal)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     this.$off('applied', this.closeModal)
   }
 }

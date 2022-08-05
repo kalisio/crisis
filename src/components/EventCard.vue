@@ -702,7 +702,7 @@ export default {
     if (this.$store.get('user')) this.refresh()
     this.$events.$on('user-changed', this.refresh)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     this.$events.$off('user-changed', this.refresh)
     this.unsubscribeParticipantLog()
     this.unsubscribeCoordinatorLog()

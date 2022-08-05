@@ -143,7 +143,7 @@ export default {
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },
-  beforeDestroy () {
+  beforeUnmount () {
     this.$events.$off('user-changed', this.configureActivity)
     const eventsService = this.$api.getService('events', this.contextId)
     eventsService.off('created', this.updateFilterQuery)

@@ -227,7 +227,7 @@ export default {
     if (this.getMode() === 'create') this.notify = true
     else this.notify = false
   },
-  beforeDestroy () {
+  beforeUnmount () {
     this.$off('applied', this.closeModal)
   }
 }

@@ -47,7 +47,7 @@ export default {
     this.$options.components['event-template-workflow-form'] = this.$load('EventTemplateWorkflowForm')
     this.$on('applied', this.closeModal)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     this.$off('applied', this.closeModal)
   }
 }

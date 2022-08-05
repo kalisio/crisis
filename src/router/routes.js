@@ -1,7 +1,7 @@
 const tours = require('../tours')
 
-module.exports = {
-  '/': {
+module.exports = [{
+    path: '/',
     name: 'index',
     component: 'Index',
     // By default all child routes are considered unauthenticated,
@@ -370,5 +370,10 @@ module.exports = {
       }
     }
   },
-  '*': 'Error404'
-}
+  // Always leave this as last one,
+  // but you can also remove it
+  {
+    path: '/:catchAll(.*)*',
+    component: 'screen/KErrorScreen'
+  }
+]

@@ -215,7 +215,7 @@ export default {
       eventsService.on('removed', this.onEventRemoved)
     }
   },
-  beforeDestroy () {
+  beforeUnmount () {
     this.$events.$off('user-changed', this.refreshFab)
     if (this.planId) {
       const eventsService = this.$api.getService('events', this.contextId)

@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title><%= appName %></title>
+
     <meta charset="utf-8">
+    <meta name="description" content="<%= appDescription %>">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>">
 
-    <title>Akt'n'Map</title>
-    <link rel="shortcut icon" type="image/x-icon" href="statics/aktnmap-icon.png">
-    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/<%= appSlug %>-icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="icons/<%= appSlug %>-icon-64x64.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="icons/<%= appSlug %>-icon-128x128.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="icons/<%= appSlug %>-icon-256x256.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/<%= appSlug %>-icon-512x512.png">
+
+    <!--link rel="icon" type="image/ico" href="favicon.ico"-->
   </head>
   <body>
     <!-- DO NOT touch the following DIV -->
     <div id="q-app"></div>
-    <!-- built files will be auto injected -->
   </body>
 </html>

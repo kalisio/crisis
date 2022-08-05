@@ -327,7 +327,7 @@ export default {
     this.$events.$on('zoom-to-participant', this.onZoomToParticipant)
     this.$events.$on('filter-participant-states', this.onFilterParticipantStates)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     // Remove event connections
     // this.$off('popupopen', this.onPopupOpen)
     this.$off('click', this.onFeatureClicked)

@@ -160,7 +160,7 @@ export default {
     this.currentOptions = _.get(perspective, 'billing.options', []).map(option => option.plan)
     this.customer = _.get(perspective, 'billing.customer')
   },
-  beforeDestroy () {
+  beforeUnmount () {
     this.$events.$off('capabilities-api-changed', this.refreshPlans)
   }
 }

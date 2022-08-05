@@ -105,7 +105,7 @@ export default {
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },
-  beforeDestroy () {
+  beforeUnmount () {
     // Restore the current time
     Time.setCurrentTime(this.currentTime)
     // Releases listeners

@@ -194,7 +194,7 @@ export default {
     plansService.on('updated', this.updateCounts)
     plansService.on('removed', this.updateCounts)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     const eventsService = this.$api.getService('events', this.organisation._id)
     eventsService.off('created', this.updateCounts)
     eventsService.off('patched', this.updateCounts)

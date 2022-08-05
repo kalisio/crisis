@@ -167,7 +167,7 @@ export default {
       this.redirect(null)
     }
   },
-  beforeDestroy () {
+  beforeUnmount () {
     this.$events.$off('user-changed', this.redirect)
   }
 }
