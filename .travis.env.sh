@@ -37,15 +37,15 @@ PROD_FLAVOR_REGEX="^prod-v[0-9]+\.[0-9]+\.[0-9]+"
 if [[ $TRAVIS_TAG =~ $PROD_FLAVOR_REGEX ]];
 then
   export FLAVOR=prod
-  KDK_PROJECT_FILE=$APP-$VERSION.js
+  KDK_PROJECT_FILE=$APP-$VERSION
 else
   if [[ $TRAVIS_BRANCH =~ $TEST_FLAVOR_REGEX ]];
   then
     export FLAVOR=test
-    KDK_PROJECT_FILE=$APP-$MAJOR.$MINOR.js
+    KDK_PROJECT_FILE=$APP-$MAJOR.$MINOR
   else
     export FLAVOR=dev
-    KDK_PROJECT_FILE=$APP.js
+    KDK_PROJECT_FILE=$APP
   fi
 fi
 export NODE_APP_INSTANCE=$FLAVOR
@@ -66,7 +66,7 @@ set -a
 set +a
 
 export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
-BUILD_BUCKET=${APP}/$BUILD_NUMBER
+BUILD_BUCKET=${APP}-builds/$BUILD_NUMBER
 
 # Install the kdk
 git clone https://github.com/kalisio/kli.git kalisio && cd kalisio && yarn 
