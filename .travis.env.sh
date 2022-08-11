@@ -81,8 +81,7 @@ else
 fi
 
 # Clone the project and install the dependencies
-cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/$KDK_PROJECT_FILE $APP.js
-node . $APP.js --clone $TRAVIS_BRANCH
+node . $APP.js --clone
 node . $APP.js --install
 node . $APP.js --link
 
