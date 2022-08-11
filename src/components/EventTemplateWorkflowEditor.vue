@@ -3,8 +3,6 @@
     :title="editorTitle"
     :buttons="buttons"
     v-model="isModalOpened"
-    @opened="$emit('opened')"
-    @closed="$emit('closed')"
   >
     <div class="column xs-gutter">
       <!-- Form to be used for workflow property -->
@@ -24,8 +22,7 @@ export default {
     mixins.service,
     mixins.objectProxy,
     mixins.schemaProxy,
-    mixins.baseEditor(['form']),
-    mixins.refsResolver(['form'])
+    mixins.baseEditor(['form'])
   ],
   computed: {
     buttons () {
@@ -40,15 +37,6 @@ export default {
       this.refresh()
       mixins.baseModal.methods.openModal.call(this, maximized)
     }
-  },
-  async created () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['event-template-workflow-form'] = this.$load('EventTemplateWorkflowForm')
-    this.$on('applied', this.closeModal)
-  },
-  beforeUnmount () {
-    this.$off('applied', this.closeModal)
   }
 }
 </script>

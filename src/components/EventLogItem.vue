@@ -7,13 +7,13 @@
     <!--
       Item toggle
      -->
-    <template slot="item-toggle">
+    <template v-slot:item-toggle>
       <q-checkbox :disable="!hasFollowUp" :disabled="!hasFollowUp" v-model="toggled" @input="onItemToggled(toggled)"/>
     </template>
     <!--
       Item content
      -->
-    <template slot="item-content">
+    <template v-slot:item-content>
       <q-item-section>
         <q-item-label>{{ getUserName(item) }}</q-item-label>
         <q-item-label v-if="itemStep" caption>{{ getUserComment(item) }}</q-item-label>

@@ -10,13 +10,13 @@
     <!--
       Card avatar
     -->
-    <div slot="card-avatar">
+    <template slot:card-avatar>
       <k-avatar class="q-pa-sm" :object="item" :contextId="item._id" size="4rem" />
-    </div>
+    </template>
     <!--
       Card content
      -->
-    <div slot="card-content">
+    <template slot:card-content>
       <k-card-section
         :title="$t('OrganisationCard.EVENTS_SECTION')"
         :hide-header="!isExpanded"
@@ -71,8 +71,8 @@
         <!-- Organisation section -->
         <k-card-section :title="isMember ? $t('OrganisationCard.INFORMATION_SECTION') : $t('OrganisationCard.ADMINISTRATION_SECTION')">
           <div class="q-pb-sm">
-            <template v-for="element in structure">
-              <div :key="element.key" class="full-width row justify-between items-center no-wrap">
+            <template v-for="element in structure" :key="element.key">
+              <div class="full-width row justify-between items-center no-wrap">
                 <k-action
                   :id="`organisation-${element.name}`"
                   :icon="element.icon"
@@ -90,15 +90,15 @@
           route: { name: 'edit-organisation-billing', params: { objectId: item._id, title: item.name } }
         }]">
             <div class="row items-center">
-            <template v-for="subscription in subscriptions">
-              <div :key="subscription" class="q-pl-sm">
+            <template v-for="subscription in subscriptions" :key="subscription">
+              <div class="q-pl-sm">
                 <q-badge :label="$t(`${subscription}_LABEL`)" color="grey-7" />
               </div>
             </template>
           </div>
         </k-card-section>
       </div>
-    </div>
+    </template>
   </k-card>
 </template>
 

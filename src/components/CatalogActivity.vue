@@ -35,7 +35,7 @@ import L from 'leaflet'
 import moment from 'moment'
 import chroma from 'chroma-js'
 import sift from 'sift'
-import Vue from 'vue'
+import { defineComponent } from "vue"
 import { Dialog } from 'quasar'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
@@ -48,8 +48,10 @@ const MAX_ITEMS = 5000
 
 export default {
   name: 'catalog-activity',
+  components: {
+    AlertForm: kCoreUtils.loadComponent('AlertForm')
+  },
   mixins: [
-    kCoreMixins.refsResolver(['map']),
     activityMixin,
     kMapMixins.activity,
     kMapMixins.featureSelection,
@@ -533,6 +535,7 @@ export default {
         { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', handler: () => this.$refs.templateModal.close() }
       ]
     },
+    /** TODO
     configureCollection (service, baseQuery, filterQuery, props = {}) {
       // As we'd like to use the collection mixin but need to require multiple services (alerts, events)
       // we create a specific component instance to manage each type of objects which are then added to the map.
@@ -549,6 +552,7 @@ export default {
       })
       return new Component({ propsData: props })
     },
+    */
     onEditStartEvent (event) {
       this.setTopPaneMode('edit-layer-data')
     },
@@ -557,14 +561,6 @@ export default {
     }
   },
   async created () {
-    // Load the required components
-    this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-color-legend'] = this.$load('KColorLegend')
-    this.$options.components['k-feature-action-button'] = this.$load('KFeatureActionButton')
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-list'] = this.$load('collection/KList')
-    this.$options.components['alert-form'] = this.$load('AlertForm')
-
     this.registerStyle('tooltip', this.getAlertTooltip)
     this.registerStyle('popup', this.getAlertPopup)
     this.registerStyle('markerStyle', this.getAlertMarker)
@@ -581,24 +577,28 @@ export default {
     this.$checkBillingOption('catalog')
   },
   mounted () {
-    this.alerts = this.configureCollection('alerts',
-      () => ({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }), () => ({}), { nbItemsPerPage: 0 })
+    /* TOOO
+      this.alerts = this.configureCollection('alerts',
+      () => ({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }), () => ({}), { nbItemsPerPage: 0 }) 
+      */
     this.alerts.$on('collection-refreshed', this.onAlertCollectionRefreshed)
-    this.events = this.configureCollection('events', () => Object.assign({
+    /* TODO
+      this.events = this.configureCollection('events', () => Object.assign({
       geoJson: true,
       $skip: 0,
       $limit: MAX_ITEMS,
       $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
     }, this.getPlanQuery()), () => this.getPlanObjectiveQuery(), { nbItemsPerPage: 0 })
+    */ 
     this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
-    this.$on('edit-start', this.onEditStartEvent)
-    this.$on('edit-stop', this.onEditStopEvent)
+    this.$engineEvents.on('edit-start', this.onEditStartEvent)
+    this.$engineEvents.on('edit-stop', this.onEditStopEvent)
   },
   beforeUnmount () {
     this.alerts.$off('collection-refreshed', this.onAlertCollectionRefreshed)
     this.events.$off('collection-refreshed', this.onEventCollectionRefreshed)
-    this.$off('edit-start', this.onEditStartEvent)
-    this.$off('edit-stop', this.onEditStopEvent)
+    this.$engineEvents.off('edit-start', this.onEditStartEvent)
+    this.$engineEvents.off('edit-stop', this.onEditStopEvent)
   }
 }
 </script>
@@ -611,6 +611,6 @@ export default {
     cursor: wait;
   }
   .position-cursor {
-    cursor: url('../statics/position-cursor.png'), auto;
+    cursor: url('/icons/kdk/position-cursor.png'), auto;
   }
 </style>

@@ -32,7 +32,6 @@ export default {
     mixins.objectProxy,
     mixins.schemaProxy,
     mixins.baseEditor(['form']),
-    mixins.refsResolver(['form'])
   ],
   props: {
     templateId: {
@@ -79,15 +78,6 @@ export default {
       if (copyWorkflow) this.object.workflow = _.cloneDeep(this.template.workflow)
       else delete this.object.workflow
     }
-  },
-  async created () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-form'] = this.$load('form/KForm')
-    this.$on('applied', this.closeModal)
-  },
-  beforeUnmount () {
-    this.$off('applied', this.closeModal)
   }
 }
 </script>

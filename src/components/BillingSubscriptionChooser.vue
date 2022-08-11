@@ -1,8 +1,8 @@
 <template>
   <q-card>
     <q-card-section class="row justify-center">
-      <template v-for="(properties, plan) in plans">
-        <div :id="plan + '-card'" class="col-xs-12 col-sm-6 col-md-3" :key="plan">
+      <template v-for="(properties, plan) in plans" :key="plan">
+        <div :id="plan + '-card'" class="col-xs-12 col-sm-6 col-md-3">
           <q-card :class="'q-ma-sm text-white bg-' + properties.color">
             <q-card-section class="text-center">
               <div class="text-h5">{{$t('plans.' + plan + '_LABEL')}}</div>

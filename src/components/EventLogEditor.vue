@@ -20,7 +20,6 @@ export default {
     kCoreMixins.baseModal,
     kCoreMixins.service,
     kCoreMixins.schemaProxy,
-    kCoreMixins.refsResolver(['form']),
     mixins.events
   ],
   props: {

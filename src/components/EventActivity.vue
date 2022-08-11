@@ -41,7 +41,6 @@ export default {
     }
   },
   mixins: [
-    kCoreMixins.refsResolver(['map']),
     activityMixin,
     kCoreMixins.baseCollection,
     kMapMixins.featureSelection,
@@ -321,8 +320,7 @@ export default {
   mounted () {
     // Setup event connections
     // this.$on('popupopen', this.onPopupOpen)
-    this.$on('click', this.onFeatureClicked)
-    this.$on('collection-refreshed', this.onCollectionRefreshed)
+    this.$engineEvents.on('click', this.onFeatureClicked)
     // Emitted from panel
     this.$events.$on('zoom-to-participant', this.onZoomToParticipant)
     this.$events.$on('filter-participant-states', this.onFilterParticipantStates)
@@ -330,8 +328,7 @@ export default {
   beforeUnmount () {
     // Remove event connections
     // this.$off('popupopen', this.onPopupOpen)
-    this.$off('click', this.onFeatureClicked)
-    this.$off('collection-refreshed', this.onCollectionRefreshed)
+    this.$engineEvents.off('click', this.onFeatureClicked)
     this.$events.$off('zoom-to-participant', this.onZoomToParticipant)
     this.$events.$off('filter-participant-states', this.onFilterParticipantStates)
   }
@@ -346,6 +343,6 @@ export default {
     cursor: wait;
   }
   .position-cursor {
-    cursor: url('../statics/position-cursor.png'), auto;
+    cursor: url('/icons/kdk/position-cursor.png'), auto;
   }
 </style>

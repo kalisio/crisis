@@ -44,7 +44,6 @@ import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 export default {
   name: 'plan-editor',
   mixins: [
-    kCoreMixins.refsResolver(),
     kCoreMixins.baseModal,
     kCoreMixins.service,
     kCoreMixins.objectProxy

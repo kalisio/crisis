@@ -191,7 +191,6 @@ export default {
     kCoreMixins.baseItem,
     kCoreMixins.service,
     kCoreMixins.schemaProxy,
-    kCoreMixins.refsResolver(['form']),
     kMapMixins.navigator,
     mixins.events,
     mixins.alerts

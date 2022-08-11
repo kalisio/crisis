@@ -7,7 +7,7 @@
     <!--
       Card content
      -->
-    <template slot="card-content">
+    <template v-slot:card-content>
       <!-- Objectives section -->
       <k-card-section :title="$t('PlanCard.OBJECTIVES_SECTION')" :actions="objectivesActions">
         <k-chips-pane v-if="hasObjectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />

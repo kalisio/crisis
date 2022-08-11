@@ -27,8 +27,8 @@
           <k-text-area class="light-paragraph q-pa-sm" :text="plan.description" />
           <!-- Objectives section -->
           <k-card-section>
-            <template v-for="(objective, index) in plan.objectives">
-              <div :key="objective.id" class="row full-width items-center justify-between no-wrap">
+            <template v-for="(objective, index) in plan.objectives" :key="objective.id">
+              <div class="row full-width items-center justify-between no-wrap">
                 <q-toggle class="col-8" v-model="objectiveFilters[index]" :label="objective.name" />
                 <div class="row items-center q-gutter-x-sm no-wrap q-pr-sm">
                   <k-panel id="objective-actions" :content="getObjectiveActions(objective)" :dense="true" />
@@ -57,7 +57,7 @@
 
 <script>
 import _ from 'lodash'
-import { QBtnDropdown, QKnob } from 'quasar'
+import { QKnob } from 'quasar'
 import mixins from '../mixins'
 
 export default {
@@ -66,7 +66,6 @@ export default {
     mixins.plans
   ],
   components: {
-    QBtnDropdown,
     QKnob
   },
   inject: ['kActivity'],

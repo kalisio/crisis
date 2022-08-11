@@ -1,8 +1,29 @@
+import logger from 'loglevel'
+import kdkCore from '@kalisio/kdk/core.client'
+//import kdkMap from '@kalisio/kdk/map.client.map'
+
+export default function () {
+  const api = this
+
+  // Set up our plugin services
+  try {
+    api.configure(kdkCore)
+   // api.configure(kdkMap)
+    // Restore previous settings if any
+    const settingsService = api.getService('settings')
+    if (settingsService) settingsService.restoreSettings()
+  } catch (error) {
+    logger.error(error.message)
+  }
+}
+
+
+/*
 import _ from 'lodash'
 import logger from 'loglevel'
 import memory from 'feathers-memory'
-import kCore from '@kalisio/kdk/core.client'
-import kMap from '@kalisio/kdk/map.client.map'
+import kdkCore from '@kalisio/kdk/core.client'
+import kdkMap from '@kalisio/kdk/map.client.map'
 import usersHooks from './users.hooks'
 
 function siftMatcher (originalQuery) {
@@ -17,12 +38,12 @@ export default function () {
 
   // Set up our plugin services
   try {
-    api.configure(kCore)
+    api.configure(kdkCore)
     // Declare our matcher
     api.registerMatcher(siftMatcher)
     // Add hooks to automatically check uniqueness when creating a new user
     api.getService('users').hooks(usersHooks)
-    api.configure(kMap)
+    api.configure(kdkMap)
     // Declare the built-in services, others are optional
     api.declareService('catalog', { context: true })
     api.declareService('features', { context: true })
@@ -41,7 +62,7 @@ export default function () {
     api.createService('plan-objectives', {
       service: memory({
         id: 'name',
-        paginate: { default: 10 },
+        paginate: { default: 12 },
         matcher: api.matcher
       })
     })
@@ -52,3 +73,4 @@ export default function () {
     logger.error(error.message)
   }
 }
+*/

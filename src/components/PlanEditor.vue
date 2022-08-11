@@ -3,10 +3,13 @@
     :title="editorTitle"
     :buttons="getButtons()"
     v-model="isModalOpened"
-    @opened="$emit('opened')"
-    @closed="$emit('closed')"
   >
-    <k-form ref="planForm":contextId="contextId" :objectId="objectId" :schema="schema" />
+    <k-form 
+      ref="planForm"
+      :contextId="contextId" 
+      :objectId="objectId" 
+      :schema="schema" 
+    />
   </k-modal>
 </template>
 
@@ -22,8 +25,7 @@ export default {
     mixins.service,
     mixins.objectProxy,
     mixins.schemaProxy,
-    editorMixin,
-    mixins.refsResolver(['planForm'])
+    editorMixin
   ],
   props: {
     templateId: {
@@ -55,18 +57,9 @@ export default {
       }
     }
   },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-form'] = this.$load('form/KForm')
-  },
   async created () {
     // Build the editor
     this.refresh()
-    this.$on('applied', this.closeModal)
-  },
-  beforeUnmount () {
-    this.$off('applied', this.closeModal)
   }
 }
 </script>

@@ -6,7 +6,7 @@
     <!--
       Card content
      -->
-    <template slot="card-content">
+    <template v-slot:card-content>
        <!-- Participants section -->
       <k-card-section
         :title="$t('EventTemplateCard.PARTICIPANTS_SECTION')"
@@ -108,7 +108,14 @@ export default {
     },
     hasWorkflow () {
       return !_.isEmpty(this.item.workflow)
-    },
+    }
+  },
+  data () {
+    return {
+      step: 1
+    }
+  },
+  methods: {
     removeWorkflow () {
       Dialog.create({
         title: this.$t('EventTemplateCard.REMOVE_WORKFLOW_TITLE'),
@@ -124,11 +131,6 @@ export default {
       }).onOk(() => {
         this.$api.getService('event-templates').patch(this.item._id, { workflow: null, hasWorkflow: false })
       })
-    }
-  },
-  data () {
-    return {
-      step: 1
     }
   },
   beforeCreate () {

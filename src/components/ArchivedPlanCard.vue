@@ -12,7 +12,7 @@
     <!--
       Card content
      -->
-    <template slot="card-content">
+    <template v-slot:card-content>
       <!-- Objectives section -->
       <k-card-section
         v-if="isExpanded"

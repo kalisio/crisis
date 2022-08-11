@@ -81,8 +81,6 @@
   </div>
 </template>
 
-</template>
-
 <script>
 import { QBtnDropdown } from 'quasar'
 import { permissions } from '@kalisio/kdk/core.common'

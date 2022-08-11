@@ -4,25 +4,23 @@ module.exports = [{
     path: '/',
     name: 'index',
     component: 'Index',
-    // By default all child routes are considered unauthenticated,
-    // will be overriden when required
     meta: { unauthenticated: true },
     children: {
       terms: 'Terms',
       login: {
-        component: 'authentication/KLogin',
+        component: 'screen/KLoginScreen',
         tour: tours.login
       },
       logout: {
-        component: 'authentication/KLogout',
+        component: 'screen/KLogoutScreen',
         meta: { authenticated: true }
       },
       register: {
-        component: 'authentication/KRegister',
+        component: 'screen/KRegisterScreen',
         tour: tours.register
       },
-      'change-endpoint': 'authentication/KChangeEndpoint',
-      'resend-verify-signup': {
+      'change-endpoint': 'screen/KEndpointScreen',
+    /*  'resend-verify-signup': {
         component: 'account/KResendVerifySignup',
         meta: { authenticated: true }
       },
@@ -367,7 +365,7 @@ module.exports = [{
             }
           }
         }
-      }
+      }*/
     }
   },
   // Always leave this as last one,

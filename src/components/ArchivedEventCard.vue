@@ -102,18 +102,17 @@
 
 <script>
 import _ from 'lodash'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
+import { mixins as kdkCoreMixins, utils as kdkdkCoreUtils } from '@kalisio/kdk/core.client'
+import { mixins as kdkMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
 export default {
   name: 'event-card',
   mixins: [
-    kCoreMixins.baseItem,
-    kCoreMixins.service,
-    kCoreMixins.schemaProxy,
-    kCoreMixins.refsResolver(['form']),
-    kMapMixins.navigator,
+    kdkCoreMixins.baseItem,
+    kdkCoreMixins.service,
+    kdkCoreMixins.schemaProxy,
+    kdkMapMixins.navigator,
     mixins.events,
     mixins.alerts
   ],
@@ -151,13 +150,13 @@ export default {
       return components
     },
     icon () {
-      return kCoreUtils.getIconName(this.getUserIcon(this.participantState, this.participantStep))
+      return kdkCoreUtils.getIconName(this.getUserIcon(this.participantState, this.participantStep))
     },
     iconColor () {
       return _.get(this.item, 'icon.color', '')
     },
     iconName () {
-      return kCoreUtils.getIconName(this.item)
+      return kdkCoreUtils.getIconName(this.item)
     },
     plan () {
       return this.item.plan

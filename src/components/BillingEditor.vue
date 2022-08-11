@@ -4,8 +4,6 @@
     :buttons="getButtons()"
     :maximized="true"
     v-model="isModalOpened"
-    @opened="$emit('opened')"
-    @closed="$emit('closed')"
   >
     <div class="q-pa-md column q-gutter-md">
       <!--

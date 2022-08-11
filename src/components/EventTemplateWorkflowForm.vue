@@ -54,7 +54,6 @@ export default {
     QStepperNavigation
   },
   mixins: [
-    kCoreMixins.refsResolver(),
     mixins.events
   ],
   props: {

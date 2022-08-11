@@ -22,7 +22,7 @@
       :list-strategy="'smart'"
       @toggle-changed="onItemToggled"
       @collection-refreshed="onCollectionRefreshed">
-        <template slot="empty-section">
+        <template v-slot:empty-section>
           <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KList.EMPTY_LIST')" />
         </template>
       </k-list>
@@ -50,7 +50,6 @@ const MAX_EVENT_LOGS = 5000
 export default {
   name: 'event-logs-list',
   mixins: [
-    kCoreMixins.refsResolver(['form']),
     kCoreMixins.schemaProxy,
     mixins.events
   ],

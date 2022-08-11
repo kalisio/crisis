@@ -70,7 +70,7 @@
 import _ from 'lodash'
 import moment from 'moment'
 import logger from 'loglevel'
-import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 import { QSlider, QRange } from 'quasar'
 
 export default {
@@ -79,8 +79,7 @@ export default {
     QSlider, QRange
   },
   mixins: [
-    kCoreMixins.schemaProxy,
-    kCoreMixins.refsResolver()
+    kdkCoreMixins.schemaProxy
   ],
   props: {
     layer: { type: Object, default: () => null },

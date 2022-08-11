@@ -46,6 +46,65 @@ export function getPlansQuery (user, contextId) {
   }
 }
 
+// Build vue router config from our config file
+export function buildRoutes (config) {
+  function buildRoutesRecursively (config, routes, parentRoute) {
+    _.forOwn(config, (value, key) => {
+      // The key is always the path for the route
+      let route = {
+        path: key,
+        name: key,
+        // "Inherit" meta data on nested routes
+        meta: (parentRoute ? Object.assign({}, parentRoute.meta) : {})
+      }
+      // If value is a simple string this is a shortcut:
+      // - name = path
+      // - component = value
+      // Otherwise we have an object similar to what expect vue-router,
+      // we simply return the async component loading function with the given component value
+      if (typeof value === 'string') {
+        route.component = () => import(`@components/${value}.vue`)
+      } else {
+        // Take care that path can be empty so we cannot just check with a if
+        if (_.has(value, 'path')) {
+          route.path = value.path
+        }
+        // Take care that name can be empty so we cannot just check with a if
+        if (_.has(value, 'name')) {
+          route.name = value.name
+        }
+        if (_.has(value, 'component')) {
+          route.component = () => import(`@components/${value.component}.vue`)
+          if (_.has(value, 'embedApi')) {
+            setupEmbedApi(route.name)
+          }
+        }
+        if (_.has(value, 'props')) {
+          route.props = value.props
+        }
+        if (_.has(value, 'meta')) {
+          // Override parent meta if child meta given
+          Object.assign(route.meta, value.meta)
+        }
+        if (_.has(value, 'redirect')) {
+          _.set(route, 'redirect', value.redirect)
+        }
+      }
+
+      // Check for any children to recurse
+      if (value.children) {
+        route.children = []
+        buildRoutesRecursively(value.children, route.children, route)
+      }
+      routes.push(route)
+    })
+  }
+
+  let routes = []
+  buildRoutesRecursively(config, routes)
+  return routes
+}
+
 export function buildTours (config) {
   function buildToursRecursively (config, tours) {
     _.forOwn(config, (value, key) => {

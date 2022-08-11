@@ -2,9 +2,7 @@
   <k-modal
     :title="editorTitle"
     :buttons="getButtons()"
-    v-model="isModalOpened"
-    @opened="$emit('opened')"
-    @closed="$emit('closed')">
+    v-model="isModalOpened">
     <div class="column xs-gutter">
         <k-form
           ref="eventForm"
@@ -41,7 +39,6 @@ export default {
     kCoreMixins.objectProxy,
     kCoreMixins.schemaProxy,
     editorMixin,
-    kCoreMixins.refsResolver(['eventForm']),
     mixins.plans
   ],
   props: {
@@ -212,23 +209,14 @@ export default {
       }
     }
   },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-form'] = this.$load('form/KForm')
-  },
   async created () {
     // Build the editor.
     // Note that if the event belongs to a plan we need to wait for the plan to be loaded
     if (!this.hasPlan()) this.refresh()
     else this.loadPlan()
-    this.$on('applied', this.closeModal)
     // Setup notify option
     if (this.getMode() === 'create') this.notify = true
     else this.notify = false
-  },
-  beforeUnmount () {
-    this.$off('applied', this.closeModal)
   }
 }
 </script>

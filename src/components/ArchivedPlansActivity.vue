@@ -16,7 +16,7 @@
           date-field="updatedAt"
           :contextId="contextId"
           :height="height">
-          <template slot="empty-history">
+          <template v-slot:empty-history>
             <div class="absolute-center">
               <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
             </div>

@@ -11,15 +11,22 @@
 import _ from 'lodash'
 import logger from 'loglevel'
 import { Loading, Dialog } from 'quasar'
-import { permissions, mixins, beforeGuard } from '@kalisio/kdk/core.client'
+import { permissions, mixins, beforeGuard, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 
 import config from 'config'
-import * as utils from '../utils'
 
 export default {
   name: 'index',
+  components: {
+    KSignupAlert: kdkCoreUtils.loadComponent('account/KSignupAlert'),
+    KWelcome: kdkCoreUtils.loadComponent('layout/KWelcome'),
+    KTour: kdkCoreUtils.loadComponent('layout/KTour')
+  },
   // authorisation mixin is required to automatically update user' abilities on update
-  mixins: [mixins.authentication, mixins.authorisation],
+  mixins: [
+    mixins.authentication, 
+    mixins.authorisation
+  ],
   methods: {
     async redirect (user) {
       this.user = user
@@ -83,9 +90,6 @@ export default {
     }
   },
   async created () {
-    this.$options.components['k-signup-alert'] = utils.loadComponent('account/KSignupAlert')
-    this.$options.components['k-welcome'] = utils.loadComponent('layout/KWelcome')
-    this.$options.components['k-tour'] = utils.loadComponent('layout/KTour')
     // initialize the user
     this.user = this.$store.get('user')
     if (this.$api.socket) {

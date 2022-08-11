@@ -13,7 +13,7 @@
         :base-query="baseQuery"
         :filter-query="filterQuery"
         :list-strategy="'smart'">
-        <template slot="empty-section">
+        <template v-slot:empty-section>
           <div class="absolute-center">
             <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
           </div>
