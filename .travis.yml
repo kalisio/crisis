@@ -62,7 +62,7 @@ jobs:
       - extra-google-m2repository
       - extra-android-m2repository
     licenses:
-      - '.+'
+    - ".+"
     before_install:
     - nvm install 16
     - yes | sdkmanager "platforms;android-30"
@@ -75,14 +75,14 @@ jobs:
     - sudo chmod 755 /usr/bin/rclone
     - rvm install ruby-2.6.5
     - gem install fastlane -v '~> 2.171.0'
-    - npm install -g @quasar/cli  
+    - npm install -g @quasar/cli
     install:
     - yarn
     before_script:
-    - export -f travis_fold    
+    - export -f travis_fold
     script:
     - bash .travis.android.sh
-
+    
   - stage: IOS
     os: osx
     language: objective-c
@@ -93,10 +93,10 @@ jobs:
     - brew update
     - brew install rclone
     - npm install -g ios-deploy --unsafe-perm=true
-    - npm install -g @quasar/cli  
+    - npm install -g @quasar/cli
     install:
     - yarn
     before_script:
-    - export -f travis_fold   
+    - export -f travis_fold
     script:
-    - travis_wait 60 bash .travis.ios.sh
+    - bash .travis.ios.sh
