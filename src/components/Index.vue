@@ -161,7 +161,7 @@ export default {
   },
   async mounted () {
     // Check if we need to redirect based on the fact there is an authenticated user
-    this.$events.$on('user-changed', this.redirect)
+    this.$events.on('user-changed', this.redirect)
 
     try {
       // No need to update/redirect here since the user should be managed by event handler above
@@ -172,7 +172,7 @@ export default {
     }
   },
   beforeUnmount () {
-    this.$events.$off('user-changed', this.redirect)
+    this.$events.off('user-changed', this.redirect)
   }
 }
 </script>

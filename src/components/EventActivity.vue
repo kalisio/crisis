@@ -322,15 +322,15 @@ export default {
     // this.$on('popupopen', this.onPopupOpen)
     this.$engineEvents.on('click', this.onFeatureClicked)
     // Emitted from panel
-    this.$events.$on('zoom-to-participant', this.onZoomToParticipant)
-    this.$events.$on('filter-participant-states', this.onFilterParticipantStates)
+    this.$events.on('zoom-to-participant', this.onZoomToParticipant)
+    this.$events.on('filter-participant-states', this.onFilterParticipantStates)
   },
   beforeUnmount () {
     // Remove event connections
     // this.$off('popupopen', this.onPopupOpen)
     this.$engineEvents.off('click', this.onFeatureClicked)
-    this.$events.$off('zoom-to-participant', this.onZoomToParticipant)
-    this.$events.$off('filter-participant-states', this.onFilterParticipantStates)
+    this.$events.off('zoom-to-participant', this.onZoomToParticipant)
+    this.$events.off('filter-participant-states', this.onFilterParticipantStates)
   }
 }
 </script>

@@ -20,7 +20,7 @@ module.exports = [{
         tour: tours.register
       },
       'change-endpoint': 'screen/KEndpointScreen',
-    /*  'resend-verify-signup': {
+      'resend-verify-signup': {
         component: 'account/KResendVerifySignup',
         meta: { authenticated: true }
       },
@@ -365,7 +365,7 @@ module.exports = [{
             }
           }
         }
-      }*/
+      }
     }
   },
   // Always leave this as last one,

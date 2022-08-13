@@ -206,7 +206,7 @@ export default {
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
   },
   created () {
-    this.$events.$on('user-changed', this.refreshFab)
+    this.$events.on('user-changed', this.refreshFab)
     // Keep track of changes once loaded
     // Indeed, archived events do not emit real-time service events
     // so that we need to manually update the archived events collection
@@ -216,7 +216,7 @@ export default {
     }
   },
   beforeUnmount () {
-    this.$events.$off('user-changed', this.refreshFab)
+    this.$events.off('user-changed', this.refreshFab)
     if (this.planId) {
       const eventsService = this.$api.getService('events', this.contextId)
       eventsService.off('removed', this.onEventRemoved)

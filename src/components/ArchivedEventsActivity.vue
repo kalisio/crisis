@@ -606,7 +606,7 @@ export default {
   },
   mounted () {
     // Setup listeners
-    this.$events.$on('time-range-changed', this.onTimeRangeChanged)
+    this.$events.on('time-range-changed', this.onTimeRangeChanged)
   },
   beforeUnmount () {
     // Release the chart if nay
@@ -614,7 +614,7 @@ export default {
     // Restore the current time
     Time.setCurrentTime(this.currentTime)
     // Releases listeners
-    this.$events.$off('time-range-changed', this.onTimeRangeChanged)
+    this.$events.off('time-range-changed', this.onTimeRangeChanged)
   }
 }
 </script>

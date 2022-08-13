@@ -129,7 +129,7 @@ export default {
     this.$options.components['k-stamp'] = this.$load('frame/KStamp')
   },
   async created () {
-    this.$events.$on('user-changed', this.configureActivity)
+    this.$events.on('user-changed', this.configureActivity)
     // Build base query
     await this.updateFilterQuery()
     // Keep track of changes once loaded
@@ -138,19 +138,19 @@ export default {
     eventsService.on('patched', this.updateFilterQuery)
     eventsService.on('updated', this.updateFilterQuery)
     eventsService.on('removed', this.updateFilterQuery)
-    this.$events.$on('filter-changed', this.updateFilterQuery)
+    this.$events.on('filter-changed', this.updateFilterQuery)
 
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },
   beforeUnmount () {
-    this.$events.$off('user-changed', this.configureActivity)
+    this.$events.off('user-changed', this.configureActivity)
     const eventsService = this.$api.getService('events', this.contextId)
     eventsService.off('created', this.updateFilterQuery)
     eventsService.off('patched', this.updateFilterQuery)
     eventsService.off('updated', this.updateFilterQuery)
     eventsService.off('removed', this.updateFilterQuery)
-    this.$events.$off('filter-changed', this.updateFilterQuery)
+    this.$events.off('filter-changed', this.updateFilterQuery)
   }
 }
 </script>

@@ -28,10 +28,12 @@
         </div>
         <div v-else class="row no-margin">
           <div class="col-11 self-center">
-            <card id="payment-card" class='k-stripe-card'
+            <!-- TODO 
+            card id="payment-card" class='k-stripe-card'
             :stripe="$config('stripe.secretKey')"
             :options="$config('stripe.options')"
-            @change='onCardUpdated' />
+            @change='onCardUpdated' 
+            /-->
           </div>
           <div class="col-1 self-center">
             <q-spinner v-show="isCreatingCard" color="grey-7" size="24px" />
@@ -44,13 +46,13 @@
 
 <script>
 import _ from 'lodash'
-import { Card, createToken } from 'vue-stripe-elements-plus'
+// TODO import { Card, createToken } from 'vue-stripe-elements-plus'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
   name: 'customer-editor',
   components: {
-    Card
+    // TODO Card
   },
   mixins: [
     kCoreMixins.baseModal,
@@ -166,11 +168,6 @@ export default {
       _.unset(this.customer, 'token')
       this.hasCard = false
     }
-  },
-  created () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-form'] = this.$load('form/KForm')
   }
 }
 </script>

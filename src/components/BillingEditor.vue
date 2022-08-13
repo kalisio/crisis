@@ -151,7 +151,7 @@ export default {
   async created () {
     // Load available plans and Whenever the cabilities are updated, update plans as well
     this.refreshPlans()
-    this.$events.$on('capabilities-api-changed', this.refreshPlans)
+    this.$events.on('capabilities-api-changed', this.refreshPlans)
     // Load underlying billing perspective
     const perspective = await this.loadObject()
     this.currentPlan = _.get(perspective, 'billing.subscription.plan')
@@ -159,7 +159,7 @@ export default {
     this.customer = _.get(perspective, 'billing.customer')
   },
   beforeUnmount () {
-    this.$events.$off('capabilities-api-changed', this.refreshPlans)
+    this.$events.off('capabilities-api-changed', this.refreshPlans)
   }
 }
 </script>

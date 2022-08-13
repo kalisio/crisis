@@ -141,7 +141,7 @@ module.exports = configure(function (ctx) {
           logLevel: 'debug'
         },
         // The auth endpoints are not easy to prefix so we manage it manually
-        '/auth': {
+        '/oauth': {
           target: 'http://localhost:' + serverPort,
           changeOrigin: true,
           logLevel: 'debug'
