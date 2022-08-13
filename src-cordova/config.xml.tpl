@@ -12,6 +12,8 @@
   <allow-intent href="sms:*"/>
   <allow-intent href="mailto:*"/>
   <allow-intent href="geo:*"/>
+  <preference name="scheme" value="app" /> 
+  <preference name="hostname" value="localhost" />  
   <preference name="android-minSdkVersion" value="23"/>
   <preference name="android-targetSdkVersion" value="30"/>
   <preference name="permissions" value="none"/>
@@ -124,7 +126,7 @@
   <plugin name="cordova-plugin-statusbar" spec="~3.0.0"/>
   <plugin name="cordova-plugin-android-permissions" spec="~1.1.3"/>
   <plugin name="cordova-plugin-device" spec="~2.1.0"/>
-  <plugin name="cordova-plugin-geolocation" spec="~4.0.2"/>
+  <plugin name="cordova-plugin-geolocation" spec="~4.1.0"/>
   <plugin name="cordova-plugin-camera" spec="~6.0.0"/>
   <plugin name="cordova-plugin-sim" spec="~1.3.3"/>
   <plugin name="cordova-plugin-whitelist" spec="~1.3.5"/>
