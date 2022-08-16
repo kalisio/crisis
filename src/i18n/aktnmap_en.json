@@ -9,11 +9,11 @@
   "errors": {
     "EVENTS_LIMIT": "Too much events to display all of them",
     "EVENT_LOG_LIMIT": "Too much participants to display all of them",
-    "CANNOT_REMOVE_CUSTOMER": "You are not allowed to remove the customer of <b>{{resource}}</b>, change the payment information first.",
+    "CANNOT_REMOVE_CUSTOMER": "You are not allowed to remove the customer of <b>{resource}</b>, change the payment information first.",
     "UNSUBSCRIBED_OPTION": "Sorry, it seems you did not subscribe to this option. Please update your subscription before coming back here."
   },
   "schemas": {
-    "ORGANISATIONS_BILLING_PLAN_NAME": "{{ object.name }}'s billing plan",
+    "ORGANISATIONS_BILLING_PLAN_NAME": "{ object.name }'s billing plan",
     "ORGANISATIONS_PLAN_FIELD_LABEL": "Select the billing plan of this organisation",
     "ORGANISATIONS_CUSTOMER_FIELD_LABEL": "Select a payment method",
     "ORGANISATIONS_EXTRA_INFOS_FIELD_LABEL": "Enter any extra information to appear on your receipts",
@@ -135,7 +135,7 @@
       "SETTINGS_LABEL": "This entry allows to update the <b>settings</b> of your organisation (name, logo, etc.).",
       "SETTINGS_LINK_LABEL": "How to manage settings",
       "REMOVE_ORGANISATION_LABEL": "Remove your organisation through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL) You must first remove all your organisation groups."
+      "REMOVE_CONFIRMATION_LABEL": "@:tours.REMOVE_CONFIRMATION_LABEL) You must first remove all your organisation groups."
     },
     "organisation": {
       "NAME_LABEL": "Update the name of your organisation.",
@@ -174,7 +174,7 @@
       "ADD_MEDIA_LABEL": "Join files to your event through this action, this will send a <p>notification</b> to all participants.",
       "EVENT_MAP_LABEL": "View the map of your event through this action.",
       "REMOVE_EVENT_LABEL": "Remove your event through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL), this will send a <p>notification</b> to all participants.",
+      "REMOVE_CONFIRMATION_LABEL": "@:tours.REMOVE_CONFIRMATION_LABEL), this will send a <p>notification</b> to all participants.",
       "ORGANISATION_MENU_LABEL": "Use the top dropdown menu to easily view the plans of your organisation."
     },
     "create-event": {
@@ -196,7 +196,7 @@
     "event-templates": {
       "TEMPLATES_LABEL": "This activity allows to manage the event <b>templates</b> in your organisation.",
       "TEMPLATE_DEFINITION_LABEL": "A template allows to define the recurrent content of a specific event type.",
-      "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
+      "OVERFLOW_MENU_LABEL": "@:tours.APP_BAR_OVERFLOW_MENU_LABEL",
       "SEARCH_LABEL": "Type part of a word contained in the name of your models in the arising bar to perform a search.",
       "SORT_LABEL": "Sort your templates by ascending or descending alphabetical order this button.",
       "NEW_TEMPLATE_LABEL": "Create a <b>new template</b> using this button.",
@@ -225,9 +225,9 @@
       "UPDATE_DESCRIPTION_LABEL": "Update the description of your model through this action.",
       "UPDATE_PROPERTIES_LABEL": "Similarly, update the properties of your model through the action associated to each field.",
       "COPY_TEMPLATE_LABEL": "Go fast by creatng a new model from this one through this action.",
-      "TEMPLATE_OVERFLOW_MENU_LABEL": "$t(tours.CARD_OVERFLOW_MENU_LABEL)",
+      "TEMPLATE_OVERFLOW_MENU_LABEL": "@:tours.CARD_OVERFLOW_MENU_LABEL",
       "REMOVE_TEMPLATE_LABEL": "Remove your model through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)",
+      "REMOVE_CONFIRMATION_LABEL": "@:tours.REMOVE_CONFIRMATION_LABEL",
       "ORGANISATION_MENU_LABEL": "Use the top dropdown menu to easily view your events or the plans of your organisation."
     },
     "create-event-template": {
@@ -291,7 +291,7 @@
       "UPDATE_DESCRIPTION_LABEL": "Update the description of your plan through this action.",
       "UPDATE_PROPERTIES_LABEL": "Similarly, update the properties of your model through the action associated to each field, you can choose if this will send a <p>notification</b> to all participants or not.",
       "REMOVE_PLAN_LABEL": "Remove your plan through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL).",
+      "REMOVE_CONFIRMATION_LABEL": "@:tours.REMOVE_CONFIRMATION_LABEL).",
       "ORGANISATION_MENU_LABEL": "Use the top dropdown menu to easily view your events or manage your organisation."
     },
     "create-plan": {
@@ -310,7 +310,7 @@
     "plan-templates": {
       "TEMPLATES_LABEL": "This activity allows to manage the plan <b>templates</b> in your organisation.",
       "TEMPLATE_DEFINITION_LABEL": "A template allows to define the recurrent content of a specific plan type.",
-      "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
+      "OVERFLOW_MENU_LABEL": "@:tours.APP_BAR_OVERFLOW_MENU_LABEL",
       "SEARCH_LABEL": "Type part of a word contained in the name of your models in the arising bar to perform a search.",
       "SORT_LABEL": "Sort your templates by ascending or descending alphabetical order this button.",
       "NEW_TEMPLATE_LABEL": "Create a <b>new template</b> using this button.",
@@ -322,7 +322,7 @@
       "UPDATE_PROPERTIES_LABEL": "Similarly, update the properties of your model through the action associated to each field.",
       "COPY_TEMPLATE_LABEL": "Go fast by creatng a new model from this one through this action.",
       "REMOVE_TEMPLATE_LABEL": "Remove your model through this action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)",
+      "REMOVE_CONFIRMATION_LABEL": "@:tours.REMOVE_CONFIRMATION_LABEL",
       "ORGANISATION_MENU_LABEL": "Use the top dropdown menu to easily view your events or the plans of your organisation."
     },
     "create-plan-template": {
@@ -366,7 +366,7 @@
   "leftPane": {
     "ORGANISATIONS": "My organisations",
     "ONLINE_HELP": "Online help",
-    "CONTEXTUAL_HELP": "$t(CONTEXTUAL_HELP)",
+    "CONTEXTUAL_HELP": "@:CONTEXTUAL_HELP",
     "LOGOUT": "Logout"
   },
   "Context": {
@@ -378,35 +378,35 @@
     "GROUPS": "Groups",
     "CATALOG": "Cartography",
     "SEARCH": "Search",
-    "CONTEXTUAL_HELP": "$t(CONTEXTUAL_HELP)",
+    "CONTEXTUAL_HELP": "@:CONTEXTUAL_HELP",
     "REFRESH": "Refresh",
     "SETTINGS": "Settings"
   },
   "OrganisationCard": {
     "EVENTS_SECTION": "Events",
-    "EVENTS_LABEL": "{{count}} event(s)",
+    "EVENTS_LABEL": "{count} event(s)",
     "PLANS_SECTION": "Plans",
     "VIEW_EVENTS": "View events",
     "VIEW_PLANS": "View plans",
-    "PLANS_LABEL": "{{count}} plan(s)",
+    "PLANS_LABEL": "{count} plan(s)",
     "VIEW_CATALOG": "View map",
     "VIEW_ARCHIVED_EVENTS": "View logbook",
     "VIEW_ARCHIVED_PLANS": "View plans archive",
     "CATALOG": "Map",
     "ARCHIVED_EVENTS": "Logbook",
-    "MEMBERS": "{{count}} member(s)",
+    "MEMBERS": "{count} member(s)",
     "VIEW_MEMBERS": "View members",
-    "TAGS": "{{count}} tag(s)",
+    "TAGS": "{count} tag(s)",
     "VIEW_TAGS": "View tags",
-    "GROUPS": "{{count}} group(s)",
+    "GROUPS": "{count} group(s)",
     "VIEW_GROUPS": "View groups",
-    "EVENT_TEMPLATES": "{{count}} event template(s)",
+    "EVENT_TEMPLATES": "{count} event template(s)",
     "VIEW_EVENT_TEMPLATES": "View event templates",
-    "PLAN_TEMPLATES": "{{count}} plan template(s)",
+    "PLAN_TEMPLATES": "{count} plan template(s)",
     "VIEW_PLAN_TEMPLATES": "View plan templates",
     "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions",
-    "EDIT_ACTION": "$t(EDIT_LABEL)",
-    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
+    "EDIT_ACTION": "@:EDIT_LABEL",
+    "REMOVE_ACTION": "@:REMOVE_LABEL",
     "ADMINISTRATION_SECTION": "Management",
     "INFORMATION_SECTION": "Informations",
     "SUBSCRIPTIONS_LABEL": "Subscriptions"
@@ -415,8 +415,8 @@
     "CUSTOMER_BLOCK_TITLE": "Payment Information",
     "CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER": "You must be verified to enter your payment information",
     "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "You did not enter in any payment information",
-    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "You have chosen a monthly bill payment method.<br/>Invoices will be send to <b>{{email}}</b>",
-    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "You have chosen a monthly bank debit payment method.<br/>Your are using a <b>{{brand}}</b> card which number is ending with <b>{{last4}}</b>",
+    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "You have chosen a monthly bill payment method.<br/>Invoices will be send to <b>{email}</b>",
+    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "You have chosen a monthly bank debit payment method.<br/>Your are using a <b>{brand}</b> card which number is ending with <b>{last4}</b>",
     "CUSTOMER_BLOCK_ACTION": "Update",
     "OPTIONS_BLOCK_TITLE": "Your plans",
     "PLAN_TITLE": "Your basic plan",
@@ -485,15 +485,15 @@
     "bronze_LABEL": "Bronze",
     "bronze_PRICE": "Free",
     "bronze_DESCRIPTION": "Our basic version for users just getting started",
-    "bronze_DETAILS": "</br>Unlimited tags</br>Unlimited events<br>Up to <b>{{groups}}</b> groups</br>Up to <b>{{event-templates}}</b> templates</br>Up to <b>{{members}}</b> members</br></br>",
+    "bronze_DETAILS": "</br>Unlimited tags</br>Unlimited events<br>Up to <b>{groups}</b> groups</br>Up to <b>{event-templates}</b> templates</br>Up to <b>{members}</b> members</br></br>",
     "silver_LABEL": "Silver",
     "silver_PRICE": "99€ per month",
     "silver_DESCRIPTION": "Powerful enough to run a small business",
-    "silver_DETAILS": "</br>Unlimited tags</br>Unlimited events</br>Unlimited templates</br>Up to <b>{{groups}}</b> groups</br>Up to <b>{{members}}</b> members</br></br>",
+    "silver_DETAILS": "</br>Unlimited tags</br>Unlimited events</br>Unlimited templates</br>Up to <b>{groups}</b> groups</br>Up to <b>{members}</b> members</br></br>",
     "gold_LABEL": "Gold",
     "gold_PRICE": "399€ per month",
     "gold_DESCRIPTION": "Powerful enough to run a large business",
-    "gold_DETAILS": "</br>Unlimited tags</br>Unlimited events</br>Unlimited templates</br>Unlimited groups</br>Up to <b>{{members}}</b> members</br></br>",
+    "gold_DETAILS": "</br>Unlimited tags</br>Unlimited events</br>Unlimited templates</br>Unlimited groups</br>Up to <b>{members}</b> members</br></br>",
     "diamond_LABEL": "Diamond",
     "diamond_PRICE": "Let's talk !",
     "diamond_DESCRIPTION": "Custom plan tailored for your business, with more control and support",
@@ -547,26 +547,26 @@
     "ALL_INTERACTIONS": "All",
     "VIEW_LOCATION": "View location",
     "FOLLOW_UP_MODAL_TITLE": "Enter your choice",
-    "FOLLOWUP_MODAL_CANCEL_BUTTON": "$t(CANCEL)",
-    "FOLLOWUP_MODAL_APPLY_BUTTON": "$t(SAVE_LABEL)",
-    "FOLLOWUP_MODAL_APPLY_ALL_BUTTON": "$t(SAVE_LABEL) for selected",
+    "FOLLOWUP_MODAL_CANCEL_BUTTON": "@:CANCEL",
+    "FOLLOWUP_MODAL_APPLY_BUTTON": "@:SAVE_LABEL",
+    "FOLLOWUP_MODAL_APPLY_ALL_BUTTON": "@:SAVE_LABEL) for selected",
     "EVENT_LOGS_EXPORT_FILE": "Participants.csv",
-    "MATCHING_RESULTS": "{{total}} participants found.",
-    "MAXIMUM_RESULTS": "Please refine your filter because you miss some results beyond {{max}} participants.",
+    "MATCHING_RESULTS": "{total} participants found.",
+    "MAXIMUM_RESULTS": "Please refine your filter because you miss some results beyond {max} participants.",
     "UNMATCHING_STEPS": "Unmatching steps",
     "CANNOT_LOG_UNMATCHING_STEPS": "Cannot apply action to participants at different steps."
   },
   "EventActivity": {
     "ADD_MEDIA_LABEL": "Add media",
     "BROWSE_MEDIA_LABEL": "Browse media",
-    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "EDIT_LABEL": "@:EDIT_LABEL",
     "SHOW_PANE_LABEL": "View participants pane",
     "HIDE_PANE_LABEL": "Hide participants pane",
     "ACTION_REQUIRED": "action required",
     "AWAITING_INFORMATION": "awaiting information",
-    "UNAMED": "$t(EventLog.UNAMED)",
+    "UNAMED": "@:EventLog.UNAMED",
     "PARTICIPANTS_LAYER_NAME": "Participants",
-    "UPLOADER_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)"
+    "UPLOADER_MODAL_CLOSE_ACTION": "@:CLOSE_LABEL"
   },
   "EventActivityPanel": {
     "PARTICIPANTS_LABEL": "Participants",
@@ -596,31 +596,31 @@
     "CREATED_AT_LABEL": "Created at",
     "UPDATED_AT_LABEL": "Updated at",
     "EXPIRE_AT_LABEL": "Expire at",
-    "REMOVE_LABEL": "$t(REMOVE_LABEL)",
-    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "REMOVE_LABEL": "@:REMOVE_LABEL",
+    "EDIT_LABEL": "@:EDIT_LABEL",
     "FOLLOW_UP_LABEL": "Follow up",
     "FOLLOW_UP_MODAL_TITLE": "Enter your choice",
     "EVENT_LOGS_LABEL": "Follow up participants",
-    "ADD_MEDIA_LABEL": "$t(EventActivity.ADD_MEDIA_LABEL)",
-    "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)",
-    "UPLOADER_MODAL_CLOSE_ACTION": "$t(EventActivity.UPLOADER_MODAL_CLOSE_ACTION)",
-    "LOCATION_MAP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "ADD_MEDIA_LABEL": "@:EventActivity.ADD_MEDIA_LABEL",
+    "BROWSE_MEDIA_LABEL": "@:EventActivity.BROWSE_MEDIA_LABEL",
+    "UPLOADER_MODAL_CLOSE_ACTION": "@:EventActivity.UPLOADER_MODAL_CLOSE_ACTION",
+    "LOCATION_MAP_MODAL_CLOSE_ACTION": "@:CLOSE_LABEL",
     "EVENT_LOGS_MODAL_TITLE": "Details about participants",
-    "EVENT_LOGS_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "EVENT_LOGS_MODAL_CLOSE_ACTION": "@:CLOSE_LABEL",
     "EVENT_LOGS_MODAL_EXPORT_DATA_LABEL": "Export data",
     "NAVIGATE_LABEL": "Navigate",
     "LOCATE_LABEL": "View the location",
     "MAP_LABEL": "Map",
-    "REMOVE_DIALOG_TITLE": "Remove the event {{event}} ?",
-    "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove the event <b>{{event}}</b> ?",
+    "REMOVE_DIALOG_TITLE": "Remove the event {event} ?",
+    "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove the event <b>{event}</b> ?",
     "ACTION_REQUIRED_WARNING": "Action required",
     "WAITING_COORDINATION_WARNING": "Waiting coordination",
     "WAITING_FOR_PARTICIPANT_LABEL": "Coordinator is waiting for your input",
     "WAITING_FOR_COORDINATOR_LABEL": "Waiting for coordinator feedback",
-    "PARTICPANTS_AWAITING_LABEL": "{{number}} participants awaiting coordination",
+    "PARTICPANTS_AWAITING_LABEL": "{number} participants awaiting coordination",
     "NO_PARTICPANTS_AWAITING_LABEL": "No participants awaiting coordination",
-    "FOLLOWUP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
-    "FOLLOWUP_MODAL_SAVE_BUTTON": "$t(SAVE_LABEL)",
+    "FOLLOWUP_MODAL_CLOSE_ACTION": "@:CLOSE_LABEL",
+    "FOLLOWUP_MODAL_SAVE_BUTTON": "@:SAVE_LABEL",
     "VIEW_LOCATION_MAP": "View location map",
     "VIEW_PARTICIPANTS": "View partcipants"
   },
@@ -663,8 +663,8 @@
     "SHOW_BY_TEMPLATE_LABEL": "By type",
     "SHOW_ALL_LABEL": "Globally",
     "EVENTS_LAYER_NAME": "My events",
-    "MATCHING_RESULTS": "{{total}} events found.",
-    "MAXIMUM_RESULTS": "Please refine your search parameters because you miss some results beyond {{max}} events.",
+    "MATCHING_RESULTS": "{total} events found.",
+    "MAXIMUM_RESULTS": "Please refine your search parameters because you miss some results beyond {max} events.",
     "SORT_EVENTS": "Sort events"
   },
   "ArchivedEventCard": {
@@ -691,19 +691,19 @@
     "BROWSE_MEDIA": "View media"
   },
   "EventTemplatesActivity": {
-    "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)",
+    "EVENT_TEMPLATES_LABEL": "@:EVENT_TEMPLATES_LABEL",
     "CREATE_TEMPLATE_LABEL": "Create an event template",
     "SEARCH_EVENT_TEMPLATES": "Search event templates",
     "SORT_EVENT_TEMPLATES": "Sort event templates"
   },
   "EventTemplateCard": {
-    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
-    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "REMOVE_ACTION": "@:REMOVE_LABEL",
+    "EDIT_ACTION": "@:EDIT_LABEL",
     "ADD_WORKFLOW_ACTION": "Add workflow",
     "EDIT_WORKFLOW_ACTION": "Update workflow",
     "REMOVE_WORKFLOW_ACTION": "Remove workflow",
     "REMOVE_WORKFLOW_TITLE": "Are you sure you want to delete the workflow?",
-    "COPY_ACTION": "$t(COPY_LABEL)",
+    "COPY_ACTION": "@:COPY_LABEL",
     "DESCRIPTION_SECTION": "Description",
     "NO_DESRIPTION_LABEL": "No description",
     "PARTICIPANTS_SECTION": "Participants",
@@ -711,11 +711,11 @@
     "COORDINATORS_SECTION": "Coordinators",
     "NO_COORDINATORS_LABEL": "No coordinators",
     "EXPIRY_DURATION_SECTION": "Expriy duration",
-    "EXPIRY_DURATION_LABEL": "{{days}} days",
+    "EXPIRY_DURATION_LABEL": "{days} days",
     "NO_EXPIRY_DURATION_LABEL": "No expriy duration",
     "PERMISSION_SECTION": "Permission",
     "WORKFLOW_SECTION": "Workflow",
-    "WORKFLOW_LABEL": "{{count}} step workflow",
+    "WORKFLOW_LABEL": "{count} step workflow",
     "NO_WORKFLOW_LABEL": "No workflow"
   },
   "EventTemplateWorkflowForm": {
@@ -728,7 +728,7 @@
   },
   "EventTemplateEditor": {
     "WORKFLOW_HELPER_LABEL": "Copy workflow",
-    "CLOSE_ACTION":  "$t(CLOSE_LABEL)"
+    "CLOSE_ACTION":  "@:CLOSE_LABEL"
   },
   "EventNotifications": {
     "CREATE": "New",
@@ -740,8 +740,8 @@
     "NOTIFY": "Notify participants"
   },
   "EventLogEditor": {
-    "CLOSE_ACTION": "$t(CLOSE_LABEL)",
-    "SAVE_BUTTON": "$t(SAVE_LABEL)"
+    "CLOSE_ACTION": "@:CLOSE_LABEL",
+    "SAVE_BUTTON": "@:SAVE_LABEL"
   },
   "CustomerEditor": {
     "TITLE": "Enter your billing information",
@@ -758,7 +758,7 @@
     "SELECT": "Select",
     "CURRENT_PLAN": "Your plan",
     "CONFIRM_DIALOG_TITLE": "Are you sure you want to update your plan ?",
-    "CONFIRM_DIALOG_MESSAGE": "Please confirm to subscribe to the <b>$t({{plan}})</b> plan",
+    "CONFIRM_DIALOG_MESSAGE": "Please confirm to subscribe to the <b>@:{plan})</b> plan",
     "PLAN_DISABLED_TOOLTIP": "Please provide the payment information to subscribe to this plan"
   },
   "OptionsChooser": {
@@ -766,8 +766,8 @@
     "SELECT": "Select",
     "SUBSCRIBED": "Subscribed",
     "CONFIRM_DIALOG_TITLE": "Are you sure you want to update your option ?",
-    "CONFIRM_DIALOG_SUBSCRIBE_MESSAGE": "Please confirm to subscribe to the <b>$t({{option}})</b> option",
-    "CONFIRM_DIALOG_UNSUBSCRIBE_MESSAGE": "Please confirm unsubscribtion to the <b>$t({{option}})</b> option",
+    "CONFIRM_DIALOG_SUBSCRIBE_MESSAGE": "Please confirm to subscribe to the <b>@:{option})</b> option",
+    "CONFIRM_DIALOG_UNSUBSCRIBE_MESSAGE": "Please confirm unsubscribtion to the <b>@:{option})</b> option",
     "OPTION_DISABLED_TOOLTIP": "Please provide the payment information to subscribe to this option"
   },
   "PlansActivity": {
@@ -776,16 +776,16 @@
     "SORT_PLANS": "Sort plans"
   },
   "PlanObjectivesEditor": {
-    "MANAGE": "Manage objectives - {{name}}",
-    "CREATE": "Add a new objective - {{name}}",
-    "EDIT": "Update objective {{name}}",
+    "MANAGE": "Manage objectives - {name}",
+    "CREATE": "Add a new objective - {name}",
+    "EDIT": "Update objective {name}",
     "SORT": "Sort objectives",
     "ADD_OBJECTIVE": "Add a new objective",
-    "EDIT_OBJECTIVE": "$t(EDIT)",
-    "REMOVE_OBJECTIVE": "$t(REMOVE)"
+    "EDIT_OBJECTIVE": "@:EDIT",
+    "REMOVE_OBJECTIVE": "@:REMOVE"
   },
   "PlanCard": {
-    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "EDIT_ACTION": "@:EDIT_LABEL",
     "REMOVE_ACTION": "Close",
     "DESCRIPTION_SECTION": "Description",
     "OBJECTIVES_SECTION": "Objectives",
@@ -795,7 +795,7 @@
     "NO_LOCATION_LABEL": "Undefined location",
     "COORDINATORS_SECTION": "Coordinators",
     "EVENTS_SECTION": "Events",
-    "EVENTS": "{{count}} event(s)",
+    "EVENTS": "{count} event(s)",
     "VIEW_PLANS": "View plans",
     "VIEW_CATALOG": "View map",
     "VIEW_ARCHIVED_EVENTS": "View logbook"
@@ -805,9 +805,9 @@
     "CREATE_TEMPLATE_LABEL": "Create a new plan template"
   },
   "PlanTemplateCard": {
-    "EDIT_ACTION": "$t(EDIT_LABEL)",
-    "COPY_ACTION": "$t(COPY_LABEL)",
-    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
+    "EDIT_ACTION": "@:EDIT_LABEL",
+    "COPY_ACTION": "@:COPY_LABEL",
+    "REMOVE_ACTION": "@:REMOVE_LABEL",
     "DESCRIPTION_SECTION": "Description",
     "NO_DESRIPTION_LABEL": "No description",
     "OBJECTIVES_SECTION": "Objectives",
@@ -837,11 +837,11 @@
   "PlanMenu": {
     "VIEW_DESCRIPTION": "View description",
     "VIEW_LOCATION": "View location",
-    "PERCENT_LABEL": "{{percent}}% done"
+    "PERCENT_LABEL": "{percent}% done"
   },
   "OrganisationMenu": {
-    "EVENTS_LABEL": "{{count}} event(s)",
-    "PLANS_LABEL": "{{count}} plan(s)",
+    "EVENTS_LABEL": "{count} event(s)",
+    "PLANS_LABEL": "{count} plan(s)",
     "VIEW_CATALOG": "View map",
     "VIEW_ARCHIVED_EVENTS": "View logbook",
     "VIEW_ARCHIVED_PLANS": "View plans archive",

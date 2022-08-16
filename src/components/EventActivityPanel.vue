@@ -94,10 +94,6 @@ export default {
     }
   },
   created () {
-    // Loads the required components
-    this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
-    this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
-    this.$options.components['k-layers-panel'] = this.$load('catalog/KLayersPanel')
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
   }

@@ -15,7 +15,7 @@
        -->
       <template v-slot:card-content>
         <!-- Plan section is only visible in event logbook -->
-        <k-card-section
+        <KCardSection
           v-if="planName"
           :title="$t('ArchivedEventCard.PLAN_SECTION')"
           :hideHeader="!isExpanded"
@@ -32,31 +32,31 @@
           </q-badge>
           <q-space />
           <k-panel v-if="!isExpanded" :content="planActions" :context="$props" />
-          <k-stamp v-if="!planName" :text="'ArchivedEventCard.UNDEFINED_PLAN_LABEL'" direction="horizontal" />
+          <KStamp v-if="!planName" :text="'ArchivedEventCard.UNDEFINED_PLAN_LABEL'" direction="horizontal" />
           </div>
-        </k-card-section>
+        </KCardSection>
         <!-- Objective section is only visible in plan logbook -->
-        <k-card-section
+        <KCardSection
           v-if="plan && !planName && (isExpanded || objective)"
           :title="$t('ArchivedEventCard.OBJECTIVE_SECTION')"
           :hideHeader="!isExpanded"
           :dense="dense"
         >
           <q-badge v-if="objective" :label="objective" color="grey-7" :multi-line="true"/>
-          <k-stamp v-else text="ArchivedEventCard.UNDEFINED_OBJECTIVE_LABEL" direction="horizontal" />
-        </k-card-section>
+          <KStamp v-else text="ArchivedEventCard.UNDEFINED_OBJECTIVE_LABEL" direction="horizontal" />
+        </KCardSection>
         <!-- Location section -->
-        <k-card-section
+        <KCardSection
           v-if="isExpanded"
           :title="$t('ArchivedEventCard.LOCATION_SECTION')"
           :context="$props"
           :dense="dense"
         >
-          <k-location-map v-if="item.location" v-model="item.location" :editable="false" style="min-height: 220px;" />
-          <k-stamp v-else text="ArchivedEventCard.UNDEFINED_LOCATION_LABEL" direction="horizontal" />
-        </k-card-section>
+          <KLocationMap v-if="item.location" v-model="item.location" :editable="false" style="min-height: 220px;" />
+          <KStamp v-else text="ArchivedEventCard.UNDEFINED_LOCATION_LABEL" direction="horizontal" />
+        </KCardSection>
         <!-- Participants section -->
-        <k-card-section v-if="isExpanded"
+        <KCardSection v-if="isExpanded"
           :title="$t('ArchivedEventCard.PARTICIPANTS_SECTION')"
           :context="$props"
           :dense="dense"
@@ -67,18 +67,18 @@
           <div v-else>
             {{ $t('ArchivedEventCard.NO_PARTICIPANTS_LABEL')}}
           </div>
-        </k-card-section>
+        </KCardSection>
         <!-- Coordinators section -->
-        <k-card-section v-if="isExpanded"
+        <KCardSection v-if="isExpanded"
           :key="item + '-coordinators'"
           :title="$t('ArchivedEventCard.COORDINATORS_SECTION')"
           :context="$props"
           :dense="dense"
         >
           <k-chips-pane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
-        </k-card-section>
+        </KCardSection>
         <!-- Timestamps section -->
-        <k-card-section
+        <KCardSection
           v-if="isExpanded"
           :dense="dense">
           <div v-if="createdAt || updatedAt || deletedAt">
@@ -93,7 +93,7 @@
               <small>{{ $t('ArchivedEventCard.UPDATED_AT_LABEL') }} {{ updatedAt.toLocaleString() }}</small>
             </cite>
           </div>
-        </k-card-section>
+        </KCardSection>
       </template>
     </k-card>
     <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
@@ -246,18 +246,6 @@ export default {
         if (result.length > 0) this.participantsCount = result[0].count
       }
     }
-  },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
-    this.$options.components['k-card'] = this.$load('collection/KCard')
-    this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
-    this.$options.components['k-panel'] = this.$load('frame/KPanel')
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
-    this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')
-    this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
-    this.$options.components['k-location-map'] = this.$load('KLocationMap')
   },
   created () {
     // Required alias for the event logs mixin

@@ -1,5 +1,5 @@
 <template>
-  <k-card
+  <KCard
     v-bind="$props"
     :actions="itemActions"
     :bind-actions="false">
@@ -8,7 +8,7 @@
      -->
     <template v-slot:card-content>
        <!-- Participants section -->
-      <k-card-section
+      <KCardSection
         :title="$t('EventTemplateCard.PARTICIPANTS_SECTION')"
         :actions="participantsActions"
         :context="$props">
@@ -20,9 +20,9 @@
         <div v-else>
           {{ $t('EventTemplateCard.NO_PARTICIPANTS_LABEL')}}
         </div>
-      </k-card-section>
+      </KCardSection>
       <!-- Coordinators section -->
-      <k-card-section
+      <KCardSection
         :title="$t('PlanTemplateCard.COORDINATORS_SECTION')"
         :actions="coordinatorsActions"
         :context="$props">
@@ -34,9 +34,9 @@
         <div v-else>
           {{ $t('PlanTemplateCard.NO_COORDINATORS_LABEL')}}
         </div>
-      </k-card-section>
+      </KCardSection>
       <!-- Expiry duration section -->
-      <k-card-section
+      <KCardSection
         :title="$t('EventTemplateCard.EXPIRY_DURATION_SECTION')"
         :actions="expiryDurationActions"
         :context="$props">
@@ -46,16 +46,16 @@
         <div v-else>
           {{ $t('EventTemplateCard.NO_EXPIRY_DURATION_LABEL')}}
         </div>
-      </k-card-section>
+      </KCardSection>
       <!-- Permission section -->
-      <k-card-section
+      <KCardSection
         :title="$t('EventTemplateCard.PERMISSION_SECTION')"
         :actions="permissionActions"
         :context="$props">
         <q-chip :label="permission" outline square dense color="grey-10" />
-      </k-card-section>
+      </KCardSection>
       <!-- Workflow section -->
-      <k-card-section
+      <KCardSection
         :title="$t('EventTemplateCard.WORKFLOW_SECTION')"
         :actions="workflowActions"
         :context="$props">
@@ -65,9 +65,9 @@
         <div v-else>
           {{ $t('EventTemplateCard.NO_WORKFLOW_LABEL')}}
         </div>
-      </k-card-section>
+      </KCardSection>
     </template>
-  </k-card>
+  </KCard>
 </template>
 
 <script>
@@ -132,13 +132,6 @@ export default {
         this.$api.getService('event-templates').patch(this.item._id, { workflow: null, hasWorkflow: false })
       })
     }
-  },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-card'] = this.$load('collection/KCard')
-    this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
-    this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')
-    this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
   }
 }
 </script>

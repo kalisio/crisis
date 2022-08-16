@@ -11,7 +11,7 @@
       @collapsed="isExpanded = false">
       <template v-slot:card-description>
         <!-- Description -->
-        <k-card-section
+        <KCardSection
           :title="$t('KCard.DESCRIPTION_SECTION')"
           :actions="descriptionActions"
           :hideHeader="!isExpanded"
@@ -27,14 +27,14 @@
           <div v-else>
             {{ $t('KCard.NO_DESCRIPTION_LABEL')}}
           </div>
-        </k-card-section>
+        </KCardSection>
       </template>
       <!--
         Card content
        -->
       <template v-slot:card-content>
         <!-- Plan section is only visible in event dashbord -->
-        <k-card-section
+        <KCardSection
           v-if="planName"
           :title="$t('EventCard.PLAN_SECTION')"
           :hideHeader="!isExpanded"
@@ -51,11 +51,11 @@
           </q-badge>
           <q-space />
           <k-panel v-if="!isExpanded" :content="planActions" :context="$props" />
-          <k-stamp v-if="!planName" :text="'EventCard.UNDEFINED_PLAN_LABEL'" direction="horizontal" />
+          <KStamp v-if="!planName" :text="'EventCard.UNDEFINED_PLAN_LABEL'" direction="horizontal" />
           </div>
-        </k-card-section>
+        </KCardSection>
         <!-- Objective section is only visible in plan dashbord -->
-        <k-card-section
+        <KCardSection
           v-if="plan && !planName && (isExpanded || objective)"
           :title="$t('EventCard.OBJECTIVE_SECTION')"
           :hideHeader="!isExpanded"
@@ -64,34 +64,34 @@
           :dense="dense"
         >
           <q-badge v-if="objective" :label="objective" color="grey-7" :multi-line="true" />
-          <k-stamp v-else :text="'EventCard.UNDEFINED_OBJECTIVE_LABEL'" direction="horizontal" />
-        </k-card-section>
+          <KStamp v-else :text="'EventCard.UNDEFINED_OBJECTIVE_LABEL'" direction="horizontal" />
+        </KCardSection>
         <!-- Interaction section -->
-        <k-card-section v-if="participantLabel || coordinatorLabel"
+        <KCardSection v-if="participantLabel || coordinatorLabel"
           :context="$props"
           :dense="dense"
         >
           <div v-if="participantLabel" v-html="participantLabel"></div>
           <div v-if="coordinatorLabel" v-html="coordinatorLabel"></div>
-        </k-card-section>
+        </KCardSection>
         <!-- Comment section -->
-        <k-card-section v-if="comment"
+        <KCardSection v-if="comment"
           :title="$t('EventCard.COMMENT_SECTION')"
           :dense="dense">
           <k-text-area class="light-paragraph" :text="comment" :length="100" />
-        </k-card-section>
+        </KCardSection>
         <!-- Location section -->
-        <k-card-section
+        <KCardSection
           v-if="isExpanded"
           :title="$t('EventCard.LOCATION_SECTION')"
           :actions="locationActions"
           :context="$props"
           :dense="dense">
-          <k-location-map v-if="item.location" v-model="item.location" :editable="false" style="min-height: 220px;" />
-          <k-stamp v-else :text="'PlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
-        </k-card-section>
+          <KLocationMap v-if="item.location" v-model="item.location" :editable="false" style="min-height: 220px;" />
+          <KStamp v-else :text="'PlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
+        </KCardSection>
         <!-- Participants section -->
-        <k-card-section
+        <KCardSection
           v-if="isExpanded"
           :title="$t('EventCard.PARTICIPANTS_SECTION')"
           :actions="participantsActions"
@@ -107,9 +107,9 @@
           <div v-else>
             {{ $t('EventCard.UNDEFINED_PARTICIPANTS_LABEL')}}
           </div>
-        </k-card-section>
+        </KCardSection>
         <!-- Coordinators section -->
-        <k-card-section v-if="isExpanded"
+        <KCardSection v-if="isExpanded"
           :title="$t('EventCard.COORDINATORS_SECTION')"
           :actions="coordinatorsActions"
           :context="$props"
@@ -119,9 +119,9 @@
             class="q-pl-sm"
             :chips="item.coordinators"
             :value-path="['profile.name', 'value', 'name']" />
-        </k-card-section>
+        </KCardSection>
         <!-- Timestamps section -->
-        <k-card-section v-if="isExpanded" :dense="dense">
+        <KCardSection v-if="isExpanded" :dense="dense">
           <div v-if="createdAt || updatedAt || expireAt">
             <cite v-if="createdAt">
               <small>{{ $t('EventCard.CREATED_AT_LABEL') }} {{ createdAt.toLocaleString() }}</small>
@@ -135,7 +135,7 @@
               <small>{{ $t('EventCard.EXPIRE_AT_LABEL') }} {{ expireAt.toLocaleString() }}</small>
             </cite>
           </div>
-        </k-card-section>
+        </KCardSection>
       </template>
     </k-card>
     <!--
@@ -187,6 +187,9 @@ import mixins from '../mixins'
 
 export default {
   name: 'event-card',
+  components: {
+    EventLogsList: kCoreUtils.loadComponent('EventLogsList')
+  },
   mixins: [
     kCoreMixins.baseItem,
     kCoreMixins.service,
@@ -678,21 +681,6 @@ export default {
       await this.logStep(this.$refs.form, this.participantStep, this.participantState)
       this.$refs.followUpModal.close()
     }
-  },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
-    this.$options.components['k-card'] = this.$load('collection/KCard')
-    this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
-    this.$options.components['k-panel'] = this.$load('frame/KPanel')
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
-    this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')
-    this.$options.components['k-form'] = this.$load('form/KForm')
-    this.$options.components['k-uploader'] = this.$load('input/KUploader')
-    this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
-    this.$options.components['event-logs-list'] = this.$load('EventLogsList')
-    this.$options.components['k-location-map'] = this.$load('KLocationMap')
   },
   created () {
     // Required alias for the event logs mixin

@@ -1,24 +1,25 @@
 <template>
-  <k-page :padding="false">
+  <KPage :padding="false">
     <template v-slot:page-content>
       <!-- Map -->
       <div ref="map" :style="viewStyle">
         <q-resize-observer @resize="onMapResized" />
       </div>
 
-      <k-modal ref="uploaderModal">
-        <k-uploader ref="uploader"
+      <KModal ref="uploaderModal">
+        <KUploader ref="uploader"
           :resource="objectId"
           :base-query="uploaderQuery()"
           :options="uploaderOptions()"
-          @uploader-ready="initializeMedias" />
-      </k-modal>
+          @uploader-ready="initializeMedias" 
+        />
+      </KModal>
 
-      <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
+      <KMediaBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
 
       <router-view service="events"></router-view>
     </template>
-  </k-page>
+  </KPage>
 </template>
 
 <script>
@@ -304,12 +305,7 @@ export default {
   },
   created () {
     // Load the required components
-    this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-color-legend'] = this.$load('KColorLegend')
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-uploader'] = this.$load('input/KUploader')
-    this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
-    this.registerStyle('tooltip', this.getParticipantTooltip)
+       this.registerStyle('tooltip', this.getParticipantTooltip)
     this.registerStyle('popup', this.getParticipantPopup)
     this.registerStyle('markerStyle', this.getParticipantMarker)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)

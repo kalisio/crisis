@@ -1,5 +1,5 @@
 <template>
-  <k-page :padding="false" @content-resized="onPageContentResized">
+  <KPage :padding="false" @content-resized="onPageContentResized">
     <template v-slot:page-content>
       <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
         <div class="row">
@@ -16,7 +16,7 @@
         Events history: switch append-items on to activate infinite scroll
       -->
       <div v-if="showHistory && height" class="row justify-center q-pl-lg q-pr-none">
-        <k-history
+        <KHistory
           style="padding-top: 80px;"
           id="history"
           service="archived-events"
@@ -30,10 +30,10 @@
           :height="height - 124">
           <template v-slot:empty-history>
             <div class="absolute-center">
-              <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
+              <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
             </div>
           </template>
-        </k-history>
+        </KHistory>
       </div>
       <!--
         Events map
@@ -48,14 +48,14 @@
       -->
       <div v-show="showChart" class="row justify-center text-center q-ma-none q-pa-none" >
         <q-page-sticky position="top" :offset="[0, 60]">
-        <k-stats-chart ref="chart" :style="chartStyle" />
+        <KStatisticsChart ref="chart" :style="chartStyle" />
         </q-page-sticky>
         <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
           icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
         <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
           icon="las la-chevron-right" class="absolute-right" @click="onNextChart" />
       </div>
-      <k-modal
+      <KModal
         id="chart-settings-modal"
         :title="$t('ArchivedEventsActivity.CHART_SETTINGS_MODAL_TITLE')"
         :buttons="getChartSettingsModalButtons()"
@@ -69,13 +69,13 @@
           <q-select id="chart-render" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')"
             :options="renderOptions" @input="refreshChart"/>
         </div>
-      </k-modal>
+      </KModal>
       <!--
         Router view to enable routing to modals
       -->
       <router-view service="archived-events"></router-view>
     </template>
-  </k-page>
+  </KPage>
 </template>
 
 <script>
@@ -583,13 +583,6 @@ export default {
         { id: 'close-button', label: 'CLOSE', renderer: 'form-button', handler: () => this.$refs.chartSettingsModal.close() }
       ]
     }
-  },
-  beforeCreate () {
-    this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-history'] = this.$load('collection/KHistory')
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
-    this.$options.components['k-stats-chart'] = this.$load('chart/KStatsChart')
   },
   async created () {
     // Resgister map styles

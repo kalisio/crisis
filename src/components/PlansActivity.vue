@@ -1,10 +1,10 @@
 <template>
-  <k-page padding>
+  <KPage padding>
     <template v-slot:page-content>
       <!--
         Templates collection
       -->
-      <k-grid
+      <KGrid
         ref="plansGrid"
         service="plans"
         :renderer="renderer"
@@ -14,16 +14,16 @@
         :list-strategy="'smart'">
         <template v-slot:empty-section>
           <div class="absolute-center">
-            <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
+            <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
           </div>
         </template>
-      </k-grid>
+      </KGrid>
       <!--
         Router view to enable routing to modals
       -->
       <router-view service="plans"></router-view>
     </template>
-  </k-page>
+  </KPage>
 </template>
 
 <script>
@@ -121,12 +121,6 @@ export default {
       }
       if (this.mode) this.setTopPaneMode(this.mode)
     }
-  },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-grid'] = this.$load('collection/KGrid')
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
   },
   async created () {
     this.$events.on('user-changed', this.configureActivity)

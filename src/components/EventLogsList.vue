@@ -12,7 +12,7 @@
     <!--
       Event logs list
     -->
-    <k-list
+    <KList
       ref="list"
       :service="getServiceName()"
       :renderer="renderer"
@@ -23,18 +23,18 @@
       @toggle-changed="onItemToggled"
       @collection-refreshed="onCollectionRefreshed">
         <template v-slot:empty-section>
-          <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KList.EMPTY_LIST')" />
+          <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KList.EMPTY_LIST')" />
         </template>
-      </k-list>
+      </KList>
     <!--
       Follow up modal
     -->
-    <k-modal ref="followUpModal"
+    <KModal ref="followUpModal"
       :title="followUpTitle"
       :buttons="getFollowUpButtons()"
     >
-      <k-form ref="form" :schema="schema"/>
-    </k-modal>
+      <KForm ref="form" :schema="schema" />
+    </KModal>
   </div>
 </template>
 
@@ -259,7 +259,7 @@ export default {
   created () {
     // Load the required components
     this.$options.components['k-list'] = this.$load('collection/KList')
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
+    this.$options.components['KStamp'] = this.$load('frame/KStamp')
     this.$options.components['k-modal'] = this.$load('frame/KModal')
     this.$options.components['k-form'] = this.$load('form/KForm')
     this.$options.components['k-action'] = this.$load('frame/KAction')

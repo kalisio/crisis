@@ -50,7 +50,7 @@
       </q-list>
     </q-expansion-item>
     <q-expansion-item ref="event" icon="las la-bell" :label="$t('AlertForm.EVENT')" group="group">
-      <k-item-field ref="eventTemplate" :properties="eventTemplateFieldProperties" />
+      <KItem-field ref="eventTemplate" :properties="eventTemplateFieldProperties" />
       <k-toggle-field ref="closeEvent" :properties="closeEventFieldProperties" />
     </q-expansion-item>
     <q-list v-show="hasError" dense class="row items-center justify-around q-pa-md">
@@ -357,7 +357,7 @@ export default {
   },
   async created () {
     // Load the required components
-    this.$options.components['k-item-field'] = this.$load('form/KItemField')
+    this.$options.components['KItem-field'] = this.$load('form/KItemField')
     this.$options.components['k-toggle-field'] = this.$load('form/KToggleField')
 
     await this.build()

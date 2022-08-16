@@ -1,16 +1,16 @@
 <template>
-  <k-modal
+  <KModal
     :title="editorTitle"
     :buttons="getButtons()"
     v-model="isModalOpened"
   >
-    <k-form 
+    <KForm
       ref="planForm"
       :contextId="contextId" 
       :objectId="objectId" 
       :schema="schema" 
     />
-  </k-modal>
+  </KModal>
 </template>
 
 <script>

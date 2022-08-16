@@ -1,14 +1,13 @@
 <template>
-  <k-modal
+  <KModal
     :title="$t('CustomerEditor.TITLE')"
     v-model="isModalOpened"
-    @opened="$emit('opened')"
-    @closed="$emit('closed')"
+    :routerMode="false"
     :buttons="getButtons()"
   >
     <div class="column">
       <div>
-        <k-form ref="form" :schema="getSchema()" @form-ready="onFormReady"/>
+        <KForm ref="form" :schema="getSchema()" @form-ready="onFormReady"/>
       </div>
       <div>
         <div>&nbsp;</div>
@@ -41,7 +40,7 @@
         </div>
       </div>
     </div>
-  </k-modal>
+  </KModal>
 </template>
 
 <script>
@@ -50,7 +49,6 @@ import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
-  name: 'customer-editor',
   components: {
     // TODO Card
   },

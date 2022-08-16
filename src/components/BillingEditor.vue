@@ -1,5 +1,5 @@
 <template>
-  <k-modal
+  <KModal
     :title="title"
     :buttons="getButtons()"
     :maximized="true"
@@ -9,20 +9,22 @@
       <!--
         Customer information section
       -->
-      <k-block
+      <KBlock
         id="customer-block"
         :color="customerBlockColor"
         :title="$t('BillingEditor.CUSTOMER_BLOCK_TITLE')"
         :text="customerBlockText"
         :action="$t('BillingEditor.CUSTOMER_BLOCK_ACTION')"
         :disabled="!isUserVerified"
-        @action-triggered="onUpdateCustomer" />
-      <customer-editor
+        @action-triggered="onUpdateCustomer"
+      />
+      <CustomerEditor
         id="customer-editor"
         ref="customerEditor"
         @customer-updated="onCustomerUpdated"
         :billingObjectId="objectId"
-        billingObjectService="organisations" />
+        billingObjectService="organisations" 
+      />
       <q-card>
         <q-card-section class="text-grey bg-grey-2">
           {{$t('BillingEditor.OPTIONS_BLOCK_TITLE')}}
@@ -32,38 +34,46 @@
         -->
         <q-expansion-item id="basic-plan" header-class="text-primary" group="billing"
         :label="$t('BillingEditor.PLAN_TITLE')" default-opened>
-          <billing-subscription-chooser
+          <BillingSubscriptionChooser
             :billingObjectId="objectId"
             billingObjectService="organisations"
             :quotas="quotas"
             :plans="plans"
             v-model="currentPlan"
-            :hasCustomer="customer !== undefined" />
+            :hasCustomer="customer !== undefined" 
+          />
         </q-expansion-item>
         <!--
           Options information secion
         -->
         <q-expansion-item id="optional-plans" header-class="text-primary" group="billing"
           :label="$t('BillingEditor.OPTIONS_TITLE')">
-          <billing-options-chooser
-          :billingObjectId="objectId"
-          billingObjectService="organisations"
-          :quotas="quotas"
-          :options="options"
-          v-model="currentOptions"
-          :hasCustomer="customer !== undefined" />
+          <BillingOptionsChooser
+            :billingObjectId="objectId"
+            billingObjectService="organisations"
+            :quotas="quotas"
+            :options="options"
+            v-model="currentOptions"
+            :hasCustomer="customer !== undefined" 
+          />
         </q-expansion-item>
       </q-card>
     </div>
-  </k-modal>
+  </KModal>
 </template>
 
 <script>
 import _ from 'lodash'
-import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 
 export default {
   name: 'billing-editor',
+  components: {
+    KBlock: kdkCoreUtils.loadComponent('frame/KBlock'),
+    CustomerEditor: kdkCoreUtils.loadComponent('CustomerEditor'),
+    BillingSubscriptionChooser: kdkCoreUtils.loadComponent('BillingSubscriptionChooser'),
+    BillingOptionsChooser: kdkCoreUtils.loadComponent('BillingOptionsChooser')
+  },
   mixins: [
     kCoreMixins.baseModal,
     kCoreMixins.objectProxy
@@ -139,14 +149,6 @@ export default {
     onCustomerUpdated (customer) {
       this.customer = customer
     }
-  },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-block'] = this.$load('frame/KBlock')
-    this.$options.components['customer-editor'] = this.$load('CustomerEditor')
-    this.$options.components['billing-subscription-chooser'] = this.$load('BillingSubscriptionChooser')
-    this.$options.components['billing-options-chooser'] = this.$load('BillingOptionsChooser')
   },
   async created () {
     // Load available plans and Whenever the cabilities are updated, update plans as well

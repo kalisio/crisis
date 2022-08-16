@@ -14,11 +14,12 @@
     <template v-slot:default>
       <q-card v-if="plan" class="bg-white" :style="computedStyle">
         <div class="row full-width justify-center items-center q-pa-md q-gutter-x-sm text-subtitle1 bg-grey-4">
-          <k-avatar
+          <KAvatar
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'"
             :object="plan"
             :contextId="organisation._id"
-            size="sm" />
+            size="sm" 
+          />
           <div>
             {{ plan.name }}
           </div>
@@ -26,12 +27,12 @@
         <div class="q-pa-xs">
           <k-text-area class="light-paragraph q-pa-sm" :text="plan.description" />
           <!-- Objectives section -->
-          <k-card-section>
+          <KCardSection>
             <template v-for="(objective, index) in plan.objectives" :key="objective.id">
               <div class="row full-width items-center justify-between no-wrap">
                 <q-toggle class="col-8" v-model="objectiveFilters[index]" :label="objective.name" />
                 <div class="row items-center q-gutter-x-sm no-wrap q-pr-sm">
-                  <k-panel id="objective-actions" :content="getObjectiveActions(objective)" :dense="true" />
+                  <KPanel id="objective-actions" :content="getObjectiveActions(objective)" :dense="true" />
                   <q-knob
                     readonly
                     show-value
@@ -48,7 +49,7 @@
                 </div>
               </div>
             </template>
-          </k-card-section>
+          </KCardSection>
         </div>
       </q-card>
     </template>
@@ -169,14 +170,6 @@ export default {
         }
       }
     }
-  },
-  async beforeCreate () {
-    // Loads the required components
-    this.$options.components['k-action'] = this.$load('frame/KAction')
-    this.$options.components['k-panel'] = this.$load('frame/KPanel')
-    this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
-    this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
-    this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
   }
 }
 </script>

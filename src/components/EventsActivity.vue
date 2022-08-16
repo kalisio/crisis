@@ -1,10 +1,10 @@
 <template>
-  <k-page padding @content-resized="onPageContentResized">
+  <KPage padding @content-resized="onPageContentResized">
     <template v-slot:page-content>
       <!--
         Events collection
       -->
-      <k-grid
+      <KGrid
         v-if="!planId"
         ref="eventsGrid"
         service="events"
@@ -15,21 +15,22 @@
         :list-strategy="'smart'">
         <template v-slot:empty-section>
           <div class="absolute-center">
-            <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
+            <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
           </div>
         </template>
-      </k-grid>
-      <k-board
+      </KGrid>
+      <KBoard
         v-else-if="height"
         ref="eventsBoard"
         :columns="boardColumns"
-        :height="height" />
+        :height="height" 
+      />
       <!--
         Router view to enable routing to modals
       -->
       <router-view service="events"></router-view>
     </template>
-  </k-page>
+  </KPage>
 </template>
 
 <script>
@@ -197,13 +198,6 @@ export default {
       // Force a refresh
       column.refreshCollection()
     }
-  },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-grid'] = this.$load('collection/KGrid')
-    this.$options.components['k-board'] = this.$load('collection/KBoard')
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
   },
   created () {
     this.$events.on('user-changed', this.refreshFab)

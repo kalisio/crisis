@@ -226,13 +226,6 @@ export default {
       await this.updatePlanObjectives(objectives)
     }
   },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-panel'] = this.$load('frame/KPanel')
-    this.$options.components['k-list'] = this.$load('collection/KList')
-    this.$options.components['k-form'] = this.$load('form/KForm')
-  },
   async created () {
     await this.loadObject()
     // Extract objectives as we will map it using an in-memory service
