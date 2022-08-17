@@ -214,7 +214,7 @@ export default {
     header () {
       let components = []
       if (this.isExpanded) {
-        components.push({ component: 'QSpace ' })
+        components.push({ component: 'QSpace' })
         components = components.concat(_.filter(this.itemActions, { scope: 'header' }))
       }
       return components

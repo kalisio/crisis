@@ -14,18 +14,15 @@
 </template>
 
 <script>
-import { mixins } from '@kalisio/kdk/core.client'
-
-const editorMixin = mixins.baseEditor(['planForm'])
+import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
-  name: 'plan-editor',
   mixins: [
-    mixins.baseModal,
-    mixins.service,
-    mixins.objectProxy,
-    mixins.schemaProxy,
-    editorMixin
+    kdkCoreMixins.baseModal,
+    kdkCoreMixins.service,
+    kdkCoreMixins.objectProxy,
+    kdkCoreMixins.schemaProxy,
+    kdkCoreMixins.baseEditor
   ],
   props: {
     templateId: {

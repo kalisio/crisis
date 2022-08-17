@@ -1,44 +1,39 @@
 <template>
-  <k-modal
+  <KModal
     :title="editorTitle"
     :buttons="getButtons()"
     v-model="isModalOpened">
     <div class="column xs-gutter">
-        <k-form
+        <KForm
           ref="eventForm"
           :class="{ 'light-dimmed': applyInProgress }"
           :contextId="contextId"
           :objectId="objectId"
           :schema="schema"
-          @field-changed="onFieldChanged" />
+          @field-changed="onFieldChanged" 
+        />
         <div class="row full-width justify-end">
           <q-checkbox :label="$t('EventEditor.NOTIFY')" v-model="notify" />
         </div>
     </div>
-  </k-modal>
+  </KModal>
 </template>
 
 <script>
 import _ from 'lodash'
 import moment from 'moment'
 import centroid from '@turf/centroid'
-import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
-import { QCheckbox } from 'quasar'
-
-const editorMixin = kCoreMixins.baseEditor(['eventForm'])
 
 export default {
   name: 'event-editor',
-  components: {
-    QCheckbox
-  },
   mixins: [
-    kCoreMixins.baseModal,
-    kCoreMixins.service,
-    kCoreMixins.objectProxy,
-    kCoreMixins.schemaProxy,
-    editorMixin,
+    kdkCoreMixins.baseModal,
+    kdkCoreMixins.service,
+    kdkCoreMixins.objectProxy,
+    kdkCoreMixins.schemaProxy,
+    kdkCoreMixins.baseEditor,
     mixins.plans
   ],
   props: {
@@ -77,7 +72,7 @@ export default {
   },
   methods: {
     getButtons () {
-      if (this.getMode() === 'create') {
+      if (this.getEditorMode() === 'create') {
         return [
           { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
           { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
@@ -146,7 +141,7 @@ export default {
         this.updateSchema()
       } else {
         // Otherwise proceed as usual to load the event object
-        return kCoreMixins.objectProxy.methods.loadObject.call(this)
+        return kdkCoreMixins.objectProxy.methods.loadObject.call(this)
       }
     },
     updateSchema () {
@@ -177,7 +172,7 @@ export default {
     async loadSchema () {
       // Call super
       // Start from schema and clone it because it will be shared by all editors
-      const schema = _.cloneDeep(await kCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName()))
+      const schema = _.cloneDeep(await kdkCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName()))
       this.schema = schema
       this.updateSchema()
       return this.schema
@@ -189,11 +184,8 @@ export default {
       // const notification = _.get(object, 'notification', true)
       // if (notification) {
       if (this.notify) {
-        if (this.getMode() === 'create') {
-          query.notification = this.$t('EventNotifications.CREATE')
-        } else if (this.getMode() === 'update') {
-          query.notification = this.$t('EventNotifications.UPDATE')
-        }
+        if (this.getEditorMode() === 'create') query.notification = this.$t('EventNotifications.CREATE')
+        else query.notification = this.$t('EventNotifications.UPDATE')
       }
       // _.unset(object, 'notification')
       return query
@@ -215,7 +207,7 @@ export default {
     if (!this.hasPlan()) this.refresh()
     else this.loadPlan()
     // Setup notify option
-    if (this.getMode() === 'create') this.notify = true
+    if (this.getEditorMode() === 'create') this.notify = true
     else this.notify = false
   }
 }

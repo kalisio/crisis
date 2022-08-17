@@ -33,7 +33,7 @@
                 :label="$t('OrganisationMenu.EVENTS_LABEL', { count: eventsCount })"
                 @triggered="routeTo('events-activity')" 
               />
-              <QSpace />
+              <q-space />
               <KAction
                 v-if="canAccessCatalog"
                 id= "organisation-catalog"
@@ -59,7 +59,7 @@
                 :label="$t('OrganisationMenu.PLANS_LABEL', { count: plansCount })"
                 @triggered="routeTo('plans-activity')" 
               />
-              <QSpace />
+              <q-space />
               <KAction
                 v-if="canAccessArchivedPlans"
                 id= "organisation-archived-plans"

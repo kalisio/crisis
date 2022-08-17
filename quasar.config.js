@@ -164,6 +164,7 @@ module.exports = configure(function (ctx) {
         'QCard',
         'QCardSection',
         'QCardActions',
+        'QCheckbox',
         'QChip',
         'QDate',
         'QDialog',

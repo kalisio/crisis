@@ -1,13 +1,13 @@
 <template>
-  <k-modal
+  <KModal
     :title="title"
     v-model="isModalOpened"
     @opened="$emit('opened')"
     @closed="$emit('closed')"
     :buttons="getButtons()"
   >
-    <k-form ref="form" :schema="schema"/>
-  </k-modal>
+    <KForm ref="form" :schema="schema"/>
+  </KModal>
 </template>
 
 <script>
@@ -76,9 +76,6 @@ export default {
     }
   },
   async created () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-form'] = this.$load('form/KForm')
     // Retrieve source log/event
     this.state = await this.getService().get(this.logId)
     this.event = await this.$api.getService('events', this.contextId).get(this.objectId)

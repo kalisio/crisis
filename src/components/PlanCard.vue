@@ -34,7 +34,7 @@
             :label="$t('PlanCard.EVENTS', { count: eventsCount })"
             :route="{ name: 'events-activity', params: { contextId }, query: { plan: item._id } }"
           />
-          <QSpace />
+          <q-space />
           <KAction
             v-if="canAccessCatalog"
             id= "plan-catalog"

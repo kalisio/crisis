@@ -22,16 +22,16 @@
 
 <script>
 import _ from 'lodash'
-import { mixins } from '@kalisio/kdk/core.client'
+import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
   name: 'event-template-editor',
   mixins: [
-    mixins.baseModal,
-    mixins.service,
-    mixins.objectProxy,
-    mixins.schemaProxy,
-    mixins.baseEditor(['form']),
+    kdkCoreMixins.baseModal,
+    kdkCoreMixins.service,
+    kdkCoreMixins.objectProxy,
+    kdkCoreMixins.schemaProxy,
+    kdkCoreMixins.baseEditor
   ],
   props: {
     templateId: {

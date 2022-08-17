@@ -257,12 +257,6 @@ export default {
     }
   },
   created () {
-    // Load the required components
-    this.$options.components['k-list'] = this.$load('collection/KList')
-    this.$options.components['KStamp'] = this.$load('frame/KStamp')
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-form'] = this.$load('form/KForm')
-    this.$options.components['k-action'] = this.$load('frame/KAction')
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
   }

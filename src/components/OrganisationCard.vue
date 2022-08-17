@@ -218,7 +218,6 @@ export default {
       }
     },
     async onExpanded () {
-      this.isExpanded = true
       // Retrieve the quotas
       await this.loadBilling()
       const subscription = this.billing.subscription.plan
@@ -235,6 +234,7 @@ export default {
         const service = this.structure[i].name
         this.counters[service] = await this.countItems(service)
       }
+      this.isExpanded = true
     }
   },
   async created () {
