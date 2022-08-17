@@ -14,9 +14,7 @@
         :color="customerBlockColor"
         :title="$t('BillingEditor.CUSTOMER_BLOCK_TITLE')"
         :text="customerBlockText"
-        :action="$t('BillingEditor.CUSTOMER_BLOCK_ACTION')"
-        :disabled="!isUserVerified"
-        @action-triggered="onUpdateCustomer"
+        :action="updateCustomerAction"
       />
       <CustomerEditor
         id="customer-editor"
@@ -27,7 +25,7 @@
       />
       <q-card>
         <q-card-section class="text-grey bg-grey-2">
-          {{$t('BillingEditor.OPTIONS_BLOCK_TITLE')}}
+          {{ $t('BillingEditor.OPTIONS_BLOCK_TITLE') }}
         </q-card-section>
         <!--
           Plan subscription section
@@ -65,6 +63,9 @@
 <script>
 import _ from 'lodash'
 import { mixins as kCoreMixins, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
+import { colors } from 'quasar'
+
+const { getPaletteColor } = colors
 
 export default {
   name: 'billing-editor',
@@ -95,10 +96,19 @@ export default {
     }
   },
   computed: {
+    updateCustomerAction () {
+      return {
+        id: 'update-customer',
+        label: 'BillingEditor.CUSTOMER_BLOCK_ACTION',
+        renderer: 'form-button',
+        handler: this.onUpdateCustomer,
+        disabled: !this.isUserVerified
+      }
+    },
     customerBlockColor () {
-      if (!this.isUserVerified) return 'red'
-      if (this.customer) return 'grey'
-      return 'orange'
+      if (!this.isUserVerified) return getPaletteColor('negative')
+      if (this.customer) return getPaletteColor('positive')
+      return getPaletteColor('warning')
     },
     customerBlockText () {
       if (!this.isUserVerified) return this.$t('BillingEditor.CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER')
@@ -108,6 +118,15 @@ export default {
     }
   },
   methods: {
+    getUpdateCustomerAction () {
+      return {
+        id: 'update-customer',
+        label: 'BillingEditor.CUSTOMER_BLOCK_ACTION',
+        renderer: 'form-button',
+        handler: this.onUpdateCustomer,
+        disabled: this.isUserVerified
+      }
+    },
     getButtons () {
       return [{
         id: 'close-button', label: 'CLOSE', renderer: 'form-button', handler: () => this.closeModal()

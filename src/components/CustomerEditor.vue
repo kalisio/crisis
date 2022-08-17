@@ -1,8 +1,6 @@
 <template>
   <KModal
     :title="$t('CustomerEditor.TITLE')"
-    v-model="isModalOpened"
-    :routerMode="false"
     :buttons="getButtons()"
   >
     <div class="column">
