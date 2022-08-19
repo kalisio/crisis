@@ -1,17 +1,16 @@
 <template>
-  <k-modal
+  <KModal
     :title="title"
     :buttons="buttons"
     v-model="isModalOpened"
-    @opened="$emit('opened')"
-    @closed="$emit('closed')"
   >
     <div class="column xs-gutter">
       <q-card-section>
-        <k-panel id="plan-objectives-toolbar" :content="getToolbar()" :mode="mode" class="no-wrap" />
+        <KPanel id="plan-objectives-toolbar" :content="toolbar" :mode="mode" class="no-wrap" />
       </q-card-section>
       <q-card-section id="plan-objectives-list" v-show="mode === 'list'">
-        <k-list ref="list"
+        <KList 
+          :ref="onListReferenceCreated"
           style="min-height: 50px; min-width: 200px"
           service="plan-objectives"
           :renderer="objectiveRenderer"
@@ -22,31 +21,37 @@
       </q-card-section>
       <q-card-section id="plan-objective-add" v-if="mode === 'add'">
         <div class="colum q-gutter-y-md">
-          <k-form ref="addForm" :schema="getObjectiveSchema()" :class="{ 'light-dimmed': savingObjective }" style="min-width: 300px" />
-          <q-spinner-cube color="primary" class="fixed-center" v-if="savingObjective" size="4em"/>
+          <KForm 
+            :ref="onAddFormReferenceCreated" 
+            :schema="objectiveSchema" 
+            style="min-width: 300px" 
+          />
         </div>
       </q-card-section>
       <q-card-section id="plan-objective-edit" v-if="mode === 'edit'">
         <div class="colum q-gutter-y-md">
-          <k-form ref="editForm" :schema="getObjectiveSchema()" :class="{ 'light-dimmed': savingObjective }" style="min-width: 300px" />
-          <q-spinner-cube color="primary" class="fixed-center" v-if="savingObjective" size="4em"/>
+          <KForm 
+            :ref="onEditFormReferenceCreated"
+            :schema="objectiveSchema" 
+            style="min-width: 300px" 
+          />
         </div>
       </q-card-section>
     </div>
-  </k-modal>
+  </KModal>
 </template>
 
 <script>
 import _ from 'lodash'
 import { uid } from 'quasar'
-import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
   name: 'plan-editor',
   mixins: [
-    kCoreMixins.baseModal,
-    kCoreMixins.service,
-    kCoreMixins.objectProxy
+    kdkCoreMixins.baseModal,
+    kdkCoreMixins.service,
+    kdkCoreMixins.objectProxy
   ],
   props: {
     objectId: {
@@ -68,12 +73,12 @@ export default {
       } else if (this.mode === 'add') {
         return [
           { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => { this.mode = 'list' } },
-          { id: 'add-plan-objective-button', label: 'CREATE', renderer: 'form-button', handler: () => this.onCreatePlanObjective() }
+          { id: 'add-plan-objective-button', label: 'CREATE', renderer: 'form-button', disabled: !addForm, handler: () => this.onCreatePlanObjective() }
         ]
       } else {
         return [
           { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => { this.mode = 'list' } },
-          { id: 'add-plan-objective-button', label: 'UPDATE', renderer: 'form-button', handler: () => this.onEditPlanObjective() }
+          { id: 'add-plan-objective-button', label: 'UPDATE', renderer: 'form-button', disabled: !editForm, handler: () => this.onEditPlanObjective() }
         ]
       }
     }
@@ -97,12 +102,8 @@ export default {
           tooltip: 'PlanObjectivesEditor.REMOVE_OBJECTIVE',
           handler: (context) => this.removePlanObjective(context.item)
         }]
-      }
-    }
-  },
-  methods: {
-    getToolbar () {
-      return {
+      },
+      toolbar: {
         list: [
           { component: 'QSpace' },
           {
@@ -115,10 +116,10 @@ export default {
         ],
         edit: [],
         add: []
-      }
-    },
-    getObjectiveSchema () {
-      return {
+      },
+      addForm: null,
+      editForm: null,
+      objectiveSchema: {
         $schema: 'http://json-schema.org/draft-06/schema#',
         $id: 'http://www.kalisio.xyz/schemas/plan-objective.create.json#',
         title: 'schemas.PLAN_OBJECTIVE_CREATE_TITLE',
@@ -152,7 +153,9 @@ export default {
         },
         required: ['name', 'description']
       }
-    },
+    }
+  },
+  methods: {
     updatePlanObjectivesServiceStore () {
       let objectivesStore = _.get(this.object, 'objectives', [])
       // Jump from array to map for in memory service
@@ -162,7 +165,7 @@ export default {
       service.store = Object.assign({}, objectivesStore)
     },
     async updatePlanObjectives (objectives) {
-      _.set(this.object, 'objectives', objectives)
+      /*_.set(this.object, 'objectives', objectives)
       this.updatePlanObjectivesServiceStore()
       this.savingObjective = true
       try {
@@ -175,10 +178,11 @@ export default {
       // After create or edit jump to the list mode
       if (this.mode !== 'list') this.mode = 'list'
       // Force the list to be refreshed
-      this.$refs.list.refreshCollection()
+      if (this.list) this.list.refreshCollection()*/
     },
     async onCreatePlanObjective () {
-      const result = this.$refs.addForm.validate()
+      if (!this.addForm) throw new Error('Cannot create plan objectives with a non-ready form')
+      const result = this.addForm.validate()
       if (result.isValid) {
         const objective = result.values
         // We generate a UID so that we can identify each objective uniquely,
@@ -195,7 +199,8 @@ export default {
       }
     },
     async onEditPlanObjective () {
-      const result = this.$refs.editForm.validate()
+      if (!this.editForm) throw new Error('Cannot edit plan objectives with a non-ready form')
+      const result = this.editForm.validate()
       if (result.isValid) {
         // Keep track of ID as it is lost in form
         const objective = Object.assign({ id: this.editedObjective.id }, result.values)
@@ -214,16 +219,29 @@ export default {
     async editPlanObjective (objective) {
       this.mode = 'edit'
       this.editedObjective = objective
-      this.setRefs(['editForm'])
-      await this.loadRefs()
-      await this.$refs.editForm.build()
-      this.$refs.editForm.fill(objective)
+      await this.editForm.build()
+      this.editForm.fill(objective)
     },
     async removePlanObjective (objective) {
       // Update objectives in-memory and in DB
       const objectives = _.get(this.object, 'objectives', [])
       _.remove(objectives, item => item.id === objective.id)
       await this.updatePlanObjectives(objectives)
+    },
+    onListReferenceCreated (reference) {
+      if (reference) {
+        this.list = reference
+      }
+    },
+    onAddFormReferenceCreated (reference) {
+      if (reference) {
+        this.addForm = reference
+      }
+    },
+    onEditFormReferenceCreated (reference) {
+      if (reference) {
+        this.editForm = reference
+      }
     }
   },
   async created () {

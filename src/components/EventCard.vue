@@ -634,7 +634,7 @@ export default {
           this.coordinatorLabel = this.$t('EventCard.NO_PARTICPANTS_AWAITING_LABEL')
         }
         if (logs.data.length < logs.total) {
-          this.$events.$emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
+          this.$events.emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
         }
       } catch (_) {
       }

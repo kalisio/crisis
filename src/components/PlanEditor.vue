@@ -5,10 +5,11 @@
     v-model="isModalOpened"
   >
     <KForm
-      ref="planForm"
+      :ref="onFormReferenceCreated"
       :contextId="contextId" 
       :objectId="objectId" 
-      :schema="schema" 
+      :schema="schema"
+      @form-ready="onFormReady"
     />
   </KModal>
 </template>
@@ -50,7 +51,7 @@ export default {
         delete this.object._id
       } else {
         // Otherwise proceed as usual to load the event object
-        return mixins.objectProxy.methods.loadObject.call(this)
+        return kdkCoreMixins.objectProxy.methods.loadObject.call(this)
       }
     }
   },

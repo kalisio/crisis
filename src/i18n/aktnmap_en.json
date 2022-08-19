@@ -13,7 +13,7 @@
     "UNSUBSCRIBED_OPTION": "Sorry, it seems you did not subscribe to this option. Please update your subscription before coming back here."
   },
   "schemas": {
-    "ORGANISATIONS_BILLING_PLAN_NAME": "{ object.name }'s billing plan",
+    "ORGANISATIONS_BILLING_PLAN_NAME": "{object.name}'s billing plan",
     "ORGANISATIONS_PLAN_FIELD_LABEL": "Select the billing plan of this organisation",
     "ORGANISATIONS_CUSTOMER_FIELD_LABEL": "Select a payment method",
     "ORGANISATIONS_EXTRA_INFOS_FIELD_LABEL": "Enter any extra information to appear on your receipts",

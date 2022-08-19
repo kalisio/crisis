@@ -6,7 +6,7 @@
           <q-card :class="'q-ma-sm text-white bg-' + properties.color">
             <q-card-section class="text-center">
               <div class="text-h5">{{$t('plans.' + plan + '_LABEL')}}</div>
-              <br>
+              <br/>
               <q-chip square outline text-color="white" class="text-subtitle1 ellipsis">{{$t('plans.' + plan + '_PRICE')}}</q-chip>
             </q-card-section>
             <q-separator inset />

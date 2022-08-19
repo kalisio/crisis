@@ -2,27 +2,29 @@
   <KPage :padding="false">
     <template v-slot:page-content>
       <!-- Map -->
-      <div ref="map" :style="viewStyle">
+      <div id="map" :ref="configureMap" :style="viewStyle">
         <q-resize-observer @resize="onMapResized" />
       </div>
 
-      <k-modal ref="templateModal"
+      <KModal ref="templateModal"
         :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
         :buttons="getTemplateModalButtons()"
-        :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }">
+        :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }"
+      >
         <k-list ref="templates" service="event-templates" :contextId="contextId"
           :list-strategy="'smart'" @selection-changed="onCreateEvent" />
-      </k-modal>
+      </KModal>
 
-      <k-modal ref="alertModal"
+      <KModal ref="alertModal"
         :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
         :buttons="getAlertModalButtons()"
-        :options="{}">
+        :options="{}"
+      >
         <div>
           <alert-form :class="{ 'light-dimmed': inProgress }" ref="alertForm"
             :layer="alertLayer" :feature="alertFeature" :forecastModel="forecastModel"/>
         </div>
-      </k-modal>
+      </KModal>
       <!-- Child views -->
       <router-view />
     </template>
@@ -52,18 +54,13 @@ export default {
     AlertForm: kCoreUtils.loadComponent('AlertForm')
   },
   mixins: [
-    activityMixin,
-    kMapMixins.activity,
-    kMapMixins.featureSelection,
-    kMapMixins.featureService,
-    kMapMixins.infobox,
-    kMapMixins.style,
-    kMapMixins.weacast,
-    kMapMixins.context,
     kMapMixins.map.baseMap,
+    kMapMixins.map.canvasLayers,
     kMapMixins.map.geojsonLayers,
+    kMapMixins.map.heatmapLayers,
     kMapMixins.map.forecastLayers,
     kMapMixins.map.fileLayers,
+    kMapMixins.map.georasterLayers,
     kMapMixins.map.editLayers,
     kMapMixins.map.style,
     kMapMixins.map.tooltip,
@@ -73,6 +70,14 @@ export default {
     kMapMixins.map.tiledWindLayers,
     kMapMixins.map.mapillaryLayers,
     kMapMixins.map.gsmapLayers,
+    activityMixin,
+    kMapMixins.activity,
+    kMapMixins.featureSelection,
+    kMapMixins.featureService,
+    kMapMixins.infobox,
+    kMapMixins.style,
+    kMapMixins.weacast,
+    kMapMixins.context,    
     mixins.alerts,
     mixins.plans
   ],
@@ -118,6 +123,13 @@ export default {
     formatDate (date) {
       return date.toLocaleString(kCoreUtils.getLocale(),
         { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+    },
+    async configureMap (container) {
+      // Avoid reentrance during awaited operations
+      if (!container || this.mapContainer) return
+      this.mapContainer = container
+      // Wait until map is ready
+      await this.initializeMap(container)
     },
     async configureActivity () {
       // Wait until map is ready
@@ -228,7 +240,7 @@ export default {
       this.refreshEventsLayer()
       // We do not manage pagination now
       if (this.events.items.length > MAX_ITEMS) {
-        this.$events.$emit('error', new Error(this.$t('errors.EVENTS_LIMIT')))
+        this.$events.emit('error', new Error(this.$t('errors.EVENTS_LIMIT')))
       }
     },
     async refreshAlertsLayer () {
@@ -257,7 +269,7 @@ export default {
       this.refreshAlertsLayer()
       // We do not manage pagination now
       if (this.alerts.items.length > MAX_ITEMS) {
-        this.$events.$emit('error', new Error(this.$t('errors.ALERTS_LIMIT')))
+        this.$events.emit('error', new Error(this.$t('errors.ALERTS_LIMIT')))
       }
     },
     async refreshObjectivesLayer () {
@@ -580,23 +592,22 @@ export default {
     /* TOOO
       this.alerts = this.configureCollection('alerts',
       () => ({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }), () => ({}), { nbItemsPerPage: 0 }) 
-      */
-    this.alerts.$on('collection-refreshed', this.onAlertCollectionRefreshed)
-    /* TODO
+      
+    this.alerts.on('collection-refreshed', this.onAlertCollectionRefreshed) 
+    
       this.events = this.configureCollection('events', () => Object.assign({
       geoJson: true,
       $skip: 0,
       $limit: MAX_ITEMS,
       $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
     }, this.getPlanQuery()), () => this.getPlanObjectiveQuery(), { nbItemsPerPage: 0 })
-    */ 
-    this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
+    this.events.on('collection-refreshed', this.onEventCollectionRefreshed) */
     this.$engineEvents.on('edit-start', this.onEditStartEvent)
     this.$engineEvents.on('edit-stop', this.onEditStopEvent)
   },
   beforeUnmount () {
-    this.alerts.$off('collection-refreshed', this.onAlertCollectionRefreshed)
-    this.events.$off('collection-refreshed', this.onEventCollectionRefreshed)
+    //this.alerts.$off('collection-refreshed', this.onAlertCollectionRefreshed)
+    //this.events.off('collection-refreshed', this.onEventCollectionRefreshed)
     this.$engineEvents.off('edit-start', this.onEditStartEvent)
     this.$engineEvents.off('edit-stop', this.onEditStopEvent)
   }

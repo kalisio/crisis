@@ -13,7 +13,7 @@
     "UNSUBSCRIBED_OPTION": "Désolé, il semble que vous n'ayez pas souscrit à cette option. Merci de modifier votre abonnement avant de revenir ici."
   },
   "schemas": {
-    "ORGANISATIONS_BILLING_PLAN_NAME": "Plan de paiement pour { object.name }",
+    "ORGANISATIONS_BILLING_PLAN_NAME": "Plan de paiement pour {object.name}",
     "ORGANISATIONS_PLAN_FIELD_LABEL": "Sélectionnez le plan de paiement pour l'organisation",
     "ORGANISATIONS_CUSTOMER_FIELD_LABEL": "Sélectionnez une méthode de paiement",
     "ORGANISATIONS_EXTRA_INFOS_FIELD_LABEL": "Saisissez des informations supplémentaires apparaissant sur vos factures",

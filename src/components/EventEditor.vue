@@ -1,20 +1,21 @@
 <template>
   <KModal
     :title="editorTitle"
-    :buttons="getButtons()"
-    v-model="isModalOpened">
+    :buttons="buttons"
+    v-model="isModalOpened"
+  >
     <div class="column xs-gutter">
-        <KForm
-          ref="eventForm"
-          :class="{ 'light-dimmed': applyInProgress }"
-          :contextId="contextId"
-          :objectId="objectId"
-          :schema="schema"
-          @field-changed="onFieldChanged" 
-        />
-        <div class="row full-width justify-end">
-          <q-checkbox :label="$t('EventEditor.NOTIFY')" v-model="notify" />
-        </div>
+      <KForm
+        :ref="onFormReferenceCreated"
+        :contextId="contextId"
+        :objectId="objectId"
+        :schema="schema"
+        @field-changed="onFieldChanged"
+        @form-ready="onFormReady" 
+      />
+      <div class="row full-width justify-end">
+        <q-checkbox :label="$t('EventEditor.NOTIFY')" v-model="notify" />
+      </div>
     </div>
   </KModal>
 </template>
@@ -70,19 +71,15 @@ export default {
       notify: undefined
     }
   },
-  methods: {
-    getButtons () {
-      if (this.getEditorMode() === 'create') {
-        return [
-          { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
-          { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
-        ]
-      }
+  computed: {
+    buttons () {
       return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
         { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
       ]
-    },
+    }
+  },
+  methods: {
     async loadObject () {
       if (this.templateId) {
         if (!this.template) this.template = await this.$api.getService('event-templates').get(this.templateId)

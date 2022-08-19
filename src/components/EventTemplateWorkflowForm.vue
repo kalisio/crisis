@@ -193,7 +193,7 @@ export default {
         this.previewSchema = await this.generateSchemaForStep(this.getCurrentStep(), this.layer)
         return this.previewSchema
       } catch (error) {
-        this.$events.$emit('error', error)
+        this.$events.emit('error', error)
         throw error
       }
     },

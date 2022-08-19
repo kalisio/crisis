@@ -291,7 +291,7 @@ export default {
       }
       // We do not manage pagination now
       if (this.items.length < this.nbTotalItems) {
-        this.$events.$emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
+        this.$events.emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
       }
       this.refreshParticipantsLayer()
     },

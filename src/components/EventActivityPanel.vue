@@ -87,10 +87,10 @@ export default {
       return _.get(participant, 'icon.color', '')
     },
     onZoomClicked (participant) {
-      this.$events.$emit('zoom-to-participant', participant)
+      this.$events.emit('zoom-to-participant', participant)
     },
     onStateClicked (participant) {
-      this.$events.$emit('filter-participant-states', participant)
+      this.$events.emit('filter-participant-states', participant)
     }
   },
   created () {
