@@ -88,7 +88,6 @@ jobs:
     language: objective-c
     osx_image: xcode13.2
     before_install:
-    - sudo gem install cocoapods
     - nvm install 16
     - npm install -g yarn
     - brew update
