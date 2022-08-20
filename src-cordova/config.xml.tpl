@@ -34,7 +34,7 @@
   <preference name="SplashScreen" value="screen"/>
   <preference name="StatusBarOverlaysWebView" value="false"/>
   <platform name="android">
-    <hook src="hooks/android-before-build.js" type="before_build"/>
+    <!--hook src="hooks/android-before-build.js" type="before_build"/-->
     <allow-intent href="market:*"/>
     <resource-file src="google-services.json" target="app/google-services.json"/>
     <custom-config-file parent="/*" target="AndroidManifest.xml">
@@ -126,17 +126,17 @@
   <plugin name="cordova-plugin-statusbar" spec="~3.0.0"/>
   <plugin name="cordova-plugin-android-permissions" spec="~1.1.3"/>
   <plugin name="cordova-plugin-device" spec="~2.1.0"/>
-  <!--plugin name="cordova-plugin-geolocation" spec="~4.1.0"/>
-  <plugin name="cordova-plugin-camera" spec="~6.0.0"/-->
+  <plugin name="cordova-plugin-geolocation" spec="~4.1.0"/>
+  <plugin name="cordova-plugin-camera" spec="~6.0.0"/>
   <plugin name="cordova-plugin-sim" spec="~1.3.3"/>
   <plugin name="cordova-plugin-whitelist" spec="~1.3.5"/>
   <plugin name="cordova-plugin-inappbrowser" spec="~5.0.0"/>
-  <!--plugin name="cordova-plugin-file" spec="~7.0.0"/>
+  <plugin name="cordova-plugin-file" spec="~7.0.0"/>
   <plugin name="cordova-plugin-file-opener2" spec="~3.0.5"/>
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
-  <plugin name="@havesource/cordova-plugin-push" spec="3.0.1"/-->
+  <plugin name="@havesource/cordova-plugin-push" spec="3.0.1"/>
   <engine name="android" spec="~10.1.2"/>
   <engine name="ios" spec="~6.2.0"/>
 </widget>
