@@ -39,7 +39,7 @@
         Events map
       -->
       <div v-show="showMap">
-        <div ref="map" :style="viewStyle">
+        <div :ref="configureMap" :style="viewStyle">
           <q-resize-observer @resize="onMapResized" />
         </div>
       </div>
@@ -213,10 +213,12 @@ export default {
     }
   },
   methods: {
-    async configureActivity () {
+    async configureMap (container) {
+      // Avoid reentrance during awaited operations
+      if (!container || this.mapContainer) return
+      this.mapContainer = container
       // Wait until map is ready
-      await this.initializeMap()
-      activityMixin.methods.configureActivity.call(this)
+      await this.initializeMap(container)
     },
     async getCatalogLayers () {
       const layers = await kdkMapMixinss.activity.methods.getCatalogLayers.call(this)
