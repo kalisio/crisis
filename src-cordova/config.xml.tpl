@@ -136,7 +136,7 @@
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
-  <plugin name="@havesource/cordova-plugin-push" spec="3.0.1"/>
+  <plugin name="@havesource/cordova-plugin-push" spec="~3.0.1"/>
   <engine name="android" spec="~10.1.2"/>
   <engine name="ios" spec="~6.2.0"/>
 </widget>
