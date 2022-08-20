@@ -132,7 +132,7 @@
   <plugin name="cordova-plugin-whitelist" spec="~1.3.5"/>
   <plugin name="cordova-plugin-inappbrowser" spec="~5.0.0"/>
   <plugin name="cordova-plugin-file" spec="~7.0.0"/>
-  <plugin name="cordova-plugin-file-opener2" spec="~3.0.5"/>
+  <!--plugin name="cordova-plugin-file-opener2" spec="~3.0.5"/-->
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>
