@@ -94,6 +94,7 @@ jobs:
     - brew install rclone
     - npm install -g ios-deploy --unsafe-perm=true
     - npm install -g @quasar/cli
+    - sudo gem install cocoapods
     - sudo gem which cocoapods
     install:
     - yarn
