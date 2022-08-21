@@ -55,13 +55,14 @@ fi
 npm run cordova:build:ios > ios.build.log 2>&1
 # Capture the build result
 EXIT_CODE=$?
+echo $EXIT_CODE
 # Copy the log whatever the result
 rclone copy ios.build.log scw:kalisio-builds/${BUILD_BUCKET}/ios.build.log
 # check_code $EXIT_CODE "Building the app"
 
 # Backup the ios build to S3
 rclone copy src-cordova/platforms/ios/build scw:kalisio-builds/${BUILD_BUCKET}/ios > /dev/null
-# check_code $? "Copying the artefact to s3"
+check_code $? "Copying the artefact to s3"
 
 travis_fold end "build"
 
