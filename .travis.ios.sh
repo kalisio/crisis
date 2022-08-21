@@ -55,7 +55,6 @@ fi
 npm run cordova:build:ios > ios.build.log 2>&1
 # Capture the build result
 EXIT_CODE=$?
-echo $EXIT_CODE
 # Copy the log whatever the result
 rclone copy ios.build.log scw:kalisio-builds/${BUILD_BUCKET}/ios.build.log
 # check_code $EXIT_CODE "Building the app"
