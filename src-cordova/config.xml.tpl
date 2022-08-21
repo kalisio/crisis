@@ -67,8 +67,8 @@
     <splash density="port-xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>
   </platform>
   <platform name="ios">
-    <hook src="hooks/ios-update-pods.sh" type="before_platform_add"/>
-    <hook src="hooks/ios-run-pods.sh" type="after_platform_add"/>
+    <!--hook src="hooks/ios-update-pods.sh" type="before_platform_add"/-->
+    <hook src="hooks/ios-run-pods.sh" type="before_build"/>
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
     <feature name="CDVWKWebViewEngine">
