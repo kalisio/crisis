@@ -5,7 +5,7 @@
 # Should be temporary and fixed in the future with:
 # https://github.com/apache/cordova-ios/pull/719
 
-pod install
+pod init
 
 #mkdir -p ~/.cocoapods/repos
 #git clone https://github.com/CocoaPods/Specs ~/.cocoapods/repos/master
