@@ -37,7 +37,7 @@ rclone copy android.build.log scw:kalisio-builds/${BUILD_BUCKET}/android.build.l
 check_code $EXIT_CODE 0 "Building the app"
 
 # Backup the android build to S3
-rclone copy src-cordova/platforms/android/app/build/outputs/apk scw:kalisio-builds/${BUILD_BUCKET}/android > /dev/null
+rclone copy src-cordova/platforms/android/app/build/outputs/bundle scw:kalisio-builds/${BUILD_BUCKET}/android > /dev/null
 check_code $? 0 "Copying the artefact to s3"
 
 travis_fold end "build"
