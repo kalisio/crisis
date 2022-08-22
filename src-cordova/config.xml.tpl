@@ -126,6 +126,7 @@
   <plugin name="cordova-custom-config" spec="~5.1.0"/>
   <plugin name="cordova-plugin-statusbar" spec="~3.0.0"/>
   <plugin name="cordova-plugin-android-permissions" spec="~1.1.3"/>
+  <plugin name="cordova-plugin-androidx-adapter" spec="~1.1.3"/>
   <plugin name="cordova-plugin-device" spec="~2.1.0"/>
   <plugin name="cordova-plugin-geolocation" spec="~4.1.0"/>
   <plugin name="cordova-plugin-camera" spec="~6.0.0"/>
@@ -133,7 +134,7 @@
   <plugin name="cordova-plugin-whitelist" spec="~1.3.5"/>
   <plugin name="cordova-plugin-inappbrowser" spec="~5.0.0"/>
   <plugin name="cordova-plugin-file" spec="~7.0.0"/>
-  <!--plugin name="cordova-plugin-file-opener2" spec="~3.0.5"/-->
+  <plugin name="cordova-plugin-file-opener2" spec="~3.0.5"/>
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm">
     <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="$GOOGLE_API_KEY_FOR_ANDROID"/>
   </plugin>

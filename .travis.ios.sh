@@ -61,7 +61,7 @@ check_code $EXIT_CODE 1 "Building the app"
 
 # Backup the ios build to S3
 rclone copy src-cordova/platforms/ios/build scw:kalisio-builds/${BUILD_BUCKET}/ios > /dev/null
-check_code $? 1 "Copying the artefact to s3"
+check_code $? 0 "Copying the artefact to s3"
 
 travis_fold end "build"
 

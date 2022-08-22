@@ -73,12 +73,12 @@ export default {
       } else if (this.mode === 'add') {
         return [
           { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => { this.mode = 'list' } },
-          { id: 'add-plan-objective-button', label: 'CREATE', renderer: 'form-button', disabled: !addForm, handler: () => this.onCreatePlanObjective() }
+          { id: 'add-plan-objective-button', label: 'CREATE', renderer: 'form-button', handler: () => this.onCreatePlanObjective() }
         ]
       } else {
         return [
           { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => { this.mode = 'list' } },
-          { id: 'add-plan-objective-button', label: 'UPDATE', renderer: 'form-button', disabled: !editForm, handler: () => this.onEditPlanObjective() }
+          { id: 'add-plan-objective-button', label: 'UPDATE', renderer: 'form-button', handler: () => this.onEditPlanObjective() }
         ]
       }
     }
@@ -160,12 +160,15 @@ export default {
       let objectivesStore = _.get(this.object, 'objectives', [])
       // Jump from array to map for in memory service
       objectivesStore = _.keyBy(objectivesStore, 'name')
+      console.log(objectivesStore)
       const service = this.$api.getService('plan-objectives')
       // Update store with a fresh object otherwise it causes a weird bug in navigator
-      service.store = Object.assign({}, objectivesStore)
+      console.log(service)
+      //service.store = Object.assign({}, objectivesStore)
+      service.store = objectivesStore
     },
     async updatePlanObjectives (objectives) {
-      /*_.set(this.object, 'objectives', objectives)
+      _.set(this.object, 'objectives', objectives)
       this.updatePlanObjectivesServiceStore()
       this.savingObjective = true
       try {
@@ -178,7 +181,7 @@ export default {
       // After create or edit jump to the list mode
       if (this.mode !== 'list') this.mode = 'list'
       // Force the list to be refreshed
-      if (this.list) this.list.refreshCollection()*/
+      if (this.list) this.list.refreshCollection()
     },
     async onCreatePlanObjective () {
       if (!this.addForm) throw new Error('Cannot create plan objectives with a non-ready form')
@@ -246,6 +249,7 @@ export default {
   },
   async created () {
     await this.loadObject()
+    console.log(this.object)
     // Extract objectives as we will map it using an in-memory service
     // so that we can use standard collection/form components
     this.updatePlanObjectivesServiceStore()
