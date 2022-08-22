@@ -176,7 +176,7 @@ export default {
     },
     getBaseQuery (object) {
       // Overriden to handle notification messages
-      const query = editorMixin.methods.getBaseQuery.call(this)
+      const query = kdkCoreMixins.baseEditor.methods.getBaseQuery.call(this)
 
       // const notification = _.get(object, 'notification', true)
       // if (notification) {
@@ -196,6 +196,10 @@ export default {
           delete this.object.workflow
         }
       }
+    },
+    async apply () {
+      await kdkCoreMixins.baseEditor.methods.apply.call(this)
+      this.closeModal()
     }
   },
   async created () {

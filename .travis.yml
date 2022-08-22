@@ -101,4 +101,4 @@ jobs:
     before_script:
     - export -f travis_fold
     script:
-    - bash .travis.ios.sh
+    - travis_wait 30 bash .travis.ios.sh

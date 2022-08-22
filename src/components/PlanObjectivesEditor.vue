@@ -20,22 +20,19 @@
         />
       </q-card-section>
       <q-card-section id="plan-objective-add" v-if="mode === 'add'">
-        <div class="colum q-gutter-y-md">
-          <KForm 
-            :ref="onAddFormReferenceCreated" 
-            :schema="objectiveSchema" 
-            style="min-width: 300px" 
-          />
-        </div>
+        <KForm 
+          :ref="onAddFormReferenceCreated" 
+          :schema="objectiveSchema" 
+          style="min-width: 300px" 
+        />
       </q-card-section>
       <q-card-section id="plan-objective-edit" v-if="mode === 'edit'">
-        <div class="colum q-gutter-y-md">
-          <KForm 
-            :ref="onEditFormReferenceCreated"
-            :schema="objectiveSchema" 
-            style="min-width: 300px" 
-          />
-        </div>
+        <KForm 
+          :ref="onEditFormReferenceCreated"
+          :schema="objectiveSchema" 
+          style="min-width: 300px" 
+          @form-ready="onEditFormReady"
+        />
       </q-card-section>
     </div>
   </KModal>
@@ -160,11 +157,9 @@ export default {
       let objectivesStore = _.get(this.object, 'objectives', [])
       // Jump from array to map for in memory service
       objectivesStore = _.keyBy(objectivesStore, 'name')
-      console.log(objectivesStore)
       const service = this.$api.getService('plan-objectives')
       // Update store with a fresh object otherwise it causes a weird bug in navigator
-      console.log(service)
-      //service.store = Object.assign({}, objectivesStore)
+      // TODO: validate if still needed service.store = Object.assign({}, objectivesStore)
       service.store = objectivesStore
     },
     async updatePlanObjectives (objectives) {
@@ -219,11 +214,9 @@ export default {
         await this.updatePlanObjectives(objectives)
       }
     },
-    async editPlanObjective (objective) {
+    editPlanObjective (objective) {
+      this.editedObjective = objective      
       this.mode = 'edit'
-      this.editedObjective = objective
-      await this.editForm.build()
-      this.editForm.fill(objective)
     },
     async removePlanObjective (objective) {
       // Update objectives in-memory and in DB
@@ -245,11 +238,13 @@ export default {
       if (reference) {
         this.editForm = reference
       }
+    },
+    onEditFormReady () {
+      this.editForm.fill(this.editedObjective)
     }
   },
   async created () {
     await this.loadObject()
-    console.log(this.object)
     // Extract objectives as we will map it using an in-memory service
     // so that we can use standard collection/form components
     this.updatePlanObjectivesServiceStore()

@@ -1,7 +1,7 @@
 <template>
   <KModal
     :title="editorTitle"
-    :buttons="getButtons()"
+    :buttons="buttons"
     v-model="isModalOpened"
   >
     <KForm
@@ -31,13 +31,15 @@ export default {
       default: ''
     }
   },
-  methods: {
-    getButtons () {
+  computed: {
+    buttons() {
       return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
         { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
       ]
-    },
+    }
+  },
+  methods: {
     async loadObject () {
       // When a template is provided use it as reference for object
       if (this.templateId) {
@@ -53,6 +55,10 @@ export default {
         // Otherwise proceed as usual to load the event object
         return kdkCoreMixins.objectProxy.methods.loadObject.call(this)
       }
+    },
+    async apply () {
+      await kdkCoreMixins.baseEditor.methods.apply.call(this)
+      this.closeModal()
     }
   },
   async created () {
