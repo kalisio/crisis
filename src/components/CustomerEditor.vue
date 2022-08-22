@@ -5,7 +5,7 @@
   >
     <div class="column">
       <div>
-        <KForm ref="form" :schema="getSchema()" @form-ready="onFormReady"/>
+        <KForm ref="onFormReferenceCreated" :schema="schema" />
       </div>
       <div>
         <div>&nbsp;</div>
@@ -66,12 +66,12 @@ export default {
   data () {
     return {
       hasCard: false,
-      isCreatingCard: false
-    }
-  },
-  methods: {
-    getSchema () {
-      return {
+      isCreatingCard: false,
+      buttons: [
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
+        { id: 'update-button', label: this.$t('CustomerEditor.UPDATE_BUTTON'), renderer: 'form-button', color: 'primary', handler: () => this.onUpdateClicked() }
+      ],
+      schema: {
         $schema: 'http://json-schema.org/draft-06/schema#',
         $id: 'http://kalisio.xyz/schemas/edit-customer',
         title: 'CustomerEditor.TITLE',
@@ -103,13 +103,9 @@ export default {
         },
         required: ['email']
       }
-    },
-    getButtons () {
-      return [
-        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
-        { id: 'update-button', label: this.$t('CustomerEditor.UPDATE_BUTTON'), renderer: 'form-button', color: 'primary', handler: () => this.onUpdateClicked() }
-      ]
-    },
+    }
+  },
+  methods: {
     async open (customer, purchasers) {
       this.customer = Object.assign({
         action: 'customer',

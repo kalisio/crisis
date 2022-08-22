@@ -41,7 +41,7 @@ docker push kalisio/$APP:$TAG
 check_code $? 0 "Pushing the $APP:$TAG docker image"
 
 # Push the app image to the hub with the flavor tag
-docker tag kalisio/$APP:$TAG kalisio/$PP:$FLAVOR
+docker tag kalisio/$APP:$TAG kalisio/$APP:$FLAVOR
 docker push kalisio/$APP:$FLAVOR
 check_code $? 0 "Pushing the $APP:$TAG docker image"
 
