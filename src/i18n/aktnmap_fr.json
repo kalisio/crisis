@@ -254,13 +254,16 @@
     "archived-events": {
       "HISTORY_LABEL": "Cette activité propose une vue historique de vos événements, apparaissant de façon séquentielle dans la plage de temps de votre choix.",
       "TIMELINE_LABEL": "Utilisez la ligne de temps pour modifier la plage temporelle par défaut.",
-      "START_TIME_LABEL": "Choisissez dans le calendrier interactif l'année, le mois et le jour de début, définissant les plus récents événements qui seront visibles.",
-      "END_TIME_LABEL": "Choisissez dans le calendrier interactif l'année, le mois et le jour de fin, définissant les plus anciens événements qui seront visibles.",
-      "TIMERANGE_LABEL": "Pour gagner du temps vous pouvez sélectionner une plage temporelle prédéfinie.",
+      "START_DATE_LABEL": "Choisissez dans le calendrier interactif la date des plus récents événements qui seront visibles.",
+      "END_DATE_LABEL": "Choisissez dans le calendrier interactif la date des plus anciens événements qui seront visibles.",
+      "START_TIME_LABEL": "Vous pouvez le faire de la même façon pour l'heure.",
+      "END_TIME_LABEL": "Vous pouvez le faire de la même façon pour l'heure.",
+      "TIME_RANGES_LABEL": "Pour gagner du temps vous pouvez sélectionner une plage temporelle prédéfinie.",
       "SORT_LABEL": "Enfin choisissez d'afficher en premier les plus récents, ou les plus vieux, via ce bouton.",
       "HISTORY_SCROLL_LABEL": "Vous pouvez faire défiler vos événements en scrollant vers le bas de l'écran.",
       "HISTORY_EVENTS_LABEL": "Pour celà vous devez sélectionner une plage de temps faisant apparaître des événements.",
       "HISTORY_DOWNLOAD_LABEL": "Exportez vos événements au format CSV pour exploitation dans une application tierce si vous le souhaitez.",
+      "HISTORY_FILTER_LABEL": "Filtrez les événements affichés selon leur statut si vous le souhaitez.",
       "MAP_VIEW_LABEL": "Basculez dans une vue cartographique de vos événements via ce bouton.",
       "MAP_VIEW_LINK_LABEL": "Voir comment paramétrer la vue cartographique",
       "BY_TEMPLATE_LABEL": "Par défaut tous vos événements sont regroupés ensemble mais vous pouvez créer des regroupements selon vos modèles via ce bouton.",
@@ -628,6 +631,10 @@
     "FOLLOWUP_MODAL_SAVE_BUTTON": "@:SAVE_LABEL",
     "VIEW_LOCATION_MAP": "Voir la localisation",
     "VIEW_PARTICIPANTS": "Voir les participants"
+  },
+  "EventFilter": {
+    "OPEN": "Ouvert",
+    "CLOSED": "Fermé"
   },
   "ArchivedEventsActivity": {
     "ASCENDING_SORT": "Plus vieux d'abord",

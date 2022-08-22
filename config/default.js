@@ -699,6 +699,7 @@ module.exports = {
           mapAction(),
           currentActivityStamp('archived-events', 'las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
           midSeparator,
+          { component: 'EventFilter' },
           { id: 'map-view', icon: 'las la-map-marked', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
           { id: 'chart-view', icon: 'las la-chart-pie', tooltip: 'ArchivedEventsActivity.SHOW_CHART_LABEL', handler: 'onShowChart' },
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.EXPORT_DATA_LABEL', handler: 'downloadEventsData' },

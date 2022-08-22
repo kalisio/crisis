@@ -47,7 +47,7 @@ describe(`suite:${suite}`, () => {
     runner = new core.Runner(suite, {
       appName: 'aktnmap',
       browser: {
-        slowMo: 1,
+        slowMo: 5,
         args: ['--lang=fr']
       },
       localStorage: {

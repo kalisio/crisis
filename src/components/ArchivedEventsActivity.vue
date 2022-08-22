@@ -158,6 +158,11 @@ export default {
       // When displaying events of all plans we'd like to have the plan object directly to ease processing
       if (!this.planId && this.showHistory) Object.assign(query, { planAsObject: true })
       Object.assign(query, this.getPlanQuery())
+      const stateFilters = _.intersection(['open', 'closed'], this.filters)
+      // Filtering open + closed or none of them is equivalent to no filter
+      if (stateFilters.length === 1) {
+        Object.assign(query, { deletedAt: { $exists: stateFilters.includes('closed') } })
+      }
       return query
     },
     filterQuery () {
@@ -188,6 +193,7 @@ export default {
 
     return {
       filter: this.$store.get('filter'),
+      filters: [],
       topPane: this.$store.get('topPane'),
       heatmap: false,
       byTemplate: false,
