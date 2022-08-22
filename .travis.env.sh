@@ -2,9 +2,7 @@
 
 check_code()
 {
-   echo RESULT CODE $1
-   echo EXPECTED CODE $2
-   if [ $1 -eq $2 ]; then
+   if [[ $1 -ne $2 ]]; then
 	  echo "$3 has failed [error: $1]"
 	  exit 1
   fi
