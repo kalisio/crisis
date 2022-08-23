@@ -145,7 +145,7 @@ export default {
           size: '0.75rem'
         })
       }
-      components.push({ component: 'QSpace ' })
+      components.push({ component: 'QSpace' })
       components.concat(_.filter(this.itemActions, { scope: 'header' }))
       return components
     },

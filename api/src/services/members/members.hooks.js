@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import commonHooks from 'feathers-hooks-common'
+import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import { hooks as coreHooks, createObjectID } from '@kalisio/kdk/core.api.js'
 
 // Fix for https://github.com/kalisio/aktnmap/issues/217
@@ -19,7 +20,10 @@ function itemContextMatch (hook) {
 export default {
   before: {
     all: [],
-    find: [commonHooks.when(hasItemContext, itemContextMatch)],
+    find: [
+      commonHooks.when(hasItemContext, itemContextMatch), 
+      fuzzySearch({ fields: ['profile.name'] }), 
+    ],
     get: [],
     create: [],
     update: [],

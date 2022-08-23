@@ -81,6 +81,9 @@ export default {
     async onWorkflow (copyWorkflow) {
       if (copyWorkflow) this.object.workflow = _.cloneDeep(this.template.workflow)
       else delete this.object.workflow
+    },
+    async apply () {
+      if (await kdkCoreMixins.baseEditor.methods.apply.call(this)) this.closeModal()
     }
   }
 }

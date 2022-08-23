@@ -1101,7 +1101,7 @@ module.exports = {
       filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
     },
     restore: { view: false, layers: false },
-    featuresChunkSize: 5000 // TODO: here or in mapEngine ?
+    featuresChunkSize: 5000 
   },
   
   routes: require('../src/router/routes')

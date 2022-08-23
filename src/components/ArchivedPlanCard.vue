@@ -20,7 +20,7 @@
         :context="$props"
         :dense="dense"
       >
-        <k-chips-pane v-if="item.objectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
+        <KChipsPane v-if="item.objectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
         <KStamp v-else :text="'ArchivedPlanCard.NO_OBJECTIVES_LABEL'" direction="horizontal" />
       </KCardSection>
       <!-- location section -->
@@ -38,7 +38,7 @@
         v-if="isExpanded"
         :title="$t('ArchivedPlanCard.COORDINATORS_SECTION')"
         :context="$props">
-        <k-chips-pane class="q-pl-sm" :chips="item.coordinators" :valuePath="['profile.name', 'value', 'name']" />
+        <KChipsPane class="q-pl-sm" :chips="item.coordinators" :valuePath="['profile.name', 'value', 'name']" />
       </KCardSection>
       <!-- Timestamps section -->
       <KCardSection
@@ -63,11 +63,11 @@
 
 <script>
 import _ from 'lodash'
-import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
   name: 'archived-plan-card',
-  mixins: [kCoreMixins.baseItem],
+  mixins: [kdkCoreMixins.baseItem],
   props: {
     dense: {
       type: Boolean,
@@ -82,7 +82,7 @@ export default {
       } else {
         components.push({ component: 'QBadge', label: this.$t('ArchivedPlanCard.OPENED_LABEL'), color: 'green-7' })
       }
-      components.push({ component: 'QSpace ' })
+      components.push({ component: 'QSpace' })
       components.concat(_.filter(this.itemActions, { scope: 'header' }))
       return components
     },

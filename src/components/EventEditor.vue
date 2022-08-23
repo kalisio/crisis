@@ -177,11 +177,10 @@ export default {
     getBaseQuery (object) {
       // Overriden to handle notification messages
       const query = kdkCoreMixins.baseEditor.methods.getBaseQuery.call(this)
-
       // const notification = _.get(object, 'notification', true)
       // if (notification) {
       if (this.notify) {
-        if (this.getEditorMode() === 'create') query.notification = this.$t('EventNotifications.CREATE')
+        if (this.editorMode === 'create') query.notification = this.$t('EventNotifications.CREATE')
         else query.notification = this.$t('EventNotifications.UPDATE')
       }
       // _.unset(object, 'notification')
@@ -198,8 +197,7 @@ export default {
       }
     },
     async apply () {
-      await kdkCoreMixins.baseEditor.methods.apply.call(this)
-      this.closeModal()
+      if (await kdkCoreMixins.baseEditor.methods.apply.call(this)) this.closeModal()
     }
   },
   async created () {
@@ -208,7 +206,7 @@ export default {
     if (!this.hasPlan()) this.refresh()
     else this.loadPlan()
     // Setup notify option
-    if (this.getEditorMode() === 'create') this.notify = true
+    if (this.editorMode === 'create') this.notify = true
     else this.notify = false
   }
 }

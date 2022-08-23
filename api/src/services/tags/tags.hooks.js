@@ -1,11 +1,12 @@
 import commonHooks from 'feathers-hooks-common'
+import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
 import { updateEventTemplateResource } from '../../hooks/index.js'
 
 export default {
   before: {
     all: [],
-    find: [],
+    find: [fuzzySearch({ fields: ['value'] })],
     get: [],
     create: [],
     update: [],

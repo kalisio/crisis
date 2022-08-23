@@ -57,8 +57,7 @@ export default {
       }
     },
     async apply () {
-      await kdkCoreMixins.baseEditor.methods.apply.call(this)
-      this.closeModal()
+      if (await kdkCoreMixins.baseEditor.methods.apply.call(this)) this.closeModal()
     }
   },
   async created () {

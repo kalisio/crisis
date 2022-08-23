@@ -36,17 +36,6 @@
         "draw": true
       }
     },
-    "expireAt": {
-      "type": "string",
-      "group": "schemas.EVENTS_ADVANCED_SETTINGS",
-      "format": "date-time",
-      "field": {
-        "component": "form/KDatetimeField",
-        "label": "schemas.EVENTS_EXPIRE_AT_FIELD_LABEL",
-        "type": "datetime",
-        "defaultOffset": 604800
-      }
-    },
     "participants": { 
       "type": "array",
       "multiselect": true,
@@ -131,19 +120,15 @@
         "label": "schemas.EVENTS_COORDINATORS_FIELD_CREATE_LABEL"
       }
     },
-    "attachments": { 
-      "type": "array",
+    "expireAt": {
+      "type": "string",
       "group": "schemas.EVENTS_ADVANCED_SETTINGS",
+      "format": "date-time",
       "field": {
-        "component": "form/KAttachmentField",
-        "label": "schemas.EVENTS_ATTACHMENTS_FIELD_LABEL",
-        "service": "storage",
-        "acceptedFiles": "image/*,application/pdf",
-        "multiple": true,
-        "maxFilesize": 10,
-        "autoProcessQueue": false,
-        "resourcesService": "events",
-        "storagePath": "<%= id %>/<%= file.name %>"
+        "component": "form/KDatetimeField",
+        "label": "schemas.EVENTS_EXPIRE_AT_FIELD_LABEL",
+        "type": "datetime",
+        "defaultOffset": 604800
       }
     },
     "hasWorkflow": {
@@ -152,11 +137,10 @@
       "default": true,
       "field": {
         "component": "form/KToggleField",
-        "label": "schemas.EVENTS_HAS_WORKFLOW_FIELD_LABEL",
-        "icon": "fa-retweet"
+        "label": "schemas.EVENTS_HAS_WORKFLOW_FIELD_LABEL"
       }
     }
   },
-  "required": ["name", "hasWorkflow"]
+  "required": ["name"]
 }
 
