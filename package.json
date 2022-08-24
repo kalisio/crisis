@@ -1,7 +1,7 @@
 {
   "name": "aktnmap",
   "description": "Kalisio Akt'n'Map Application",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "homepage": "https://github.com/kalisio/aktnmap",
   "keywords": [
     "kalisio"
@@ -60,15 +60,9 @@
       "ecmaVersion": 2019,
       "sourceType": "module"
     },
-    "plugins": [
-      "vue"
-    ],
-    "env": [
-      "mocha"
-    ],
-    "ignore": [
-      "public"
-    ],
+    "plugins": ["vue"],
+    "env": ["mocha"],
+    "ignore": ["public"],
     "globals": [
       "DEV",
       "PROD",

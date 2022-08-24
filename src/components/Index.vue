@@ -84,7 +84,7 @@ export default {
             query: _.omit(_.get(this.$route, 'query', {}), ['organisation', 'page'])
           })
         } else {
-          this.$toast({ message: this.$t('Index.ORGANISATION_NOT_FOUND') })
+          this.$notify({ message: this.$t('Index.ORGANISATION_NOT_FOUND') })
         }
       }
     }
@@ -162,7 +162,7 @@ export default {
       // and would like to know if the mobile client is up-to-date
       else if (api.buildNumber === config.buildNumber) return
     }
-    this.$toast({ message: this.$t('Index.VERSION_MISMATCH') })
+    this.$notify({ message: this.$t('Index.VERSION_MISMATCH') })
   },
   async mounted () {
     // Check if we need to redirect based on the fact there is an authenticated user

@@ -84,7 +84,8 @@ export default {
           handler: (item) => this.onUserFollowUp(item)
         }, {
           id: 'location-map',
-          component: 'frame/KPopupAction',
+          component: 'menu/KMenu',
+          dropdownIcon: 'las la-ellipsis-v',
           tooltip: 'EventLogsList.VIEW_LOCATION',
           icon: 'las la-map-marker',
           content: [{

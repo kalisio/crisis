@@ -269,7 +269,8 @@ const contextFilter = function (field, services = []) {
 
 const layerActions = [{
   id: 'layer-actions',
-  component: 'frame/KPopupAction',
+  component: 'menu/KMenu',
+  dropdownIcon: 'las la-ellipsis-v',
   actionRenderer: 'item',
   content: [
     { id: 'zoom-to', label: 'mixins.activity.ZOOM_TO_LABEL', icon: 'las la-search-location', handler: 'onZoomToLayer' },

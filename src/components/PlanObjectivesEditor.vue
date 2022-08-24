@@ -190,7 +190,7 @@ export default {
         const objectives = _.get(this.object, 'objectives', [])
         // Check for unique name
         if (_.find(objectives, item => item.name === objective.name)) {
-          this.$toast({ message: this.$t('errors.OBJECT_ID_ALREADY_TAKEN') })
+          this.$notify({ message: this.$t('errors.OBJECT_ID_ALREADY_TAKEN') })
           return
         }
         await this.updatePlanObjectives(objectives.concat(objective))
@@ -206,7 +206,7 @@ export default {
         const objectives = _.get(this.object, 'objectives', [])
         // Check for unique name
         if (_.find(objectives, item => item.name === objective.name && item.id !== objective.id)) {
-          this.$toast({ message: this.$t('errors.OBJECT_ID_ALREADY_TAKEN') })
+          this.$notify({ message: this.$t('errors.OBJECT_ID_ALREADY_TAKEN') })
           return
         }
         const index = _.findIndex(objectives, item => item.id === objective.id)

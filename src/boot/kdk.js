@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import config from 'config'
+import { Notify } from 'quasar'
 import appHooks from '../app.hooks'
 import services from '../services'
 import { api, utils as kdkCoreUtils, Store, Layout, Events, Theme, beforeGuard, authenticationGuard } from '@kalisio/kdk/core.client'
@@ -27,7 +28,7 @@ export default async ({ app }) => {
   app.config.globalProperties.$events = Events
   app.config.globalProperties.$api = api
   app.config.globalProperties.$can = api.can
-  app.config.globalProperties.$toast = kdkCoreUtils.toast
+  app.config.globalProperties.$notify = Notify.create
   app.config.globalProperties.$tie = function (key, param) {
     if (_.isEmpty(key)) return key
     return this.$te(key) ? this.$t(key, param) : key
@@ -57,7 +58,6 @@ export default async ({ app }) => {
 
   // Register global components
   app.component('KAction', await kdkCoreUtils.loadComponent('frame/KAction'))
-  app.component('KPopupAction', await kdkCoreUtils.loadComponent('frame/KPopupAction'))
   app.component('KMenu', await kdkCoreUtils.loadComponent('menu/KMenu'))
   app.component('KStamp', await kdkCoreUtils.loadComponent('frame/KStamp'))
   app.component('KPanel', await kdkCoreUtils.loadComponent('frame/KPanel'))

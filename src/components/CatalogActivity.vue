@@ -1,30 +1,50 @@
 <template>
   <KPage :padding="false">
     <template v-slot:page-content>
-      <!-- Map -->
+      <!-- 
+        Map 
+      -->
       <div id="map" :ref="configureMap" :style="viewStyle">
         <q-resize-observer @resize="onMapResized" />
       </div>
-
+      <!-- 
+        Event templates selector modal 
+      -->
       <KModal ref="templateModal"
         :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
         :buttons="getTemplateModalButtons()"
         :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }"
       >
-        <k-list ref="templates" service="event-templates" :contextId="contextId"
-          :list-strategy="'smart'" @selection-changed="onCreateEvent" />
+        <KList 
+          ref="templates" 
+          service="event-templates" 
+          :contextId="contextId"
+          :list-strategy="'smart'" 
+          @selection-changed="onCreateEvent" 
+        />
       </KModal>
-
-      <KModal ref="alertModal"
+      <!-- 
+        Alert editor modal 
+      -->
+      <AlertEditor
+        ref="alertEditor"
+        :layer="alertLayer" 
+        :feature="alertFeature" 
+        :forecastModel="forecastModel"
+      />
+      <!--KModal ref="alertModal"
         :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
         :buttons="getAlertModalButtons()"
         :options="{}"
       >
-        <div>
-          <alert-form :class="{ 'light-dimmed': inProgress }" ref="alertForm"
-            :layer="alertLayer" :feature="alertFeature" :forecastModel="forecastModel"/>
-        </div>
-      </KModal>
+        <AlertForm 
+          :class="{ 'light-dimmed': inProgress }" 
+          ref="alertForm"
+          :layer="alertLayer" 
+          :feature="alertFeature" 
+          :forecastModel="forecastModel"
+        />
+      </KModal-->
       <!-- Child views -->
       <router-view />
     </template>
@@ -42,6 +62,7 @@ import { Dialog } from 'quasar'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
+import AlertEditor from './AlertEditor.vue'
 
 const activityMixin = kCoreMixins.baseActivity()
 
@@ -49,9 +70,8 @@ const activityMixin = kCoreMixins.baseActivity()
 const MAX_ITEMS = 5000
 
 export default {
-  name: 'catalog-activity',
   components: {
-    AlertForm: kCoreUtils.loadComponent('AlertForm')
+    AlertEditor
   },
   mixins: [
     kMapMixins.map.baseMap,
@@ -442,17 +462,18 @@ export default {
         await this.$api.getService('alerts').remove(data.feature._id)
       })
     },
-    getAlertModalButtons () {
+    /* getAlertModalButtons () {
       return [
         { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.$refs.alertModal.close() },
         { id: 'apply-button', label: 'DONE', renderer: 'form-button', handler: () => this.onCreateAlert() }
       ]
-    },
+    },*/
     onCreateMeasureAlertAction (data) {
       this.alertFeature = data.feature
       this.alertLayer = data.layer
-      this.$refs.alertModal.open()
+      this.$refs.alertEditor.openModal()
     },
+    /*
     async onCreateAlert () {
       const result = this.$refs.alertForm.validate()
       if (!result.isValid) return
@@ -472,6 +493,7 @@ export default {
       this.inProgress = false
       this.$refs.alertModal.close()
     },
+  */
     onCreateWeatherAlertAction (data) {
       // Retrieve weather layer activated
       const selectedLayer = _.values(this.layers).filter(sift({
@@ -488,7 +510,7 @@ export default {
           }
         }
         this.alertLayer = selectedLayer[0]
-        this.$refs.alertModal.open()
+        this.$refs.alertEditor.openModal()
       }
     },
     async onAnalyzePopulation (data) {
@@ -539,7 +561,7 @@ export default {
           }
         })
       } else {
-        this.$toast({ message: this.$t('CatalogActivity.POPULATION_ANALYSIS_ERROR') })
+        this.$notify({ message: this.$t('CatalogActivity.POPULATION_ANALYSIS_ERROR') })
       }
     },
     getTemplateModalButtons () {
@@ -547,12 +569,11 @@ export default {
         { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', handler: () => this.$refs.templateModal.close() }
       ]
     },
-    /** TODO
     configureCollection (service, baseQuery, filterQuery, props = {}) {
       // As we'd like to use the collection mixin but need to require multiple services (alerts, events)
       // we create a specific component instance to manage each type of objects which are then added to the map.
       // Indeed we can only support one service if we directly use the mixin in the activity.
-      const Component = Vue.extend({
+      return defineComponent({
         mixins: [kCoreMixins.baseCollection],
         methods: {
           getService: () => this.$api.getService(service),
@@ -560,11 +581,10 @@ export default {
           getCollectionFilterQuery: filterQuery,
           // No pagination on map items
           getCollectionPaginationQuery: () => ({})
-        }
+        },
+        props
       })
-      return new Component({ propsData: props })
     },
-    */
     onEditStartEvent (event) {
       this.setTopPaneMode('edit-layer-data')
     },
@@ -589,19 +609,21 @@ export default {
     this.$checkBillingOption('catalog')
   },
   mounted () {
-    /* TOOO
-      this.alerts = this.configureCollection('alerts',
+    // Create and setup the alert collection
+    this.alerts = this.configureCollection('alerts',
       () => ({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }), () => ({}), { nbItemsPerPage: 0 }) 
-      
-    this.alerts.on('collection-refreshed', this.onAlertCollectionRefreshed) 
-    
-      this.events = this.configureCollection('events', () => Object.assign({
+    console.log(this.alerts)
+    this.alerts.$on('collection-refreshed', this.onAlertCollectionRefreshed) 
+    // Create and setup the events collection
+    this.events = this.configureCollection('events', () => Object.assign({
       geoJson: true,
       $skip: 0,
       $limit: MAX_ITEMS,
       $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
     }, this.getPlanQuery()), () => this.getPlanObjectiveQuery(), { nbItemsPerPage: 0 })
-    this.events.on('collection-refreshed', this.onEventCollectionRefreshed) */
+    console.log(this.events)
+    this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
+    // Setup engine events listeners
     this.$engineEvents.on('edit-start', this.onEditStartEvent)
     this.$engineEvents.on('edit-stop', this.onEditStopEvent)
   },

@@ -129,7 +129,8 @@ export default {
       if (objective.description) {
         actions.push({
           id: 'show-objective-description',
-          component: 'frame/KPopupAction',
+          component: 'menu/KMenu',
+          dropdownIcon: 'las la-ellipsis-v',
           tooltip: 'PlanMenu.VIEW_DESCRIPTION',
           icon: 'las la-file-alt',
           content: [{
@@ -143,7 +144,8 @@ export default {
       if (objective.location) {
         actions.push({
           id: 'show-objective-location',
-          component: 'frame/KPopupAction',
+          component: 'menu/KMenu',
+          dropdownIcon: 'las la-ellipsis-v',
           tooltip: 'PlanMenu.VIEW_LOCATION',
           icon: 'las la-map-marker',
           content: [{
