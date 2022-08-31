@@ -84,7 +84,7 @@ describe(`suite:${suite}`, () => {
     let member = _.find(org.members, { name: 'Manager' })
     await members.joinGroup(page, org, group, member, 'member')
     member = _.find(org.members, { name: 'Member' })
-    await members.joinGroup(page, org, group, member, 'manager')
+    await members.joinGroup(page, org, group, member, 'member')
     await groups.goToGroupMembersActivity(page, org, group)
     expect(await members.countMembers(page, org)).to.equal(2)
   })

@@ -39,8 +39,8 @@ describe(`suite:${suite}`, () => {
       coordinators: 'Manager'/* ,
       permission: 'manager' */
     }],
-    events: [{
-      name: 'Manager event 1',
+    plans: [{
+      name: 'Manager plan 1',
       participants: [{
         name: 'Tag'
       }, {
@@ -48,7 +48,7 @@ describe(`suite:${suite}`, () => {
       }]
     },
     {
-      name: 'Manager event 2',
+      name: 'Manager plan 2',
       participants: [{
         name: 'Tag'
       }, {
@@ -96,7 +96,7 @@ describe(`suite:${suite}`, () => {
   })
 
   it('org manager can create plan templates', async () => {
-    const member = _.find(org.members, { name: 'Owner' })
+    const member = _.find(org.members, { name: 'Manager' })
     await core.login(page, member)
     await core.closeSignupAlert(page)
     const planTemplate = _.find(org.planTemplates, { name: 'Manager plan template' })
@@ -105,41 +105,23 @@ describe(`suite:${suite}`, () => {
     expect(await plans.planTemplateExists(page, org, planTemplate, 'name')).beTrue()
   })
 
-  /* it('org manager can create plan from template', async () => {
+  it('org manager can create plan from template', async () => {
     const managerTemplate = _.find(org.planTemplates, { name: 'Manager plan template' })
-    const managerPlanOne = _.find(org.events, { name: 'Manager event 1' })
-    await events.createPlan(page, org, managerTemplate, managerPlanOne)
-    const managerPlanTwo = _.find(org.events, { name: 'Manager event 2' })
-    await events.createEvent(page, org, managerTemplate, managerPlanTwo)
-    expect(await events.countEvents(page, org)).to.equal(2)
-    //Corriger l'erreur
-    //expect(await events.eventExists(page, org, managerTemplate, 'description')).beTrue()
-    expect(await events.eventExists(page, org, managerEventOne, 'name')).beTrue()
-    expect(await events.eventExists(page, org, managerEventTwo, 'name')).beTrue()
-  }) */
-
-  // Ci-dessous je conserve le fil de ce qui me sert de modèle pour le scénario de test (events.test.js)
-  /* it('org manager can remove his events', async () => {
-    await core.clickAction(page, 'events')
-    const memberEvent = _.find(org.events, { name: 'Manager event 1' })
-    await events.removeEvent(page, org, memberEvent)
-    expect(await events.countEvents(page, org)).to.equal(1)
-  }) */
-  
-  /* it('logbook shows 2 events', async () => {
-    expect(await logbooks.countLogbookEvents(page, org)).to.equal(2)
+    const managerPlanOne = _.find(org.plans, { name: 'Manager plan 1' })
+    await plans.createPlan(page, org, managerTemplate, managerPlanOne)
+    const managerPlanTwo = _.find(org.plans, { name: 'Manager plan 2' })
+    await plans.createPlan(page, org, managerTemplate, managerPlanTwo)
+    expect(await plans.countPlans(page, org)).to.equal(2)
+    expect(await plans.planExists(page, org, managerPlanOne, 'name')).beTrue()
+    expect(await plans.planExists(page, org, managerPlanTwo, 'name')).beTrue()
   })
 
-  it('logbook shows 1 active event', async () => {
-    await logbooks.goToLogbook(page, org)
-    await page.waitForTimeout(2000)
-    expect(await logbooks.countLogbookOpenedItems(page, org)).to.equal(1)
-  })
-
-  it('logbook shows 1 closed event', async () => {
-    await page.waitForTimeout(2000)
-    expect(await logbooks.countLogbookClosedItems(page, org)).to.equal(1)
-    //expect(await logbooks.countLogbookEventsTest(page, org, 'closed')).to.equal(1)
+  // Continuer les tests : suppression d'un plan par différents types de rôles, archivage...
+  /* it('org manager can remove his plans', async () => {
+    await core.clickAction(page, 'plans')
+    const memberPlan = _.find(org.plans, { name: 'Manager plan 1' })
+    await events.removePlan(page, org, memberEvent)
+    expect(await events.countPlans(page, org)).to.equal(1)
   }) */
 
   after(async function () {
@@ -147,10 +129,10 @@ describe(`suite:${suite}`, () => {
     this.timeout(60000)
     await runner.stop()
     // First remove groups in case removal test failed
-    await client.removeGroups(org)
+    /* await client.removeGroups(org)
     // Then members
     await client.removeMembers(org)
     // Then organisation/owner
-    await client.removeOrganisation(org)
+    await client.removeOrganisation(org) */
   })
 })
