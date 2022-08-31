@@ -98,7 +98,7 @@ describe(`suite:${suite}`, () => {
       browser: {
         slowMo: 1,
         args: ['--lang=fr'],
-        devtools: true
+        devtools: false
       },
       localStorage: {
         'akt\'n\'map-welcome': false

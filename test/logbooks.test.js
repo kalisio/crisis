@@ -118,6 +118,8 @@ describe(`suite:${suite}`, () => {
   })
   
   it('logbook shows 2 events', async () => {
+    await logbooks.goToLogbook(page, org)
+    await page.waitForTimeout(10000)
     expect(await logbooks.countLogbookEvents(page, org)).to.equal(2)
   })
 
