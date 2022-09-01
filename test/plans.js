@@ -44,6 +44,25 @@ export async function goToPlansActivity (page, organisation, wait = 2000) {
   }
 }
 
+// Création de la fonction permettant d'accéder aux événements d'un plan donné
+export async function goToPlanEvents (page, organisation, plan, wait = 2000) {
+  const url = page.url()
+  if (!url.includes('plan-events')) {
+    // We can pass an object or a name
+    await goToPlansActivity(page, organisation)
+    debug('Navigating to plan events')
+    await core.clickItemAction(page, organisationComponent, organisation, plan, 'plan-events', wait)
+  }
+}
+
+/* A récupérer pour identification du plan dont on veut voir les événements
+export async function planExists (page, organisation, plan, property) {
+  await goToPlansActivity(page, organisation)
+  // Can provide an object with a property to match or a text input
+  const exists = await core.itemExists(page, planComponent, property ? _.get(plan, property) : plan)
+  return exists
+} */
+
 export async function countPlans (page, organisation) {
   await goToPlansActivity(page, organisation)
   const count = await core.countItems(page, planComponent)

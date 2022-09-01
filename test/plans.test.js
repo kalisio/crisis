@@ -3,6 +3,7 @@ import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import { core } from '@kalisio/kdk/test.client'
 import * as plans from './plans'
+import * as events from './events'
 
 const suite = 'plans'
 
@@ -28,6 +29,13 @@ describe(`suite:${suite}`, () => {
       permissions: 'owner',
       tags: [{ value: 'Tag' }],
       groups: [{ name: 'Group', permissions: 'member' }]
+    }, {
+      name: 'Member',
+      email: 'member@kalisio.xyz',
+      password: 'Pass;word1',
+      permissions: 'member',
+      tags: [{ value: 'Tag' }],
+      groups: [{ name: 'Group', permissions: 'member' }]
     }],
     groups: [{
       name: 'Group',
@@ -35,12 +43,17 @@ describe(`suite:${suite}`, () => {
     }],
     planTemplates: [{
       name: 'Manager plan template',
-      description: 'Plan template description',
-      coordinators: 'Manager'/* ,
-      permission: 'manager' */
+      description: 'Plan template - creation right for manager',
+      coordinators: 'Manager',
+      permission: 'manager'
+    }, {
+      name: 'Owner plan template',
+      description: 'Plan template - creation right for owner',
+      coordinators: 'Manager',
+      permission: 'owner'
     }],
     plans: [{
-      name: 'Manager plan 1',
+      name: 'Owner plan',
       participants: [{
         name: 'Tag'
       }, {
@@ -48,7 +61,37 @@ describe(`suite:${suite}`, () => {
       }]
     },
     {
-      name: 'Manager plan 2',
+      name: 'Manager plan',
+      participants: [{
+        name: 'Tag'
+      }, {
+        name: 'Manager'
+      }]
+    }],
+    eventTemplates: [{
+      name: 'Member template',
+      description: 'Template description',
+      permission: 'member'
+    }, {
+      name: 'Manager template 1',
+      description: 'Template 1 description',
+      permission: 'manager'
+    }, {
+      name: 'Manager template 2',
+      description: 'Template 2 description',
+      permission: 'manager'
+    }, {
+      name: 'Owner template',
+      description: 'Template description',
+      permission: 'owner'
+    }],
+    events: [{
+      name: 'Member event',
+      participants: [{
+        name: 'Group'
+      }]
+    }, {
+      name: 'Manager event',
       participants: [{
         name: 'Tag'
       }, {
@@ -95,34 +138,61 @@ describe(`suite:${suite}`, () => {
     expect(runner.hasError()).beFalse()
   })
 
-  it('org manager can create plan templates', async () => {
-    const member = _.find(org.members, { name: 'Manager' })
+  it('org owner can create plan templates', async () => {
+    const member = _.find(org.members, { name: 'Owner' })
     await core.login(page, member)
     await core.closeSignupAlert(page)
-    const planTemplate = _.find(org.planTemplates, { name: 'Manager plan template' })
+    const planTemplate = _.find(org.planTemplates, { name: 'Owner plan template' })
     await plans.createPlanTemplate(page, org, planTemplate)
     expect(await plans.countPlanTemplates(page, org)).to.equal(1)
     expect(await plans.planTemplateExists(page, org, planTemplate, 'name')).beTrue()
   })
 
-  it('org manager can create plan from template', async () => {
-    const managerTemplate = _.find(org.planTemplates, { name: 'Manager plan template' })
-    const managerPlanOne = _.find(org.plans, { name: 'Manager plan 1' })
-    await plans.createPlan(page, org, managerTemplate, managerPlanOne)
-    const managerPlanTwo = _.find(org.plans, { name: 'Manager plan 2' })
-    await plans.createPlan(page, org, managerTemplate, managerPlanTwo)
-    expect(await plans.countPlans(page, org)).to.equal(2)
-    expect(await plans.planExists(page, org, managerPlanOne, 'name')).beTrue()
-    expect(await plans.planExists(page, org, managerPlanTwo, 'name')).beTrue()
+  it('org owner can create plan from template', async () => {
+    const ownerTemplate = _.find(org.planTemplates, { name: 'Owner plan template' })
+    const ownerPlan = _.find(org.plans, { name: 'Owner plan' })
+    await plans.createPlan(page, org, ownerTemplate, ownerPlan)
+    expect(await plans.countPlans(page, org)).to.equal(1)
+    expect(await plans.planExists(page, org, ownerPlan, 'name')).beTrue()
+    await core.logout(page)
+    await core.goToLoginScreen(page)
   })
 
-  // Continuer les tests : suppression d'un plan par différents types de rôles, archivage...
-  /* it('org manager can remove his plans', async () => {
-    await core.clickAction(page, 'plans')
-    const memberPlan = _.find(org.plans, { name: 'Manager plan 1' })
-    await events.removePlan(page, org, memberEvent)
-    expect(await events.countPlans(page, org)).to.equal(1)
-  }) */
+  it('org manager can create plan templates', async () => {
+    const member = _.find(org.members, { name: 'Manager' })
+    await core.login(page, member)
+    const planTemplate = _.find(org.planTemplates, { name: 'Manager plan template' })
+    await plans.createPlanTemplate(page, org, planTemplate)
+    expect(await plans.countPlanTemplates(page, org)).to.equal(2)
+    expect(await plans.planTemplateExists(page, org, planTemplate, 'name')).beTrue()
+  })
+
+  it('org manager can create plan from template', async () => {
+    const managerTemplate = _.find(org.planTemplates, { name: 'Manager plan template' })
+    const managerPlan = _.find(org.plans, { name: 'Manager plan' })
+    await plans.createPlan(page, org, managerTemplate, managerPlan)
+    expect(await plans.countPlans(page, org)).to.equal(2)
+    expect(await plans.planExists(page, org, managerPlan, 'name')).beTrue()
+  })
+
+  it('org manager can create event templates', async () => {
+    const managerTemplateOne = _.find(org.eventTemplates, { name: 'Manager template 1' })
+    await events.createEventTemplate(page, org, managerTemplateOne)
+    const managerTemplateTwo = _.find(org.eventTemplates, { name: 'Manager template 2' })
+    await events.createEventTemplate(page, org, managerTemplateTwo)
+    expect(await events.countEventTemplates(page, org)).to.equal(2)
+    expect(await events.eventTemplateExists(page, org, managerTemplateOne, 'name')).beTrue()
+    expect(await events.eventTemplateExists(page, org, managerTemplateTwo, 'name')).beTrue()
+  })
+
+  it('org manager can create events from templates', async () => {
+    const managerTemplate = _.find(org.eventTemplates, { name: 'Manager template 1' })
+    const managerEvent = _.find(org.events, { name: 'Manager event' })
+    await events.createEvent(page, org, managerTemplate, managerEvent)
+    expect(await events.countEvents(page, org)).to.equal(1)
+    expect(await events.eventExists(page, org, managerTemplate, 'description')).beTrue()
+    expect(await events.eventExists(page, org, managerEvent, 'name')).beTrue()
+  })
 
   after(async function () {
     // Let enough time to process
