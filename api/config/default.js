@@ -252,7 +252,7 @@ module.exports = {
       serviceClient: process.env.GOOGLE_MAIL_CLIENT_ID,
       // New lines in env var causes some problems and raises the following error
       // Uncaught Error: error:0909006C:PEM routines:get_name:no start line
-      privateKey: JSON.parse(`"${process.env.GOOGLE_MAIL_PRIVATE_KEY}"`)
+      privateKey: process.env.GOOGLE_MAIL_PRIVATE_KEY
     },
     templateDir: path.join(__dirname, 'email-templates')
   },
