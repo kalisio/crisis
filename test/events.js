@@ -140,7 +140,11 @@ export async function createEvent (page, organisation, template, event, wait = 2
     }
   }
   if (event.coordinators) {
-    // TODO
+    for (let i = 0; i < event.coordinators.length; i++) {
+      const coordinators = event.coordinators[i]
+      await core.type(page, '#coordinators-field', coordinators.name)
+      await core.click(page, `#${_.kebabCase(coordinators.name)}`)
+    }
   }
   await core.clickAction(page, 'apply-button', wait)
 }
