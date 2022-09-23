@@ -44,13 +44,32 @@ describe(`suite:${suite}`, () => {
     planTemplates: [{
       name: 'Manager plan template',
       description: 'Plan template - creation right for manager',
-      coordinators: 'Manager',
+      coordinators: [{
+        name: 'Manager'
+      }],
       permission: 'manager'
     }, {
-      name: 'Owner plan template',
-      description: 'Plan template - creation right for owner',
-      coordinators: 'Manager',
+      name: 'Owner plan template 1',
+      description: 'Plan template 1 - creation right for owner',
+      coordinators: [{
+        name: 'Manager',
+        name: 'Owner'
+      }],
       permission: 'owner'
+    }, {
+      name: 'Owner plan template 2',
+      description: 'Plan template 2 - creation right for owner',
+      coordinators: [{
+        name: 'Manager'
+      }],
+      permission: 'owner'
+    },],
+    planObjectives: [{
+      name: 'Objective 1',
+      description: 'Objective 1 description'
+    }, {
+      name: 'Objective 2',
+      description: 'Objective 2 description'
     }],
     plans: [{
       name: 'Owner plan',
@@ -75,14 +94,24 @@ describe(`suite:${suite}`, () => {
     }, {
       name: 'Manager template 1',
       description: 'Template 1 description',
+      coordinators: [{
+        name: 'Manager',
+        name: 'Owner'
+      }],
       permission: 'manager'
     }, {
       name: 'Manager template 2',
       description: 'Template 2 description',
+      coordinators: [{
+        name: 'Manager'
+      }],
       permission: 'manager'
     }, {
       name: 'Owner template',
       description: 'Template description',
+      coordinators: [{
+        name: 'Owner'
+      }],
       permission: 'owner'
     }],
     events: [{
@@ -142,14 +171,26 @@ describe(`suite:${suite}`, () => {
     const member = _.find(org.members, { name: 'Owner' })
     await core.login(page, member)
     await core.closeSignupAlert(page)
-    const planTemplate = _.find(org.planTemplates, { name: 'Owner plan template' })
-    await plans.createPlanTemplate(page, org, planTemplate)
-    expect(await plans.countPlanTemplates(page, org)).to.equal(1)
-    expect(await plans.planTemplateExists(page, org, planTemplate, 'name')).beTrue()
+    const planTemplate1 = _.find(org.planTemplates, { name: 'Owner plan template 1' })
+    await plans.createPlanTemplate(page, org, planTemplate1)
+    const planTemplate2 = _.find(org.planTemplates, { name: 'Owner plan template 2' })
+    await plans.createPlanTemplate(page, org, planTemplate2)
+    expect(await plans.countPlanTemplates(page, org)).to.equal(2)
+    expect(await plans.planTemplateExists(page, org, planTemplate1, 'name')).beTrue()
+    expect(await plans.planTemplateExists(page, org, planTemplate2, 'name')).beTrue()
   })
+/* 
+  // Problème ici : j'accède bien au formulaire du template que je veux, mais impossible d'écrire dans les champs
+  it('org owner can add objective to plan template', async () => {
+    const planTemplate = _.find(org.planTemplates, { name: 'Owner plan template 2' })
+    const planObjective = _.find(org.planObjectives, { name: 'Objective 1' })
+    await plans.goToPlanTemplateObjectives(page, org, planTemplate.name)
+    await plans.createPlanTemplateObjective(page, org, planTemplate.name, planObjective, 10000)
+    expect(await plans.countPlanObjectives(page, org, planTemplate)).to.equal(1)
+  }) */
 
   it('org owner can create plan from template', async () => {
-    const ownerTemplate = _.find(org.planTemplates, { name: 'Owner plan template' })
+    const ownerTemplate = _.find(org.planTemplates, { name: 'Owner plan template 1' })
     const ownerPlan = _.find(org.plans, { name: 'Owner plan' })
     await plans.createPlan(page, org, ownerTemplate, ownerPlan)
     expect(await plans.countPlans(page, org)).to.equal(1)
@@ -163,7 +204,7 @@ describe(`suite:${suite}`, () => {
     await core.login(page, member)
     const planTemplate = _.find(org.planTemplates, { name: 'Manager plan template' })
     await plans.createPlanTemplate(page, org, planTemplate)
-    expect(await plans.countPlanTemplates(page, org)).to.equal(2)
+    expect(await plans.countPlanTemplates(page, org)).to.equal(3)
     expect(await plans.planTemplateExists(page, org, planTemplate, 'name')).beTrue()
   })
 
@@ -186,12 +227,29 @@ describe(`suite:${suite}`, () => {
   })
 
   it('org manager can create events from templates', async () => {
+    await plans.goToPlansActivity(page, org, 3000)
+    const planName = 'Manager plan'
+    await plans.goToPlanEvents(page, org, planName, 5000)
     const managerTemplate = _.find(org.eventTemplates, { name: 'Manager template 1' })
     const managerEvent = _.find(org.events, { name: 'Manager event' })
     await events.createEvent(page, org, managerTemplate, managerEvent)
     expect(await events.countEvents(page, org)).to.equal(1)
     expect(await events.eventExists(page, org, managerTemplate, 'description')).beTrue()
     expect(await events.eventExists(page, org, managerEvent, 'name')).beTrue()
+  })
+
+  it('event exists', async () => {
+    const memberEvent = _.find(org.events, { name: 'Manager event' })
+    memberEvent.name = 'Manager event'
+    const planName = 'Manager plan'
+    expect(await plans.planEventExists(page, org, planName, memberEvent, 'name')).beTrue()
+  })
+
+  it('org manager can close an event', async () => {
+    const eventName = 'Manager event'
+    await page.waitForTimeout(3000)
+    await plans.expandPlanEvent(page, org, eventName, 5000)
+    await plans.closePlanEvent(page, org, eventName, 20000)
   })
 
   after(async function () {
