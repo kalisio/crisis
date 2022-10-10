@@ -9,12 +9,12 @@ source .travis.env.sh
 
 # Configure rclone
 mkdir -p $HOME/.config/rclone
-cp $WORKSPACE/common/rclone.conf $HOME/.config/rclone/.
+cp $WORKSPACE_DIR/common/rclone.conf $HOME/.config/rclone/.
 
 # Install the required secret files requied to sign the app
-cp $WORKSPACE/common/android/*.json src-cordova/
-cp $WORKSPACE/$FLAVOR/android/*.json src-cordova/
-cp $WORKSPACE/common/android/$GOOGLE_KEYSTORE src-cordova/	
+cp $WORKSPACE_DIR/common/android/*.json src-cordova/
+cp $WORKSPACE_DIR/$FLAVOR/android/*.json src-cordova/
+cp $WORKSPACE_DIR/common/android/$GOOGLE_KEYSTORE src-cordova/	
 
 travis_fold end "provision"
 

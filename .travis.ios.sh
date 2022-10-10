@@ -9,13 +9,13 @@ source .travis.env.sh
 
 # Configure rclone
 mkdir -p $HOME/.config/rclone
-cp $WORKSPACE/common/rclone.conf $HOME/.config/rclone/.
+cp $WORKSPACE_DIR/common/rclone.conf $HOME/.config/rclone/.
 
 # Copy the certificates
-cp $WORKSPACE/common/ios/*.cer .
-cp $WORKSPACE/common/ios/*.p12 .
-cp $WORKSPACE/$FLAVOR/ios/*.cer .
-cp $WORKSPACE/$FLAVOR/ios/*.p12 .
+cp $WORKSPACE_DIR/common/ios/*.cer .
+cp $WORKSPACE_DIR/common/ios/*.p12 .
+cp $WORKSPACE_DIR/$FLAVOR/ios/*.cer .
+cp $WORKSPACE_DIR/$FLAVOR/ios/*.p12 .
 
 # Create a custom keychain
 security create-keychain -p travis ios-build.keychain
