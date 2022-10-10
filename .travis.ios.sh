@@ -34,9 +34,9 @@ done
 security set-key-partition-list -S apple-tool:,apple: -s -k travis ios-build.keychain
 
 # Install the required secret files requied to sign the app
-cp $WORKSPACE/$FLAVOR/ios/build.json src-cordova/.
+cp $WORKSPACE_DIR/$FLAVOR/ios/build.json src-cordova/.
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-cp $WORKSPACE/$FLAVOR/ios/*.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+cp $WORKSPACE_DIR/$FLAVOR/ios/*.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
 travis_fold end "provision"
 
