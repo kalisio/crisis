@@ -171,9 +171,10 @@ export default {
     try {
       // No need to update/redirect here since the user should be managed by event handler above
       await this.restoreSession()
-    } catch (_) {
+    } catch (error) {
       // Check if we need to redirect based on the fact there is no authenticated user
-      this.redirect(null)
+      this.user = null
+      this.redirect()
     }
   },
   beforeUnmount () {

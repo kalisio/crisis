@@ -29,22 +29,22 @@
       <KCardSection :title="$t('PlanCard.EVENTS_SECTION')">
         <div class="full-width row justify-between items-center no-wrap">
           <KAction
-            id= "plan-events"
-            icon= "las la-fire"
+            id="plan-events"
+            icon="las la-fire"
             :label="$t('PlanCard.EVENTS', { count: eventsCount })"
             :route="{ name: 'events-activity', params: { contextId }, query: { plan: item._id } }"
           />
           <q-space />
           <KAction
             v-if="canAccessCatalog"
-            id= "plan-catalog"
-            icon= "las la-map"
+            id="plan-catalog"
+            icon="las la-map"
             :tooltip="$t('PlanCard.VIEW_CATALOG')"
             :route="{ name: 'catalog-activity', params: { contextId }, query: { plan: item._id } }"
           />
           <KAction
             v-if="canAccessArchivedEvents"
-            id= "plan-archived-events"
+            id="plan-archived-events"
             icon= "las la-clipboard-list"
             :tooltip="$t('PlanCard.VIEW_ARCHIVED_EVENTS')"
             :route="{ name: 'archived-events-activity', params: { contextId }, query: { plan: item._id } }" 
