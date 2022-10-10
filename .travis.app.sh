@@ -49,4 +49,3 @@ docker push kalisio/$APP:$FLAVOR
 check_code $? 0 "Pushing the $APP:$TAG docker image"
 
 travis_fold end "deploy"
-
