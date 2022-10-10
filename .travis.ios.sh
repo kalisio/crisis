@@ -9,13 +9,13 @@ source .travis.env.sh
 
 # Configure rclone
 mkdir -p $HOME/.config/rclone
-cp $WORKSPACE_DIR/workspace/common/rclone.conf $HOME/.config/rclone/.
+cp $WORKSPACE/common/rclone.conf $HOME/.config/rclone/.
 
 # Copy the certificates
-cp $WORKSPACE_DIR/workspace/common/ios/*.cer .
-cp $WORKSPACE_DIR/workspace/common/ios/*.p12 .
-cp $WORKSPACE_DIR/workspace/$FLAVOR/ios/*.cer .
-cp $WORKSPACE_DIR/workspace/$FLAVOR/ios/*.p12 .
+cp $WORKSPACE/common/ios/*.cer .
+cp $WORKSPACE/common/ios/*.p12 .
+cp $WORKSPACE/$FLAVOR/ios/*.cer .
+cp $WORKSPACE/$FLAVOR/ios/*.p12 .
 
 # Create a custom keychain
 security create-keychain -p travis ios-build.keychain
@@ -34,9 +34,9 @@ done
 security set-key-partition-list -S apple-tool:,apple: -s -k travis ios-build.keychain
 
 # Install the required secret files requied to sign the app
-cp $WORKSPACE_DIR/workspace/$FLAVOR/ios/build.json src-cordova/.
+cp $WORKSPACE/$FLAVOR/ios/build.json src-cordova/.
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-cp $WORKSPACE_DIR/workspace/$FLAVOR/ios/*.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+cp $WORKSPACE/$FLAVOR/ios/*.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
 travis_fold end "provision"
 
