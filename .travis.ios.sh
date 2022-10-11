@@ -78,4 +78,3 @@ rclone copy ios.deploy.log scw:kalisio-builds/${BUILD_BUCKET}/ios.deploy.log
 check_code $EXIT_CODE 0 "Deploying the app"
 
 travis_fold end "deploy"
-
