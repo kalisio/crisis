@@ -46,14 +46,14 @@
       <!--
         Events graph
       -->
-      <div v-show="showChart" class="row justify-center text-center q-ma-none q-pa-none" >
-        <q-page-sticky position="top" :offset="[0, 60]">
-        <k-stats-chart ref="chart" :style="chartStyle" />
-        </q-page-sticky>
-        <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
-          icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
-        <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
-          icon="las la-chevron-right" class="absolute-right" @click="onNextChart" />
+      <div v-show="showChart" class="row justify-center">
+        <div class="row" :style="chartStyle">
+          <k-stats-chart class="col q-mt-xl" ref="chart" />
+          <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
+            icon="las la-chevron-left" class="col-1" @click="onPreviousChart"/>
+          <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
+            icon="las la-chevron-right" class="col-1" @click="onNextChart" />
+        </div>
       </div>
       <k-modal
         id="chart-settings-modal"
@@ -140,8 +140,9 @@ export default {
       return this.mode === 'history'
     },
     chartStyle () {
-      const min = Math.min(this.$q.screen.width, this.$q.screen.height)
-      return `width: ${min * .75}px;`
+      return (this.chartType === 'bar' ?
+        `width: ${this.$q.screen.width * 0.8}px;` :
+        `width: ${this.$q.screen.height * 0.8}px;`)
     },
     nbCharts () {
       if (!this.chartData.length || (this.nbValuesPerChart.value === 0)) return 1
