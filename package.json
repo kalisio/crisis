@@ -188,7 +188,7 @@
     "commander": "^2.15.0",
     "config": "^1.26.1",
     "connect-history-api-fallback": "^1.1.0",
-    "cordova": "^8.0.0",
+    "cordova": "^9.0.0",
     "cordova-set-version": "^6.0.3",
     "debug": "^4.1.0",
     "envsub": "^3.0.9",
