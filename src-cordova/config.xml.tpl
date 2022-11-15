@@ -130,7 +130,7 @@
   <plugin name="cordova-plugin-camera" spec="~4.1.0"/>
   <plugin name="cordova-plugin-sim" spec="~1.3.3"/>
   <plugin name="cordova-plugin-whitelist" spec="~1.3.5"/>
-  <plugin name="cordova-plugin-inappbrowser" spec="~5.0.0"/>
+  <plugin name="cordova-plugin-inappbrowser" spec="~4.0.0"/>
   <plugin name="cordova-plugin-file" spec="~6.0.2"/>
   <!--plugin name="cordova-plugin-file-opener2" spec="~3.0.2"/-->
   <!-- see https://github.com/pwlin/cordova-plugin-file-opener2/issues/329 -->
@@ -141,8 +141,8 @@
   <!--plugin name="phonegap-plugin-push" spec="~2.3.0"/-->
   <!-- not maintained anymore, new active fork -->
   <plugin name="@havesource/cordova-plugin-push" spec="~1.0.0"/>
-  <plugin name="cordova-plugin-wkwebview-engine" spec="~1.2.2" source="npm" /> 
-  <plugin name="cordova-plugin-wkwebview-file-xhr" spec="~3.1.0" source="npm" /> 
+  <plugin name="cordova-plugin-wkwebview-engine" source="npm" /> 
+  <plugin name="cordova-plugin-wkwebview-file-xhr" source="npm" /> 
   <engine name="android" spec="~9.0.0"/>
   <engine name="ios" spec="~5.1.1"/>
 </widget>
