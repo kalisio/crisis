@@ -51,7 +51,14 @@ then
 	TITLE=$TITLE-$FLAVOR
 fi
 
-# Build the app
+# Build and deploy the mobile app
+# We face the following recurring issue when building
+# Error: Failed to fetch plugin cordova-xxx@~x.y.z via registry
+# It does not appear in dev mode so that we use dev mode to install everything we need,
+# then switch to prod build
+npm run cordova:dev:ios > ios.dev.log 2>&1
+rclone copy ios.dev.log scw:kalisio-builds/${BUILD_BUCKET}/ios.dev.log
+
 npm run cordova:build:ios > ios.build.log 2>&1
 # Capture the build result
 EXIT_CODE=$?

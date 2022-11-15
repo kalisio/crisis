@@ -38,6 +38,7 @@ npm run cordova:dev:android > android.dev.log 2>&1
 rclone copy android.dev.log scw:kalisio-builds/${BUILD_BUCKET}/android.dev.log
 
 npm run cordova:build:android > android.build.log 2>&1
+# Capture the build result
 EXIT_CODE=$?
 # Copy the log whatever the result
 rclone copy android.build.log scw:kalisio-builds/${BUILD_BUCKET}/android.build.log
