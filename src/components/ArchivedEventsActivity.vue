@@ -88,13 +88,12 @@ import { mixins as kdkCoreMixins, utils as kdkCoreUtils, Time } from '@kalisio/k
 import { mixins as kdkMapMixinss } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
-const activityMixin = kdkCoreMixins.baseActivity()
+const activityMixin = kdkCoreMixins.baseActivity('archivedEventsActivity')
 
 // For mapping or statistics we get all events at once to avoid managing pagination
 const MAX_EVENTS = 5000
 
 export default {
-  name: 'archived-events-activity',
   mixins: [
     activityMixin,
     kdkCoreMixins.baseCollection,

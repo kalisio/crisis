@@ -39,8 +39,7 @@ import { permissions } from '@kalisio/kdk/core.common'
 import * as utils from '../utils'
 
 export default {
-  name: 'archived-plans-activity',
-  mixins: [kCoreMixins.baseActivity()],
+  mixins: [kCoreMixins.baseActivity('archivedPlansActivity')],
   props: {
     contextId: {
       type: String,

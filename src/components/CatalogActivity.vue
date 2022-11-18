@@ -64,7 +64,7 @@ import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/c
 import mixins from '../mixins'
 import AlertEditor from './AlertEditor.vue'
 
-const activityMixin = kCoreMixins.baseActivity()
+const activityMixin = kCoreMixins.baseActivity('catalogActivity')
 
 // For mapping we get all events at once to avoid managing pagination
 const MAX_ITEMS = 5000
@@ -92,10 +92,10 @@ export default {
     kMapMixins.map.gsmapLayers,
     activityMixin,
     kMapMixins.activity,
+    kMapMixins.style,
     kMapMixins.featureSelection,
     kMapMixins.featureService,
     kMapMixins.infobox,
-    kMapMixins.style,
     kMapMixins.weacast,
     kMapMixins.context,    
     mixins.alerts,
@@ -125,7 +125,7 @@ export default {
   },
   watch: {
     objectiveFilters: function () {
-      this.events.refreshCollection()
+      //this.events.refreshCollection()
       this.refreshObjectivesLayer()
     },
     planId: {
@@ -152,13 +152,13 @@ export default {
       await this.initializeMap(container)
     },
     async configureActivity () {
-      // Wait until map is ready
-      await this.initializeMap()
       activityMixin.methods.configureActivity.call(this)
       Time.setCurrentTime(moment.utc())
       // Then update events, alerts, plan
+      /*
       this.alerts.refreshCollection()
       this.events.refreshCollection()
+      */
       this.refreshObjectivesLayer()
     },
     getFeatureActions (feature, layer) {
@@ -253,8 +253,10 @@ export default {
           }
         })
       }
+      /*
       this.updateLayer(this.$t('CatalogActivity.EVENTS_LAYER'),
         { type: 'FeatureCollection', features: _.get(this.events, 'items', []) })
+      */
     },
     onEventCollectionRefreshed () {
       this.refreshEventsLayer()
@@ -282,8 +284,10 @@ export default {
           }
         })
       }
+      /*
       this.updateLayer(this.$t('CatalogActivity.ALERTS_LAYER'),
         { type: 'FeatureCollection', features: _.get(this.alerts, 'items', []) })
+      */
     },
     onAlertCollectionRefreshed () {
       this.refreshAlertsLayer()
@@ -622,7 +626,6 @@ export default {
       $limit: MAX_ITEMS,
       $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
     }, this.getPlanQuery()), () => this.getPlanObjectiveQuery(), { nbItemsPerPage: 0 })
-    console.log(this.events)
     this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
     */
     // Setup engine events listeners

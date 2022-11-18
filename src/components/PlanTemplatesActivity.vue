@@ -31,8 +31,7 @@ import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
-  name: 'plan-templates-activity',
-  mixins: [kCoreMixins.baseActivity()],
+  mixins: [kCoreMixins.baseActivity('planTemplatesActivity')],
   props: {
     contextId: {
       type: String,

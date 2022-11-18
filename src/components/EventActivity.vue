@@ -2,7 +2,7 @@
   <KPage :padding="false">
     <template v-slot:page-content>
       <!-- Map -->
-      <div ref="map" :style="viewStyle">
+      <div :ref="configureMap" :style="viewStyle">
         <q-resize-observer @resize="onMapResized" />
       </div>
 
@@ -31,10 +31,9 @@ import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.cl
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
-const activityMixin = kCoreMixins.baseActivity()
+const activityMixin = kCoreMixins.baseActivity('event-activity')
 
 export default {
-  name: 'event-activity',
   provide () {
     return {
       kActivity: this,
@@ -42,14 +41,6 @@ export default {
     }
   },
   mixins: [
-    activityMixin,
-    kCoreMixins.baseCollection,
-    kMapMixins.featureSelection,
-    kMapMixins.featureService,
-    kMapMixins.infobox,
-    kMapMixins.style,
-    kMapMixins.weacast,
-    kMapMixins.activity,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
     kMapMixins.map.forecastLayers,
@@ -63,6 +54,14 @@ export default {
     kMapMixins.map.tiledWindLayers,
     kMapMixins.map.mapillaryLayers,
     kMapMixins.map.gsmapLayers,
+    activityMixin,
+    kCoreMixins.baseCollection,
+    kMapMixins.featureSelection,
+    kMapMixins.featureService,
+    kMapMixins.infobox,
+    kMapMixins.style,
+    kMapMixins.weacast,
+    kMapMixins.activity,
     mixins.events,
     mixins.plans
   ],
@@ -83,6 +82,13 @@ export default {
     }
   },
   methods: {
+    async configureMap (container) {
+      // Avoid reentrance during awaited operations
+      if (!container || this.mapContainer) return
+      this.mapContainer = container
+      // Wait until map is ready
+      await this.initializeMap(container)
+    },
     getService () {
       // Archived mode ?
       return this.$api.getService(this.archived ? 'archived-event-logs' : 'event-logs')
@@ -97,8 +103,6 @@ export default {
     async configureActivity () {
       // Archived mode ?
       this.archived = _.get(this.$route, 'query.archived')
-      // Wait until map is ready
-      await this.initializeMap()
       this.event = await this.$api.getService(this.archived ? 'archived-events' : 'events', this.contextId).get(this.objectId)
       this.refreshUser()
       // If we'd like to only work in real-time

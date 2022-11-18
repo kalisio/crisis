@@ -32,10 +32,9 @@ import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { permissions } from '@kalisio/kdk/core.common'
 import * as utils from '../utils'
 
-const activityMixin = kCoreMixins.baseActivity()
+const activityMixin = kCoreMixins.baseActivity('plansActivity')
 
 export default {
-  name: 'plans-activity',
   mixins: [activityMixin],
   props: {
     contextId: {
