@@ -92,7 +92,7 @@
     "@casl/mongoose": "^7.1.0",
     "@feathersjs/client": "^5.0.0-pre.28",
     "@feathersjs/commons": "^5.0.0-pre.28",
-    "@feathersjs/memory": "^5.0.0-pre.20",
+    "@feathersjs/memory": "^5.0.0-pre.28",
     "@geoman-io/leaflet-geoman-free": "^2.11.1",
     "@kalisio/kdk": "https://github.com/kalisio/kdk#es-modules",
     "@mapbox/geojsonhint": "^3.0.1",

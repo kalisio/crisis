@@ -610,6 +610,7 @@ export default {
   },
   mounted () {
     // Create and setup the alert collection
+    /*
     this.alerts = this.configureCollection('alerts',
       () => ({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }), () => ({}), { nbItemsPerPage: 0 }) 
     console.log(this.alerts)
@@ -623,6 +624,7 @@ export default {
     }, this.getPlanQuery()), () => this.getPlanObjectiveQuery(), { nbItemsPerPage: 0 })
     console.log(this.events)
     this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
+    */
     // Setup engine events listeners
     this.$engineEvents.on('edit-start', this.onEditStartEvent)
     this.$engineEvents.on('edit-stop', this.onEditStopEvent)
