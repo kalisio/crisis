@@ -7,7 +7,6 @@ export default {
     find: [],
     get: [],
     create: [
-    (hook) => { console.log('fuck1') },
     checkGroupsQuotas
     ],
     update: [],
@@ -17,17 +16,13 @@ export default {
 
   after: {
     all: [
-      (hook) => { console.log('fuck2') },
       updateEventTemplateResource('participants'),
-      updateEventTemplateResource('coordinators'),
-      (hook) => { console.log('fuck3') }
+      updateEventTemplateResource('coordinators')
     ],
     find: [],
     get: [],
     create: [
-      (hook) => { console.log('fuck4') },
-      coreHooks.createTopic(),
-      (hook) => { console.log('fuck5') }
+      coreHooks.createTopic()
       // Groups can now be created as empty because org managers can manage all groups
       // coreHooks.createGroupAuthorisations
     ],

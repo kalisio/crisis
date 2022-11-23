@@ -338,9 +338,9 @@ module.exports = {
     url: process.env.DB_URL || (containerized ? 'mongodb://mongodb:27017/aktnmap' : 'mongodb://127.0.0.1:27017/aktnmap')
   },
   storage: {
-    client: {
+    s3Client: {
       credentials: {
-        accessKeyId: process.env.S3_ACCESS_KEY_ID,
+        accessKeyId: process.env.S3_ACCESS_KEY,
         secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
       },
       endpoint: process.env.S3_ENDPOINT,
