@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import commonHooks from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
 
 export default {
   before: {
@@ -22,12 +21,10 @@ export default {
     all: [],
     find: [],
     get: [],
-    // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
-    create: [coreHooks.unpopulateAttachmentResource],
+    create: [],
     update: [],
     patch: [],
-    // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
-    remove: [coreHooks.unpopulateAttachmentResource]
+    remove: []
   },
 
   error: {

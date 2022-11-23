@@ -61,8 +61,7 @@ const hooks = {
     patch: [sendEventNotifications],
     // Because the notification ID is based on created/updated time we need to update it even on remove
     remove: [commonHooks.setNow('updatedAt'),
-      sendEventNotifications/*, Because we can archive events we don't actually remove attachments so that it remain reachable
-      coreHooks.removeAttachments('attachments') */
+      sendEventNotifications
     ]
   },
 
