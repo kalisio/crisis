@@ -1,11 +1,11 @@
 <template>
-  <k-page padding @content-resized="onPageContentResized">
+  <KPage padding @content-resized="onPageContentResized">
     <template v-slot:page-content>
       <!--
         Page content
        -->
       <div class="row justify-center q-pa-lg">
-        <k-history
+        <KHistory
           v-if="height"
           id="history"
           service="archived-plans"
@@ -16,19 +16,19 @@
           date-field="updatedAt"
           :contextId="contextId"
           :height="height">
-          <template slot="empty-history">
+          <template v-slot:empty-history>
             <div class="absolute-center">
-              <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
+              <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
             </div>
           </template>
-        </k-history>
+        </KHistory>
       </div>
       <!--
         Router view to enable routing to modals
       -->
       <router-view service="archived-plans"></router-view>
     </template>
-  </k-page>
+  </KPage>
 </template>
 
 <script>
@@ -39,8 +39,7 @@ import { permissions } from '@kalisio/kdk/core.common'
 import * as utils from '../utils'
 
 export default {
-  name: 'archived-plans-activity',
-  mixins: [kCoreMixins.baseActivity()],
+  mixins: [kCoreMixins.baseActivity('archivedPlansActivity')],
   props: {
     contextId: {
       type: String,
@@ -84,12 +83,6 @@ export default {
       this.height = size.height - 110
     }
   },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-history'] = this.$load('collection/KHistory')
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
-  },
   async created () {
     // Setup current time to now
     this.currentTime = Time.getCurrentTime()
@@ -105,7 +98,7 @@ export default {
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },
-  beforeDestroy () {
+  beforeUnmount () {
     // Restore the current time
     Time.setCurrentTime(this.currentTime)
     // Releases listeners

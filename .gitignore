@@ -1,15 +1,8 @@
 # IDE
 .vscode
 
-# Quasar/Cordova build
+# Quasar
 .quasar
-cordova
-src-cordova/config.xml
-src-cordova/*.keystore
-src-cordova/*.json
-src-cordova/platforms
-src-cordova/plugins
-src-cordova/www
 
 # Logs
 logs
@@ -87,4 +80,4 @@ src/tours/core
 src/tours/map
 
 #KDK icons
-src/assets/icons
+public/icons/kdk

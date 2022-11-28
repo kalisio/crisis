@@ -79,7 +79,7 @@ const plansMixin = {
     plansService.on('updated', this.onPlanUpdated)
     plansService.on('removed', this.onPlanRemoved)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     const plansService = this.$api.getService(this.planService, this.contextId)
     plansService.off('patched', this.onPlanUpdated)
     plansService.off('updated', this.onPlanUpdated)

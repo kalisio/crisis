@@ -1,12 +1,14 @@
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { checkGroupsQuotas, updateEventTemplateResource } from '../../hooks'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import { checkGroupsQuotas, updateEventTemplateResource } from '../../hooks/index.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [checkGroupsQuotas],
+    create: [
+    checkGroupsQuotas
+    ],
     update: [],
     patch: [],
     remove: []
@@ -20,9 +22,9 @@ module.exports = {
     find: [],
     get: [],
     create: [
-      coreHooks.createTopic(),
+      coreHooks.createTopic()
       // Groups can now be created as empty because org managers can manage all groups
-      //coreHooks.createGroupAuthorisations
+      // coreHooks.createGroupAuthorisations
     ],
     update: [],
     patch: [],

@@ -1,47 +1,40 @@
 <template>
-  <k-modal
+  <KModal
     :title="editorTitle"
-    :buttons="getButtons()"
+    :buttons="buttons"
     v-model="isModalOpened"
-    @opened="$emit('opened')"
-    @closed="$emit('closed')">
+  >
     <div class="column xs-gutter">
-        <k-form
-          ref="eventForm"
-          :class="{ 'light-dimmed': applyInProgress }"
-          :contextId="contextId"
-          :objectId="objectId"
-          :schema="schema"
-          @field-changed="onFieldChanged" />
-        <div class="row full-width justify-end">
-          <q-checkbox :label="$t('EventEditor.NOTIFY')" v-model="notify" />
-        </div>
+      <KForm
+        :ref="onFormReferenceCreated"
+        :contextId="contextId"
+        :objectId="objectId"
+        :schema="schema"
+        @field-changed="onFieldChanged"
+        @form-ready="onFormReady" 
+      />
+      <div class="row full-width justify-end">
+        <q-checkbox :label="$t('EventEditor.NOTIFY')" v-model="notify" />
+      </div>
     </div>
-  </k-modal>
+  </KModal>
 </template>
 
 <script>
 import _ from 'lodash'
 import moment from 'moment'
 import centroid from '@turf/centroid'
-import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
-import { QCheckbox } from 'quasar'
-
-const editorMixin = kCoreMixins.baseEditor(['eventForm'])
 
 export default {
   name: 'event-editor',
-  components: {
-    QCheckbox
-  },
   mixins: [
-    kCoreMixins.baseModal,
-    kCoreMixins.service,
-    kCoreMixins.objectProxy,
-    kCoreMixins.schemaProxy,
-    editorMixin,
-    kCoreMixins.refsResolver(['eventForm']),
+    kdkCoreMixins.baseModal,
+    kdkCoreMixins.service,
+    kdkCoreMixins.objectProxy,
+    kdkCoreMixins.schemaProxy,
+    kdkCoreMixins.baseEditor,
     mixins.plans
   ],
   props: {
@@ -78,19 +71,15 @@ export default {
       notify: undefined
     }
   },
-  methods: {
-    getButtons () {
-      if (this.getMode() === 'create') {
-        return [
-          { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
-          { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
-        ]
-      }
+  computed: {
+    buttons () {
       return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
         { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
       ]
-    },
+    }
+  },
+  methods: {
     async loadObject () {
       if (this.templateId) {
         if (!this.template) this.template = await this.$api.getService('event-templates').get(this.templateId)
@@ -149,7 +138,7 @@ export default {
         this.updateSchema()
       } else {
         // Otherwise proceed as usual to load the event object
-        return kCoreMixins.objectProxy.methods.loadObject.call(this)
+        return kdkCoreMixins.objectProxy.methods.loadObject.call(this)
       }
     },
     updateSchema () {
@@ -180,23 +169,19 @@ export default {
     async loadSchema () {
       // Call super
       // Start from schema and clone it because it will be shared by all editors
-      const schema = _.cloneDeep(await kCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName()))
+      const schema = _.cloneDeep(await kdkCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName()))
       this.schema = schema
       this.updateSchema()
       return this.schema
     },
     getBaseQuery (object) {
       // Overriden to handle notification messages
-      const query = editorMixin.methods.getBaseQuery.call(this)
-
+      const query = kdkCoreMixins.baseEditor.methods.getBaseQuery.call(this)
       // const notification = _.get(object, 'notification', true)
       // if (notification) {
       if (this.notify) {
-        if (this.getMode() === 'create') {
-          query.notification = this.$t('EventNotifications.CREATE')
-        } else if (this.getMode() === 'update') {
-          query.notification = this.$t('EventNotifications.UPDATE')
-        }
+        if (this.editorMode === 'create') query.notification = this.$t('EventNotifications.CREATE')
+        else query.notification = this.$t('EventNotifications.UPDATE')
       }
       // _.unset(object, 'notification')
       return query
@@ -210,25 +195,19 @@ export default {
           delete this.object.workflow
         }
       }
+    },
+    async apply () {
+      if (await kdkCoreMixins.baseEditor.methods.apply.call(this)) this.closeModal()
     }
-  },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-form'] = this.$load('form/KForm')
   },
   async created () {
     // Build the editor.
     // Note that if the event belongs to a plan we need to wait for the plan to be loaded
     if (!this.hasPlan()) this.refresh()
     else this.loadPlan()
-    this.$on('applied', this.closeModal)
     // Setup notify option
-    if (this.getMode() === 'create') this.notify = true
+    if (this.editorMode === 'create') this.notify = true
     else this.notify = false
-  },
-  beforeDestroy () {
-    this.$off('applied', this.closeModal)
   }
 }
 </script>

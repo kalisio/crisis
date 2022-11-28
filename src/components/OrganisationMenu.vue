@@ -10,12 +10,13 @@
       menu-self="top middle">
       <template v-slot:label>
         <div>
-          <k-avatar
+          <KAvatar
             id="organisation-avatar"
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'"
             :object="organisation"
             :contextId="organisation._id"
-            :size="$q.screen.lt.sm ? '1.5rem' : '2rem'" />
+            :size="$q.screen.lt.sm ? '1.5rem' : '2rem'" 
+          />
         </div>
       </template>
       <template v-slot:default>
@@ -23,64 +24,68 @@
           <div class="row full-width justify-center q-pa-md text-subtitle1 bg-grey-4">
             {{ organisation.name }}
           </div>
-          <k-card-section v-if="hasEventsSection">
+          <KCardSection v-if="hasEventsSection">
             <!-- Events section -->
             <div class="full-width row justify-between items-center no-wrap">
-              <k-action
+              <KAction
                 id= "organisation-events"
                 icon= "las la-fire"
                 :label="$t('OrganisationMenu.EVENTS_LABEL', { count: eventsCount })"
-                @triggered="routeTo('events-activity')" />
+                @triggered="routeTo('events-activity')" 
+              />
               <q-space />
-              <k-action
+              <KAction
                 v-if="canAccessCatalog"
                 id= "organisation-catalog"
                 icon= "las la-map"
                 :tooltip="$t('OrganisationMenu.VIEW_CATALOG')"
-                @triggered="routeTo('catalog-activity')"  />
-              <k-action
+                @triggered="routeTo('catalog-activity')"  
+              />
+              <KAction
                 v-if="canAccessArchivedEvents"
                 id= "organisation-archived-events"
                 icon= "las la-clipboard-list"
                 :tooltip="$t('OrganisationMenu.VIEW_ARCHIVED_EVENTS')"
-                @triggered="routeTo('archived-events-activity')"   />
+                @triggered="routeTo('archived-events-activity')"   
+              />
             </div>
-          </k-card-section>
+          </KCardSection>
           <!-- Plans section -->
-          <k-card-section v-if="hasPlansSection && canAccessPlans">
+          <KCardSection v-if="hasPlansSection && canAccessPlans">
             <div class="full-width row justify-between items-center no-wrap">
-              <k-action
+              <KAction
                 id= "organisation-plans"
                 icon= "las la-stream"
                 :label="$t('OrganisationMenu.PLANS_LABEL', { count: plansCount })"
-                @triggered="routeTo('plans-activity')" />
+                @triggered="routeTo('plans-activity')" 
+              />
               <q-space />
-              <k-action
+              <KAction
                 v-if="canAccessArchivedPlans"
                 id= "organisation-archived-plans"
                 icon= "las la-archive"
                 :tooltip="$t('OrganisationMenu.VIEW_ARCHIVED_PLANS')"
-                @triggered="routeTo('archived-plans-activity')" />
+                @triggered="routeTo('archived-plans-activity')" 
+              />
             </div>
-          </k-card-section>
+          </KCardSection>
           <!-- Manage section -->
-          <k-card-section v-if="hasManageSection && canManageOrganisation">
+          <KCardSection v-if="hasManageSection && canManageOrganisation">
             <div class="row justify-center">
-              <k-action
+              <KAction
                 id= "manage-organisation"
                 icon= "las la-cog"
                 size="md"
                 :label="$t('OrganisationMenu.MANAGE_ORGANISATION')"
                 @triggered="routeTo('members-activity')"
-                :propagate="false" />
+                :propagate="false" 
+              />
             </div>
-          </k-card-section>
+          </KCardSection>
         </q-card>
       </template>
     </q-btn-dropdown>
   </div>
-</template>
-
 </template>
 
 <script>
@@ -175,11 +180,6 @@ export default {
       this.plansCount = await this.countItems('plans', query)
     }
   },
-  beforeCreate () {
-    this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
-    this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
-    this.$options.components['k-action'] = this.$load('frame/KAction')
-  },
   async created () {
     await this.updateCounts()
     // Keep track of changes once loaded
@@ -194,7 +194,7 @@ export default {
     plansService.on('updated', this.updateCounts)
     plansService.on('removed', this.updateCounts)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     const eventsService = this.$api.getService('events', this.organisation._id)
     eventsService.off('created', this.updateCounts)
     eventsService.off('patched', this.updateCounts)

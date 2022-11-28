@@ -49,7 +49,7 @@ const contextHelp = function (tour) {
 const leftPane = function (tour) {
   return {
     content: [
-      { component: 'QImg', src: 'statics/aktnmap-banner.png' },
+      { component: 'QImg', src: 'aktnmap-banner.png' },
       { component: 'account/KIdentityPanel', class: 'full-width' },
       { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
@@ -269,7 +269,8 @@ const contextFilter = function (field, services = []) {
 
 const layerActions = [{
   id: 'layer-actions',
-  component: 'frame/KPopupAction',
+  component: 'menu/KMenu',
+  dropdownIcon: 'las la-ellipsis-v',
   actionRenderer: 'item',
   content: [
     { id: 'zoom-to', label: 'mixins.activity.ZOOM_TO_LABEL', icon: 'las la-search-location', handler: 'onZoomToLayer' },
@@ -1101,7 +1102,7 @@ module.exports = {
       filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
     },
     restore: { view: false, layers: false },
-    featuresChunkSize: 5000 // TODO: here or in mapEngine ?
+    featuresChunkSize: 5000 
   },
   
   routes: require('../src/router/routes')

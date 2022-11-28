@@ -1,6 +1,6 @@
-import { checkAlertsQuotas } from '../../hooks'
+import { checkAlertsQuotas } from '../../hooks/index.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
     find: [],

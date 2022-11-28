@@ -27,11 +27,11 @@ export default {
     }
   },
   created () {
-    this.$events.$on('context-changed', this.setupContext)
+    this.$events.on('context-changed', this.setupContext)
     this.service.on('patched', this.watchOrganisation)
   },
-  beforeDestroy () {
-    this.$events.$off('context-changed', this.setupContext)
+  beforeUnmount () {
+    this.$events.off('context-changed', this.setupContext)
     this.service.off('patched', this.watchOrganisation)
     Theme.restore()
   }

@@ -1,11 +1,12 @@
-import { when } from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { updateEventTemplateResource } from '../../hooks'
+import commonHooks from 'feathers-hooks-common'
+import fuzzySearch from 'feathers-mongodb-fuzzy-search'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import { updateEventTemplateResource } from '../../hooks/index.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
-    find: [],
+    find: [fuzzySearch({ fields: ['value'] })],
     get: [],
     create: [],
     update: [],
@@ -21,13 +22,13 @@ module.exports = {
     find: [],
     get: [],
     // We create topics for members tag only, check if tag is really created or just its count increased
-    create: [when(hook => hook.result && hook.result.scope === 'members' && hook.result.count === 1, coreHooks.createTopic()),
+    create: [commonHooks.when(hook => hook.result && hook.result.scope === 'members' && hook.result.count === 1, coreHooks.createTopic()),
       // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
       coreHooks.unpopulateTagResource],
     update: [],
     patch: [],
     // We remove topics for members tag only, check if tag is really removed or just its count decreased
-    remove: [when(hook => hook.result && hook.result.scope === 'members' && hook.result.count <= 0, coreHooks.removeTopic()),
+    remove: [commonHooks.when(hook => hook.result && hook.result.scope === 'members' && hook.result.count <= 0, coreHooks.removeTopic()),
       // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
       coreHooks.unpopulateTagResource]
   },

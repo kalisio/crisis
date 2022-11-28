@@ -1,10 +1,10 @@
 <template>
-  <k-page padding>
+  <KPage padding>
     <template v-slot:page-content>
       <!--
         Templates collection
       -->
-      <k-grid
+      <KGrid
         ref="plansGrid"
         service="plans"
         :renderer="renderer"
@@ -12,18 +12,18 @@
         :base-query="sorter.query"
         :filter-query="filterQuery"
         :list-strategy="'smart'">
-        <template slot="empty-section">
+        <template v-slot:empty-section>
           <div class="absolute-center">
-            <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
+            <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
           </div>
         </template>
-      </k-grid>
+      </KGrid>
       <!--
         Router view to enable routing to modals
       -->
       <router-view service="plans"></router-view>
     </template>
-  </k-page>
+  </KPage>
 </template>
 
 <script>
@@ -32,10 +32,9 @@ import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { permissions } from '@kalisio/kdk/core.common'
 import * as utils from '../utils'
 
-const activityMixin = kCoreMixins.baseActivity()
+const activityMixin = kCoreMixins.baseActivity('plansActivity')
 
 export default {
-  name: 'plans-activity',
   mixins: [activityMixin],
   props: {
     contextId: {
@@ -122,14 +121,8 @@ export default {
       if (this.mode) this.setTopPaneMode(this.mode)
     }
   },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-grid'] = this.$load('collection/KGrid')
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
-  },
   async created () {
-    this.$events.$on('user-changed', this.configureActivity)
+    this.$events.on('user-changed', this.configureActivity)
     // Build base query
     await this.updateFilterQuery()
     // Keep track of changes once loaded
@@ -138,19 +131,19 @@ export default {
     eventsService.on('patched', this.updateFilterQuery)
     eventsService.on('updated', this.updateFilterQuery)
     eventsService.on('removed', this.updateFilterQuery)
-    this.$events.$on('filter-changed', this.updateFilterQuery)
+    this.$events.on('filter-changed', this.updateFilterQuery)
 
     // Check if option has been subscribed
     this.$checkBillingOption('archiving')
   },
-  beforeDestroy () {
-    this.$events.$off('user-changed', this.configureActivity)
+  beforeUnmount () {
+    this.$events.off('user-changed', this.configureActivity)
     const eventsService = this.$api.getService('events', this.contextId)
     eventsService.off('created', this.updateFilterQuery)
     eventsService.off('patched', this.updateFilterQuery)
     eventsService.off('updated', this.updateFilterQuery)
     eventsService.off('removed', this.updateFilterQuery)
-    this.$events.$off('filter-changed', this.updateFilterQuery)
+    this.$events.off('filter-changed', this.updateFilterQuery)
   }
 }
 </script>

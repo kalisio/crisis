@@ -1,5 +1,5 @@
 <template>
-  <k-page padding>
+  <KPage padding>
     <template v-slot:page-content>
       <!--
         Templates collection
@@ -12,9 +12,9 @@
         :base-query="sorter.query"
         :filter-query="filter.query"
         :list-strategy="'smart'">
-        <template slot="empty-section">
+        <template v-slot:empty-section>
           <div class="absolute-center">
-            <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
+            <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
           </div>
         </template>
       </k-grid>
@@ -23,7 +23,7 @@
       -->
       <router-view service="event-templates"></router-view>
     </template>
-  </k-page>
+  </KPage>
 </template>
 
 <script>
@@ -31,8 +31,7 @@ import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
-  name: 'event-templates-activity',
-  mixins: [kCoreMixins.baseActivity()],
+  mixins: [kCoreMixins.baseActivity('eventTemplatesActivity')],
   props: {
     contextId: {
       type: String,
@@ -48,12 +47,6 @@ export default {
         component: 'EventTemplateCard'
       }, this.activityOptions.items)
     }
-  },
-  created () {
-    // Load the required components
-    this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-grid'] = this.$load('collection/KGrid')
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
   }
 }
 </script>

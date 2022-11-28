@@ -1,6 +1,6 @@
 <template>
-  <k-page :padding="false" @content-resized="onPageContentResized">
-    <div slot="page-content">
+  <KPage :padding="false" @content-resized="onPageContentResized">
+    <template v-slot:page-content>
       <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
         <div class="row">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -16,7 +16,7 @@
         Events history: switch append-items on to activate infinite scroll
       -->
       <div v-if="showHistory && height" class="row justify-center q-pl-lg q-pr-none">
-        <k-history
+        <KHistory
           style="padding-top: 80px;"
           id="history"
           service="archived-events"
@@ -28,18 +28,18 @@
           :contextId="contextId"
           :list-strategy="'smart'"
           :height="height - 124">
-          <template slot="empty-history">
+          <template v-slot:empty-history>
             <div class="absolute-center">
-              <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
+              <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
             </div>
           </template>
-        </k-history>
+        </KHistory>
       </div>
       <!--
         Events map
       -->
       <div v-show="showMap">
-        <div ref="map" :style="viewStyle">
+        <div :ref="configureMap" :style="viewStyle">
           <q-resize-observer @resize="onMapResized" />
         </div>
       </div>
@@ -48,14 +48,14 @@
       -->
       <div v-show="showChart" class="row justify-center text-center q-ma-none q-pa-none" >
         <q-page-sticky position="top" :offset="[0, 60]">
-        <k-stats-chart ref="chart" :style="chartStyle" />
+        <KStatisticsChart ref="chart" :style="chartStyle" />
         </q-page-sticky>
         <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
           icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
         <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
           icon="las la-chevron-right" class="absolute-right" @click="onNextChart" />
       </div>
-      <k-modal
+      <KModal
         id="chart-settings-modal"
         :title="$t('ArchivedEventsActivity.CHART_SETTINGS_MODAL_TITLE')"
         :buttons="getChartSettingsModalButtons()"
@@ -69,13 +69,13 @@
           <q-select id="chart-render" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')"
             :options="renderOptions" @input="refreshChart"/>
         </div>
-      </k-modal>
+      </KModal>
       <!--
         Router view to enable routing to modals
       -->
       <router-view service="archived-events"></router-view>
-    </div>
-  </k-page>
+    </template>
+  </KPage>
 </template>
 
 <script>
@@ -84,31 +84,29 @@ import moment from 'moment'
 import L from 'leaflet'
 import Papa from 'papaparse'
 import { colors, QSlider } from 'quasar'
-import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
+import { mixins as kdkCoreMixins, utils as kdkCoreUtils, Time } from '@kalisio/kdk/core.client'
+import { mixins as kdkMapMixinss } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
-const activityMixin = kCoreMixins.baseActivity()
+const activityMixin = kdkCoreMixins.baseActivity('archivedEventsActivity')
 
 // For mapping or statistics we get all events at once to avoid managing pagination
 const MAX_EVENTS = 5000
 
 export default {
-  name: 'archived-events-activity',
   mixins: [
-    kCoreMixins.refsResolver(['map']),
     activityMixin,
-    kCoreMixins.baseCollection,
-    kMapMixins.activity,
-    kMapMixins.style,
-    kMapMixins.context,
-    kMapMixins.map.baseMap,
-    kMapMixins.map.geojsonLayers,
-    kMapMixins.map.heatmapLayers,
-    kMapMixins.map.style,
-    kMapMixins.map.tooltip,
-    kMapMixins.map.popup,
-    kMapMixins.map.activity,
+    kdkCoreMixins.baseCollection,
+    kdkMapMixinss.activity,
+    kdkMapMixinss.style,
+    kdkMapMixinss.context,
+    kdkMapMixinss.map.baseMap,
+    kdkMapMixinss.map.geojsonLayers,
+    kdkMapMixinss.map.heatmapLayers,
+    kdkMapMixinss.map.style,
+    kdkMapMixinss.map.tooltip,
+    kdkMapMixinss.map.popup,
+    kdkMapMixinss.map.activity,
     mixins.plans
   ],
   components: {
@@ -216,23 +214,24 @@ export default {
       paginationOptions,
       renderOptions,
       render: _.find(renderOptions, { value: 'count' }),
-      chartData: [],
       height: undefined
     }
   },
   methods: {
-    async configureActivity () {
+    async configureMap (container) {
+      // Avoid reentrance during awaited operations
+      if (!container || this.mapContainer) return
+      this.mapContainer = container
       // Wait until map is ready
-      await this.initializeMap()
-      activityMixin.methods.configureActivity.call(this)
+      await this.initializeMap(container)
     },
     async getCatalogLayers () {
-      const layers = await kMapMixins.activity.methods.getCatalogLayers.call(this)
+      const layers = await kdkMapMixinss.activity.methods.getCatalogLayers.call(this)
       // We only want base layers
       return _.filter(layers, { type: 'BaseLayer' })
     },
     formatDate (date) {
-      return date.toLocaleString(kCoreUtils.getLocale(),
+      return date.toLocaleString(kdkCoreUtils.getLocale(),
         { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
     },
     getHeatmapOptions () {
@@ -346,9 +345,9 @@ export default {
         icon: {
           type: 'icon.fontAwesome',
           options: {
-            iconClasses: kCoreUtils.getIconName(feature) || 'fas fa-map-marker-alt',
+            iconClasses: kdkCoreUtils.getIconName(feature) || 'fas fa-map-marker-alt',
             // Conversion from palette to RGB color is required for markers
-            markerColor: kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color', 'blue')),
+            markerColor: kdkCoreUtils.getColorFromPalette(_.get(feature, 'icon.color', 'blue')),
             iconColor: '#FFFFFF'
           }
         }
@@ -537,7 +536,7 @@ export default {
         [this.$t('ArchivedEventsActivity.CHART_COUNT_LABEL')]: this.chartData[index]
       }))
       const csv = Papa.unparse(json)
-      kCoreUtils.downloadAsBlob(csv, this.$t('ArchivedEventsActivity.CHART_EXPORT_FILE'), 'text/csv;charset=utf-8;')
+      kdkCoreUtils.downloadAsBlob(csv, this.$t('ArchivedEventsActivity.CHART_EXPORT_FILE'), 'text/csv;charset=utf-8;')
     },
     async downloadEventsData () {
       let data, mimeType
@@ -582,7 +581,7 @@ export default {
         data = Papa.unparse(json)
       }
 
-      kCoreUtils.downloadAsBlob(data, (this.showMap
+      kdkCoreUtils.downloadAsBlob(data, (this.showMap
         ? this.$t('ArchivedEventsActivity.MAP_EXPORT_FILE')
         : this.$t('ArchivedEventsActivity.EVENTS_EXPORT_FILE')), mimeType)
     },
@@ -591,13 +590,6 @@ export default {
         { id: 'close-button', label: 'CLOSE', renderer: 'form-button', handler: () => this.$refs.chartSettingsModal.close() }
       ]
     }
-  },
-  beforeCreate () {
-    this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-history'] = this.$load('collection/KHistory')
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
-    this.$options.components['k-stats-chart'] = this.$load('chart/KStatsChart')
   },
   async created () {
     // Resgister map styles
@@ -614,17 +606,15 @@ export default {
   },
   mounted () {
     // Setup listeners
-    this.$on('collection-refreshed', this.onCollectionRefreshed)
-    this.$events.$on('time-range-changed', this.onTimeRangeChanged)
+    this.$events.on('time-range-changed', this.onTimeRangeChanged)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     // Release the chart if nay
     if (this.chart) this.chart.destroy()
     // Restore the current time
     Time.setCurrentTime(this.currentTime)
     // Releases listeners
-    this.$off('collection-refreshed', this.onCollectionRefreshed)
-    this.$events.$off('time-range-changed', this.onTimeRangeChanged)
+    this.$events.off('time-range-changed', this.onTimeRangeChanged)
   }
 }
 </script>

@@ -1,38 +1,41 @@
 <template>
-  <k-modal ref="modal"
+  <KModal
     :title="editorTitle"
     :buttons="buttons"
     v-model="isModalOpened"
-    @opened="$emit('opened')"
-    @closed="$emit('closed')"
   >
     <div class="column xs-gutter">
-      <!-- Form to be used for standard properties -->
-      <k-form :class="{ 'light-dimmed': applyInProgress }" ref="form" :schema="schema" />
-      <!-- Toggle used to copy the source template workflow on creation -->
+      <!-- 
+        Form to be used for standard properties 
+      -->
+      <KForm 
+        :ref="onFormReferenceCreated" 
+        :schema="schema" 
+        @form-ready="onFormReady"
+      />
+      <!-- 
+        Toggle used to copy the source template workflow on creation 
+      -->
       <p v-show="hasWorkflow" :class="{ 'light-dimmed': applyInProgress }" class="col-10 caption pull-left">
         <q-toggle id="workflow-toggle" icon="las la-retweet" v-model="copyWorkflow" @input="onWorkflow">
         </q-toggle>
         <strong>{{$t('EventTemplateEditor.WORKFLOW_HELPER_LABEL')}}</strong>
       </p>
     </div>
-    <q-spinner-cube color="primary" class="fixed-center" v-if="applyInProgress" size="4em"/>
-  </k-modal>
+  </KModal>
 </template>
 
 <script>
 import _ from 'lodash'
-import { mixins } from '@kalisio/kdk/core.client'
+import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
-  name: 'event-template-editor',
   mixins: [
-    mixins.baseModal,
-    mixins.service,
-    mixins.objectProxy,
-    mixins.schemaProxy,
-    mixins.baseEditor(['form']),
-    mixins.refsResolver(['form'])
+    kdkCoreMixins.baseModal,
+    kdkCoreMixins.service,
+    kdkCoreMixins.objectProxy,
+    kdkCoreMixins.schemaProxy,
+    kdkCoreMixins.baseEditor
   ],
   props: {
     templateId: {
@@ -57,7 +60,7 @@ export default {
   methods: {
     openModal (maximized = false) {
       this.refresh()
-      mixins.baseModal.methods.openModal.call(this, maximized)
+      kdkCoreMixins.baseModal.methods.openModal.call(this, maximized)
     },
     async loadObject () {
       // When a template is provided use it as reference for object
@@ -72,22 +75,16 @@ export default {
         return Promise.resolve(this.object)
       } else {
         // Otherwise proceed as usual to load the event object
-        return mixins.objectProxy.methods.loadObject.call(this)
+        return kdkCoreMixins.objectProxy.methods.loadObject.call(this)
       }
     },
     async onWorkflow (copyWorkflow) {
       if (copyWorkflow) this.object.workflow = _.cloneDeep(this.template.workflow)
       else delete this.object.workflow
+    },
+    async apply () {
+      if (await kdkCoreMixins.baseEditor.methods.apply.call(this)) this.closeModal()
     }
-  },
-  async created () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-form'] = this.$load('form/KForm')
-    this.$on('applied', this.closeModal)
-  },
-  beforeDestroy () {
-    this.$off('applied', this.closeModal)
   }
 }
 </script>

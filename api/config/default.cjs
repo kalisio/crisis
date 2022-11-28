@@ -121,18 +121,28 @@ module.exports = {
   authentication: {
     secret: process.env.APP_SECRET,
     appId: process.env.APP_ID,
-    strategies: [
+    path: API_PREFIX + '/authentication',
+    service: API_PREFIX + '/users',
+    entity: 'user',
+    authStrategies: [
       'jwt',
       'local'
     ],
-    path: API_PREFIX + '/authentication',
-    service: API_PREFIX + '/users',
-    jwt: {
-      header: { typ: 'access' }, // See https://tools.ietf.org/html/rfc7519#section-5.1
+    local: {
+      usernameField: 'email',
+      passwordField: 'password'
+    },
+    jwtOptions: {
+      header: {
+        type: 'access' // See https://tools.ietf.org/html/rfc7519#section-5.1
+      },
       audience: process.env.SUBDOMAIN || 'kalisio', // The resource server where the token is processed
       issuer: 'kalisio', // The issuing server, application or resource
       algorithm: 'HS256', // See https://github.com/auth0/node-jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
       expiresIn: '7d'
+    },
+    oauth: {
+      redirect: '/'
     },
     passwordPolicy: {
       minLength: 8,
@@ -328,8 +338,15 @@ module.exports = {
     url: process.env.DB_URL || (containerized ? 'mongodb://mongodb:27017/aktnmap' : 'mongodb://127.0.0.1:27017/aktnmap')
   },
   storage: {
-    accessKeyId: process.env.S3_ACCESS_KEY,
-    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+    s3Client: {
+      credentials: {
+        accessKeyId: process.env.S3_ACCESS_KEY || process.env.S3_ACCESS_KEY_ID,
+        secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
+      },
+      endpoint: process.env.S3_ENDPOINT,
+      region: process.env.S3_REGION,
+      signatureVersion: 'v4'
+    },
     bucket: process.env.S3_BUCKET
   },
   // When multiple instances are running we need to sync them

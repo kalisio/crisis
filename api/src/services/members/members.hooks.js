@@ -1,6 +1,7 @@
 import _ from 'lodash'
-import { when } from 'feathers-hooks-common'
-import { hooks as coreHooks, createObjectID } from '@kalisio/kdk/core.api'
+import commonHooks from 'feathers-hooks-common'
+import fuzzySearch from 'feathers-mongodb-fuzzy-search'
+import { hooks as coreHooks, createObjectID } from '@kalisio/kdk/core.api.js'
 
 // Fix for https://github.com/kalisio/aktnmap/issues/217
 // because in some cases the context is stored in the DB as an ObjectID while it is as a string otherwise.
@@ -16,10 +17,13 @@ function itemContextMatch (hook) {
   return hook
 }
 
-module.exports = {
+export default {
   before: {
     all: [],
-    find: [when(hasItemContext, itemContextMatch)],
+    find: [
+      commonHooks.when(hasItemContext, itemContextMatch), 
+      fuzzySearch({ fields: ['profile.name'] }), 
+    ],
     get: [],
     create: [],
     update: [],

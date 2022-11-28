@@ -2,10 +2,10 @@ import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import request from 'superagent'
 import fuzzySearch from 'feathers-mongodb-fuzzy-search'
-import core, { kalisio, hooks as coreHooks, permissions as corePermissions } from '@kalisio/kdk/core.api'
-import * as permissions from '../src/permissions'
-import { createOrganisationServices, removeOrganisationServices } from '../src/services'
-import webhooks from '../src/app.webhooks'
+import core, { kdk, hooks as coreHooks, permissions as corePermissions } from '@kalisio/kdk/core.api.js'
+import * as permissions from '../../common/permissions.mjs'
+import { createOrganisationServices, removeOrganisationServices } from '../src/services/index.js'
+import webhooks from '../src/app.webhooks.js'
 
 describe('events', () => {
   let app, server, port, baseUrl, accessToken,
@@ -36,10 +36,10 @@ describe('events', () => {
     // Then rules for events
     corePermissions.defineAbilities.registerHook(permissions.defineUserAbilities)
 
-    app = kalisio()
+    app = kdk()
     // Register authorisation/log hook
     app.hooks({
-      before: { all: [coreHooks.authorise], find: [fuzzySearch()] },
+      before: { all: [coreHooks.authorise], find: [fuzzySearch({ fields: ['name'] })] },
       error: { all: coreHooks.log }
     })
     // Add hooks for contextual services
@@ -84,8 +84,8 @@ describe('events', () => {
     })
     orgService.hooks({
       after: {
-        create: [coreHooks.createOrganisationAuthorisations],
-        remove: [coreHooks.removeOrganisationAuthorisations]
+        create: [coreHooks.createOrganisationServices, coreHooks.createOrganisationAuthorisations],
+        remove: [coreHooks.removeOrganisationAuthorisations, coreHooks.removeOrganisationServices]
       }
     })
     authorisationService = app.getService('authorisations')
@@ -94,12 +94,12 @@ describe('events', () => {
   // Let enough time to process
     .timeout(5000)
 
-  it('launch the server for webhooks', (done) => {
+  it('launch the server for webhooks', async () => {
     // Register webhooks
-    app.configure(webhooks)
+    await app.configure(webhooks)
     // Now app is configured launch the server
-    server = app.listen(port)
-    server.once('listening', _ => done())
+    server = await app.listen(port)
+    await new Promise(resolve => server.once('listening', () => resolve()))
   })
   // Let enough time to process
     .timeout(5000)
@@ -229,13 +229,20 @@ describe('events', () => {
         done()
       })
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('unauthorized operation cannot be accessed through webhooks', (done) => {
     request
       .post(`${baseUrl}/webhooks/events`)
       .set('Authorization', 'Bearer ' + accessToken)
       .set('Content-Type', 'application/json')
-      .send({ service: 'events', operation: 'remove' })
+      .send({
+        context: orgObject._id.toString(),
+        id: 'xxx',
+        service: 'events',
+        operation: 'update'
+      })
       .catch(data => {
         const error = data.response.body
         expect(error).toExist()
@@ -243,14 +250,18 @@ describe('events', () => {
         done()
       })
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('authorized user can create events from webhook', () => {
     const operation = request
       .post(`${baseUrl}/webhooks/events`)
       .set('Authorization', 'Bearer ' + accessToken)
       .set('Content-Type', 'application/json')
-      .send({ context: orgObject._id.toString(),
-              data: { template: 'template', name: 'webhook event' } })
+      .send({
+        context: orgObject._id.toString(),
+        data: { template: 'template', name: 'webhook event' }
+      })
       .then(response => {
         const result = response.body
         expect(result._id).toExist()

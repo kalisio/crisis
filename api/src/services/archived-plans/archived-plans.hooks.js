@@ -1,25 +1,25 @@
-import { disallow } from 'feathers-hooks-common'
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { hooks as mapHooks } from '@kalisio/kdk/map.api'
+import commonHooks from 'feathers-hooks-common'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import { hooks as mapHooks } from '@kalisio/kdk/map.api.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
     find: [mapHooks.marshallSpatialQuery, coreHooks.marshallComparisonQuery, coreHooks.distinct],
     get: [],
     create: [
-      disallow('external'),
+      commonHooks.disallow('external'),
       coreHooks.convertDates(['createdAt', 'updatedAt'])
     ],
     update: [
-      disallow('external'),
+      commonHooks.disallow('external'),
       coreHooks.convertDates(['createdAt', 'updatedAt'])
     ],
     patch: [
-      disallow('external'),
+      commonHooks.disallow('external'),
       coreHooks.convertDates(['createdAt', 'updatedAt'])
     ],
-    remove: [disallow('external')]
+    remove: [commonHooks.disallow('external')]
   },
 
   after: {

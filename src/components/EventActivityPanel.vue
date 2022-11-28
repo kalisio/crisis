@@ -2,10 +2,10 @@
   <k-layers-panel
     :layers="filteredLayers" 
     :layerCategories="filteredCategories">
-    <div slot="footer" >
+    <template v-slot:footer>
       <q-expansion-item icon="las la-user" header-class="text-primary" id="participants" :label="$t('EventActivityPanel.PARTICIPANTS_LABEL')">
-        <template v-for="participant in participants">
-          <div class="row justify-between no-wrap" style="overflow: auto" :key="participant._id">
+        <template v-for="participant in participants" :key="participant._id">
+          <div class="row justify-between no-wrap" style="overflow: auto">
             <div class="col-auto self-center">
               <q-btn flat round small color="primary" @click="onStateClicked(participant)">
                 <k-avatar :object="participant" />
@@ -27,7 +27,7 @@
           </div>
         </template>
       </q-expansion-item>
-    </div>
+    </template>
   </k-layers-panel>
 </template>
 
@@ -87,17 +87,13 @@ export default {
       return _.get(participant, 'icon.color', '')
     },
     onZoomClicked (participant) {
-      this.$events.$emit('zoom-to-participant', participant)
+      this.$events.emit('zoom-to-participant', participant)
     },
     onStateClicked (participant) {
-      this.$events.$emit('filter-participant-states', participant)
+      this.$events.emit('filter-participant-states', participant)
     }
   },
   created () {
-    // Loads the required components
-    this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
-    this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
-    this.$options.components['k-layers-panel'] = this.$load('catalog/KLayersPanel')
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
   }

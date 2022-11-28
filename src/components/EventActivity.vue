@@ -1,24 +1,25 @@
 <template>
-  <k-page :padding="false">
+  <KPage :padding="false">
     <template v-slot:page-content>
       <!-- Map -->
-      <div ref="map" :style="viewStyle">
+      <div :ref="configureMap" :style="viewStyle">
         <q-resize-observer @resize="onMapResized" />
       </div>
 
-      <k-modal ref="uploaderModal">
-        <k-uploader ref="uploader"
+      <KModal ref="uploaderModal">
+        <KUploader ref="uploader"
           :resource="objectId"
           :base-query="uploaderQuery()"
           :options="uploaderOptions()"
-          @uploader-ready="initializeMedias" />
-      </k-modal>
+          @uploader-ready="initializeMedias" 
+        />
+      </KModal>
 
-      <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
+      <KMediaBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
 
       <router-view service="events"></router-view>
     </template>
-  </k-page>
+  </KPage>
 </template>
 
 <script>
@@ -30,10 +31,9 @@ import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.cl
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
-const activityMixin = kCoreMixins.baseActivity()
+const activityMixin = kCoreMixins.baseActivity('event-activity')
 
 export default {
-  name: 'event-activity',
   provide () {
     return {
       kActivity: this,
@@ -41,15 +41,6 @@ export default {
     }
   },
   mixins: [
-    kCoreMixins.refsResolver(['map']),
-    activityMixin,
-    kCoreMixins.baseCollection,
-    kMapMixins.featureSelection,
-    kMapMixins.featureService,
-    kMapMixins.infobox,
-    kMapMixins.style,
-    kMapMixins.weacast,
-    kMapMixins.activity,
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
     kMapMixins.map.forecastLayers,
@@ -63,6 +54,14 @@ export default {
     kMapMixins.map.tiledWindLayers,
     kMapMixins.map.mapillaryLayers,
     kMapMixins.map.gsmapLayers,
+    activityMixin,
+    kCoreMixins.baseCollection,
+    kMapMixins.featureSelection,
+    kMapMixins.featureService,
+    kMapMixins.infobox,
+    kMapMixins.style,
+    kMapMixins.weacast,
+    kMapMixins.activity,
     mixins.events,
     mixins.plans
   ],
@@ -83,6 +82,13 @@ export default {
     }
   },
   methods: {
+    async configureMap (container) {
+      // Avoid reentrance during awaited operations
+      if (!container || this.mapContainer) return
+      this.mapContainer = container
+      // Wait until map is ready
+      await this.initializeMap(container)
+    },
     getService () {
       // Archived mode ?
       return this.$api.getService(this.archived ? 'archived-event-logs' : 'event-logs')
@@ -97,8 +103,6 @@ export default {
     async configureActivity () {
       // Archived mode ?
       this.archived = _.get(this.$route, 'query.archived')
-      // Wait until map is ready
-      await this.initializeMap()
       this.event = await this.$api.getService(this.archived ? 'archived-events' : 'events', this.contextId).get(this.objectId)
       this.refreshUser()
       // If we'd like to only work in real-time
@@ -291,7 +295,7 @@ export default {
       }
       // We do not manage pagination now
       if (this.items.length < this.nbTotalItems) {
-        this.$events.$emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
+        this.$events.emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
       }
       this.refreshParticipantsLayer()
     },
@@ -305,12 +309,7 @@ export default {
   },
   created () {
     // Load the required components
-    this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-color-legend'] = this.$load('KColorLegend')
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-uploader'] = this.$load('input/KUploader')
-    this.$options.components['k-media-browser'] = this.$load('media/KMediaBrowser')
-    this.registerStyle('tooltip', this.getParticipantTooltip)
+       this.registerStyle('tooltip', this.getParticipantTooltip)
     this.registerStyle('popup', this.getParticipantPopup)
     this.registerStyle('markerStyle', this.getParticipantMarker)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
@@ -321,19 +320,17 @@ export default {
   mounted () {
     // Setup event connections
     // this.$on('popupopen', this.onPopupOpen)
-    this.$on('click', this.onFeatureClicked)
-    this.$on('collection-refreshed', this.onCollectionRefreshed)
+    this.$engineEvents.on('click', this.onFeatureClicked)
     // Emitted from panel
-    this.$events.$on('zoom-to-participant', this.onZoomToParticipant)
-    this.$events.$on('filter-participant-states', this.onFilterParticipantStates)
+    this.$events.on('zoom-to-participant', this.onZoomToParticipant)
+    this.$events.on('filter-participant-states', this.onFilterParticipantStates)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     // Remove event connections
     // this.$off('popupopen', this.onPopupOpen)
-    this.$off('click', this.onFeatureClicked)
-    this.$off('collection-refreshed', this.onCollectionRefreshed)
-    this.$events.$off('zoom-to-participant', this.onZoomToParticipant)
-    this.$events.$off('filter-participant-states', this.onFilterParticipantStates)
+    this.$engineEvents.off('click', this.onFeatureClicked)
+    this.$events.off('zoom-to-participant', this.onZoomToParticipant)
+    this.$events.off('filter-participant-states', this.onFilterParticipantStates)
   }
 }
 </script>
@@ -346,6 +343,6 @@ export default {
     cursor: wait;
   }
   .position-cursor {
-    cursor: url('../statics/position-cursor.png'), auto;
+    cursor: url('/icons/kdk/position-cursor.png'), auto;
   }
 </style>

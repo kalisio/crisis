@@ -1,7 +1,7 @@
-import { hooks as coreHooks } from '@kalisio/kdk/core.api'
-import { subscribeToAppTopic, unsubscribeFromAppTopic } from '../../hooks'
+import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import { subscribeToAppTopic, unsubscribeFromAppTopic } from '../../hooks/index.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
     find: [],

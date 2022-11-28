@@ -1,4 +1,4 @@
-module.exports = function (app, options) {
+export default function (app, options) {
   const db = options.db || app.db
   options.Model = db.collection('archived-events')
   options.Model.createIndex({ createdAt: -1 })

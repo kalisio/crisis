@@ -1,9 +1,12 @@
 import path from 'path'
+import { fileURLToPath } from 'url'
 import chai, { util, expect, assert } from 'chai'
 import chailint from 'chai-lint'
-import core, { kalisio, hooks, permissions } from '@kalisio/kdk/core.api'
-import * as billingPermissions from '../src/permissions'
-import * as billingHooks from '../src/hooks'
+import core, { kdk, hooks, permissions } from '@kalisio/kdk/core.api.js'
+import * as billingPermissions from '../../common/permissions.mjs'
+import * as billingHooks from '../src/hooks/index.js'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 describe('billing', () => {
   let app, server, port,
@@ -18,7 +21,7 @@ describe('billing', () => {
     permissions.defineAbilities.registerHook(permissions.defineUserAbilities)
     permissions.defineAbilities.registerHook(billingPermissions.defineUserAbilities)
 
-    app = kalisio()
+    app = kdk()
     // Register authorisation/log hook
     app.hooks({
       before: { all: [hooks.authorise] },
@@ -32,8 +35,8 @@ describe('billing', () => {
     return app.db.connect()
   })
 
-  it('registers the services', (done) => {
-    app.configure(core)
+  it('registers the services', async () => {
+    await app.configure(core)
     userService = app.getService('users')
     userService.hooks({
       after: {
@@ -41,12 +44,11 @@ describe('billing', () => {
       }
     })
     expect(userService).toExist()
-    app.createService('billing', { servicesPath: path.join(__dirname, '..', 'src', 'services') })
+    await app.createService('billing', { servicesPath: path.join(__dirname, '..', 'src', 'services') })
     billingService = app.getService('billing')
     expect(billingService).toExist()
     // Now app is configured launch the server
-    server = app.listen(port)
-    server.once('listening', _ => done())
+    server = await app.listen(port)
     // Retrieve feathers-strip services
     customerService = app.service('billing/customer')
     expect(customerService).toExist()
@@ -54,6 +56,7 @@ describe('billing', () => {
     expect(cardService).toExist()
     subscriptionService = app.service('billing/subscription')
     expect(subscriptionService).toExist()
+    await new Promise(resolve => server.once('listening', () => resolve()))
   })
 
   it('creates a test user', async () => {

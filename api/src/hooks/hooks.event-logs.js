@@ -1,7 +1,8 @@
 import makeDebug from 'debug'
 import _ from 'lodash'
-import { SKIP } from '@feathersjs/feathers'
-import { getItems } from 'feathers-hooks-common'
+import commonHooks from 'feathers-hooks-common'
+
+const { getItems } = commonHooks
 const debug = makeDebug('aktnmap:event-logs:hooks')
 
 export async function addLogDefaults (hook) {
@@ -180,8 +181,6 @@ export async function countParticipants (hook) {
     debug(`Aggregated ${results.length} events in logs`)
     // Set result to avoid service DB call
     hook.result = results
-    // Return skip to avoid executing remaining hooks as this is not relevent anymore
-    return SKIP
   }
   return hook
 }

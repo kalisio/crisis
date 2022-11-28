@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 import { Geolocation } from '@kalisio/kdk/map.client.map'
 import * as utils from '../utils'
 
@@ -202,7 +203,7 @@ const eventsMixin = {
       // Start from schema template and clone it because modifications
       // will be shared by all caller otherwise
       if (!this.baseLogSchema) {
-        this.baseLogSchema = await this.$load('event-logs.create', 'schema')
+        this.baseLogSchema = await kdkCoreUtils.loadSchema('event-logs.create')
         // FIXME: not yet sure why this is now required, might be related to
         // https://forum.vuejs.org/t/solved-using-standalone-version-but-getting-failed-to-mount-component-template-or-render-function-not-defined/19569/2
         if (this.baseLogSchema.default) this.baseLogSchema = this.baseLogSchema.default

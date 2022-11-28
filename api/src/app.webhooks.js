@@ -1,9 +1,14 @@
 import _ from 'lodash'
+import makeDebug from 'debug'
 import moment from 'moment'
-import { ObjectID } from 'mongodb'
+import mongodb from 'mongodb'
 import { BadRequest } from '@feathersjs/errors'
 
-export default async function () {
+const debug = makeDebug('aktnmap:webhooks')
+
+const { ObjectID } = mongodb
+
+export default function () {
   const app = this
 
   // Create webhook for events
@@ -18,13 +23,14 @@ export default async function () {
       }
       if (!payload.service) payload.service = 'events'
       if (!payload.operation) payload.operation = 'create'
+      debug('Preprocessed event webhook request with payload', payload)
     },
     // Post processor used to find template by matching names
     postprocessor: async (service, args, payload) => {
       if (payload.operation !== 'create') return
       // Arguments for create operation are [data, params]
-      let data = args[0]
-      let params = args[1]
+      const data = args[0]
+      const params = args[1]
       // Retrieve template to create event from
       let template
       if (_.has(data, 'template')) {
@@ -54,6 +60,7 @@ export default async function () {
       // Event notification must be passed as query param
       params.notification = _.get(data, 'notification', true) // Default is to notify
       delete data.notification
+      debug('Postprocessed event webhook request with data/payload', data, payload)
     }
   })
 }

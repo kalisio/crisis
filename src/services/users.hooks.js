@@ -1,11 +1,11 @@
-import { hooks as coreHooks } from '@kalisio/kdk/core.client'
+import { hooks as kdkCoreHooks } from '@kalisio/kdk/core.client'
 
 export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [coreHooks.checkUnique],
+    create: [kdkCoreHooks.checkUnique],
     update: [],
     patch: [],
     remove: []

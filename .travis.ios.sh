@@ -9,13 +9,13 @@ source .travis.env.sh
 
 # Configure rclone
 mkdir -p $HOME/.config/rclone
-cp $TRAVIS_BUILD_DIR/workspace/common/rclone.conf $HOME/.config/rclone/.
+cp $WORKSPACE_DIR/common/rclone.conf $HOME/.config/rclone/.
 
 # Copy the certificates
-cp $TRAVIS_BUILD_DIR/workspace/common/ios/*.cer .
-cp $TRAVIS_BUILD_DIR/workspace/common/ios/*.p12 .
-cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/ios/*.cer .
-cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/ios/*.p12 .
+cp $WORKSPACE_DIR/common/ios/*.cer .
+cp $WORKSPACE_DIR/common/ios/*.p12 .
+cp $WORKSPACE_DIR/$FLAVOR/ios/*.cer .
+cp $WORKSPACE_DIR/$FLAVOR/ios/*.p12 .
 
 # Create a custom keychain
 security create-keychain -p travis ios-build.keychain
@@ -34,9 +34,9 @@ done
 security set-key-partition-list -S apple-tool:,apple: -s -k travis ios-build.keychain
 
 # Install the required secret files requied to sign the app
-cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/ios/build.json src-cordova/.
+cp $WORKSPACE_DIR/$FLAVOR/ios/build.json src-cordova/.
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/ios/*.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+cp $WORKSPACE_DIR/$FLAVOR/ios/*.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
 travis_fold end "provision"
 
@@ -57,11 +57,11 @@ npm run cordova:build:ios > ios.build.log 2>&1
 EXIT_CODE=$?
 # Copy the log whatever the result
 rclone copy ios.build.log scw:kalisio-builds/${BUILD_BUCKET}/ios.build.log
-check_code $EXIT_CODE "Building the app"
+check_code $EXIT_CODE 1 "Building the app"
 
 # Backup the ios build to S3
 rclone copy src-cordova/platforms/ios/build scw:kalisio-builds/${BUILD_BUCKET}/ios > /dev/null
-check_code $? "Copying the artefact to s3"
+check_code $? 0 "Copying the artefact to s3"
 
 travis_fold end "build"
 
@@ -75,7 +75,6 @@ xcrun altool --upload-app -t ios -f "./src-cordova/platforms/ios/build/device/$T
 EXIT_CODE=$?
 # Copy the log whatever the result
 rclone copy ios.deploy.log scw:kalisio-builds/${BUILD_BUCKET}/ios.deploy.log
-check_code $EXIT_CODE "Deploying the app"
+check_code $EXIT_CODE 0 "Deploying the app"
 
 travis_fold end "deploy"
-

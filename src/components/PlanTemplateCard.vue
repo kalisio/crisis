@@ -1,14 +1,14 @@
 <template>
-  <k-card
+  <KCard
     v-bind="$props"
     :actions="itemActions"
     :bind-actions="false">
     <!--
       Card content
      -->
-    <template slot="card-content">
+    <template v-slot:card-content>
       <!-- Objectives section -->
-      <k-card-section
+      <KCardSection
         :title="$t('PlanTemplateCard.OBJECTIVES_SECTION')"
         :actions="objectivesActions"
         :context="$props">
@@ -18,9 +18,9 @@
         <div v-else>
           {{ $t('PlanTemplateCard.NO_OBJECTIVES_LABEL')}}
         </div>
-      </k-card-section>
+      </KCardSection>
       <!-- coordinators section -->
-      <k-card-section
+      <KCardSection
         :title="$t('PlanTemplateCard.COORDINATORS_SECTION')"
         :actions="coordinatorsActions"
         :context="$props">
@@ -33,16 +33,16 @@
         <div v-else>
           {{ $t('PlanTemplateCard.NO_COORDINATORS_LABEL')}}
         </div>
-      </k-card-section>
+      </KCardSection>
       <!-- Permission section -->
-      <k-card-section
+      <KCardSection
         :title="$t('PlanTemplateCard.PERMISSION_SECTION')"
         :actions="permissionActions"
         :context="$props">
         <q-chip :label="permission" outline square dense color="grey-10" />
-      </k-card-section>
+      </KCardSection>
     </template>
-  </k-card>
+  </KCard>
 </template>
 
 <script>
@@ -78,13 +78,6 @@ export default {
         name: 'edit-plan-template-objectives', params: { objectId: this.item._id }
       })
     }
-  },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-card'] = this.$load('collection/KCard')
-    this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
-    this.$options.components['k-chips-pane'] = this.$load('frame/KChipsPane')
-    this.$options.components['k-text-area'] = this.$load('frame/KTextArea')
   }
 }
 </script>

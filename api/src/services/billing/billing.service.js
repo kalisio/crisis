@@ -1,6 +1,6 @@
 import makeDebug from 'debug'
 import _ from 'lodash'
-import { disallow } from 'feathers-hooks-common'
+import commonHooks from 'feathers-hooks-common'
 import { Customer, Card, Subscription } from 'feathers-stripe'
 import { BadRequest } from '@feathersjs/errors'
 
@@ -212,11 +212,11 @@ export default function (name, app, options) {
     },
     setup (app) {
       app.use('/billing/customer', new Customer({ secretKey: config.secretKey }))
-      app.service('billing/customer').hooks({ before: { all: disallow('external') } })
+      app.service('billing/customer').hooks({ before: { all: commonHooks.disallow('external') } })
       app.use('/billing/card', new Card({ secretKey: config.secretKey }))
-      app.service('billing/card').hooks({ before: { all: disallow('external') } })
+      app.service('billing/card').hooks({ before: { all: commonHooks.disallow('external') } })
       app.use('/billing/subscription', new Subscription({ secretKey: config.secretKey }))
-      app.service('billing/subscription').hooks({ before: { all: disallow('external') } })
+      app.service('billing/subscription').hooks({ before: { all: commonHooks.disallow('external') } })
     },
     // Used to perform service actions such as create a customer/subscription.
     async create (data, params) {

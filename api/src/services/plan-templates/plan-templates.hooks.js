@@ -1,6 +1,6 @@
-import { checkPlanTemplatesQuotas } from '../../hooks'
+import { checkPlanTemplatesQuotas } from '../../hooks/index.js'
 
-module.exports = {
+export default {
   before: {
     all: [],
     find: [],

@@ -1,10 +1,10 @@
 <template>
-  <k-page padding @content-resized="onPageContentResized">
+  <KPage padding @content-resized="onPageContentResized">
     <template v-slot:page-content>
       <!--
         Events collection
       -->
-      <k-grid
+      <KGrid
         v-if="!planId"
         ref="eventsGrid"
         service="events"
@@ -13,23 +13,24 @@
         :base-query="baseQuery"
         :filter-query="filterQuery"
         :list-strategy="'smart'">
-        <template slot="empty-section">
+        <template v-slot:empty-section>
           <div class="absolute-center">
-            <k-stamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
+            <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_GRID')" />
           </div>
         </template>
-      </k-grid>
-      <k-board
+      </KGrid>
+      <KBoard
         v-else-if="height"
         ref="eventsBoard"
         :columns="boardColumns"
-        :height="height" />
+        :height="height" 
+      />
       <!--
         Router view to enable routing to modals
       -->
       <router-view service="events"></router-view>
     </template>
-  </k-page>
+  </KPage>
 </template>
 
 <script>
@@ -38,10 +39,9 @@ import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { permissions } from '@kalisio/kdk/core.common'
 import mixins from '../mixins'
 
-const activityMixin = kCoreMixins.baseActivity()
+const activityMixin = kCoreMixins.baseActivity('eventsActivity')
 
 export default {
-  name: 'events-activity',
   mixins: [
     activityMixin,
     mixins.plans
@@ -198,15 +198,8 @@ export default {
       column.refreshCollection()
     }
   },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-page'] = this.$load('layout/KPage')
-    this.$options.components['k-grid'] = this.$load('collection/KGrid')
-    this.$options.components['k-board'] = this.$load('collection/KBoard')
-    this.$options.components['k-stamp'] = this.$load('frame/KStamp')
-  },
   created () {
-    this.$events.$on('user-changed', this.refreshFab)
+    this.$events.on('user-changed', this.refreshFab)
     // Keep track of changes once loaded
     // Indeed, archived events do not emit real-time service events
     // so that we need to manually update the archived events collection
@@ -215,8 +208,8 @@ export default {
       eventsService.on('removed', this.onEventRemoved)
     }
   },
-  beforeDestroy () {
-    this.$events.$off('user-changed', this.refreshFab)
+  beforeUnmount () {
+    this.$events.off('user-changed', this.refreshFab)
     if (this.planId) {
       const eventsService = this.$api.getService('events', this.contextId)
       eventsService.off('removed', this.onEventRemoved)

@@ -1,8 +1,13 @@
 <template>
   <div>
-    <k-signup-alert v-if="user" :isVerified="user.isVerified" :email="user.email" />
-    <k-tour ref="tour" />
-    <k-welcome />
+    <KSignupAlert 
+      v-if="user" 
+      :isVerified="user.isVerified" 
+      :accountEmail="user.email" 
+      notifierEmail="email-notifications@kalisio.com"
+    />
+    <KTour ref="tour" />
+    <KWelcome />
     <router-view></router-view>
   </div>
 </template>
@@ -11,15 +16,22 @@
 import _ from 'lodash'
 import logger from 'loglevel'
 import { Loading, Dialog } from 'quasar'
-import { permissions, mixins, beforeGuard } from '@kalisio/kdk/core.client'
+import { permissions, mixins, beforeGuard, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 
 import config from 'config'
-import * as utils from '../utils'
 
 export default {
   name: 'index',
+  components: {
+    KSignupAlert: kdkCoreUtils.loadComponent('account/KSignupAlert'),
+    KWelcome: kdkCoreUtils.loadComponent('layout/KWelcome'),
+    KTour: kdkCoreUtils.loadComponent('layout/KTour')
+  },
   // authorisation mixin is required to automatically update user' abilities on update
-  mixins: [mixins.authentication, mixins.authorisation],
+  mixins: [
+    mixins.authentication, 
+    mixins.authorisation
+  ],
   methods: {
     async redirect (user) {
       this.user = user
@@ -72,7 +84,7 @@ export default {
             query: _.omit(_.get(this.$route, 'query', {}), ['organisation', 'page'])
           })
         } else {
-          this.$toast({ message: this.$t('Index.ORGANISATION_NOT_FOUND') })
+          this.$notify({ message: this.$t('Index.ORGANISATION_NOT_FOUND') })
         }
       }
     }
@@ -83,9 +95,6 @@ export default {
     }
   },
   async created () {
-    this.$options.components['k-signup-alert'] = utils.loadComponent('account/KSignupAlert')
-    this.$options.components['k-welcome'] = utils.loadComponent('layout/KWelcome')
-    this.$options.components['k-tour'] = utils.loadComponent('layout/KTour')
     // initialize the user
     this.user = this.$store.get('user')
     if (this.$api.socket) {
@@ -153,22 +162,23 @@ export default {
       // and would like to know if the mobile client is up-to-date
       else if (api.buildNumber === config.buildNumber) return
     }
-    this.$toast({ message: this.$t('Index.VERSION_MISMATCH') })
+    this.$notify({ message: this.$t('Index.VERSION_MISMATCH') })
   },
   async mounted () {
     // Check if we need to redirect based on the fact there is an authenticated user
-    this.$events.$on('user-changed', this.redirect)
+    this.$events.on('user-changed', this.redirect)
 
     try {
       // No need to update/redirect here since the user should be managed by event handler above
       await this.restoreSession()
-    } catch (_) {
+    } catch (error) {
       // Check if we need to redirect based on the fact there is no authenticated user
-      this.redirect(null)
+      this.user = null
+      this.redirect()
     }
   },
-  beforeDestroy () {
-    this.$events.$off('user-changed', this.redirect)
+  beforeUnmount () {
+    this.$events.off('user-changed', this.redirect)
   }
 }
 </script>

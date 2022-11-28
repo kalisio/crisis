@@ -1,5 +1,5 @@
 <template>
-  <k-item
+  <KItem
     v-bind="$props"
     :options="{ toggle: true }"
     :actions="itemActions"
@@ -7,13 +7,13 @@
     <!--
       Item toggle
      -->
-    <template slot="item-toggle">
+    <template v-slot:item-toggle>
       <q-checkbox :disable="!hasFollowUp" :disabled="!hasFollowUp" v-model="toggled" @input="onItemToggled(toggled)"/>
     </template>
     <!--
       Item content
      -->
-    <template slot="item-content">
+    <template v-slot:item-content>
       <q-item-section>
         <q-item-label>{{ getUserName(item) }}</q-item-label>
         <q-item-label v-if="itemStep" caption>{{ getUserComment(item) }}</q-item-label>
@@ -24,7 +24,7 @@
         <q-item-label v-if="createdAt" caption>{{ createdAt.toLocaleString() }}</q-item-label>
       </q-item-section>
     </template>
-  </k-item>
+  </KItem>
 </template>
 
 <script>
@@ -59,10 +59,6 @@ export default {
     createdAt () {
       return this.item.createdAt ? new Date(this.item.createdAt) : null
     }
-  },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-item'] = this.$load('collection/KItem')
   },
   created () {
     // Archived mode ?

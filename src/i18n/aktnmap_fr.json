@@ -9,11 +9,11 @@
   "errors": {
     "EVENTS_LIMIT": "Trop d'événements pour les afficher tous",
     "EVENT_LOG_LIMIT": "Trop de participants pour afficher l'ensemble des informations",
-    "CANNOT_REMOVE_CUSTOMER": "Vous n'êtes pas autorisé à supprimer le client de <b>{{resource}}</b>, modifiez préalablement les informations de paiement.",
+    "CANNOT_REMOVE_CUSTOMER": "Vous n'êtes pas autorisé à supprimer le client de <b>{resource}</b>, modifiez préalablement les informations de paiement.",
     "UNSUBSCRIBED_OPTION": "Désolé, il semble que vous n'ayez pas souscrit à cette option. Merci de modifier votre abonnement avant de revenir ici."
   },
   "schemas": {
-    "ORGANISATIONS_BILLING_PLAN_NAME": "Plan de paiement pour {{ object.name }}",
+    "ORGANISATIONS_BILLING_PLAN_NAME": "Plan de paiement pour {object.name}",
     "ORGANISATIONS_PLAN_FIELD_LABEL": "Sélectionnez le plan de paiement pour l'organisation",
     "ORGANISATIONS_CUSTOMER_FIELD_LABEL": "Sélectionnez une méthode de paiement",
     "ORGANISATIONS_EXTRA_INFOS_FIELD_LABEL": "Saisissez des informations supplémentaires apparaissant sur vos factures",
@@ -141,7 +141,7 @@
       "SETTINGS_LABEL": "Modifiez le <b>paramétrage</b> de votre organisation (nom, logo, etc.).",
       "SETTINGS_LINK_LABEL": "Voir comment modifier les paramètres",
       "REMOVE_ORGANISATION_LABEL": "Supprimez votre organisation via cette action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL) Vous devrez préalablement supprimer l'ensemble des groupes."
+      "REMOVE_CONFIRMATION_LABEL": "@:tours.REMOVE_CONFIRMATION_LABEL) Vous devrez préalablement supprimer l'ensemble des groupes."
     },
     "organisation": {
       "NAME_LABEL": "Modifiez le nom de votre organisation.",
@@ -180,7 +180,7 @@
       "UPDATE_PROPERTIES_LABEL": "De la même façon, modifiez les différentes propriétés de votre événement via l'action afférente, vous pourrez choisir d'envoyer d'une <b>notification</b> à tous les participants ou non.",
       "EVENT_MAP_LABEL": "Accédez à la carte lié à votre événement via cette action.",
       "REMOVE_EVENT_LABEL": "Supprimez votre événement via cette action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL), ceci provoquera l'envoi d'une <b>notification</b> à tous les participants.",
+      "REMOVE_CONFIRMATION_LABEL": "@:tours.REMOVE_CONFIRMATION_LABEL), ceci provoquera l'envoi d'une <b>notification</b> à tous les participants.",
       "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement aux plans de votre organisation."
     },
     "create-event": {
@@ -202,7 +202,7 @@
     "event-templates": {
       "TEMPLATES_LABEL": "Cette activité vous permet de gérer les <b>modèles</b> d'événements au sein de votre organisation.",
       "TEMPLATE_DEFINITION_LABEL": "Un modèle permet de définir le contenu récurrent d'un type d'événement particulier.",
-      "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
+      "OVERFLOW_MENU_LABEL": "@:tours.APP_BAR_OVERFLOW_MENU_LABEL",
       "SEARCH_LABEL": "Tapez tout ou partie d'un mot contenu dans le nom de vos modèles au sein de la barre qui apparait pour effectuer une recherche.",
       "SORT_LABEL": "Ordonnez vos modèles par ordre alphabétique ascendant ou descendant via ce bouton.",
       "NEW_TEMPLATE_LABEL": "Créez un <b>nouveau modèle</b> via ce bouton.",
@@ -232,7 +232,7 @@
       "UPDATE_PROPERTIES_LABEL": "De la même façon, modifiez les différentes propriétés de votre modèle via l'action afférente.",
       "COPY_TEMPLATE_LABEL": "Gagnez du temps en créant un nouveau modèle à partir de celui-ci via cette action.",
       "REMOVE_TEMPLATE_LABEL": "Supprimez votre modèle via cette action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)",
+      "REMOVE_CONFIRMATION_LABEL": "@:tours.REMOVE_CONFIRMATION_LABEL",
       "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement à vos événements ou aux plans votre organisation."
     },
     "create-event-template": {
@@ -299,7 +299,7 @@
       "UPDATE_DESCRIPTION_LABEL": "Modifiez la description de votre plan via cette action.",
       "UPDATE_PROPERTIES_LABEL": "De la même façon, modifiez les différentes propriétés de votre plan via l'action afférente, vous pourrez choisir d'envoyer d'une <b>notification</b> à tous les participants ou non.",
       "REMOVE_PLAN_LABEL": "Supprimez votre plan via cette action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL).",
+      "REMOVE_CONFIRMATION_LABEL": "@:tours.REMOVE_CONFIRMATION_LABEL).",
       "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement à vos événements ou administrer votre organisation."
     },
     "create-plan": {
@@ -318,7 +318,7 @@
     "plan-templates": {
       "TEMPLATES_LABEL": "Cette activité vous permet de gérer les <b>modèles</b> de plans au sein de votre organisation.",
       "TEMPLATE_DEFINITION_LABEL": "Un modèle permet de définir le contenu récurrent d'un type de plan particulier.",
-      "OVERFLOW_MENU_LABEL": "$t(tours.APP_BAR_OVERFLOW_MENU_LABEL)",
+      "OVERFLOW_MENU_LABEL": "@:tours.APP_BAR_OVERFLOW_MENU_LABEL",
       "SEARCH_LABEL": "Tapez tout ou partie d'un mot contenu dans le nom de vos modèles au sein de la barre qui apparait pour effectuer une recherche.",
       "SORT_LABEL": "Ordonnez vos modèles par ordre alphabétique ascendant ou descendant via ce bouton.",
       "NEW_TEMPLATE_LABEL": "Créez un <b>nouveau modèle</b> via ce bouton.",
@@ -330,7 +330,7 @@
       "UPDATE_PROPERTIES_LABEL": "De la même façon, modifiez les différentes propriétés de votre modèle via l'action afférente.",
       "COPY_TEMPLATE_LABEL": "Gagnez du temps en créant un nouveau modèle à partir de celui-ci via cette action.",
       "REMOVE_TEMPLATE_LABEL": "Supprimez votre modèle via cette action.",
-      "REMOVE_CONFIRMATION_LABEL": "$t(tours.REMOVE_CONFIRMATION_LABEL)",
+      "REMOVE_CONFIRMATION_LABEL": "@:tours.REMOVE_CONFIRMATION_LABEL",
       "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement à vos événements ou aux plans votre organisation."
     },
     "create-plan-template": {
@@ -374,7 +374,7 @@
   "leftPane": {
     "ORGANISATIONS": "Mes organisations",
     "ONLINE_HELP": "Aide en ligne",
-    "CONTEXTUAL_HELP": "$t(CONTEXTUAL_HELP)",
+    "CONTEXTUAL_HELP": "@:CONTEXTUAL_HELP",
     "LOGOUT": "Se déconnecter"
   },
   "Context": {
@@ -386,35 +386,35 @@
     "GROUPS": "Groupes",
     "CATALOG": "Cartographie",
     "SEARCH": "Rechercher",
-    "CONTEXTUAL_HELP": "$t(CONTEXTUAL_HELP)",    
+    "CONTEXTUAL_HELP": "@:CONTEXTUAL_HELP",    
     "REFRESH": "Rafraîchir",
     "SETTINGS": "Paramètres"
   },
   "OrganisationCard": {
     "EVENTS_SECTION": "Evénements",
-    "EVENTS_LABEL": "{{count}} événement(s)",
+    "EVENTS_LABEL": "{count} événement(s)",
     "PLANS_SECTION": "Plans",
     "VIEW_EVENTS": "Voir les événements",
     "VIEW_PLANS": "Voir les plans",
-    "PLANS_LABEL": "{{count}} plan(s)",
+    "PLANS_LABEL": "{count} plan(s)",
     "VIEW_CATALOG": "Voir la carte",
     "VIEW_ARCHIVED_EVENTS": "Voir la main courante",
     "VIEW_ARCHIVED_PLANS": "Voir l'archive de plans",
     "CATALOG": "Cartographie",
     "ARCHIVED_EVENTS": "Main courante",
-    "MEMBERS": "{{count}} membre(s)",
+    "MEMBERS": "{count} membre(s)",
     "VIEW_MEMBERS": "Voir les membres",
-    "TAGS": "{{count}} étiquette(s)",
+    "TAGS": "{count} étiquette(s)",
     "VIEW_TAGS": "Voir les étiquettes",
-    "GROUPS": "{{count}} groupe(s)",
+    "GROUPS": "{count} groupe(s)",
     "VIEW_GROUPS": "Voir les groupes",
-    "EVENT_TEMPLATES": "{{count}} modèle(s) d'événement",
+    "EVENT_TEMPLATES": "{count} modèle(s) d'événement",
     "VIEW_EVENT_TEMPLATES": "Voir les modèles d'événement",
-    "PLAN_TEMPLATES": "{{count}} modèle(s) de plan",
+    "PLAN_TEMPLATES": "{count} modèle(s) de plan",
     "VIEW_PLAN_TEMPLATES": "Voir les modèles de plan",    
     "MANAGE_SUBSCRIPTIONS": "Gérer vos abonnements",
-    "EDIT_ACTION": "$t(EDIT_LABEL)",
-    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
+    "EDIT_ACTION": "@:EDIT_LABEL",
+    "REMOVE_ACTION": "@:REMOVE_LABEL",
     "ADMINISTRATION_SECTION": "Gestion",
     "INFORMATION_SECTION": "Informations",
     "SUBSCRIPTIONS_LABEL": "Abonnements"
@@ -423,8 +423,8 @@
     "CUSTOMER_BLOCK_TITLE": "Information de paiement",
     "CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER": "Vous devez être vérifié pour renseigner vos informations de paiement",
     "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "Vous n'avez renseigné aucune information de paiement",
-    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "Vous avez choisi une méthode paiement par facturation mensuelle.<br/>Les factures seront envoyées à <b>{{email}}</b>",
-    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisi une méthode paiement par débit bancaire mensuel.<br/>Vous utilisez une carte <b>{{brand}}</b> dont le numéro se termine par <b>{{last4}}</b>",
+    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "Vous avez choisi une méthode paiement par facturation mensuelle.<br/>Les factures seront envoyées à <b>{email}</b>",
+    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisi une méthode paiement par débit bancaire mensuel.<br/>Vous utilisez une carte <b>{brand}</b> dont le numéro se termine par <b>{last4}</b>",
     "CUSTOMER_BLOCK_ACTION": "Mettre à jour",
     "OPTIONS_BLOCK_TITLE": "Vos abonnements",
     "PLAN_TITLE": "Votre abonnement de base",
@@ -493,15 +493,15 @@
     "bronze_LABEL": "Bronze",
     "bronze_PRICE": "Gratuit",
     "bronze_DESCRIPTION": "Notre version basique pour les personnes qui souhaitent découvrir",
-    "bronze_DETAILS": "</br>Etiquettes illimités</br>Evénements illimitées</br>Jusqu’à <b>{{event-templates}}</b> modèles</br>Jusqu’à <b>{{groups}}</b> groupes</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
+    "bronze_DETAILS": "</br>Etiquettes illimités</br>Evénements illimitées</br>Jusqu’à <b>{event-templates}</b> modèles</br>Jusqu’à <b>{groups}</b> groupes</br>Jusqu’à <b>{members}</b> membres</br></br>",
     "silver_LABEL": "Argent",
     "silver_PRICE": "99€ par mois",
     "silver_DESCRIPTION": "Assez puissant pour gérer une association ou une entreprise de taille moyenne",
-    "silver_DETAILS": "</br>Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Jusqu’à <b>{{groups}}</b> groupes</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
+    "silver_DETAILS": "</br>Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Jusqu’à <b>{groups}</b> groupes</br>Jusqu’à <b>{members}</b> membres</br></br>",
     "gold_LABEL": "Or",
     "gold_PRICE": "399€ par mois",
     "gold_DESCRIPTION": "Assez puissant pour gérer une association ou une entreprise de grande taille",
-    "gold_DETAILS": "</br>Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Jusqu’à <b>{{members}}</b> membres</br></br>",
+    "gold_DETAILS": "</br>Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Jusqu’à <b>{members}</b> membres</br></br>",
     "diamond_LABEL": "Diamant",
     "diamond_PRICE": "Parlons-en !",
     "diamond_DESCRIPTION": "Définissons une solution adaptée à vos besoins, avec un contrôle accru et plus d’assistance",
@@ -555,33 +555,33 @@
     "ALL_INTERACTIONS": "Toutes",
     "VIEW_LOCATION": "Voir la localisation",
     "FOLLOW_UP_MODAL_TITLE": "Entrez votre choix",
-    "FOLLOWUP_MODAL_CANCEL_BUTTON": "$t(CANCEL)",
-    "FOLLOWUP_MODAL_APPLY_BUTTON": "$t(SAVE_LABEL)",
-    "FOLLOWUP_MODAL_APPLY_ALL_BUTTON": "$t(SAVE_LABEL) pour la sélection",
+    "FOLLOWUP_MODAL_CANCEL_BUTTON": "@:CANCEL",
+    "FOLLOWUP_MODAL_APPLY_BUTTON": "@:SAVE_LABEL",
+    "FOLLOWUP_MODAL_APPLY_ALL_BUTTON": "@:SAVE_LABEL) pour la sélection",
     "EVENT_LOGS_EXPORT_FILE": "Participants.csv",
-    "MATCHING_RESULTS": "{{total}} participants trouvés.",
-    "MAXIMUM_RESULTS": "Raffinez votre filtre car certains résultats sont omis au-delà de {{max}} participants.",
+    "MATCHING_RESULTS": "{total} participants trouvés.",
+    "MAXIMUM_RESULTS": "Raffinez votre filtre car certains résultats sont omis au-delà de {max} participants.",
     "UNMATCHING_STEPS": "Etapes différentes",
     "CANNOT_LOG_UNMATCHING_STEPS": "Impossible de réaliser l'action pour des participants à différentes étapes."
   },
   "EventActivity": {
     "ADD_MEDIA_LABEL": "Ajouter un média",
     "BROWSE_MEDIA_LABEL": "Parcourir les médias",
-    "EDIT_LABEL": "$t(EDIT_LABEL)",
+    "EDIT_LABEL": "@:EDIT_LABEL",
     "SHOW_PANE_LABEL": "Afficher le volet participants",
     "HIDE_PANE_LABEL": "Cacher le volet participants",
     "ACTION_REQUIRED": "action requise",
     "AWAITING_INFORMATION": "en attente d'information",
-    "UNAMED": "$t(EventLog.UNAMED)",
+    "UNAMED": "@:EventLog.UNAMED",
     "PARTICIPANTS_LAYER_NAME": "Participants",
-    "UPLOADER_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)"
+    "UPLOADER_MODAL_CLOSE_ACTION": "@:CLOSE_LABEL"
   },
   "EventActivityPanel": {
     "PARTICIPANTS_LABEL": "Participants",
     "FILTER_PARTICIPANTS": "Sélectionnez pour filtrer les participants avec ce statut"
   },
   "EventsActivity": {
-    "EVENTS_LABEL": "$t(EVENTS_LABEL)",
+    "EVENTS_LABEL": "@:EVENTS_LABEL",
     "SEARCH_EVENTS": "Rechercher des événements",
     "SORT_EVENTS": "Trier les événements",
     "TODO_LABEL": "A faire",
@@ -605,30 +605,30 @@
     "UPDATED_AT_LABEL": "Mis à jour le",
     "EXPIRE_AT_LABEL": "Expire le",
     "REMOVE_ACTION": "Clôturer",
-    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "EDIT_ACTION": "@:EDIT_LABEL",
     "FOLLOW_UP_LABEL": "Suivre",
     "FOLLOW_UP_MODAL_TITLE": "Entrez votre choix",
     "EVENT_LOGS_LABEL": "Suivi des participants",
-    "ADD_MEDIA_LABEL": "$t(EventActivity.ADD_MEDIA_LABEL)",
-    "BROWSE_MEDIA_LABEL": "$t(EventActivity.BROWSE_MEDIA_LABEL)",
-    "UPLOADER_MODAL_CLOSE_ACTION": "$t(EventActivity.UPLOADER_MODAL_CLOSE_ACTION)",
-    "LOCATION_MAP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "ADD_MEDIA_LABEL": "@:EventActivity.ADD_MEDIA_LABEL",
+    "BROWSE_MEDIA_LABEL": "@:EventActivity.BROWSE_MEDIA_LABEL",
+    "UPLOADER_MODAL_CLOSE_ACTION": "@:EventActivity.UPLOADER_MODAL_CLOSE_ACTION",
+    "LOCATION_MAP_MODAL_CLOSE_ACTION": "@:CLOSE_LABEL",
     "EVENT_LOGS_MODAL_TITLE": "Détails des participants",
-    "EVENT_LOGS_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
+    "EVENT_LOGS_MODAL_CLOSE_ACTION": "@:CLOSE_LABEL",
     "EVENT_LOGS_MODAL_EXPORT_DATA_LABEL": "Exporter les données",
     "NAVIGATE_LABEL": "Naviguer",
     "LOCATE_LABEL": "Voir la localisation",    
     "MAP_LABEL": "Carte",    
-    "REMOVE_DIALOG_TITLE": "Clôturer l'événement {{event}} ?",
-    "REMOVE_DIALOG_MESSAGE": "Etes vous sûr de vouloir clôturer l'événement <b>{{event}}</b> ?",
+    "REMOVE_DIALOG_TITLE": "Clôturer l'événement {event} ?",
+    "REMOVE_DIALOG_MESSAGE": "Etes vous sûr de vouloir clôturer l'événement <b>{event}</b> ?",
     "ACTION_REQUIRED_WARNING": "Action requise",
     "WAITING_COORDINATION_WARNING": "En attente du coordonnateur",
     "WAITING_FOR_PARTICIPANT_LABEL": "Le coordonnateur est en attente de votre action",
     "WAITING_FOR_COORDINATOR_LABEL": "En attente du coordonnateur",
-    "PARTICPANTS_AWAITING_LABEL": "{{number}} participants en attente de coordination",
+    "PARTICPANTS_AWAITING_LABEL": "{number} participants en attente de coordination",
     "NO_PARTICPANTS_AWAITING_LABEL": "Aucun participant en attente de coordination",
-    "FOLLOWUP_MODAL_CLOSE_ACTION": "$t(CLOSE_LABEL)",
-    "FOLLOWUP_MODAL_SAVE_BUTTON": "$t(SAVE_LABEL)",
+    "FOLLOWUP_MODAL_CLOSE_ACTION": "@:CLOSE_LABEL",
+    "FOLLOWUP_MODAL_SAVE_BUTTON": "@:SAVE_LABEL",
     "VIEW_LOCATION_MAP": "Voir la localisation",
     "VIEW_PARTICIPANTS": "Voir les participants"
   },
@@ -675,8 +675,8 @@
     "SHOW_BY_TEMPLATE_LABEL": "Par type",
     "SHOW_ALL_LABEL": "Globalement",
     "EVENTS_LAYER_NAME": "Mes événements",
-    "MATCHING_RESULTS": "{{total}} événements trouvés.",
-    "MAXIMUM_RESULTS": "Raffinez vos paramètres de recherches car certains résultats sont omis au-delà de {{max}} événements.",
+    "MATCHING_RESULTS": "{total} événements trouvés.",
+    "MAXIMUM_RESULTS": "Raffinez vos paramètres de recherches car certains résultats sont omis au-delà de {max} événements.",
     "SORT_EVENTS": "Trier les événements"
   },
   "ArchivedEventCard": {
@@ -703,19 +703,19 @@
     "BROWSE_MEDIA": "Voir les médias"
   },
   "EventTemplatesActivity": {
-    "EVENT_TEMPLATES_LABEL": "$t(EVENT_TEMPLATES_LABEL)",
+    "EVENT_TEMPLATES_LABEL": "@:EVENT_TEMPLATES_LABEL",
     "CREATE_TEMPLATE_LABEL": "Créer un modèle d'événement",
     "SEARCH_EVENT_TEMPLATES": "Rechercher des modèles d'événements",
     "SORT_EVENT_TEMPLATES": "Trier les modèles d'événements"
   },
   "EventTemplateCard": {
-    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
-    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "REMOVE_ACTION": "@:REMOVE_LABEL",
+    "EDIT_ACTION": "@:EDIT_LABEL",
     "ADD_WORKFLOW_ACTION": "Ajouter un processus",
     "EDIT_WORKFLOW_ACTION": "Modifier le processus",
     "REMOVE_WORKFLOW_ACTION": "Supprimer le processus",
     "REMOVE_WORKFLOW_TITLE": "Etes vous sûr de vouloir supprimer le processus ?",
-    "COPY_ACTION": "$t(COPY_LABEL)",
+    "COPY_ACTION": "@:COPY_LABEL",
     "DESCRIPTION_SECTION": "Description",
     "NO_DESRIPTION_LABEL": "Aucune description",
     "PARTICIPANTS_SECTION": "Participants",
@@ -723,11 +723,11 @@
     "COORDINATORS_SECTION": "Coordonnateurs",
     "NO_COORDINATORS_LABEL": "Aucun coordonnateurs",
     "EXPIRY_DURATION_SECTION": "Durée d'expiration",
-    "EXPIRY_DURATION_LABEL": "{{days}} jours",
+    "EXPIRY_DURATION_LABEL": "{days} jours",
     "NO_EXPIRY_DURATION_LABEL": "Aucune durée d'expiration",    
     "PERMISSION_SECTION": "Permission",
     "WORKFLOW_SECTION": "Processus",
-    "WORKFLOW_LABEL": "Processus en {{count}} étape(s)",
+    "WORKFLOW_LABEL": "Processus en {count} étape(s)",
     "NO_WORKFLOW_LABEL": "Aucun processus"    
   },
   "EventTemplateWorkflowForm": {
@@ -740,7 +740,7 @@
   },
   "EventTemplateEditor": {
     "WORKFLOW_HELPER_LABEL": "Copier le processus",
-    "CLOSE_ACTION":  "$t(CLOSE_LABEL)"
+    "CLOSE_ACTION":  "@:CLOSE_LABEL"
   },
   "EventNotifications": {
     "CREATE": "Nouveau",
@@ -752,8 +752,8 @@
     "NOTIFY": "Notifier les participants"
   },
   "EventLogEditor": {
-    "CLOSE_ACTION": "$t(CLOSE_LABEL)",
-    "SAVE_BUTTON": "$t(SAVE_LABEL)"
+    "CLOSE_ACTION": "@:CLOSE_LABEL",
+    "SAVE_BUTTON": "@:SAVE_LABEL"
   },
   "CustomerEditor": {
     "TITLE": "Saisissez vos informations de paiement",
@@ -770,7 +770,7 @@
     "SELECT": "Sélectionner",
     "CURRENT_PLAN": "Votre offre",
     "CONFIRM_DIALOG_TITLE": "Êtes vous sur de vouloir mettre à jour votre plan ?",
-    "CONFIRM_DIALOG_MESSAGE": "Merci de confirmer la souscription au plan <b>$t({{plan}})</b>",
+    "CONFIRM_DIALOG_MESSAGE": "Merci de confirmer la souscription au plan <b>@:{plan})</b>",
     "PLAN_DISABLED_TOOLTIP": "Merci de renseigner les informations de paiement pour souscrire à ce plan"
   },
   "OptionsChooser": {
@@ -778,8 +778,8 @@
     "SELECT": "Sélectionner",
     "SUBSCRIBED": "Souscrite",
     "CONFIRM_DIALOG_TITLE": "Êtes vous sur de vouloir mettre à jour votre option ?",
-    "CONFIRM_DIALOG_SUBSCRIBE_MESSAGE": "Merci de confirmer la souscription à l'option <b>$t({{option}})</b>",
-    "CONFIRM_DIALOG_UNSUBSCRIBE_MESSAGE": "Merci de confirmer la résiliation de l'option <b>$t({{option}})</b>",
+    "CONFIRM_DIALOG_SUBSCRIBE_MESSAGE": "Merci de confirmer la souscription à l'option <b>@:{option})</b>",
+    "CONFIRM_DIALOG_UNSUBSCRIBE_MESSAGE": "Merci de confirmer la résiliation de l'option <b>@:{option})</b>",
     "OPTION_DISABLED_TOOLTIP": "Merci de renseigner les informations de paiement pour souscrire aux options"
   },
   "PlansActivity": {
@@ -788,16 +788,16 @@
     "SORT_PLANS": "Trier les plans"
   },
   "PlanObjectivesEditor": {
-    "MANAGE": "Gérer les objectifs - {{name}}",
-    "CREATE": "Ajouter un nouvel objectif - {{name}}",
-    "EDIT": "Editer l'objectif {{name}}",
+    "MANAGE": "Gérer les objectifs - {name}",
+    "CREATE": "Ajouter un nouvel objectif - {name}",
+    "EDIT": "Editer l'objectif {name}",
     "SORT": "Trier les objectifs",
     "ADD_OBJECTIVE": "Ajouter un nouvel objectif",
-    "EDIT_OBJECTIVE": "$t(EDIT)",
-    "REMOVE_OBJECTIVE": "$t(REMOVE)"
+    "EDIT_OBJECTIVE": "@:EDIT",
+    "REMOVE_OBJECTIVE": "@:REMOVE"
   },
   "PlanCard": {
-    "EDIT_ACTION": "$t(EDIT_LABEL)",
+    "EDIT_ACTION": "@:EDIT_LABEL",
     "REMOVE_ACTION": "Clôturer",
     "DESCRIPTION_SECTION": "Description",
     "OBJECTIVES_SECTION": "Objectifs",
@@ -807,7 +807,7 @@
     "NO_LOCATION_LABEL": "Aucune localisation",
     "COORDINATORS_SECTION": "Coordonnateurs",
     "EVENTS_SECTION": "Evénements",
-    "EVENTS": "{{count}} événements(s)",
+    "EVENTS": "{count} événements(s)",
     "VIEW_PLANS": "Voir les plans",
     "VIEW_CATALOG": "Voir la carte",
     "VIEW_ARCHIVED_EVENTS": "Voir la main courante"
@@ -817,9 +817,9 @@
     "CREATE_TEMPLATE_LABEL": "Créer un nouveau modèle de plan"
   },
   "PlanTemplateCard": {
-    "EDIT_ACTION": "$t(EDIT_LABEL)",
-    "COPY_ACTION": "$t(COPY_LABEL)",
-    "REMOVE_ACTION": "$t(REMOVE_LABEL)",
+    "EDIT_ACTION": "@:EDIT_LABEL",
+    "COPY_ACTION": "@:COPY_LABEL",
+    "REMOVE_ACTION": "@:REMOVE_LABEL",
     "DESCRIPTION_SECTION": "Description",
     "NO_DESRIPTION_LABEL": "Aucune description",
     "OBJECTIVES_SECTION": "Objectifs",
@@ -849,11 +849,11 @@
   "PlanMenu": {
     "VIEW_DESCRIPTION": "Voir la description",
     "VIEW_LOCATION": "Voir la localisation",
-    "PERCENT_LABEL": "{{percent}}% réalisé"
+    "PERCENT_LABEL": "{percent}% réalisé"
   },
   "OrganisationMenu": {
-    "EVENTS_LABEL": "{{count}} événement(s)",
-    "PLANS_LABEL": "{{count}} plan(s)",
+    "EVENTS_LABEL": "{count} événement(s)",
+    "PLANS_LABEL": "{count} plan(s)",
     "VIEW_CATALOG": "Voir la carte",
     "VIEW_ARCHIVED_EVENTS": "Voir la main courante",
     "VIEW_ARCHIVED_PLANS": "Voir l'archive des plans",

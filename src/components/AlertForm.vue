@@ -50,8 +50,8 @@
       </q-list>
     </q-expansion-item>
     <q-expansion-item ref="event" icon="las la-bell" :label="$t('AlertForm.EVENT')" group="group">
-      <k-item-field ref="eventTemplate" :properties="eventTemplateFieldProperties" />
-      <k-toggle-field ref="closeEvent" :properties="closeEventFieldProperties" />
+      <KItemField ref="eventTemplate" :properties="eventTemplateFieldProperties" />
+      <KToggleField ref="closeEvent" :properties="closeEventFieldProperties" />
     </q-expansion-item>
     <q-list v-show="hasError" dense class="row items-center justify-around q-pa-md">
       <q-item>
@@ -70,17 +70,18 @@
 import _ from 'lodash'
 import moment from 'moment'
 import logger from 'loglevel'
-import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import { mixins as kdkCoreMixins, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 import { QSlider, QRange } from 'quasar'
 
 export default {
-  name: 'alert-form',
   components: {
-    QSlider, QRange
+    QSlider, 
+    QRange,
+    KItemField: kdkCoreUtils.loadComponent('form/KItemField'),
+    KToggleField: kdkCoreUtils.loadComponent('form/KToggleField')
   },
   mixins: [
-    kCoreMixins.schemaProxy,
-    kCoreMixins.refsResolver()
+    kdkCoreMixins.schemaProxy
   ],
   props: {
     layer: { type: Object, default: () => null },
@@ -357,10 +358,6 @@ export default {
     }
   },
   async created () {
-    // Load the required components
-    this.$options.components['k-item-field'] = this.$load('form/KItemField')
-    this.$options.components['k-toggle-field'] = this.$load('form/KToggleField')
-
     await this.build()
     this.$emit('form-ready', this)
   }

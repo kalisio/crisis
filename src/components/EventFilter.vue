@@ -1,5 +1,5 @@
 <template>
-  <k-action
+  <KAction
     id="event-filter"
     icon="las la-filter"
     :color="filters.length > 0 ? 'accent' : 'grey-7'">
@@ -15,7 +15,7 @@
           type="toggle" />
       </q-popup-proxy>
     </template>
-  </k-action>
+  </KAction>
 </template>
 
 <script>
@@ -38,8 +38,6 @@ export default {
     }
   },
   async created () {
-    // Load the required components
-    this.$options.components['k-action'] = this.$load('frame/KAction')
     // Intiializes the options
     this.options = [
       { label: this.$t('EventFilter.OPEN'), value: 'open' },

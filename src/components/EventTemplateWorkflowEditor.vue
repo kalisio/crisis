@@ -1,31 +1,33 @@
 <template>
-  <k-modal ref="modal"
+  <KModal
     :title="editorTitle"
     :buttons="buttons"
     v-model="isModalOpened"
-    @opened="$emit('opened')"
-    @closed="$emit('closed')"
   >
     <div class="column xs-gutter">
-      <!-- Form to be used for workflow property -->
-      <event-template-workflow-form :class="{ 'light-dimmed': applyInProgress }" ref="form" :schema="schema" />
-      <q-spinner-cube color="primary" class="fixed-center" v-if="applyInProgress" size="4em"/>
+      <EventTemplateWorkflowForm 
+        ref="onFormReferenceCreated" 
+        :schema="schema"
+        @form-ready="onFormReady"
+      />
     </div>
-  </k-modal>
+  </KModal>
 </template>
 
 <script>
-import { mixins } from '@kalisio/kdk/core.client'
+import EventTemplateWorkflowForm from './EventTemplateWorkflowForm.vue'
+import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
-  name: 'event-template-editor',
+  components: {
+    EventTemplateWorkflowForm
+  },
   mixins: [
-    mixins.baseModal,
-    mixins.service,
-    mixins.objectProxy,
-    mixins.schemaProxy,
-    mixins.baseEditor(['form']),
-    mixins.refsResolver(['form'])
+    kdkCoreMixins.baseModal,
+    kdkCoreMixins.service,
+    kdkCoreMixins.objectProxy,
+    kdkCoreMixins.schemaProxy,
+    kdkCoreMixins.baseEditor
   ],
   computed: {
     buttons () {
@@ -38,17 +40,8 @@ export default {
   methods: {
     openModal (maximized = false) {
       this.refresh()
-      mixins.baseModal.methods.openModal.call(this, maximized)
+      kdkCoreMixins.baseModal.methods.openModal.call(this, maximized)
     }
-  },
-  async created () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['event-template-workflow-form'] = this.$load('EventTemplateWorkflowForm')
-    this.$on('applied', this.closeModal)
-  },
-  beforeDestroy () {
-    this.$off('applied', this.closeModal)
   }
 }
 </script>

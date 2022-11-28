@@ -2,10 +2,9 @@
   <q-stepper id="workflow" header-nav animated ref="stepper" v-model="currentStep" @input="onStepSelected">
     <q-step v-for="(step, index) in steps" :key="step.name + '_' + index" :name="step.name"
       :title="step.title" :icon="getStepIcon(step)">
-      <k-form ref="stepForm" v-show="!preview" :schema="schema" @form-ready="fillStepForm" @field-changed="onStepFieldChanged">
-      </k-form>
+      <KForm ref="stepForm" v-show="!preview" :schema="schema" @form-ready="fillStepForm" @field-changed="onStepFieldChanged" />
       <div v-show="preview">
-        <k-form ref="previewForm" :schema="previewSchema"/>
+        <KForm ref="previewForm" :schema="previewSchema" />
       </div>
     </q-step>
     <template v-slot:navigation>
@@ -54,7 +53,6 @@ export default {
     QStepperNavigation
   },
   mixins: [
-    kCoreMixins.refsResolver(),
     mixins.events
   ],
   props: {
@@ -195,7 +193,7 @@ export default {
         this.previewSchema = await this.generateSchemaForStep(this.getCurrentStep(), this.layer)
         return this.previewSchema
       } catch (error) {
-        this.$events.$emit('error', error)
+        this.$events.emit('error', error)
         throw error
       }
     },
@@ -278,8 +276,6 @@ export default {
       end: [],
       stakeholder: 'participant'
     }
-    // Load the required components
-    this.$options.components['k-form'] = this.$load('form/KForm')
     // Initialize step data on creation so that local ref to form can be resolved
     this.steps = [this.generateStep()]
     this.currentStep = this.steps[0].name

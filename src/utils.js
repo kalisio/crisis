@@ -1,7 +1,4 @@
 import _ from 'lodash'
-import Vue from 'vue'
-import i18next from 'i18next'
-import VueI18next from '@panter/vue-i18next'
 
 export function hasRoleInEvent (user, roles) {
   return _.findIndex(roles, role => {
@@ -49,83 +46,7 @@ export function getPlansQuery (user, contextId) {
   }
 }
 
-export function loadComponent (component) {
-  return () => {
-    return import(`@kalisio/kdk/lib/core/client/components/${component}.vue`)
-      .catch(errorCore => {
-        return import(`@kalisio/kdk/lib/map/client/components/${component}.vue`)
-          .catch(errorMap => {
-            // Otherwise this should be app component
-            return import(`@/${component}.vue`)
-              .catch(errorApp => {
-                console.log(errorCore, errorMap, errorApp)
-              })
-          })
-      })
-  }
-}
-
-export function loadSchema (schema) {
-  return import(`@kalisio/kdk/lib/core/common/schemas/${schema}.json`)
-    .catch(errorCore => {
-      return import(`@kalisio/kdk/lib/map/common/schemas/${schema}.json`)
-        .catch(errorMap => {
-          // Otherwise this should be app component
-          return import(`./schemas/${schema}.json`)
-            .catch(errorApp => {
-              console.log(errorCore, errorMap, errorApp)
-            })
-        })
-    })
-}
-
-export function loadTranslation (module, locale) {
-  let translation = module + '_' + locale + '.json'
-  return import(`@kalisio/kdk/lib/core/client/i18n/${translation}`)
-    .catch(errorCore => {
-      return import(`@kalisio/kdk/lib/map/client/i18n/${translation}`)
-        .catch(errorMap => {
-          return import(`./i18n/${translation}`)
-            .catch(errorApp => {
-              console.log(errorCore, errorMap, errorApp)
-            })
-        })
-    })
-}
-
-export function resolveAsset (asset) {
-  // If external URL simply use it
-  if (asset.startsWith('http://') || asset.startsWith('https://')) return asset
-  // Otherwise let webpack resolve asset
-  else return require('./assets/' + asset)
-}
-
-// We need this so that we can dynamically load the components
-// with a function that has previously been statically analyzed by the bundler (eg webpack)
-export function load (name, type = 'component') {
-  switch (type) {
-    case 'asset':
-      return resolveAsset(name)
-    case 'schema':
-      return loadSchema(name)
-    case 'component':
-    default:
-      return loadComponent(name)
-  }
-}
-
-export async function createComponent (component, options) {
-  const ComponentClass = await loadComponent(component)()
-  const Component = Vue.extend(ComponentClass.default)
-  return new Component(Object.assign({ i18n: new VueI18next(i18next) }, options))
-}
-
-export async function createComponentVNode (component, options) {
-  const ComponentClass = await loadComponent(component)()
-  const Component = Vue.extend(ComponentClass.default)
-  return this.$createElement(Component, Object.assign({ i18n: new VueI18next(i18next) }, options))
-}
-
+// Build vue router config from our config file
 export function buildRoutes (config) {
   function buildRoutesRecursively (config, routes, parentRoute) {
     _.forOwn(config, (value, key) => {
@@ -142,7 +63,7 @@ export function buildRoutes (config) {
       // Otherwise we have an object similar to what expect vue-router,
       // we simply return the async component loading function with the given component value
       if (typeof value === 'string') {
-        route.component = loadComponent(value)
+        route.component = () => import(`@components/${value}.vue`)
       } else {
         // Take care that path can be empty so we cannot just check with a if
         if (_.has(value, 'path')) {
@@ -153,7 +74,10 @@ export function buildRoutes (config) {
           route.name = value.name
         }
         if (_.has(value, 'component')) {
-          route.component = loadComponent(value.component)
+          route.component = () => import(`@components/${value.component}.vue`)
+          if (_.has(value, 'embedApi')) {
+            setupEmbedApi(route.name)
+          }
         }
         if (_.has(value, 'props')) {
           route.props = value.props

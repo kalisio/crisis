@@ -1,14 +1,11 @@
 <template>
-  <k-modal
+  <KModal
     :title="$t('CustomerEditor.TITLE')"
-    v-model="isModalOpened"
-    @opened="$emit('opened')"
-    @closed="$emit('closed')"
     :buttons="getButtons()"
   >
     <div class="column">
       <div>
-        <k-form ref="form" :schema="getSchema()" @form-ready="onFormReady"/>
+        <KForm ref="onFormReferenceCreated" :schema="schema" />
       </div>
       <div>
         <div>&nbsp;</div>
@@ -28,10 +25,12 @@
         </div>
         <div v-else class="row no-margin">
           <div class="col-11 self-center">
-            <card id="payment-card" class='k-stripe-card'
+            <!-- TODO 
+            card id="payment-card" class='k-stripe-card'
             :stripe="$config('stripe.secretKey')"
             :options="$config('stripe.options')"
-            @change='onCardUpdated' />
+            @change='onCardUpdated' 
+            /-->
           </div>
           <div class="col-1 self-center">
             <q-spinner v-show="isCreatingCard" color="grey-7" size="24px" />
@@ -39,27 +38,20 @@
         </div>
       </div>
     </div>
-  </k-modal>
+  </KModal>
 </template>
 
 <script>
 import _ from 'lodash'
-import { QCard, QBtn, QIcon, QSpinner } from 'quasar'
-import { Card, createToken } from 'vue-stripe-elements-plus'
+// TODO import { Card, createToken } from 'vue-stripe-elements-plus'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 
 export default {
-  name: 'customer-editor',
   components: {
-    QCard,
-    QBtn,
-    QIcon,
-    QSpinner,
-    Card
+    // TODO Card
   },
   mixins: [
     kCoreMixins.baseModal,
-    kCoreMixins.refsResolver(['form'])
   ],
   props: {
     billingObjectId: {
@@ -74,12 +66,12 @@ export default {
   data () {
     return {
       hasCard: false,
-      isCreatingCard: false
-    }
-  },
-  methods: {
-    getSchema () {
-      return {
+      isCreatingCard: false,
+      buttons: [
+        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
+        { id: 'update-button', label: this.$t('CustomerEditor.UPDATE_BUTTON'), renderer: 'form-button', color: 'primary', handler: () => this.onUpdateClicked() }
+      ],
+      schema: {
         $schema: 'http://json-schema.org/draft-06/schema#',
         $id: 'http://kalisio.xyz/schemas/edit-customer',
         title: 'CustomerEditor.TITLE',
@@ -111,13 +103,9 @@ export default {
         },
         required: ['email']
       }
-    },
-    getButtons () {
-      return [
-        { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
-        { id: 'update-button', label: this.$t('CustomerEditor.UPDATE_BUTTON'), renderer: 'form-button', color: 'primary', handler: () => this.onUpdateClicked() }
-      ]
-    },
+    }
+  },
+  methods: {
     async open (customer, purchasers) {
       this.customer = Object.assign({
         action: 'customer',
@@ -172,11 +160,6 @@ export default {
       _.unset(this.customer, 'token')
       this.hasCard = false
     }
-  },
-  created () {
-    // Load the required components
-    this.$options.components['k-modal'] = this.$load('frame/KModal')
-    this.$options.components['k-form'] = this.$load('form/KForm')
   }
 }
 </script>

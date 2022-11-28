@@ -1,8 +1,8 @@
 <template>
   <q-card>
     <q-card-section class="row justify-center">
-      <template v-for="(properties, option) in options">
-        <div :id="option + '-card'" class="col-xs-12 col-sm-6 col-md-3" :key="option">
+      <template v-for="(properties, option) in options" :key="option">
+        <div :id="option + '-card'" class="col-xs-12 col-sm-6 col-md-3">
           <q-card :class="'q-ma-sm text-white bg-' + properties.color" >
             <q-card-section class="text-center">
               <div class="text-h4">{{$t('options.' + option + '_LABEL')}}</div>

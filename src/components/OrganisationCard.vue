@@ -1,5 +1,5 @@
 <template>
-  <k-card
+  <KCard
     v-bind="$props"
     :header="header"
     :actions="itemActions"
@@ -10,96 +10,102 @@
     <!--
       Card avatar
     -->
-    <div slot="card-avatar">
-      <k-avatar class="q-pa-sm" :object="item" :contextId="item._id" size="4rem" />
-    </div>
+    <template v-slot:card-avatar>
+      <KAvatar class="q-pa-sm" :object="item" :contextId="item._id" size="4rem" />
+    </template>
     <!--
       Card content
      -->
-    <div slot="card-content">
-      <k-card-section
+    <template v-slot:card-content>
+      <KCardSection
         :title="$t('OrganisationCard.EVENTS_SECTION')"
         :hide-header="!isExpanded"
       >
         <!-- Events section -->
         <div class="full-width row justify-between items-center no-wrap">
-          <k-action
+          <KAction
             id= "organisation-events"
             icon= "las la-fire"
             :label="$t('OrganisationCard.EVENTS_LABEL', { count: eventsCount })"
             @triggered="routeTo('events-activity')"
-            style="max-width: 60%" />
+            style="max-width: 60%" 
+          />
           <div>
-            <k-action
+            <KAction
               v-if="canAccessCatalog"
               id= "organisation-catalog"
               icon= "las la-map"
               :tooltip="$t('OrganisationCard.VIEW_CATALOG')"
-              @triggered="routeTo('catalog-activity')"  />
-            <k-action
+              @triggered="routeTo('catalog-activity')"
+            />
+            <KAction
               v-if="canAccessArchivedEvents"
               id= "organisation-archived-events"
               icon= "las la-clipboard-list"
               :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_EVENTS')"
-              @triggered="routeTo('archived-events-activity')"   />
+              @triggered="routeTo('archived-events-activity')"
+            />
           </div>
         </div>
-      </k-card-section>
+      </KCardSection>
       <!-- Plans section -->
-      <k-card-section
+      <KCardSection
         v-if="canAccessPlans"
         :title="$t('OrganisationCard.PLANS_SECTION')"
         :hide-header="!isExpanded"
       >
         <div class="full-width row justify-between items-center no-wrap">
-          <k-action
+          <KAction
             id= "organisation-plans"
             icon= "las la-stream"
             :label="$t('OrganisationCard.PLANS_LABEL', { count: plansCount })"
             @triggered="routeTo('plans-activity')"
-            style="max-width: 75%" />
-          <k-action
+            style="max-width: 75%"
+          />
+          <KAction
             v-if="canAccessArchivedPlans"
             id= "organisation-archived-plans"
             icon= "las la-archive"
             :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_PLANS')"
-            @triggered="routeTo('archived-plans-activity')" />
+            @triggered="routeTo('archived-plans-activity')" 
+          />
         </div>
-      </k-card-section>
+      </KCardSection>
       <!-- Administation section -->
       <div v-if="isExpanded">
         <!-- Organisation section -->
-        <k-card-section :title="isMember ? $t('OrganisationCard.INFORMATION_SECTION') : $t('OrganisationCard.ADMINISTRATION_SECTION')">
+        <KCardSection :title="isMember ? $t('OrganisationCard.INFORMATION_SECTION') : $t('OrganisationCard.ADMINISTRATION_SECTION')">
           <div class="q-pb-sm">
-            <template v-for="element in structure">
-              <div :key="element.key" class="full-width row justify-between items-center no-wrap">
-                <k-action
+            <template v-for="element in structure" :key="element.key">
+              <div class="full-width row justify-between items-center no-wrap">
+                <KAction
                   :id="`organisation-${element.name}`"
                   :icon="element.icon"
                   :label="$t(`OrganisationCard.${element.key}`, { count: counters[element.name] })"
                   @triggered="routeTo(`${element.name}-activity`)"
-                  style="max-width: 75%" />
+                  style="max-width: 75%" 
+                />
                 <q-badge v-if="!isMember" :label="`${quotas[element.name]} max`" color="grey-7" />
               </div>
             </template>
           </div>
-        </k-card-section>
+        </KCardSection>
         <!-- Billing section -->
-        <k-card-section v-if="canAccessBilling" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{
+        <KCardSection v-if="canAccessBilling" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{
           id: 'edit-billing', icon: 'las la-edit', size: 'sm', tooltip: 'OrganisationCard.EDIT_ACTION',
           route: { name: 'edit-organisation-billing', params: { objectId: item._id, title: item.name } }
         }]">
             <div class="row items-center">
-            <template v-for="subscription in subscriptions">
-              <div :key="subscription" class="q-pl-sm">
+            <template v-for="subscription in subscriptions" :key="subscription">
+              <div class="q-pl-sm">
                 <q-badge :label="$t(`${subscription}_LABEL`)" color="grey-7" />
               </div>
             </template>
           </div>
-        </k-card-section>
+        </KCardSection>
       </div>
-    </div>
-  </k-card>
+    </template>
+  </KCard>
 </template>
 
 <script>
@@ -133,7 +139,7 @@ export default {
     header () {
       let components = [
         { component: 'QBadge', label: this.getUserRoleLabel(), color: 'grey-7' },
-        { component: 'frame/KSpot', color: this.item.color, width: '20px', borderRadius: '5px' },
+        { component: 'media/KShape', type: 'rect', color: this.item.color, width: 20, borderRadius: 5 },
         { component: 'QSpace' }
       ]
       if (this.isExpanded) components = components.concat(_.filter(this.itemActions, { scope: 'header' }))
@@ -212,7 +218,6 @@ export default {
       }
     },
     async onExpanded () {
-      this.isExpanded = true
       // Retrieve the quotas
       await this.loadBilling()
       const subscription = this.billing.subscription.plan
@@ -227,16 +232,10 @@ export default {
       // Counts the different elements
       for (let i = 0; i < this.structure.length; ++i) {
         const service = this.structure[i].name
-        this.$set(this.counters, service, await this.countItems(service))
+        this.counters[service] = await this.countItems(service)
       }
+      this.isExpanded = true
     }
-  },
-  beforeCreate () {
-    // Load the required components
-    this.$options.components['k-card'] = this.$load('collection/KCard')
-    this.$options.components['k-card-section'] = this.$load('collection/KCardSection')
-    this.$options.components['k-avatar'] = this.$load('frame/KAvatar')
-    this.$options.components['k-action'] = this.$load('frame/KAction')
   },
   async created () {
     await this.updateCounts()
@@ -252,7 +251,7 @@ export default {
     plansService.on('updated', this.updateCounts)
     plansService.on('removed', this.updateCounts)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     const eventsService = this.$api.getService('events', this.item._id)
     eventsService.off('created', this.updateCounts)
     eventsService.off('patched', this.updateCounts)

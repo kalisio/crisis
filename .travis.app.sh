@@ -1,13 +1,5 @@
 #!/bin/bash
 
-push_docker () {
-	docker push kalisio/$1:$2
-	check_code $? "Pushing the $2 $1 docker image"
-	docker tag kalisio/$1:$2 kalisio/$1:$3
-	docker push kalisio/$1:$3
-	check_code $? "Pushing the $3 $1 docker image"
-}
-
 #
 # Provision the required files
 #
@@ -22,25 +14,23 @@ travis_fold end "provision"
 #
 travis_fold start "build"
 
-# Build the api
-cd api && yarn build
-check_code $? "Building the api"
-
-# Build the client
-cd .. && yarn build
-BUILD_CODE=$? 
+yarn build
+EXIT_CODE=$? 
 tail -n 24 build.log
-check_code $BUILD_CODE "Builing the client" 
+check_code $EXIT_CODE 0 "Builing the client" 
 
 # Log in to docker before building the app because of rate limiting
 docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
-check_code $? "Connecting to Docker"
+check_code $? 0 "Connecting to Docker"
 
-# Create an archive to speed docker build process and build the image
+# Create an archive to speed docker build process
 cd ../..
-tar -zcf kalisio.tgz kalisio
+tar --exclude='$APP/test' -zcf $TRAVIS_BUILD_DIR/kalisio.tgz kalisio
+
+# Build the image
+cd $TRAVIS_BUILD_DIR
 docker build --build-arg APP=$APP --build-arg FLAVOR=$FLAVOR --build-arg BUILD_NUMBER=$BUILD_NUMBER -f dockerfile -t kalisio/$APP:$TAG . 
-check_code $? "Building the app docker image"
+check_code $? 0 "Building the app docker image"
 
 travis_fold end "build"
 
@@ -49,7 +39,13 @@ travis_fold end "build"
 #
 travis_fold start "deploy"
 
-# Push the app image to the hub
-push_docker $APP $TAG $FLAVOR 
+# Push the app image to the hub with the version tag
+docker push kalisio/$APP:$TAG
+check_code $? 0 "Pushing the $APP:$TAG docker image"
+
+# Push the app image to the hub with the flavor tag
+docker tag kalisio/$APP:$TAG kalisio/$APP:$FLAVOR
+docker push kalisio/$APP:$FLAVOR
+check_code $? 0 "Pushing the $APP:$TAG docker image"
 
 travis_fold end "deploy"

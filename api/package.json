@@ -1,7 +1,7 @@
 {
   "name": "aktnmap-api",
   "description": "Kalisio Akt'n'Map Web Services",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "homepage": "https://github.com/kalisio/aktnmap",
   "keywords": [
     "kalisio"
@@ -19,6 +19,7 @@
   "bugs": {
     "url": "https://github.com/kalisio/aktnmap/issues"
   },
+  "type": "module",
   "main": "main.js",
   "scripts": {
     "release:patch": "npm --no-git-tag-version version patch",
@@ -26,32 +27,24 @@
     "release:major": "npm --no-git-tag-version version major",
     "dev": "nodemon --watch src --exec npm run debug",
     "dev:replica": "nodemon --watch src --exec npm run debug:replica",
-    "debug": "npm run build && cross-env NODE_ENV=development node --inspect dist/main.js",
-    "debug:replica": "npm run build && cross-env NODE_ENV=development node --inspect=localhost:9230 dist/main.js",
-    "clean": "node build/script.clean.js",
-    "build": "npm run clean && babel src -d dist -s",
-    "prod": "cross-env NODE_ENV=production node dist/main.js",
+    "debug": "cross-env NODE_ENV=development node --inspect src/main.js",
+    "debug:replica": "cross-env NODE_ENV=development node --inspect=localhost:9230 src/main.js",
+    "prod": "cross-env NODE_ENV=production node src/main.js",
     "lint": "standard src/**/*.js test/**/*.js --fix",
-    "mocha": "cross-env NODE_CONFIG_DIR=./test/config/ SUBDOMAIN= mocha --require babel-core/register",
-    "coverage": "nyc npm run mocha",
-    "test": "npm run build && npm run lint && npm run coverage"
+    "mocha": "cross-env NODE_CONFIG_DIR=./test/config/ SUBDOMAIN= mocha --exit",
+    "coverage": "c8 npm run mocha",
+    "test": "npm run lint && npm run coverage"
   },
   "standard": {
-    "parser": "babel-eslint",
     "sourceType": "module",
     "env": [
       "mocha"
     ]
   },
   "devDependencies": {
-    "@feathersjs/client": "^3.5.3",
+    "@feathersjs/client": "^5.0.0-pre.28",
     "@slack/webhook": "^5.0.2",
-    "babel-cli": "^6.24.0",
-    "babel-core": "^6.24.1",
-    "babel-eslint": "^10.0.3",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-export-extensions": "^6.22.0",
-    "babel-preset-env": "^1.7.0",
+    "c8": "^7.11.0",
     "chai": "^4.3.4",
     "chai-lint": "^0.1.1",
     "colors": "^1.1.2",
@@ -61,32 +54,26 @@
     "googleapis": "^21.3.0",
     "mocha": "^9.1.1",
     "nodemon": "^1.11.0",
-    "nyc": "^15.0.1",
     "shelljs": "^0.8.5",
-    "socket.io-client": "^2.0.1",
-    "standard": "^14.0.0"
+    "socket.io-client": "^4.4.1",
+    "standard": "^16.0.4"
   },
   "dependencies": {
-    "@feathersjs/authentication": "https://github.com/kalisio/authentication.git",
-    "@feathersjs/authentication-jwt": "^2.0.1",
-    "@feathersjs/authentication-local": "^1.2.1",
-    "@feathersjs/errors": "~3.3.0",
-    "@feathersjs/express": "^1.2.3",
-    "@feathersjs/feathers": "~3.3.1",
-    "@kalisio/feathers-distributed": "^1.0.5",
-    "@kalisio/kdk": "^1.6.0",
+    "@feathersjs/authentication": "^5.0.0-pre.28",
+    "@feathersjs/errors": "^5.0.0-pre.28",
+    "@feathersjs/express": "^5.0.0-pre.28",
+    "@feathersjs/feathers": "^5.0.0-pre.28",
+    "@kalisio/feathers-distributed": "^2.0.2",
+    "@kalisio/kdk": "https://github.com/kalisio/kdk#es-modules",
     "@turf/point-on-feature": "^5.1.0",
+    "@weacast/core": "^2.1.2",
     "containerized": "^1.0.2",
-    "feathers-hooks-common": "^3.0.0",
-    "feathers-mongodb-fuzzy-search": "https://github.com/kalisio/feathers-mongodb-fuzzy-search.git",
+    "feathers-hooks-common": "^5.0.6",
+    "feathers-mongodb-fuzzy-search": "^2.0.1",
     "feathers-stripe": "~0.5.0",
     "feathers-sync": "^2.1.0",
     "fs-extra": "^8.1.0",
     "http-proxy-middleware": "^0.17.4",
-    "weacast-core": "^1.3.0",
     "winston": "^3.2.1"
-  },
-  "resolutions": {
-    "@geoman-io/leaflet-geoman-free": "2.11.3"
   }
 }
