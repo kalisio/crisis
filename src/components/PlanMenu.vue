@@ -162,13 +162,15 @@ export default {
       this.$router.push({ name: 'plans-activity', params: { contextId: this.organisation._id } })
     },
     async refreshPercentages () {
-      this.objectivePercents = []
+      // Initialize the whole array as we have some async operations here
+      // so that the rendering could be triggered and is refering to the array by index
+      this.objectivePercents = _.fill(Array(_.size(this.plan.objectives), 0))
       if (this.plan.objectives) {
-        for (let i = 0; i < this.plan.objectives.length; ++i) {
+        for (let i = 0; i < this.plan.objectives.length; i++) {
           const nbEvents = await this.countEvents({ objective: this.plan.objectives[i].name })
           const nbClosedEvents = await this.countClosedEvents({ objective: this.plan.objectives[i].name })
           const percent = nbEvents !== 0 ? Math.round((nbClosedEvents / nbEvents) * 100) : 0
-          this.objectivePercents.push(percent)
+          this.objectivePercents[i] = percent
         }
       }
     }
