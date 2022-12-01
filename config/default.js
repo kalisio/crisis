@@ -49,13 +49,13 @@ const contextHelp = function (tour) {
 const leftPane = function (tour) {
   return {
     content: [
-      { component: 'QImg', src: 'aktnmap-banner.png' },
+      { component: 'app/KLogo' },
       { component: 'account/KIdentityPanel', class: 'full-width' },
       { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
       { component: 'editor/KSettingsEditor' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
-      { component: 'layout/KAbout' },
+      { id: 'about', icon: 'las la-info', label: 'ABOUT', renderer: 'item', dialog: { component: 'app/KAbout', title: 'ABOUT' } },
       { id: 'online-help', icon: 'las la-book', label: 'leftPane.ONLINE_HELP', url: onlineHelp, renderer: 'item' },
       contextHelp(tour),
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },

@@ -24,7 +24,7 @@ export default {
   name: 'index',
   components: {
     KSignupAlert: kdkCoreUtils.loadComponent('account/KSignupAlert'),
-    KWelcome: kdkCoreUtils.loadComponent('layout/KWelcome'),
+    KWelcome: kdkCoreUtils.loadComponent('app/KWelcome'),
     KTour: kdkCoreUtils.loadComponent('layout/KTour')
   },
   // authorisation mixin is required to automatically update user' abilities on update
