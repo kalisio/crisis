@@ -57,14 +57,8 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#capture-photo',
-  content: 'tours.events.CAPTURE_PHOTO_LABEL',
-  params: {
-    placement: 'bottom'
-  }
-}, {
-  target: '#add-media',
-  content: 'tours.events.ADD_MEDIA_LABEL',
+  target: '#browse-media',
+  content: 'tours.events.BROWSE_MEDIA_LABEL',
   params: {
     placement: 'bottom'
   }

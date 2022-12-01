@@ -6,15 +6,6 @@
         <q-resize-observer @resize="onMapResized" />
       </div>
 
-      <KModal ref="uploaderModal">
-        <KUploader ref="uploader"
-          :resource="objectId"
-          :base-query="uploaderQuery()"
-          :options="uploaderOptions()"
-          @uploader-ready="initializeMedias" 
-        />
-      </KModal>
-
       <KMediaBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
 
       <router-view service="events"></router-view>
@@ -31,7 +22,7 @@ import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.cl
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
-const activityMixin = kCoreMixins.baseActivity('event-activity')
+const activityMixin = kCoreMixins.baseActivity('eventActivity')
 
 export default {
   provide () {
@@ -141,16 +132,6 @@ export default {
       if (this.isCoordinator || this.archived) {
         this.refreshCollection()
       }
-    },
-    uploadMedia () {
-      this.$refs.uploaderModal.open()
-      // If the modal has already been created the uploader is ready otherwise wait for event
-      if (this.$refs.uploader) this.initializeMedias()
-    },
-    initializeMedias () {
-      this.$refs.uploader.initialize(this.event.attachments)
-      // Open file dialog the first time
-      if (!this.event.attachments || (this.event.attachments.length === 0)) this.$refs.uploader.openFileInput()
     },
     browseMedia () {
       this.$refs.mediaBrowser.show(this.event.attachments)

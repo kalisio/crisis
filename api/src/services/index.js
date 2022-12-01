@@ -318,7 +318,6 @@ export default async function () {
           service.name === 'groups' ||
           service.name === 'members' ||
           service.name === 'tags' ||
-          service.name === 'storage' ||
           service.name === 'devices' ||
           service.name === 'features' ||
           service.name === 'alerts') {

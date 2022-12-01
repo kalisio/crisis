@@ -148,18 +148,6 @@
       <k-form ref="form" :schema="schema"/>
     </k-modal>
     <!--
-      Upload modal
-    -->
-    <k-modal ref="uploaderModal"
-      :buttons="getUploaderButtons()"
-    >
-      <k-uploader ref="uploader"
-        :resource="item._id"
-        :base-query="uploaderQuery()"
-        :options="uploaderOptions()"
-        @uploader-ready="initializeMedias"/>
-    </k-modal>
-    <!--
       Logs modal
     -->
     <k-modal ref="eventLogsModal"
@@ -172,16 +160,15 @@
     <!--
       Media browser
     -->
-    <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
+    <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()"/>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
-import moment from 'moment'
 import centroid from '@turf/centroid'
 import { Dialog } from 'quasar'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kCoreUtils, Storage } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
@@ -312,27 +299,11 @@ export default {
         style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;'
       }
     },
-    canCapturePhoto () {
-      if (!this.$q.platform.is.cordova) return false
-      return true
-    },
     getFollowUpButtons () {
       return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.$refs.followUpModal.close() },
         { id: 'save-button', label: this.$t('EventCard.FOLLOWUP_MODAL_SAVE_BUTTON'), renderer: 'form-button', handler: () => this.logParticipantState() }
       ]
-    },
-    getUploaderButtons () {
-      return [{
-        id: 'close-action',
-        label: this.$t('EventCard.UPLOADER_MODAL_CLOSE_ACTION'),
-        icon: 'las la-times',
-        renderer: 'form-button',
-        handler: () => {
-          this.$refs.uploaderModal.close()
-          this.refresh()
-        }
-      }]
     },
     getEventLogsToolbar () {
       return [{
@@ -416,58 +387,22 @@ export default {
         }
         this.itemActions.splice(0, 0, followUpAction)
       }
-      // Find the add media action and push the browse media action just after
-      const index = _.findIndex(this.itemActions, (action) => action.id === 'add-media')
-      this.itemActions.splice(index + 1, 0, {
+      const browseAction = {
         id: 'browse-media',
         tooltip: 'EventCard.BROWSE_MEDIA_LABEL',
         icon: 'las la-photo-video',
         scope: 'footer',
         handler: this.browseMedia,
-        badge: { label: this.mediasCount().toString(), floating: true },
-        visible: this.hasMedias() && this.$can('read', 'events', this.contextId, this.item)
-      })
-    },
-    uploadMedia () {
-      this.$refs.uploaderModal.open()
-      // If the modal has already been created the uploader is ready otherwise wait for event
-      if (this.$refs.uploader) this.initializeMedias()
-    },
-    initializeMedias () {
-      this.$refs.uploader.initialize(this.item.attachments)
-      // Open file dialog the first time
-      if (!this.item.attachments || (this.item.attachments.length === 0)) this.$refs.uploader.openFileInput()
+        visible: this.$can('read', 'events', this.contextId, this.item)
+      }
+      // Add badge with media if any
+      if (this.mediasCount() > 0) browseAction.badge = { label: this.mediasCount().toString(), floating: true }
+      // Find the event map action and push the browse media action just before
+      const index = _.findIndex(this.itemActions, (action) => action.id === 'event-map')
+      this.itemActions.splice(index, 0, browseAction)
     },
     browseMedia () {
-      this.$refs.mediaBrowser.show(this.item.attachments)
-    },
-    capturePhoto () {
-      navigator.camera.getPicture(this.onPhotoCaptured, null, {
-        correctOrientation: true,
-        quality: 75,
-        destinationType: navigator.camera.DestinationType.DATA_URL,
-        sourceType: navigator.camera.PictureSourceType.CAMERA
-      })
-    },
-    async onPhotoCaptured (photoDataUri) {
-      const storageService = this.$api.getService('storage', this.contextId)
-      const name = moment().format('YYYYMMDD_HHmmss.jpg')
-      const id = this.item._id + '/' + name
-      photoDataUri = 'data:image/jpg;base64,' + photoDataUri
-      kCoreUtils.createThumbnail(photoDataUri, 200, 200, 50, async thumbnailDataUri => {
-        // Store once everything has been computed
-        await storageService.create({ id: id + '.thumbnail', uri: thumbnailDataUri })
-        await storageService.create({
-          id,
-          uri: photoDataUri,
-          name,
-          resourcesService: 'events',
-          resource: this.item._id,
-          field: 'attachments',
-          notification: this.$t('EventNotifications.UPDATE_MEDIA')
-        })
-        this.refresh()
-      })
+      this.$refs.mediaBrowser.show(this.attachments)
     },
     launchNavigation () {
       let longitude = _.get(this.item, 'location.longitude')
@@ -677,19 +612,35 @@ export default {
         }
       }
     },
+    async refreshAttachments () {
+      await this.loadAttachments()
+      // Some actions depends on medias
+      this.configureActions()
+    },
     async logParticipantState () {
       await this.logStep(this.$refs.form, this.participantStep, this.participantState)
       this.$refs.followUpModal.close()
     }
   },
-  created () {
+  async created () {
     // Required alias for the event logs mixin
     this.event = this.item
+    await this.refreshAttachments()
     // Set the required actor
     if (this.$store.get('user')) this.refresh()
     this.$events.on('user-changed', this.refresh)
+    // Keep track of changes on medias once loaded
+    const storageService = Storage.getService(this.contextId)
+    storageService.on('object-put', this.refreshAttachments)
+    storageService.on('multipart-upload-completed', this.refreshAttachments)
+    storageService.on('removed', this.refreshAttachments)
   },
   beforeUnmount () {
+    // Releases listeners
+    const storageService = Storage.getService(this.contextId)
+    storageService.off('object-put', this.refreshAttachments)
+    storageService.off('multipart-upload-completed', this.refreshAttachments)
+    storageService.off('removed', this.refreshAttachments)
     this.$events.off('user-changed', this.refresh)
     this.unsubscribeParticipantLog()
     this.unsubscribeCoordinatorLog()

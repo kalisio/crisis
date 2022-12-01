@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import sift from 'sift'
 
 export function hasRoleInEvent (user, roles) {
   return _.findIndex(roles, role => {

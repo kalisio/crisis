@@ -565,16 +565,6 @@ module.exports = {
         editItemAction('EventCard.EDIT_ACTION', 'participants'),
         editItemAction('EventCard.EDIT_ACTION', 'coordinators'),
         { 
-          id: 'capture-photo', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-camera', 
-          visible: ['canCapturePhoto', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
-          handler: 'capturePhoto', scope: 'footer'
-        },
-        { 
-          id: 'add-media', tooltip: 'EventCard.ADD_MEDIA_LABEL', icon: 'las la-paperclip',
-          visible: { name: '$can', params: ['read', 'events', ':contextId', ':item'] },
-          handler:  'uploadMedia', scope: 'footer'
-        },
-        { 
           id: 'event-map', tooltip: 'EventCard.MAP_LABEL', icon: 'las la-map-marked-alt',
           visible: ['hasAnyLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
           handler:  'viewMap', scope: 'footer'
@@ -1054,7 +1044,7 @@ module.exports = {
     rightPane: {
       content: {
         'map': [
-          catalogTabbar(['user-layers', 'event-participants'], 'user-layers'),
+          catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'user-layers'),
           { id: 'user-layers', component: 'catalog/KUserLayersPanel', bind: '$data' },
           { component: 'QSpace' },
           { id: 'catalog-footer', component: 'frame/KPanel', content: [{
@@ -1065,8 +1055,16 @@ module.exports = {
             }]
           }
         ],
+        'user-views': [
+          catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'user-views'),
+          { id: 'user-views', component: 'catalog/KViewsPanel' },
+        ],
+        'catalog-layers': [
+          catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'catalog-layers'),
+          { id: 'system-layers', component: 'catalog/KCatalogLayersPanel', bind: '$data', scope: 'user' }
+        ],
         'event-participants': [
-          catalogTabbar(['user-layers', 'event-participants'], 'event-participants'),
+          catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'event-participants'),
           { id: 'event-participants', component: 'EventActivityPanel', bind: '$data' }
         ]
       }

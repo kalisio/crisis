@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import path from 'path-browserify'
 import { utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 import { Geolocation } from '@kalisio/kdk/map.client.map'
 import * as utils from '../utils'
@@ -9,7 +10,8 @@ const eventsMixin = {
       userId: '',
       isParticipant: false,
       isCoordinator: false,
-      event: {}
+      event: {},
+      attachments: []
     }
     // In event panel we inject the event as props from the activity instead
     // This avoids a warning of Vuejs about duplicated name in data/props
@@ -26,11 +28,26 @@ const eventsMixin = {
     hasAnyLocation () {
       return this.hasLocation() || this.hasLocationGeometry()
     },
+    async loadAttachments () {
+      this.attachments = []
+      const storageService = this.$api.getService('storage', this.contextId)
+      if (storageService) {
+        this.attachments = await storageService.find({ query: { Prefix: this.event._id || this.event } })
+        // "Folders" are retrieved but are zero-sized
+        this.attachments = this.attachments.filter(item => item.Size > 0)
+        .map(item => ({
+          // From key name we extract the filename
+          name: path.basename(item.Key),
+          key: item.Key,
+          size: item.Size
+        }))
+      }
+    },
     hasMedias () {
-      return _.has(this.event, 'attachments') && (this.event.attachments.length > 0)
+      return (this.attachments.length > 0)
     },
     mediasCount () {
-      return _.has(this.event, 'attachments') ? this.event.attachments.length : 0
+      return this.attachments.length
     },
     // Check if there is a defined user interaction on target step
     hasStepUserInteraction (step) {
@@ -305,25 +322,12 @@ const eventsMixin = {
         this.isCoordinator = utils.hasRoleInEvent(user, this.event.coordinators)
       }
     },
-    uploaderOptions () {
-      return {
-        service: this.contextId + '/storage',
-        acceptedFiles: 'image/*,application/pdf',
-        multiple: true,
-        maxFilesize: 10,
-        autoProcessQueue: true,
-        resourcesService: 'events',
-        storagePath: '<%= id %>/<%= file.name %>'
-      }
-    },
-    uploaderQuery () {
-      return {
-        notification: this.$t('EventNotifications.UPDATE_MEDIA')
-      }
-    },
     mediaBrowserOptions () {
       return {
-        service: this.contextId + '/storage',
+        storage: {
+          context: this.contextId,
+          prefix: this.event._id || this.event
+        },
         backgroundColor: 'black',
         controlColor: 'white'
       }

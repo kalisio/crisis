@@ -217,7 +217,7 @@ export default {
       })
     },
     browseMedia () {
-      this.$refs.mediaBrowser.show(this.item.attachments)
+      this.$refs.mediaBrowser.show(this.attachments)
     },
     viewMap () {
       this.$router.push({
@@ -247,9 +247,10 @@ export default {
       }
     }
   },
-  created () {
+  async created () {
     // Required alias for the event logs mixin
     this.event = this.item
+    await this.loadAttachments()
     // Set the required actor
     if (this.$store.get('user')) this.refresh()
     this.$events.on('user-changed', this.refresh)

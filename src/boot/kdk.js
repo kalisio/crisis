@@ -64,7 +64,6 @@ export default async ({ app }) => {
   app.component('KTextArea', await kdkCoreUtils.loadComponent('frame/KTextArea'))
   app.component('KChipsPane', await kdkCoreUtils.loadComponent('frame/KChipsPane'))
   app.component('KAvatar', await kdkCoreUtils.loadComponent('frame/KAvatar'))
-  app.component('KUploader', await kdkCoreUtils.loadComponent('input/KUploader'))
   app.component('KModal', await kdkCoreUtils.loadComponent('frame/KModal'))
   app.component('KForm', await kdkCoreUtils.loadComponent('form/KForm'))
   app.component('KList', await kdkCoreUtils.loadComponent('collection/KList'))
@@ -78,7 +77,7 @@ export default async ({ app }) => {
   app.component('KShape', await kdkCoreUtils.loadComponent('media/KShape'))
   app.component('KStatisticsChart', await kdkCoreUtils.loadComponent('chart/KStatisticsChart'))
   app.component('KLocationMap', await kdkCoreUtils.loadComponent('KLocationMap'))
-  app.component('KLayersPanel', await kdkCoreUtils.loadComponent('KLayersPanel'))
+  app.component('KLayersPanel', await kdkCoreUtils.loadComponent('catalog/KLayersPanel'))
   app.component('KColorLegend', await kdkCoreUtils.loadComponent('KColorLegend'))
   app.component('KPage', await kdkCoreUtils.loadComponent('layout/KPage'))
 
