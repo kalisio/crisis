@@ -49,13 +49,13 @@ const contextHelp = function (tour) {
 const leftPane = function (tour) {
   return {
     content: [
-      { component: 'QImg', src: 'aktnmap-banner.png' },
+      { component: 'app/KLogo' },
       { component: 'account/KIdentityPanel', class: 'full-width' },
       { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
       { component: 'editor/KSettingsEditor' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
-      { component: 'layout/KAbout' },
+      { id: 'about', icon: 'las la-info', label: 'ABOUT', renderer: 'item', dialog: { component: 'app/KAbout', title: 'ABOUT', okAction: 'CLOSE' } },
       { id: 'online-help', icon: 'las la-book', label: 'leftPane.ONLINE_HELP', url: onlineHelp, renderer: 'item' },
       contextHelp(tour),
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
@@ -334,8 +334,7 @@ module.exports = {
     service: 'organisations'
   },
   screens: {
-    banner: 'aktnmap-banner.png',
-    extraLinks: [
+    links: [
       { label: 'screen.ABOUT_KALISIO', url: website },
       { label: 'screen.CONTACT', url: website + '/#footer' },
       { label: 'screen.TERMS_AND_POLICIES', url: domain + '/#/terms' },
@@ -344,27 +343,27 @@ module.exports = {
       /* Removed from default config
       providers: ['google', 'github'],
       */
-      links: [
-        { id: 'reset-password-link', label: 'KLogin.FORGOT_YOUR_PASSWORD_LINK', route: {name: 'send-reset-password' } },
-        { id: 'register-link', label: 'KLogin.DONT_HAVE_AN_ACCOUNT_LINK', route: { name: 'register' } },
-        { id: 'contextual-help', label: 'KLogin.CONTEXTUAL_HELP', route: { name: 'login', query: { tour: true } } }
+      actions: [
+        { id: 'reset-password-link', label: 'KLoginScreen.FORGOT_YOUR_PASSWORD_LABEL', route: {name: 'send-reset-password' } },
+        { id: 'register-link', label: 'KLoginScreen.DONT_HAVE_AN_ACCOUNT_LABEL', route: { name: 'register' } },
+        { id: 'contextual-help', label: 'KLoginScreen.CONTEXTUAL_HELP', route: { name: 'login', query: { tour: true } } }
       ]
     },
     logout: {
-      links: [
-        { id: 'login-link', label: 'KLogout.LOG_IN_AGAIN_LINK', route: { name: 'login' } },
+      actions: [
+        { id: 'login-link', label: 'KLogoutScreen.LOG_IN_AGAIN_LABEL', route: { name: 'login' } }
       ]
     },
     register: {
-      links: [
-        { id: 'login-link', label: 'KRegister.ALREADY_HAVE_AN_ACCOUNT_LINK', route: { name: 'login' } },
-        { id: 'contextual-help', label: 'KRegister.CONTEXTUAL_HELP', route: { name: 'register', query: { tour: true } } }
+      actions: [
+        { id: 'login-link', label: 'KRegisterScreen.ALREADY_HAVE_AN_ACCOUNT_LABEL', route: { name: 'login' } },
+        { id: 'contextual-help', label: 'KRegisterScreen.CONTEXTUAL_HELP', route: { name: 'register', query: { tour: true } } }
       ]
     },
-    changeEndpoint: {
-      links: [
-        { id: 'login-link', label: 'KChangeEndpoint.LOGIN_LINK', route: { name: 'login' } },
-        { id: 'register-link', label: 'KChangeEndpoint.DONT_HAVE_AN_ACCOUNT_LINK', route: { name: 'register' } }
+    endpoint: {
+      actions: [
+        { id: 'login-link', label: 'KEndpointScreen.LOG_IN_LABEL', route: { name: 'login' } },
+        { id: 'register-link', label: 'KEndpointScreen.DONT_HAVE_AN_ACCOUNT_LABEL', route: { name: 'register' } }
       ]
     }
   },

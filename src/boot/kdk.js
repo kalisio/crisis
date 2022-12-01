@@ -65,6 +65,7 @@ export default async ({ app }) => {
   app.component('KChipsPane', await kdkCoreUtils.loadComponent('frame/KChipsPane'))
   app.component('KAvatar', await kdkCoreUtils.loadComponent('frame/KAvatar'))
   app.component('KModal', await kdkCoreUtils.loadComponent('frame/KModal'))
+  app.component('KDialog', await kdkCoreUtils.loadComponent('modal/KDialog'))
   app.component('KForm', await kdkCoreUtils.loadComponent('form/KForm'))
   app.component('KList', await kdkCoreUtils.loadComponent('collection/KList'))
   app.component('KGrid', await kdkCoreUtils.loadComponent('collection/KGrid'))
