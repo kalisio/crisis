@@ -3,7 +3,7 @@ import config from 'config'
 import { Notify } from 'quasar'
 import appHooks from '../app.hooks'
 import services from '../services'
-import { api, utils as kdkCoreUtils, Store, Layout, Events, Theme, beforeGuard, authenticationGuard } from '@kalisio/kdk/core.client'
+import { api, i18n, utils as kdkCoreUtils, Store, Layout, Events, Theme, beforeGuard, authenticationGuard } from '@kalisio/kdk/core.client'
 import { Geolocation } from '@kalisio/kdk/map.client.map'
 
 /*function updateThemeColors () {
@@ -22,6 +22,9 @@ export default async ({ app }) => {
   // Then all services
   services.call(api)
 
+  // Initializes i18n
+  await i18n.initialize(app, ['core', 'map', 'aktnmap'])
+
   // Register global properties to the the vue app
   app.config.globalProperties.$store = Store
   app.config.globalProperties.$layout = Layout
@@ -29,10 +32,7 @@ export default async ({ app }) => {
   app.config.globalProperties.$api = api
   app.config.globalProperties.$can = api.can
   app.config.globalProperties.$notify = Notify.create
-  app.config.globalProperties.$tie = function (key, param) {
-    if (_.isEmpty(key)) return key
-    return this.$te(key) ? this.$t(key, param) : key
-  }
+  app.config.globalProperties.$tie = i18n.tie.bind(i18n)
   app.config.globalProperties.$config = function (path, defaultValue) {
     return _.get(config, path, defaultValue)
   }
