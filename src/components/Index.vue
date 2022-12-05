@@ -14,18 +14,17 @@
 
 <script setup>
 import logger from 'loglevel'
+import config from 'config'
 import { useRouter, useRoute } from 'vue-router'
 import { watch, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { api, i18n, beforeGuard, permissions, composables } from '@kalisio/kdk/core.client'
 
-import config from 'config'
-
 // Data
 const router = useRouter()
 const route = useRoute()
 const $q = useQuasar()
-const { User, restoreSession, updateAbilities } = composables.useUser()
+const { User, restoreSession, updateAbilities, logout } = composables.useUser()
 const { Version } = composables.useVersion()
 let isInitialized = false
 let pendingReconnection = null
