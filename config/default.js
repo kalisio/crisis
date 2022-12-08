@@ -321,6 +321,9 @@ module.exports = {
       // Nothing specific, use defaults
     }
   },
+  storage: {
+    useProxy: true
+  },
   stripe: {
     secretKey: process.env.STRIPE_PUBLIC_KEY,
     options: {}
