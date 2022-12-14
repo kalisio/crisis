@@ -19,10 +19,11 @@ import L from 'leaflet'
 import chroma from 'chroma-js'
 import centroid from '@turf/centroid'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
+import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
-const activityMixin = kCoreMixins.baseActivity('eventActivity')
+const name = 'eventActivity'
+const activityMixin = kCoreMixins.baseActivity(name)
 
 export default {
   provide () {
@@ -289,8 +290,9 @@ export default {
     }
   },
   created () {
+    this.setCurrentActivity(this)
     // Load the required components
-       this.registerStyle('tooltip', this.getParticipantTooltip)
+    this.registerStyle('tooltip', this.getParticipantTooltip)
     this.registerStyle('popup', this.getParticipantPopup)
     this.registerStyle('markerStyle', this.getParticipantMarker)
     this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
@@ -307,11 +309,17 @@ export default {
     this.$events.on('filter-participant-states', this.onFilterParticipantStates)
   },
   beforeUnmount () {
+    this.clearHighlights()
     // Remove event connections
     // this.$off('popupopen', this.onPopupOpen)
     this.$engineEvents.off('click', this.onFeatureClicked)
     this.$events.off('zoom-to-participant', this.onZoomToParticipant)
     this.$events.off('filter-participant-states', this.onFilterParticipantStates)
+  },
+  setup () {
+    return {
+      ...kMapComposables.useActivity(name)
+    }
   }
 }
 </script>

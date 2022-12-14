@@ -252,8 +252,8 @@ let defaultMapOptions = {
 }
 
 const widgets = [
-  { id: 'information-box', icon: 'las la-digital-tachograph', component: 'widget/KInformationBox', bind: '$data.selection' },
-  { id: 'time-series', icon: 'las la-chart-line', component: 'widget/KTimeSeries', bind: '$data' },
+  { id: 'information-box', icon: 'las la-digital-tachograph', component: 'widget/KInformationBox' },
+  { id: 'time-series', icon: 'las la-chart-line', component: 'widget/KTimeSeries' },
   { id: 'mapillary-viewer', icon: 'kdk:mapillary.png', component: 'widget/KMapillaryViewer' }
 ]
 
@@ -662,8 +662,8 @@ module.exports = {
         { component: 'KFeatureActionButton' }
       ]
     },
-    window: {
-      widgets: widgets
+    windows: {
+      top: { widgets }
     },
     fab: {
       actions: [
@@ -671,7 +671,7 @@ module.exports = {
           route: { name: 'create-map-view', params: { south: ':south', north: ':north', west: ':west', east: ':east' }, query: { layers: ':layers' } } },
         { id: 'add-layer', icon: 'las la-plus', label: 'mixins.activity.ADD_LAYER',
           route: { name: 'add-layer', params: { south: ':south', north: ':north', west: ':west', east: ':east' }, query: { layers: ':layers' } } },
-        { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'onProbeLocation' }
+        { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'probeAtLocation' }
       ]
     },
     engine: defaultMapOptions,
@@ -1081,8 +1081,8 @@ module.exports = {
         component: 'frame/KPageSticky', position: 'left', offset: [18, 0], content: [{ component: 'KColorLegend' }]
       }]
     },
-    window: {
-      widgets: widgets
+    windows: {
+      top: { widgets }
     },
     fab: {
       actions: [
@@ -1093,7 +1093,7 @@ module.exports = {
         { id: 'edit-event', label: 'EventActivity.EDIT_LABEL', icon: 'las la-edit',
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] },
           route: { name: 'edit-map-event', params: { contextId: ':contextId', objectId: ':objectId' } } },
-        { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'onProbeLocation' }
+        { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'probeAtLocation' }
       ]
     },
     engine: defaultMapOptions,

@@ -59,11 +59,12 @@ import chroma from 'chroma-js'
 import sift from 'sift'
 import { defineComponent } from "vue"
 import { Dialog } from 'quasar'
-import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
+import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 import AlertEditor from './AlertEditor.vue'
 
+const name = 'catalogActivity'
 const activityMixin = kCoreMixins.baseActivity('catalogActivity')
 
 // For mapping we get all events at once to avoid managing pagination
@@ -596,7 +597,8 @@ export default {
       this.setTopPaneMode('default')
     }
   },
-  async created () {
+  created () {
+    this.setCurrentActivity(this)
     this.registerStyle('tooltip', this.getAlertTooltip)
     this.registerStyle('popup', this.getAlertPopup)
     this.registerStyle('markerStyle', this.getAlertMarker)
@@ -633,10 +635,16 @@ export default {
     this.$engineEvents.on('edit-stop', this.onEditStopEvent)
   },
   beforeUnmount () {
+    this.clearHighlights()
     //this.alerts.$off('collection-refreshed', this.onAlertCollectionRefreshed)
     //this.events.off('collection-refreshed', this.onEventCollectionRefreshed)
     this.$engineEvents.off('edit-start', this.onEditStartEvent)
     this.$engineEvents.off('edit-stop', this.onEditStopEvent)
+  },
+  setup () {
+    return {
+      ...kMapComposables.useActivity(name)
+    }
   }
 }
 </script>
