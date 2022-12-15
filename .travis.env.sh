@@ -71,9 +71,16 @@ BUILD_BUCKET=${APP}/$BUILD_NUMBER
 # Install the kdk
 git clone https://github.com/kalisio/kli.git kalisio && cd kalisio && yarn 
 
-# Clone the project and install the dependencies
-cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/$KDK_PROJECT_FILE $APP.js
-node . $APP.js --clone $TRAVIS_BRANCH
+# In dev flavor we can build different versions on different branches
+# so check if a specific file exists for the target branch first otherwise use default one
+if [[ -f $TRAVIS_BUILD_DIR/workspace/$FLAVOR/$KDK_PROJECT_FILE-$TRAVIS_BRANCH.js ]];
+then
+  cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/$KDK_PROJECT_FILE-$TRAVIS_BRANCH.js $APP.js
+else
+  cp $TRAVIS_BUILD_DIR/workspace/$FLAVOR/$KDK_PROJECT_FILE.js $APP.js
+fi
+
+node . $APP.js --clone
 node . $APP.js --install
 node . $APP.js --link
 
