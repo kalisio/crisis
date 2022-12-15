@@ -42,7 +42,8 @@ export default function () {
       service: memory({
         id: 'name',
         paginate: { default: 12 },
-        matcher: api.matcher
+        matcher: api.matcher,
+        filters: { '$locale': true }
       })
     })
     // Restore previous settings if any
