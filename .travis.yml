@@ -26,6 +26,7 @@ jobs:
     - '12.16'
     services:
     - docker
+    install: skip
     before_script:
     - export -f travis_fold     
     script:
@@ -55,15 +56,17 @@ jobs:
     android:
       components:
       - tools
-      - tools  # Include again to work around travis not using the latest, see: https://github.com/travis-ci/travis-ci/issues/6193
       - platform-tools
-      - build-tools-30.0.0
-      - android-30
+      - tools
+      - extra-google-google_play_services
+      - extra-google-m2repository
+      - extra-android-m2repository
     licenses:
-      - '.+'
+    - ".+"
     before_install:
     - nvm install 12.16
     - yes | sdkmanager "platforms;android-30"
+    - yes | sdkmanager "build-tools;30.0.3"
     - npm install -g yarn
     - curl -k -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
     - unzip rclone-current-linux-amd64.zip
@@ -71,7 +74,7 @@ jobs:
     - sudo chown root:root /usr/bin/rclone
     - sudo chmod 755 /usr/bin/rclone
     - rvm install ruby-2.6.5
-    - gem install fastlane -v '~> 2.171.0'
+    - gem install fastlane -v '~> 2.209.0'
     - npm install -g @quasar/cli  
     install:
     - yarn
