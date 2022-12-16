@@ -12,6 +12,8 @@
   <allow-intent href="sms:*"/>
   <allow-intent href="mailto:*"/>
   <allow-intent href="geo:*"/>
+  <preference name="scheme" value="app" /> 
+  <preference name="hostname" value="localhost" />  
   <preference name="android-minSdkVersion" value="23"/>
   <preference name="android-targetSdkVersion" value="30"/>
   <preference name="permissions" value="none"/>
@@ -65,8 +67,7 @@
     <splash density="port-xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png"/>
   </platform>
   <platform name="ios">
-    <!--hook src="hooks/ios-update-pods.sh" type="before_platform_add"/-->
-    <!--hook src="hooks/ios-run-pods.sh" type="after_platform_add"/-->
+    <hook src="hooks/ios-install-pod.sh" type="before_plugin_install"/>
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
     <feature name="CDVWKWebViewEngine">
@@ -74,8 +75,8 @@
     </feature>
     <preference name="WKWebViewOnly" value="true"/>
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine"/>
-    <preference name="AllowBackForwardNavigationGestures" value="true" />
-    <preference name="Allow3DTouchLinkPreview" value="false" />
+    <preference name="AllowBackForwardNavigationGestures" value="true"/>
+    <preference name="Allow3DTouchLinkPreview" value="false"/>
     <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
       <string>Need to access your position to build meaningful events</string>
     </edit-config>
@@ -125,6 +126,7 @@
   <plugin name="cordova-custom-config" spec="~5.1.0"/>
   <plugin name="cordova-plugin-statusbar" spec="~3.0.0"/>
   <plugin name="cordova-plugin-android-permissions" spec="~1.1.3"/>
+  <!--plugin name="cordova-plugin-androidx-adapter" spec="~1.1.3"/-->
   <plugin name="cordova-plugin-device" spec="~2.1.0"/>
   <plugin name="cordova-plugin-geolocation" spec="~4.1.0"/>
   <plugin name="cordova-plugin-camera" spec="~4.1.0"/>
