@@ -609,8 +609,6 @@ export default {
     this.registerStyle('featureStyle', this.getEventStyle)
     this.registerStyle('tooltip', this.getObjectiveTooltip)
     this.registerStyle('popup', this.getObjectivePopup)
-    this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
-    this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
     // Check if option has been subscribed
     this.$checkBillingOption('catalog')
   },

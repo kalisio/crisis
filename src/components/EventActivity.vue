@@ -295,8 +295,6 @@ export default {
     this.registerStyle('tooltip', this.getParticipantTooltip)
     this.registerStyle('popup', this.getParticipantPopup)
     this.registerStyle('markerStyle', this.getParticipantMarker)
-    this.registerStyle('tooltip', this.getProbedLocationForecastTooltip)
-    this.registerStyle('markerStyle', this.getProbedLocationForecastMarker)
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
   },
