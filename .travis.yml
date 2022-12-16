@@ -77,6 +77,7 @@ jobs:
     - gem install fastlane -v '~> 2.209.0'
     - npm install -g @quasar/cli  
     install:
+    - yarn config set ignore-engines true
     - yarn
     before_script:
     - export -f travis_fold    
@@ -97,6 +98,7 @@ jobs:
     - sudo gem install cocoapods
     - sudo gem which cocoapods
     install:
+    - yarn config set ignore-engines true
     - yarn
     before_script:
     - export -f travis_fold   
