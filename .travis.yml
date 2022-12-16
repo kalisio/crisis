@@ -82,7 +82,7 @@ jobs:
     before_script:
     - export -f travis_fold    
     script:
-    - bash .travis.android.sh
+    - travis_wait 30 bash .travis.android.sh
 
   - stage: IOS
     os: osx
