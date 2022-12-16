@@ -81,6 +81,8 @@ else
 fi
 
 node . $APP.js --clone
+# Required as by upgrading to cordova >= 10 some dependencies complains about node version being < 12.20
+yarn config set ignore-engines
 node . $APP.js --install
 node . $APP.js --link
 
