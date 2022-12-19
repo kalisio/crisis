@@ -146,5 +146,5 @@
   <plugin name="cordova-plugin-wkwebview-engine" spec="~1.2.2" source="npm" /> 
   <plugin name="cordova-plugin-wkwebview-file-xhr" spec="~3.1.0" source="npm" /> 
   <engine name="android" spec="~9.0.0"/>
-  <engine name="ios" spec="~6.2.0"/>
+  <engine name="ios" spec="~5.1.1"/>
 </widget>
