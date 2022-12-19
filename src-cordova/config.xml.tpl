@@ -142,7 +142,7 @@
   </plugin>
   <!--plugin name="phonegap-plugin-push" spec="~2.3.0"/-->
   <!-- not maintained anymore, new active fork -->
-  <plugin name="@havesource/cordova-plugin-push" spec="~3.0.1"/>
+  <plugin name="@havesource/cordova-plugin-push" spec="~2.0.0"/>
   <plugin name="cordova-plugin-wkwebview-engine" spec="~1.2.2" source="npm" /> 
   <plugin name="cordova-plugin-wkwebview-file-xhr" spec="~3.1.0" source="npm" /> 
   <engine name="android" spec="~9.0.0"/>
