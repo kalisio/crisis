@@ -49,7 +49,7 @@ const contextHelp = function (tour) {
 const leftPane = function (tour) {
   return {
     content: [
-      { component: 'foundation/KLogo' },
+      { component: 'KLogo' },
       { component: 'account/KIdentityPanel', class: 'full-width' },
       { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
@@ -63,6 +63,76 @@ const leftPane = function (tour) {
     ]
   }
 }
+
+// top widgets
+const topWidgets = [{ 
+  id: 'information-box', label: 'KInformationBox.LABEL', icon: 'las la-digital-tachograph', 
+  content: { component: 'widget/KInformationBox' },
+  header: [{
+    id: 'center-view',
+    icon: 'las la-eye',
+    tooltip: 'KInformationBox.CENTER_ON',
+    visible: 'hasFeature',
+    handler: 'onCenterOn'
+  }, {
+    id: 'copy-properties',
+    icon: 'las la-clipboard',
+    tooltip: 'KInformationBox.COPY_PROPERTIES',
+    visible: 'hasProperties',
+    handler: 'onCopyProperties'
+  }, {
+    id: 'export-feature',
+    icon: 'kdk:json.svg',
+    tooltip: 'KInformationBox.EXPORT_FEATURE',
+    visible: 'hasFeature',
+    handler: 'onExportFeature'
+  }] 
+}, {
+  id: 'time-series', label: 'KTimeSeries.LABEL', icon: 'las la-chart-line', 
+  content: { component: 'widget/KTimeSeries' },
+  header: [{
+    id: 'absolute-time-range',
+    component: 'time/KAbsoluteTimeRange'
+  }, {
+    id: 'restore-time-range',
+    icon: 'las la-undo',
+    tooltip: 'KTimeSeries.RESTORE_TIME_RANGE',
+    visible: 'hasZoomHistory',
+    handler: 'onZoomRestored'
+  }, {
+    id: 'relative-time-ranges',
+    component: 'menu/KMenu',
+    icon: 'las la-history',
+    content: [{
+      component: 'time/KRelativeTimeRanges',
+      ranges: ['last-hour', 'last-2-hours', 'last-3-hours', 'last-6-hours',
+        'last-12-hours', 'last-day', 'last-2-days', 'last-3-days', 'last-week',
+        'next-12-hours', 'next-day', 'next-2-days', 'next-3-days']
+    }]
+  }, {
+    id: 'center-view',
+    icon: 'las la-eye',
+    tooltip: 'KTimeSeries.CENTER_ON',
+    visible: 'probedVariables',
+    handler: 'onCenterOn'
+  }, {
+    id: 'export-feature',
+    icon: 'las la-file-download',
+    tooltip: 'KTimeSeries.EXPORT_SERIES',
+    visible: 'probedVariables',
+    handler: 'onExportSeries'
+  }]
+}, { 
+  id: 'mapillary-viewer', label: 'KMapillaryViewer.LABEL', icon: 'kdk:mapillary.png',  
+  content: { component: 'widget/KMapillaryViewer' },
+  header: [{
+    id: 'center',
+    icon: 'las la-eye',
+    tooltip: 'KMapillaryViewer.CENTER_ON',
+    visible: 'hasImage',
+    handler: 'centerMap'
+  }]
+}]
 
 // Catalog tababr
 function catalogTabbar (views, activeView) {
@@ -251,12 +321,6 @@ let defaultMapOptions = {
   }
 }
 
-const widgets = [
-  { id: 'information-box', icon: 'las la-digital-tachograph', component: 'widget/KInformationBox' },
-  { id: 'time-series', icon: 'las la-chart-line', component: 'widget/KTimeSeries' },
-  { id: 'mapillary-viewer', icon: 'kdk:mapillary.png', component: 'widget/KMapillaryViewer' }
-]
-
 const contextFilter = function (field, services = []) {
   return [
     { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
@@ -306,10 +370,16 @@ module.exports = {
   gatewayJwt: 'aktnmap-gateway-jwt',
   appName: 'Akt\'n\'Map',
   appLogo: 'aktnmap-logo.png',
+  terms: 'aktnmap-terms',
   appWebsite: 'https://kalisio.com/solutions#aktnmap',
   appOnlineHelp: onlineHelp,
   publisher: 'Kalisio',
   publisherWebsite: website,
+  locale: {
+    // If you'd like to force locale otherwise it is retrieved from browser
+    // default: 'en',
+    fallback: 'en'
+  },
   logs: {
     level: (process.env.NODE_ENV === 'development' ? 'debug' : 'info')
   },
@@ -337,15 +407,14 @@ module.exports = {
     service: 'organisations'
   },
   screens: {
-    links: [
-      { label: 'screen.ABOUT_KALISIO', url: website },
-      { label: 'screen.CONTACT', url: website + '/#footer' },
-      { label: 'screen.TERMS_AND_POLICIES', url: domain + '/#/terms' },
-    ],
+    actions: [{ 
+      id: 'terms-policies', 
+      label: 'screen.TERMS_AND_POLICIES', 
+      dialog: {
+        component: 'app/KTerms'
+      }
+    }],
     login: {
-      /* Removed from default config
-      providers: ['google', 'github'],
-      */
       actions: [
         { id: 'reset-password-link', label: 'KLoginScreen.FORGOT_YOUR_PASSWORD_LABEL', route: {name: 'send-reset-password' } },
         { id: 'register-link', label: 'KLoginScreen.DONT_HAVE_AN_ACCOUNT_LABEL', route: { name: 'register' } },
@@ -663,7 +732,7 @@ module.exports = {
       ]
     },
     windows: {
-      top: { widgets }
+      top: topWidgets
     },
     fab: {
       actions: [
@@ -1082,7 +1151,7 @@ module.exports = {
       }]
     },
     windows: {
-      top: { widgets }
+      top: topWidgets
     },
     fab: {
       actions: [

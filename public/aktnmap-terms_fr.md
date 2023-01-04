@@ -1,8 +1,8 @@
-# Conditions d'utilisation
+# Conditions générales et politiques
 
-Ce site Web et l'application mobile associée sont détenus et exploités par Kalisio SAS ("Kalisio", "nous" ou "notre"). En utilisant le site, l'application mobile, les services fournis sur le site ou le contenu que nous mettons à votre disposition via les services (ensemble, les « Services »), vous acceptez d'être lié par les Conditions d'utilisation suivantes.
+Ce site Web et l'application mobile associée sont détenus et exploités par [Kalisio SAS](https://kalisio.com) ("Kalisio", "nous" ou "notre"). En utilisant le site, l'application mobile, les services fournis sur le site ou le contenu que nous mettons à votre disposition via les services (ensemble, les « Services »), vous acceptez d'être lié par les Conditions d'utilisation suivantes.
 
-** SI VOUS N'ÊTES PAS D'ACCORD AVEC CES CONDITIONS, VEUILLEZ NE PAS UTILISER LES SERVICES. **
+**SI VOUS N'ÊTES PAS D'ACCORD AVEC CES CONDITIONS, VEUILLEZ NE PAS UTILISER LES SERVICES.**
 
 > Nous pouvons, de temps à autre, modifier ces Conditions. Veuillez consulter régulièrement cette page pour les mises à jour.
 
