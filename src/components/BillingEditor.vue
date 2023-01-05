@@ -70,7 +70,7 @@ const { getPaletteColor } = colors
 export default {
   name: 'billing-editor',
   components: {
-    KBlock: kdkCoreUtils.loadComponent('frame/KBlock'),
+    KBlock: kdkCoreUtils.loadComponent('KBlock'),
     CustomerEditor: kdkCoreUtils.loadComponent('CustomerEditor'),
     BillingSubscriptionChooser: kdkCoreUtils.loadComponent('BillingSubscriptionChooser'),
     BillingOptionsChooser: kdkCoreUtils.loadComponent('BillingOptionsChooser')

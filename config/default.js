@@ -137,7 +137,7 @@ const topWidgets = [{
 // Catalog tababr
 function catalogTabbar (views, activeView) {
   const tabbar = {
-    id: 'catalog-tabbar', component: 'frame/KPanel', class: 'q-pa-sm', actionRenderer: 'tab', content: []
+    id: 'catalog-tabbar', component: 'KPanel', class: 'q-pa-sm', actionRenderer: 'tab', content: []
   }
   if (views.includes('user-layers')) tabbar.content.push({
     id: 'user-layers', label: 'KUserLayersPanel.LAYERS_LABEL', color: 'grey-7', toggle: { color: 'primary' }, 
@@ -166,7 +166,7 @@ const separator = { component: 'QSeparator', vertical: true, color: 'grey-5' }
 const midSeparator = { component: 'QSeparator', vertical: true, inset: true, color: 'grey-5', style: 'max-width: 1px; min-width: 1px;' }
 
 const currentActivityStamp = function (id, icon, text) {
-  return { id, component: 'frame/KStamp', icon, iconSize: 'sm', text, direction: 'horizontal', class: 'text-grey-7' }
+  return { id, component: 'KStamp', icon, iconSize: 'sm', text, direction: 'horizontal', class: 'text-grey-7' }
 }
 
 const gotoActivityAction = function (service, icon, label, contextId) {
@@ -701,7 +701,7 @@ module.exports = {
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-layers'),
           { id: 'user-layers', component: 'catalog/KUserLayersPanel', bind: '$data' },
           { component: 'QSpace' },
-          { id: 'catalog-footer', component: 'frame/KPanel', content: [{
+          { id: 'catalog-footer', component: 'KPanel', content: [{
               id: 'manage-layer-categories',
               icon: 'las la-cog',
               label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
@@ -790,7 +790,7 @@ module.exports = {
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-layers'),
           { id: 'user-layers', component: 'catalog/KUserLayersPanel', bind: '$data' },
           { component: 'QSpace' },
-          { id: 'catalog-footer', component: 'frame/KPanel', content: [{
+          { id: 'catalog-footer', component: 'KPanel', content: [{
               id: 'manage-layer-categories',
               icon: 'las la-cog',
               label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
@@ -1118,7 +1118,7 @@ module.exports = {
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'user-layers'),
           { id: 'user-layers', component: 'catalog/KUserLayersPanel', bind: '$data' },
           { component: 'QSpace' },
-          { id: 'catalog-footer', component: 'frame/KPanel', content: [{
+          { id: 'catalog-footer', component: 'KPanel', content: [{
               id: 'manage-layer-categories',
               icon: 'las la-cog',
               label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',

@@ -57,15 +57,15 @@ export default async ({ app }) => {
   }
 
   // Register global components
-  app.component('KAction', await kdkCoreUtils.loadComponent('frame/KAction'))
+  app.component('KAction', await kdkCoreUtils.loadComponent('KAction'))
+  app.component('KPanel', await kdkCoreUtils.loadComponent('KPanel'))
+  app.component('KStamp', await kdkCoreUtils.loadComponent('KStamp'))
+  app.component('KTextArea', await kdkCoreUtils.loadComponent('KTextArea'))
+  app.component('KChipsPane', await kdkCoreUtils.loadComponent('KChipsPane'))
+  app.component('KAvatar', await kdkCoreUtils.loadComponent('KAvatar'))
+  app.component('KModal', await kdkCoreUtils.loadComponent('KModal'))
+  app.component('KDialog', await kdkCoreUtils.loadComponent('KDialog'))
   app.component('KMenu', await kdkCoreUtils.loadComponent('menu/KMenu'))
-  app.component('KStamp', await kdkCoreUtils.loadComponent('frame/KStamp'))
-  app.component('KPanel', await kdkCoreUtils.loadComponent('frame/KPanel'))
-  app.component('KTextArea', await kdkCoreUtils.loadComponent('frame/KTextArea'))
-  app.component('KChipsPane', await kdkCoreUtils.loadComponent('frame/KChipsPane'))
-  app.component('KAvatar', await kdkCoreUtils.loadComponent('frame/KAvatar'))
-  app.component('KModal', await kdkCoreUtils.loadComponent('frame/KModal'))
-  app.component('KDialog', await kdkCoreUtils.loadComponent('modal/KDialog'))
   app.component('KForm', await kdkCoreUtils.loadComponent('form/KForm'))
   app.component('KList', await kdkCoreUtils.loadComponent('collection/KList'))
   app.component('KGrid', await kdkCoreUtils.loadComponent('collection/KGrid'))

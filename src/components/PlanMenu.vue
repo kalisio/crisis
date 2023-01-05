@@ -134,7 +134,7 @@ export default {
           tooltip: 'PlanMenu.VIEW_DESCRIPTION',
           icon: 'las la-file-alt',
           content: [{
-            component: 'frame/KTextArea',
+            component: 'KTextArea',
             text: objective.description,
             length: 8192,
             class: 'q-pa-sm bg-grey-5'
