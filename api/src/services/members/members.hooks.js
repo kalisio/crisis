@@ -22,7 +22,7 @@ export default {
     all: [],
     find: [
       commonHooks.when(hasItemContext, itemContextMatch), 
-      fuzzySearch({ fields: ['profile.name'] }), 
+      fuzzySearch({ fields: ['profile.name'] }), coreHooks.diacriticSearch() 
     ],
     get: [],
     create: [],

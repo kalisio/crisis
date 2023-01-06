@@ -6,7 +6,7 @@ import { updateEventTemplateResource } from '../../hooks/index.js'
 export default {
   before: {
     all: [],
-    find: [fuzzySearch({ fields: ['value'] })],
+    find: [fuzzySearch({ fields: ['value'] }), coreHooks.diacriticSearch()],
     get: [],
     create: [],
     update: [],
