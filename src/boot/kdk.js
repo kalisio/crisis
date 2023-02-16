@@ -3,7 +3,7 @@ import config from 'config'
 import { Notify } from 'quasar'
 import appHooks from '../app.hooks'
 import services from '../services'
-import { api, i18n, utils as kdkCoreUtils, Store, Layout, Events, Theme, beforeGuard, authenticationGuard } from '@kalisio/kdk/core.client'
+import { initializeApi, i18n, utils as kdkCoreUtils, Store, Layout, Events, Theme, beforeGuard, authenticationGuard } from '@kalisio/kdk/core.client'
 import { Geolocation } from '@kalisio/kdk/map.client.map'
 
 /*function updateThemeColors () {
@@ -17,6 +17,8 @@ export default async ({ app }) => {
   // https://vuejs.org/guide/components/provide-inject.html#working-with-reactivity
   app.config.unwrapInjectedRef = true
 
+  // Initiate the client
+  const api = initializeApi()
   // Setup app hooks
   api.hooks(appHooks)
   // Then all services
