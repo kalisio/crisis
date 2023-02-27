@@ -441,19 +441,14 @@ module.exports = {
   },
   layout: {
     view: 'lHh LpR lFf',
-    leftPane: {
-      opener: true
+    page: { visible: true },
+    panes: {
+      left: { opener: true },
+      top: { opener: true, visible: true },
+      right: { opener: true },
+      bottom: { opener: true }
     },
-    topPane: {
-      opener: false,
-      visible: true
-    },
-    rightPane: {
-      opener: true
-    },
-    bottomPane: {
-      opener: true
-    }
+    fab: { visible: true }
   },
   accountActivity: {
     leftPane: leftPane(),
@@ -487,14 +482,15 @@ module.exports = {
     leftPane: leftPane(),
     topPane: {
       content: {
-        'default': [
+        default: [
           currentActivityStamp('organisations', 'las la-grip-horizontal', 'KOrganisationsActivity.ORGANISATIONS_LABEL'),
           midSeparator,
           { id: 'organisation-sorter', component: 'collection/KSorter', tooltip: 'KOrganisationsActivity.SORT_ORGANISATIONS' },
           { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATIONS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
-        'filter': contextFilter('name')
-      }
+        filter: contextFilter('name')
+      },
+      mode: 'default'
     },
     fab: {
       actions: [
@@ -514,7 +510,7 @@ module.exports = {
     leftPane: leftPane(),
     topPane: {
       content: {
-        'default': [
+        default: [
           { component: 'OrganisationMenu', mode: 'plan' },
           separator,
           currentActivityStamp('plans', 'las la-stream', 'PlansActivity.PLANS_LABEL'),
@@ -533,8 +529,9 @@ module.exports = {
           },
           { id: 'search-plan', icon: 'las la-search', tooltip: 'PlansActivity.SEARCH_PLANS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
         ],
-        'filter': contextFilter('name')
-      }
+        filter: contextFilter('name')
+      },
+      mode: 'default'
     },
     items: {
       actions: [
@@ -558,14 +555,15 @@ module.exports = {
     leftPane: leftPane(),
     topPane: {
       content: {
-        'default': [
+        default: [
           { component: 'OrganisationMenu', mode: 'plan' },
           separator,
           plansAction(),
           currentActivityStamp('archived-plans', 'las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL'),         
         ],
-        'filter': contextFilter('name')
-      }
+        filter: contextFilter('name')
+      },
+      mode: 'default'
     },
     bottomPane: {
       content: [
