@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://www.kalisio.xyz/schemas/event-logs.create.json#",
   "title": "Event Log Creation",
   "description": "Event log creation schema",

@@ -117,7 +117,7 @@ export default {
       addForm: null,
       editForm: null,
       objectiveSchema: {
-        $schema: 'http://json-schema.org/draft-06/schema#',
+        $schema: 'http://json-schema.org/draft-07/schema#',
         $id: 'http://www.kalisio.xyz/schemas/plan-objective.create.json#',
         title: 'schemas.PLAN_OBJECTIVE_CREATE_TITLE',
         type: 'object',
