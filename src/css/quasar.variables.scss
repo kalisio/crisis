@@ -1,13 +1,7 @@
-// Quasar Stylus Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Stylus variables found in Quasar's source Stylus files.
+// Sass/SCSS variables customization
+// https://quasar.dev/style/sass-scss-variables#variables-list
 
-// Check documentation for full list of Quasar variables
-
-// It's highly recommended to change the default colors
-// to match your app's branding.
-// Tip: Use the "Theme Builder" on Quasar's documentation website.
+@import 'kdk/core.variables';
 
 // Theme
 $primary: #1b5e20;
@@ -18,7 +12,3 @@ $info: $accent;
 $positive: #7bb946;
 $negative: #c74a4a;
 $warning: #d09931;
-
-// Layout
-$sticky-z-index: 1000;
-$left-pane-width: 300px;
