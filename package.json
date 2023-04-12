@@ -38,9 +38,7 @@
     "cordova:dev:ios": "npm run cordova:config:ios && npm run provision && quasar dev -m ios",
     "cordova:build:android": "npm run cordova:config:android && npm run provision && quasar build -m cordova -T android",
     "cordova:build:ios": "npm run cordova:config:ios && npm run provision && quasar build -m cordova -T ios -- --device",
-    "analyze:stats": "webpack --config build/webpack.prod.conf.js --profile --json > build-stats.json",
-    "analyze:treemap": "webpack-bundle-analyzer build-stats.json dist",
-    "analyze": "npm run analyze:stats && npm run analyze:treemap",
+    "analyze": "cross-env ANALYZE_BUNDLE=1 npm run build",
     "lint": "standard src/**/*.js src/**/*.vue test/**/*.js tutorials/**/*.js --fix",
     "benchmark": "node ./benchmark",
     "css:cp": "shx cp -R node_modules/@kalisio/kdk/extras/css/* src/css/kdk",
@@ -227,7 +225,8 @@
     "shelljs": "^0.8.5",
     "shx": "^0.3.4",
     "sns-mobile": "https://github.com/kalisio/sns-mobile",
-    "standard": "^17.0.0"
+    "standard": "^17.0.0",
+    "webpack-bundle-analyzer": "^4.8.0"
   },
   "resolutions": {
     "@pixi/accessibility": "5.3.10",
