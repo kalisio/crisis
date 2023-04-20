@@ -142,7 +142,10 @@ module.exports = {
       expiresIn: '7d'
     },
     oauth: {
-      redirect: '/'
+      redirect: domain + '/',
+      defaults: {
+        origin: domain
+      }
     },
     passwordPolicy: {
       minLength: 8,
@@ -170,33 +173,7 @@ module.exports = {
         */
         name: 'Kalisio'
       }
-    ],
-    /* Removed from default config
-    github: {
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: domain + '/auth/github/callback',
-      successRedirect: domain + '/',
-      failureRedirect: domain + '/#/login' +
-        '?error_message=An error occured while authenticating with GitHub, check you correctly authorized the application and have a valid public email in your profile'
-    },
-    google: {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: domain + '/auth/google/callback',
-      successRedirect: domain + '/',
-      failureRedirect: domain + '/#/login' +
-        '?error_message=An error occured while authenticating with Google, check you correctly authorized the application and have a valid public email in your profile',
-      scope: ['profile', 'email']
-    },
-    */
-    // Required for OAuth2 to work correctly
-    cookie: {
-      enabled: true,
-      name: 'aktnmap-jwt',
-      httpOnly: false,
-      secure: (process.env.NODE_ENV === 'development' ? false : true)
-    }
+    ]
   },
   authorisation: {
     cache: {
