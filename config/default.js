@@ -139,23 +139,23 @@ function catalogTabbar (views, activeView) {
   const tabbar = {
     id: 'catalog-tabbar', component: 'KPanel', class: 'q-pa-sm', actionRenderer: 'tab', content: []
   }
-  if (views.includes('user-layers')) tabbar.content.push({
-    id: 'user-layers', label: 'KUserLayersPanel.LAYERS_LABEL', color: 'grey-7', toggle: { color: 'primary' }, 
-    toggled: activeView === 'user-layers' ? true : false,
-    handler: { name: 'setRightPaneMode', params: ['map'] } 
-  })
   if (views.includes('event-participants')) tabbar.content.push({
     id: 'event-participant-tab', label: 'EventActivityPanel.PARTICIPANTS_LABEL', color: 'grey-7', toggle: { color: 'primary' },
     toggled: activeView === 'event-participants' ? true : false,
     handler: { name: 'setRightPaneMode', params: ['event-participants'] } 
   })
+  if (views.includes('user-layers')) tabbar.content.push({
+    id: 'user-layers', label: 'LAYERS_LABEL', color: 'grey-7', toggle: { color: 'primary' }, 
+    toggled: activeView === 'user-layers' ? true : false,
+    handler: { name: 'setRightPaneMode', params: ['user-layers'] } 
+  })
   if (views.includes('user-views')) tabbar.content.push({
-    id: 'user-views-tab', label: 'KViewsPanel.VIEWS_LABEL', color: 'grey-7', toggle: { color: 'primary' },
+    id: 'user-views-tab', label: 'VIEWS_LABEL', color: 'grey-7', toggle: { color: 'primary' },
     toggled: activeView === 'user-views' ? true : false,
     handler: { name: 'setRightPaneMode', params: ['user-views'] } 
   })
   if (views.includes('catalog-layers')) tabbar.content.push({
-    id: 'catalog-layers-tab', label: 'KCatalogLayersPanel.LAYERS_LABEL', color: 'grey-7', toggle: { color: 'primary' },
+    id: 'catalog-layers-tab', label: 'CATALOG_LABEL', color: 'grey-7', toggle: { color: 'primary' },
     toggled: activeView === 'catalog-layers' ? true : false,
     handler: { name: 'setRightPaneMode', params: ['catalog-layers'] } 
   })
@@ -337,16 +337,21 @@ const layerActions = [{
   dropdownIcon: 'las la-ellipsis-v',
   actionRenderer: 'item',
   content: [
-    { id: 'zoom-to', label: 'mixins.activity.ZOOM_TO_LABEL', icon: 'las la-search-location', handler: 'onZoomToLayer' },
-    { id: 'save', label: 'mixins.activity.SAVE_LABEL', icon: 'las la-save', handler: 'onSaveLayer', visible: 'isLayerStorable' },
-    { id: 'filter-data', label: 'mixins.activity.FILTER_DATA_LABEL', icon: 'las la-filter', handler: 'onFilterLayerData', visible: ['isFeatureLayer', 'hasFeatureSchema'] },
-    { id: 'view-data', label: 'mixins.activity.VIEW_DATA_LABEL', icon: 'las la-th-list', handler: 'onViewLayerData', visible: ['isFeatureLayer', 'hasFeatureSchema'] },
-    { id: 'chart-data', label: 'mixins.activity.CHART_DATA_LABEL', icon: 'las la-chart-pie', handler: 'onChartLayerData', visible: ['isFeatureLayer', 'hasFeatureSchema'] },
-    { id: 'edit', label: 'mixins.activity.EDIT_LABEL', icon: 'las la-edit', handler: 'onEditLayer', visible: 'isLayerEditable' },
-    { id: 'edit-style', label: 'mixins.activity.EDIT_LAYER_STYLE_LABEL', icon: 'las la-border-style', handler: 'onEditLayerStyle', visible: 'isLayerStyleEditable' },
-    { id: 'edit-data', label: 'mixins.activity.START_EDIT_DATA_LABEL', icon: 'las la-edit', handler: 'onEditLayerData', visible: 'isLayerDataEditable',
+    { id: 'zoom-to-layer', label: 'mixins.activity.ZOOM_TO_LABEL', icon: 'las la-search-location', handler: 'onZoomToLayer', visible: ':isVisible' },
+    { id: 'save-layer', label: 'mixins.activity.SAVE_LABEL', icon: 'las la-save', handler: 'onSaveLayer', visible: 'isLayerStorable' },
+    { id: 'filter-layer-data', label: 'mixins.activity.FILTER_DATA_LABEL', icon: 'las la-filter', visible: ['isFeatureLayer', 'hasFeatureSchema'],
+      route: { name: 'map-layer-filter', params: { contextId: ':contextId', layerId: ':_id', layerName: ':name' } } },
+    { id: 'view-layer-data', label: 'mixins.activity.VIEW_DATA_LABEL', icon: 'las la-th-list', visible: ['isFeatureLayer', 'hasFeatureSchema'],
+      route: { name: 'map-layer-table', params: { contextId: ':contextId', layerId: ':_id', layerName: ':name' } } },
+    { id: 'chart-layer-data', label: 'mixins.activity.CHART_DATA_LABEL', icon: 'las la-chart-pie', visible: ['isFeatureLayer', 'hasFeatureSchema'],
+      route: { name: 'map-layer-chart', params: { contextId: ':contextId', layerId: ':_id', layerName: ':name' } } },
+    { id: 'edit-layer', label: 'mixins.activity.EDIT_LABEL', icon: 'las la-file-alt', visible: 'isLayerEditable',
+      route: { name: 'edit-map-layer', params: { contextId: ':contextId', layerId: ':_id', layerName: ':name' } } },
+    { id: 'edit-layer-style', label: 'mixins.activity.EDIT_LAYER_STYLE_LABEL', icon: 'las la-border-style', visible: 'isLayerStyleEditable',
+      route: { name: 'edit-map-layer-style', params: { contextId: ':contextId', layerId: ':_id', layerName: ':name' } } },
+    { id: 'edit-layer-data', label: 'mixins.activity.START_EDIT_DATA_LABEL', icon: 'las la-edit', handler: 'onEditLayerData', visible: 'isLayerDataEditable',
       toggle: { icon: 'las la-edit', tooltip: 'mixins.activity.STOP_EDIT_DATA_LABEL' }, component: 'KEditLayerData' },
-    { id: 'remove', label: 'mixins.activity.REMOVE_LABEL', icon: 'las la-minus-circle', handler: 'onRemoveLayer', visible: 'isLayerRemovable' }
+    { id: 'remove-layer', label: 'mixins.activity.REMOVE_LABEL', icon: 'las la-trash', handler: 'onRemoveLayer', visible: 'isLayerRemovable' }
   ]
 }]
 
@@ -469,7 +474,8 @@ module.exports = {
           { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
           { id: 'danger-zone', icon: 'las la-exclamation-triangle', color: 'primary', label: 'KAccountActivity.DANGER_ZONE', disabled: true }
         ]
-      }
+      },
+      mode: 'profile'
     },
     devices: {
       actions: [
@@ -614,7 +620,8 @@ module.exports = {
           { id: 'search-event', icon: 'las la-search', tooltip: 'EventsActivity.SEARCH_EVENTS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
         ],
         'filter': contextFilter('name')
-      }
+      },
+      mode: 'default'
     },
     items: {
       actions: [
@@ -691,13 +698,16 @@ module.exports = {
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { component: 'KMeasureTool' }
         ]
-      }
+      },
+      mode: 'default'
     },
     rightPane: {
       content: {
-        'map': [
+        'user-layers': [
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-layers'),
-          { id: 'user-layers', component: 'catalog/KUserLayersPanel', bind: '$data' },
+          { id: 'user-layers', component: 'catalog/KLayersPanel',
+            layers: ':layers', layerCategories: ':layerCategories',
+            layersFilter: { scope: { $in: ['user', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: true } } },
           { component: 'QSpace' },
           { id: 'catalog-footer', component: 'KPanel', content: [{
               id: 'manage-layer-categories',
@@ -713,9 +723,13 @@ module.exports = {
         ],
         'catalog-layers': [
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'catalog-layers'),
-          { id: 'system-layers', component: 'catalog/KCatalogLayersPanel', bind: '$data', scope: 'user' }
+          { id: 'catalog-layers', component: 'catalog/KLayersPanel',
+            layers: ':layers', layerCategories: ':layerCategories',
+            layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
+            forecastModels: ':forecastModels', forecastModel: ':forecastModel', forecastModelHandlers: ':forecastModelHandlers' }
         ]
-      }
+      },
+      mode: 'user-layers'
     },
     bottomPane: {
       content: [
@@ -779,22 +793,17 @@ module.exports = {
           { id: 'settings', icon: 'las la-cog', tooltip: 'ArchivedEventsActivity.CHART_SETTINGS_LABEL', handler: 'showChartSettings' },
           { id: 'export-data', icon: 'las la-file-download', tooltip: 'ArchivedEventsActivity.CHART_EXPORT_LABEL', handler: 'downloadChartData' }
         ]
-      }
+      },
+      mode: 'history'
     },
     rightPane: {
       content: {
         'history': [],
-        'map': [
+        'user-layers': [
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-layers'),
-          { id: 'user-layers', component: 'catalog/KUserLayersPanel', bind: '$data' },
-          { component: 'QSpace' },
-          { id: 'catalog-footer', component: 'KPanel', content: [{
-              id: 'manage-layer-categories',
-              icon: 'las la-cog',
-              label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
-              route: { name: 'manage-layer-categories', params: { south: ':south', north: ':north', west: ':west', east: ':east' }, query: { layers: ':layers' } } 
-            }]
-          }
+          { id: 'user-layers', component: 'catalog/KLayersPanel',
+            layers: ':layers', layerCategories: ':layerCategories',
+            layersFilter: { scope: { $in: ['user', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: true } } }
         ],
         'user-views': [
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-views'),
@@ -802,10 +811,14 @@ module.exports = {
         ],
         'catalog-layers': [
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'catalog-layers'),
-          { id: 'system-layers', component: 'catalog/KCatalogLayersPanel', bind: '$data', scope: 'user' }
+          { id: 'catalog-layers', component: 'catalog/KLayersPanel',
+            layers: ':layers', layerCategories: ':layerCategories',
+            layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
+            forecastModels: ':forecastModels', forecastModel: ':forecastModel', forecastModelHandlers: ':forecastModelHandlers' }
         ],
         'chart': []
-      }
+      },
+      mode: 'history'
     },
     bottomPane: {
       content: [
@@ -874,7 +887,8 @@ module.exports = {
           { service: 'groups', field: 'name', baseQuery: {}, icon: { name: 'las la-sitemap' } },
           { service: 'tags', field: 'value', baseQuery: {}, icon: { name: 'las la-tag' } }
         ])
-      }
+      },
+      mode: 'default'
     },
     fab: {
       actions: [{ 
@@ -937,7 +951,8 @@ module.exports = {
           { id: 'search-tag', icon: 'las la-search', tooltip: 'KTagsActivity.SEARCH_TAGS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('value')
-      }
+      },
+      mode: 'default'
     },
     items: {
       actions: [
@@ -963,7 +978,8 @@ module.exports = {
           { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUPS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         'filter': contextFilter('name')
-      }
+      },
+      mode: 'default'
     },
     fab: {
       actions: [{ id: 'create-group', icon: 'las la-plus', tooltip: 'KGroupsActivity.CREATE_GROUP_LABEL',
@@ -996,7 +1012,8 @@ module.exports = {
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } },
         ],
         'filter': contextFilter('name')
-      }
+      },
+      mode: 'default'
     },
     fab: {
       actions: [{
@@ -1043,7 +1060,8 @@ module.exports = {
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } },
         ],
         'filter': contextFilter('name')
-      }
+      },
+      mode: 'default'
     },
     fab: {
       actions: [{
@@ -1108,21 +1126,20 @@ module.exports = {
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
           { component: 'KMeasureTool' }
         ]
-      }
+      },
+      mode: 'default'
     },
     rightPane: {
       content: {
-        'map': [
+        'event-participants': [
+          catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'event-participants'),
+          { id: 'event-participants', component: 'EventActivityPanel', participants: ':participants' }
+        ],
+        'user-layers': [
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'user-layers'),
-          { id: 'user-layers', component: 'catalog/KUserLayersPanel', bind: '$data' },
-          { component: 'QSpace' },
-          { id: 'catalog-footer', component: 'KPanel', content: [{
-              id: 'manage-layer-categories',
-              icon: 'las la-cog',
-              label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
-              route: { name: 'manage-layer-categories', params: { south: ':south', north: ':north', west: ':west', east: ':east' }, query: { layers: ':layers' } } 
-            }]
-          }
+          { id: 'user-layers', component: 'catalog/KLayersPanel',
+            layers: ':layers', layerCategories: ':layerCategories',
+            layersFilter: { scope: { $in: ['user', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: true } } }
         ],
         'user-views': [
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'user-views'),
@@ -1130,13 +1147,13 @@ module.exports = {
         ],
         'catalog-layers': [
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'catalog-layers'),
-          { id: 'system-layers', component: 'catalog/KCatalogLayersPanel', bind: '$data', scope: 'user' }
-        ],
-        'event-participants': [
-          catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'event-participants'),
-          { id: 'event-participants', component: 'EventActivityPanel', bind: '$data' }
+          { id: 'catalog-layers', component: 'catalog/KLayersPanel',
+            layers: ':layers', layerCategories: ':layerCategories',
+            layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
+            forecastModels: ':forecastModels', forecastModel: ':forecastModel', forecastModelHandlers: ':forecastModelHandlers' }
         ]
-      }
+      },
+      mode: 'event-participants'
     },
     bottomPane: {
       content: [

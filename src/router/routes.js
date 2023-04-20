@@ -205,6 +205,36 @@ module.exports = [{
                       'create-layer': tours['create-layer']
                     }
                   },
+                  'layer-chart/:layerId?': {
+                    name: 'map-layer-chart',
+                    component: 'KFeaturesChart',
+                    props: true
+                  },
+                  'layer-filter/:layerId?': {
+                    name: 'map-layer-filter',
+                    component: 'KFeaturesFilter',
+                    props: true
+                  },
+                  'layer-table/:layerId?': {
+                    name: 'map-layer-table',
+                    component: 'KFeaturesTable',
+                    props: true
+                  },
+                  'edit-layer/:layerId': {
+                    name: 'edit-map-layer',
+                    component: 'KLayerEditor',
+                    props: true
+                  },
+                  'edit-layer-style/:layerId?': {
+                    name: 'edit-map-layer-style',
+                    component: 'KLayerStyleEditor',
+                    props: true
+                  },
+                  'edit-layer-feature/:layerId?/:featureId': {
+                    name: 'edit-map-layer-feature',
+                    component: 'KFeatureEditor',
+                    props: true
+                  },
                   'create-view': {
                     name: 'create-map-view',
                     component: 'catalog/KCreateView',

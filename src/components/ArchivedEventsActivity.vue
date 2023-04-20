@@ -125,17 +125,14 @@ export default {
     }
   },
   computed: {
-    mode () {
-      return this.topPane.mode
-    },
     showMap () {
-      return this.mode === 'map'
+      return this.getTopPaneMode() === 'map'
     },
     showChart () {
-      return this.mode === 'chart'
+      return this.getTopPaneMode() === 'chart'
     },
     showHistory () {
-      return this.mode === 'history'
+      return this.getTopPaneMode() === 'history'
     },
     chartStyle () {
       const min = Math.min(this.$q.screen.width, this.$q.screen.height)
@@ -193,7 +190,6 @@ export default {
     return {
       filter: this.$store.get('filter'),
       filters: [],
-      topPane: this.$store.get('topPane'),
       heatmap: false,
       byTemplate: false,
       heatmapRadius: 1,
@@ -392,7 +388,7 @@ export default {
     },
     onShowMap () {
       this.setTopPaneMode('map')
-      this.setRightPaneMode('map')
+      this.setRightPaneMode('user-layers')
       // Refresh layer data
       this.refreshCollection()
     },

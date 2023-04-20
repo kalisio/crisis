@@ -1,6 +1,9 @@
 {
   "EVENTS_LABEL": "Evénements",
   "EVENT_TEMPLATES_LABEL": "Modèles d'événement",
+  "VIEWS_LABEL": "Mes vues",
+  "LAYERS_LABEL": "Mes données",
+  "CATALOG_LABEL": "Catalogue",
   "REMOVE_LABEL": "Supprimer",
   "EDIT_LABEL": "Editer",
   "COPY_LABEL": "Copier",

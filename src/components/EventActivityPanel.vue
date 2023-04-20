@@ -1,32 +1,26 @@
 <template>
-  <k-layers-panel
-    :layers="filteredLayers" 
-    :layerCategories="filteredCategories">
-    <template v-slot:footer>
-      <template v-for="participant in participants" :key="participant._id">
-        <div class="row justify-between no-wrap" style="overflow: auto">
-          <div class="col-auto self-center">
-            <q-btn flat round small color="primary" @click="onStateClicked(participant)">
-              <k-avatar :object="participant" />
-              <q-tooltip v-if="participant.step" content-class="bg-primary" >{{ getUserState(participant) }}</q-tooltip>
-              <q-tooltip v-if="participant.step" :offset="[0, 48]">{{ $t('EventActivityPanel.FILTER_PARTICIPANTS') }}</q-tooltip>
-            </q-btn>
-            <span>{{ getUserName(participant) }}&nbsp;&nbsp;</span>
-          </div>
-          <k-text-area class="self-center text-italic" :text="getUserComment(participant)" :length="30"/>
-          <div class="col-auto self-center">
-            <q-btn v-if="!archived && canFollowUpUser(participant)" flat round small color="primary" @click="doUserFollowUp(participant._id)">
-              <q-icon name="las la-sms" color="red" />
-              <q-tooltip>{{ getUserFollowUp(participant) }}</q-tooltip>
-            </q-btn>
-            <q-btn flat round small color="primary" @click="onZoomClicked(participant)">
-              <q-icon name="las la-search-location" />
-            </q-btn>
-          </div>
-        </div>
-      </template>
-    </template>
-  </k-layers-panel>
+  <template v-for="participant in participants" :key="participant._id">
+    <div class="row justify-between no-wrap" style="overflow: auto">
+      <div class="col-auto self-center">
+        <q-btn flat round small color="primary" @click="onStateClicked(participant)">
+          <k-avatar :object="participant" />
+          <q-tooltip v-if="participant.step" content-class="bg-primary" >{{ getUserState(participant) }}</q-tooltip>
+          <q-tooltip v-if="participant.step" :offset="[0, 48]">{{ $t('EventActivityPanel.FILTER_PARTICIPANTS') }}</q-tooltip>
+        </q-btn>
+        <span>{{ getUserName(participant) }}&nbsp;&nbsp;</span>
+      </div>
+      <k-text-area class="self-center text-italic" :text="getUserComment(participant)" :length="30"/>
+      <div class="col-auto self-center">
+        <q-btn v-if="!archived && canFollowUpUser(participant)" flat round small color="primary" @click="doUserFollowUp(participant._id)">
+          <q-icon name="las la-sms" color="red" />
+          <q-tooltip>{{ getUserFollowUp(participant) }}</q-tooltip>
+        </q-btn>
+        <q-btn flat round small color="primary" @click="onZoomClicked(participant)">
+          <q-icon name="las la-search-location" />
+        </q-btn>
+      </div>
+    </div>
+  </template>
 </template>
 
 <script>
@@ -40,41 +34,9 @@ export default {
     mixins.events
   ],
   props: {
-    layers: {
-      type: Object,
-      required: true
-    },
-    layerCategories: {
-      type: Array,
-      required: true
-    },
-    forecastModels: {
-      type: Array,
-      required: true
-    },
-    forecastModelHandlers: {
-      type: Object,
-      required: true
-    },
-    forecastModel: {
-      type: Object,
-      required: true
-    },
     participants: {
       type: Array,
       required: true
-    },
-    event: {
-      type: Object,
-      required: true
-    }
-  },
-  computed: {
-    filteredLayers () {
-     return []
-    },
-    filteredCategories () {
-      return []
     }
   },
   methods: {
