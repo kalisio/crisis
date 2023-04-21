@@ -196,7 +196,7 @@ module.exports = [{
                 },
                 children: {
                   'add-layer': {
-                    name: 'add-layer',
+                    name: 'add-map-layer',
                     component: 'catalog/KAddLayer',
                     tour: {
                       'add-layer': tours['add-layer'],
