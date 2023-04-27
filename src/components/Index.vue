@@ -6,7 +6,7 @@
       :accountEmail="User.email" 
       notifierEmail="email-notifications@kalisio.com"
     />
-    <KTour ref="tour" />
+    <KTour ref="tour" v-if="isInitialized" />
     <KWelcome />
     <router-view></router-view>
   </div>
@@ -21,7 +21,7 @@ import { api, permissions, composables } from '@kalisio/kdk/core.client'
 // Data
 const $q = useQuasar()
 // Register custom redirect to handle permissions
-const { User } = composables.useSession({ redirect })
+const { isInitialized, User } = composables.useSession({ redirect })
 
 // Functions
 async function redirect (route, result, user) {
