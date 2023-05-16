@@ -66,7 +66,7 @@ const leftPane = function (tour) {
 
 // top widgets
 const topWidgets = [{ 
-  id: 'information-box', label: 'KInformationBox.LABEL', icon: 'las la-digital-tachograph', 
+  id: 'information-box', label: 'KInformationBox.LABEL', icon: 'las la-digital-tachograph', scrollable: true,
   content: { component: 'widget/KInformationBox' },
   header: [{
     id: 'center-view',
