@@ -500,7 +500,7 @@ module.exports = {
       mode: 'default'
     },
     fab: {
-      actions: [
+      content: [
         { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL', route: { name: 'create-organisation' } }
       ]
     },
@@ -727,7 +727,7 @@ module.exports = {
           { id: 'catalog-layers', component: 'catalog/KLayersPanel',
             layers: ':layers', layerCategories: ':layerCategories',
             layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
-            forecastModels: ':forecastModels', forecastModel: ':forecastModel', forecastModelHandlers: ':forecastModelHandlers' }
+            forecastModels: ':forecastModels' }
         ]
       },
       mode: 'user-layers'
@@ -745,10 +745,10 @@ module.exports = {
       ]
     },
     windows: {
-      top: topWidgets
+      top: { content: topWidgets }
     },
     fab: {
-      actions: [
+      content: [
         { id: 'create-view', icon: 'las la-star', label: 'mixins.activity.CREATE_VIEW', route: { name: 'create-map-view' } },
         { id: 'add-layer', icon: 'las la-plus', label: 'mixins.activity.ADD_LAYER', route: { name: 'add-map-layer' } },
         { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'probeAtLocation' }
@@ -813,7 +813,7 @@ module.exports = {
           { id: 'catalog-layers', component: 'catalog/KLayersPanel',
             layers: ':layers', layerCategories: ':layerCategories',
             layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
-            forecastModels: ':forecastModels', forecastModel: ':forecastModel', forecastModelHandlers: ':forecastModelHandlers' }
+            forecastModels: ':forecastModels' }
         ],
         'chart': []
       },
@@ -890,7 +890,7 @@ module.exports = {
       mode: 'default'
     },
     fab: {
-      actions: [{ 
+      content: [{ 
         id: 'add-member', icon: 'las la-plus', tooltip: 'KMembersActivity.ADD_USER_LABEL',
         visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
         route: { name: 'add-member' } 
@@ -981,7 +981,7 @@ module.exports = {
       mode: 'default'
     },
     fab: {
-      actions: [{ id: 'create-group', icon: 'las la-plus', tooltip: 'KGroupsActivity.CREATE_GROUP_LABEL',
+      content: [{ id: 'create-group', icon: 'las la-plus', tooltip: 'KGroupsActivity.CREATE_GROUP_LABEL',
           visible: { name: '$can', params: ['create', 'groups', ':contextId'] },
           route: { name: 'create-group', params: { contextId: ':contextId' } }
       }]
@@ -1015,7 +1015,7 @@ module.exports = {
       mode: 'default'
     },
     fab: {
-      actions: [{
+      content: [{
         id: 'create-event-template', icon: 'las la-plus', tooltip: 'EventTemplatesActivity.CREATE_TEMPLATE_LABEL',
         visible: { name: '$can', params: ['create', 'event-templates', ':contextId'] },
         route: { name: 'create-event-template', params: { contextId: ':contextId' } }
@@ -1063,7 +1063,7 @@ module.exports = {
       mode: 'default'
     },
     fab: {
-      actions: [{
+      content: [{
         id: 'create-plan-template', icon: 'las la-plus', tooltip: 'PlanTemplatesActivity.CREATE_TEMPLATE_LABEL',
         visible: { name: '$can', params: ['create', 'plan-templates', ':contextId'] },
         route: { name: 'create-plan-template', params: { contextId: ':contextId' } }
@@ -1149,7 +1149,7 @@ module.exports = {
           { id: 'catalog-layers', component: 'catalog/KLayersPanel',
             layers: ':layers', layerCategories: ':layerCategories',
             layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
-            forecastModels: ':forecastModels', forecastModel: ':forecastModel', forecastModelHandlers: ':forecastModelHandlers' }
+            forecastModels: ':forecastModels' }
         ]
       },
       mode: 'event-participants'
@@ -1165,10 +1165,10 @@ module.exports = {
       }]
     },
     windows: {
-      top: topWidgets
+      top: { content: topWidgets }
     },
     fab: {
-      actions: [
+      content: [
         { id: 'add-media', label: 'EventActivity.ADD_MEDIA_LABEL', icon: 'las la-paperclip', handler: 'uploadMedia',
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] } },
         { id: 'browse-media', label: 'EventActivity.BROWSE_MEDIA_LABEL', icon: 'photo_library', handler: 'browseMedia',
