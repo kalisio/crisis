@@ -1,3 +1,5 @@
+Please refer to GitHub issues for changelog starting from v2.0: https://github.com/kalisio/aktnmap/issues.
+
 # Changelog
 
 ## [prod-v1.3.0](https://github.com/kalisio/aktnmap/tree/prod-v1.3.0) (2022-02-23)
