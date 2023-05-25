@@ -85,7 +85,7 @@ describe(`suite:${suite}`, () => {
 
   before(async function () {
     chailint(chai, util)
-    
+
     // Let enough time to process
     this.timeout(90000)
     api = new core.Api({

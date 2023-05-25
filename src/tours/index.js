@@ -40,7 +40,7 @@ module.exports = {
   'import-layer': require('./map/import-layer'),
   'connect-layer': require('./map/connect-layer'),
   'create-layer': require('./map/create-layer'),
-  'create-view': require('./map/create-view'),  
+  'create-view': require('./map/create-view'),
   timeline: require('./map/timeline'),
   fab: require('./map/fab')
 }

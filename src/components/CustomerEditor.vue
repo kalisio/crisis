@@ -25,11 +25,11 @@
         </div>
         <div v-else class="row no-margin">
           <div class="col-11 self-center">
-            <!-- TODO 
+            <!-- TODO
             card id="payment-card" class='k-stripe-card'
             :stripe="$config('stripe.secretKey')"
             :options="$config('stripe.options')"
-            @change='onCardUpdated' 
+            @change='onCardUpdated'
             /-->
           </div>
           <div class="col-1 self-center">
@@ -51,7 +51,7 @@ export default {
     // TODO Card
   },
   mixins: [
-    kCoreMixins.baseModal,
+    kCoreMixins.baseModal
   ],
   props: {
     billingObjectId: {

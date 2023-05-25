@@ -63,11 +63,11 @@
       >
         <div>
           <q-select id="chart-type" v-model="selectedChartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')"
-          :options="availableChartTypes" @input="refreshChart"/>
+          :options="availableChartTypes" @update:modelValue="refreshChart"/>
           <q-select id="count-per-chart" v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')"
-            :options="paginationOptions" @input="refreshChartAndPagination"/>
+            :options="paginationOptions" @update:modelValue="refreshChartAndPagination"/>
           <q-select id="chart-render" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')"
-            :options="renderOptions" @input="refreshChart"/>
+            :options="renderOptions" @update:modelValue="refreshChart"/>
         </div>
       </KModal>
       <!--
@@ -136,7 +136,7 @@ export default {
     },
     chartStyle () {
       const min = Math.min(this.$q.screen.width, this.$q.screen.height)
-      return `width: ${min * .75}px;`
+      return `width: ${min * 0.75}px;`
     },
     nbCharts () {
       if (!this.chartData.length || (this.nbValuesPerChart.value === 0)) return 1
@@ -450,21 +450,24 @@ export default {
       this.values = data.map(item => item.value)
       this.chartData = data.map(item => item.count)
     },
-    getChartOptions (type) {
+    getChartOptions () {
       const start = (this.currentChart - 1) * this.nbValuesPerChart.value
       const end = (this.nbValuesPerChart.value > 0 ? start + this.nbValuesPerChart.value : this.chartData.length)
       let title = this.$t('ArchivedEventsActivity.CHART_TITLE')
       if (this.nbCharts > 1) title += ` (${this.currentChart}/${this.nbCharts})`
 
-      this.chartLabels = this.values.slice(start, end),
+      this.chartLabels = this.values.slice(start, end)
       this.chartDatasets = [{
-        data: this.chartData.slice(start, end)
+        data: this.chartData.slice(start, end),
+        colorScale: 'Accent'
       }]
       this.chartOptions = {
         responsive: true,
-        title: {
-        display: true,
-          text: title
+        plugins: {
+          title: {
+            display: true,
+            text: title
+          }
         }
       }
       // ticks.precision = 0 means round displayed values to integers
@@ -476,7 +479,7 @@ export default {
         _.set(this.chartDatasets[0], 'backgroundColor', backgroundColor)
         _.set(this.chartDatasets[0], 'pointBorderColor', '#fff')
         _.set(this.chartDatasets[0], 'pointBackgroundColor', color)
-        _.set(this.chartOptions, 'plugins.legend.display', false)        
+        _.set(this.chartOptions, 'plugins.legend.display', false)
         _.set(this.chartOptions, 'scales[0].ticks.beginAtZero', true)
         _.set(this.chartOptions, 'scales[0].ticks.precision', 0)
       }
@@ -487,31 +490,25 @@ export default {
         _.set(this.chartOptions, 'scales.y.ticks.beginAtZero', true)
         _.set(this.chartOptions, 'scales.y.ticks.precision', 0)
       } else if (this.chartType === 'polarArea') {
-        
-        // FIXME: does not work 
-        // _.set(chartOptions, '.scale.display', false)
+
+        // FIXME: does not work
+        // _.set(this.chartOptions, '.scale.display', false)
       }
     },
     async refreshChart () {
       this.chartType = this.selectedChartType.value
       // Retrieve data
       await this.getChartData()
-       // Update chart options
-      const start = (this.currentChart - 1) * this.nbValuesPerChart.value
-      const end = (this.nbValuesPerChart.value > 0 ? start + this.nbValuesPerChart.value : this.chartData.length)
-      let title = this.$t('ArchivedEventsActivity.CHART_TITLE')
-      if (this.nbCharts > 1) title += ` (${this.currentChart}/${this.nbCharts})`
+      // Update chart options
+      this.getChartOptions()
       // Update the chart
-      this.$refs.chart.update({ 
-        type: this.selectedChartType.value,
+      this.$refs.chart.update({
+        type: this.chartType,
         data: {
-          labels: this.values.slice(start, end),
-          datasets:  [{
-            data: this.chartData.slice(start, end),
-            colorScale: 'Accent'
-          }]
+          labels: this.chartLabels,
+          datasets: this.chartDatasets
         },
-        options: {}
+        options: this.chartOptions
       })
     },
     async refreshChartAndPagination () {

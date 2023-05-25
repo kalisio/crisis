@@ -587,6 +587,17 @@ describe('events', () => {
     await orgService.remove(orgObject._id, { user: orgManagerObject, checkAuthorisation: true })
     const orgs = await orgService.find({ query: { name: 'test-org' }, user: orgManagerObject, checkAuthorisation: true })
     expect(orgs.data.length === 0).beTrue()
+
+    eventService = server.app.getService(`${orgObject._id.toString()}/events`)
+    expect(eventService).beNull()
+    archivedEventService = server.app.getService(`${orgObject._id.toString()}/archived-events`)
+    expect(archivedEventService).beNull()
+    eventTemplateService = server.app.getService(`${orgObject._id.toString()}/event-templates`)
+    expect(eventTemplateService).beNull()
+    eventLogService = server.app.getService(`${orgObject._id.toString()}/event-logs`)
+    expect(eventLogService).beNull()
+    archivedEventLogService = server.app.getService(`${orgObject._id.toString()}/archived-event-logs`)
+    expect(archivedEventLogService).beNull()
   })
   // Let enough time to process
     .timeout(5000)

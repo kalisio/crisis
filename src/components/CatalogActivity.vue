@@ -1,35 +1,35 @@
 <template>
   <KPage :padding="false">
     <template v-slot:page-content>
-      <!-- 
-        Map 
+      <!--
+        Map
       -->
       <div id="map" :ref="configureMap" :style="viewStyle">
         <q-resize-observer @resize="onMapResized" />
       </div>
-      <!-- 
-        Event templates selector modal 
+      <!--
+        Event templates selector modal
       -->
       <KModal ref="templateModal"
         :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
         :buttons="getTemplateModalButtons()"
         :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }"
       >
-        <KList 
-          ref="templates" 
-          service="event-templates" 
+        <KList
+          ref="templates"
+          service="event-templates"
           :contextId="contextId"
-          :list-strategy="'smart'" 
-          @selection-changed="onCreateEvent" 
+          :list-strategy="'smart'"
+          @selection-changed="onCreateEvent"
         />
       </KModal>
-      <!-- 
-        Alert editor modal 
+      <!--
+        Alert editor modal
       -->
       <AlertEditor
         ref="alertEditor"
-        :layer="alertLayer" 
-        :feature="alertFeature" 
+        :layer="alertLayer"
+        :feature="alertFeature"
         :forecastModel="forecastModel"
       />
       <!--KModal ref="alertModal"
@@ -37,11 +37,11 @@
         :buttons="getAlertModalButtons()"
         :options="{}"
       >
-        <AlertForm 
-          :class="{ 'light-dimmed': inProgress }" 
+        <AlertForm
+          :class="{ 'light-dimmed': inProgress }"
           ref="alertForm"
-          :layer="alertLayer" 
-          :feature="alertFeature" 
+          :layer="alertLayer"
+          :feature="alertFeature"
           :forecastModel="forecastModel"
         />
       </KModal-->
@@ -57,7 +57,7 @@ import L from 'leaflet'
 import moment from 'moment'
 import chroma from 'chroma-js'
 import sift from 'sift'
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue'
 import { Dialog } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
@@ -98,7 +98,7 @@ export default {
     kMapMixins.featureService,
     kMapMixins.infobox,
     kMapMixins.weacast,
-    kMapMixins.context,    
+    kMapMixins.context,
     mixins.alerts,
     mixins.plans
   ],
@@ -126,7 +126,7 @@ export default {
   },
   watch: {
     objectiveFilters: function () {
-      //this.events.refreshCollection()
+      // this.events.refreshCollection()
       this.refreshObjectivesLayer()
     },
     planId: {
@@ -383,7 +383,7 @@ export default {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
       const color = kCoreUtils.getColorFromPalette(_.get(event, 'icon.color', 'blue'))
-      return { color: color, fillColor: chroma(color).alpha(0.5).hex() } // Transparency
+      return { color, fillColor: chroma(color).alpha(0.5).hex() } // Transparency
     },
     getEventPopup (event, layer, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
@@ -472,7 +472,7 @@ export default {
         { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.$refs.alertModal.close() },
         { id: 'apply-button', label: 'DONE', renderer: 'form-button', handler: () => this.onCreateAlert() }
       ]
-    },*/
+    }, */
     onCreateMeasureAlertAction (data) {
       this.alertFeature = data.feature
       this.alertLayer = data.layer
@@ -616,9 +616,9 @@ export default {
     // Create and setup the alert collection
     /*
     this.alerts = this.configureCollection('alerts',
-      () => ({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }), () => ({}), { nbItemsPerPage: 0 }) 
+      () => ({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }), () => ({}), { nbItemsPerPage: 0 })
     console.log(this.alerts)
-    this.alerts.$on('collection-refreshed', this.onAlertCollectionRefreshed) 
+    this.alerts.$on('collection-refreshed', this.onAlertCollectionRefreshed)
     // Create and setup the events collection
     this.events = this.configureCollection('events', () => Object.assign({
       geoJson: true,
@@ -634,8 +634,8 @@ export default {
   },
   beforeUnmount () {
     this.clearHighlights()
-    //this.alerts.$off('collection-refreshed', this.onAlertCollectionRefreshed)
-    //this.events.off('collection-refreshed', this.onEventCollectionRefreshed)
+    // this.alerts.$off('collection-refreshed', this.onAlertCollectionRefreshed)
+    // this.events.off('collection-refreshed', this.onEventCollectionRefreshed)
     this.$engineEvents.off('edit-start', this.onEditStartEvent)
     this.$engineEvents.off('edit-stop', this.onEditStopEvent)
   },

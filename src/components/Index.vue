@@ -1,9 +1,9 @@
 <template>
   <div>
-    <KSignupAlert 
-      v-if="User" 
-      :isVerified="User.isVerified" 
-      :accountEmail="User.email" 
+    <KSignupAlert
+      v-if="User"
+      :isVerified="User.isVerified"
+      :accountEmail="User.email"
       notifierEmail="email-notifications@kalisio.com"
     />
     <KTour ref="tour" v-if="isInitialized" />
@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
+import _ from 'lodash'
 import config from 'config'
-import { useRouter, useRoute } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { api, permissions, composables } from '@kalisio/kdk/core.client'
 

@@ -1,7 +1,8 @@
 import _ from 'lodash'
 import commonHooks from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
-import { checkOrganisationsQuotas, checkSubscriptionQuotas, subscribeDefaultPlan, removeBilling } from '../../hooks/index.js'
+import { checkOrganisationsQuotas, checkSubscriptionQuotas, subscribeDefaultPlan,
+         removeBilling, removeOrganisationAlerts } from '../../hooks/index.js'
 
 export default {
   before: {
@@ -30,6 +31,7 @@ export default {
     remove: [
       coreHooks.setAsDeleted,
       removeBilling,
+      removeOrganisationAlerts,
       coreHooks.removeOrganisationGroups,
       coreHooks.removeOrganisationTags,
       coreHooks.removeOrganisationAuthorisations,

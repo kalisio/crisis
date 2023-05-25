@@ -102,7 +102,7 @@
 
 <script>
 import _ from 'lodash'
-import { mixins as kdkCoreMixins, utils as kdkdkCoreUtils } from '@kalisio/kdk/core.client'
+import { mixins as kdkCoreMixins, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kdkMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
@@ -259,7 +259,7 @@ export default {
     this.$events.off('user-changed', this.refresh)
   }
 }
-</script> 
+</script>
 
 <style lang="scss">
   .event-card-description {

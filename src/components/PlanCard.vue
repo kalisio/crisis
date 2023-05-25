@@ -47,7 +47,7 @@
             id="plan-archived-events"
             icon= "las la-clipboard-list"
             :tooltip="$t('PlanCard.VIEW_ARCHIVED_EVENTS')"
-            :route="{ name: 'archived-events-activity', params: { contextId }, query: { plan: item._id } }" 
+            :route="{ name: 'archived-events-activity', params: { contextId }, query: { plan: item._id } }"
           />
         </div>
       </KCardSection>

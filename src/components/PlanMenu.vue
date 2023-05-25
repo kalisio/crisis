@@ -18,7 +18,7 @@
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'"
             :object="plan"
             :contextId="organisation._id"
-            size="sm" 
+            size="sm"
           />
           <div>
             {{ plan.name }}

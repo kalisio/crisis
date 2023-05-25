@@ -9,7 +9,7 @@
         <KPanel id="plan-objectives-toolbar" :content="toolbar" :mode="mode" class="no-wrap" />
       </q-card-section>
       <q-card-section id="plan-objectives-list" v-show="mode === 'list'">
-        <KList 
+        <KList
           :ref="onListReferenceCreated"
           style="min-height: 50px; min-width: 200px"
           service="plan-objectives"
@@ -20,17 +20,17 @@
         />
       </q-card-section>
       <q-card-section id="plan-objective-add" v-if="mode === 'add'">
-        <KForm 
-          :ref="onAddFormReferenceCreated" 
-          :schema="objectiveSchema" 
-          style="min-width: 300px" 
+        <KForm
+          :ref="onAddFormReferenceCreated"
+          :schema="objectiveSchema"
+          style="min-width: 300px"
         />
       </q-card-section>
       <q-card-section id="plan-objective-edit" v-if="mode === 'edit'">
-        <KForm 
+        <KForm
           :ref="onEditFormReferenceCreated"
-          :schema="objectiveSchema" 
-          style="min-width: 300px" 
+          :schema="objectiveSchema"
+          style="min-width: 300px"
           @form-ready="onEditFormReady"
         />
       </q-card-section>
@@ -215,7 +215,7 @@ export default {
       }
     },
     editPlanObjective (objective) {
-      this.editedObjective = objective      
+      this.editedObjective = objective
       this.mode = 'edit'
     },
     async removePlanObjective (objective) {

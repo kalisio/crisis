@@ -75,7 +75,7 @@ import { QSlider, QRange } from 'quasar'
 
 export default {
   components: {
-    QSlider, 
+    QSlider,
     QRange,
     KItemField: kdkCoreUtils.loadComponent('form/KItemField'),
     KToggleField: kdkCoreUtils.loadComponent('form/KToggleField')
@@ -182,16 +182,18 @@ export default {
       return options
     },
     getOperators (variable) {
-      return this.isRange(variable) ? [{
-        label: this.$i18n.t('AlertForm.RANGE'),
-        value: '$range'
-      }] : [{
-        label: this.$i18n.t('AlertForm.GREATER_THAN'),
-        value: '$gte'
-      }, {
-        label: this.$i18n.t('AlertForm.LOWER_THAN'),
-        value: '$lte'
-      }]
+      return this.isRange(variable)
+        ? [{
+            label: this.$i18n.t('AlertForm.RANGE'),
+            value: '$range'
+          }]
+        : [{
+            label: this.$i18n.t('AlertForm.GREATER_THAN'),
+            value: '$gte'
+          }, {
+            label: this.$i18n.t('AlertForm.LOWER_THAN'),
+            value: '$lte'
+          }]
     },
     isRange (variable) {
       const unitsWithRange = ['deg']
@@ -210,10 +212,12 @@ export default {
       return {
         isActive: false,
         operator: this.isRange(variable) ? '$range' : '$gte',
-        threshold: this.isRange(variable) ? {
-          min: Math.ceil((max - min) * 0.25 / step) * step, // Quartiles rounded to nearest step
-          max: Math.ceil((max - min) * 0.75 / step) * step
-        } : Math.ceil((max - min) * 0.5 / step) * step, // Mean value rounded to nearest step
+        threshold: this.isRange(variable)
+          ? {
+              min: Math.ceil((max - min) * 0.25 / step) * step, // Quartiles rounded to nearest step
+              max: Math.ceil((max - min) * 0.75 / step) * step
+            }
+          : Math.ceil((max - min) * 0.5 / step) * step, // Mean value rounded to nearest step
         min,
         max,
         step
@@ -342,7 +346,8 @@ export default {
       // Add reference to feature service whenever required
       if (this.layer.service) {
         _.set(values, 'feature', this.layer.featureId
-          ? _.get(this.feature, 'properties.' + this.layer.featureId) : this.feature._id)
+          ? _.get(this.feature, 'properties.' + this.layer.featureId)
+          : this.feature._id)
       }
       // Setup style if any provided, except if templated as it would require
       // a complex mapping with the underlying feature

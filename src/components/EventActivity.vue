@@ -107,7 +107,7 @@ export default {
         const feature = { type: 'Feature', geometry: this.event.location }
         // Add event layer
         const layer = L.geoJson(feature, {
-          style: () => ({ color: color, fillColor: chroma(color).alpha(0.5).hex() }) // Transparency
+          style: () => ({ color, fillColor: chroma(color).alpha(0.5).hex() }) // Transparency
         })
         this.map.addLayer(layer)
         // Recenter map

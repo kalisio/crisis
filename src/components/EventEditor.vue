@@ -11,7 +11,7 @@
         :objectId="objectId"
         :schema="schema"
         @field-changed="onFieldChanged"
-        @form-ready="onFormReady" 
+        @form-ready="onFormReady"
       />
       <div class="row full-width justify-end">
         <q-checkbox :label="$t('EventEditor.NOTIFY')" v-model="notify" />

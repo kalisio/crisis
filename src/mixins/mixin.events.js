@@ -35,12 +35,12 @@ const eventsMixin = {
         this.attachments = await storageService.find({ query: { Prefix: this.event._id || this.event } })
         // "Folders" are retrieved but are zero-sized
         this.attachments = this.attachments.filter(item => item.Size > 0)
-        .map(item => ({
+          .map(item => ({
           // From key name we extract the filename
-          name: path.basename(item.Key),
-          key: item.Key,
-          size: item.Size
-        }))
+            name: path.basename(item.Key),
+            key: item.Key,
+            size: item.Size
+          }))
       }
     },
     hasMedias () {

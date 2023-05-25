@@ -2,11 +2,11 @@
   <!-- Don't drop "q-app" class -->
   <div id="q-app">
     <!-- Ajax bar -->
-    <q-ajax-bar 
-      ref="bar" 
-      position="bottom" 
-      size="8px" 
-      color="primary" 
+    <q-ajax-bar
+      ref="bar"
+      position="bottom"
+      size="8px"
+      color="primary"
       :delay="250">
     </q-ajax-bar>
     <!-- Router view -->

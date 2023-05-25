@@ -12,9 +12,10 @@ import { createServer, runServer } from '../src/server.js'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 describe('aktnmap', () => {
-  let server, expressServer, userService, userObject, memberObject, orgService, orgObject, authorisationService, devicesService, pusherService, billingService, sns,
-    mailerService, memberService, tagService, tagObject, memberTagObject, groupService, groupObject, gmailClient, gmailUser,
-    subscriptionObject, client, password
+  let server, expressServer, userService, userObject, memberObject, orgService, orgObject,
+    authorisationService, devicesService, pusherService, billingService, sns, mailerService,
+    memberService, tagService, tagObject, memberTagObject, groupService, groupObject,
+    gmailClient, gmailUser, subscriptionObject, client, password
   const now = new Date()
   const logFilePath = path.join(__dirname, 'logs', 'aktnmap-' + now.toISOString().slice(0, 10) + '.log')
   const device = {
@@ -85,9 +86,7 @@ describe('aktnmap', () => {
     const gmailApiConfig = {
       user: process.env.GMAIL_API_USER,
       clientEmail: process.env.GMAIL_API_CLIENT_EMAIL,
-      // The private key file is set as an environment variable containing \n
-      // So we need to parse it such as if it came from a JSON file
-      privateKey: JSON.parse('{ "key": "' + process.env.GMAIL_API_PRIVATE_KEY + '" }').key
+      privateKey: process.env.GMAIL_API_PRIVATE_KEY
     }
     gmailUser = gmailApiConfig.user
     gmailClient = await createGmailClient(gmailApiConfig)
@@ -755,7 +754,7 @@ describe('aktnmap', () => {
         return userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
       })
       .then(user => {
-      // Update user with his new permissions
+        // Update user with his new permissions
         userObject = user
         expect(userObject.organisations).toExist()
         expect(userObject.organisations.length === 0).beTrue()
@@ -765,6 +764,12 @@ describe('aktnmap', () => {
       })
       .then(orgs => {
         expect(orgs.data.length === 0).beTrue()
+        memberService = server.app.getService(`${orgObject._id.toString()}/members`)
+        expect(memberService).beNull()
+        tagService = server.app.getService(`${orgObject._id.toString()}/tags`)
+        expect(tagService).beNull()
+        groupService = server.app.getService(`${orgObject._id.toString()}/groups`)
+        expect(groupService).beNull()
       })
     const events = new Promise((resolve, reject) => {
       // This should unsubscribe device to org topic

@@ -96,7 +96,7 @@ export default {
         const billingService = this.$api.getService('billing')
         await billingService.update(this.billingObjectId, {
           action: 'subscription',
-          plan: plan,
+          plan,
           billingObjectService: this.billingObjectService,
           billingPerspective: 'billing'
         })

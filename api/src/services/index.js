@@ -28,8 +28,9 @@ export async function createEventService (options = {}) {
   }, options))
 }
 
-export function removeEventService (options) {
-  // TODO
+export function removeEventService (options = {}) {
+  const app = this
+  return app.removeService(app.getService('events', options.context))
 }
 
 export async function createEventTemplateService (options = {}) {
@@ -42,8 +43,9 @@ export async function createEventTemplateService (options = {}) {
   }, options))
 }
 
-export function removeEventTemplateService (options) {
-  // TODO
+export function removeEventTemplateService (options = {}) {
+  const app = this
+  return app.removeService(app.getService('event-templates', options.context))
 }
 
 export async function createEventLogService (options = {}) {
@@ -57,8 +59,9 @@ export async function createEventLogService (options = {}) {
   }, options))
 }
 
-export function removeEventLogService (options) {
-  // TODO
+export function removeEventLogService (options = {}) {
+  const app = this
+  return app.removeService(app.getService('event-logs', options.context))
 }
 
 export async function createArchivedEventService (options = {}) {
@@ -72,8 +75,9 @@ export async function createArchivedEventService (options = {}) {
   }, options))
 }
 
-export function removeArchivedEventService (options) {
-  // TODO
+export function removeArchivedEventService (options = {}) {
+  const app = this
+  return app.removeService(app.getService('archived-events', options.context))
 }
 
 export async function createArchivedEventLogService (options = {}) {
@@ -87,8 +91,9 @@ export async function createArchivedEventLogService (options = {}) {
   }, options))
 }
 
-export function removeArchivedEventLogService (options) {
-  // TODO
+export function removeArchivedEventLogService (options = {}) {
+  const app = this
+  return app.removeService(app.getService('archived-event-logs', options.context))
 }
 
 export async function createPlanTemplateService (options = {}) {
@@ -101,8 +106,9 @@ export async function createPlanTemplateService (options = {}) {
   }, options))
 }
 
-export function removePlanTemplateService (options) {
-  // TODO
+export function removePlanTemplateService (options = {}) {
+  const app = this
+  return app.removeService(app.getService('plan-templates', options.context))
 }
 
 export async function createPlanService (options = {}) {
@@ -115,8 +121,9 @@ export async function createPlanService (options = {}) {
   }, options))
 }
 
-export function removePlanService (options) {
-  // TODO
+export function removePlanService (options = {}) {
+  const app = this
+  return app.removeService(app.getService('plans', options.context))
 }
 
 export async function createArchivedPlanService (options = {}) {
@@ -130,8 +137,9 @@ export async function createArchivedPlanService (options = {}) {
   }, options))
 }
 
-export function removeArchivedPlanService (options) {
-  // TODO
+export function removeArchivedPlanService (options = {}) {
+  const app = this
+  return app.removeService(app.getService('archived-plans', options.context))
 }
 
 export async function createOrganisationServices (organisation, db) {

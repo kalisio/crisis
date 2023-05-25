@@ -23,7 +23,7 @@
         v-else-if="height"
         ref="eventsBoard"
         :columns="boardColumns"
-        :height="height" 
+        :height="height"
       />
       <!--
         Router view to enable routing to modals
