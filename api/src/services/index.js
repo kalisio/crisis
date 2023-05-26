@@ -157,19 +157,19 @@ export async function createOrganisationServices (organisation, db) {
   await createArchivedPlanService.call(app, { context: organisation, db })
 }
 
-export function removeOrganisationServices (organisation) {
+export async function removeOrganisationServices (organisation) {
   const app = this
-  removeFeaturesService.call(app, { collection: 'features', context: organisation })
-  removeCatalogService.call(app, { context: organisation })
-  removeAlertsService.call(app, { context: organisation })
-  removeEventService.call(app, { context: organisation })
-  removeEventTemplateService.call(app, { context: organisation })
-  removeEventLogService.call(app, { context: organisation })
-  removeArchivedEventService.call(app, { context: organisation })
-  removeArchivedEventLogService.call(app, { context: organisation })
-  removePlanTemplateService.call(app, { context: organisation })
-  removePlanService.call(app, { context: organisation })
-  removeArchivedPlanService.call(app, { context: organisation })
+  await removeFeaturesService.call(app, { collection: 'features', context: organisation })
+  await removeCatalogService.call(app, { context: organisation })
+  await removeAlertsService.call(app, { context: organisation })
+  await removeEventService.call(app, { context: organisation })
+  await removeEventTemplateService.call(app, { context: organisation })
+  await removeEventLogService.call(app, { context: organisation })
+  await removeArchivedEventService.call(app, { context: organisation })
+  await removeArchivedEventLogService.call(app, { context: organisation })
+  await removePlanTemplateService.call(app, { context: organisation })
+  await removePlanService.call(app, { context: organisation })
+  await removeArchivedPlanService.call(app, { context: organisation })
 }
 
 async function isOrganisationInactive (organisation, db, duration) {

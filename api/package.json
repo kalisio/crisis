@@ -63,7 +63,7 @@
     "@feathersjs/errors": "^5.0.5",
     "@feathersjs/express": "^5.0.5",
     "@feathersjs/feathers": "^5.0.5",
-    "@kalisio/feathers-distributed": "^2.2.0",
+    "@kalisio/feathers-distributed": "^2.2.1",
     "@kalisio/kdk": "https://github.com/kalisio/kdk",
     "@turf/point-on-feature": "^5.1.0",
     "@weacast/core": "^2.1.5",
