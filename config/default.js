@@ -53,9 +53,16 @@ const leftPane = function (tour) {
       { component: 'account/KIdentityPanel', class: 'full-width' },
       { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
-      { component: 'editor/KSettingsEditor' },
+      { id: 'settings', icon: 'las la-cog', label: 'SETTINGS', renderer: 'item', dialog: {
+          component: 'app/KSettings', title: 'SETTINGS', cancelAction: 'CANCEL', okAction: {
+            id: 'apply-settings', label: 'APPLY', handler: 'apply'
+          }
+        }
+      },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
-      { id: 'about', icon: 'las la-info', label: 'ABOUT', renderer: 'item', dialog: { component: 'app/KAbout', title: 'ABOUT', okAction: 'CLOSE' } },
+      { id: 'about', icon: 'las la-info', label: 'ABOUT', renderer: 'item', dialog: { 
+        component: 'app/KAbout', title: 'ABOUT', okAction: 'CLOSE' } 
+      },
       { id: 'online-help', icon: 'las la-book', label: 'leftPane.ONLINE_HELP', url: onlineHelp, renderer: 'item' },
       contextHelp(tour),
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
