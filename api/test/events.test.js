@@ -1,6 +1,7 @@
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import request from 'superagent'
+import { Blob } from 'buffer'
 import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import core, { kdk, hooks as coreHooks, permissions as corePermissions } from '@kalisio/kdk/core.api.js'
 import * as permissions from '../../common/permissions.mjs'
@@ -449,24 +450,24 @@ describe('events', () => {
   // Let enough time to process
     .timeout(15000)
 
-  it('event coordinators can add attachments to events', async () => {
-    const content = Buffer.from('some buffered data')
-    storageObject = await storageService.create({
-      id: 'buffer.txt',
-      contentType: 'text/plain',
-      buffer: content,
-      resource: eventObject._id.toString(),
-      resourcesService: 'events'
+  it('event coordinators can upload/download data to/from event storage', async () => {
+    const fileId = `${eventObject._id}/buffer.txt`
+    const content = 'some buffered data'
+    const blob = new Blob([content], { type: 'text/plain' })
+    storageObject = await storageService.putObject({
+      id: fileId,
+      type: blob.type,
+      buffer: await blob.arrayBuffer()
     })
-    expect(storageObject.size).to.equal(content.length)
-    const events = await eventService.find({ query: { name: 'updated event' }, user: orgManagerObject, checkAuthorisation: true })
-    expect(events.data.length > 0).beTrue()
-    eventObject = events.data[0]
-    expect(eventObject.attachments).toExist()
-    expect(eventObject.attachments.length > 0).beTrue()
-    expect(eventObject.attachments[0]._id).to.equal(storageObject._id)
-    const data = await storageService.get('buffer.txt')
-    expect(data.size === 18).beTrue()
+    expect(storageObject._id).to.equal(fileId)
+    let response = await storageService.get(fileId)
+    expect(response.buffer).toExist()
+    expect(response.type).to.equal(blob.type)
+    const buffer = storageService.atob(response.buffer)
+    expect(buffer.toString()).to.equal(content)
+    response = await storageService.remove(fileId)
+    expect(response._id).to.equal(fileId)
+    expect(response.$metadata.httpStatusCode).to.equal(204)
   })
     .timeout(15000)
 
@@ -588,15 +589,15 @@ describe('events', () => {
     const orgs = await orgService.find({ query: { name: 'test-org' }, user: orgManagerObject, checkAuthorisation: true })
     expect(orgs.data.length === 0).beTrue()
 
-    eventService = server.app.getService(`${orgObject._id.toString()}/events`)
+    eventService = app.getService(`${orgObject._id.toString()}/events`)
     expect(eventService).beNull()
-    archivedEventService = server.app.getService(`${orgObject._id.toString()}/archived-events`)
+    archivedEventService = app.getService(`${orgObject._id.toString()}/archived-events`)
     expect(archivedEventService).beNull()
-    eventTemplateService = server.app.getService(`${orgObject._id.toString()}/event-templates`)
+    eventTemplateService = app.getService(`${orgObject._id.toString()}/event-templates`)
     expect(eventTemplateService).beNull()
-    eventLogService = server.app.getService(`${orgObject._id.toString()}/event-logs`)
+    eventLogService = app.getService(`${orgObject._id.toString()}/event-logs`)
     expect(eventLogService).beNull()
-    archivedEventLogService = server.app.getService(`${orgObject._id.toString()}/archived-event-logs`)
+    archivedEventLogService = app.getService(`${orgObject._id.toString()}/archived-event-logs`)
     expect(archivedEventLogService).beNull()
   })
   // Let enough time to process
