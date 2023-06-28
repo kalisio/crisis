@@ -271,7 +271,7 @@ module.exports = configure(function (ctx) {
 
     // https://v2.quasar.dev/quasar-cli-webpack/developing-pwa/configuring-pwa
     pwa: {
-      workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
+      workboxPluginMode: 'InjectManifest', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
 
       // for the custom service worker ONLY (/src-pwa/custom-service-worker.[js|ts])
@@ -288,6 +288,10 @@ module.exports = configure(function (ctx) {
         description: 'Monitor real-time events on the field',
         display: 'standalone',
         orientation: 'portrait',
+        background_color: '#f0ecec',
+        theme_color :  '#1b5e20',
+        start_url: './',
+        id: './',
         icons: [
           {
             src: 'icons/aktnmap-icon-32x32.png',
