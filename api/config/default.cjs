@@ -333,7 +333,14 @@ module.exports = {
     //collection: 'events'
     // When using redis
     uri: process.env.REDIS_URL || (containerized ? 'redis://redis:6379' : 'redis://localhost:6379')
-  } : false)
+  } : false),
+  push: {
+    vapidDetails: {
+      subject: process.env.VAPID_SUBJECT,
+      publicKey: process.env.VAPID_PUBLIC_KEY,
+      privateKey: process.env.VAPID_PRIVATE_KEY
+    }
+  }
 }
 
 /*
