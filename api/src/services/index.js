@@ -311,7 +311,8 @@ export default async function () {
         plans: _.get(app.get('billing'), 'plans'),
         options: _.get(app.get('billing'), 'options'),
         quotas: app.get('quotas'),
-        mapillary: app.get('mapillary')
+        mapillary: app.get('mapillary'),
+        vapidPublicKey: app.get('push').vapidDetails.publicKey
       }
       if (process.env.BUILD_NUMBER) {
         response.buildNumber = process.env.BUILD_NUMBER
