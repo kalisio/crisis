@@ -3,6 +3,7 @@ import config from 'config'
 import { Notify, Dialog } from 'quasar'
 import appHooks from '../app.hooks'
 import services from '../services'
+import { subscribeToPushNotifications } from '../utils'
 import { initializeApi, i18n, utils as kdkCoreUtils, Store, Layout, Events, beforeGuard, authenticationGuard } from '@kalisio/kdk/core.client'
 import { Geolocation } from '@kalisio/kdk/map.client.map'
 
@@ -99,6 +100,7 @@ export default async ({ app }) => {
   // updateThemeColors()
 
   api.on('authenticated', (data) => {
+    subscribeToPushNotifications()
     // Store API gateway token if any
     if (data.gatewayToken) api.get('storage').setItem(config.gatewayJwt, data.gatewayToken)
   })

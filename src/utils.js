@@ -1,3 +1,13 @@
+import { 
+  checkPrerequisites,
+  getPushSubscription,
+  subscribePushNotifications,
+  requestNotificationPermission,
+  addSubscription
+} from '@kalisio/feathers-webpush/client.js'
+import { i18n, Store, api } from '@kalisio/kdk/core.client'
+import { Notify } from 'quasar'
+import logger from 'loglevel'
 import _ from 'lodash'
 import sift from 'sift'
 
@@ -131,4 +141,25 @@ export function buildTours (config) {
   const tours = {}
   buildToursRecursively(config, tours)
   return tours
+}
+
+export async function subscribeToPushNotifications() {
+  // Check prerequisites & notification permission
+  try {
+    await checkPrerequisites()
+    await requestNotificationPermission()
+  } catch (error) {
+    Notify.create({ type: 'negative', message: i18n.t(`errors.${error.code}`) })
+    return
+  }
+  // Check if user is already subscribed
+  const currentSubscription = await getPushSubscription()
+  if (currentSubscription && _.find(_.get(user, 'subscriptions', []), subscription => subscription.endpoint === currentSubscription.endpoint)) return
+  // Subscribe to web webpush notifications
+  const subscription = await subscribePushNotifications(Store.get('capabilities.api.vapidPublicKey'))
+  // Patch user subscriptions
+  const user = Store.get('user')
+  await addSubscription(user, subscription, 'subscriptions')
+  api.service('api/users').patch(Store.user._id, { subscriptions: user.subscriptions })
+  logger.debug(`New webpush subscription registered with endpoint: ${subscription.endpoint}`)
 }
