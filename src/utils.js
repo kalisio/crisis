@@ -10,6 +10,7 @@ import { Notify } from 'quasar'
 import logger from 'loglevel'
 import _ from 'lodash'
 import sift from 'sift'
+import moment from 'moment'
 
 export function hasRoleInEvent (user, roles) {
   return _.findIndex(roles, role => {
@@ -152,19 +153,32 @@ export async function subscribeToPushNotifications() {
     Notify.create({ type: 'negative', message: i18n.t(`errors.${error.code}`) })
     return
   }
-  console.log('toto', utils.getPlatform())
-  // Check if user is already subscribed
+  // Data
+  const userService = api.service('api/users')
   const user = Store.get('user')
+  const platform = utils.getPlatform()
+  const date = moment.utc().toString()
   const currentSubscription = await getPushSubscription()
-  if (currentSubscription && _.find(_.get(user, 'subscriptions', []), subscription => subscription.endpoint === currentSubscription.endpoint)) return
+  // Check if user is already subscribed
+  if (currentSubscription && _.find(_.get(user, 'subscriptions', []), subscription => subscription.endpoint === currentSubscription.endpoint)){
+    if (!platform.desktop) {
+      // Patch mobile connection date
+      const subscriptions = _.map(user.subscriptions, subscription => {
+        if (subscription.endpoint === currentSubscription.endpoint) subscription.lastMobileActivity = date
+      })
+      userService.patch(Store.user._id, { subscriptions: subscriptions })
+      logger.debug(`New mobile connection date registered on ${date} with ${currentSubscription.endpoint} subscription`)
+    }
+    return
+  } 
   // Subscribe to web webpush notifications
   let subscription = await subscribePushNotifications(Store.get('capabilities.api.vapidPublicKey'))
-  // Set platform information
-  const platform = utils.getPlatform()
+  // Set platform informations
   subscription.browser = { name: platform.name, version: platform.version }
   subscription.platform = platform.platform
+  subscription.lastMobileActivity = platform.desktop ? '' : date
   // Patch user subscriptions
   await addSubscription(user, subscription, 'subscriptions')
-  api.service('api/users').patch(Store.user._id, { subscriptions: user.subscriptions })
+  userService.patch(Store.user._id, { subscriptions: user.subscriptions })
   logger.debug(`New webpush subscription registered with endpoint: ${subscription.endpoint}`)
 }
