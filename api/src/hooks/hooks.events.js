@@ -21,7 +21,6 @@ export async function sendEventPushNotifications (hook) {
   if (hook.type !== 'after') {
     throw new Error('The \'sendPushNotifications\' hook should only be used as a \'after\' hook.')
   }
-  console.log(hook.result.urlRedirection)
   const userService = hook.app.getService('users')
   const pushService = hook.app.getService('push')
   if (!pushService) return hook
