@@ -5,7 +5,7 @@ import {
   requestNotificationPermission,
   addSubscription
 } from '@kalisio/feathers-webpush/client.js'
-import { i18n, Store, api } from '@kalisio/kdk/core.client'
+import { i18n, Store, api, utils } from '@kalisio/kdk/core.client'
 import { Notify } from 'quasar'
 import logger from 'loglevel'
 import _ from 'lodash'
@@ -152,12 +152,17 @@ export async function subscribeToPushNotifications() {
     Notify.create({ type: 'negative', message: i18n.t(`errors.${error.code}`) })
     return
   }
+  console.log('toto', utils.getPlatform())
   // Check if user is already subscribed
   const user = Store.get('user')
   const currentSubscription = await getPushSubscription()
   if (currentSubscription && _.find(_.get(user, 'subscriptions', []), subscription => subscription.endpoint === currentSubscription.endpoint)) return
   // Subscribe to web webpush notifications
-  const subscription = await subscribePushNotifications(Store.get('capabilities.api.vapidPublicKey'))
+  let subscription = await subscribePushNotifications(Store.get('capabilities.api.vapidPublicKey'))
+  // Set platform information
+  const platform = utils.getPlatform()
+  subscription.browser = { name: platform.name, version: platform.version }
+  subscription.platform = platform.platform
   // Patch user subscriptions
   await addSubscription(user, subscription, 'subscriptions')
   api.service('api/users').patch(Store.user._id, { subscriptions: user.subscriptions })
