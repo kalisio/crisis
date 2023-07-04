@@ -24,8 +24,9 @@
 import _ from 'lodash'
 import moment from 'moment'
 import centroid from '@turf/centroid'
-import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
+import { Store, mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 import mixins from '../mixins'
+import config from 'config'
 
 export default {
   name: 'event-editor',
@@ -96,6 +97,8 @@ export default {
         if (this.hasPlan()) {
           this.object.plan = this.planId
         }
+        // Setup notification redirection url
+        this.object.urlRedirection = `${config.domain}/#/home/${Store.get('context._id')}/events`
         // Setup expiry date from template
         if (this.object.expiryDuration) {
           const expiryDate = moment().utc().add({ days: this.object.expiryDuration })
