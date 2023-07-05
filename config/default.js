@@ -8,7 +8,7 @@ const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
 let domain
-let shortName
+let shortName = 'Akt\'n\'Map'
 let stripeKey
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
@@ -19,9 +19,7 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   shortName = 'Akt\'n\'Map Test'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://aktnmap.prod.kalisio.com'
-  shortName = 'Akt\'n\'Map'
 } else {
-  shortName = 'Akt\'n\'Map'
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
     domain = 'http://localhost:' + clientPort // Akt'n'Map app client/server port = 8080/8081
