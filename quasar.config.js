@@ -284,7 +284,7 @@ module.exports = configure(function (ctx) {
       
       manifest: {
         name: 'Akt\'n\'Map',
-        short_name: 'aktnmap',
+        short_name: clientConfig.shortName,
         description: 'Monitor real-time events on the field',
         display: 'standalone',
         orientation: 'portrait',
