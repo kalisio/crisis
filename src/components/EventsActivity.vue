@@ -77,8 +77,10 @@ export default {
   },
   computed: {
     renderer () {
-      const dense = (this.planId ? true : this.$q.screen.lt.sm)
-      return _.merge({ component: 'EventCard', dense }, this.activityOptions.items)
+      const renderer = { component: 'EventCard' }
+      renderer.dense = (this.planId ? true : this.$q.screen.lt.sm)
+      if (this.planId) renderer.class = 'full-width'
+      return _.merge(renderer, this.activityOptions.items)
     },
     baseQuery () {
       const query = _.clone(this.sorter.query)
