@@ -283,8 +283,8 @@ module.exports = configure(function (ctx) {
       },
       
       manifest: {
-        name: clientConfig.appName,
-        short_name: clientConfig.shortName,
+        name: clientConfig.pwaAppName,
+        short_name: clientConfig.pwaShortName,
         description: 'Monitor real-time events on the field',
         display: 'standalone',
         orientation: 'portrait',

@@ -8,15 +8,18 @@ const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
 let domain
-let shortName = 'Akt\'n\'Map'
+let pwaAppName = 'Akt\'n\'Map'
+let pwaShortName = 'AktnMap'
 let stripeKey
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   domain = 'https://aktnmap.dev.kalisio.xyz'
-  shortName = 'Akt\'n\'Map Dev'
+  pwaAppName += '(dev)'
+  pwaShortName += '(dev)'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://aktnmap.test.kalisio.xyz'
-  shortName = 'Akt\'n\'Map Test'
+  pwaAppName += '(test)'
+  pwaShortName += '(test)'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://aktnmap.prod.kalisio.com'
 } else {
@@ -374,7 +377,8 @@ module.exports = {
   // If using local IP on WiFi router
   //domain: 'http://192.168.1.16:8081',
   domain,
-  shortName,
+  pwaAppName,
+  pwaShortName,
   flavor: process.env.NODE_APP_INSTANCE || 'dev',
   version: require('../package.json').version,
   buildNumber: process.env.BUILD_NUMBER,
