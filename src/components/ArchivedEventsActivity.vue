@@ -20,7 +20,6 @@
           style="padding-top: 80px;"
           id="history"
           service="archived-events"
-          :append-items="true"
           :base-query="baseQuery"
           :filter-query="filterQuery"
           :renderer="renderer"
