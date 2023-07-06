@@ -53,7 +53,7 @@ module.exports = configure(function (ctx) {
 
     // https://quasar.dev/quasar-cli-webpack/quasar-config-js#property-htmlvariables
     htmlVariables: {
-      appName: 'Akt\'n\'Map',
+      appName: clientConfig.appName,
       appSlug: 'aktnmap',
       appDescription: 'Monitor real-time events on the field'
     },
@@ -283,7 +283,7 @@ module.exports = configure(function (ctx) {
       },
       
       manifest: {
-        name: 'Akt\'n\'Map',
+        name: clientConfig.appName,
         short_name: clientConfig.shortName,
         description: 'Monitor real-time events on the field',
         display: 'standalone',
