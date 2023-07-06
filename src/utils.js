@@ -144,7 +144,7 @@ export function buildTours (config) {
   return tours
 }
 
-export async function subscribeToPushNotifications() {
+export async function subscribeToPushNotifications () {
   // Check prerequisites & notification permission
   try {
     await checkPrerequisites()
@@ -155,28 +155,27 @@ export async function subscribeToPushNotifications() {
   }
   // Data
   const userService = api.service('api/users')
-  const user = Store.get('user')
   const platform = utils.getPlatform()
-  const date = moment.utc().toString()
+  const date = moment.utc().toISOString()
   const currentSubscription = await getPushSubscription()
+  const user = Store.get('user')
   // Check if user is already subscribed
-  if (currentSubscription && _.find(_.get(user, 'subscriptions', []), subscription => subscription.endpoint === currentSubscription.endpoint)){
-    if (!platform.desktop) {
-      // Patch mobile connection date
-      const subscriptions = _.map(user.subscriptions, subscription => {
-        if (subscription.endpoint === currentSubscription.endpoint) subscription.lastMobileActivity = date
-      })
-      userService.patch(Store.user._id, { subscriptions: subscriptions })
-      logger.debug(`New mobile connection date registered on ${date} with ${currentSubscription.endpoint} subscription`)
-    }
+  if (currentSubscription && _.find(_.get(user, 'subscriptions', []), subscription => subscription.endpoint === currentSubscription.endpoint)) {
+    // Patch subscription connection date
+    const subscriptions = _.map(user.subscriptions, subscription => {
+      if (subscription.endpoint === currentSubscription.endpoint) subscription.lastActivity = date
+      return subscription
+    })
+    userService.patch(Store.user._id, { subscriptions: subscriptions })
+    logger.debug(`New connection date registered on ${date} with subscription endpoint: ${currentSubscription.endpoint}`)
     return
-  } 
+  }
   // Subscribe to web webpush notifications
   let subscription = await subscribePushNotifications(Store.get('capabilities.api.vapidPublicKey'))
   // Set platform informations
   subscription.browser = { name: platform.name, version: platform.version }
   subscription.platform = platform.platform
-  subscription.lastMobileActivity = platform.desktop ? '' : date
+  subscription.lastActivity = date
   // Patch user subscriptions
   await addSubscription(user, subscription, 'subscriptions')
   userService.patch(Store.user._id, { subscriptions: user.subscriptions })
