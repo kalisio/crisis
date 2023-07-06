@@ -12,9 +12,9 @@ stages:
 - name: DOC
   if: commit_message =~ /\[build doc\]/
 - name: ANDROID
-  if: commit_message !~ /(skip[ _-]android)/
+  if: commit_message =~ /\[build android\]/
 - name: IOS
-  if: commit_message !~ /(skip[ _-]ios)/
+  if: commit_message =~ /\[build ios\]/
 
 jobs:
   include:
