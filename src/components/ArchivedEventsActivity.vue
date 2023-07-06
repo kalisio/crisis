@@ -85,7 +85,7 @@ import Papa from 'papaparse'
 import { colors, QSlider } from 'quasar'
 import { mixins as kdkCoreMixins, utils as kdkCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { mixins as kdkMapMixinss } from '@kalisio/kdk/map.client.map'
-import mixins from '../mixins'
+import { usePlan } from '../composables'
 
 const activityMixin = kdkCoreMixins.baseActivity('archivedEventsActivity')
 
@@ -105,8 +105,7 @@ export default {
     kdkMapMixinss.map.style,
     kdkMapMixinss.map.tooltip,
     kdkMapMixinss.map.popup,
-    kdkMapMixinss.map.activity,
-    mixins.plans
+    kdkMapMixinss.map.activity
   ],
   components: {
     QSlider
@@ -607,6 +606,11 @@ export default {
     Time.setCurrentTime(this.currentTime)
     // Releases listeners
     this.$events.off('time-range-changed', this.onTimeRangeChanged)
+  },
+  setup (props) {
+    return {
+      ...usePlan({ contextId: props.contextId })
+    }
   }
 }
 </script>

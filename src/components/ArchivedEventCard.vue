@@ -104,6 +104,7 @@
 import _ from 'lodash'
 import { mixins as kdkCoreMixins, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kdkMapMixins } from '@kalisio/kdk/map.client.map'
+import { useAlerts } from '../composables'
 import mixins from '../mixins'
 
 export default {
@@ -113,8 +114,7 @@ export default {
     kdkCoreMixins.service,
     kdkCoreMixins.schemaProxy,
     kdkMapMixins.navigator,
-    mixins.events,
-    mixins.alerts
+    mixins.events
   ],
   props: {
     dense: {
@@ -257,6 +257,11 @@ export default {
   },
   beforeUnmount () {
     this.$events.off('user-changed', this.refresh)
+  },
+  setup () {
+    return {
+      ...useAlerts()
+    }
   }
 }
 </script>

@@ -170,6 +170,7 @@ import centroid from '@turf/centroid'
 import { Dialog } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils, Storage } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
+import { useAlerts } from '../composables'
 import mixins from '../mixins'
 
 export default {
@@ -182,8 +183,7 @@ export default {
     kCoreMixins.service,
     kCoreMixins.schemaProxy,
     kMapMixins.navigator,
-    mixins.events,
-    mixins.alerts
+    mixins.events
   ],
   props: {
     dense: {
@@ -644,6 +644,11 @@ export default {
     this.$events.off('user-changed', this.refresh)
     this.unsubscribeParticipantLog()
     this.unsubscribeCoordinatorLog()
+  },
+  setup () {
+    return {
+      ...useAlerts()
+    }
   }
 }
 </script>

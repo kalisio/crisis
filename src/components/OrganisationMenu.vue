@@ -91,7 +91,7 @@
 <script>
 import { QBtnDropdown } from 'quasar'
 import { permissions } from '@kalisio/kdk/core.common'
-import mixins from '../mixins'
+import { usePlan } from '../composables'
 import * as utils from '../utils'
 
 export default {
@@ -99,9 +99,6 @@ export default {
   components: {
     QBtnDropdown
   },
-  mixins: [
-    mixins.plans
-  ],
   props: {
     mode: {
       type: String,
@@ -115,8 +112,7 @@ export default {
     return {
       organisation: this.$store.get('context'),
       eventsCount: 0,
-      plansCount: 0,
-      planId: null
+      plansCount: 0
     }
   },
   computed: {
@@ -205,6 +201,11 @@ export default {
     plansService.off('patched', this.updateCounts)
     plansService.off('updated', this.updateCounts)
     plansService.off('removed', this.updateCounts)
+  },
+  setup (props) {
+    return {
+      ...usePlan({ contextId: props.contextId })
+    }
   }
 }
 </script>

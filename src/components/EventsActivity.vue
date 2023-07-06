@@ -37,14 +37,14 @@
 import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { permissions } from '@kalisio/kdk/core.common'
+import { usePlan } from '../composables'
 import mixins from '../mixins'
 
 const activityMixin = kCoreMixins.baseActivity('eventsActivity')
 
 export default {
   mixins: [
-    activityMixin,
-    mixins.plans
+    activityMixin
   ],
   provide () {
     return {
@@ -215,6 +215,11 @@ export default {
     if (this.planId) {
       const eventsService = this.$api.getService('events', this.contextId)
       eventsService.off('removed', this.onEventRemoved)
+    }
+  },
+  setup (props) {
+    return {
+      ...usePlan({ contextId: props.contextId })
     }
   }
 }

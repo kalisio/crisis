@@ -25,6 +25,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import centroid from '@turf/centroid'
 import { Store, mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
+import { usePlan } from '../composables'
 import mixins from '../mixins'
 import config from 'config'
 
@@ -35,8 +36,7 @@ export default {
     kdkCoreMixins.service,
     kdkCoreMixins.objectProxy,
     kdkCoreMixins.schemaProxy,
-    kdkCoreMixins.baseEditor,
-    mixins.plans
+    kdkCoreMixins.baseEditor
   ],
   props: {
     templateId: {
@@ -211,6 +211,11 @@ export default {
     // Setup notify option
     if (this.editorMode === 'create') this.notify = true
     else this.notify = false
+  },
+  setup (props) {
+    return {
+      ...usePlan({ contextId: props.contextId })
+    }
   }
 }
 </script>
