@@ -48,7 +48,8 @@ module.exports = configure(function (ctx) {
       'roboto-font',
       'material-icons',
       'line-awesome',
-      'fontawesome-v5'
+      'fontawesome-v5',
+      'fontawesome-v6'
     ],
 
     // https://quasar.dev/quasar-cli-webpack/quasar-config-js#property-htmlvariables
