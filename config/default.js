@@ -14,12 +14,12 @@ let stripeKey
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   domain = 'https://aktnmap.dev.kalisio.xyz'
-  pwaAppName += '(dev)'
-  pwaShortName += '(dev)'
+  pwaAppName += ' (dev)'
+  pwaShortName += ' (dev)'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://aktnmap.test.kalisio.xyz'
-  pwaAppName += '(test)'
-  pwaShortName += '(test)'
+  pwaAppName += ' (test)'
+  pwaShortName += ' (test)'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://aktnmap.prod.kalisio.com'
 } else {
