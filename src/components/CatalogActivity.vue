@@ -273,7 +273,7 @@ export default {
         })
       }
       this.updateLayer(this.$t('CatalogActivity.EVENTS_LAYER'),
-        { type: 'FeatureCollection', features: _.get(this.events, 'items', []) })
+        { type: 'FeatureCollection', features: this.eventItems })
     },
     onEventsCollectionRefreshed () {
       this.refreshEventsLayer()
@@ -302,7 +302,7 @@ export default {
         })
       }
       this.updateLayer(this.$t('CatalogActivity.ALERTS_LAYER'),
-        { type: 'FeatureCollection', features: _.get(this.alerts, 'items', []) })
+        { type: 'FeatureCollection', features: this.alertItems })
     },
     onAlertsCollectionRefreshed () {
       this.refreshAlertsLayer()
