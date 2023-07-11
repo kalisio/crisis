@@ -55,8 +55,7 @@ const contextHelp = function (tour) {
 const leftPane = function (tour) {
   return {
     content: [
-      { component: 'KLogo' },
-      { component: 'account/KIdentityPanel', class: 'full-width' },
+      { component: 'account/KProfile', class: 'full-width' },
       { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
       { id: 'settings', icon: 'las la-cog', label: 'SETTINGS', renderer: 'item', dialog: {
@@ -471,10 +470,22 @@ module.exports = {
     },
     fab: { visible: true }
   },
+  account: {
+    sections: [
+      { title: 'KPasswordManager.TITLE', component: 'account/KPasswordManager' },
+      { title: 'KIdentityManager.TITLE', component: 'account/KIdentityManager' },
+      { title: 'KSubscriptionsManager.TITLE', component: 'account/KSubscriptionsManager',
+        actions: [
+          { id: 'unsubscribe', tooltip: 'KSubscriptionCard.UNSUBSCRIBE_LABEL', icon: 'phonelink_erase', handler: 'unsubscribe' }
+        ]
+      }
+    ],
+    deletable: true
+  },
   engines: {
     leaflet: mapEngine
   },
-  accountActivity: {
+  /*accountActivity: {
     leftPane: leftPane(),
     topPane: {
       content: {
@@ -502,7 +513,7 @@ module.exports = {
           scope: 'header', visible: { name: '$can', params: ['remove', 'subscriptions', ':contextId', ':item'] } }
       ]
     }
-  },
+  },*/
   organisationsActivity: {
     leftPane: leftPane(),
     topPane: {
