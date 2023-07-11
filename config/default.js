@@ -284,7 +284,7 @@ const removeWorkflowAction = function (tooltip) {
   }
 }
 
-let defaultMapOptions = {
+let mapEngine = {
   viewer: {
     minZoom: 3,
     maxZoom: 19,
@@ -470,6 +470,9 @@ module.exports = {
       bottom: { opener: true }
     },
     fab: { visible: true }
+  },
+  engines: {
+    leaflet: mapEngine
   },
   accountActivity: {
     leftPane: leftPane(),
@@ -769,7 +772,6 @@ module.exports = {
         { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'probeAtLocation' }
       ]
     },
-    engine: defaultMapOptions,
     layers: {
       actions: layerActions
     },
@@ -866,7 +868,6 @@ module.exports = {
         }
       ]
     },
-    engine: defaultMapOptions,
     layers: {
       actions: layerActions,
       filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
@@ -1194,7 +1195,6 @@ module.exports = {
         { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'probeAtLocation' }
       ]
     },
-    engine: defaultMapOptions,
     layers: {
       actions: layerActions,
       filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
