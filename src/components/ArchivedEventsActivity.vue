@@ -1,12 +1,9 @@
 <template>
-  <KPage :padding="false" @content-resized="onPageContentResized">
+  <KPage :padding="!showMap" @content-resized="onPageContentResized">
     <template v-slot:page-content>
       <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
         <div class="row">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="col-12">
+          <div class="col-12">
           <q-slider id="heatmap-radius" v-model="heatmapRadius" :min="1" :max="100" :step="1"
             label-always :label-value="$t('ArchivedEventsActivity.HEATMAP_RADIUS_LABEL') + ': ' + heatmapRadius + ' Kms'" @change="onHeatmapRadius"></q-slider>
           </div>
@@ -45,10 +42,8 @@
       <!--
         Events graph
       -->
-      <div v-show="showChart" class="row justify-center text-center q-ma-none q-pa-none" >
-        <q-page-sticky position="top" :offset="[0, 60]">
-        <KStatisticsChart ref="chart" :style="chartStyle" />
-        </q-page-sticky>
+      <div v-show="showChart" class="fit row items-center text-center q-ma-none q-pa-none" >
+        <KStatisticsChart ref="chart" :style="chartStyle" class="col"/>
         <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
           icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
         <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
@@ -151,7 +146,7 @@ export default {
       const query = { $sort: { createdAt: -1 } }
       // When displaying events of all plans we'd like to have the plan object directly to ease processing
       if (!this.planId && this.showHistory) Object.assign(query, { planAsObject: true })
-      Object.assign(query, this.getPlanQuery())
+      Object.assign(query, this.planQuery)
       const stateFilters = _.intersection(['open', 'closed'], this.filters)
       // Filtering open + closed or none of them is equivalent to no filter
       if (stateFilters.length === 1) {
@@ -161,7 +156,7 @@ export default {
     },
     filterQuery () {
       const query = _.clone(this.filter.query)
-      Object.assign(query, this.getPlanObjectiveQuery())
+      Object.assign(query, this.planObjectiveQuery)
       return query
     }
   },
