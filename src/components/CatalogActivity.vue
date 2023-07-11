@@ -57,7 +57,7 @@ import L from 'leaflet'
 import moment from 'moment'
 import chroma from 'chroma-js'
 import sift from 'sift'
-import { reactive, watch } from 'vue'
+import { ref, toRef, computed, watch } from 'vue'
 import { Dialog } from 'quasar'
 import { mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
@@ -620,23 +620,24 @@ export default {
   },
   setup (props) {
     const plan = usePlan({ contextId: props.contextId })
-
-    const alerts = kCoreComposables.useCollection(reactive({
-      service: 'alerts',
-      baseQuery: {
-        geoJson: true, $skip: 0, $limit: MAX_ITEMS
-      },
-      nbItemsPerPage: 0
-    }))
-    const events = kCoreComposables.useCollection(reactive({
-      service: 'events',
-      baseQuery: Object.assign({
-        geoJson: true, $skip: 0, $limit: MAX_ITEMS,
-        $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
-      }, plan.getPlanQuery()),
-      filterQuery: plan.getPlanObjectiveQuery(),
-      nbItemsPerPage: 0
-    }))
+    const alerts = kCoreComposables.useCollection({
+      service: ref('alerts'),
+      contextId: toRef(props, 'contextId'),
+      baseQuery: ref({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }),
+      nbItemsPerPage: ref(0)
+    })
+    const baseQuery = computed(() => Object.assign({
+      geoJson: true, $skip: 0, $limit: MAX_ITEMS,
+      $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
+    }, plan.planQuery.value))
+    const filterQuery = computed(() => plan.planObjectiveQuery.value)
+    const events = kCoreComposables.useCollection({
+      service: ref('events'),
+      contextId: toRef(props, 'contextId'),
+      baseQuery,
+      filterQuery,
+      nbItemsPerPage: ref(0)
+    })
     
     return {
       alerts,

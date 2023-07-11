@@ -12,6 +12,14 @@ export function usePlan(options) {
   const objectiveFilters = ref([])
   let planService = ''
 
+  // Computed
+  const planQuery = computed(() => {
+    return _.isEmpty(planId.value) ? {} : { plan: planId.value }
+  })
+  const planObjectiveQuery = computed(() => {
+    return _.isEmpty(objectiveFilters.value) ? {} : { objective: { $in: objectiveFilters.value } }
+  })
+
   // Functions
   function hasPlan () {
     return planId.value
@@ -40,31 +48,18 @@ export function usePlan(options) {
       planId.value = null
     }
   }
-  function getPlanQuery () {
-    const query = {}
-    if (!_.isEmpty(planId.value)) {
-      Object.assign(query, {
-        plan: planId.value
-      })
-    }
-    return query
-  }
   function refreshPlanId () {
     const id = _.get(route, 'query.plan', null)
     if (planId.value !== id) planId.value = id
   }
-  function getPlanObjectiveQuery () {
-    if (_.isEmpty(objectiveFilters.value)) return {}
-    else return { objective: { $in: objectiveFilters.value } }
-  }
   async function countEvents (query = {}) {
     const eventsService = api.getService('archived-events', options.contextId)
-    const response = await eventsService.find({ query: Object.assign(query, getPlanQuery()), $limit: 0 })
+    const response = await eventsService.find({ query: Object.assign(query, planQuery.value), $limit: 0 })
     return response.total
   }
   async function countClosedEvents (query = {}) {
     const eventsService = api.getService('archived-events', options.contextId)
-    const response = await eventsService.find({ query: Object.assign(query, { deletedAt: { $exists: true } }, getPlanQuery()), $limit: 0 })
+    const response = await eventsService.find({ query: Object.assign(query, { deletedAt: { $exists: true } }, planQuery.value), $limit: 0 })
     return response.total
   }
 
@@ -98,8 +93,8 @@ export function usePlan(options) {
     hasPlanLocation,
     hasPlanObjectives,
     loadPlan,
-    getPlanQuery,
-    getPlanObjectiveQuery,
+    planQuery,
+    planObjectiveQuery,
     countEvents,
     countClosedEvents
   }

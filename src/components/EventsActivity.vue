@@ -86,12 +86,12 @@ export default {
       const query = _.clone(this.sorter.query)
       // When displaying events of all plans we'd like to have the plan object directly to ease processing
       if (!this.planId) Object.assign(query, { planAsObject: true })
-      Object.assign(query, this.getPlanQuery())
+      Object.assign(query, this.planQuery)
       return query
     },
     filterQuery () {
       const query = _.clone(this.filter.query)
-      Object.assign(query, this.getPlanObjectiveQuery())
+      Object.assign(query, this.planObjectiveQuery)
       return query
     },
     columnWidth () {
