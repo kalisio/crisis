@@ -173,12 +173,12 @@ export default {
       let every
       if (this.isWeather) {
         every = moment.duration(this.forecastModel.interval, 's')
-      } else {
+      } else if (this.isMeasure) {
         every = moment.duration(this.layer.every)
       }
       // Filter values outside bounds or lower than update frequency
       let options = this.generateTimeOptions(values)
-      options = options.filter(option => (option.value >= every.asMinutes()))
+      if (!_.isNil(every)) options = options.filter(option => (option.value >= every.asMinutes()))
       return options
     },
     getOperators (variable) {

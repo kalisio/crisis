@@ -31,20 +31,8 @@
         :layer="alertLayer"
         :feature="alertFeature"
         :forecastModel="forecastModel"
+        :router-mode="false"
       />
-      <KModal ref="alertModal"
-        :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
-        :buttons="getAlertModalButtons()"
-        :options="{}"
-      >
-        <AlertForm
-          :class="{ 'light-dimmed': inProgress }"
-          ref="alertForm"
-          :layer="alertLayer"
-          :feature="alertFeature"
-          :forecastModel="forecastModel"
-        />
-      </KModal>
       <!-- Child views -->
       <router-view />
     </template>
@@ -64,7 +52,6 @@ import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/k
 import mixins from '../mixins'
 import { usePlan, useAlerts } from '../composables'
 
-import AlertForm from './AlertForm.vue'
 import AlertEditor from './AlertEditor.vue'
 
 const name = 'catalogActivity'
@@ -75,7 +62,6 @@ const MAX_ITEMS = 5000
 
 export default {
   components: {
-    AlertForm,
     AlertEditor
   },
   mixins: [
@@ -219,6 +205,14 @@ export default {
             icon: 'las la-minus-circle',
             handler: this.onRemoveAlert,
             label: this.$t('CatalogActivity.REMOVE_ALERT_ACTION')
+          })
+        } else if (layer.name === this.$t('CatalogActivity.EVENTS_LAYER')) {
+          // Event deletion
+          featureActions.push({
+            name: 'remove-event',
+            icon: 'las la-minus-circle',
+            handler: this.onRemoveEvent,
+            label: this.$t('CatalogActivity.REMOVE_EVENT_ACTION')
           })
         }
         // We can initiate an event from location and feature
@@ -465,51 +459,15 @@ export default {
       })
     },
     onRemoveAlert (data) {
-      Dialog.create({
-        title: this.$t('CatalogActivity.REMOVE_ALERT_DIALOG_TITLE'),
-        message: this.$t('CatalogActivity.REMOVE_ALERT_DIALOG_MESSAGE'),
-        html: true,
-        ok: {
-          label: this.$t('OK'),
-          flat: true
-        },
-        cancel: {
-          label: this.$t('CANCEL'),
-          flat: true
-        }
-      }).onOk(async () => {
-        await this.$api.getService('alerts').remove(data.feature._id)
-      })
+      this.showRemoveAlertDialog(data.feature)
     },
-    getAlertModalButtons () {
-      return [
-        { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.$refs.alertModal.close() },
-        { id: 'apply-button', label: 'DONE', renderer: 'form-button', handler: () => this.onCreateAlert() }
-      ]
+    onRemoveEvent (data) {
+      mixins.events.methods.showRemoveEventDialog.call(this, data.feature)
     },
     onCreateMeasureAlertAction (data) {
       this.alertFeature = data.feature
       this.alertLayer = data.layer
       this.$refs.alertEditor.openModal()
-    },
-    async onCreateAlert () {
-      const result = this.$refs.alertForm.validate()
-      if (!result.isValid) return
-      this.inProgress = true
-      try {
-        // Add notification prefix to be used at creation,
-        // Indeed, as alerting is a background process it will not be able to easily guess the user locale
-        const alert = Object.assign(result.values, {
-          notification: {
-            create: this.$t('EventNotifications.CREATE'),
-            remove: this.$t('EventNotifications.REMOVE')
-          }
-        })
-        await this.$api.getService('alerts').create(alert)
-      } catch (_) {
-      }
-      this.inProgress = false
-      this.$refs.alertModal.close()
     },
     onCreateWeatherAlertAction (data) {
       // Retrieve weather layer activated
@@ -644,7 +602,7 @@ export default {
       events,
       ...kMapComposables.useActivity(name),
       ...plan,
-      ...useAlerts()
+      ...useAlerts({ contextId: props.contextId })
     }
   }
 }

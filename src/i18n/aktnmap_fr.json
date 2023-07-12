@@ -9,6 +9,14 @@
   "COPY_LABEL": "Copier",
   "CLOSE_LABEL": "Fermer",
   "SAVE_LABEL": "Enregistrer",
+  "mixins": {
+    "REMOVE_EVENT_DIALOG_TITLE": "Clôturer l'événement {event} ?",
+    "REMOVE_EVENT_DIALOG_MESSAGE": "Etes vous sûr de vouloir clôturer l'événement <b>{event}</b> ?"
+  },
+  "composables": {
+    "REMOVE_ALERT_DIALOG_TITLE": "Supprimer l'alerte ?",
+    "REMOVE_ALERT_DIALOG_MESSAGE": "Etes vous sûr de vouloir supprimer l'alerte de votre espace de travail ?"
+  },
   "errors": {
     "EVENTS_LIMIT": "Trop d'événements pour les afficher tous",
     "EVENT_LOG_LIMIT": "Trop de participants pour afficher l'ensemble des informations",
@@ -444,6 +452,7 @@
     "CREATE_EVENT_LOCATION_ACTION": "Créer un évènement localisé à cet endroit",
     "ANALYZE_POPULATION_FEATURE_ACTION": "Analyser la population de cette zone",
     "REMOVE_ALERT_ACTION": "Supprimer l'alerte",
+    "REMOVE_EVENT_ACTION": "Clôturer l'événement",
     "CREATE_EVENT_TITLE": "Sélectionner un modèle d'événement",
     "CREATE_ALERT_TITLE": "Créer une nouvelle alerte ?",
     "OBJECTIVES_LAYER": "Mes objectifs",
@@ -461,8 +470,6 @@
     "ALERT_FIRST": "Prochain ",
     "ALERT_GTE": "supérieur(e) au seuil de",
     "ALERT_LTE": "inférieur(e) au seuil de",
-    "REMOVE_ALERT_DIALOG_TITLE": "Supprimer l'alerte ?",
-    "REMOVE_ALERT_DIALOG_MESSAGE": "Etes vous sûr de vouloir supprimer l'alerte de votre espace de travail ?",
     "POPULATION_ANALYSIS": "Analyse de population",
     "POPULATION_ANALYSIS_ERROR": "L'analyse de population a échoué, veuillez réessayer plus tard ou modifier votre paramétrage"
   },
@@ -588,8 +595,8 @@
     "DESCRIPTION_SECTION": "Description",
     "COMMENT_SECTION": "Commentaire",
     "PLAN_SECTION": "Plan",
-    "UNDEFINED_PLAN_LABEL": "Aucun plan",    
     "PLAN_ACTION": "Voir le plan",
+    "UNDEFINED_PLAN_LABEL": "Aucun plan",    
     "OBJECTIVE_SECTION": "Objectif",
     "UNDEFINED_OBJECTIVE_LABEL": "Aucun objectif",    
     "LOCATION_SECTION": "Localisation",
@@ -615,8 +622,6 @@
     "NAVIGATE_LABEL": "Naviguer",
     "LOCATE_LABEL": "Voir la localisation",    
     "MAP_LABEL": "Carte",    
-    "REMOVE_DIALOG_TITLE": "Clôturer l'événement {event} ?",
-    "REMOVE_DIALOG_MESSAGE": "Etes vous sûr de vouloir clôturer l'événement <b>{event}</b> ?",
     "ACTION_REQUIRED_WARNING": "Action requise",
     "WAITING_COORDINATION_WARNING": "En attente du coordonnateur",
     "WAITING_FOR_PARTICIPANT_LABEL": "Le coordonnateur est en attente de votre action",

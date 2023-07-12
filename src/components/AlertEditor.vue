@@ -2,9 +2,11 @@
   <KModal
     :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
     :buttons="buttons"
+    v-model="isModalOpened"
   >
     <AlertForm
       :ref="onFormReferenceCreated"
+      :class="{ 'light-dimmed': applyInProgress }"
       :layer="layer"
       :feature="feature"
       :forecastModel="forecastModel"
@@ -53,6 +55,11 @@ export default {
     }
   },
   methods: {
+    onFormReferenceCreated (reference) {
+      if (reference) {
+        this.form = reference
+      }
+    },
     async apply () {
       const result = this.form.validate()
       if (!result.isValid) return

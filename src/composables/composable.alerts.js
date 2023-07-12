@@ -2,7 +2,8 @@ import _ from 'lodash'
 import moment from 'moment'
 import i18next from 'i18next'
 import { ref, computed, watch, onBeforeMount, onBeforeUnmount } from 'vue'
-import { utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { Dialog } from 'quasar'
+import { i18n, api, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 
 export function useAlerts(options) {
   // Functions
@@ -98,11 +99,29 @@ export function useAlerts(options) {
       if (i18n) i18next.addResourceBundle(locale, 'kdk', i18n, true, true)
     }
   }
+  function showRemoveAlertDialog (alert) {
+    Dialog.create({
+      title: i18n.t('composables.REMOVE_ALERT_DIALOG_TITLE'),
+      message: i18n.t('composables.REMOVE_ALERT_DIALOG_MESSAGE'),
+      html: true,
+      ok: {
+        label: i18n.t('OK'),
+        flat: true
+      },
+      cancel: {
+        label: i18n.t('CANCEL'),
+        flat: true
+      }
+    }).onOk(async () => {
+      await api.getService('alerts', options.contextId).remove(alert._id)
+    })
+  }
 
   return {
     getAlertDetailsAsHtml,
     getAlertStatusAsHtml,
-    loadAlertLayer
+    loadAlertLayer,
+    showRemoveAlertDialog
   }
 }
 
