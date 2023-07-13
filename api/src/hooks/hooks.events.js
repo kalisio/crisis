@@ -40,7 +40,7 @@ export async function sendEventPushNotifications (hook) {
     if (participant.service === 'members') participantsId.push(participant._id)
     if (participant.service === 'groups' || participant.service === 'tags') {
       _.forEach(users, user => {
-        if (_.find(user[participant.service], participantService => _.toString(participantService._id) === participant._id)) participantsId.push(user._id)
+        if (_.find(user[participant.service], participantService => _.toString(participantService._id) === _.toString(participant._id))) participantsId.push(user._id)
       })
     }
   })
