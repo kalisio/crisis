@@ -16,13 +16,12 @@
 import _ from 'lodash'
 import config from 'config'
 import { useQuasar } from 'quasar'
-import { api, permissions, composables } from '@kalisio/kdk/core.client'
+import { api, permissions, composables, i18n } from '@kalisio/kdk/core.client'
 
 // Data
 const $q = useQuasar()
 // Register custom redirect to handle permissions
 const { isInitialized, User } = composables.useSession({ redirect })
-
 // Functions
 async function redirect (route, result, user) {
   // Check if we'd like to redirect to an organisation
@@ -49,7 +48,7 @@ async function redirect (route, result, user) {
         query: _.omit(_.get(route, 'query', {}), ['organisation', 'page'])
       }
     } else {
-      $q.notify({ type: 'negative', message: this.$t('Index.ORGANISATION_NOT_FOUND') })
+      $q.notify({ type: 'negative', message: i18n.t('Index.ORGANISATION_NOT_FOUND') })
       return false
     }
   }
