@@ -10,8 +10,7 @@ import webhooks from '../src/app.webhooks.js'
 
 describe('events', () => {
   let app, server, port, baseUrl, accessToken,
-    userService, userObject, orgManagerObject, orgObject, orgUserObject, orgService,
-    authorisationService, devicesService, pusherService, sns,
+    userService, userObject, orgManagerObject, orgObject, orgUserObject, orgService, authorisationService,
     storageService, storageObject, eventService, eventObject, eventTemplateService, eventLogService,
     archivedEventService, archivedEventLogService
 
@@ -65,18 +64,6 @@ describe('events', () => {
     await app.configure(core)
     userService = app.getService('users')
     expect(userService).toExist()
-    userService.hooks({
-      before: {
-        remove: [coreHooks.unregisterDevices]
-      }
-    })
-    devicesService = app.getService('devices')
-    expect(devicesService).toExist()
-    pusherService = app.getService('pusher')
-    expect(pusherService).toExist()
-    // For now we only test 1 platform, should be sufficient due to SNS facade
-    sns = pusherService.getSnsApplication('ANDROID')
-    expect(sns).toExist()
     orgService = app.getService('organisations')
     expect(orgService).toExist()
     // Register services hook for organisations
@@ -119,10 +106,6 @@ describe('events', () => {
     orgManagerObject = user
     const users = await userService.find({ query: { 'profile.name': 'org-manager' }, checkAuthorisation: true, user: orgManagerObject })
     expect(users.data.length > 0).beTrue()
-    await devicesService.update(managerDevice.registrationId, managerDevice, { user: orgManagerObject })
-    user = await userService.get(orgManagerObject._id)
-    // Update user with registered device
-    orgManagerObject = user
   })
   // Let enough time to process
     .timeout(15000)
@@ -171,10 +154,6 @@ describe('events', () => {
     // Update user with authorisations
     orgUserObject = users.data[0]
     expect(orgUserObject.organisations[0].permissions).to.deep.equal('member')
-    await devicesService.update(memberDevice.registrationId, memberDevice, { user: orgUserObject })
-    user = await userService.get(orgUserObject._id)
-    // Update user with registered device
-    orgUserObject = user
   })
   // Let enough time to process
     .timeout(15000)
@@ -274,13 +253,7 @@ describe('events', () => {
       .catch(error => {
         console.log(error)
       })
-    const event = new Promise((resolve, reject) => {
-      sns.once('messageSent', (endpointArn, messageId) => {
-        expect(orgManagerObject.devices[0].arn).to.equal(endpointArn)
-        resolve()
-      })
-    })
-    return Promise.all([operation, event])
+    return operation
   })
   // Let enough time to process
     .timeout(10000)
@@ -307,13 +280,7 @@ describe('events', () => {
         expect(eventObject.coordinators.length > 0).beTrue()
         expect(eventObject.coordinators[0]._id.toString()).to.equal(orgUserObject._id.toString())
       })
-    const event = new Promise((resolve, reject) => {
-      sns.once('messageSent', (endpointArn, messageId) => {
-        expect(orgManagerObject.devices[0].arn).to.equal(endpointArn)
-        resolve()
-      })
-    })
-    return Promise.all([operation, event])
+    return operation
   })
   // Let enough time to process
     .timeout(15000)
@@ -333,13 +300,7 @@ describe('events', () => {
       .then(events => {
         expect(events.data.length > 0).beTrue()
       })
-    const event = new Promise((resolve, reject) => {
-      sns.once('messageSent', (endpointArn, messageId) => {
-        expect(orgManagerObject.devices[0].arn).to.equal(endpointArn)
-        resolve()
-      })
-    })
-    return Promise.all([operation, event])
+    return operation
   })
   // Let enough time to process
     .timeout(15000)
@@ -378,13 +339,7 @@ describe('events', () => {
         expect(eventObject.coordinators.length > 0).beTrue()
         expect(eventObject.coordinators[0]._id.toString()).to.equal(orgManagerObject._id.toString())
       })
-    const event = new Promise((resolve, reject) => {
-      sns.once('messageSent', (endpointArn, messageId) => {
-        expect(orgUserObject.devices[0].arn).to.equal(endpointArn)
-        resolve()
-      })
-    })
-    return Promise.all([operation, event])
+    return operation
   })
   // Let enough time to process
     .timeout(15000)
@@ -439,13 +394,7 @@ describe('events', () => {
       .then(events => {
         expect(events.data.length > 0).beTrue()
       })
-    const event = new Promise((resolve, reject) => {
-      sns.once('messageSent', (endpointArn, messageId) => {
-        expect(orgUserObject.devices[0].arn).to.equal(endpointArn)
-        resolve()
-      })
-    })
-    return Promise.all([operation, event])
+    return operation
   })
   // Let enough time to process
     .timeout(15000)
@@ -499,13 +448,7 @@ describe('events', () => {
       .then(logs => {
         expect(logs.data.length === 1).beTrue()
       })
-    const event = new Promise((resolve, reject) => {
-      sns.once('messageSent', (endpointArn, messageId) => {
-        expect(orgUserObject.devices[0].arn).to.equal(endpointArn)
-        resolve()
-      })
-    })
-    return Promise.all([operation, event])
+    return operation
   })
   // Let enough time to process
     .timeout(5000)
@@ -557,13 +500,7 @@ describe('events', () => {
       .catch(error => {
         expect(error).toExist()
       })
-    const event = new Promise((resolve, reject) => {
-      sns.once('messageSent', (endpointArn, messageId) => {
-        expect(orgUserObject.devices[0].arn).to.equal(endpointArn)
-        resolve()
-      })
-    })
-    return Promise.all([operation, event])
+    return operation
   })
   // Let enough time to process
     .timeout(10000)

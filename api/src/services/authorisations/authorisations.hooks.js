@@ -44,11 +44,11 @@ export default {
     find: [],
     get: [],
     // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
-    create: [coreHooks.subscribeSubjectsToResourceTopic, coreHooks.unpopulateSubjects, coreHooks.unpopulateResource],
+    create: [coreHooks.unpopulateSubjects, coreHooks.unpopulateResource],
     update: [],
     patch: [],
     // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
-    remove: [coreHooks.unsubscribeSubjectsFromResourceTopic, coreHooks.unpopulateSubjects, coreHooks.unpopulateResource]
+    remove: [coreHooks.unpopulateSubjects, coreHooks.unpopulateResource]
   },
 
   error: {

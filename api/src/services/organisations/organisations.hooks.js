@@ -22,7 +22,6 @@ export default {
     get: [],
     create: [
       coreHooks.createOrganisationServices,
-      coreHooks.createTopic(),
       coreHooks.createOrganisationAuthorisations,
       subscribeDefaultPlan
     ],
@@ -35,7 +34,6 @@ export default {
       coreHooks.removeOrganisationGroups,
       coreHooks.removeOrganisationTags,
       coreHooks.removeOrganisationAuthorisations,
-      coreHooks.removeTopic(),
       coreHooks.removeOrganisationServices
     ]
   },

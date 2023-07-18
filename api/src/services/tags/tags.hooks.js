@@ -21,16 +21,16 @@ export default {
     ],
     find: [],
     get: [],
-    // We create topics for members tag only, check if tag is really created or just its count increased
-    create: [commonHooks.when(hook => hook.result && hook.result.scope === 'members' && hook.result.count === 1, coreHooks.createTopic()),
+    create: [
       // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
-      coreHooks.unpopulateTagResource],
+      coreHooks.unpopulateTagResource
+    ],
     update: [],
     patch: [],
-    // We remove topics for members tag only, check if tag is really removed or just its count decreased
-    remove: [commonHooks.when(hook => hook.result && hook.result.scope === 'members' && hook.result.count <= 0, coreHooks.removeTopic()),
+    remove: [
       // Required due to https://github.com/feathersjs-ecosystem/feathers-sync/issues/87
-      coreHooks.unpopulateTagResource]
+      coreHooks.unpopulateTagResource
+    ]
   },
 
   error: {

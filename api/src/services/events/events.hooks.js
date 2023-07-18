@@ -3,7 +3,7 @@ import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
 import { hooks as mapHooks } from '@kalisio/kdk/map.api.js'
 import commonHooks from 'feathers-hooks-common'
 import {
-  addCreatorAsCoordinator, processNotification, sendEventNotifications, sendEventPushNotifications,
+  addCreatorAsCoordinator, processNotification, sendEventPushNotifications,
   marshallPlanQuery, populatePlan, checkEventsQuotas, archive
 } from '../../hooks/index.js'
 
@@ -56,13 +56,10 @@ const hooks = {
       })
     ],
     get: [],
-    create: [sendEventNotifications, sendEventPushNotifications],
-    update: [sendEventNotifications, sendEventPushNotifications],
-    patch: [sendEventNotifications, sendEventPushNotifications],
-    // Because the notification ID is based on created/updated time we need to update it even on remove
-    remove: [commonHooks.setNow('updatedAt'),
-      sendEventNotifications, sendEventPushNotifications
-    ]
+    create: [sendEventPushNotifications],
+    update: [sendEventPushNotifications],
+    patch: [sendEventPushNotifications],
+    remove: [commonHooks.setNow('updatedAt'), sendEventPushNotifications]
   },
 
   error: {

@@ -42,23 +42,17 @@ let limiter = {
     interval: 60*1000 // 1 minute window
   }
 }
-let domain, topicName, weacastApi
+let domain, weacastApi
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   // For benchmarking
   apiLimiter = null
   limiter = null
   domain = 'https://aktnmap.dev.kalisio.xyz'
-  // For SNS topic name generation
-  topicName = (object) => `aktnmap-dev-${object._id.toString()}`
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://aktnmap.test.kalisio.xyz'
-  // For SNS topic name generation
-  topicName = (object) => `aktnmap-test-${object._id.toString()}`
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://aktnmap.prod.kalisio.com'
-  // For SNS topic name generation
-  topicName = (object) => `aktnmap-${object._id.toString()}`
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
@@ -66,8 +60,6 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   } else {
     domain = 'http://localhost:' + serverPort // Akt'n'Map app client/server port = 8081
   }
-  // For SNS topic name generation
-  topicName = (object) => `aktnmap-dev-${object._id.toString()}`
   // For benchmarking
   apiLimiter = null
   limiter = null
@@ -243,21 +235,6 @@ module.exports = {
       privateKey: process.env.GOOGLE_MAIL_PRIVATE_KEY
     },
     templateDir: path.join(__dirname, 'email-templates')
-  },
-  pusher: {
-    accessKeyId: process.env.SNS_ACCESS_KEY,
-    secretAccessKey: process.env.SNS_SECRET_ACCESS_KEY,
-    region: 'eu-west-1',
-    apiVersion: '2010-03-31',
-    platforms: {
-      ANDROID: process.env.SNS_ANDROID_ARN,
-      IOS: process.env.SNS_IOS_ARN
-    },
-    topicName,
-    topics: (process.env.SNS_ANDROID_TOPIC_ARN && process.env.SNS_IOS_TOPIC_ARN ? {
-      ANDROID: process.env.SNS_ANDROID_TOPIC_ARN,
-      IOS: process.env.SNS_IOS_TOPIC_ARN
-    } : undefined)
   },
   mapillary: {
     token: process.env.MAPILLARY_TOKEN

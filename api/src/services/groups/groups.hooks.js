@@ -23,7 +23,6 @@ export default {
     find: [],
     get: [],
     create: [
-      coreHooks.createTopic()
       // Groups can now be created as empty because org managers can manage all groups
       // coreHooks.createGroupAuthorisations
     ],
@@ -31,8 +30,7 @@ export default {
     patch: [],
     remove: [
       coreHooks.setAsDeleted,
-      coreHooks.removeGroupAuthorisations,
-      coreHooks.removeTopic()
+      coreHooks.removeGroupAuthorisations
     ]
   },
 

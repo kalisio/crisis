@@ -327,7 +327,6 @@ export default async function () {
           service.name === 'groups' ||
           service.name === 'members' ||
           service.name === 'tags' ||
-          service.name === 'devices' ||
           service.name === 'features' ||
           service.name === 'alerts') {
         await app.configureService(service.name, service, servicesPath)
@@ -379,7 +378,6 @@ export default async function () {
   }
 
   const usersService = app.getService('users')
-  const pusherService = app.getService('pusher')
   const defaultUsers = app.get('authentication').defaultUsers
   // Do not use exposed passwords on staging/prod environments
   if (defaultUsers && !process.env.NODE_APP_INSTANCE) {
@@ -390,16 +388,7 @@ export default async function () {
       const createdUser = _.find(users, user => user.email === defaultUser.email)
       if (!createdUser) {
         app.logger.info('Initializing default user (email = ' + defaultUser.email + ')')
-        const user = await usersService.create(_.omit(defaultUser, 'device'))
-        // Register user device if any
-        if (defaultUser.device) {
-          await pusherService.create({
-            action: 'device',
-            device: defaultUser.device
-          }, {
-            user
-          })
-        }
+        await usersService.create(_.omit(defaultUser, 'device'))
       }
     }
   }

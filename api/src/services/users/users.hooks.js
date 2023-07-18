@@ -46,14 +46,8 @@ export default {
     remove: [
       coreHooks.setAsDeleted,
       coreHooks.removeAttachments('avatar'),
-      coreHooks.updateSubjectSubscriptions({
-        field: 'tags',
-        service: 'tags',
-        subjectAsItem: true
-      }),
-      coreHooks.updateTags, // After unsubscriptions otherwise will remove topic of unused tags before it
+      coreHooks.updateTags,
       coreHooks.leaveOrganisations(),
-      coreHooks.unregisterDevices,
       coreHooks.removeVerification
     ]
   },
