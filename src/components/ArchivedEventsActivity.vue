@@ -1,12 +1,9 @@
 <template>
-  <KPage :padding="false" @content-resized="onPageContentResized">
+  <KPage :padding="!showMap" @content-resized="onPageContentResized">
     <template v-slot:page-content>
       <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
         <div class="row">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="col-12">
+          <div class="col-12">
           <q-slider id="heatmap-radius" v-model="heatmapRadius" :min="1" :max="100" :step="1"
             label-always :label-value="$t('ArchivedEventsActivity.HEATMAP_RADIUS_LABEL') + ': ' + heatmapRadius + ' Kms'" @change="onHeatmapRadius"></q-slider>
           </div>
@@ -20,7 +17,6 @@
           style="padding-top: 80px;"
           id="history"
           service="archived-events"
-          :append-items="true"
           :base-query="baseQuery"
           :filter-query="filterQuery"
           :renderer="renderer"
@@ -46,10 +42,8 @@
       <!--
         Events graph
       -->
-      <div v-show="showChart" class="row justify-center text-center q-ma-none q-pa-none" >
-        <q-page-sticky position="top" :offset="[0, 60]">
-        <KStatisticsChart ref="chart" :style="chartStyle" />
-        </q-page-sticky>
+      <div v-show="showChart" class="fit row items-center text-center q-ma-none q-pa-none" >
+        <KStatisticsChart ref="chart" :style="chartStyle" class="col"/>
         <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
           icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
         <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
@@ -63,11 +57,11 @@
       >
         <div>
           <q-select id="chart-type" v-model="selectedChartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')"
-          :options="availableChartTypes" @input="refreshChart"/>
+          :options="availableChartTypes" @update:modelValue="refreshChart"/>
           <q-select id="count-per-chart" v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')"
-            :options="paginationOptions" @input="refreshChartAndPagination"/>
+            :options="paginationOptions" @update:modelValue="refreshChartAndPagination"/>
           <q-select id="chart-render" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')"
-            :options="renderOptions" @input="refreshChart"/>
+            :options="renderOptions" @update:modelValue="refreshChart"/>
         </div>
       </KModal>
       <!--
@@ -86,7 +80,7 @@ import Papa from 'papaparse'
 import { colors, QSlider } from 'quasar'
 import { mixins as kdkCoreMixins, utils as kdkCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { mixins as kdkMapMixinss } from '@kalisio/kdk/map.client.map'
-import mixins from '../mixins'
+import { usePlan } from '../composables'
 
 const activityMixin = kdkCoreMixins.baseActivity('archivedEventsActivity')
 
@@ -106,8 +100,7 @@ export default {
     kdkMapMixinss.map.style,
     kdkMapMixinss.map.tooltip,
     kdkMapMixinss.map.popup,
-    kdkMapMixinss.map.activity,
-    mixins.plans
+    kdkMapMixinss.map.activity
   ],
   components: {
     QSlider
@@ -136,7 +129,7 @@ export default {
     },
     chartStyle () {
       const min = Math.min(this.$q.screen.width, this.$q.screen.height)
-      return `width: ${min * .75}px;`
+      return `width: ${min * 0.75}px;`
     },
     nbCharts () {
       if (!this.chartData.length || (this.nbValuesPerChart.value === 0)) return 1
@@ -153,7 +146,7 @@ export default {
       const query = { $sort: { createdAt: -1 } }
       // When displaying events of all plans we'd like to have the plan object directly to ease processing
       if (!this.planId && this.showHistory) Object.assign(query, { planAsObject: true })
-      Object.assign(query, this.getPlanQuery())
+      Object.assign(query, this.planQuery)
       const stateFilters = _.intersection(['open', 'closed'], this.filters)
       // Filtering open + closed or none of them is equivalent to no filter
       if (stateFilters.length === 1) {
@@ -163,7 +156,7 @@ export default {
     },
     filterQuery () {
       const query = _.clone(this.filter.query)
-      Object.assign(query, this.getPlanObjectiveQuery())
+      Object.assign(query, this.planObjectiveQuery)
       return query
     }
   },
@@ -450,21 +443,24 @@ export default {
       this.values = data.map(item => item.value)
       this.chartData = data.map(item => item.count)
     },
-    getChartOptions (type) {
+    getChartOptions () {
       const start = (this.currentChart - 1) * this.nbValuesPerChart.value
       const end = (this.nbValuesPerChart.value > 0 ? start + this.nbValuesPerChart.value : this.chartData.length)
       let title = this.$t('ArchivedEventsActivity.CHART_TITLE')
       if (this.nbCharts > 1) title += ` (${this.currentChart}/${this.nbCharts})`
 
-      this.chartLabels = this.values.slice(start, end),
+      this.chartLabels = this.values.slice(start, end)
       this.chartDatasets = [{
-        data: this.chartData.slice(start, end)
+        data: this.chartData.slice(start, end),
+        colorScale: 'Accent'
       }]
       this.chartOptions = {
         responsive: true,
-        title: {
-        display: true,
-          text: title
+        plugins: {
+          title: {
+            display: true,
+            text: title
+          }
         }
       }
       // ticks.precision = 0 means round displayed values to integers
@@ -476,7 +472,7 @@ export default {
         _.set(this.chartDatasets[0], 'backgroundColor', backgroundColor)
         _.set(this.chartDatasets[0], 'pointBorderColor', '#fff')
         _.set(this.chartDatasets[0], 'pointBackgroundColor', color)
-        _.set(this.chartOptions, 'plugins.legend.display', false)        
+        _.set(this.chartOptions, 'plugins.legend.display', false)
         _.set(this.chartOptions, 'scales[0].ticks.beginAtZero', true)
         _.set(this.chartOptions, 'scales[0].ticks.precision', 0)
       }
@@ -487,31 +483,25 @@ export default {
         _.set(this.chartOptions, 'scales.y.ticks.beginAtZero', true)
         _.set(this.chartOptions, 'scales.y.ticks.precision', 0)
       } else if (this.chartType === 'polarArea') {
-        
-        // FIXME: does not work 
-        // _.set(chartOptions, '.scale.display', false)
+
+        // FIXME: does not work
+        // _.set(this.chartOptions, '.scale.display', false)
       }
     },
     async refreshChart () {
       this.chartType = this.selectedChartType.value
       // Retrieve data
       await this.getChartData()
-       // Update chart options
-      const start = (this.currentChart - 1) * this.nbValuesPerChart.value
-      const end = (this.nbValuesPerChart.value > 0 ? start + this.nbValuesPerChart.value : this.chartData.length)
-      let title = this.$t('ArchivedEventsActivity.CHART_TITLE')
-      if (this.nbCharts > 1) title += ` (${this.currentChart}/${this.nbCharts})`
+      // Update chart options
+      this.getChartOptions()
       // Update the chart
-      this.$refs.chart.update({ 
-        type: this.selectedChartType.value,
+      this.$refs.chart.update({
+        type: this.chartType,
         data: {
-          labels: this.values.slice(start, end),
-          datasets:  [{
-            data: this.chartData.slice(start, end),
-            colorScale: 'Accent'
-          }]
+          labels: this.chartLabels,
+          datasets: this.chartDatasets
         },
-        options: {}
+        options: this.chartOptions
       })
     },
     async refreshChartAndPagination () {
@@ -611,6 +601,11 @@ export default {
     Time.setCurrentTime(this.currentTime)
     // Releases listeners
     this.$events.off('time-range-changed', this.onTimeRangeChanged)
+  },
+  setup (props) {
+    return {
+      ...usePlan({ contextId: props.contextId })
+    }
   }
 }
 </script>

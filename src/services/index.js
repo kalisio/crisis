@@ -43,7 +43,7 @@ export default function () {
         id: 'name',
         paginate: { default: 12 },
         matcher: api.matcher,
-        filters: { '$locale': true }
+        filters: { $locale: true }
       })
     })
     // Restore previous settings if any

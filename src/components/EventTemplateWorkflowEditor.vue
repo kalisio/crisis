@@ -5,8 +5,8 @@
     v-model="isModalOpened"
   >
     <div class="column xs-gutter">
-      <EventTemplateWorkflowForm 
-        ref="onFormReferenceCreated" 
+      <EventTemplateWorkflowForm
+        ref="onFormReferenceCreated"
         :schema="schema"
         @form-ready="onFormReady"
       />

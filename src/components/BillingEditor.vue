@@ -21,7 +21,7 @@
         ref="customerEditor"
         @customer-updated="onCustomerUpdated"
         :billingObjectId="objectId"
-        billingObjectService="organisations" 
+        billingObjectService="organisations"
       />
       <q-card>
         <q-card-section class="text-grey bg-grey-2">
@@ -38,7 +38,7 @@
             :quotas="quotas"
             :plans="plans"
             v-model="currentPlan"
-            :hasCustomer="customer !== undefined" 
+            :hasCustomer="customer !== undefined"
           />
         </q-expansion-item>
         <!--
@@ -52,7 +52,7 @@
             :quotas="quotas"
             :options="options"
             v-model="currentOptions"
-            :hasCustomer="customer !== undefined" 
+            :hasCustomer="customer !== undefined"
           />
         </q-expansion-item>
       </q-card>

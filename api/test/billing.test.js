@@ -58,6 +58,8 @@ describe('billing', () => {
     expect(subscriptionService).toExist()
     await new Promise(resolve => server.once('listening', () => resolve()))
   })
+  // Let enough time to process
+    .timeout(5000)
 
   it('creates a test user', async () => {
     const user = await userService.create({ email: 'test-user@test.org', name: 'test-user' }, { checkAuthorisation: true })

@@ -29,6 +29,8 @@
     "dev": "npm run provision && cross-env NODE_ENV=development quasar dev",
     "prod": "cd api && npm run prod",
     "build": "npm run provision && quasar build",
+    "pwa:dev": "npm run provision && cross-env NODE_ENV=development quasar dev -m pwa",
+    "pwa:build": "npm run provision && quasar build -m pwa",
     "cordova:clean": "cd src-cordova && cordova clean && cd ..",
     "cordova:config": "envsub -s dollar-both src-cordova/config.xml.tpl src-cordova/config.xml",
     "cordova:config:android": "npm run cordova:config && cd src-cordova && cordova platform add android && cd ..",
@@ -225,7 +227,8 @@
     "shx": "^0.3.4",
     "sns-mobile": "https://github.com/kalisio/sns-mobile",
     "standard": "^17.0.0",
-    "webpack-bundle-analyzer": "^4.8.0"
+    "webpack-bundle-analyzer": "^4.8.0",
+    "workbox-webpack-plugin": "^6.0.0"
   },
   "resolutions": {
     "@pixi/accessibility": "5.3.10",

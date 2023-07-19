@@ -1,16 +1,16 @@
 import _ from 'lodash'
 import config from 'config'
-import { Notify } from 'quasar'
+import { Notify, Dialog } from 'quasar'
 import appHooks from '../app.hooks'
 import services from '../services'
-import { initializeApi, i18n, utils as kdkCoreUtils, Store, Layout, Events, Theme, beforeGuard, authenticationGuard } from '@kalisio/kdk/core.client'
+import { utils, initializeApi, i18n, utils as kdkCoreUtils, Store, Layout, Events, beforeGuard, authenticationGuard } from '@kalisio/kdk/core.client'
 import { Geolocation } from '@kalisio/kdk/map.client.map'
 
-/*function updateThemeColors () {
+/* function updateThemeColors () {
   const theme = config.theme
   // Default theme override
   if (theme) Theme.apply(theme)
-}*/
+} */
 
 export default async ({ app }) => {
   // Required to make injections reactively linked to the provider
@@ -73,7 +73,7 @@ export default async ({ app }) => {
   app.component('KGrid', await kdkCoreUtils.loadComponent('collection/KGrid'))
   app.component('KBoard', await kdkCoreUtils.loadComponent('collection/KBoard'))
   app.component('KHistory', await kdkCoreUtils.loadComponent('collection/KHistory'))
-  app.component('KItem', await kdkCoreUtils.loadComponent('collection/KItem'))  
+  app.component('KItem', await kdkCoreUtils.loadComponent('collection/KItem'))
   app.component('KCard', await kdkCoreUtils.loadComponent('collection/KCard'))
   app.component('KCardSection', await kdkCoreUtils.loadComponent('collection/KCardSection'))
   app.component('KMediaBrowser', await kdkCoreUtils.loadComponent('media/KMediaBrowser'))
@@ -96,9 +96,11 @@ export default async ({ app }) => {
   // Add global guard
   beforeGuard.registerGuard(authenticationGuard)
 
-  //updateThemeColors()
+  // updateThemeColors()
 
   api.on('authenticated', (data) => {
+    // Subscribe to webpush notifications
+    utils.subscribeToPushNotifications()
     // Store API gateway token if any
     if (data.gatewayToken) api.get('storage').setItem(config.gatewayJwt, data.gatewayToken)
   })

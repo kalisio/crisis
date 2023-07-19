@@ -6,8 +6,8 @@
   >
     <KForm
       :ref="onFormReferenceCreated"
-      :contextId="contextId" 
-      :objectId="objectId" 
+      :contextId="contextId"
+      :objectId="objectId"
       :schema="schema"
       @form-ready="onFormReady"
     />
@@ -32,7 +32,7 @@ export default {
     }
   },
   computed: {
-    buttons() {
+    buttons () {
       return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
         { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }

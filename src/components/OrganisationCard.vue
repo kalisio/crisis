@@ -28,7 +28,7 @@
             icon= "las la-fire"
             :label="$t('OrganisationCard.EVENTS_LABEL', { count: eventsCount })"
             @triggered="routeTo('events-activity')"
-            style="max-width: 60%" 
+            style="max-width: 60%"
           />
           <div>
             <KAction
@@ -67,7 +67,7 @@
             id= "organisation-archived-plans"
             icon= "las la-archive"
             :tooltip="$t('OrganisationCard.VIEW_ARCHIVED_PLANS')"
-            @triggered="routeTo('archived-plans-activity')" 
+            @triggered="routeTo('archived-plans-activity')"
           />
         </div>
       </KCardSection>
@@ -83,7 +83,7 @@
                   :icon="element.icon"
                   :label="$t(`OrganisationCard.${element.key}`, { count: counters[element.name] })"
                   @triggered="routeTo(`${element.name}-activity`)"
-                  style="max-width: 75%" 
+                  style="max-width: 75%"
                 />
                 <q-badge v-if="!isMember" :label="`${quotas[element.name]} max`" color="grey-7" />
               </div>

@@ -1,6 +1,6 @@
 
-var filePath
-var fs = require('fs')
+let filePath
+const fs = require('fs')
 module.exports.setPath = function (path) {
   filePath = './tutorials/videos/' + path
 }

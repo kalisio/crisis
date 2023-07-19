@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import path from 'path-browserify'
+import { Dialog } from 'quasar'
 import { utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 import { Geolocation } from '@kalisio/kdk/map.client.map'
 import * as utils from '../utils'
@@ -35,12 +36,12 @@ const eventsMixin = {
         this.attachments = await storageService.find({ query: { Prefix: this.event._id || this.event } })
         // "Folders" are retrieved but are zero-sized
         this.attachments = this.attachments.filter(item => item.Size > 0)
-        .map(item => ({
+          .map(item => ({
           // From key name we extract the filename
-          name: path.basename(item.Key),
-          key: item.Key,
-          size: item.Size
-        }))
+            name: path.basename(item.Key),
+            key: item.Key,
+            size: item.Size
+          }))
       }
     },
     hasMedias () {
@@ -331,6 +332,25 @@ const eventsMixin = {
         backgroundColor: 'black',
         controlColor: 'white'
       }
+    },
+    showRemoveEventDialog (event) {
+      if (!event) event = this.event
+      Dialog.create({
+        title: this.$t('mixins.REMOVE_EVENT_DIALOG_TITLE', { event: event.name }),
+        message: this.$t('mixins.REMOVE_EVENT_DIALOG_MESSAGE', { event: event.name }),
+        html: true,
+        ok: {
+          label: this.$t('OK'),
+          flat: true
+        },
+        cancel: {
+          label: this.$t('CANCEL'),
+          flat: true
+        }
+      }).onOk(() => {
+        const eventsService = this.$api.getService('events', this.contextId)
+        eventsService.remove(event._id, { query: { notification: this.$t('EventNotifications.REMOVE') } })
+      })
     }
   }
 }

@@ -23,7 +23,7 @@
         v-else-if="height"
         ref="eventsBoard"
         :columns="boardColumns"
-        :height="height" 
+        :height="height"
       />
       <!--
         Router view to enable routing to modals
@@ -37,14 +37,14 @@
 import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { permissions } from '@kalisio/kdk/core.common'
+import { usePlan } from '../composables'
 import mixins from '../mixins'
 
 const activityMixin = kCoreMixins.baseActivity('eventsActivity')
 
 export default {
   mixins: [
-    activityMixin,
-    mixins.plans
+    activityMixin
   ],
   provide () {
     return {
@@ -77,19 +77,21 @@ export default {
   },
   computed: {
     renderer () {
-      const dense = (this.planId ? true : this.$q.screen.lt.sm)
-      return _.merge({ component: 'EventCard', dense }, this.activityOptions.items)
+      const renderer = { component: 'EventCard' }
+      renderer.dense = (this.planId ? true : this.$q.screen.lt.sm)
+      if (this.planId) renderer.class = 'full-width'
+      return _.merge(renderer, this.activityOptions.items)
     },
     baseQuery () {
       const query = _.clone(this.sorter.query)
       // When displaying events of all plans we'd like to have the plan object directly to ease processing
       if (!this.planId) Object.assign(query, { planAsObject: true })
-      Object.assign(query, this.getPlanQuery())
+      Object.assign(query, this.planQuery)
       return query
     },
     filterQuery () {
       const query = _.clone(this.filter.query)
-      Object.assign(query, this.getPlanObjectiveQuery())
+      Object.assign(query, this.planObjectiveQuery)
       return query
     },
     columnWidth () {
@@ -142,7 +144,7 @@ export default {
     async refreshFab () {
       const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.contextId)
       if (this.$can('create', 'events', this.contextId)) {
-        const actions = []
+        const content = []
         const eventTemplatesService = this.$api.getService('event-templates')
         let response = await eventTemplatesService.find({ query: { $limit: 0 } })
         const batchSize = 50
@@ -167,7 +169,7 @@ export default {
             // It is easier to access the DOM with template names, eg in tests, so we use it as action name whenever possible
             // However we have to check about duplicated names
             const doublons = templates.filter(otherTemplate => otherTemplate.name.toLowerCase() === template.name.toLowerCase())
-            actions.push({
+            content.push({
               id: 'create-' + (doublons.length > 1 ? template._id : _.kebabCase(template.name)),
               label: template.name,
               icon: template.icon.name,
@@ -181,7 +183,7 @@ export default {
           })
           offset = offset + batchSize
         }
-        this.setFab(actions)
+        this.setFab(content)
       }
     },
     onPageContentResized (size) {
@@ -213,6 +215,11 @@ export default {
     if (this.planId) {
       const eventsService = this.$api.getService('events', this.contextId)
       eventsService.off('removed', this.onEventRemoved)
+    }
+  },
+  setup (props) {
+    return {
+      ...usePlan({ contextId: props.contextId })
     }
   }
 }

@@ -15,7 +15,7 @@
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'"
             :object="organisation"
             :contextId="organisation._id"
-            :size="$q.screen.lt.sm ? '1.5rem' : '2rem'" 
+            :size="$q.screen.lt.sm ? '1.5rem' : '2rem'"
           />
         </div>
       </template>
@@ -31,7 +31,7 @@
                 id= "organisation-events"
                 icon= "las la-fire"
                 :label="$t('OrganisationMenu.EVENTS_LABEL', { count: eventsCount })"
-                @triggered="routeTo('events-activity')" 
+                @triggered="routeTo('events-activity')"
               />
               <q-space />
               <KAction
@@ -39,14 +39,14 @@
                 id= "organisation-catalog"
                 icon= "las la-map"
                 :tooltip="$t('OrganisationMenu.VIEW_CATALOG')"
-                @triggered="routeTo('catalog-activity')"  
+                @triggered="routeTo('catalog-activity')"
               />
               <KAction
                 v-if="canAccessArchivedEvents"
                 id= "organisation-archived-events"
                 icon= "las la-clipboard-list"
                 :tooltip="$t('OrganisationMenu.VIEW_ARCHIVED_EVENTS')"
-                @triggered="routeTo('archived-events-activity')"   
+                @triggered="routeTo('archived-events-activity')"
               />
             </div>
           </KCardSection>
@@ -57,7 +57,7 @@
                 id= "organisation-plans"
                 icon= "las la-stream"
                 :label="$t('OrganisationMenu.PLANS_LABEL', { count: plansCount })"
-                @triggered="routeTo('plans-activity')" 
+                @triggered="routeTo('plans-activity')"
               />
               <q-space />
               <KAction
@@ -65,7 +65,7 @@
                 id= "organisation-archived-plans"
                 icon= "las la-archive"
                 :tooltip="$t('OrganisationMenu.VIEW_ARCHIVED_PLANS')"
-                @triggered="routeTo('archived-plans-activity')" 
+                @triggered="routeTo('archived-plans-activity')"
               />
             </div>
           </KCardSection>
@@ -78,7 +78,7 @@
                 size="md"
                 :label="$t('OrganisationMenu.MANAGE_ORGANISATION')"
                 @triggered="routeTo('members-activity')"
-                :propagate="false" 
+                :propagate="false"
               />
             </div>
           </KCardSection>
@@ -91,7 +91,7 @@
 <script>
 import { QBtnDropdown } from 'quasar'
 import { permissions } from '@kalisio/kdk/core.common'
-import mixins from '../mixins'
+import { usePlan } from '../composables'
 import * as utils from '../utils'
 
 export default {
@@ -99,9 +99,6 @@ export default {
   components: {
     QBtnDropdown
   },
-  mixins: [
-    mixins.plans
-  ],
   props: {
     mode: {
       type: String,
@@ -115,8 +112,7 @@ export default {
     return {
       organisation: this.$store.get('context'),
       eventsCount: 0,
-      plansCount: 0,
-      planId: null
+      plansCount: 0
     }
   },
   computed: {
@@ -205,6 +201,11 @@ export default {
     plansService.off('patched', this.updateCounts)
     plansService.off('updated', this.updateCounts)
     plansService.off('removed', this.updateCounts)
+  },
+  setup (props) {
+    return {
+      ...usePlan({ contextId: props.contextId })
+    }
   }
 }
 </script>

@@ -20,6 +20,7 @@ import chroma from 'chroma-js'
 import centroid from '@turf/centroid'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
+import { usePlan } from '../composables'
 import mixins from '../mixins'
 
 const name = 'eventActivity'
@@ -54,8 +55,7 @@ export default {
     kMapMixins.style,
     kMapMixins.weacast,
     kMapMixins.activity,
-    mixins.events,
-    mixins.plans
+    mixins.events
   ],
   props: {
     contextId: {
@@ -107,7 +107,7 @@ export default {
         const feature = { type: 'Feature', geometry: this.event.location }
         // Add event layer
         const layer = L.geoJson(feature, {
-          style: () => ({ color: color, fillColor: chroma(color).alpha(0.5).hex() }) // Transparency
+          style: () => ({ color, fillColor: chroma(color).alpha(0.5).hex() }) // Transparency
         })
         this.map.addLayer(layer)
         // Recenter map
@@ -314,9 +314,10 @@ export default {
     this.$events.off('zoom-to-participant', this.onZoomToParticipant)
     this.$events.off('filter-participant-states', this.onFilterParticipantStates)
   },
-  setup () {
+  setup (props) {
     return {
-      ...kMapComposables.useActivity(name)
+      ...kMapComposables.useActivity(name),
+      ...usePlan({ contextId: props.contextId })
     }
   }
 }

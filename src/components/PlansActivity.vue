@@ -81,7 +81,7 @@ export default {
       // Fab actions
       const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.contextId)
       if (this.$can('create', 'plans', this.contextId)) {
-        const actions = []
+        const content = []
         const planTemplatesService = this.$api.getService('plan-templates')
         let response = await planTemplatesService.find({ query: { $limit: 0 } })
         const batchSize = 50
@@ -106,7 +106,7 @@ export default {
             // It is easier to access the DOM with template names, eg in tests, so we use it as action name whenever possible
             // However we have to check about duplicated names
             const doublons = templates.filter(otherTemplate => otherTemplate.name.toLowerCase() === template.name.toLowerCase())
-            actions.push({
+            content.push({
               id: 'create-' + (doublons.length > 1 ? template._id : _.kebabCase(template.name)),
               label: template.name,
               icon: template.icon.name,
@@ -116,7 +116,7 @@ export default {
           })
           offset = offset + batchSize
         }
-        this.setFab(actions)
+        this.setFab(content)
       }
       if (this.mode) this.setTopPaneMode(this.mode)
     }

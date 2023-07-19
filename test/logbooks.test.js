@@ -52,7 +52,7 @@ describe(`suite:${suite}`, () => {
 
   before(async function () {
     chailint(chai, util)
-    
+
     // Let enough time to process
     this.timeout(60000)
     api = new core.Api({
@@ -104,8 +104,8 @@ describe(`suite:${suite}`, () => {
     const managerEventTwo = _.find(org.events, { name: 'Manager event 2' })
     await events.createEvent(page, org, managerTemplate, managerEventTwo)
     expect(await events.countEvents(page, org)).to.equal(2)
-    //Corriger l'erreur
-    //expect(await events.eventExists(page, org, managerTemplate, 'description')).beTrue()
+    // Corriger l'erreur
+    // expect(await events.eventExists(page, org, managerTemplate, 'description')).beTrue()
     expect(await events.eventExists(page, org, managerEventOne, 'name')).beTrue()
     expect(await events.eventExists(page, org, managerEventTwo, 'name')).beTrue()
   })
@@ -116,7 +116,7 @@ describe(`suite:${suite}`, () => {
     await events.removeEvent(page, org, memberEvent)
     expect(await events.countEvents(page, org)).to.equal(1)
   })
-  
+
   it('logbook shows 2 events', async () => {
     await logbooks.goToLogbook(page, org)
     await page.waitForTimeout(10000)

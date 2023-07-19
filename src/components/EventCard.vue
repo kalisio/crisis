@@ -167,9 +167,9 @@
 <script>
 import _ from 'lodash'
 import centroid from '@turf/centroid'
-import { Dialog } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils, Storage } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
+import { useAlerts } from '../composables'
 import mixins from '../mixins'
 
 export default {
@@ -182,8 +182,7 @@ export default {
     kCoreMixins.service,
     kCoreMixins.schemaProxy,
     kMapMixins.navigator,
-    mixins.events,
-    mixins.alerts
+    mixins.events
   ],
   props: {
     dense: {
@@ -416,22 +415,7 @@ export default {
       this.navigate(longitude, latitude)
     },
     removeEvent () {
-      Dialog.create({
-        title: this.$t('EventCard.REMOVE_DIALOG_TITLE', { event: this.item.name }),
-        message: this.$t('EventCard.REMOVE_DIALOG_MESSAGE', { event: this.item.name }),
-        html: true,
-        ok: {
-          label: this.$t('OK'),
-          flat: true
-        },
-        cancel: {
-          label: this.$t('CANCEL'),
-          flat: true
-        }
-      }).onOk(() => {
-        const eventsService = this.$api.getService('events', this.contextId)
-        eventsService.remove(this.item._id, { query: { notification: this.$t('EventNotifications.REMOVE') } })
-      })
+      this.showRemoveEventDialog(this.item)
     },
     async followUp () {
       if (this.hasParticipantInteraction) {
@@ -644,6 +628,11 @@ export default {
     this.$events.off('user-changed', this.refresh)
     this.unsubscribeParticipantLog()
     this.unsubscribeCoordinatorLog()
+  },
+  setup () {
+    return {
+      ...useAlerts()
+    }
   }
 }
 </script>

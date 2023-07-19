@@ -5,16 +5,16 @@
     v-model="isModalOpened"
   >
     <div class="column xs-gutter">
-      <!-- 
-        Form to be used for standard properties 
+      <!--
+        Form to be used for standard properties
       -->
-      <KForm 
-        :ref="onFormReferenceCreated" 
-        :schema="schema" 
+      <KForm
+        :ref="onFormReferenceCreated"
+        :schema="schema"
         @form-ready="onFormReady"
       />
-      <!-- 
-        Toggle used to copy the source template workflow on creation 
+      <!--
+        Toggle used to copy the source template workflow on creation
       -->
       <p v-show="hasWorkflow" :class="{ 'light-dimmed': applyInProgress }" class="col-10 caption pull-left">
         <q-toggle id="workflow-toggle" icon="las la-retweet" v-model="copyWorkflow" @input="onWorkflow">

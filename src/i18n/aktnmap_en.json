@@ -9,6 +9,14 @@
   "COPY_LABEL": "Copy",
   "CLOSE_LABEL": "Close",
   "SAVE_LABEL": "Save",
+  "mixins": {
+    "REMOVE_EVENT_DIALOG_TITLE": "Remove the event {event} ?",
+    "REMOVE_EVENT_DIALOG_MESSAGE": "Are you sure you want to remove the event <b>{event}</b> ?"
+  },
+  "composables": {
+    "REMOVE_ALERT_DIALOG_TITLE": "Remove this alert ?",
+    "REMOVE_ALERT_DIALOG_MESSAGE": "Are you sure you want to remove this alert from your workspace ?"
+  },
   "errors": {
     "EVENTS_LIMIT": "Too much events to display all of them",
     "EVENT_LOG_LIMIT": "Too much participants to display all of them",
@@ -437,6 +445,7 @@
     "CREATE_EVENT_LOCATION_ACTION": "Create an event at this location",
     "ANALYZE_POPULATION_FEATURE_ACTION": "Analyze population in this area",
     "REMOVE_ALERT_ACTION": "Remove alert",
+    "REMOVE_EVENT_ACTION": "Close event",
     "CREATE_EVENT_TITLE": "Select an event template",
     "CREATE_ALERT_TITLE": "Create a new alert ?",
     "OBJECTIVES_LAYER": "My objectives",
@@ -454,8 +463,6 @@
     "ALERT_FIRST": "Next ",
     "ALERT_GTE": "greater than threshold",
     "ALERT_LTE": "lower than threshold",
-    "REMOVE_ALERT_DIALOG_TITLE": "Remove this alert ?",
-    "REMOVE_ALERT_DIALOG_MESSAGE": "Are you sure you want to remove this alert from your workspace ?",
     "POPULATION_ANALYSIS": "Population analysis",
     "POPULATION_ANALYSIS_ERROR": "Population analysis failed, please try again later or modify your parameters"
   },
@@ -593,8 +600,8 @@
     "CREATED_AT_LABEL": "Created at",
     "UPDATED_AT_LABEL": "Updated at",
     "EXPIRE_AT_LABEL": "Expire at",
-    "REMOVE_LABEL": "@:REMOVE_LABEL",
-    "EDIT_LABEL": "@:EDIT_LABEL",
+    "REMOVE_ACTION": "Close",
+    "EDIT_ACTION": "@:EDIT_LABEL",
     "FOLLOW_UP_LABEL": "Follow up",
     "FOLLOW_UP_MODAL_TITLE": "Enter your choice",
     "EVENT_LOGS_LABEL": "Follow up participants",
@@ -608,8 +615,6 @@
     "NAVIGATE_LABEL": "Navigate",
     "LOCATE_LABEL": "View the location",
     "MAP_LABEL": "Map",
-    "REMOVE_DIALOG_TITLE": "Remove the event {event} ?",
-    "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove the event <b>{event}</b> ?",
     "ACTION_REQUIRED_WARNING": "Action required",
     "WAITING_COORDINATION_WARNING": "Waiting coordination",
     "WAITING_FOR_PARTICIPANT_LABEL": "Coordinator is waiting for your input",

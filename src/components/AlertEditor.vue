@@ -1,12 +1,14 @@
 <template>
-  <KModal 
+  <KModal
     :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
     :buttons="buttons"
-  >      
-    <AlertForm 
+    v-model="isModalOpened"
+  >
+    <AlertForm
       :ref="onFormReferenceCreated"
-      :layer="layer" 
-      :feature="feature" 
+      :class="{ 'light-dimmed': applyInProgress }"
+      :layer="layer"
+      :feature="feature"
       :forecastModel="forecastModel"
       @form-ready="onFormReady"
     />
@@ -26,21 +28,21 @@ export default {
     kdkCoreMixins.baseModal
   ],
   props: {
-    layer: { 
-      type: Object, 
-      default: () => null 
+    layer: {
+      type: Object,
+      default: () => null
     },
-    feature: { 
-      type: Object, 
-      default: () => null 
+    feature: {
+      type: Object,
+      default: () => null
     },
-    forecastModel: { 
-      type: Object, 
-      default: () => null 
+    forecastModel: {
+      type: Object,
+      default: () => null
     }
   },
   computed: {
-    buttons () { 
+    buttons () {
       return [
         { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
         { id: 'apply-button', label: 'DONE', renderer: 'form-button', handler: () => this.apply() }
@@ -53,6 +55,11 @@ export default {
     }
   },
   methods: {
+    onFormReferenceCreated (reference) {
+      if (reference) {
+        this.form = reference
+      }
+    },
     async apply () {
       const result = this.form.validate()
       if (!result.isValid) return

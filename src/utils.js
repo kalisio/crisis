@@ -14,7 +14,7 @@ export function hasRoleInEvent (user, roles) {
 }
 
 export function getEventsQuery (user, contextId) {
-  let ids = [user._id]
+  const ids = [user._id]
   if (contextId) {
     _.get(user, 'groups', []).forEach(group => {
       if (group.context === contextId) ids.push(group._id)
@@ -33,7 +33,7 @@ export function getEventsQuery (user, contextId) {
 }
 
 export function getPlansQuery (user, contextId) {
-  let ids = [user._id]
+  const ids = [user._id]
   if (contextId) {
     _.get(user, 'groups', []).forEach(group => {
       if (group.context === contextId) ids.push(group._id)
@@ -52,7 +52,7 @@ export function buildRoutes (config) {
   function buildRoutesRecursively (config, routes, parentRoute) {
     _.forOwn(config, (value, key) => {
       // The key is always the path for the route
-      let route = {
+      const route = {
         path: key,
         name: key,
         // "Inherit" meta data on nested routes
@@ -76,9 +76,6 @@ export function buildRoutes (config) {
         }
         if (_.has(value, 'component')) {
           route.component = () => import(`@components/${value.component}.vue`)
-          if (_.has(value, 'embedApi')) {
-            setupEmbedApi(route.name)
-          }
         }
         if (_.has(value, 'props')) {
           route.props = value.props
@@ -101,7 +98,7 @@ export function buildRoutes (config) {
     })
   }
 
-  let routes = []
+  const routes = []
   buildRoutesRecursively(config, routes)
   return routes
 }
@@ -131,7 +128,7 @@ export function buildTours (config) {
     })
   }
 
-  let tours = {}
+  const tours = {}
   buildToursRecursively(config, tours)
   return tours
 }

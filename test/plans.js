@@ -57,19 +57,19 @@ export async function goToPlanEvents (page, organisation, plan, wait = 2000) {
 }
 
 export async function planEventExists (page, organisation, plan, event, property) {
-  await goToPlanEvents (page, organisation, plan)
+  await goToPlanEvents(page, organisation, plan)
   // Can provide an object with a property to match or a text input
   const exists = await core.itemExists(page, eventComponent, property ? _.get(event, property) : event)
   return exists
 }
 
 export async function expandPlanEvent (page, event, wait = 2000) {
-  const url = page.url()
+  // const url = page.url()
   await core.clickItemAction(page, eventComponent, event, 'expand-action', wait)
 }
 
 export async function closePlanEvent (page, event, wait = 2000) {
-  const url = page.url()
+  // const url = page.url()
   await core.clickItemAction(page, eventComponent, event, 'remove-item-header', wait)
 }
 
@@ -124,7 +124,7 @@ export async function createPlanTemplate (page, organisation, template, wait = 2
       await core.click(page, `#${_.kebabCase(coordinators.name)}`)
     }
   }
-  //if (template.permission) await clickPermission(page, template.permission)
+  // if (template.permission) await clickPermission(page, template.permission)
   await core.clickAction(page, 'apply-button', wait)
 }
 

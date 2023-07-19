@@ -52,7 +52,6 @@ describe(`suite:${suite}`, () => {
       name: 'Owner plan template 1',
       description: 'Plan template 1 - creation right for owner',
       coordinators: [{
-        name: 'Manager',
         name: 'Owner'
       }],
       permission: 'owner'
@@ -63,7 +62,7 @@ describe(`suite:${suite}`, () => {
         name: 'Manager'
       }],
       permission: 'owner'
-    },],
+    }],
     planObjectives: [{
       name: 'Objective 1',
       description: 'Objective 1 description'
@@ -95,8 +94,7 @@ describe(`suite:${suite}`, () => {
       name: 'Manager template 1',
       description: 'Template 1 description',
       coordinators: [{
-        name: 'Manager',
-        name: 'Owner'
+        name: 'Manager'
       }],
       permission: 'manager'
     }, {
@@ -131,7 +129,7 @@ describe(`suite:${suite}`, () => {
 
   before(async function () {
     chailint(chai, util)
-    
+
     // Let enough time to process
     this.timeout(60000)
     api = new core.Api({
@@ -179,7 +177,7 @@ describe(`suite:${suite}`, () => {
     expect(await plans.planTemplateExists(page, org, planTemplate1, 'name')).beTrue()
     expect(await plans.planTemplateExists(page, org, planTemplate2, 'name')).beTrue()
   })
-/* 
+  /*
   // Problème ici : j'accède bien au formulaire du template que je veux, mais impossible d'écrire dans les champs
   it('org owner can add objective to plan template', async () => {
     const planTemplate = _.find(org.planTemplates, { name: 'Owner plan template 2' })

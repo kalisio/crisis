@@ -23,7 +23,7 @@ describe(`suite:${suite}`, () => {
 
   before(async () => {
     chailint(chai, util)
-    
+
     api = new core.Api({
       appName: 'aktnmap'
     })

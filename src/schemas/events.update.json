@@ -34,7 +34,9 @@
       "field": {
         "component": "form/KLocationField",
         "label": "schemas.EVENTS_LOCATION_FIELD_LABEL",
-        "draw": true
+        "geocoders": [],
+        "geolocate": true,
+        "map": ["location", "draw-point", "draw-rectangle", "draw-polygon"]
       }
     },
     "expireAt": {

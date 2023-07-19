@@ -27,14 +27,9 @@ export default {
     get: [],
     create: [],
     update: [],
-    patch: [ // Required to update subscriptions correctly
+    patch: [ // Required to update tags correctly
       coreHooks.populatePreviousObject,
-      coreHooks.updateTags, // Before subscriptions to have topics already created on tags before it
-      coreHooks.updateSubjectSubscriptions({
-        field: 'tags',
-        service: 'tags',
-        subjectAsItem: true
-      })
+      coreHooks.updateTags
     ],
     remove: []
   },

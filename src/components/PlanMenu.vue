@@ -18,7 +18,7 @@
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'"
             :object="plan"
             :contextId="organisation._id"
-            size="sm" 
+            size="sm"
           />
           <div>
             {{ plan.name }}
@@ -59,13 +59,10 @@
 <script>
 import _ from 'lodash'
 import { QKnob } from 'quasar'
-import mixins from '../mixins'
+import { usePlan } from '../composables'
 
 export default {
   name: 'plan-menu',
-  mixins: [
-    mixins.plans
-  ],
   components: {
     QKnob
   },
@@ -173,6 +170,11 @@ export default {
           this.objectivePercents[i] = percent
         }
       }
+    }
+  },
+  setup (props) {
+    return {
+      ...usePlan({ contextId: props.contextId })
     }
   }
 }

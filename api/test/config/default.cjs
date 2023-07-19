@@ -7,5 +7,7 @@ const config = require(path.join(__dirname, '../../config/default.cjs'))
 config.logs.DailyRotateFile.dirname = path.join(__dirname, '..', 'logs')
 config.db.url = config.db.url.replace('aktnmap', 'aktnmap-test')
 delete config.authentication.defaultUsers
+// Set a hard limit like in production
+config.quotas.global.bronze = 1
 
 module.exports = config

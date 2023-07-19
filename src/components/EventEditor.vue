@@ -11,7 +11,7 @@
         :objectId="objectId"
         :schema="schema"
         @field-changed="onFieldChanged"
-        @form-ready="onFormReady" 
+        @form-ready="onFormReady"
       />
       <div class="row full-width justify-end">
         <q-checkbox :label="$t('EventEditor.NOTIFY')" v-model="notify" />
@@ -24,8 +24,10 @@
 import _ from 'lodash'
 import moment from 'moment'
 import centroid from '@turf/centroid'
-import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
+import { Store, mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
+import { usePlan } from '../composables'
 import mixins from '../mixins'
+import config from 'config'
 
 export default {
   name: 'event-editor',
@@ -34,8 +36,7 @@ export default {
     kdkCoreMixins.service,
     kdkCoreMixins.objectProxy,
     kdkCoreMixins.schemaProxy,
-    kdkCoreMixins.baseEditor,
-    mixins.plans
+    kdkCoreMixins.baseEditor
   ],
   props: {
     templateId: {
@@ -96,6 +97,8 @@ export default {
         if (this.hasPlan()) {
           this.object.plan = this.planId
         }
+        // Setup notification redirection url
+        this.object.urlRedirection = `${config.domain}/#/home/${Store.get('context._id')}/events`
         // Setup expiry date from template
         if (this.object.expiryDuration) {
           const expiryDate = moment().utc().add({ days: this.object.expiryDuration })
@@ -208,6 +211,11 @@ export default {
     // Setup notify option
     if (this.editorMode === 'create') this.notify = true
     else this.notify = false
+  },
+  setup (props) {
+    return {
+      ...usePlan({ contextId: props.contextId })
+    }
   }
 }
 </script>

@@ -1,50 +1,38 @@
 <template>
   <KPage :padding="false">
     <template v-slot:page-content>
-      <!-- 
-        Map 
+      <!--
+        Map
       -->
       <div id="map" :ref="configureMap" :style="viewStyle">
         <q-resize-observer @resize="onMapResized" />
       </div>
-      <!-- 
-        Event templates selector modal 
+      <!--
+        Event templates selector modal
       -->
       <KModal ref="templateModal"
         :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
         :buttons="getTemplateModalButtons()"
         :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }"
       >
-        <KList 
-          ref="templates" 
-          service="event-templates" 
+        <KList
+          ref="templates"
+          service="event-templates"
           :contextId="contextId"
-          :list-strategy="'smart'" 
-          @selection-changed="onCreateEvent" 
+          :list-strategy="'smart'"
+          @selection-changed="onCreateEvent"
         />
       </KModal>
-      <!-- 
-        Alert editor modal 
+      <!--
+        Alert editor modal
       -->
       <AlertEditor
         ref="alertEditor"
-        :layer="alertLayer" 
-        :feature="alertFeature" 
+        :layer="alertLayer"
+        :feature="alertFeature"
         :forecastModel="forecastModel"
+        :router-mode="false"
       />
-      <!--KModal ref="alertModal"
-        :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
-        :buttons="getAlertModalButtons()"
-        :options="{}"
-      >
-        <AlertForm 
-          :class="{ 'light-dimmed': inProgress }" 
-          ref="alertForm"
-          :layer="alertLayer" 
-          :feature="alertFeature" 
-          :forecastModel="forecastModel"
-        />
-      </KModal-->
       <!-- Child views -->
       <router-view />
     </template>
@@ -57,11 +45,13 @@ import L from 'leaflet'
 import moment from 'moment'
 import chroma from 'chroma-js'
 import sift from 'sift'
-import { defineComponent } from "vue"
+import { ref, toRef, computed, watch } from 'vue'
 import { Dialog } from 'quasar'
-import { mixins as kCoreMixins, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
+import { usePlan, useAlerts } from '../composables'
+
 import AlertEditor from './AlertEditor.vue'
 
 const name = 'catalogActivity'
@@ -98,9 +88,7 @@ export default {
     kMapMixins.featureService,
     kMapMixins.infobox,
     kMapMixins.weacast,
-    kMapMixins.context,    
-    mixins.alerts,
-    mixins.plans
+    kMapMixins.context
   ],
   provide () {
     return {
@@ -124,10 +112,28 @@ export default {
       inProgress: false
     }
   },
+  computed: {
+    // FIXME: Need to add this computed in order to be able to watch
+    // Should be fixed when component will be migrated to composition API
+    alertItems () { return this.alerts.items.value },
+    eventItems () { return this.events.items.value }
+  },
   watch: {
-    objectiveFilters: function () {
-      //this.events.refreshCollection()
-      this.refreshObjectivesLayer()
+    alertItems: {
+      handler () {
+        this.onAlertsCollectionRefreshed()
+      }
+    },
+    eventItems: {
+      handler () {
+        this.onEventsCollectionRefreshed()
+      }
+    },
+    objectiveFilters: {
+      handler () {
+        this.events.refreshCollection()
+        this.refreshObjectivesLayer()
+      }
     },
     planId: {
       async handler () {
@@ -156,10 +162,8 @@ export default {
       activityMixin.methods.configureActivity.call(this)
       Time.setCurrentTime(moment.utc())
       // Then update events, alerts, plan
-      /*
       this.alerts.refreshCollection()
       this.events.refreshCollection()
-      */
       this.refreshObjectivesLayer()
     },
     getFeatureActions (feature, layer) {
@@ -201,6 +205,14 @@ export default {
             icon: 'las la-minus-circle',
             handler: this.onRemoveAlert,
             label: this.$t('CatalogActivity.REMOVE_ALERT_ACTION')
+          })
+        } else if (layer.name === this.$t('CatalogActivity.EVENTS_LAYER')) {
+          // Event deletion
+          featureActions.push({
+            name: 'remove-event',
+            icon: 'las la-minus-circle',
+            handler: this.onRemoveEvent,
+            label: this.$t('CatalogActivity.REMOVE_EVENT_ACTION')
           })
         }
         // We can initiate an event from location and feature
@@ -254,15 +266,13 @@ export default {
           }
         })
       }
-      /*
       this.updateLayer(this.$t('CatalogActivity.EVENTS_LAYER'),
-        { type: 'FeatureCollection', features: _.get(this.events, 'items', []) })
-      */
+        { type: 'FeatureCollection', features: this.eventItems })
     },
-    onEventCollectionRefreshed () {
+    onEventsCollectionRefreshed () {
       this.refreshEventsLayer()
       // We do not manage pagination now
-      if (this.events.items.length > MAX_ITEMS) {
+      if (this.events.nbTotalItems.value > MAX_ITEMS) {
         this.$events.emit('error', new Error(this.$t('errors.EVENTS_LIMIT')))
       }
     },
@@ -285,15 +295,13 @@ export default {
           }
         })
       }
-      /*
       this.updateLayer(this.$t('CatalogActivity.ALERTS_LAYER'),
-        { type: 'FeatureCollection', features: _.get(this.alerts, 'items', []) })
-      */
+        { type: 'FeatureCollection', features: this.alertItems })
     },
-    onAlertCollectionRefreshed () {
+    onAlertsCollectionRefreshed () {
       this.refreshAlertsLayer()
       // We do not manage pagination now
-      if (this.alerts.items.length > MAX_ITEMS) {
+      if (this.alerts.nbTotalItems.value > MAX_ITEMS) {
         this.$events.emit('error', new Error(this.$t('errors.ALERTS_LIMIT')))
       }
     },
@@ -383,7 +391,7 @@ export default {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
       const color = kCoreUtils.getColorFromPalette(_.get(event, 'icon.color', 'blue'))
-      return { color: color, fillColor: chroma(color).alpha(0.5).hex() } // Transparency
+      return { color, fillColor: chroma(color).alpha(0.5).hex() } // Transparency
     },
     getEventPopup (event, layer, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
@@ -451,54 +459,16 @@ export default {
       })
     },
     onRemoveAlert (data) {
-      Dialog.create({
-        title: this.$t('CatalogActivity.REMOVE_ALERT_DIALOG_TITLE'),
-        message: this.$t('CatalogActivity.REMOVE_ALERT_DIALOG_MESSAGE'),
-        html: true,
-        ok: {
-          label: this.$t('OK'),
-          flat: true
-        },
-        cancel: {
-          label: this.$t('CANCEL'),
-          flat: true
-        }
-      }).onOk(async () => {
-        await this.$api.getService('alerts').remove(data.feature._id)
-      })
+      this.showRemoveAlertDialog(data.feature)
     },
-    /* getAlertModalButtons () {
-      return [
-        { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.$refs.alertModal.close() },
-        { id: 'apply-button', label: 'DONE', renderer: 'form-button', handler: () => this.onCreateAlert() }
-      ]
-    },*/
+    onRemoveEvent (data) {
+      mixins.events.methods.showRemoveEventDialog.call(this, data.feature)
+    },
     onCreateMeasureAlertAction (data) {
       this.alertFeature = data.feature
       this.alertLayer = data.layer
       this.$refs.alertEditor.openModal()
     },
-    /*
-    async onCreateAlert () {
-      const result = this.$refs.alertForm.validate()
-      if (!result.isValid) return
-      this.inProgress = true
-      try {
-        // Add notification prefix to be used at creation,
-        // Indeed, as alerting is a background process it will not be able to easily guess the user locale
-        const alert = Object.assign(result.values, {
-          notification: {
-            create: this.$t('EventNotifications.CREATE'),
-            remove: this.$t('EventNotifications.REMOVE')
-          }
-        })
-        await this.$api.getService('alerts').create(alert)
-      } catch (_) {
-      }
-      this.inProgress = false
-      this.$refs.alertModal.close()
-    },
-  */
     onCreateWeatherAlertAction (data) {
       // Retrieve weather layer activated
       const selectedLayer = _.values(this.layers).filter(sift({
@@ -574,22 +544,6 @@ export default {
         { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', handler: () => this.$refs.templateModal.close() }
       ]
     },
-    configureCollection (service, baseQuery, filterQuery, props = {}) {
-      // As we'd like to use the collection mixin but need to require multiple services (alerts, events)
-      // we create a specific component instance to manage each type of objects which are then added to the map.
-      // Indeed we can only support one service if we directly use the mixin in the activity.
-      return defineComponent({
-        mixins: [kCoreMixins.baseCollection],
-        methods: {
-          getService: () => this.$api.getService(service),
-          getCollectionBaseQuery: baseQuery,
-          getCollectionFilterQuery: filterQuery,
-          // No pagination on map items
-          getCollectionPaginationQuery: () => ({})
-        },
-        props
-      })
-    },
     onEditStartEvent (event) {
       this.setTopPaneMode('edit-layer-data')
     },
@@ -613,35 +567,42 @@ export default {
     this.$checkBillingOption('catalog')
   },
   mounted () {
-    // Create and setup the alert collection
-    /*
-    this.alerts = this.configureCollection('alerts',
-      () => ({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }), () => ({}), { nbItemsPerPage: 0 }) 
-    console.log(this.alerts)
-    this.alerts.$on('collection-refreshed', this.onAlertCollectionRefreshed) 
-    // Create and setup the events collection
-    this.events = this.configureCollection('events', () => Object.assign({
-      geoJson: true,
-      $skip: 0,
-      $limit: MAX_ITEMS,
-      $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
-    }, this.getPlanQuery()), () => this.getPlanObjectiveQuery(), { nbItemsPerPage: 0 })
-    this.events.$on('collection-refreshed', this.onEventCollectionRefreshed)
-    */
     // Setup engine events listeners
     this.$engineEvents.on('edit-start', this.onEditStartEvent)
     this.$engineEvents.on('edit-stop', this.onEditStopEvent)
   },
   beforeUnmount () {
     this.clearHighlights()
-    //this.alerts.$off('collection-refreshed', this.onAlertCollectionRefreshed)
-    //this.events.off('collection-refreshed', this.onEventCollectionRefreshed)
     this.$engineEvents.off('edit-start', this.onEditStartEvent)
     this.$engineEvents.off('edit-stop', this.onEditStopEvent)
   },
-  setup () {
+  setup (props) {
+    const plan = usePlan({ contextId: props.contextId })
+    const alerts = kCoreComposables.useCollection({
+      service: ref('alerts'),
+      contextId: toRef(props, 'contextId'),
+      baseQuery: ref({ geoJson: true, $skip: 0, $limit: MAX_ITEMS }),
+      nbItemsPerPage: ref(0)
+    })
+    const baseQuery = computed(() => Object.assign({
+      geoJson: true, $skip: 0, $limit: MAX_ITEMS,
+      $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
+    }, plan.planQuery.value))
+    const filterQuery = computed(() => plan.planObjectiveQuery.value)
+    const events = kCoreComposables.useCollection({
+      service: ref('events'),
+      contextId: toRef(props, 'contextId'),
+      baseQuery,
+      filterQuery,
+      nbItemsPerPage: ref(0)
+    })
+    
     return {
-      ...kMapComposables.useActivity(name)
+      alerts,
+      events,
+      ...kMapComposables.useActivity(name),
+      ...plan,
+      ...useAlerts({ contextId: props.contextId })
     }
   }
 }

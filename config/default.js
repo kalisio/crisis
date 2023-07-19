@@ -8,12 +8,18 @@ const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
 let domain
+let pwaAppName = 'Akt\'n\'Map'
+let pwaShortName = 'AktnMap'
 let stripeKey
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   domain = 'https://aktnmap.dev.kalisio.xyz'
+  pwaAppName += ' (dev)'
+  pwaShortName += ' (dev)'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://aktnmap.test.kalisio.xyz'
+  pwaAppName += ' (test)'
+  pwaShortName += ' (test)'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://aktnmap.prod.kalisio.com'
 } else {
@@ -49,13 +55,19 @@ const contextHelp = function (tour) {
 const leftPane = function (tour) {
   return {
     content: [
-      { component: 'KLogo' },
-      { component: 'account/KIdentityPanel', class: 'full-width' },
+      { component: 'account/KProfile', class: 'full-width' },
       { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
-      { component: 'editor/KSettingsEditor' },
+      { id: 'settings', icon: 'las la-cog', label: 'SETTINGS', renderer: 'item', dialog: {
+          component: 'app/KSettings', title: 'SETTINGS', cancelAction: 'CANCEL', okAction: {
+            id: 'apply-settings', label: 'APPLY', handler: 'apply'
+          }
+        }
+      },
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
-      { id: 'about', icon: 'las la-info', label: 'ABOUT', renderer: 'item', dialog: { component: 'app/KAbout', title: 'ABOUT', okAction: 'CLOSE' } },
+      { id: 'about', icon: 'las la-info', label: 'ABOUT', renderer: 'item', dialog: { 
+        component: 'app/KAbout', title: 'ABOUT', okAction: 'CLOSE' } 
+      },
       { id: 'online-help', icon: 'las la-book', label: 'leftPane.ONLINE_HELP', url: onlineHelp, renderer: 'item' },
       contextHelp(tour),
       { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
@@ -189,7 +201,7 @@ const eventsAction = function (contextId = 'contextId') {
   return { 
     id: 'events', icon: 'las la-fire', tooltip: 'EventsActivity.EVENTS_LABEL',
     visible: { name: '$can', params: ['service', 'events', `:${contextId}`] },
-    route: { name: 'events-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } }
+    route: { name: 'events-activity', params: { contextId: `:${contextId}` } }
   }
 }
 
@@ -197,7 +209,7 @@ const mapAction = function (contextId = 'contextId') {
   return {
     id: 'catalog', icon: 'las la-map', tooltip: 'Context.CATALOG',
     visible: { name: '$can', params: ['update', 'catalog', `:${contextId}`] },
-    route: { name: 'catalog-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } },    
+    route: { name: 'catalog-activity', params: { contextId: `:${contextId}` } },    
   }
 }
 
@@ -205,7 +217,7 @@ const archivedEventsAction = function (contextId = 'contextId') {
   return { 
     id: 'archived-events', icon: 'las la-clipboard-list', tooltip: 'Context.ARCHIVED_EVENTS',
     visible: { name: '$can', params: ['service', 'archived-events', `:${contextId}`] },
-    route: { name: 'archived-events-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } }
+    route: { name: 'archived-events-activity', params: { contextId: `:${contextId}` } }
   }
 }
 
@@ -271,7 +283,7 @@ const removeWorkflowAction = function (tooltip) {
   }
 }
 
-let defaultMapOptions = {
+let mapEngine = {
   viewer: {
     minZoom: 3,
     maxZoom: 19,
@@ -364,6 +376,8 @@ module.exports = {
   // If using local IP on WiFi router
   //domain: 'http://192.168.1.16:8081',
   domain,
+  pwaAppName,
+  pwaShortName,
   flavor: process.env.NODE_APP_INSTANCE || 'dev',
   version: require('../package.json').version,
   buildNumber: process.env.BUILD_NUMBER,
@@ -456,7 +470,22 @@ module.exports = {
     },
     fab: { visible: true }
   },
-  accountActivity: {
+  account: {
+    sections: [
+      { title: 'KPasswordManager.TITLE', component: 'account/KPasswordManager' },
+      { title: 'KIdentityManager.TITLE', component: 'account/KIdentityManager' },
+      { title: 'KSubscriptionsManager.TITLE', component: 'account/KSubscriptionsManager',
+        actions: [
+          { id: 'unsubscribe', tooltip: 'KSubscriptionCard.UNSUBSCRIBE_LABEL', icon: 'phonelink_erase', handler: 'unsubscribe' }
+        ]
+      }
+    ],
+    deletable: true
+  },
+  engines: {
+    leaflet: mapEngine
+  },
+  /*accountActivity: {
     leftPane: leftPane(),
     topPane: {
       content: {
@@ -478,13 +507,13 @@ module.exports = {
       },
       mode: 'profile'
     },
-    devices: {
+    subscriptions: {
       actions: [
-        { id: 'remove-device', tooltip: 'KDeviceCard.UNLINK_LABEL', icon: 'phonelink_erase', handler: 'removeDevice',
-          scope: 'header', visible: { name: '$can', params: ['remove', 'devices', ':contextId', ':item'] } }
+        { id: 'unsubscribe', tooltip: 'KSubscriptionCard.UNSUBSCRIBE_LABEL', icon: 'phonelink_erase', handler: 'unsubscribe',
+          scope: 'header', visible: { name: '$can', params: ['remove', 'subscriptions', ':contextId', ':item'] } }
       ]
     }
-  },
+  },*/
   organisationsActivity: {
     leftPane: leftPane(),
     topPane: {
@@ -754,7 +783,6 @@ module.exports = {
         { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'probeAtLocation' }
       ]
     },
-    engine: defaultMapOptions,
     layers: {
       actions: layerActions
     },
@@ -851,7 +879,6 @@ module.exports = {
         }
       ]
     },
-    engine: defaultMapOptions,
     layers: {
       actions: layerActions,
       filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
@@ -1179,7 +1206,6 @@ module.exports = {
         { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'probeAtLocation' }
       ]
     },
-    engine: defaultMapOptions,
     layers: {
       actions: layerActions,
       filter: { id: { $in: ['layer-actions', 'zoom-to'] } }
