@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import commonHooks from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
 import { checkOrganisationsQuotas, checkSubscriptionQuotas, subscribeDefaultPlan,
@@ -7,7 +8,7 @@ import { checkOrganisationsQuotas, checkSubscriptionQuotas, subscribeDefaultPlan
 export default {
   before: {
     all: [],
-    find: [],
+    find: [fuzzySearch({ fields: ['name'] }), coreHooks.diacriticSearch()],
     get: [],
     create: [checkOrganisationsQuotas],
     update: [],

@@ -5,7 +5,7 @@ import { checkGroupsQuotas, updateEventTemplateResource } from '../../hooks/inde
 export default {
   before: {
     all: [],
-    find: [fuzzySearch({ fields: ['name'] }), coreHooks.diacriticSearch() ],
+    find: [fuzzySearch({ fields: ['name'] }), coreHooks.diacriticSearch()],
     get: [],
     create: [
     checkGroupsQuotas

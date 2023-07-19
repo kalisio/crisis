@@ -91,12 +91,9 @@ export function useAlerts(options) {
   }
   function loadAlertLayer (alert) {
     if (!_.has(alert, 'layer._id')) return null
-    let i18n = _.get(alert, 'layer.i18n')
     // Process i18n
-    if (i18n) {
-      const locale = kCoreUtils.getAppLocale()
-      i18n = _.get(i18n, locale)
-      if (i18n) i18next.addResourceBundle(locale, 'kdk', i18n, true, true)
+    if (_.has(alert, 'layer.i18n')) {
+      i18n.registerTranslation(_.get(alert, 'layer.i18n'))
     }
   }
   function showRemoveAlertDialog (alert) {

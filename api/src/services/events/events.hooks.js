@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
 import { hooks as mapHooks } from '@kalisio/kdk/map.api.js'
 import commonHooks from 'feathers-hooks-common'
@@ -13,7 +14,7 @@ const hooks = {
       coreHooks.convertObjectIDs(['layer', 'feature', 'alert._id', 'plan']),
       coreHooks.convertToString(['alert.conditions'])
     ],
-    find: [mapHooks.marshallSpatialQuery, marshallPlanQuery],
+    find: [fuzzySearch({ fields: ['name'] }), coreHooks.diacriticSearch(), mapHooks.marshallSpatialQuery, marshallPlanQuery],
     get: [],
     // Because expireAt comes from client convert it to Date object
     create: [

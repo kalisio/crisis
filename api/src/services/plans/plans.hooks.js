@@ -1,3 +1,4 @@
+import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import commonHooks from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
 import { hooks as mapHooks } from '@kalisio/kdk/map.api.js'
@@ -6,7 +7,7 @@ import { addCreatorAsCoordinator, checkPlansQuotas, updateEventsObjective, remov
 const hooks = {
   before: {
     all: [],
-    find: [],
+    find: [fuzzySearch({ fields: ['name'] }), coreHooks.diacriticSearch()],
     get: [mapHooks.marshallSpatialQuery],
     create: [
       checkPlansQuotas,
