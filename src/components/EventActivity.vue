@@ -104,7 +104,7 @@ export default {
       const icon = kCoreUtils.getIconName(this.event) || 'fas fa-circle'
       // Located event ?
       if (this.hasLocationGeometry()) {
-        const feature = { type: 'Feature', geometry: this.event.location }
+        const feature = this.getLocationAsFeature()
         // Add event layer
         const layer = L.geoJson(feature, {
           style: () => ({ color, fillColor: chroma(color).alpha(0.5).hex() }) // Transparency
@@ -114,8 +114,9 @@ export default {
         const location = centroid(feature)
         this.center(_.get(location, 'geometry.coordinates[0]'), _.get(location, 'geometry.coordinates[1]'), 15)
       } else if (this.hasLocation()) {
+        const feature = this.getLocationAsFeature()
         // Add event marker
-        const marker = L.marker([this.event.location.latitude, this.event.location.longitude], {
+        const marker = L.marker([_.get(feature, 'geometry.coordinates[1]'), _.get(feature, 'geometry.coordinates[0]')], {
           icon: L.icon.fontAwesome({
             iconClasses: icon,
             // Conversion from palette to RGB color is required for markers
@@ -124,10 +125,10 @@ export default {
           })
         })
         // Address as popup
-        marker.bindPopup(this.event.location.name)
+        marker.bindPopup(_.get(feature, 'properties.name'))
         marker.addTo(this.map)
         // Recenter map
-        this.center(this.event.location.longitude, this.event.location.latitude, 15)
+        this.center(_.get(feature, 'geometry.coordinates[0]'), _.get(feature, 'geometry.coordinates[1]'), 15)
       }
       // Add participants layer if coordinator or archived mode as managers can see all
       if (this.isCoordinator || this.archived) {

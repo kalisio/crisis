@@ -79,8 +79,9 @@ import L from 'leaflet'
 import Papa from 'papaparse'
 import { colors, QSlider } from 'quasar'
 import { mixins as kdkCoreMixins, utils as kdkCoreUtils, Time } from '@kalisio/kdk/core.client'
-import { mixins as kdkMapMixinss } from '@kalisio/kdk/map.client.map'
+import { mixins as kdkMapMixins } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
+import { getLocationAsFeature } from '../utils.js'
 
 const activityMixin = kdkCoreMixins.baseActivity('archivedEventsActivity')
 
@@ -91,16 +92,16 @@ export default {
   mixins: [
     activityMixin,
     kdkCoreMixins.baseCollection,
-    kdkMapMixinss.activity,
-    kdkMapMixinss.style,
-    kdkMapMixinss.context,
-    kdkMapMixinss.map.baseMap,
-    kdkMapMixinss.map.geojsonLayers,
-    kdkMapMixinss.map.heatmapLayers,
-    kdkMapMixinss.map.style,
-    kdkMapMixinss.map.tooltip,
-    kdkMapMixinss.map.popup,
-    kdkMapMixinss.map.activity
+    kdkMapMixins.activity,
+    kdkMapMixins.style,
+    kdkMapMixins.context,
+    kdkMapMixins.map.baseMap,
+    kdkMapMixins.map.geojsonLayers,
+    kdkMapMixins.map.heatmapLayers,
+    kdkMapMixins.map.style,
+    kdkMapMixins.map.tooltip,
+    kdkMapMixins.map.popup,
+    kdkMapMixins.map.activity
   ],
   components: {
     QSlider
@@ -215,7 +216,7 @@ export default {
       await this.initializeMap(container)
     },
     async getCatalogLayers () {
-      const layers = await kdkMapMixinss.activity.methods.getCatalogLayers.call(this)
+      const layers = await kdkMapMixins.activity.methods.getCatalogLayers.call(this)
       // We only want base layers
       return _.filter(layers, { type: 'BaseLayer' })
     },
@@ -555,10 +556,11 @@ export default {
         }
         const json = response.data.map(item => {
           // No nested structure in CSV
-          if (item.location) {
-            item.longitude = item.location.longitude
-            item.latitude = item.location.latitude
-            item.address = item.location.name
+          const location = getLocationAsFeature(item)
+          if (location) {
+            item.longitude = _.get(location, 'geometry.coordinates[0]')
+            item.latitude = _.get(location, 'geometry.coordinates[1]')
+            item.address = _.get(location, 'location.properties.name')
             delete item.location
           }
           return item

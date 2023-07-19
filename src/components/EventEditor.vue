@@ -108,7 +108,7 @@ export default {
         // Setup hasWorkflow tag
         this.object.hasWorkflow = !_.isNil(this.template.workflow)
         if (!_.isNil(this.longitude) && !_.isNil(this.latitude)) {
-          this.object.location = { longitude: this.longitude, latitude: this.latitude }
+          this.object.location = { type: 'Feature', geometry: { type: 'Point', coordinates: [this.longitude, this.latitude] } }
         } else if (this.layerId) {
           // const layer = await this.$api.getService('catalog').get(this.layerId)
           // Keep track of layer/feature ID
@@ -116,13 +116,7 @@ export default {
           if (this.featureId) {
             const feature = await this.$api.getService('features').get(this.featureId)
             this.object.feature = this.featureId
-            this.object.location = feature.geometry
-            // Compatibility with GPS-based localization
-            const location = centroid(feature)
-            Object.assign(this.object.location, {
-              longitude: _.get(location, 'geometry.coordinates[0]'),
-              latitude: _.get(location, 'geometry.coordinates[1]')
-            })
+            this.object.location = feature
             /*
             // Perform reverse geocoding if we target a feature
             let description = _.get(feature, 'name', _.get(feature, 'NAME'))

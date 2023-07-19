@@ -21,11 +21,12 @@
     },
     "location": {
       "type": "object", 
-      "draggable": true,
       "field": {
         "component": "form/KLocationField",
         "label": "schemas.PLANS_LOCATION_FIELD_LABEL",
-        "draw": true
+        "geocoders": [],
+        "geolocate": false,
+        "map": ["location", "draw-point", "draw-polyline", "draw-rectangle", "draw-polygon"]
       }
     },
     "coordinators": { 

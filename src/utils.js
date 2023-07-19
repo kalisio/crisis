@@ -1,6 +1,18 @@
 import _ from 'lodash'
 import sift from 'sift'
 
+export function getLocationAsFeature(object) {
+  if (!object || !object.location) return null
+  const location = object.location
+  let feature = location
+  // backward compatibility with old format with only a geometry, not a feature
+  if (location.type !== 'Feature') {
+    feature = { type: 'Feature', geometry: location, properties: { name: location.name } }
+    if (!_.has(feature, 'geometry.type')) feature.geometry = { type: 'Point', coordinates: [location.longitude, location.latitude] }
+  }
+  return feature
+}
+
 export function hasRoleInEvent (user, roles) {
   return _.findIndex(roles, role => {
     if ((role.service === 'members') && (role._id === user._id)) return true

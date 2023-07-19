@@ -6,7 +6,7 @@
   >
     <div class="column xs-gutter">
       <EventTemplateWorkflowForm
-        ref="onFormReferenceCreated"
+        :ref="onFormReferenceCreated"
         :schema="schema"
         @form-ready="onFormReady"
       />

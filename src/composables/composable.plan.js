@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { ref, computed, watch, onBeforeMount, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { api } from '@kalisio/kdk/core.client'
+import * as utils from '../utils'
 
 export function usePlan(options) {
 
@@ -24,8 +25,11 @@ export function usePlan(options) {
   function hasPlan () {
     return planId.value
   }
+  function getPlanLocationAsFeature () {
+    return getLocationAsFeature(plan.value)
+  }
   function hasPlanLocation () {
-    return _.has(plan.value, 'location.latitude') && _.has(plan.value, 'location.longitude')
+    return _.has(getPlanLocationAsFeature(), 'geometry')
   }
   function hasPlanObjectives () {
     return (_.get(plan.value, 'objectives', []).length > 0)

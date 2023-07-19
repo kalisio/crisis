@@ -200,14 +200,6 @@ export default {
     }
   },
   methods: {
-    getLocationMap () {
-      return {
-        component: 'KLocationMap',
-        value: this.item.location,
-        editable: false,
-        style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;'
-      }
-    },
     followUp () {
       this.$router.push({
         name: 'event-activity',

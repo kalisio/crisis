@@ -34,7 +34,7 @@
         "label": "schemas.EVENTS_LOCATION_FIELD_LABEL",
         "geocoders": [],
         "geolocate": true,
-        "map": ["location", "draw-point", "draw-rectangle", "draw-polygon"]
+        "map": ["location", "draw-polyline", "draw-point", "draw-rectangle", "draw-polygon"]
       }
     },
     "participants": { 

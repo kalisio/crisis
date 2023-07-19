@@ -20,11 +20,14 @@ const eventsMixin = {
     return data
   },
   methods: {
+    getLocationAsFeature () {
+      return utils.getLocationAsFeature(this.event)
+    },
     hasLocation () {
-      return _.has(this.event, 'location.latitude') && _.has(this.event, 'location.longitude')
+      return _.has(this.getLocationAsFeature(), 'geometry')
     },
     hasLocationGeometry () {
-      return (_.has(this.event, 'location.type') && (_.get(this.event, 'location.type') !== 'Point'))
+      return (_.get(this.getLocationAsFeature(), 'geometry.type') !== 'Point')
     },
     hasAnyLocation () {
       return this.hasLocation() || this.hasLocationGeometry()

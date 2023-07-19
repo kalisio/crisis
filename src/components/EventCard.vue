@@ -290,14 +290,6 @@ export default {
     }
   },
   methods: {
-    getLocationMap () {
-      return {
-        component: 'KLocationMap',
-        value: this.item.location,
-        editable: false,
-        style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;'
-      }
-    },
     getFollowUpButtons () {
       return [
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.$refs.followUpModal.close() },
@@ -404,11 +396,12 @@ export default {
       this.$refs.mediaBrowser.show(this.attachments)
     },
     launchNavigation () {
-      let longitude = _.get(this.item, 'location.longitude')
-      let latitude = _.get(this.item, 'location.latitude')
+      const feature = this.getLocationAsFeature()
+      let longitude = _.get(feature, 'geometry.coordinates[0]')
+      let latitude = _.get(feature, 'geometry.coordinates[1]')
       // Use centroid for lines/polygons
       if (this.hasLocationGeometry()) {
-        const location = centroid({ type: 'Feature', geometry: _.get(this.item, 'location') })
+        const location = centroid(this.getLocationAsFeature())
         longitude = _.get(location, 'geometry.coordinates[0]')
         latitude = _.get(location, 'geometry.coordinates[1]')
       }

@@ -214,16 +214,18 @@ export default {
       const form = this.getForm('stepForm')
       const interactionField = form.getField('featureInteraction')
       // Add required label field
-      _.set(interactionField, 'properties.field.options',
-        _.toPairs(this.layerSchema.properties).map(([key, value]) => ({ value: key, label: value.field.helper })))
+      // FIXME: [Vue warn] Set operation on key "xxx" failed: target is readonly. 
+      //_.set(interactionField, 'field.options',
+      //  _.toPairs(this.layerSchema.properties).map(([key, value]) => ({ value: key, label: value.field.helper })))
     },
     setupEndField () {
       const form = this.getForm('stepForm')
       const interactionField = form.getField('interaction')
       const endField = form.getField('end')
       // Add required label field
-      _.set(endField, 'properties.field.options',
-        interactionField.model.map(option => Object.assign({ label: option.value }, option)))
+      // FIXME: [Vue warn] Set operation on key "xxx" failed: target is readonly. 
+      //_.set(endField, 'field.options',
+      //  interactionField.reference.model.map(option => Object.assign({ label: option.value }, option)))
     },
     async build () {
       // Because our step form is under a v-if caused by the Quasar stepper

@@ -79,7 +79,7 @@ export default async ({ app }) => {
   app.component('KMediaBrowser', await kdkCoreUtils.loadComponent('media/KMediaBrowser'))
   app.component('KShape', await kdkCoreUtils.loadComponent('media/KShape'))
   app.component('KStatisticsChart', await kdkCoreUtils.loadComponent('chart/KStatisticsChart'))
-  app.component('KLocationMap', await kdkCoreUtils.loadComponent('KLocationMap'))
+  app.component('KLocationMap', await kdkCoreUtils.loadComponent('location/KLocationMap'))
   app.component('KLayersPanel', await kdkCoreUtils.loadComponent('catalog/KLayersPanel'))
   app.component('KColorLegend', await kdkCoreUtils.loadComponent('KColorLegend'))
   app.component('KPage', await kdkCoreUtils.loadComponent('layout/KPage'))

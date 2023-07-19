@@ -65,7 +65,6 @@
     }
   },
   "oneOf": [{
-    "required": [ "title", "icon", "description", "featureInteraction", "stakeholder" ] }, {
     "required": [ "title", "icon", "description", "interaction", "stakeholder" ]
   }]
 }
