@@ -91,9 +91,9 @@
   "dependencies": {
     "@casl/ability": "^6.1.1",
     "@casl/mongoose": "^7.1.0",
-    "@feathersjs/client": "^5.0.5",
-    "@feathersjs/commons": "^5.0.5",
-    "@feathersjs/memory": "^5.0.5",
+    "@feathersjs/client": "^5.0.8",
+    "@feathersjs/commons": "^5.0.8",
+    "@feathersjs/memory": "^5.0.8",
     "@geoman-io/leaflet-geoman-free": "^2.11.1",
     "@kalisio/feathers-s3": "^1.1.0",
     "@kalisio/kdk": "https://github.com/kalisio/kdk",
