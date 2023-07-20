@@ -58,7 +58,7 @@ export default function () {
         delete data.expiryDuration
       }
       // Event notification must be passed as query param
-      params.notification = _.get(data, 'notification', true) // Default is to notify
+      params.notification = _.get(data, 'notification', {}) // Default is to notify
       delete data.notification
       debug('Postprocessed event webhook request with data/payload', data, payload)
     }

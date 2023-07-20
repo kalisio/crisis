@@ -97,8 +97,6 @@ export default {
         if (this.hasPlan()) {
           this.object.plan = this.planId
         }
-        // Setup notification redirection url
-        this.object.urlRedirection = `${config.domain}/#/home/${Store.get('context._id')}/events`
         // Setup expiry date from template
         if (this.object.expiryDuration) {
           const expiryDate = moment().utc().add({ days: this.object.expiryDuration })
@@ -174,13 +172,13 @@ export default {
     getBaseQuery (object) {
       // Overriden to handle notification messages
       const query = kdkCoreMixins.baseEditor.methods.getBaseQuery.call(this)
-      // const notification = _.get(object, 'notification', true)
-      // if (notification) {
       if (this.notify) {
-        if (this.editorMode === 'create') query.notification = this.$t('EventNotifications.CREATE')
-        else query.notification = this.$t('EventNotifications.UPDATE')
+        query.notification = {
+          body: (this.editorMode === 'create' ? this.$t('EventNotifications.CREATE') : this.$t('EventNotifications.UPDATE')),
+          // Setup notification redirection url
+          url: `${config.domain}/#/home/${Store.get('context._id')}/events`
+        }
       }
-      // _.unset(object, 'notification')
       return query
     },
     onFieldChanged (field, value) {

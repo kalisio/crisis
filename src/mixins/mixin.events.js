@@ -330,7 +330,12 @@ const eventsMixin = {
       return {
         storage: {
           context: this.contextId,
-          prefix: this.event._id || this.event
+          prefix: this.event._id || this.event,
+          uploadQuery: {
+            notification: {
+              body: this.$t('EventNotifications.UPDATE_MEDIA')
+            }
+          }
         },
         backgroundColor: 'black',
         controlColor: 'white'
@@ -352,7 +357,7 @@ const eventsMixin = {
         }
       }).onOk(() => {
         const eventsService = this.$api.getService('events', this.contextId)
-        eventsService.remove(event._id, { query: { notification: this.$t('EventNotifications.REMOVE') } })
+        eventsService.remove(event._id, { query: { notification: { body: this.$t('EventNotifications.REMOVE') } } })
       })
     }
   }

@@ -255,7 +255,15 @@ export function processAlert (organisation) {
       if (!previousEvent) {
         debug('Creating event for alert', alert)
         try {
-          await eventsService.create(event, { notification: _.get(alert, 'notification.create', true) })
+          const params = {}
+          if (_.has(alert, 'notification.create')) {
+            params.notification = {
+              body: _.get(alert, 'notification.create'),
+              // Setup notification redirection url
+              url: `${app.get('domain')}/#/home/${eventsService.getContextId()}/events`
+            }
+          }
+          await eventsService.create(event, params)
         } catch (error) {
           // This could be possible if we have replication and multiple instances check alert simultaneously
           if (_.get(error, 'data.code' === 11000)) {
@@ -275,7 +283,15 @@ export function processAlert (organisation) {
     if (!isActive && previousEvent && closeEvent) {
       debug(`Removing event ${previousEvent._id.toString()} for alert`, alert)
       try {
-        await eventsService.remove(previousEvent._id.toString(), { notification: _.get(alert, 'notification.remove', true) })
+        const params = {}
+        if (_.has(alert, 'notification.remove')) {
+          params.notification = {
+            body: _.get(alert, 'notification.remove'),
+            // Setup notification redirection url
+            url: `${app.get('domain')}/#/home/${eventsService.getContextId()}/events`
+          }
+        }
+        await eventsService.remove(previousEvent._id.toString(), params)
       } catch (error) {
         // This could be possible if we have replication and multiple instances check alert simultaneously
         if (error.code === 404) {
@@ -324,6 +340,7 @@ export default async function () {
       if (service.name === 'users' ||
           service.name === 'authorisations' ||
           service.name === 'organisations' ||
+          service.name === 'storage' ||
           service.name === 'groups' ||
           service.name === 'members' ||
           service.name === 'tags' ||

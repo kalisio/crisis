@@ -265,7 +265,7 @@ describe('events', () => {
       participants: [{ _id: orgManagerObject._id, service: 'members' }]
     },
     {
-      notification: 'event created',
+      notification: { body: 'event created' },
       user: orgUserObject,
       checkAuthorisation: true
     })
@@ -289,7 +289,7 @@ describe('events', () => {
     const operation = eventService.patch(eventObject._id, {
       name: 'updated member event'
     }, {
-      notification: 'event updated',
+      notification: { body: 'event updated' },
       user: orgUserObject,
       checkAuthorisation: true
     })
@@ -307,7 +307,7 @@ describe('events', () => {
 
   it('org member can delete an event', async () => {
     await eventService.remove(eventObject._id, {
-      notification: 'event updated',
+      notification: { body: 'event updated' },
       user: orgUserObject,
       checkAuthorisation: true
     })
@@ -324,7 +324,7 @@ describe('events', () => {
       participants: [{ _id: orgUserObject._id, service: 'members' }]
     },
     {
-      notification: 'event created',
+      notification: { body: 'event created' },
       user: orgManagerObject,
       checkAuthorisation: true
     })
@@ -383,7 +383,7 @@ describe('events', () => {
     const operation = eventService.patch(eventObject._id, {
       name: 'updated event'
     }, {
-      notification: 'event updated',
+      notification: { body: 'event updated' },
       user: orgManagerObject,
       checkAuthorisation: true
     })
@@ -485,7 +485,7 @@ describe('events', () => {
 
   it('event coordinators can remove events', () => {
     const operation = eventService.remove(eventObject._id, {
-      notification: 'event removed',
+      notification: { body: 'event removed' },
       user: orgManagerObject,
       checkAuthorisation: true
     })
