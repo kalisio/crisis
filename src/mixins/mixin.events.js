@@ -24,10 +24,12 @@ const eventsMixin = {
       return utils.getLocationAsFeature(this.event)
     },
     hasLocation () {
-      return _.has(this.getLocationAsFeature(), 'geometry')
+      const feature = this.getLocationAsFeature()
+      return feature && _.has(feature, 'geometry')
     },
     hasLocationGeometry () {
-      return (_.get(this.getLocationAsFeature(), 'geometry.type') !== 'Point')
+      const feature = this.getLocationAsFeature()
+      return feature && _.has(feature, 'geometry') && (_.get(feature, 'geometry.type') !== 'Point')
     },
     hasAnyLocation () {
       return this.hasLocation() || this.hasLocationGeometry()
@@ -58,28 +60,18 @@ const eventsMixin = {
       if (_.isEmpty(step)) return false
       else return !_.isEmpty(step.interaction)
     },
-    // Check if there is a defined feature interaction on target step
-    hasStepFeatureInteraction (step) {
-      if (_.isEmpty(step)) return false
-      else return !_.isEmpty(step.featureInteraction)
-    },
     // Check if there is a defined interaction on target step
     hasStepInteraction (step) {
-      return this.hasStepUserInteraction(step) || this.hasStepFeatureInteraction(step)
+      return this.hasStepUserInteraction(step)
     },
     // Check if there is a recorded user interaction on target state
     hasStateUserInteraction (state) {
       if (_.isEmpty(state)) return false
       else return !_.isEmpty(_.get(state, 'properties.interaction'))
     },
-    // Check if there is a recorded feature interaction on target state
-    hasStateFeatureInteraction (state) {
-      if (_.isEmpty(state)) return false
-      else return !_.isEmpty(state.properties)
-    },
     // Check if there is a recorded interaction on target state
     hasStateInteraction (state) {
-      return this.hasStateUserInteraction(state) || this.hasStateFeatureInteraction(state)
+      return this.hasStateUserInteraction(state)
     },
     // Check if we wait for an interaction at current state based on target step/stakeholder
     waitingInteraction (step, state, stakeholder) {
@@ -114,8 +106,6 @@ const eventsMixin = {
     getUserIcon (state = {}, step = {}) {
       // When last step was an interaction use it as icon
       if (this.hasStateUserInteraction(state)) return _.get(state, 'properties.interaction.icon')
-      // When last step was a feature interaction use a specific icon
-      if (this.hasStateFeatureInteraction(state)) return { name: 'fa-edit', color: 'blue' }
       // If we wait for an interaction use previous state icon
       if (this.hasStateUserInteraction(state.previous)) return this.getUserIcon(state.previous, step)
       // Otherwise use workflow icon for current step
@@ -204,39 +194,19 @@ const eventsMixin = {
         return currentStep
       }
     },
-    async loadLayerSchema (layerId) {
-      this.layerSchema = null
-      if (!layerId) return
-      const layer = await this.$api.getService('catalog', this.contextId).get(layerId)
-      if (layer.schema) this.layerSchema = layer.schema.content
-    },
-    async loadFeatureProperties (featureId) {
-      if (!featureId) return null
-      const feature = await this.$api.getService('features', this.contextId).get(featureId)
-      return (!_.isEmpty(feature.properties) ? feature.properties : null)
-    },
-    async loadFeatureGeometry (featureId) {
-      if (!featureId) return null
-      const feature = await this.$api.getService('features', this.contextId).get(featureId)
-      return feature.geometry
-    },
-    async generateSchemaForStep (step) {
+    generateSchemaForStep (step) {
       // Start from schema template and clone it because modifications
       // will be shared by all caller otherwise
-      if (!this.baseLogSchema) {
-        this.baseLogSchema = await kdkCoreUtils.loadSchema('event-logs.create')
-        // FIXME: not yet sure why this is now required, might be related to
-        // https://forum.vuejs.org/t/solved-using-standalone-version-but-getting-failed-to-mount-component-template-or-render-function-not-defined/19569/2
-        if (this.baseLogSchema.default) this.baseLogSchema = this.baseLogSchema.default
+      const schema = {
+        $schema: 'http://json-schema.org/draft-07/schema#',
+        $id: 'http://www.kalisio.xyz/schemas/event-logs.create.json#',
+        title: 'Event Log Creation',
+        description: 'Event log creation schema',
+        type: 'object',
+        properties: {},
+        required: []
       }
-      const schema = _.cloneDeep(this.baseLogSchema)
-      // Then add step interactions
-      if (this.hasStepFeatureInteraction(step)) {
-        if (this.layerSchema) {
-          schema.properties = _.pickBy(this.layerSchema.properties, (value, property) => step.featureInteraction.includes(property))
-          schema.required = _.filter(this.layerSchema.required, (property) => step.featureInteraction.includes(property))
-        }
-      }
+      // Then add step interaction
       if (this.hasStepUserInteraction(step)) {
         const options = step.interaction.map(option => { return { label: option.value, value: option } })
         schema.properties.interaction = {
@@ -303,14 +273,6 @@ const eventsMixin = {
         // Directly store as GeoJson objects
         const log = await this.createParticipantLog(step, state)
         _.merge(log.properties, result.values)
-        if (this.hasStateFeatureInteraction(log) && this.event.feature) {
-          // Use feature geometry instead of user position in this case
-          const geometry = await this.loadFeatureGeometry(this.event.feature)
-          if (geometry) log.geometry = geometry
-          // Update feature properties
-          this.$api.getService('features', this.contextId).patch(this.event.feature,
-            _.mapKeys(result.values, (value, key) => `properties.${key}`))
-        }
         // Then create interaction log
         return this.getService().create(log)
       } else {

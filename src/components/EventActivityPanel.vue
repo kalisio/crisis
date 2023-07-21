@@ -7,9 +7,9 @@
           <q-tooltip v-if="participant.step" content-class="bg-primary" >{{ getUserState(participant) }}</q-tooltip>
           <q-tooltip v-if="participant.step" :offset="[0, 48]">{{ $t('EventActivityPanel.FILTER_PARTICIPANTS') }}</q-tooltip>
         </q-btn>
-        <span>{{ getUserName(participant) }}&nbsp;&nbsp;</span>
+        <span v-if="getUserComment(participant)">{{ getUserName(participant) }}: {{ getUserComment(participant) }}</span>
+        <span v-else>{{ getUserName(participant) }}</span>
       </div>
-      <k-text-area class="self-center text-italic" :text="getUserComment(participant)" :length="30"/>
       <div class="col-auto self-center">
         <q-btn v-if="!archived && canFollowUpUser(participant)" flat round small color="primary" @click="doUserFollowUp(participant._id)">
           <q-icon name="las la-sms" color="red" />

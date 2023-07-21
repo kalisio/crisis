@@ -53,7 +53,7 @@ export default {
       return this.$api.getService('event-logs', this.contextId)
     },
     async loadSchema () {
-      this.schema = await this.generateSchemaForStep(this.step, this.event.layer)
+      this.schema = this.generateSchemaForStep(this.step)
       return this.schema
     },
     async refresh () {
@@ -65,9 +65,7 @@ export default {
           this.loadRefs()
         ])
         await this.$refs.form.build()
-        const properties = await this.loadFeatureProperties(this.event.feature)
-        if (properties) this.$refs.form.fill(properties)
-        else this.$refs.form.clear()
+        this.$refs.form.clear()
       }
     },
     async logCoordinatorState () {
@@ -79,8 +77,6 @@ export default {
     // Retrieve source log/event
     this.state = await this.getService().get(this.logId)
     this.event = await this.$api.getService('events', this.contextId).get(this.objectId)
-    // Load layer schema if any
-    await this.loadLayerSchema(this.event.layer)
     this.step = this.getWorkflowStep(this.state)
     this.refresh()
   }

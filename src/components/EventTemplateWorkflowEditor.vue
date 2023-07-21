@@ -7,6 +7,7 @@
     <div class="column xs-gutter">
       <EventTemplateWorkflowForm
         :ref="onFormReferenceCreated"
+        :class="{ 'light-dimmed': applyInProgress }"
         :schema="schema"
         @form-ready="onFormReady"
       />
@@ -29,6 +30,11 @@ export default {
     kdkCoreMixins.schemaProxy,
     kdkCoreMixins.baseEditor
   ],
+  data () {
+    return {
+      applyInProgress: false
+    }
+  },
   computed: {
     buttons () {
       return [
@@ -38,6 +44,14 @@ export default {
     }
   },
   methods: {
+    async apply () {
+      this.applyInProgress = true
+      if (await kdkCoreMixins.baseEditor.methods.apply.call(this)) {
+        this.applyInProgress = false
+        this.closeModal()
+      }
+      this.applyInProgress = false
+    },
     openModal (maximized = false) {
       this.refresh()
       kdkCoreMixins.baseModal.methods.openModal.call(this, maximized)

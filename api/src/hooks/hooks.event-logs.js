@@ -1,6 +1,7 @@
 import makeDebug from 'debug'
 import _ from 'lodash'
 import commonHooks from 'feathers-hooks-common'
+import { sendPushNotifications } from '../utils.js'
 
 const { getItems } = commonHooks
 const debug = makeDebug('aktnmap:event-logs:hooks')
@@ -84,9 +85,9 @@ export async function updatePreviousLog (hook) {
   return hook
 }
 
-export async function sendStateNotifications (hook) {
+export async function sendEventLogPushNotifications (hook) {
   if (hook.type !== 'after') {
-    throw new Error('The \'sendStateNotifications\' hook should only be used as a \'after\' hook.')
+    throw new Error('The \'sendEventLogPushNotifications\' hook should only be used as a \'after\' hook.')
   }
 
   // A notification occur only when we record the interaction of a given workflow step
@@ -94,35 +95,19 @@ export async function sendStateNotifications (hook) {
   const interaction = _.get(hook, 'result.properties.interaction')
   const stakeholder = _.get(hook, 'result.stakeholder')
   if (interaction && (stakeholder === 'coordinator')) {
-    const pusherService = hook.app.getService('pusher')
-    if (!pusherService) return hook
     const participant = hook.result.participant
     let event = hook.result.event
     if (participant && event) {
-      // We need the event first to get its title
+      // We need the event first to get its title as we only have the id
       const eventsService = hook.app.getService('events', hook.service.context)
       event = await eventsService.get(event.toString())
       // We'd like to be tolerant here because the participants might have be removed from the system while the event is still alive
       try {
-        await pusherService.create({
-          action: 'message',
-          // The notification contains the event title with recorded interaction
-          // FIXME add dates for correct stacking
-          message: {
-            title: event.name,
-            body: interaction.value,
-            // To make the log appear right in the event time line use the event creation as reference
-            // and make the log appear like an event update
-            createdAt: event.createdAt,
-            updatedAt: hook.result.createdAt,
-            // Custom vibration pattern
-            vibration: [500, 1000, 500, 500, 500, 500],
-            sound: 'default'
-          },
-          pushObject: participant.toString(),
-          pushObjectService: 'users'
-        })
-        debug('Published event state notifications for participant ' + participant.toString() + ' on event ' + event._id.toString())
+        const notification = {
+          title: event.name,
+          body: interaction.value
+        }
+        await sendPushNotifications(hook.app, [participant.toString()], notification)
       } catch (error) {
         hook.app.logger.error(error.message, error)
       }

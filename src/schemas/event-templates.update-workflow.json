@@ -55,10 +55,10 @@
     "end": {
       "type": "array", 
       "uniqueItems": true,
+      "multiselect": true,
       "field": {
         "component": "form/KSelectField",
         "label": "schemas.EVENT_TEMPLATES_WORKFLOW_END_FIELD_LABEL",
-        "multiple": true,
         "chips": true,
         "options": []
       }

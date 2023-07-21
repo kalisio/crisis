@@ -1,6 +1,6 @@
 import commonHooks from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
-import { addLogDefaults, sendStateNotifications, linkWithPreviousLog, updatePreviousLog, archive } from '../../hooks/index.js'
+import { addLogDefaults, sendEventLogPushNotifications, linkWithPreviousLog, updatePreviousLog, archive } from '../../hooks/index.js'
 
 const populatePreviousLog = commonHooks.populate({
   schema: hook => {
@@ -44,7 +44,7 @@ const hooks = {
     all: [],
     find: [populatePreviousLog, populateParticipant],
     get: [],
-    create: [updatePreviousLog, sendStateNotifications, populatePreviousLog, populateParticipant],
+    create: [updatePreviousLog, sendEventLogPushNotifications, populatePreviousLog, populateParticipant],
     update: [],
     patch: [],
     remove: []

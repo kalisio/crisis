@@ -41,17 +41,17 @@ export default {
       default: () => null
     }
   },
+  data () {
+    return {
+      applyInProgress: false
+    }
+  },
   computed: {
     buttons () {
       return [
         { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
         { id: 'apply-button', label: 'DONE', renderer: 'form-button', handler: () => this.apply() }
       ]
-    }
-  },
-  data () {
-    return {
-      applyInProgress: false
     }
   },
   methods: {

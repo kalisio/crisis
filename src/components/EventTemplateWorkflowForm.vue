@@ -2,7 +2,8 @@
   <q-stepper id="workflow" header-nav animated ref="stepper" v-model="currentStep" @input="onStepSelected">
     <q-step v-for="(step, index) in steps" :key="step.name + '_' + index" :name="step.name"
       :title="step.title" :icon="getStepIcon(step)">
-      <KForm ref="stepForm" v-show="!preview" :schema="schema" @form-ready="fillStepForm" @field-changed="onStepFieldChanged" />
+      <KForm ref="stepForm" v-show="!preview" :schema="stepSchema" :values='stepValues'
+        @form-ready="onFormReady" @field-changed="onStepFieldChanged" />
       <div v-show="preview">
         <KForm ref="previewForm" :schema="previewSchema" />
       </div>
@@ -72,8 +73,23 @@ export default {
     return {
       steps: [],
       currentStep: '',
-      preview: false,
-      previewSchema: null
+      stepValues: {},
+      preview: false
+    }
+  },
+  computed: {
+    stepSchema () {
+      if (!this.schema) return null
+      // Start from base schema
+      const schema = Object.assign({}, this.schema)
+      // Add required end field options
+      const options = _.get(this.stepValues, 'interaction', [])
+      _.set(schema, 'properties.end.field.options',
+          options.map(option => Object.assign({ label: option.value }, option)))
+      return schema
+    },
+    previewSchema () {
+      return this.generateSchemaForStep(this.getCurrentStep())
     }
   },
   methods: {
@@ -110,7 +126,7 @@ export default {
         this.steps.push(step)
         this.currentStep = this.steps[this.steps.length - 1].name
       }
-      this.restoreStep()
+      this.refreshStep()
     },
     onRemoveStep () {
       const name = this.currentStep
@@ -120,13 +136,13 @@ export default {
       if (this.currentStep !== this.steps[0].name) {
         this.currentStep = this.steps[index - 1].name
       } else {
-        // when removing first step the second will replace it
+        // When removing first step the second will replace it
         this.currentStep = this.steps[1].name
       }
-      // Can't use splice because Vue does not detect the change
-      this.steps = this.steps.filter((step) => step.name !== name)
+      // Use splice so that Vue detects the change
+      this.steps.splice(index, 1)
       // Restore step form when editing
-      this.restoreStep()
+      this.refreshStep()
     },
     onPreviousStep () {
       // Apply current form changes when editing
@@ -134,7 +150,7 @@ export default {
       if (!this.applyStepChanges()) return
       const index = this.getCurrentStepIndex()
       this.currentStep = this.steps[index - 1].name
-      this.restoreStep()
+      this.refreshStep()
     },
     onNextStep () {
       // Apply current form changes when editing
@@ -143,7 +159,7 @@ export default {
       const index = this.getCurrentStepIndex()
       this.currentStep = this.steps[index + 1].name
       // Restore step form when editing
-      this.restoreStep()
+      this.refreshStep()
     },
     onStepSelected (step) {
       // Apply current form changes when editing
@@ -153,7 +169,7 @@ export default {
       // For now we don't validate
       // if (!this.applyStepChanges()) return
       // Restore step form when editing
-      this.restoreStep()
+      this.refreshStep()
     },
     onPreviewOrEdit () {
       // Apply current form changes before previewing
@@ -163,7 +179,17 @@ export default {
       }
       this.preview = !this.preview
       // Restore step form when editing
-      this.restoreStep()
+      this.refreshStep()
+    },
+    onStepFieldChanged () {
+      const form = this.getForm('stepForm')
+      if (form) {
+        _.assign(this.stepValues, form.values())
+      }
+    },
+    onFormReady () {
+      // Now internal form is ready we are as well
+      this.$emit('form-ready', this)
     },
     applyStepChanges () {
       if (this.preview) return true
@@ -173,83 +199,25 @@ export default {
       }
       return form.isValid
     },
-    async restoreStep () {
-      // For preview we need to update the underlying schema to reflect step values
-      if (this.preview) {
-        this.previewSchema = await this.generateSchemaForStep(this.getCurrentStep(), this.layer)
-        // We need to force a refresh so that the schema is correctly transfered to child component by Vuejs
-        await this.$nextTick()
-        // Force form refresh to default values
-        const form = this.getForm('previewForm')
-        await form.build()
-        form.clear()
-      } else {
+    refreshStep () {
+      // For preview the underlying schema should be updated automatically, thus reset the form
+      if (!this.preview) {
         // Otherwise simply fill the step form
         this.fillStepForm()
       }
     },
-    async loadPreviewSchema () {
-      try {
-        this.previewSchema = await this.generateSchemaForStep(this.getCurrentStep(), this.layer)
-        return this.previewSchema
-      } catch (error) {
-        this.$events.emit('error', error)
-        throw error
-      }
-    },
-    onStepFieldChanged (field, value) {
-      // Setup workflow ending values selector depending on interaction field state
-      if (field === 'interaction') {
-        this.setupEndField()
-      }
-    },
     fillStepForm () {
-      const form = this.getForm('stepForm')
-      form.fill(this.getCurrentStep())
-      this.setupFeatureInteractionField()
-      this.setupEndField()
-    },
-    setupFeatureInteractionField () {
-      if (!this.layerSchema) return
-      const form = this.getForm('stepForm')
-      const interactionField = form.getField('featureInteraction')
-      // Add required label field
-      // FIXME: [Vue warn] Set operation on key "xxx" failed: target is readonly. 
-      //_.set(interactionField, 'field.options',
-      //  _.toPairs(this.layerSchema.properties).map(([key, value]) => ({ value: key, label: value.field.helper })))
-    },
-    setupEndField () {
-      const form = this.getForm('stepForm')
-      const interactionField = form.getField('interaction')
-      const endField = form.getField('end')
-      // Add required label field
-      // FIXME: [Vue warn] Set operation on key "xxx" failed: target is readonly. 
-      //_.set(endField, 'field.options',
-      //  interactionField.reference.model.map(option => Object.assign({ label: option.value }, option)))
-    },
-    async build () {
-      // Because our step form is under a v-if caused by the Quasar stepper
-      // it is destroyed/recreated by Vue so that we need to restore the refs each time it is build
-      this.setRefs(['stepForm'])
-      // Build the internal form
-      await Promise.all([
-        this.loadPreviewSchema(),
-        this.loadRefs()
-      ])
-
-      return Promise.all([
-        this.getForm('stepForm').build(),
-        this.getForm('previewForm').build()
-      ])
+      this.stepValues = this.getCurrentStep()
     },
     async fill (workflow) {
-      // If no workflow given this will use default one
+      // If no workflow given we will use default one
       if (workflow && workflow.length > 0) {
         this.steps = workflow
-        this.currentStep = this.steps[0].name
+        // Reset current step if not available
+        if (!this.getCurrentStep()) this.currentStep = this.steps[0].name
       }
       // Restore step form when editing
-      this.restoreStep()
+      this.refreshStep()
     },
     clear () {
       this.fill([this.generateStep()])
@@ -266,6 +234,7 @@ export default {
       object.workflow = this.steps
     },
     submitted (object) {
+      // Nothing to do
     }
   },
   created () {
@@ -273,7 +242,6 @@ export default {
       title: '',
       icon: { name: 'fas fa-check', color: 'grey' },
       description: '',
-      featureInteraction: [],
       interaction: [],
       end: [],
       stakeholder: 'participant'
@@ -281,6 +249,7 @@ export default {
     // Initialize step data on creation so that local ref to form can be resolved
     this.steps = [this.generateStep()]
     this.currentStep = this.steps[0].name
+    this.refreshStep()
   }
 }
 </script>

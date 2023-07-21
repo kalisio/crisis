@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { createObjectID } from '@kalisio/kdk/core.api.js'
 
 // Send a notification to participants that can be users, groups or tags
 export async function sendPushNotifications (app, participants, notification) {
@@ -18,6 +19,8 @@ export async function sendPushNotifications (app, participants, notification) {
   // Define participants
   const [usersId, groupsId, tagsId] = Array(3).fill([])
   _.forEach(participants, participant => {
+    // Check for ObjectID
+    if (typeof participant === 'string') usersId.push(participant)
     if (participant.service === 'members') usersId.push(participant._id)
     if (participant.service === 'groups') groupsId.push(participant._id)
     if (participant.service === 'tags') tagsId.push(participant._id)

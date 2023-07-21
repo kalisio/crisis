@@ -154,9 +154,7 @@ export default {
       return this.$api.getService(this.getServiceName())
     },
     async loadSchema () {
-      // Load layer schema if any first
-      await this.loadLayerSchema(this.event.layer)
-      this.schema = await this.generateSchemaForStep(this.selectedParticipantStep)
+      this.schema = this.generateSchemaForStep(this.selectedParticipantStep)
       return this.schema
     },
     onItemToggled (item, toggled) {
@@ -193,9 +191,7 @@ export default {
         this.loadRefs()
       ])
       await this.$refs.form.build()
-      const properties = await this.loadFeatureProperties(this.event.feature)
-      if (properties) this.$refs.form.fill(properties)
-      else this.$refs.form.clear()
+      this.$refs.form.clear()
     },
     async logParticipantStates () {
       // Check for multi-selection
