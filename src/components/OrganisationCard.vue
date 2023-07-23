@@ -90,19 +90,6 @@
             </template>
           </div>
         </KCardSection>
-        <!-- Billing section -->
-        <KCardSection v-if="canAccessBilling" :title="$t('OrganisationCard.SUBSCRIPTIONS_LABEL')" :actions="[{
-          id: 'edit-billing', icon: 'las la-edit', size: 'sm', tooltip: 'OrganisationCard.EDIT_ACTION',
-          route: { name: 'edit-organisation-billing', params: { objectId: item._id, title: item.name } }
-        }]">
-            <div class="row items-center">
-            <template v-for="subscription in subscriptions" :key="subscription">
-              <div class="q-pl-sm">
-                <q-badge :label="$t(`${subscription}_LABEL`)" color="grey-7" />
-              </div>
-            </template>
-          </div>
-        </KCardSection>
       </div>
     </template>
   </KCard>
@@ -218,17 +205,6 @@ export default {
       }
     },
     async onExpanded () {
-      // Retrieve the quotas
-      await this.loadBilling()
-      const subscription = this.billing.subscription.plan
-      const orgQuotas = _.get(this.billing, 'quotas')
-      const appQuotas = this.$store.get('capabilities.api.quotas', {})
-      if (_.isEmpty(appQuotas)) {
-        logger.debug('No application quotas found')
-        return
-      }
-      this.quotas = appQuotas[subscription]
-      _.merge(this.quota, orgQuotas)
       // Counts the different elements
       for (let i = 0; i < this.structure.length; ++i) {
         const service = this.structure[i].name

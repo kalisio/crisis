@@ -78,19 +78,6 @@ module.exports = [{
               component: 'editor/KModalEditor',
               props: true,
               tour: tours['edit-organisation']
-            },
-            'edit-billing/:objectId': {
-              name: 'edit-organisation-billing',
-              component: 'BillingEditor',
-              props: function (route) {
-                return {
-                  objectId: route.params.objectId,
-                  title: route.params.title,
-                  perspective: 'billing',
-                  perspectiveAsObject: true
-                }
-              },
-              tour: tours['edit-organisation-billing']
             }
           }
         },
