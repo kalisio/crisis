@@ -624,7 +624,10 @@
     "FOLLOWUP_MODAL_CLOSE_ACTION": "@:CLOSE_LABEL",
     "FOLLOWUP_MODAL_SAVE_BUTTON": "@:SAVE_LABEL",
     "VIEW_LOCATION_MAP": "View location map",
-    "VIEW_PARTICIPANTS": "View partcipants"
+    "VIEW_PARTICIPANTS": "View partcipants",
+    "GOOGLE_MAP_LABEL": "Google Map",
+    "WAZE_LABEL": "Waze",
+    "APPLE_PLANS_LABEL": "Apple Plans"
   },
   "EventFilter": {
     "OPEN": "Open",

@@ -276,7 +276,10 @@ export default {
     },
     coordinatatorsActions () {
       return _.filter(this.itemActions, { scope: 'coordinators' })
-    }
+    },
+    hasPosition () {
+      return _.has(this.item, 'location.geometry.coordinates')
+    },
   },
   data () {
     return {
@@ -334,6 +337,7 @@ export default {
       return this.schema
     },
     configureActions () {
+      console.log('toto', this.itemActions)
       // Required alias for the event logs mixin
       this.event = this.item
       this.refreshUser()
@@ -389,6 +393,27 @@ export default {
       // Find the event map action and push the browse media action just before
       const index = _.findIndex(this.itemActions, (action) => action.id === 'event-map')
       this.itemActions.splice(index, 0, browseAction)
+    },
+    getLatitude () {
+      return _.get(this.item, 'location.geometry.coordinates[1]')
+    },
+    getLongitude () {
+      return _.get(this.item, 'location.geometry.coordinates[0]')
+    },
+    launchGoogleMap () {
+      let url = 'https://www.google.com/maps/dir/?api=1'
+      if (this.hasPosition) url = `${url}&destination=${this.getLatitude()},${this.getLongitude()}`
+      window.open(url)
+    },
+    launchApplePlans () {
+      let url = 'https://maps.apple.com/'
+      if (this.hasPosition) url = `${url}place?ll=${this.getLatitude()},${this.getLongitude()}`
+      window.open(url)
+    },
+    launchWaze () {
+      let url = 'https://waze.com/ul'
+      if (this.hasPosition) url = `${url}?q=${this.getLatitude()},${this.getLongitude()}`
+      window.open(url)
     },
     browseMedia () {
       this.$refs.mediaBrowser.show(this.attachments)
