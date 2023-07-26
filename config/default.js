@@ -675,14 +675,9 @@ module.exports = {
           visible: ['hasAnyLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
           handler:  'viewMap', scope: 'footer'
         },
-        { 
-          id: 'navigate', tooltip: 'EventCard.NAVIGATE_LABEL', icon: 'las la-location-arrow', 
-          visible: ['hasAnyLocation', 'canNavigate', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
-          handler: 'launchNavigation', scope: 'footer'
-        },
         { id: 'navigate-menu', scope: 'footer', component: 'menu/KMenu', icon: 'las la-location-arrow', tooltip: 'EventCard.NAVIGATE_LABEL', actionRenderer: 'item',
           content: [
-            { id: 'navigate-google-map', icon: 'fab fa-google', label: 'EventCard.GOOGLE_MAP_LABEL', handler: 'launchGoogleMap' },
+            { id: 'navigate-google-maps', icon: 'fab fa-google', label: 'EventCard.GOOGLE_MAPS_LABEL', handler: 'launchGoogleMaps' },
             { id: 'navigate-apple-plans', icon: 'fab fa-apple', label: 'EventCard.APPLE_PLANS_LABEL', handler: 'launchApplePlans' },
             { id: 'navigate-waze-map', icon: 'fab fa-waze', label: 'EventCard.WAZE_LABEL', handler: 'launchWaze' },
           ]

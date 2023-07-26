@@ -400,7 +400,7 @@ export default {
     getLongitude () {
       return _.get(this.item, 'location.geometry.coordinates[0]')
     },
-    launchGoogleMap () {
+    launchGoogleMaps () {
       let url = 'https://www.google.com/maps/dir/?api=1'
       if (this.hasPosition) url = `${url}&destination=${this.getLatitude()},${this.getLongitude()}`
       window.open(url)
@@ -417,18 +417,6 @@ export default {
     },
     browseMedia () {
       this.$refs.mediaBrowser.show(this.attachments)
-    },
-    launchNavigation () {
-      const feature = this.getLocationAsFeature()
-      let longitude = _.get(feature, 'geometry.coordinates[0]')
-      let latitude = _.get(feature, 'geometry.coordinates[1]')
-      // Use centroid for lines/polygons
-      if (this.hasLocationGeometry()) {
-        const location = centroid(this.getLocationAsFeature())
-        longitude = _.get(location, 'geometry.coordinates[0]')
-        latitude = _.get(location, 'geometry.coordinates[1]')
-      }
-      this.navigate(longitude, latitude)
     },
     removeEvent () {
       this.showRemoveEventDialog(this.item)

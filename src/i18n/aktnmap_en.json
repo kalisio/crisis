@@ -625,7 +625,7 @@
     "FOLLOWUP_MODAL_SAVE_BUTTON": "@:SAVE_LABEL",
     "VIEW_LOCATION_MAP": "View location map",
     "VIEW_PARTICIPANTS": "View partcipants",
-    "GOOGLE_MAP_LABEL": "Google Map",
+    "GOOGLE_MAPS_LABEL": "Google Maps",
     "WAZE_LABEL": "Waze",
     "APPLE_PLANS_LABEL": "Apple Plans"
   },
