@@ -100,38 +100,35 @@ export default {
       return 440
     },
     boardColumns () {
+      const props = {
+        service: 'events',
+        renderer: this.renderer,
+        contextId: this.contextId,
+        filterQuery: this.filterQuery
+      }
       return [{
         label: 'EventsActivity.TODO_LABEL',
         value: 'todo',
-        props: {
-          service: 'events',
-          renderer: this.renderer,
-          contextId: this.contextId,
-          baseQuery: Object.assign({ participants: { $eq: [] } }, this.baseQuery),
-          filterQuery: this.filterQuery
-        },
+        props: _.defaults({
+          baseQuery: Object.assign({ participants: { $eq: [] } }, this.baseQuery)
+        }, props),
         width: this.columnWidth
       }, {
         label: 'EventsActivity.DOING_LABEL',
         value: 'doing',
-        props: {
-          service: 'events',
-          renderer: this.renderer,
-          contextId: this.contextId,
+        props: _.defaults({
           baseQuery: Object.assign({ participants: { $ne: [] } }, this.baseQuery),
-          filterQuery: this.filterQuery
-        },
+        }, props),
         width: this.columnWidth
       }, {
         label: 'EventsActivity.DONE_LABEL',
         value: 'done',
-        props: {
+        props: _.defaults({
+          // Override service & component
           service: 'archived-events',
-          renderer: { component: 'ArchivedEventCard', dense: true },
-          contextId: this.contextId,
-          baseQuery: Object.assign({ deletedAt: { $exists: true } }, this.baseQuery),
-          filterQuery: this.filterQuery
-        },
+          renderer: Object.assign({}, this.renderer, { component: 'ArchivedEventCard' }),
+          baseQuery: Object.assign({ deletedAt: { $exists: true } }, this.baseQuery)
+        }, props),
         width: this.columnWidth
       }]
     }
@@ -192,6 +189,13 @@ export default {
     async onUserChanged () {
       await this.refreshFab()
     },
+    onEventUpdated () {
+      // Retrieve archived events collection
+      const board = this.$refs.eventsBoard
+      const columns = board.getColumns(['todo', 'doing'])
+      // Force a refresh
+      columns.forEach(column => column.resetCollection())
+    },
     onEventRemoved () {
       // Retrieve archived events collection
       const board = this.$refs.eventsBoard
@@ -202,11 +206,17 @@ export default {
   },
   created () {
     this.$events.on('user-changed', this.refreshFab)
-    // Keep track of changes once loaded
-    // Indeed, archived events do not emit real-time service events
-    // so that we need to manually update the archived events collection
+  },
+  mounted () {
+    // Keep track of changes once loaded, done on mounted as we need the plan ID which is retrieved on before mount in composable.
+    // Indeed, archived events do not emit real-time service events, we need to manually update the archived events collection.
+    // Morevoer, if the item property used to assign the column is changed it can cause a problem.
+    // Indeed, the item will be correctly append to the new column as it is not already present.
+    // However, the item will not be removed from the previous column as it is not a remove operation and not tracked anymore as no more matching the query.
     if (this.planId) {
       const eventsService = this.$api.getService('events', this.contextId)
+      eventsService.on('patched', this.onEventUpdated)
+      eventsService.on('updated', this.onEventUpdated)
       eventsService.on('removed', this.onEventRemoved)
     }
   },
@@ -214,6 +224,8 @@ export default {
     this.$events.off('user-changed', this.refreshFab)
     if (this.planId) {
       const eventsService = this.$api.getService('events', this.contextId)
+      eventsService.off('removed', this.onEventUpdated)
+      eventsService.off('removed', this.onEventUpdated)
       eventsService.off('removed', this.onEventRemoved)
     }
   },
