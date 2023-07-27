@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import commonHooks from 'feathers-hooks-common'
+import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
 import { hooks as mapHooks } from '@kalisio/kdk/map.api.js'
 import { populatePlan, marshallPlanQuery } from '../../hooks/index.js'
@@ -10,7 +11,7 @@ export default {
       coreHooks.convertObjectIDs(['plan']),
       coreHooks.convertToString(['alert.conditions'])
     ],
-    find: [mapHooks.marshallSpatialQuery, coreHooks.marshallComparisonQuery, marshallPlanQuery, coreHooks.distinct],
+    find: [fuzzySearch({ fields: ['name'] }), coreHooks.diacriticSearch(), mapHooks.marshallSpatialQuery, coreHooks.marshallComparisonQuery, marshallPlanQuery, coreHooks.distinct],
     get: [],
     create: [
       commonHooks.disallow('external'),
