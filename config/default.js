@@ -201,7 +201,7 @@ const eventsAction = function (contextId = 'contextId') {
   return { 
     id: 'events', icon: 'las la-fire', tooltip: 'EventsActivity.EVENTS_LABEL',
     visible: { name: '$can', params: ['service', 'events', `:${contextId}`] },
-    route: { name: 'events-activity', params: { contextId: `:${contextId}` } }
+    route: { name: 'events-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } }
   }
 }
 
@@ -209,7 +209,7 @@ const mapAction = function (contextId = 'contextId') {
   return {
     id: 'catalog', icon: 'las la-map', tooltip: 'Context.CATALOG',
     visible: { name: '$can', params: ['update', 'catalog', `:${contextId}`] },
-    route: { name: 'catalog-activity', params: { contextId: `:${contextId}` } },    
+    route: { name: 'catalog-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } },    
   }
 }
 
@@ -217,7 +217,7 @@ const archivedEventsAction = function (contextId = 'contextId') {
   return { 
     id: 'archived-events', icon: 'las la-clipboard-list', tooltip: 'Context.ARCHIVED_EVENTS',
     visible: { name: '$can', params: ['service', 'archived-events', `:${contextId}`] },
-    route: { name: 'archived-events-activity', params: { contextId: `:${contextId}` } }
+    route: { name: 'archived-events-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } }
   }
 }
 
