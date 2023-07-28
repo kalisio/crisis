@@ -1,37 +1,40 @@
 <template>
-  <template v-for="participant in participants" :key="participant._id">
-    <div class="row justify-between no-wrap" style="overflow: auto">
-      <div class="col-auto self-center">
-        <q-btn flat round small color="primary" @click="onStateClicked(participant)">
-          <k-avatar :object="participant" />
-          <q-tooltip v-if="participant.step" content-class="bg-primary" >{{ getUserState(participant) }}</q-tooltip>
-          <q-tooltip v-if="participant.step" :offset="[0, 48]">{{ $t('EventActivityPanel.FILTER_PARTICIPANTS') }}</q-tooltip>
-        </q-btn>
-        <span v-if="getUserComment(participant)">{{ getUserName(participant) }}: {{ getUserComment(participant) }}</span>
-        <span v-else>{{ getUserName(participant) }}</span>
-      </div>
-      <div class="col-auto self-center">
-        <q-btn v-if="!archived && canFollowUpUser(participant)" flat round small color="primary" @click="doUserFollowUp(participant._id)">
-          <q-icon name="las la-sms" color="red" />
-          <q-tooltip>{{ getUserFollowUp(participant) }}</q-tooltip>
-        </q-btn>
-        <q-btn flat round small color="primary" @click="onZoomClicked(participant)">
-          <q-icon name="las la-search-location" />
-        </q-btn>
-      </div>
-    </div>
-  </template>
+  <KScrollArea :maxHeight="scrollAreaMaxHeight" :style="panelStyle">
+      <template v-for="participant in participants" :key="participant._id">
+        <div class="full-width row items-center q-pl-md q-pr-sm no-wrap">
+          <q-btn flat round small color="primary" @click="onStateClicked(participant)">
+            <k-avatar :object="participant" />
+            <q-tooltip v-if="participant.step" content-class="bg-primary" >{{ getUserState(participant) }}</q-tooltip>
+            <q-tooltip v-if="participant.step" :offset="[0, 48]">{{ $t('EventActivityPanel.FILTER_PARTICIPANTS') }}</q-tooltip>
+          </q-btn>
+          <div class="ellipsis" v-if="getUserComment(participant)">{{ getUserName(participant) }}: {{ getUserComment(participant) }}
+            <q-tooltip content-class="bg-primary" >{{ getUserComment(participant) }}</q-tooltip>
+          </div>
+          <div v-else>{{ getUserName(participant) }}</div>
+          <q-space />
+          <q-btn v-if="!archived && canFollowUpUser(participant)" flat round small color="primary" @click="doUserFollowUp(participant._id)">
+            <q-icon name="las la-sms" color="red" />
+            <q-tooltip>{{ getUserFollowUp(participant) }}</q-tooltip>
+          </q-btn>
+          <q-btn flat round small color="primary" @click="onZoomClicked(participant)">
+            <q-icon name="las la-search-location" />
+          </q-btn>
+        </div>
+      </template>
+  </KScrollArea>
 </template>
 
 <script>
 import _ from 'lodash'
 import { utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
 export default {
   name: 'event-activity-panel',
   mixins: [
-    mixins.events
+    mixins.events,
+    kMapMixins.catalogPanel
   ],
   props: {
     participants: {

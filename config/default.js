@@ -149,7 +149,7 @@ const topWidgets = [{
 // Catalog tababr
 function catalogTabbar (views, activeView) {
   const tabbar = {
-    id: 'catalog-tabbar', component: 'KPanel', class: 'q-pa-sm', actionRenderer: 'tab', content: []
+    id: 'catalog-tabbar', component: 'KPanel', class: 'q-pa-sm justify-center', actionRenderer: 'tab', content: []
   }
   if (views.includes('event-participants')) tabbar.content.push({
     id: 'event-participant-tab', label: 'EventActivityPanel.PARTICIPANTS_LABEL', color: 'grey-7', toggle: { color: 'primary' },
@@ -746,7 +746,8 @@ module.exports = {
               icon: 'las la-cog',
               label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
               route: { name: 'manage-layer-categories' } 
-            }]
+            }],
+            class: 'justify-center'
           }
         ],
         'user-views': [
