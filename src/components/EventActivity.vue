@@ -5,9 +5,7 @@
       <div :ref="configureMap" :style="viewStyle">
         <q-resize-observer @resize="onMapResized" />
       </div>
-
       <KMediaBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
-
       <router-view service="events"></router-view>
     </template>
   </KPage>
@@ -96,6 +94,7 @@ export default {
       // Archived mode ?
       this.archived = _.get(this.$route, 'query.archived')
       this.event = await this.$api.getService(this.archived ? 'archived-events' : 'events', this.contextId).get(this.objectId)
+      await this.loadAttachments()
       this.refreshUser()
       // If we'd like to only work in real-time
       // Time.setCurrentTime(moment.utc())
@@ -136,7 +135,7 @@ export default {
       }
     },
     browseMedia () {
-      this.$refs.mediaBrowser.show(this.event.attachments)
+      this.$refs.mediaBrowser.show(this.attachments)
     },
     filterItem (item) {
       // Is there any filter active ?
@@ -283,14 +282,14 @@ export default {
       this.refreshParticipantsLayer()
     },
     goBack () {
-      if (this.archived) {
-        this.$router.push({ name: 'archived-events-activity', query: { plan: this.planId } })
-      } else {
-        this.$router.push({ name: 'events-activity', query: { plan: this.planId } })
+      const route = {
+        name: (this.archived ? 'archived-events-activity' : 'events-activity')
       }
+      if (this.planId) Object.assign(route, { query: { plan: this.planId } })
+      this.$router.push(route)
     }
   },
-  created () {
+  async created () {
     this.setCurrentActivity(this)
     // Load the required components
     this.registerStyle('tooltip', this.getParticipantTooltip)

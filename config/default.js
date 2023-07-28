@@ -1199,9 +1199,7 @@ module.exports = {
     },
     fab: {
       content: [
-        { id: 'add-media', label: 'EventActivity.ADD_MEDIA_LABEL', icon: 'las la-paperclip', handler: 'uploadMedia',
-          visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] } },
-        { id: 'browse-media', label: 'EventActivity.BROWSE_MEDIA_LABEL', icon: 'photo_library', handler: 'browseMedia',
+        { id: 'browse-media', label: 'EventActivity.BROWSE_MEDIA_LABEL', icon: 'las la-photo-video', handler: 'browseMedia',
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] } },
         { id: 'edit-event', label: 'EventActivity.EDIT_LABEL', icon: 'las la-edit',
           visible: { name: '$can', params: ['update', 'events', ':contextId', ':event'] },
