@@ -68,7 +68,7 @@ export function usePlan(options) {
   }
 
   // Lifecycle hooks
-  watch(() => route.to, refreshPlanId)
+  watch(() => route.query.plan, refreshPlanId)
   
   onBeforeMount(() => {
     // Jump to archive whenever required

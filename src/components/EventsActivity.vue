@@ -65,11 +65,7 @@ export default {
     }
   },
   watch: {
-    async $route (to, from) {
-      // Need to refresh the fab because the plan has probably changed
-      await this.refreshFab()
-    },
-    plan: {
+    planId: {
       handler () {
         this.refreshFab()
       }
@@ -190,18 +186,22 @@ export default {
       await this.refreshFab()
     },
     onEventUpdated () {
-      // Retrieve archived events collection
-      const board = this.$refs.eventsBoard
-      const columns = board.getColumns(['todo', 'doing'])
-      // Force a refresh
-      columns.forEach(column => column.resetCollection())
+      if (this.planId) {
+        // Retrieve archived events collection
+        const board = this.$refs.eventsBoard
+        const columns = board.getColumns(['todo', 'doing'])
+        // Force a refresh
+        columns.forEach(column => column.resetCollection())
+      }
     },
     onEventRemoved () {
-      // Retrieve archived events collection
-      const board = this.$refs.eventsBoard
-      const column = board.getColumn('done')
-      // Force a refresh
-      column.refreshCollection()
+      if (this.planId) {
+        // Retrieve archived events collection
+        const board = this.$refs.eventsBoard
+        const column = board.getColumn('done')
+        // Force a refresh
+        column.refreshCollection()
+      }
     }
   },
   created () {
@@ -213,21 +213,17 @@ export default {
     // Morevoer, if the item property used to assign the column is changed it can cause a problem.
     // Indeed, the item will be correctly append to the new column as it is not already present.
     // However, the item will not be removed from the previous column as it is not a remove operation and not tracked anymore as no more matching the query.
-    if (this.planId) {
-      const eventsService = this.$api.getService('events', this.contextId)
-      eventsService.on('patched', this.onEventUpdated)
-      eventsService.on('updated', this.onEventUpdated)
-      eventsService.on('removed', this.onEventRemoved)
-    }
+    const eventsService = this.$api.getService('events', this.contextId)
+    eventsService.on('patched', this.onEventUpdated)
+    eventsService.on('updated', this.onEventUpdated)
+    eventsService.on('removed', this.onEventRemoved)
   },
   beforeUnmount () {
     this.$events.off('user-changed', this.refreshFab)
-    if (this.planId) {
-      const eventsService = this.$api.getService('events', this.contextId)
-      eventsService.off('removed', this.onEventUpdated)
-      eventsService.off('removed', this.onEventUpdated)
-      eventsService.off('removed', this.onEventRemoved)
-    }
+    const eventsService = this.$api.getService('events', this.contextId)
+    eventsService.off('removed', this.onEventUpdated)
+    eventsService.off('removed', this.onEventUpdated)
+    eventsService.off('removed', this.onEventRemoved)
   },
   setup (props) {
     return {
