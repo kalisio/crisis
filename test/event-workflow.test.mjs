@@ -1,8 +1,8 @@
 import _ from 'lodash'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
-import { core } from '@kalisio/kdk/test.client'
-import * as events from './events'
+import { core } from '@kalisio/kdk/test.client.js'
+import * as events from './events.mjs'
 
 const suite = 'event-workflow'
 

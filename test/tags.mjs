@@ -1,6 +1,6 @@
 import makeDebug from 'debug'
-import { core } from '@kalisio/kdk/test.client'
-import { goToOrganisationsActivity } from './organisations'
+import { core } from '@kalisio/kdk/test.client.js'
+import { goToOrganisationsActivity } from './organisations.mjs'
 
 const debug = makeDebug('aktnmap:test:tags')
 

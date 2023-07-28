@@ -1,9 +1,9 @@
 import _ from 'lodash'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
-import { core } from '@kalisio/kdk/test.client'
-import * as events from './events'
-import * as logbooks from './logbooks'
+import { core } from '@kalisio/kdk/test.client.js'
+import * as events from './events.mjs'
+import * as logbooks from './logbooks.mjs'
 
 const suite = 'logbooks'
 

@@ -1,9 +1,9 @@
 import _ from 'lodash'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
-import { core } from '@kalisio/kdk/test.client'
-import * as members from './members'
-import * as organisations from './organisations'
+import { core } from '@kalisio/kdk/test.client.js'
+import * as members from './members.mjs'
+import * as organisations from './organisations.mjs'
 
 const suite = 'members'
 
