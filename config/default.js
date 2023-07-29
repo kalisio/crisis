@@ -677,7 +677,7 @@ module.exports = {
           visible: ['hasAnyLocation', { name: '$can', params: ['read', 'events', ':contextId', ':item'] }],
           handler:  'viewMap', scope: 'footer'
         },
-        { id: 'navigate-menu', scope: 'footer', component: 'menu/KMenu', icon: 'las la-location-arrow', tooltip: 'EventCard.NAVIGATE_LABEL', actionRenderer: 'item',
+        { id: 'navigate-menu', scope: 'footer', component: 'menu/KMenu', icon: 'las la-location-arrow', tooltip: 'EventCard.NAVIGATE_LABEL', actionRenderer: 'item', dense: true,
           content: [
             { id: 'navigate-google-maps', icon: 'fab fa-google', label: 'EventCard.GOOGLE_MAPS_LABEL', handler: 'launchGoogleMaps' },
             { id: 'navigate-apple-plans', icon: 'fab fa-apple', label: 'EventCard.APPLE_PLANS_LABEL', handler: 'launchApplePlans' },

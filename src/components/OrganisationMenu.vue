@@ -24,7 +24,10 @@
           <div class="row full-width justify-center q-pa-md text-subtitle1 bg-grey-4">
             {{ organisation.name }}
           </div>
-          <KCardSection v-if="hasEventsSection">
+          <KCardSection 
+            v-if="hasEventsSection"
+            :hide-header="true"
+          >
             <!-- Events section -->
             <div class="full-width row justify-between items-center no-wrap">
               <KAction
@@ -51,7 +54,10 @@
             </div>
           </KCardSection>
           <!-- Plans section -->
-          <KCardSection v-if="hasPlansSection && canAccessPlans">
+          <KCardSection 
+            v-if="hasPlansSection && canAccessPlans"
+            :hide-header="true"
+          >
             <div class="full-width row justify-between items-center no-wrap">
               <KAction
                 id= "organisation-plans"
@@ -70,7 +76,10 @@
             </div>
           </KCardSection>
           <!-- Manage section -->
-          <KCardSection v-if="hasManageSection && canManageOrganisation">
+          <KCardSection 
+            v-if="hasManageSection && canManageOrganisation"
+            :hide-header="true"
+          >
             <div class="row justify-center">
               <KAction
                 id= "manage-organisation"
