@@ -46,15 +46,13 @@
           <KStamp v-else text="ArchivedEventCard.UNDEFINED_OBJECTIVE_LABEL" direction="horizontal" />
         </KCardSection>
         <!-- Location section -->
-        <KCardSection
+        <KLocationCardSection
           v-if="isExpanded"
-          :title="$t('ArchivedEventCard.LOCATION_SECTION')"
+          :location="item.location"
+          :actions="locationActions"
           :context="$props"
           :dense="dense"
-        >
-          <KLocationMap v-if="item.location" v-model="item.location" :editable="false" style="min-height: 220px;" />
-          <KStamp v-else text="ArchivedEventCard.UNDEFINED_LOCATION_LABEL" direction="horizontal" />
-        </KCardSection>
+        />
         <!-- Participants section -->
         <KCardSection v-if="isExpanded"
           :title="$t('ArchivedEventCard.PARTICIPANTS_SECTION')"
