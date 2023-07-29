@@ -81,7 +81,6 @@
           <k-text-area class="light-paragraph" :text="comment" :length="100" />
         </KCardSection>
         <!-- Location section -->
-        {{  item.location }}
         <KLocationCardSection
           v-if="isExpanded"
           :location="item.location"
@@ -89,15 +88,6 @@
           :context="$props"
           :dense="dense"
         />
-        <!--KLocationCardSection
-          v-if="isExpanded"
-          :title="$t('EventCard.LOCATION_SECTION')"
-          :actions="locationActions"
-          :context="$props"
-          :dense="dense">
-          <KLocationMap v-if="item.location" v-model="item.location" style="min-height: 220px;" />
-          <KStamp v-else :text="'PlanCard.NO_LOCATION_LABEL'" direction="horizontal" />
-        </KCardSection-->
         <!-- Participants section -->
         <KCardSection
           v-if="isExpanded"
