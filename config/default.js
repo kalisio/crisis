@@ -310,9 +310,11 @@ let mapEngine = {
   },
   // Default GeoJSON layer style for points
   pointStyle: {
-    'icon-color': '#FFFFFF',
-    'marker-color': '#2196f3',
-    'icon-classes': 'fas fa-circle'
+    iconClasses: 'fas fa-circle',    
+    iconColor: '#FFFFFF',
+    markerColor: '#1b5e20',
+    iconXOffset: -1,
+    iconYOffset: 0
   },
   // Default GeoJSON layer style for points edition
   editPointStyle: {
@@ -697,7 +699,7 @@ module.exports = {
           currentActivityStamp('catalog', 'las la-map', 'Context.CATALOG'),
           archivedEventsAction(),
           midSeparator,
-          { component: 'KLocateUser' },
+          { id: 'locate-user', component: 'tools/KGeolocateTool' },
           { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
           {
             id: 'tools', component: 'menu/KMenu', icon: 'las la-wrench', tooltip: 'mixins.activity.TOOLS', actionRenderer: 'item',
@@ -718,7 +720,7 @@ module.exports = {
         'search-location': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { component: 'KSearchLocation' }
+          { component: 'tools/KSearchTool' }
         ],
         'edit-layer-data': [
           { id: 'accept', icon: 'las la-arrow-left', handler: { name: 'onEndLayerEdition', params: ['accept'] } },
@@ -1126,7 +1128,7 @@ module.exports = {
         default: [
           { id: 'back', icon: 'las la-arrow-left', handler: 'goBack' },
           separator,
-          { component: 'KLocateUser' },
+          { id: 'locate-user', component: 'tools/KGeolocateTool' },
           { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
           {
             id: 'tools', component: 'menu/KMenu', icon: 'las la-wrench', tooltip: 'mixins.activity.TOOLS', actionRenderer: 'item',
@@ -1148,7 +1150,7 @@ module.exports = {
         'search-location': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { component: 'KSearchLocation' }
+          { component: 'tools/KSearchTool' }
         ],
         'measure-tool': [
           { id: 'accept', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
