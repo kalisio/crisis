@@ -310,11 +310,11 @@ let mapEngine = {
   },
   // Default GeoJSON layer style for points
   pointStyle: {
-    iconClasses: 'fas fa-circle',    
-    iconColor: '#FFFFFF',
-    markerColor: '#1b5e20',
-    iconXOffset: -1,
-    iconYOffset: 0
+    'icon-color': '#FFFFFF',
+    'marker-color': '#1b5e20',
+    'icon-classes': 'fas fa-circle',
+    'icon-x-offset': -1,
+    'icon-y-offset': 0
   },
   // Default GeoJSON layer style for points edition
   editPointStyle: {
