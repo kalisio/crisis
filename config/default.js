@@ -251,13 +251,13 @@ const editItemAction = function (tooltip, scope = undefined, properties = undefi
   }
 }
 
-const removeItemAction = function (tooltip, scope = undefined, prompt = 'confirm') {
+const removeItemAction = function (tooltip, scope = undefined, prompt = 'confirm', nameField = 'name') {
   let id = 'remove-item'
   if (scope) id += `-${scope}`
   return {
     id, scope, tooltip, icon: 'las la-trash', size: 'sm',
     visible: 'canRemoveItem',
-    handler: { name: 'removeItem', params: [prompt] }
+    handler: { name: 'removeItem', params: [prompt, nameField] }
   }
 }
 
@@ -942,7 +942,12 @@ module.exports = {
           handler: 'removeMember',
           scope: 'header'
         },
-        editItemAction('KMemberCard.TAG_ACTION', 'tags'),
+        { 
+          id: 'add-tag', icon: 'las la-plus-circle', tooltip: 'KMemberCard.TAG_ACTION', size: 'sm',
+          visible: 'canEditItem', 
+          route: { name: 'add-tag', params: { contextId: ':contextId', objectId: ':item._id' } },
+          scope: 'tags' 
+        },
         { 
           id: 'join-group', icon: 'las la-plus-circle', tooltip: 'KMemberCard.JOIN_GROUP_ACTION', size: 'sm',
           visible: 'canJoinGroup', 
@@ -985,9 +990,16 @@ module.exports = {
       },
       mode: 'default'
     },
+    fab: {
+      content: [{ id: 'create-tag', icon: 'las la-plus', tooltip: 'KTagsActivity.CREATE_TAG_LABEL',
+          visible: { name: '$can', params: ['create', 'tags', ':contextId'] },
+          route: { name: 'create-tag', params: { contextId: ':contextId' } }
+      }]
+    },
     items: {
       actions: [
         editItemAction('KTagCard.EDIT_ACTION', 'header', 'value,icon'),
+        removeItemAction('KTagCard.REMOVE_ACTION', 'header', 'confirm', 'value'),
         editItemAction('KTagCard.EDIT_ACTION', 'description')
       ]
     }

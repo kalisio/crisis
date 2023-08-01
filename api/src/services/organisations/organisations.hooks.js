@@ -32,8 +32,8 @@ export default {
       coreHooks.setAsDeleted,
       removeBilling,
       removeOrganisationAlerts,
-      coreHooks.removeOrganisationGroups,
-      coreHooks.removeOrganisationTags,
+      coreHooks.removeOrganisationResources('groups'),
+      coreHooks.removeOrganisationResources('tags'),
       coreHooks.removeOrganisationAuthorisations,
       coreHooks.removeOrganisationServices
     ]

@@ -148,32 +148,28 @@ describe('aktnmap', () => {
   })
 
   it('create user tag', async () => {
+    await tagService.create({ value: 'test' }, { user: userObject, checkAuthorisation: true })
+    const tags = await tagService.find({ query: { value: 'test', scope: 'members' }, paginate: false })
+    tagObject = tags[0]
     const user = await memberService.patch(userObject._id.toString(), {
-      tags: [{ value: 'test', scope: 'members' }]
-    }, { user: userObject, previousItem: _.clone(userObject), checkAuthorisation: true }) // Because we bypass populate hooks give the previousItem directly
+      tags: [tagObject]
+    }, { user: userObject, checkAuthorisation: true })
     // Update user with its tag
     userObject = user
     expect(userObject.tags).toExist()
     expect(userObject.tags.length === 1).beTrue()
     expect(userObject.tags[0].value).to.equal('test')
     expect(userObject.tags[0].context.toString()).to.equal(orgObject._id.toString())
-    const tags = await tagService.find({ query: { value: 'test', scope: 'members' }, paginate: false })
-    tagObject = tags[0]
-    expect(tagObject.count).to.equal(1)
   })
   // Let enough time to process
     .timeout(15000)
 
-  it('creates an organisation group', () => {
-    return groupService.create({ name: 'test-group' }, { user: userObject, checkAuthorisation: true })
-      .then(() => {
-        return groupService.find({ query: { name: 'test-group' }, user: userObject, checkAuthorisation: true })
-      })
-      .then(groups => {
-        expect(groups.data.length > 0).beTrue()
-        groupObject = groups.data[0]
-        expect(groupObject.name).to.equal('test-group')
-      })
+  it('creates an organisation group', async () => {
+    await groupService.create({ name: 'test-group' }, { user: userObject, checkAuthorisation: true })
+    const groups = await groupService.find({ query: { name: 'test-group' }, user: userObject, checkAuthorisation: true })
+    expect(groups.data.length > 0).beTrue()
+    groupObject = groups.data[0]
+    expect(groupObject.name).to.equal('test-group')
   })
   // Let enough time to process
     .timeout(10000)
@@ -243,26 +239,26 @@ describe('aktnmap', () => {
     .timeout(5000)
 
   it('creates a member tag', async () => {
+    await tagService.create({ value: 'test-member' }, { user: userObject, checkAuthorisation: true })
+    const tags = await tagService.find({ query: { value: 'test-member', scope: 'members' }, paginate: false })
+    memberTagObject = tags[0]
     const user = await memberService.patch(memberObject._id.toString(), {
-      tags: [{ value: 'test-member', scope: 'members' }]
-    }, { user: userObject, previousItem: _.clone(memberObject), checkAuthorisation: true }) // Because we bypass populate hooks give the previousItem directly
+      tags: [memberTagObject]
+    }, { user: userObject, checkAuthorisation: true })
     // Update member with its tag
     memberObject = user
     expect(memberObject.tags).toExist()
     expect(memberObject.tags.length === 1).beTrue()
     expect(memberObject.tags[0].value).to.equal('test-member')
     expect(memberObject.tags[0].context.toString()).to.equal(orgObject._id.toString())
-    const tags = await tagService.find({ query: { value: 'test-member', scope: 'members' }, paginate: false })
-    memberTagObject = tags[0]
-    expect(memberTagObject.count).to.equal(1)
   })
   // Let enough time to process
     .timeout(10000)
 
   it('adds existing tag to member', async () => {
     const user = await memberService.patch(memberObject._id.toString(), {
-      tags: [_.clone(memberObject.tags[0]), _.clone(tagObject)]
-    }, { user: userObject, previousItem: _.clone(memberObject), checkAuthorisation: true }) // Because we bypass populate hooks give the previousItem directly
+      tags: [_.clone(memberTagObject), _.clone(tagObject)]
+    }, { user: userObject, checkAuthorisation: true })
     // Update member with its tag
     memberObject = user
     expect(memberObject.tags).toExist()

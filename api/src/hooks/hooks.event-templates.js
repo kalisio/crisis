@@ -2,10 +2,10 @@ import _ from 'lodash'
 import makeDebug from 'debug'
 const debug = makeDebug('aktnmap:event-templates:hooks')
 
-export function updateEventTemplateResource (resourceScope) {
+export function updateEventTemplateResources (resourceScope) {
   return async function (hook) {
     if (hook.type !== 'after') {
-      throw new Error('The \'updateEventTemplateResource\' hook should only be used as a \'after\' hook.')
+      throw new Error('The \'updateEventTemplateResources\' hook should only be used as a \'after\' hook.')
     }
     // Only applicable to update/remove operations
     if ((hook.method === 'get' || hook.method === 'find' || hook.method === 'create')) return hook

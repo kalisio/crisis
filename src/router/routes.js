@@ -121,11 +121,11 @@ module.exports = [{
                   props: true,
                   tour: tours['edit-member-role']
                 },
-                'edit/:objectId/:schemaProperties?': {
-                  name: 'edit-member-tags',
-                  component: 'editor/KModalEditor',
+                'add-tag/:objectId': {
+                  name: 'add-tag',
+                  component: 'team/KAddTag',
                   props: true,
-                  tour: tours['edit-member-tags']
+                  tour: tours['add-tag']
                 },
                 'join-group/:objectId': {
                   name: 'join-group',
@@ -141,6 +141,12 @@ module.exports = [{
               component: 'team/KTagsActivity',
               props: true,
               children: {
+                create: {
+                  name: 'create-tag',
+                  component: 'editor/KModalEditor',
+                  props: true,
+                  tour: tours['create-tag']
+                },
                 'edit/:objectId/:schemaProperties?': {
                   name: 'edit-tag',
                   component: 'editor/KModalEditor',

@@ -27,10 +27,7 @@ export default {
     get: [],
     create: [],
     update: [],
-    patch: [ // Required to update tags correctly
-      coreHooks.populatePreviousObject,
-      coreHooks.updateTags
-    ],
+    patch: [],
     remove: []
   },
 

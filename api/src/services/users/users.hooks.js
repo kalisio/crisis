@@ -46,7 +46,6 @@ export default {
     remove: [
       coreHooks.setAsDeleted,
       coreHooks.removeAttachments('avatar'),
-      coreHooks.updateTags,
       coreHooks.leaveOrganisations(),
       coreHooks.removeVerification
     ]
