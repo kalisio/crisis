@@ -1,11 +1,5 @@
 <template>
   <div>
-    <KSignupAlert
-      v-if="User"
-      :isVerified="User.isVerified"
-      :accountEmail="User.email"
-      notifierEmail="email-notifications@kalisio.com"
-    />
     <KTour ref="tour" v-if="isInitialized" />
     <KWelcome />
     <router-view></router-view>

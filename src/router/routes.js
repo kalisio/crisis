@@ -24,7 +24,7 @@ module.exports = [{
       component: 'account/KResendVerifySignup',
       meta: { authenticated: true }
     },
-    'verify-signup/:token': {
+    'verify-signup': {
       component: 'account/KVerifySignup',
       meta: { authenticated: true }
     },
@@ -37,13 +37,13 @@ module.exports = [{
       meta: { authenticated: true, unauthenticated: false },
       tour: tours['change-password']
     },
-    'reset-password/:token': 'account/KResetPassword',
+    'reset-password/:email': 'account/KResetPassword',
     'send-change-identity': {
       component: 'account/KSendChangeIdentity',
       meta: { authenticated: true, unauthenticated: false },
       tour: tours['send-change-identity']
     },
-    'change-identity/:token': {
+    'change-identity': {
       component: 'account/KChangeIdentity',
       meta: { authenticated: true }
     },
