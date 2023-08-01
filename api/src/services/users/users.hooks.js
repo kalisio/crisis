@@ -38,7 +38,7 @@ export default {
     get: [coreHooks.removeVerification],
     create: [
       commonHooks.iff(hook => !hook.result.sponsor, coreHooks.sendVerificationEmail),
-      commonHooks.iffElse(hook => hook.result.sponsor, coreHooks.joinOrganisation, coreHooks.createPrivateOrganisation),
+      commonHooks.iff(hook => hook.result.sponsor, coreHooks.joinOrganisation),
       coreHooks.removeVerification
     ],
     update: [],

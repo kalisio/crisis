@@ -11,6 +11,19 @@ import { createServer, runServer } from '../src/server.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+/* Scenario story board
+
+  Creates a user with an org
+  Creates a user group and tag in the org
+  User invites a new member in its org
+  User creates a new tag for member
+  Removes tags from the user
+  Adds member to group then update it
+  Removes member from org
+  Removes group
+  Removes org
+  Removes users
+*/
 describe('aktnmap', () => {
   let server, expressServer, userService, userObject, memberObject, orgService, orgObject,
     authorisationService, billingService, mailerService,
@@ -91,7 +104,8 @@ describe('aktnmap', () => {
       name: 'test-user'
     }, { checkAuthorisation: true })
     userObject = user
-    const orgs = await orgService.find({ query: {}, user: userObject, checkAuthorisation: true })
+    await orgService.create({ name: 'test-org' }, { user: userObject, checkAuthorisation: true })
+    const orgs = await orgService.find({ query: { name: 'test-org' }, user: userObject, checkAuthorisation: true })
     expect(orgs.data.length > 0).beTrue()
     orgObject = orgs.data[0]
     memberService = server.app.getService(`${orgObject._id.toString()}/members`)
@@ -100,7 +114,6 @@ describe('aktnmap', () => {
     expect(tagService).toExist()
     groupService = server.app.getService(`${orgObject._id.toString()}/groups`)
     expect(groupService).toExist()
-    expect(orgObject.name).to.equal('test-user')
   })
   // Let enough time to process
     .timeout(30000)
@@ -272,7 +285,7 @@ describe('aktnmap', () => {
   it('removes user tags', async () => {
     const user = await memberService.patch(userObject._id.toString(), {
       tags: []
-    }, { user: userObject, previousItem: _.clone(userObject), checkAuthorisation: true }) // Because we bypass populate hooks give the previousItem directly
+    }, { user: userObject, checkAuthorisation: true })
     userObject = user
     expect(userObject.tags).toExist()
     expect(userObject.tags.length === 0).beTrue()
