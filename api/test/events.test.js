@@ -14,15 +14,6 @@ describe('events', () => {
     storageService, storageObject, eventService, eventObject, eventTemplateService, eventLogService,
     archivedEventService, archivedEventLogService
 
-  const managerDevice = {
-    registrationId: 'managerFakeId',
-    platform: 'ANDROID'
-  }
-  const memberDevice = {
-    registrationId: 'memberFakeId',
-    platform: 'ANDROID'
-  }
-
   before(() => {
     chailint(chai, util)
 

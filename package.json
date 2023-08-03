@@ -31,14 +31,6 @@
     "build": "npm run provision && quasar build",
     "pwa:dev": "npm run provision && cross-env NODE_ENV=development quasar dev -m pwa",
     "pwa:build": "npm run provision && quasar build -m pwa",
-    "cordova:clean": "cd src-cordova && cordova clean && cd ..",
-    "cordova:config": "envsub -s dollar-both src-cordova/config.xml.tpl src-cordova/config.xml",
-    "cordova:config:android": "npm run cordova:config && cd src-cordova && cordova platform add android && cd ..",
-    "cordova:config:ios": "npm run cordova:config && cd src-cordova && cordova platform add ios && cd ..",
-    "cordova:dev:android": "npm run cordova:config:android && npm run provision && quasar dev -m android",
-    "cordova:dev:ios": "npm run cordova:config:ios && npm run provision && quasar dev -m ios",
-    "cordova:build:android": "npm run cordova:config:android && npm run provision && quasar build -m cordova -T android",
-    "cordova:build:ios": "npm run cordova:config:ios && npm run provision && quasar build -m cordova -T ios -- --device",
     "analyze": "cross-env ANALYZE_BUNDLE=1 npm run build",
     "lint": "standard src/**/*.js src/**/*.vue test/**/*.js tutorials/**/*.js --fix",
     "benchmark": "node ./benchmark",
@@ -50,8 +42,7 @@
     "coverage": "c8 npm run mocha",
     "test:server": "cd api && npm run test",
     "test:client": "cd test && npm run coverage",
-    "clean-databases": "node ./tools/clean-databases",
-    "clean-sns": "node ./tools/clean-sns"
+    "clean-databases": "node ./tools/clean-databases"
   },
   "standard": {
     "parser": "vue-eslint-parser",
@@ -206,8 +197,6 @@
     "commander": "^2.15.0",
     "config": "^3.3.7",
     "connect-history-api-fallback": "^1.1.0",
-    "cordova": "^11.0.0",
-    "cordova-set-version": "^13.0.1",
     "cross-env": "^7.0.3",
     "debug": "^4.1.0",
     "envsub": "^4.0.7",

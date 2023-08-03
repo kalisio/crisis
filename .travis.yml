@@ -11,10 +11,6 @@ stages:
   if: commit_message !~ /(skip[ _-]app)/
 - name: DOC
   if: commit_message =~ /\[build doc\]/
-- name: ANDROID
-  if: commit_message =~ /\[build android\]/
-- name: IOS
-  if: commit_message =~ /\[build ios\]/
 
 jobs:
   include:
@@ -49,56 +45,3 @@ jobs:
       github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
       keep-history: true
 
-  - stage: ANDROID
-    os: linux
-    language: android
-    jdk: oraclejdk8
-    android:
-      components:
-      - tools
-      - platform-tools
-      - tools
-      - extra-google-google_play_services
-      - extra-google-m2repository
-      - extra-android-m2repository
-    licenses:
-    - ".+"
-    before_install:
-    - nvm install 16
-    - yes | sdkmanager "platforms;android-30"
-    - yes | sdkmanager "build-tools;30.0.3"
-    - npm install -g yarn
-    - curl -k -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
-    - unzip rclone-current-linux-amd64.zip
-    - cd rclone-*-linux-amd64 && sudo cp rclone /usr/bin/ && cd ..
-    - sudo chown root:root /usr/bin/rclone
-    - sudo chmod 755 /usr/bin/rclone
-    - rvm install ruby-2.6.5
-    - gem install fastlane -v '~> 2.209.0'
-    - npm install -g @quasar/cli
-    install:
-    - yarn
-    before_script:
-    - export -f travis_fold
-    script:
-    - bash .travis.android.sh
-    
-  - stage: IOS
-    os: osx
-    language: objective-c
-    osx_image: xcode13.2
-    before_install:
-    - nvm install 16
-    - npm install -g yarn
-    - brew update
-    - brew install rclone
-    - npm install -g ios-deploy --unsafe-perm=true
-    - npm install -g @quasar/cli
-    - sudo gem install cocoapods
-    - sudo gem which cocoapods
-    install:
-    - yarn
-    before_script:
-    - export -f travis_fold
-    script:
-    - travis_wait 30 bash .travis.ios.sh
