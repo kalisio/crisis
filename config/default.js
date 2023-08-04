@@ -475,7 +475,7 @@ module.exports = {
   account: {
     sections: [
       { title: 'KPasswordManager.TITLE', component: 'account/KPasswordManager' },
-      { title: 'KIdentityManager.TITLE', component: 'account/KIdentityManager' },
+      { title: 'KEmailManager.TITLE', component: 'account/KEmailManager' },
       { title: 'KSubscriptionsManager.TITLE', component: 'account/KSubscriptionsManager',
         actions: [
           { id: 'unsubscribe', tooltip: 'KSubscriptionCard.UNSUBSCRIBE_LABEL', icon: 'phonelink_erase', handler: 'unsubscribe' }
