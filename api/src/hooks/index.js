@@ -9,6 +9,7 @@ export * from './hooks.events.js'
 export * from './hooks.event-logs.js'
 export * from './hooks.event-templates.js'
 export * from './hooks.archiving.js'
+export * from './hooks.organisations.js'
 export * from './hooks.plans.js'
 export * from './hooks.storage.js'
 
