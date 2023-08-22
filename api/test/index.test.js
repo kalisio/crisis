@@ -26,7 +26,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 */
 describe('aktnmap', () => {
   let server, expressServer, userService, userObject, memberObject, orgService, orgObject,
-    authorisationService, billingService, mailerService,
+    authorisationService, mailerService,
     memberService, tagService, tagObject, memberTagObject, groupService, groupObject,
     gmailClient, gmailUser, subscriptionObject, client, password
   const now = new Date()
@@ -63,8 +63,6 @@ describe('aktnmap', () => {
     expect(authorisationService).toExist()
     mailerService = server.app.getService('mailer')
     expect(mailerService).toExist()
-    billingService = server.app.getService('billing')
-    expect(billingService).toExist()
   })
   // Let enough time to process
     .timeout(2000)
@@ -160,6 +158,29 @@ describe('aktnmap', () => {
     }
   })
 
+  it('connects user client', async () => {
+    const response = await client.authenticate({
+      strategy: 'local',
+      email: gmailUser,
+      password: 'Pass;word1'
+    })
+    expect(response.user._id).to.equal(userObject._id.toString())
+  })
+  // Let enough time to process
+    .timeout(10000)
+
+  it('cannot update organisation quotas from external clients', async () => {
+    const org = await client.service(server.app.get('apiPath') + '/organisations').patch(orgObject._id.toString(), { name: 'test-org', 'quotas.members': 200 })
+    console.log(org)
+    expect(org.quotas).beUndefined()
+  })
+
+  it('disconnects user client', async () => {
+    await client.logout()
+  })
+  // Let enough time to process
+    .timeout(10000)
+
   it('create user tag', async () => {
     await tagService.create({ value: 'test' }, { user: userObject, checkAuthorisation: true })
     const tags = await tagService.find({ query: { value: 'test', scope: 'members' }, paginate: false })
@@ -240,13 +261,8 @@ describe('aktnmap', () => {
   })
 
   it('cannot update member permissions without using authorisations service', async () => {
-    try {
-      await client.service(server.app.get('apiPath') + '/users').patch(memberObject._id.toString(), { groups: [] })
-      assert.fail('error not thrown')
-    } catch (error) {
-      expect(error).toExist()
-      expect(error.name).to.equal('BadRequest')
-    }
+    const member = await client.service(server.app.get('apiPath') + '/users').patch(memberObject._id.toString(), { name: 'new name', groups: [] })
+    expect(member.groups).beUndefined()
   })
   // Let enough time to process
     .timeout(5000)
@@ -372,14 +388,6 @@ describe('aktnmap', () => {
   })
   // Let enough time to process
     .timeout(20000)
-
-  it('cannot remove the organisation while a group do exists', () => {
-    return orgService.remove(orgObject._id, { user: userObject, checkAuthorisation: true })
-      .catch(error => {
-        expect(error).toExist()
-        expect(error.name).to.equal('Forbidden')
-      })
-  })
 
   it('removes an organisation group', () => {
     return groupService.remove(groupObject._id, { user: userObject, checkAuthorisation: true })

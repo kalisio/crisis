@@ -70,7 +70,6 @@
     "containerized": "^1.0.2",
     "feathers-hooks-common": "^5.0.6",
     "feathers-mongodb-fuzzy-search": "^2.0.1",
-    "feathers-stripe": "~0.5.0",
     "feathers-sync": "^2.1.0",
     "fs-extra": "^8.1.0",
     "http-proxy-middleware": "^0.17.4",

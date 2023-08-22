@@ -8,6 +8,6 @@ config.logs.DailyRotateFile.dirname = path.join(__dirname, '..', 'logs')
 config.db.url = config.db.url.replace('aktnmap', 'aktnmap-test')
 delete config.authentication.defaultUsers
 // Set a hard limit like in production
-config.quotas.global.bronze = 1
+config.quotas.organisations = 1
 
 module.exports = config

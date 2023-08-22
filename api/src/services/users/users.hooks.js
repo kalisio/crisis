@@ -25,8 +25,8 @@ export default {
     ],
     update: [commonHooks.disallow('external')],
     patch: [
-      commonHooks.iff(commonHooks.isProvider('external'), commonHooks.preventChanges('organisations')),
-      commonHooks.iff(commonHooks.isProvider('external'), commonHooks.preventChanges('groups')),
+      commonHooks.iff(commonHooks.isProvider('external'), coreHooks.preventChanges(false, ['organisations'])),
+      commonHooks.iff(commonHooks.isProvider('external'), coreHooks.preventChanges(false, ['groups'])),
       coreHooks.convertDates(['expireAt'])
     ],
     remove: [coreHooks.preventRemoveUser]

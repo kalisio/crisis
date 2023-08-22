@@ -21,13 +21,9 @@
     "EVENTS_LIMIT": "Too much events to display all of them",
     "EVENT_LOG_LIMIT": "Too much participants to display all of them",
     "CANNOT_REMOVE_CUSTOMER": "You are not allowed to remove the customer of <b>{resource}</b>, change the payment information first.",
-    "UNSUBSCRIBED_OPTION": "Sorry, it seems you did not subscribe to this option. Please update your subscription before coming back here."
+    "UNSUBSCRIBED_OPTION": "Sorry, it seems your quotas do not allow to access this activity. Please update your quotas before coming back here."
   },
   "schemas": {
-    "ORGANISATIONS_BILLING_PLAN_NAME": "{object.name}'s billing plan",
-    "ORGANISATIONS_PLAN_FIELD_LABEL": "Select the billing plan of this organisation",
-    "ORGANISATIONS_CUSTOMER_FIELD_LABEL": "Select a payment method",
-    "ORGANISATIONS_EXTRA_INFOS_FIELD_LABEL": "Enter any extra information to appear on your receipts",
     "EVENT_TEMPLATES_CREATE_TITLE": "Create a new event template ?",
     "EVENT_TEMPLATES_NAME_FIELD_LABEL": "Enter the name of this template",
     "EVENT_TEMPLATES_ICON_FIELD_LABEL": "Select an icon to represent this template",
@@ -141,8 +137,6 @@
       "PLAN_TEMPLATES_LABEL": "This activity allows to manage the plan <b>templates</b> in your organisation.",
       "PLAN_TEMPLATES_LINK_LABEL": "How to manage templates",
       "DESCRIPTION_LABEL": "Update the description of your organisation.",
-      "BILLING_LABEL": "This entry allows to manage the <b>subscriptions</b> of your organisation.",
-      "BILLING_LINK_LABEL": "How to manage subscriptions",
       "SETTINGS_LABEL": "This entry allows to update the <b>settings</b> of your organisation (name, logo, etc.).",
       "SETTINGS_LINK_LABEL": "How to manage settings",
       "REMOVE_ORGANISATION_LABEL": "Remove your organisation through this action.",
@@ -421,17 +415,6 @@
     "ADMINISTRATION_SECTION": "Management",
     "INFORMATION_SECTION": "Informations",
     "SUBSCRIPTIONS_LABEL": "Subscriptions"
-  },
-  "BillingEditor": {
-    "CUSTOMER_BLOCK_TITLE": "Payment Information",
-    "CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER": "You must be verified to enter your payment information",
-    "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "You did not enter in any payment information",
-    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "You have chosen a monthly bill payment method.<br/>Invoices will be send to <b>{email}</b>",
-    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "You have chosen a monthly bank debit payment method.<br/>Your are using a <b>{brand}</b> card which number is ending with <b>{last4}</b>",
-    "CUSTOMER_BLOCK_ACTION": "Update",
-    "OPTIONS_BLOCK_TITLE": "Your plans",
-    "PLAN_TITLE": "Your basic plan",
-    "OPTIONS_TITLE": "Your additional plans"
   },
   "OrganisationSettingsActivity": {
     "SETTINGS": "Settings",
@@ -751,33 +734,6 @@
   "EventLogEditor": {
     "CLOSE_ACTION": "@:CLOSE_LABEL",
     "SAVE_BUTTON": "@:SAVE_LABEL"
-  },
-  "CustomerEditor": {
-    "TITLE": "Enter your billing information",
-    "CUSTOMER_EMAIL_FIELD_LABEL": "Select the invoice recipient",
-    "CUSTOMER_DESCRIPTION_FIELD_LABEL": "Enter a mention to add to your invoice",
-    "CUSTOMER_VAT_NUMBER_FIELD_LABEL": "Enter your VAT number",
-    "BILLING_METHOD_MESSAGE": "Enter a credit card if you like to be charged automatically",
-    "CLOSE_ACTION": "Close",
-    "UPDATE_BUTTON": "Update"
-  },
-  "SubscriptionChooser": {
-    "MORE_DETAILS": "More details",
-    "CLICK": "Contact us",
-    "SELECT": "Select",
-    "CURRENT_PLAN": "Your plan",
-    "CONFIRM_DIALOG_TITLE": "Are you sure you want to update your plan ?",
-    "CONFIRM_DIALOG_MESSAGE": "Please confirm to subscribe to the <b>@:{plan})</b> plan",
-    "PLAN_DISABLED_TOOLTIP": "Please provide the payment information to subscribe to this plan"
-  },
-  "OptionsChooser": {
-    "CLICK": "Contact us",
-    "SELECT": "Select",
-    "SUBSCRIBED": "Subscribed",
-    "CONFIRM_DIALOG_TITLE": "Are you sure you want to update your option ?",
-    "CONFIRM_DIALOG_SUBSCRIBE_MESSAGE": "Please confirm to subscribe to the <b>@:{option})</b> option",
-    "CONFIRM_DIALOG_UNSUBSCRIBE_MESSAGE": "Please confirm unsubscribtion to the <b>@:{option})</b> option",
-    "OPTION_DISABLED_TOOLTIP": "Please provide the payment information to subscribe to this option"
   },
   "PlansActivity": {
     "PLANS_LABEL": "Plans",

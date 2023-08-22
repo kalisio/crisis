@@ -81,16 +81,6 @@ module.exports = [{
             }
           }
         },
-        'account/:page': {
-          name: 'account-activity',
-          component: 'account/KAccountActivity',
-          props: true,
-          tour: {
-            profile: tours['account-profile'],
-            security: tours['account-security'],
-            'danger-zone': tours['account-dz']
-          }
-        },
         ':contextId': {
           // The name of the route has to be set the default child
           name: '',

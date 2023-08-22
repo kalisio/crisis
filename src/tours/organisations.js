@@ -125,14 +125,6 @@ module.exports = [{
     clickOnLink: '#organisation-plan-templates'
   }
 }, {
-  target: '#edit-billing',
-  content: 'tours.organisations.BILLING_LABEL',
-  link: 'tours.organisations.BILLING_LINK_LABEL',
-  params: {
-    placement: 'top',
-    clickOnLink: '#edit-billing'
-  }
-}, {
   target: '#edit-item-description',
   content: 'tours.organisations.DESCRIPTION_LABEL',
   params: {

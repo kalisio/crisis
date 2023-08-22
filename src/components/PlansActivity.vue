@@ -133,8 +133,8 @@ export default {
     eventsService.on('removed', this.updateFilterQuery)
     this.$events.on('filter-changed', this.updateFilterQuery)
 
-    // Check if option has been subscribed
-    this.$checkBillingOption('archiving')
+    // Check if we can create plans
+    this.$checkQuota('plans', 1)
   },
   beforeUnmount () {
     this.$events.off('user-changed', this.configureActivity)

@@ -34,12 +34,9 @@ async function redirect (route, result, user) {
       return {
         name: _.get(route, 'query.route', 'context'),
         params: Object.assign({
-          contextId: organisation._id,
-          objectId: organisation._id, // Required for eg billing
-          title: organisation.name, // Required for eg billing
-          page: _.get(route, 'query.page')
+          contextId: organisation._id
         }, _.get(route, 'params', {})),
-        query: _.omit(_.get(route, 'query', {}), ['organisation', 'page'])
+        query: _.omit(_.get(route, 'query', {}), ['organisation'])
       }
     } else {
       $q.notify({ type: 'negative', message: i18n.t('Index.ORGANISATION_NOT_FOUND') })

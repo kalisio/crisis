@@ -95,8 +95,8 @@ export default {
     eventsService.on('patched', this.updateFilterQuery)
     eventsService.on('updated', this.updateFilterQuery)
     eventsService.on('removed', this.updateFilterQuery)
-    // Check if option has been subscribed
-    this.$checkBillingOption('archiving')
+    // Check if we can create archived plans
+    this.$checkQuota('archived-plans', 1)
   },
   beforeUnmount () {
     // Restore the current time

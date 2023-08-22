@@ -35,7 +35,6 @@ export default function () {
     api.declareService('plans', { context: true })
     api.declareService('plan-templates', { context: true })
     api.declareService('archived-plans', { context: true })
-    api.declareService('billing')
     // We use an in-memory service to manage plan objectives so that we can use standard collection/form components,
     // although objectives are not autonomous objects but are stored in the plan object itself
     api.createService('plan-objectives', {

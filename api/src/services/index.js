@@ -324,8 +324,6 @@ export default async function () {
         domain: app.get('domain'),
         gateway: app.get('gateway'),
         version: packageInfo.version,
-        plans: _.get(app.get('billing'), 'plans'),
-        options: _.get(app.get('billing'), 'options'),
         quotas: app.get('quotas'),
         mapillary: app.get('mapillary'),
         vapidPublicKey: app.get('push').vapidDetails.publicKey
@@ -381,7 +379,6 @@ export default async function () {
     // which will only emit our own services
     await app.configureService('authentication', app.getService('authentication'), servicesPath)
     await app.configure(kMap)
-    await app.createService('billing', { servicesPath })
 
     const orgsService = app.getService('organisations')
     // Register services hook for organisations

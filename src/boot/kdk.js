@@ -39,21 +39,19 @@ export default async ({ app }) => {
     return _.get(config, path, defaultValue)
   }
   app.config.globalProperties.$geolocation = Geolocation
-  app.config.globalProperties.$checkBillingOption = async function (option) {
-    if (this.$config('flavor') === 'dev') return
+  app.config.globalProperties.$checkQuota = async function (service, quota) {
     const perspective = await api.getService('organisations')
-      .get(this.contextId, { query: { $select: ['name', 'billing'] } })
-    const options = _.get(perspective, 'billing.options', [])
-    if (!_.find(options, { plan: option })) {
+      .get(this.contextId, { query: { $select: ['name', 'quotas'] } })
+    const orgQuota = _.get(perspective, `quotas.${service}`, Store.get(`capabilities.api.quotas.${service}`, 0))
+    // -1 means no limit
+    if (orgQuota === -1) return
+    if (quota > orgQuota) {
       Dialog.create({
         title: this.$t('OOPS'),
         message: this.$t('errors.UNSUBSCRIBED_OPTION'),
         persistent: true
       }).onOk(() => {
-        this.$router.push({
-          name: 'edit-organisation-billing',
-          params: { objectId: this.contextId, title: perspective.name }
-        })
+        this.$router.push({ name: 'home' })
       })
     }
   }

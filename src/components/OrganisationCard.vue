@@ -85,7 +85,7 @@
                   @triggered="routeTo(`${element.name}-activity`)"
                   style="max-width: 75%"
                 />
-                <q-badge v-if="!isMember" :label="`${quotas[element.name]} max`" color="grey-7" />
+                <q-badge v-if="!isMember" :label="`${quotas[element.name] || 0} max`" color="grey-7" />
               </div>
             </template>
           </div>
@@ -110,7 +110,6 @@ export default {
       isExpanded: false,
       eventsCount: 0,
       plansCount: 0,
-      billing: null,
       quotas: {},
       counters: {},
       structure: [
@@ -143,15 +142,6 @@ export default {
     },
     canAccessArchivedEvents () {
       return this.$can('service', 'archived-events', this.item._id)
-    },
-    canAccessBilling () {
-      return this.$can('update', 'organisations', null, { _id: this.item._id })
-    },
-    subscriptions () {
-      const plan = `plans.${_.get(this.billing, 'subscription.plan')}`
-      const options = _.get(this.billing, 'options')
-      if (options) return _.concat([plan], _.map(options, (option) => { return `options.${option.plan}` }))
-      return [plan]
     },
     isMember () {
       const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.item._id)
@@ -193,16 +183,21 @@ export default {
       }
       this.plansCount = await this.countItems('plans', query)
     },
-    async loadBilling () {
+    async loadQuotas () {
       const organisationsService = this.$api.getService('organisations')
-      const response = await organisationsService.get(this.item._id, { query: { $select: ['billing'] } })
-      this.billing = _.get(response, 'billing', null)
-      if (!this.billing) {
-        logger.debug('No billing found for the organisation ID: ', this.item._id)
+      const response = await organisationsService.get(this.item._id, { query: { $select: ['quotas'] } })
+      const orgQuotas = _.get(response, 'quotas', {})
+      if (_.isEmpty(orgQuotas)) {
+        logger.debug('No quotas found for organisation ', this.item._id)
       }
-      if (!_.get(this.billing, 'subscription.plan')) {
-        logger.debug('No subscription plan found for the organisation ID: ', this.item._id)
+      const appQuotas = this.$store.get('capabilities.api.quotas', {})
+      if (_.isEmpty(appQuotas)) {
+        logger.debug('No application quotas found')
+        this.quotas = {}
+      } else {
+        this.quotas = appQuotas
       }
+      _.merge(this.quotas, orgQuotas)
     },
     async onExpanded () {
       // Counts the different elements
@@ -214,6 +209,7 @@ export default {
     }
   },
   async created () {
+    await this.loadQuotas()
     await this.updateCounts()
     // Keep track of changes once loaded
     const eventsService = this.$api.getService('events', this.item._id)

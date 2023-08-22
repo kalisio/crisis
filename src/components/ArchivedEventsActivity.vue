@@ -589,8 +589,8 @@ export default {
     // Setup current time to now
     this.currentTime = Time.getCurrentTime()
     Time.setCurrentTime(moment.now())
-    // Check if option has been subscribed
-    this.$checkBillingOption('archiving')
+    // Check if we can create archived events
+    this.$checkQuota('archived-events', 1)
   },
   mounted () {
     // Setup listeners

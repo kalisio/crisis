@@ -563,8 +563,8 @@ export default {
     this.registerStyle('featureStyle', this.getEventStyle)
     this.registerStyle('tooltip', this.getObjectiveTooltip)
     this.registerStyle('popup', this.getObjectivePopup)
-    // Check if option has been subscribed
-    this.$checkBillingOption('catalog')
+    // Check if we can create layers
+    this.$checkQuota('catalog', 1)
   },
   mounted () {
     // Setup engine events listeners

@@ -21,13 +21,9 @@
     "EVENTS_LIMIT": "Trop d'événements pour les afficher tous",
     "EVENT_LOG_LIMIT": "Trop de participants pour afficher l'ensemble des informations",
     "CANNOT_REMOVE_CUSTOMER": "Vous n'êtes pas autorisé à supprimer le client de <b>{resource}</b>, modifiez préalablement les informations de paiement.",
-    "UNSUBSCRIBED_OPTION": "Désolé, il semble que vous n'ayez pas souscrit à cette option. Merci de modifier votre abonnement avant de revenir ici."
+    "UNSUBSCRIBED_OPTION": "Désolé, il semble que vos quotas n'autorise pas l'accès à cette activité. Veuillez procéder à l'augmentation de vos quotas avant de revenir ici."
   },
   "schemas": {
-    "ORGANISATIONS_BILLING_PLAN_NAME": "Plan de paiement pour {object.name}",
-    "ORGANISATIONS_PLAN_FIELD_LABEL": "Sélectionnez le plan de paiement pour l'organisation",
-    "ORGANISATIONS_CUSTOMER_FIELD_LABEL": "Sélectionnez une méthode de paiement",
-    "ORGANISATIONS_EXTRA_INFOS_FIELD_LABEL": "Saisissez des informations supplémentaires apparaissant sur vos factures",
     "EVENT_TEMPLATES_CREATE_TITLE": "Créer un nouveau modèle d'évènement ?",
     "EVENT_TEMPLATES_NAME_FIELD_LABEL": "Saisissez le nom du modèle",
     "EVENT_TEMPLATES_ICON_FIELD_LABEL": "Selectionnez une icone pour représenter le modèle",
@@ -147,8 +143,6 @@
       "PLAN_TEMPLATES_LABEL": "Accédez à l'activité qui vous permet de gérer les <b>modèles de plan</b> au sein de votre organisation.",
       "PLAN_TEMPLATES_LINK_LABEL": "Voir comment gérer les modèles",
       "DESCRIPTION_LABEL": "Modifiez la description de votre organisation.",
-      "BILLING_LABEL": "Accédez à l'activité qui vous permet de modifier vos <b>options d'abonnement</b>.",
-      "BILLING_LINK_LABEL": "Voir comment gérer vos options",
       "SETTINGS_LABEL": "Modifiez le <b>paramétrage</b> de votre organisation (nom, logo, etc.).",
       "SETTINGS_LINK_LABEL": "Voir comment modifier les paramètres",
       "REMOVE_ORGANISATION_LABEL": "Supprimez votre organisation via cette action.",
@@ -428,17 +422,6 @@
     "ADMINISTRATION_SECTION": "Gestion",
     "INFORMATION_SECTION": "Informations",
     "SUBSCRIPTIONS_LABEL": "Abonnements"
-  },
-  "BillingEditor": {
-    "CUSTOMER_BLOCK_TITLE": "Information de paiement",
-    "CUSTOMER_BLOCK_TEXT_UNVERIFIED_USER": "Vous devez être vérifié pour renseigner vos informations de paiement",
-    "CUSTOMER_BLOCK_TEXT_NO_PAYMENT": "Vous n'avez renseigné aucune information de paiement",
-    "CUSTOMER_BLOCK_TEXT_INVOICE_PAYMENT": "Vous avez choisi une méthode paiement par facturation mensuelle.<br/>Les factures seront envoyées à <b>{email}</b>",
-    "CUSTOMER_BLOCK_TEXT_CARD_PAYMENT": "Vous avez choisi une méthode paiement par débit bancaire mensuel.<br/>Vous utilisez une carte <b>{brand}</b> dont le numéro se termine par <b>{last4}</b>",
-    "CUSTOMER_BLOCK_ACTION": "Mettre à jour",
-    "OPTIONS_BLOCK_TITLE": "Vos abonnements",
-    "PLAN_TITLE": "Votre abonnement de base",
-    "OPTIONS_TITLE": "Vos abonnements supplémentaires"
   },
   "OrganisationSettingsActivity": {
     "SETTINGS": "Paramètres",
@@ -758,33 +741,6 @@
   "EventLogEditor": {
     "CLOSE_ACTION": "@:CLOSE_LABEL",
     "SAVE_BUTTON": "@:SAVE_LABEL"
-  },
-  "CustomerEditor": {
-    "TITLE": "Saisissez vos informations de paiement",
-    "CUSTOMER_EMAIL_FIELD_LABEL": "Sélectionnez le destinataire des factures",
-    "CUSTOMER_DESCRIPTION_FIELD_LABEL": "Saisissez une mention à ajouter à votre facture",
-    "CUSTOMER_VAT_NUMBER_FIELD_LABEL": "Saisissez votre numéro de TVA",
-    "BILLING_METHOD_MESSAGE": "Saisissez une carte bancaire si vous voulez payer de façon automatique",
-    "CLOSE_ACTION": "Fermer",
-    "UPDATE_BUTTON": "Mettre à jour"
-  },
-  "SubscriptionChooser": {
-    "MORE_DETAILS": "En savoir plus",
-    "CLICK": "Nous contacter",
-    "SELECT": "Sélectionner",
-    "CURRENT_PLAN": "Votre offre",
-    "CONFIRM_DIALOG_TITLE": "Êtes vous sur de vouloir mettre à jour votre plan ?",
-    "CONFIRM_DIALOG_MESSAGE": "Merci de confirmer la souscription au plan <b>@:{plan})</b>",
-    "PLAN_DISABLED_TOOLTIP": "Merci de renseigner les informations de paiement pour souscrire à ce plan"
-  },
-  "OptionsChooser": {
-    "CLICK": "Nous contacter",
-    "SELECT": "Sélectionner",
-    "SUBSCRIBED": "Souscrite",
-    "CONFIRM_DIALOG_TITLE": "Êtes vous sur de vouloir mettre à jour votre option ?",
-    "CONFIRM_DIALOG_SUBSCRIBE_MESSAGE": "Merci de confirmer la souscription à l'option <b>@:{option})</b>",
-    "CONFIRM_DIALOG_UNSUBSCRIBE_MESSAGE": "Merci de confirmer la résiliation de l'option <b>@:{option})</b>",
-    "OPTION_DISABLED_TOOLTIP": "Merci de renseigner les informations de paiement pour souscrire aux options"
   },
   "PlansActivity": {
     "PLANS_LABEL": "Plans",

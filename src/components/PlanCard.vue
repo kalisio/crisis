@@ -87,9 +87,6 @@ export default {
     },
     canAccessArchivedEvents () {
       return this.$can('read', 'archived-events', this.contextId)
-    },
-    canAccessBilling () {
-      return this.$can('update', 'organisations', null, { _id: this.contextId })
     }
   },
   data () {

@@ -44,7 +44,8 @@ export default {
     find: [coreHooks.marshallCollationQuery],
     get: [],
     create: [],
-    update: [coreHooks.preventUpdatePerspectives],
+    // We only use pacth in editors to avoid dumping "hidden" (ie internal) properties
+    update: [commonHooks.disallow()],
     patch: [],
     remove: []
   },

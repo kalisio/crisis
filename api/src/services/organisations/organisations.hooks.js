@@ -2,8 +2,7 @@ import _ from 'lodash'
 import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import commonHooks from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
-import { checkOrganisationsQuotas, checkSubscriptionQuotas, subscribeDefaultPlan,
-         removeBilling, removeOrganisationAlerts } from '../../hooks/index.js'
+import { checkOrganisationsQuotas, removeOrganisationAlerts } from '../../hooks/index.js'
 
 export default {
   before: {
@@ -12,9 +11,8 @@ export default {
     get: [],
     create: [checkOrganisationsQuotas],
     update: [],
-    // When changing billing plan check for quotas
-    patch: [commonHooks.when(hook => _.get(hook, 'data.billing'), checkOrganisationsQuotas, checkSubscriptionQuotas)],
-    remove: [coreHooks.preventRemoveOrganisation]
+    patch: [commonHooks.iff(commonHooks.isProvider('external'), coreHooks.preventChanges(false, ['quotas']))],
+    remove: []
   },
 
   after: {
@@ -23,14 +21,12 @@ export default {
     get: [],
     create: [
       coreHooks.createOrganisationServices,
-      coreHooks.createOrganisationAuthorisations,
-      subscribeDefaultPlan
+      coreHooks.createOrganisationAuthorisations
     ],
     update: [],
     patch: [],
     remove: [
       coreHooks.setAsDeleted,
-      removeBilling,
       removeOrganisationAlerts,
       coreHooks.removeOrganisationResources('groups'),
       coreHooks.removeOrganisationResources('tags'),

@@ -5,7 +5,6 @@ module.exports = {
   organisations: require('./organisations'),
   'create-organisation': require('./core/create-organisation'),
   'edit-organisation': require('./edit-organisation'),
-  'edit-organisation-billing': require('./edit-organisation-billing'),
   'account-profile': require('./core/account-profile'),
   'account-security': require('./core/account-security'),
   'account-dz': require('./core/account-dz'),

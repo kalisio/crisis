@@ -4,7 +4,6 @@ import makeDebug from 'debug'
 const debug = makeDebug('aktnmap:hooks')
 
 export * from './hooks.quotas.js'
-export * from './hooks.billing.js'
 export * from './hooks.events.js'
 export * from './hooks.event-logs.js'
 export * from './hooks.event-templates.js'

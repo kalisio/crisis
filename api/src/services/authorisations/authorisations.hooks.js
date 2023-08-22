@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
 import commonHooks from 'feathers-hooks-common'
-import { checkMembersQuotas, preventRemovingCustomer } from '../../hooks/index.js'
+import { checkMembersQuotas } from '../../hooks/index.js'
 
 export default {
   before: {
@@ -15,9 +15,7 @@ export default {
         coreHooks.preventRemovingLastOwner('organisations')),
       // Groups can now be left as empty because org managers can manage all groups
       // coreHooks.preventRemovingLastOwner('groups')),
-      commonHooks.when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations',
-        checkMembersQuotas,
-        preventRemovingCustomer)
+      commonHooks.when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations', checkMembersQuotas)
     ],
     update: [],
     patch: [],
@@ -33,7 +31,6 @@ export default {
       // Need to be done in a before and not a after hook because otherwise the user has been
       // removed from the member service and will not be available anymore for subsequent operations
       commonHooks.when(hook => _.get(hook.params, 'query.scope') === 'organisations',
-        preventRemovingCustomer,
         coreHooks.removeOrganisationTagsAuthorisations,
         coreHooks.removeOrganisationGroupsAuthorisations)
     ]

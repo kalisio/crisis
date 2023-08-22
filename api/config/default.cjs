@@ -177,50 +177,19 @@ module.exports = {
     inactivityDuration: (process.env.NODE_ENV === 'development' ? 'P-7D' : 'P-1Y')
   },
   quotas: {
-    global: {
-      // Setup some default quotas in dev so that we can perform testing more easily
-      bronze: (process.env.NODE_ENV === 'development' ? 2 : 1)
-    },
-    bronze: {
-      members: 10,
-      groups: (process.env.NODE_ENV === 'development' ? 5 : 1),
-      tags: (process.env.NODE_ENV === 'development' ? 10 : 5),
-      events: -1,
-      'event-templates': (process.env.NODE_ENV === 'development' ? 5 : 1),
-      plans: (process.env.NODE_ENV === 'development' ? 5 : 0),
-      'plan-templates': (process.env.NODE_ENV === 'development' ? 5 : 0),
-      alerts: (process.env.NODE_ENV === 'development' ? 5 : 1)
-    },
-    silver: {
-      members: 25,
-      groups: 5,
-      tags: 50,
-      events: -1,
-      'event-templates': 5,
-      plans: 5,
-      'plan-templates': 5,
-      alerts: 5
-    },
-    gold: {
-      members: 250,
-      groups: 50,
-      tags: 100,
-      events: -1,
-      'event-templates': 50,
-      plans: 10,
-      'plan-templates': 10,
-      alerts: 50
-    },
-    diamond: {
-      members: 2500,
-      groups: 250,
-      tags: 250,
-      events: -1,
-      'event-templates': 100,
-      plans: 25,
-      'plan-templates': 25,
-      alerts: 250
-    }
+    // Setup some default quotas in dev so that we can perform testing more easily
+    organisations: (process.env.NODE_ENV === 'development' ? 2 : 1),
+    members: 10,
+    groups: (process.env.NODE_ENV === 'development' ? 5 : 1),
+    tags: (process.env.NODE_ENV === 'development' ? 10 : 5),
+    events: -1,
+    'event-templates': (process.env.NODE_ENV === 'development' ? 5 : 1),
+    'archived-events': (process.env.NODE_ENV === 'development' ? -1 : 0),
+    plans: (process.env.NODE_ENV === 'development' ? 5 : 0),
+    'plan-templates': (process.env.NODE_ENV === 'development' ? 5 : 0),
+    'archived-plans': (process.env.NODE_ENV === 'development' ? -1 : 0),
+    catalog: (process.env.NODE_ENV === 'development' ? -1 : 0),
+    alerts: (process.env.NODE_ENV === 'development' ? 5 : 1)
   },
   mailer: {
     service: 'gmail',
@@ -243,8 +212,6 @@ module.exports = {
     providers: [{ provider: 'opendatafrance' }, { provider: 'openstreetmap' }]
   },
   billing: {
-    secretKey: process.env.STRIPE_SECRET_KEY,
-    daysUntilInvoiceDue: 7,
     plans: {
       // First plan is the default one
       bronze: {
@@ -252,26 +219,21 @@ module.exports = {
         default: true
       },
       silver: {
-        color: 'light-green-8',
-        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'plan_D9lRPmBX3N4MzO' : 'plan_DHd5HGwsl31NoC')
+        color: 'light-green-8'
       },
       gold: {
-        color: 'light-green-10',
-        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'plan_D9lSeSigaoIck3' : 'plan_DHd5RMLMSlpUmQ')
+        color: 'light-green-10'
       },
       diamond: {
-        color: 'green-10',
-        url: 'https://kalisio.com/contact'
+        color: 'green-10'
       }
     },
     options: {
       archiving: {
-        color: 'light-green-6',
-        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'price_1Gs1lWDSpJUNa66oZRWs98Lq' : 'price_1Gs1p7DSpJUNa66ohJbWnsos')
+        color: 'light-green-6'
       },
       catalog: {
-        color: 'light-green-6',
-        stripeId: (process.env.NODE_APP_INSTANCE === 'prod' ? 'price_1Gs1lWDSpJUNa66obhxqjSph' : 'price_1Gs1p7DSpJUNa66oHtX9IDzG')
+        color: 'light-green-6'
       }
     }
   },
