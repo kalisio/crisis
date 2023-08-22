@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import path from 'path-browserify'
 import { Dialog } from 'quasar'
-import { utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 import { Geolocation } from '@kalisio/kdk/map.client.map'
 import * as utils from '../utils'
 

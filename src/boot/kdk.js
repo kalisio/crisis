@@ -40,9 +40,9 @@ export default async ({ app }) => {
   }
   app.config.globalProperties.$geolocation = Geolocation
   app.config.globalProperties.$checkQuota = async function (service, quota) {
-    const perspective = await api.getService('organisations')
+    const org = await api.getService('organisations')
       .get(this.contextId, { query: { $select: ['name', 'quotas'] } })
-    const orgQuota = _.get(perspective, `quotas.${service}`, Store.get(`capabilities.api.quotas.${service}`, 0))
+    const orgQuota = _.get(org, `quotas.${service}`, Store.get(`capabilities.api.quotas.${service}`, 0))
     // -1 means no limit
     if (orgQuota === -1) return
     if (quota > orgQuota) {

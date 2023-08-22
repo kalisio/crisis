@@ -23,10 +23,8 @@
 <script>
 import _ from 'lodash'
 import moment from 'moment'
-import centroid from '@turf/centroid'
 import { Store, mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 import { usePlan } from '../composables'
-import mixins from '../mixins'
 import config from 'config'
 
 export default {

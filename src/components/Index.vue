@@ -15,7 +15,7 @@ import { api, permissions, composables, i18n } from '@kalisio/kdk/core.client'
 // Data
 const $q = useQuasar()
 // Register custom redirect to handle permissions
-const { isInitialized, User } = composables.useSession({ redirect })
+const { isInitialized } = composables.useSession({ redirect })
 // Functions
 async function redirect (route, result, user) {
   // Check if we'd like to redirect to an organisation

@@ -24,7 +24,7 @@
           <div class="row full-width justify-center q-pa-md text-subtitle1 bg-grey-4">
             {{ organisation.name }}
           </div>
-          <KCardSection 
+          <KCardSection
             v-if="hasEventsSection"
             :hide-header="true"
           >
@@ -54,7 +54,7 @@
             </div>
           </KCardSection>
           <!-- Plans section -->
-          <KCardSection 
+          <KCardSection
             v-if="hasPlansSection && canAccessPlans"
             :hide-header="true"
           >
@@ -76,7 +76,7 @@
             </div>
           </KCardSection>
           <!-- Manage section -->
-          <KCardSection 
+          <KCardSection
             v-if="hasManageSection && canManageOrganisation"
             :hide-header="true"
           >

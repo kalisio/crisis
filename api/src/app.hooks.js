@@ -51,7 +51,7 @@ export default {
   },
 
   after: {
-    all: [coreHooks.log, coreHooks.processPerspectives],
+    all: [coreHooks.log],
     find: [],
     get: [],
     create: [],

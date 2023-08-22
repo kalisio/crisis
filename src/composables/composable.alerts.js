@@ -1,11 +1,9 @@
 import _ from 'lodash'
 import moment from 'moment'
-import i18next from 'i18next'
-import { ref, computed, watch, onBeforeMount, onBeforeUnmount } from 'vue'
 import { Dialog } from 'quasar'
 import { i18n, api, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 
-export function useAlerts(options) {
+export function useAlerts (options) {
   // Functions
   function formatAlertDateTime (date) {
     return date.toLocaleString(kCoreUtils.getLocale(),
@@ -121,4 +119,3 @@ export function useAlerts(options) {
     showRemoveAlertDialog
   }
 }
-

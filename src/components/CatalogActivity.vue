@@ -45,8 +45,7 @@ import L from 'leaflet'
 import moment from 'moment'
 import chroma from 'chroma-js'
 import sift from 'sift'
-import { ref, toRef, computed, watch } from 'vue'
-import { Dialog } from 'quasar'
+import { ref, toRef, computed } from 'vue'
 import { mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
@@ -585,7 +584,9 @@ export default {
       nbItemsPerPage: ref(0)
     })
     const baseQuery = computed(() => Object.assign({
-      geoJson: true, $skip: 0, $limit: MAX_ITEMS,
+      geoJson: true,
+      $skip: 0,
+      $limit: MAX_ITEMS,
       $select: ['_id', 'name', 'description', 'icon', 'location', 'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
     }, plan.planQuery.value))
     const filterQuery = computed(() => plan.planObjectiveQuery.value)
@@ -596,7 +597,7 @@ export default {
       filterQuery,
       nbItemsPerPage: ref(0)
     })
-    
+
     return {
       alerts,
       events,

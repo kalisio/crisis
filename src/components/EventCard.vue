@@ -164,7 +164,6 @@
 
 <script>
 import _ from 'lodash'
-import centroid from '@turf/centroid'
 import { mixins as kCoreMixins, utils as kCoreUtils, Storage } from '@kalisio/kdk/core.client'
 import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import { useAlerts } from '../composables'
@@ -277,7 +276,7 @@ export default {
     },
     hasPosition () {
       return _.has(this.item, 'location.geometry.coordinates')
-    },
+    }
   },
   data () {
     return {

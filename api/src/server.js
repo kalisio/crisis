@@ -55,7 +55,7 @@ export class Server {
     }
     // Set up our services (see `services/index.js`)
     await app.configure(services)
-    // Register authorisation, perspective, etc. hooks
+    // Register hooks
     app.hooks(hooks)
     // Set up real-time event channels
     app.configure(channels)

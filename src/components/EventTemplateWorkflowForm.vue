@@ -85,7 +85,7 @@ export default {
       // Add required end field options
       const options = _.get(this.stepValues, 'interaction', [])
       _.set(schema, 'properties.end.field.options',
-          options.map(option => Object.assign({ label: option.value }, option)))
+        options.map(option => Object.assign({ label: option.value }, option)))
       return schema
     },
     previewSchema () {
@@ -129,7 +129,6 @@ export default {
       this.refreshStep()
     },
     onRemoveStep () {
-      const name = this.currentStep
       const index = this.getCurrentStepIndex()
       // Before modifying array check if current step is the last one,
       // if so go back otherwise jump to previous

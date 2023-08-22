@@ -1,11 +1,10 @@
 import _ from 'lodash'
 import { ref, computed, watch, onBeforeMount, onBeforeUnmount } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { api } from '@kalisio/kdk/core.client'
 import * as utils from '../utils'
 
-export function usePlan(options) {
-
+export function usePlan (options) {
   // Data
   const route = useRoute()
   const planId = ref(null)
@@ -26,7 +25,7 @@ export function usePlan(options) {
     return planId.value
   }
   function getPlanLocationAsFeature () {
-    return getLocationAsFeature(plan.value)
+    return utils.getLocationAsFeature(plan.value)
   }
   function hasPlanLocation () {
     return _.has(getPlanLocationAsFeature(), 'geometry')
@@ -69,7 +68,7 @@ export function usePlan(options) {
 
   // Lifecycle hooks
   watch(() => route.query.plan, refreshPlanId)
-  
+
   onBeforeMount(() => {
     // Jump to archive whenever required
     planService = (_.get(route, 'name').includes('archived') ? 'archived-plans' : 'plans')

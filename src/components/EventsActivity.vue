@@ -38,7 +38,6 @@ import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { permissions } from '@kalisio/kdk/core.common'
 import { usePlan } from '../composables'
-import mixins from '../mixins'
 
 const activityMixin = kCoreMixins.baseActivity('eventsActivity')
 
@@ -113,7 +112,7 @@ export default {
         label: 'EventsActivity.DOING_LABEL',
         value: 'doing',
         props: _.defaults({
-          baseQuery: Object.assign({ participants: { $ne: [] } }, this.baseQuery),
+          baseQuery: Object.assign({ participants: { $ne: [] } }, this.baseQuery)
         }, props),
         width: this.columnWidth
       }, {
