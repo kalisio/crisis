@@ -3,7 +3,7 @@
       <template v-for="participant in participants" :key="participant._id">
         <div class="full-width row items-center q-pl-md q-pr-sm no-wrap">
           <q-btn flat round small color="primary" @click="onStateClicked(participant)">
-            <k-avatar :object="participant" />
+            <KAvatar :subject="participant" />
             <q-tooltip v-if="participant.step" content-class="bg-primary" >{{ getUserState(participant) }}</q-tooltip>
             <q-tooltip v-if="participant.step" :offset="[0, 48]">{{ $t('EventActivityPanel.FILTER_PARTICIPANTS') }}</q-tooltip>
           </q-btn>
