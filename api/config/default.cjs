@@ -13,7 +13,7 @@ const API_PREFIX = '/api'
 let nbRequestsPerMinute = 60 * 4
 let nbAuthenticationRequestsPerMinute = 10
 // Whitelist features services from rate limiting as they use a lot of concurrent requests
-const apiLimiterWhitelist = (service) => service.path.includes('features') || (service.key === 'kano') || (service.key === 'weacast')
+const apiLimiterWhitelist = (service) => (service.path && service.path.includes('features')) || (service.key === 'kano') || (service.key === 'weacast')
 // Global API limiter
 let apiLimiter = {
   http: {
@@ -61,8 +61,8 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
     domain = 'http://localhost:' + serverPort // Akt'n'Map app client/server port = 8081
   }
   // For benchmarking
-  apiLimiter = null
-  limiter = null
+  //apiLimiter = null
+  //limiter = null
 }
 // Override defaults if env provided
 if (process.env.SUBDOMAIN) {
