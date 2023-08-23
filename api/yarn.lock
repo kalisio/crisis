@@ -1469,13 +1469,6 @@
     "@types/config" "^3.3.0"
     config "^3.3.9"
 
-"@feathersjs/errors@^3.2.2":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-3.3.6.tgz#c34cfcd0a8fc1519afb36030efb3f835a8088015"
-  integrity sha512-VCohY/AQU13xYyZGl6rfdUgE+2bjaI76a4aEb6reIphHKgb4mnjYlg2PzS1/hcU1qUNi515kY9yQa5HsE7J1dQ==
-  dependencies:
-    debug "^4.0.0"
-
 "@feathersjs/errors@^3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-3.3.0.tgz#c5fcc163f49d6b139f10d118eec36e8f90818aff"
@@ -3881,7 +3874,7 @@ datauri@^2.0.0:
     image-size "^0.7.3"
     mimer "^1.0.0"
 
-debug@*, debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.3, debug@^4.3.4, debug@~4.3.1, debug@~4.3.2:
+debug@*, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.3, debug@^4.3.4, debug@~4.3.1, debug@~4.3.2:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.4.tgz#1319f6579357f2338d3337d2cdd4914bb5dcc865"
   integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==
@@ -5047,15 +5040,6 @@ feathers-mongodb@^6.0.0:
     "@feathersjs/adapter-commons" "^4.5.11"
     "@feathersjs/commons" "^4.5.11"
     "@feathersjs/errors" "^4.5.11"
-
-feathers-stripe@~0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/feathers-stripe/-/feathers-stripe-0.5.0.tgz#4376da1f3c080b55eaf7813f6f98a89e307ae58e"
-  integrity sha512-mDL15R4zo/YWmleiuMaZFvjgXW0Im/nfhEOgJ+6oCfQ3Nf0jogFj8N+KJ0Qw6WMkaDJ49KCHEHoQ6u8+iyi1dA==
-  dependencies:
-    "@feathersjs/errors" "^3.2.2"
-    debug "^3.1.0"
-    stripe "^6.0.0"
 
 feathers-sync@^2.1.0:
   version "2.1.0"
@@ -8141,7 +8125,7 @@ qs@6.10.3:
   dependencies:
     side-channel "^1.0.4"
 
-qs@6.11.0, qs@^6.10.2, qs@^6.11.0, qs@^6.6.0, qs@^6.9.4, qs@^6.9.6:
+qs@6.11.0, qs@^6.10.2, qs@^6.11.0, qs@^6.9.4, qs@^6.9.6:
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.11.0.tgz#fd0d963446f7a65e1367e01abd85429453f0c37a"
   integrity sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==
@@ -9364,16 +9348,6 @@ strip-json-comments@^3.0.1:
 strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
-
-stripe@^6.0.0:
-  version "6.36.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-6.36.0.tgz#546cb863a766674a86c02322e0d6d5d84c656fc4"
-  integrity sha512-7vjyVO4NCWvX38CH1AuSQH16uRxcQN+UhUTBPs4UHsIl5+SJXLBvCsHrMgd+bY9k1YDliT0fQB1fH9OI3GrEhw==
-  dependencies:
-    lodash.isplainobject "^4.0.6"
-    qs "^6.6.0"
-    safe-buffer "^5.1.1"
-    uuid "^3.3.2"
 
 strnum@^1.0.5:
   version "1.0.5"
