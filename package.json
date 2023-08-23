@@ -87,6 +87,7 @@
     "@feathersjs/memory": "^5.0.8",
     "@geoman-io/leaflet-geoman-free": "^2.11.1",
     "@kalisio/feathers-s3": "^1.1.0",
+    "@kalisio/feathers-webpush": "^1.0.1",
     "@kalisio/kdk": "https://github.com/kalisio/kdk",
     "@kalisio/leaflet.donutcluster": "^1.0.0",
     "@mapbox/geojsonhint": "^3.0.1",
