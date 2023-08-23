@@ -271,9 +271,6 @@ export default {
     expireAt () {
       return this.item.expireAt ? new Date(this.item.expireAt) : null
     },
-    coordinatatorsActions () {
-      return _.filter(this.itemActions, { scope: 'coordinators' })
-    },
     hasPosition () {
       return _.has(this.item, 'location.geometry.coordinates')
     }
@@ -334,7 +331,6 @@ export default {
       return this.schema
     },
     configureActions () {
-      console.log('toto', this.itemActions)
       // Required alias for the event logs mixin
       this.event = this.item
       this.refreshUser()
