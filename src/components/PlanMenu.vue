@@ -16,7 +16,7 @@
         <div class="row full-width justify-center items-center q-pa-md q-gutter-x-sm text-subtitle1 bg-grey-4">
           <KAvatar
             :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'"
-            :object="plan"
+            :subject="plan"
             :contextId="organisation._id"
             size="sm"
           />

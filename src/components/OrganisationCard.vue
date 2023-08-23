@@ -11,7 +11,12 @@
       Card avatar
     -->
     <template v-slot:card-avatar>
-      <KAvatar class="q-pa-sm" :object="item" :contextId="item._id" size="4rem" />
+      <KAvatar
+        :subject="item" 
+        :contextId="item._id" 
+        size="4rem" 
+        class="q-pa-sm" 
+      />
     </template>
     <!--
       Card content
