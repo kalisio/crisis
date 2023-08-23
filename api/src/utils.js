@@ -12,7 +12,7 @@ export async function sendPushNotifications (app, participants, notification) {
   })
   const data = {
     notification, 
-    subscriptionService: 'api/users',
+    subscriptionService: `${app.get('apiPath')}/users`,
     subscriptionProperty: 'subscriptions',
   }
 
