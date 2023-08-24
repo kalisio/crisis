@@ -37,6 +37,10 @@ export default {
     kMapMixins.catalogPanel
   ],
   props: {
+    event: {
+      type: Object,
+      required: true
+    },
     participants: {
       type: Array,
       required: true
