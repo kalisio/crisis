@@ -60,6 +60,7 @@ export default async ({ app }) => {
   app.component('KAction', await kdkCoreUtils.loadComponent('KAction'))
   app.component('KPanel', await kdkCoreUtils.loadComponent('KPanel'))
   app.component('KStamp', await kdkCoreUtils.loadComponent('KStamp'))
+  app.component('KScrollArea', await kdkCoreUtils.loadComponent('KScrollArea'))
   app.component('KTextArea', await kdkCoreUtils.loadComponent('KTextArea'))
   app.component('KChipsPane', await kdkCoreUtils.loadComponent('KChipsPane'))
   app.component('KAvatar', await kdkCoreUtils.loadComponent('KAvatar'))
