@@ -20,8 +20,8 @@
       :base-query="baseQuery"
       :filter-query="filterQuery"
       :list-strategy="'smart'"
-      @toggle-changed="onItemToggled"
-      @collection-refreshed="onCollectionRefreshed">
+      :processor="onCollectionRefreshed"
+      @toggle-changed="onItemToggled">
         <template v-slot:empty-section>
           <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KList.EMPTY_LIST')" />
         </template>
@@ -162,10 +162,10 @@ export default {
       else _.remove(this.toggledParticipants, participant => participant._id === item._id)
     },
     onCollectionRefreshed (items) {
-      // Process logs to make it usable as a more conveninet object by adding icon, etc.
-      this.$refs.list.items = this.processStates(items)
       // Clear toggled items
       this.toggledParticipants = []
+      // Process logs to make it usable as a more convenient object by adding icon, etc.
+      return this.processStates(items)
     },
     getFollowUpButtons () {
       return [{
@@ -186,10 +186,7 @@ export default {
       this.selectedParticipantStep = this.getWorkflowStep(this.selectedParticipantState)
       this.$refs.followUpModal.open()
       // We can then load the schema and local refs in parallel
-      await Promise.all([
-        this.loadSchema(),
-        this.loadRefs()
-      ])
+      await this.loadSchema()
       await this.$refs.form.build()
       this.$refs.form.clear()
     },

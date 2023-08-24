@@ -6,7 +6,7 @@
     @closed="$emit('closed')"
     :buttons="getButtons()"
   >
-    <KForm ref="form" :schema="schema"/>
+    <KForm ref="form" :schema="schema" @form-ready="refresh"/>
   </KModal>
 </template>
 
@@ -59,11 +59,8 @@ export default {
     async refresh () {
       this.refreshUser()
       if (this.userId) {
-        // We can then load the schema and local refs in parallel
-        await Promise.all([
-          this.loadSchema(),
-          this.loadRefs()
-        ])
+        // We can then load the schema
+        await this.loadSchema()
         await this.$refs.form.build()
         this.$refs.form.clear()
       }
@@ -78,7 +75,6 @@ export default {
     this.state = await this.getService().get(this.logId)
     this.event = await this.$api.getService('events', this.contextId).get(this.objectId)
     this.step = this.getWorkflowStep(this.state)
-    this.refresh()
   }
 }
 </script>

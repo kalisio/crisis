@@ -417,11 +417,8 @@ export default {
     async followUp () {
       if (this.hasParticipantInteraction) {
         this.$refs.followUpModal.open()
-        // We can then load the schema and local refs in parallel
-        await Promise.all([
-          this.loadSchema(),
-          this.loadRefs()
-        ])
+        // We can then load the schema
+        await this.loadSchema()
         await this.$refs.form.build()
         this.$refs.form.clear()
       } else if (this.isCoordinator) {
