@@ -1177,7 +1177,7 @@ module.exports = {
       content: {
         'event-participants': [
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'event-participants'),
-          { id: 'event-participants', component: 'EventActivityPanel', participants: ':participants' }
+          { id: 'event-participants', component: 'EventActivityPanel', event: ':event', participants: ':participants' }
         ],
         'user-layers': [
           catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'user-layers'),

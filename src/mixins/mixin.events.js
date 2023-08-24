@@ -251,12 +251,8 @@ const eventsMixin = {
       // Participant position as geometry
       if (log.stakeholder === 'participant') {
         await Geolocation.update()
-        const position = this.$store.get('geolocation.position')
-        if (position) {
-          log.geometry = {
-            type: 'Point',
-            coordinates: [position.longitude, position.latitude]
-          }
+        if (Geolocation.hasLocation()) {
+          log.geometry = Geolocation.getGeometry()
         }
       } else {
         // Copy geometry from previous state for coordinator so that we keep the last known user position
