@@ -37,9 +37,8 @@ export function addCreatorAsCoordinator (hook) {
       coordinators.push({
         _id: createObjectID(user._id),
         service: 'members',
-        name: user.name,
         profile: {
-          name: user.name,
+          name: _.get(user, 'profile.name'),
           description: user.email
         },
         icon: { name: 'person' }

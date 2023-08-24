@@ -221,7 +221,7 @@ export default {
       // Default content is participant name
       const tooltip = L.tooltip({ permanent: true }, layer)
       const step = this.getWorkflowStep(feature)
-      const name = _.get(feature, 'participant.name', this.$t('EventActivity.UNAMED'))
+      const name = _.get(feature, 'participant.profile.name', this.$t('EventActivity.UNAMED'))
       // Check for any interaction to be performed
       if (!this.archived && this.waitingInteraction(step, feature, 'coordinator')) {
         return tooltip.setContent('<b>' + name + '<br>' + step.title + ' : ' + this.$t('EventActivity.ACTION_REQUIRED') + '</b>')

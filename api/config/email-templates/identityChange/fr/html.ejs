@@ -1,6 +1,6 @@
 <h1>[Akt'n'Map] Vos informations ont été changées</h1>
 
-<p>Bonjour <%= user.name %>, vos informations personnelles ont été modifiées. Merci de vérifier que vous avez bien demandé ces changements.</p>
+<p>Bonjour <%= user.profile.name %>, vos informations personnelles ont été modifiées. Merci de vérifier que vous avez bien demandé ces changements.</p>
 <ul>
 <% for (var key in user.verifyChanges) {%>
    <li><%= key %>: <%= user.verifyChanges[key] %></li>
