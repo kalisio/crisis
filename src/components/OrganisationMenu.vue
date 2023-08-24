@@ -12,8 +12,7 @@
         <div>
           <KAvatar
             id="organisation-avatar"
-            :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'"
-            :object="organisation"
+            :subject="organisation"
             :contextId="organisation._id"
             :size="$q.screen.lt.sm ? '1.5rem' : '2rem'"
           />
