@@ -116,7 +116,7 @@ const eventsMixin = {
     },
     getUserName (state = {}) {
       // Manage the case the participant is not correctly populated
-      return _.get(state, 'participant.name', this.$t('EventLog.UNAMED'))
+      return _.get(state, 'participant.profile.name', this.$t('EventLog.UNAMED'))
     },
     getUserComment (state = {}) {
       // When last step had a recorded interaction use its comment if any

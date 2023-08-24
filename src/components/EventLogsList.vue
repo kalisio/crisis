@@ -244,7 +244,7 @@ export default {
         // Change from step ID to label
         item.step = _.get(item, 'step.title', '')
         // Change from object to string
-        item.participant = _.get(item, 'participant.name', this.$t('EventLog.UNAMED'))
+        item.participant = _.get(item, 'participant.profile.name', this.$t('EventLog.UNAMED'))
         // Delete what is not exported
         return _.pick(item, properties)
       })

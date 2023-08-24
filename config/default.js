@@ -478,7 +478,7 @@ module.exports = {
       { title: 'KEmailManager.TITLE', component: 'account/KEmailManager' },
       { title: 'KSubscriptionsManager.TITLE', component: 'account/KSubscriptionsManager',
         actions: [
-          { id: 'unsubscribe', tooltip: 'KSubscriptionCard.UNSUBSCRIBE_LABEL', icon: 'phonelink_erase', handler: 'unsubscribe' }
+          { id: 'unsubscribe', tooltip: 'KSubscription.UNSUBSCRIBE_LABEL', icon: 'phonelink_erase', handler: 'unsubscribe' }
         ]
       }
     ],
