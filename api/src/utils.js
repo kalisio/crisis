@@ -17,18 +17,19 @@ export async function sendPushNotifications (app, participants, notification) {
   }
 
   // Define participants
-  const [usersId, groupsId, tagsId] = Array(3).fill([])
+  const [userIds, groupIds, tagIds, organisationIds] = Array(4).fill([])
   _.forEach(participants, participant => {
     // Check for ObjectID
-    if (typeof participant === 'string') usersId.push(participant)
-    if (participant.service === 'members') usersId.push(participant._id)
-    if (participant.service === 'groups') groupsId.push(participant._id)
-    if (participant.service === 'tags') tagsId.push(participant._id)
+    if (typeof participant === 'string') userIds.push(participant)
+    if (participant.service === 'members') userIds.push(participant._id)
+    if (participant.service === 'groups') groupIds.push(participant._id)
+    if (participant.service === 'tags') tagIds.push(participant._id)
+    if (participant.service === 'organisations') tagIds.push(participant._id)
   })
-
-
+  
   // Send notification
-  if (_.size(usersId) > 0) pushService.create({ ...data, subscriptionFilter: { _id: { $in: usersId }}})
-  if (_.size(groupsId) > 0) pushService.create({ ...data, subscriptionFilter: { groups: { $elemMatch: { _id: { $in: groupsId }}}}})
-  if (_.size(tagsId) > 0) pushService.create({ ...data, subscriptionFilter: { tags: { $elemMatch: { _id: { $in: tagsId }}}}})
+  if (_.size(userIds) > 0) pushService.create({ ...data, subscriptionFilter: { _id: { $in: userIds }}})
+  if (_.size(groupIds) > 0) pushService.create({ ...data, subscriptionFilter: { groups: { $elemMatch: { _id: { $in: groupIds }}}}})
+  if (_.size(tagIds) > 0) pushService.create({ ...data, subscriptionFilter: { tags: { $elemMatch: { _id: { $in: tagIds }}}}})
+  if (_.size(organisationIds) > 0) pushService.create({ ...data, subscriptionFilter: { organisations: { $elemMatch: { _id: { $in: organisationIds }}}}})
 }

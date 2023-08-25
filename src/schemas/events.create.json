@@ -73,6 +73,17 @@
         "icon": {
           "name": "las la-tag"
         }
+      },
+      {
+        "service": "organisations",
+        "field": "name",
+        "description": "description",
+        "baseQuery": {
+          "$select": ["_id", "name", "description"]
+        },
+        "icon": {
+          "name": "las la-grip-horizontal"
+        }
       }],
       "field": {
         "component": "form/KItemField",
