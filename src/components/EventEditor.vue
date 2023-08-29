@@ -193,7 +193,7 @@ export default {
       if (await kdkCoreMixins.baseEditor.methods.apply.call(this)) this.closeModal()
     }
   },
-  async created () {
+  async mounted () {
     // Build the editor.
     // Note that if the event belongs to a plan we need to wait for the plan to be loaded
     if (!this.hasPlan()) this.refresh()
