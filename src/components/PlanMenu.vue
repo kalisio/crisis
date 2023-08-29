@@ -15,7 +15,6 @@
       <q-card v-if="plan" class="bg-white" :style="computedStyle">
         <div class="row full-width justify-center items-center q-pa-md q-gutter-x-sm text-subtitle1 bg-grey-4">
           <KAvatar
-            :class="$q.screen.lt.sm ? 'q-pa-none' : 'q-pa-xs'"
             :subject="plan"
             :contextId="organisation._id"
             size="sm"
@@ -30,10 +29,16 @@
           <KCardSection>
             <template v-for="(objective, index) in plan.objectives" :key="objective.id">
               <div class="row full-width items-center justify-between no-wrap">
-                <q-toggle class="col-8" v-model="objectiveFilters[index]" :label="objective.name" />
+                <q-toggle 
+                  class="col-8" 
+                  v-model="objectiveFilters" 
+                  :val="objective.name" 
+                  :label="objective.name" 
+                />
                 <div class="row items-center q-gutter-x-sm no-wrap q-pr-sm">
                   <KPanel id="objective-actions" :content="getObjectiveActions(objective)" :dense="true" />
                   <q-knob
+                    v-if="objectivePercents[index]"
                     readonly
                     show-value
                     v-model="objectivePercents[index]"
@@ -62,7 +67,6 @@ import { QKnob } from 'quasar'
 import { usePlan } from '../composables'
 
 export default {
-  name: 'plan-menu',
   components: {
     QKnob
   },
@@ -94,7 +98,6 @@ export default {
   data () {
     return {
       organisation: this.$store.get('context'),
-      objectiveFilters: this.kActivity.objectiveFilters,
       objectivePercents: []
     }
   },
@@ -106,17 +109,12 @@ export default {
     },
     plan: {
       handler () {
-        if (this.plan) this.objectiveFilters = _.fill(Array(_.size(this.plan.objectives), false))
+        this.objectiveFilters = []
       }
     },
     objectiveFilters: {
       handler () {
-        if (!this.plan) return
-        const filters = []
-        for (let i = 0; i < this.objectiveFilters.length; i++) {
-          if (this.objectiveFilters[i]) filters.push(_.get(this.plan, `objectives[${i}].name`))
-        }
-        this.kActivity.objectiveFilters = filters
+        this.kActivity.objectiveFilters = this.objectiveFilters
       }
     }
   },
