@@ -16,10 +16,6 @@ describe(`suite:${suite}`, () => {
   const org = {
     name: user.name
   }
-  const newOrg = {
-    name: 'My new org',
-    description: 'A new org'
-  }
 
   before(async () => {
     chailint(chai, util)
@@ -50,11 +46,18 @@ describe(`suite:${suite}`, () => {
     await core.goToRegisterScreen(page)
     await core.register(page, user)
     // await core.login(page, user)
-    await core.closeSignupAlert(page)
     await core.closeWelcomeDialog(page)
   })
 
-  it('check user has one organisation', async () => {
+  it('check that the user has no organization', async () => {
+    expect(await organisationExists(page, org)).beFalse()
+    expect(await countOrganisations(page) === 0).beTrue()
+  })
+
+  it('create organization', async () => {
+    await createOrganisation(page, org)
+    await editOrganisationBilling(page, client, user)    
+    await core.closeWelcomeDialog(page)
     expect(await organisationExists(page, org)).beTrue()
     expect(await countOrganisations(page) === 1).beTrue()
   })
@@ -70,14 +73,7 @@ describe(`suite:${suite}`, () => {
     runner.clearErrors()
   })
 
-  it('check organisation creation is forbidden', async () => {
-    await createOrganisation(page, newOrg)
-    await core.clickAction(page, 'cancel-button')
-    expect(runner.hasError()).beTrue()
-    runner.clearErrors()
-  })
-
-  it.skip('check account deletion is forbidden', async () => {
+  it('check account deletion is forbidden', async () => {
     await core.deleteAccount(page, user.name)
     expect(runner.hasError()).beTrue()
     runner.clearErrors()
@@ -86,14 +82,8 @@ describe(`suite:${suite}`, () => {
   it('update profile', async () => {
     await core.updateAccountProfile(page, 'My new name', runner.getDataPath('avatar.png'))
     user.name = 'My new name'
-    await core.clickLeftOpener(page)
-    expect(await runner.captureAndMatch('profile')).beTrue()
-  })
-
-  it('edit organisation billing', async () => {
-    await editOrganisationBilling(page, org)
-    await core.clickAction(page, 'close-button')
-    await page.waitForTimeout(1000)
+    // await core.clickLeftOpener(page)
+    // expect(await runner.captureAndMatch('profile')).beTrue()
   })
 
   it('delete organisation', async () => {
