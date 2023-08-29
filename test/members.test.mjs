@@ -55,8 +55,8 @@ describe(`suite:${suite}`, () => {
     // Prepare structure for current run
     await client.createOrganisation(org)
     // Create members outside organisation
-    await client.createUser(_.find(org.members, { name: 'Manager' }))
     await client.createUser(_.find(org.members, { name: 'Member' }))
+    await client.createUser(_.find(org.members, { name: 'Manager' }))
     page = await runner.start()
   })
 
@@ -70,7 +70,6 @@ describe(`suite:${suite}`, () => {
 
   it('org owner can add members', async () => {
     await core.login(page, org.owner)
-    await core.closeSignupAlert(page)
     // Add manager
     const manager = _.find(org.members, { name: 'Manager' })
     await members.addMember(page, org, manager)
@@ -124,8 +123,7 @@ describe(`suite:${suite}`, () => {
     const member = _.find(org.members, { name: 'Member' })
     const guest = _.find(org.members, { name: 'Guest' })
     await core.login(page, member)
-    await core.closeSignupAlert(page)
-    expect(await organisations.countOrganisations(page)).to.equal(2)
+    expect(await organisations.countOrganisations(page)).to.equal(1)
     expect(await members.countMembers(page, org)).to.equal(4)
     expect(await members.canAddMember(page, org)).beFalse()
     expect(await members.canEditMember(page, org, member)).beFalse()
@@ -142,8 +140,7 @@ describe(`suite:${suite}`, () => {
     const member = _.find(org.members, { name: 'Member' })
     const guest = _.find(org.members, { name: 'Guest' })
     await core.login(page, manager)
-    await core.closeSignupAlert(page)
-    expect(await organisations.countOrganisations(page)).to.equal(2)
+    expect(await organisations.countOrganisations(page)).to.equal(1)
     expect(await members.countMembers(page, org)).to.equal(4)
     expect(await members.canAddMember(page, org)).beTrue()
     expect(await members.canEditMember(page, org, manager)).beTrue()
@@ -166,7 +163,6 @@ describe(`suite:${suite}`, () => {
 
   it('owner can remove manager', async () => {
     await core.login(page, org.owner)
-    await core.closeSignupAlert(page)
     const manager = _.find(org.members, { name: 'Manager' })
     await members.removeMember(page, org, manager)
     expect(await members.countMembers(page, org)).to.equal(2)

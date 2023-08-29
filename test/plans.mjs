@@ -3,13 +3,25 @@ import makeDebug from 'debug'
 import { core } from '@kalisio/kdk/test.client.js'
 import { goToOrganisationsActivity } from './organisations.mjs'
 
-const debug = makeDebug('aktnmap:test:tags')
+const debug = makeDebug('aktnmap:test:plans')
 
 const organisationComponent = 'OrganisationCard'
 export const planComponent = 'PlanCard'
 export const eventComponent = 'EventCard'
 export const planTemplateComponent = 'PlanTemplateCard'
 export const objectiveComponent = 'PlanObjectiveItem'
+
+export async function clickPermission (page, permissions, wait = 250) {
+  let role = 1
+  if (permissions === 'manager') role = 2
+  if (permissions === 'owner') role = 3
+  const xpath = `//*[@id="permission-field"]/div[${role}]/div`
+  const elements = await page.$x(xpath)
+  if (elements.length > 0) {
+    elements[0].click()
+    await page.waitForTimeout(wait)
+  }
+}
 
 export async function goToLogbook (page, organisation, wait = 2000) {
   const url = page.url()
@@ -124,7 +136,7 @@ export async function createPlanTemplate (page, organisation, template, wait = 2
       await core.click(page, `#${_.kebabCase(coordinators.name)}`)
     }
   }
-  // if (template.permission) await clickPermission(page, template.permission)
+  if (template.permission) await clickPermission(page, template.permission)
   await core.clickAction(page, 'apply-button', wait)
 }
 

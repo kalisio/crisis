@@ -75,7 +75,6 @@ describe(`suite:${suite}`, () => {
     const manager = _.find(org.members, { name: 'Manager' })
     const member = _.find(org.members, { name: 'Member' })
     await core.login(page, owner)
-    await core.closeSignupAlert(page)
     expect(await tags.countTags(page, org)).to.equal(0)
     await members.editTags(page, org, owner, [apple])
     await members.editTags(page, org, manager, [banana])
