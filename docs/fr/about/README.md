@@ -1,6 +1,6 @@
 # A propos
 
-**Akt'n'Map** est un projet libre disponible sur [GitHub](https://github.com/kalisio/aktnmap).
+**Kalisio Crisis** est un projet libre disponible sur [GitHub](https://github.com/kalisio/crisis).
 
 Il repose sur un écosystème de développement et de déploiement composé de:
 * [KDK](https://kalisio.github.io/kdk/), un kit de développement pour les applications géospatiales
@@ -11,12 +11,12 @@ Il repose sur un écosystème de développement et de déploiement composé de:
 
 ## Feuille de route
 
-La feuille de route est disponible sur [Github](https://github.com/kalisio/aktnmap/projects/1).
+La feuille de route est disponible sur [Github](https://github.com/kalisio/crisis/projects/1).
 
 ## Versions
 
-La liste des différentes versions est disponible sur [Github](https://github.com/kalisio/aktnmap/milestones)
+La liste des différentes versions est disponible sur [Github](https://github.com/kalisio/crisis/milestones)
 
 ## Notes de version
 
-La liste des modifications apportées à chaque version est disponible sur [Github](https://github.com/kalisio/aktnmap/blob/master/CHANGELOG.md)
+La liste des modifications apportées à chaque version est disponible sur [Github](https://github.com/kalisio/crisis/blob/master/CHANGELOG.md)
