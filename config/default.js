@@ -8,9 +8,10 @@ const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
 let domain
-let pwaAppName = 'Akt\'n\'Map'
-let pwaShortName = 'AktnMap'
-let stripeKey
+let appName = 'Kalisio Crisis'
+let pwaAppName = appName
+let pwaShortName = appName
+
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   domain = 'https://aktnmap.dev.kalisio.xyz'
@@ -378,8 +379,10 @@ module.exports = {
   // If using local IP on WiFi router
   //domain: 'http://192.168.1.16:8081',
   domain,
+  appName,
   pwaAppName,
   pwaShortName,
+  appLogo: 'crisis-logo.png',  
   flavor: process.env.NODE_APP_INSTANCE || 'dev',
   version: require('../package.json').version,
   buildNumber: process.env.BUILD_NUMBER,
@@ -389,10 +392,8 @@ module.exports = {
   transport: 'websocket', // Could be 'http' or 'websocket',
   gateway,
   gatewayJwtField: 'jwt',
-  gatewayJwt: 'aktnmap-gateway-jwt',
-  appName: 'Akt\'n\'Map',
-  appLogo: 'aktnmap-logo.png',
-  terms: 'aktnmap-terms',
+  gatewayJwt: 'crisis-gateway-jwt',
+  terms: 'crisis-terms',
   appWebsite: 'https://kalisio.com/solutions#aktnmap',
   appOnlineHelp: onlineHelp,
   publisher: 'Kalisio',
@@ -415,10 +416,6 @@ module.exports = {
   },
   storage: {
     useProxy: true
-  },
-  stripe: {
-    secretKey: process.env.STRIPE_PUBLIC_KEY,
-    options: {}
   },
   roles: {
     // Member/Manager/Owner
