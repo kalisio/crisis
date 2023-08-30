@@ -1,6 +1,6 @@
 <img src="https://s3.eu-central-1.amazonaws.com/kalisioscope/aktnmap/aktnmap-icon-256x256.png" width="256">
 
-## Akt'n'Map tools
+## Crisis tools
 
 This folder contains some useful scripts to manage application databases.
 

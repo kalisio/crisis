@@ -4,7 +4,7 @@ sidebarDepth: 3
 
 # Contributing
 
-If you are a developer you can help us build a better Akt'n'Map !
+If you are a developer you can help us build a better Kalisio Crisis !
 
 ## Submission guidelines
 

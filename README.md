@@ -1,6 +1,6 @@
 <img src="https://s3.eu-central-1.amazonaws.com/kalisioscope/aktnmap/aktnmap-icon-256x256.png" width="256">
 
-## Akt'n'Map application
+## Kalisio Crisis application
 
 [![Latest Release](https://img.shields.io/github/v/tag/kalisio/aktnmap?sort=semver&label=latest)](https://github.com/kalisio/aktnmap/releases)
 [![Build Status](https://app.travis-ci.com/kalisio/aktnmap.svg?branch=master)](https://app.travis-ci.com/kalisio/aktnmap)
@@ -12,7 +12,7 @@
 
 For more information please visit our websites:
 * [Kalisio Company](https://kalisio.com/)
-* [Akt'n'Map Product](https://kalisio.github.io/aktnmap/)
+* [Kalisio Crisis](https://kalisio.github.io/crisis/)
 
 This application is based on the [Kalisio Development Kit](https://kalisio.github.io/kdk/).
 

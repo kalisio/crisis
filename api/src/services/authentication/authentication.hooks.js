@@ -19,7 +19,7 @@ export default {
     create: [coreHooks.verifyGuest, coreHooks.consentGuest, commonHooks.iff(hook => process.env.API_GATEWAY_URL, async hook => {
       const config = hook.app.get('authentication')
       if (!config) return hook
-      // Default appId for Akt'n'Map used to access the gateway
+      // Default appId for Crisis used to access the gateway
       const appId = config.appId
       if (appId) {
         await coreHooks.createJWT({
