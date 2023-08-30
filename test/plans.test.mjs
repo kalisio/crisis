@@ -89,28 +89,32 @@ describe(`suite:${suite}`, () => {
     eventTemplates: [{
       name: 'Member template',
       description: 'Template description',
-      permission: 'member'
+      permission: 'member',
+      expiryDuration: '90'
     }, {
       name: 'Manager template 1',
       description: 'Template 1 description',
       coordinators: [{
         name: 'Manager'
       }],
-      permission: 'manager'
+      permission: 'manager',
+      expiryDuration: '90'
     }, {
       name: 'Manager template 2',
       description: 'Template 2 description',
       coordinators: [{
         name: 'Manager'
       }],
-      permission: 'manager'
+      permission: 'manager',
+      expiryDuration: '90'
     }, {
       name: 'Owner template',
       description: 'Template description',
       coordinators: [{
         name: 'Owner'
       }],
-      permission: 'owner'
+      permission: 'owner',
+      expiryDuration: '90'
     }],
     events: [{
       name: 'Member event',
@@ -167,25 +171,24 @@ describe(`suite:${suite}`, () => {
 
   it('org owner can create plan templates', async () => {
     const member = _.find(org.members, { name: 'Owner' })
-    await core.login(page, member)
-    await core.closeSignupAlert(page)
     const planTemplate1 = _.find(org.planTemplates, { name: 'Owner plan template 1' })
-    await plans.createPlanTemplate(page, org, planTemplate1)
     const planTemplate2 = _.find(org.planTemplates, { name: 'Owner plan template 2' })
+    await core.login(page, member)
+    await plans.createPlanTemplate(page, org, planTemplate1)
+    expect(await plans.countPlanTemplates(page, org)).to.equal(1)
     await plans.createPlanTemplate(page, org, planTemplate2)
     expect(await plans.countPlanTemplates(page, org)).to.equal(2)
     expect(await plans.planTemplateExists(page, org, planTemplate1, 'name')).beTrue()
     expect(await plans.planTemplateExists(page, org, planTemplate2, 'name')).beTrue()
   })
-  /*
-  // Problème ici : j'accède bien au formulaire du template que je veux, mais impossible d'écrire dans les champs
-  it('org owner can add objective to plan template', async () => {
-    const planTemplate = _.find(org.planTemplates, { name: 'Owner plan template 2' })
-    const planObjective = _.find(org.planObjectives, { name: 'Objective 1' })
-    await plans.goToPlanTemplateObjectives(page, org, planTemplate.name)
-    await plans.createPlanTemplateObjective(page, org, planTemplate.name, planObjective, 10000)
-    expect(await plans.countPlanObjectives(page, org, planTemplate)).to.equal(1)
-  }) */
+
+  // it('org owner can add objective to plan template', async () => {
+  //   const planTemplate = _.find(org.planTemplates, { name: 'Owner plan template 2' })
+  //   const planObjective = _.find(org.planObjectives, { name: 'Objective 1' })
+  //   await plans.goToPlanTemplateObjectives(page, org, planTemplate.name)
+  //   await plans.createPlanTemplateObjective(page, org, planTemplate.name, planObjective, 10000)
+  //   expect(await plans.countPlanObjectives(page, org, planTemplate)).to.equal(1)
+  // })
 
   it('org owner can create plan from template', async () => {
     const ownerTemplate = _.find(org.planTemplates, { name: 'Owner plan template 1' })
@@ -251,14 +254,10 @@ describe(`suite:${suite}`, () => {
   })
 
   after(async function () {
-    // Let enough time to process
-    this.timeout(60000)
     await runner.stop()
-    // First remove groups in case removal test failed
-    /* await client.removeGroups(org)
-    // Then members
+    // First remove members in case removal test failed
     await client.removeMembers(org)
     // Then organisation/owner
-    await client.removeOrganisation(org) */
+    await client.removeOrganisation(org)
   })
 })

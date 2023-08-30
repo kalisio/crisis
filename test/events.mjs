@@ -14,7 +14,7 @@ export async function clickPermission (page, permission, wait = 250) {
   let index = 1
   if (permission === 'manager') index = 2
   if (permission === 'owner') index = 3
-  const xpath = `(//div[@id="permission-field"]//div[@role="radio"])[${index}]`
+  const xpath = `//*[@id="permission-field"]/div[${index}]/div`
   const elements = await page.$x(xpath)
   if (elements.length > 0) {
     elements[0].click()
@@ -127,11 +127,7 @@ export async function createEvent (page, organisation, template, event, wait = 2
   if (event.name) await core.type(page, '#name-field', event.name, false, true)
   if (event.description) await core.type(page, '#description-field', event.description, false, true)
   // Geolocate on map by default
-  const xpath = '(//div[@id="location-input"]//div[@role="radio"])[2]'
-  const locationElements = await page.$x(xpath)
-  if (locationElements.length > 0) {
-    locationElements[0].click()
-  }
+  core.click(page, '#geolocate')
   if (event.participants) {
     for (let i = 0; i < event.participants.length; i++) {
       const participant = event.participants[i]
@@ -152,9 +148,18 @@ export async function createEvent (page, organisation, template, event, wait = 2
 export async function createEventTemplate (page, organisation, template, wait = 2000) {
   await goToEventTemplatesActivity(page, organisation)
   await core.clickAction(page, 'create-event-template')
+  // We can use default setup from template or override
   await core.type(page, '#name-field', template.name)
   if (template.description) await core.type(page, '#description-field', template.description)
   if (template.permission) await clickPermission(page, template.permission)
+  // Set expiry duration
+  await core.click(page, '#expiryDuration-field')
+  const xpath = `//*[@id="${template.expiryDuration}"]`
+  const elements = await page.$x(xpath)
+  if (elements.length > 0) {
+    elements[0].click()
+    await page.waitForTimeout(wait)
+  }
   await core.clickAction(page, 'apply-button', wait)
 }
 

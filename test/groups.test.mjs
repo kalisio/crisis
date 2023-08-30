@@ -16,15 +16,15 @@ describe(`suite:${suite}`, () => {
       password: 'Pass;word1'
     },
     members: [{
-      name: 'Manager',
-      email: 'manager@kalisio.xyz',
-      password: 'Pass;word1',
-      permissions: 'manager'
-    }, {
       name: 'Member',
       email: 'member@kalisio.xyz',
       password: 'Pass;word1',
       permissions: 'member'
+    }, {
+      name: 'Manager',
+      email: 'manager@kalisio.xyz',
+      password: 'Pass;word1',
+      permissions: 'manager'
     }],
     groups: [{
       name: 'Group 1',
@@ -73,7 +73,6 @@ describe(`suite:${suite}`, () => {
   it('org owner can create a group', async () => {
     const group = _.find(org.groups, { name: 'Group 1' })
     await core.login(page, org.owner)
-    await core.closeSignupAlert(page)
     await groups.createGroup(page, org, group)
     expect(await groups.countGroups(page, org)).to.equal(1)
     expect(await groups.groupExists(page, org, group)).beTrue()
@@ -110,7 +109,6 @@ describe(`suite:${suite}`, () => {
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, org.owner)
-    await core.closeSignupAlert(page)
     const group = _.find(org.groups, { name: 'Group 1' })
     const member = _.find(org.members, { name: 'Manager' })
     await members.leaveGroup(page, org, group, member)
@@ -207,7 +205,6 @@ describe(`suite:${suite}`, () => {
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, org.owner)
-    await core.closeSignupAlert(page)
     const group = _.find(org.groups, { name: 'New Group 1' })
     await groups.removeGroup(page, org, group)
     expect(await groups.countGroups(page, org)).to.equal(0)

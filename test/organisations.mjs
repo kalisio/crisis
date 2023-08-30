@@ -9,7 +9,7 @@ export async function goToOrganisationsActivity (page, wait = 2000) {
   const url = page.url()
   if (!url.includes('organisations')) {
     debug('Navigating to organisations activity')
-    await core.clickLeftPaneAction(page, 'my-organisations', wait)
+    await core.clickPaneAction(page, 'left', 'my-organisations')
   }
 }
 
@@ -37,12 +37,17 @@ export async function deleteOrganisation (page, organisation, wait = 1000) {
   await goToOrganisationsActivity(page)
   await core.expandCard(page, organisationComponent, organisation.name)
   await core.clickItemAction(page, organisationComponent, organisation.name, 'remove-item-header')
-  await core.type(page, '.q-dialog input', organisation.name)
-  await core.click(page, '.q-dialog button:nth-child(2)', wait)
+  await core.type(page, '.q-dialog-plugin input', organisation.name)
+  await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
 }
 
-export async function editOrganisationBilling (page, organisation, wait = 1000) {
+export async function editOrganisationBilling (page, client, user) {
   await goToOrganisationsActivity(page)
-  await core.expandCard(page, organisationComponent, organisation.name)
-  await core.clickItemAction(page, organisationComponent, organisation.name, 'edit-billing', wait)
+
+  await client.authenticate({ strategy: 'local', email: user.email, password: user.password })
+  const users = await client.getService('users').find({ query: { email: user.email } })
+  await client.getService('organisations').patch(users.data[0].organisations[0]._id, { billing: { subscription: { plan: 'diamond'}}})
+  await page.reload()
+  await page.waitForNavigation()
+  await page.waitForTimeout(4000)
 }
