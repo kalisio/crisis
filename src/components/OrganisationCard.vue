@@ -15,7 +15,6 @@
         :subject="item" 
         :contextId="item._id" 
         size="4rem" 
-        class="q-pa-sm" 
       />
     </template>
     <!--
