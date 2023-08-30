@@ -14,7 +14,7 @@ travis_fold end "provision"
 #
 travis_fold start "build"
 
-#yarn build
+yarn build
 yarn pwa:build
 EXIT_CODE=$? 
 tail -n 24 build.log
