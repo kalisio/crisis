@@ -56,9 +56,9 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
-    domain = 'http://localhost:' + clientPort // Akt'n'Map app client/server port = 8080/8081
+    domain = 'http://localhost:' + clientPort // Crisis app client/server port = 8080/8081
   } else {
-    domain = 'http://localhost:' + serverPort // Akt'n'Map app client/server port = 8081
+    domain = 'http://localhost:' + serverPort // Crisis app client/server port = 8081
   }
   // For benchmarking
   //apiLimiter = null

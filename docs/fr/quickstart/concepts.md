@@ -4,7 +4,7 @@ sidebarDepth: 3
 
 # Concepts de base
 
-Nous allons illustrer ici les *concepts de base* vous permettant de prendre en main Akt'n'Map.
+Nous allons illustrer ici les *concepts de base* vous permettant de prendre en main Kalisio Crisis.
 
 Cette présentation s'accompagne parfois de petits *didacticiels* qui peuvent être exécutés directement sur l'application. Aussi il vous sera nécessaire de suivre tout d'abord les étapes vous permettant de créer un compte sur l'application puis de vous y connecter pour que cela fonctionne correctment.
 
@@ -25,7 +25,7 @@ Lorsque vous voyez un label *beta* sur un élément de l'interface utilisateur (
 :::
 
 ::: warning Attention
-Akt'n'Map s'améliore et évolue de façon continue. Aussi, ce qui s’affiche sur votre écran peut parfois différer de ce que vous lirez et verrez dans cette documentation, mais les concepts clés restent les mêmes.
+Kalisio Crisis s'améliore et évolue de façon continue. Aussi, ce qui s’affiche sur votre écran peut parfois différer de ce que vous lirez et verrez dans cette documentation, mais les concepts clés restent les mêmes.
 :::
 
 ## Activité
@@ -40,7 +40,7 @@ Depuis une activité vous pouvez à tout moment ouvrir le <tour-link text="menu 
 
 ## <i class="las la-user"></i> Utilisateur
 
-Une *personne* qui est **enregistrée** sur Akt'n'Map. Cela peut se faire de deux manières:
+Une *personne* qui est **enregistrée** sur Kalisio Crisis. Cela peut se faire de deux manières:
   * soit en créant elle-même son **compte** sur l'application,
   * soit en étant *invitée* au sein d'une organisation par un autre utilisateur de l'application.
 
@@ -150,7 +150,7 @@ La figure suivante résume un exemple de structuration classique dans l'applicat
 
 ![structure](../../assets/structure-FR.png)
 
-A un évènement, Akt'n'Map permet d’associer :
+A un évènement, Kalisio Crisis permet d’associer :
   * une *localisation* (adresse ou coordonnées géographiques),
   * des *photos* ou des *documents* afin de les partager entre les acteurs,
   * un **[processus](../gofurther/workflow.md)** définissant les interaction entre les participants et les coordonnateurs.

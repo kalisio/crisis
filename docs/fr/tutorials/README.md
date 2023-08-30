@@ -4,15 +4,15 @@ sidebarDepth: 3
 
 # Didacticiels Vidéo
 
-Cette section présente l'essentiel des fonctionnalités d'Akt'n'Map grâce à des didacticiels ou tutoriels vidéo. Vous pouvez retrouver l'ensemble de ces vidéos sur notre [playlist](https://www.youtube.com/playlist?list=PLM-YEzjgLnA9HdhoTcS86U3bCEMOw75eC).
+Cette section présente l'essentiel des fonctionnalités de Kalisio Crisis grâce à des didacticiels ou tutoriels vidéo. Vous pouvez retrouver l'ensemble de ces vidéos sur notre [playlist](https://www.youtube.com/playlist?list=PLM-YEzjgLnA9HdhoTcS86U3bCEMOw75eC).
 
 ::: warning Attention
-Akt'n'Map s'améliore et évolue de façon continue. Aussi, ce qui s’affiche sur votre écran peut parfois différer de ce que vous verrez dans ces vidéos, mais les concepts clés restent les mêmes.
+Kalisio Crisis s'améliore et évolue de façon continue. Aussi, ce qui s’affiche sur votre écran peut parfois différer de ce que vous verrez dans ces vidéos, mais les concepts clés restent les mêmes.
 :::
 
 ## <i class="las la-fire"></i> Gérez vos événements
 
-Au quotidien, ou lors de situations à risque, la principale utilisation d'Akt'n'Map consiste à partager et traiter des [événements](../quickstart/concepts.md#evenement) avec les membres appropriés de votre [organisation](../quickstart/concepts.md#organisation).
+Au quotidien, ou lors de situations à risque, la principale utilisation de Kalisio Crisis consiste à partager et traiter des [événements](../quickstart/concepts.md#evenement) avec les membres appropriés de votre [organisation](../quickstart/concepts.md#organisation).
 
 ### Créez un événement
 
@@ -58,7 +58,7 @@ Créez vos [modèles d'événements](../quickstart/concepts.md#modele-d-evenemen
 
 Si nécessaire, vous pouvez compléter notre [catalogue de données cartographiques](../gofurther/catalog.md#donnees) en y intégrant vos propres données. 
 
-Vous pouvez connecter Akt'n'Map directement à des flux OGC provenant de services tiers ou de votre SIG, comme l'illustre cette vidéo:
+Vous pouvez connecter Kalisio Crisis directement à des flux OGC provenant de services tiers ou de votre SIG, comme l'illustre cette vidéo:
 
 <iframe src="https://www.youtube.com/embed?v=ibvy3hp8bt8&list=PLM-YEzjgLnA9HdhoTcS86U3bCEMOw75eC&index=8&autoplay=0" width="640" height="480" frameborder="0" allowfullscreen></iframe>
 
@@ -76,6 +76,6 @@ Retrouvez les fichiers permettant de définir les schémas de données utilisés
 
 ## <i class="las la-stream"></i> Gérez vos plans d'actions
 
-Cette dernière vidéo illustre le concept le plus avancé d'Akt'n'Map pour faciliter la gestion de situations à risque, à savoir la gestion d'un [plan d'actions](./plan.md):
+Cette dernière vidéo illustre le concept le plus avancé de Kalisio Crisis pour faciliter la gestion de situations à risque, à savoir la gestion d'un [plan d'actions](./plan.md):
 
 <iframe src="https://www.youtube.com/embed?v=ibvy3hp8bt8&list=PLM-YEzjgLnA9HdhoTcS86U3bCEMOw75eC&index=11&autoplay=0" width="640" height="480" frameborder="0" allowfullscreen></iframe>

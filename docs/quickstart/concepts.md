@@ -4,7 +4,7 @@ sidebarDepth: 3
 
 # Basics
 
-Here is a quick rundown of the *key concepts* to handle when you're just getting started with Akt'n'Map.
+Here is a quick rundown of the *key concepts* to handle when you're just getting started with Kalisio Crisis.
 
 This presentation comes with small *tutorials* that can be directly run on the application. Thus, you will first have to follow the required steps to create your account then connect to make everything works as expected.
 
@@ -25,7 +25,7 @@ Sometimes you can see a *beta* label on a user interface element (like a button)
 :::
 
 ::: warning
-Akt'n'Map look and features are ever-evolving. As a consequence, your screen probably looks a little different than what you can read and see in this documentation but the key concepts remain the same.
+Kalisio Crisis look and features are ever-evolving. As a consequence, your screen probably looks a little different than what you can read and see in this documentation but the key concepts remain the same.
 :::
 
 ## Activity
@@ -40,7 +40,7 @@ From an activity you can always open the <tour-link text="main menu" path="home"
 
 ## <i class="las la-user"></i> User
 
-A *person* who has been **registered** to Akt'n'Map. This can be done through two ways:
+A *person* who has been **registered** to Kalisio Crisis. This can be done through two ways:
   * by creating his own **account** on the application,
   * by being *invited* within an organisation by another user of the application.
 
@@ -150,7 +150,7 @@ The following figure shows a standard configuration in the application and how e
 
 ![structure](../assets/structure-EN.png)
 
-Akt'n'Map allows to attach to each event:
+Kalisio Crisis allows to attach to each event:
   * a *location* (address or geographic coordinates),
   * *pictures* or *documents* shared among participants,
   * a **[workflow](../gofurther/workflow.md)** defining interactions between participants and coordinators.

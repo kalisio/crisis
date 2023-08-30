@@ -2,7 +2,7 @@ const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8
 
 module.exports = {
   base: '/',
-  title: `Akt'n'Map`,
+  title: `Kalisio Crisis`,
   description: 'Situational intelligence solution to inform and coordinate fieldworkers',
   head: [
     ['link', { rel: 'icon', href: `https://s3.eu-central-1.amazonaws.com/kalisioscope/aktnmap/aktnmap-icon-64x64.png` }],
@@ -11,12 +11,12 @@ module.exports = {
   locales: {
     '/': {
       lang: 'en',
-      title: `Akt'n'Map`,
+      title: `Kalisio Crisis`,
       description: 'Situational intelligence solution to inform and coordinate fieldworkers',
     },
     '/fr/': {
       lang: 'fr',
-      title: `Akt'n'Map`,
+      title: `Kalisio Crisis`,
       description: `Solution d'intelligence situationnelle pour informer et coordonner les acteurs de terrain`,
     },
   },
