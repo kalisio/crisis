@@ -35,11 +35,13 @@ describe(`suite:${suite}`, () => {
     }],
     eventTemplates: [{
       name: 'Member template',
-      permission: 'member'
+      permission: 'member',
+      expiryDuration: 90
     }, {
       name: 'Manager template',
       description: 'Template description',
-      permission: 'manager'
+      permission: 'manager',
+      expiryDuration: 90
     }],
     events: [{
       name: 'Member event',
@@ -49,7 +51,7 @@ describe(`suite:${suite}`, () => {
     }, {
       name: 'Manager event',
       participants: [{
-        name: 'Tag'
+        name: 'Group'
       }, {
         name: 'Owner'
       }]

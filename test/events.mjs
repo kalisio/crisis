@@ -250,17 +250,17 @@ export async function removeEvent (page, organisation, event, wait = 2000) {
   await goToEventsActivity(page, organisation)
   await core.expandCard(page, eventComponent, event.name)
   await core.clickItemAction(page, eventComponent, event.name, 'remove-item-header')
-  await core.click(page, '.q-dialog button:nth-child(2)', wait)
+  await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
 }
 
 export async function removeEventTemplate (page, organisation, template, wait = 2000) {
   await goToEventTemplatesActivity(page, organisation)
   await core.clickItemAction(page, eventTemplateComponent, template.name, 'remove-item-header')
-  await core.click(page, '.q-dialog button:nth-child(2)', wait)
+  await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
 }
 
 export async function removeEventTemplateWorkflow (page, organisation, template, wait = 2000) {
   await goToEventTemplatesActivity(page, organisation)
   await core.clickItemAction(page, eventTemplateComponent, template.name, 'remove-item-workflow')
-  await core.click(page, '.q-dialog button:nth-child(2)', wait)
+  await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
 }
