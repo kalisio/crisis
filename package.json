@@ -1,15 +1,15 @@
 {
-  "name": "aktnmap",
+  "name": "crisis",
   "description": "Kalisio Akt'n'Map Application",
   "version": "2.0.0",
-  "homepage": "https://github.com/kalisio/aktnmap",
+  "homepage": "https://github.com/kalisio/crisis",
   "keywords": [
     "kalisio"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/kalisio/aktnmap.git"
+    "url": "git://github.com/kalisio/crisis.git"
   },
   "author": {
     "name": "Kalisio contributors",
@@ -17,7 +17,7 @@
   },
   "contributors": [],
   "bugs": {
-    "url": "https://github.com/kalisio/aktnmap/issues"
+    "url": "https://github.com/kalisio/crisis/issues"
   },
   "scripts": {
     "version": "cordova-set-version src-cordova/config.xml.tpl",

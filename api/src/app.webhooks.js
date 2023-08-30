@@ -4,7 +4,7 @@ import moment from 'moment'
 import mongodb from 'mongodb'
 import { BadRequest } from '@feathersjs/errors'
 
-const debug = makeDebug('aktnmap:webhooks')
+const debug = makeDebug('crisis:webhooks')
 
 const { ObjectID } = mongodb
 

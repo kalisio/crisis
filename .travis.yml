@@ -37,7 +37,6 @@ jobs:
     script:
     - cd docs && yarn install && yarn build
     - cd .vuepress/dist
-    - echo 'aktnmap.com' > CNAME
     deploy:
       provider: pages
       local-dir: docs/.vuepress/dist

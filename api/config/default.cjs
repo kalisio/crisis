@@ -48,11 +48,11 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   // For benchmarking
   apiLimiter = null
   limiter = null
-  domain = 'https://aktnmap.dev.kalisio.xyz'
+  domain = 'https://crisis.dev.kalisio.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
-  domain = 'https://aktnmap.test.kalisio.xyz'
+  domain = 'https://crisis.test.kalisio.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
-  domain = 'https://aktnmap.prod.kalisio.com'
+  domain = 'https://crisis.prod.kalisio.com'
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
@@ -66,10 +66,10 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
 }
 // Override defaults if env provided
 if (process.env.SUBDOMAIN) {
-  domain = 'https://aktnmap.' + process.env.SUBDOMAIN
+  domain = 'https://crisis.' + process.env.SUBDOMAIN
 }
 // On a developer machine will do domain = gateway = localhost
-const gateway = (process.env.API_GATEWAY_URL ? process.env.API_GATEWAY_URL : domain.replace('aktnmap', 'api'))
+const gateway = (process.env.API_GATEWAY_URL ? process.env.API_GATEWAY_URL : domain.replace('crisis', 'api'))
 
 module.exports = {
   // Proxy your API if using any.
@@ -102,7 +102,7 @@ module.exports = {
   distribution: { // Distribute no services simply use remote ones
     services: (service) => false,
     middlewares: { after: express.errorHandler() },
-    key: 'aktnmap',
+    key: 'crisis',
     healthcheckPath: API_PREFIX + '/distribution/'
   },
   paginate: {
@@ -245,14 +245,14 @@ module.exports = {
     DailyRotateFile: {
       format: winston.format.json(),
       dirname: path.join(__dirname, '..', 'logs'),
-      filename: 'aktnmap-%DATE%.log',
+      filename: 'crisis-%DATE%.log',
       datePattern: 'YYYY-MM-DD',
       maxFiles: '30d'
     }
   },
   db: {
     adapter: 'mongodb',
-    url: process.env.DB_URL || (containerized ? 'mongodb://mongodb:27017/aktnmap' : 'mongodb://127.0.0.1:27017/aktnmap')
+    url: process.env.DB_URL || (containerized ? 'mongodb://mongodb:27017/crisis' : 'mongodb://127.0.0.1:27017/crisis')
   },
   storage: {
     s3Client: {
