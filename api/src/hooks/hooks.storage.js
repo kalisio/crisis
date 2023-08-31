@@ -3,7 +3,7 @@ import path from 'path'
 import makeDebug from 'debug'
 import { sendPushNotifications } from '../utils.js'
 
-const debug = makeDebug('aktnmap:storage:hooks')
+const debug = makeDebug('crisis:storage:hooks')
 
 export async function sendMediaPushNotifications (hook) {
   if (hook.type !== 'after') {

@@ -15,7 +15,7 @@ import kMap, {
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const modelsPath = path.join(__dirname, '..', 'models')
 const servicesPath = path.join(__dirname, '..', 'services')
-const debug = makeDebug('aktnmap:services')
+const debug = makeDebug('crisis:services')
 
 export async function createEventService (options = {}) {
   const app = this
