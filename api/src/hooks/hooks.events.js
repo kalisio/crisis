@@ -3,7 +3,7 @@ import makeDebug from 'debug'
 import commonHooks from 'feathers-hooks-common'
 import { sendPushNotifications } from '../utils.js'
 const { populate } = commonHooks
-const debug = makeDebug('aktnmap:events:hooks')
+const debug = makeDebug('crisis:events:hooks')
 
 export async function sendEventPushNotifications (hook) {
   if (hook.type !== 'after') {

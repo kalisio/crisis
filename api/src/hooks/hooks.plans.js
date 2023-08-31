@@ -3,7 +3,7 @@ import makeDebug from 'debug'
 import commonHooks from 'feathers-hooks-common'
 
 const { getItems } = commonHooks
-const debug = makeDebug('aktnmap:plans:hooks')
+const debug = makeDebug('crisis:plans:hooks')
 
 export function isObjectiveEqual (objective1, objective2) {
   return (objective1.id === objective2.id)

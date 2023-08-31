@@ -1,7 +1,7 @@
 const groups = require('../src/tours/core/groups')
 
 const website = 'https://www.kalisio.com'
-const onlineHelp = 'https://kalisio.github.io/aktnmap'
+const onlineHelp = 'https://kalisio.github.io/crissi'
 
 const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
@@ -14,15 +14,15 @@ let pwaShortName = appName
 
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
-  domain = 'https://aktnmap.dev.kalisio.xyz'
+  domain = 'https://crisis.dev.kalisio.xyz'
   pwaAppName += ' (dev)'
   pwaShortName += ' (dev)'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
-  domain = 'https://aktnmap.test.kalisio.xyz'
+  domain = 'https://crisis.test.kalisio.xyz'
   pwaAppName += ' (test)'
   pwaShortName += ' (test)'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
-  domain = 'https://aktnmap.prod.kalisio.com'
+  domain = 'https://crisis.prod.kalisio.com'
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
@@ -34,17 +34,17 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
 // Override defaults if env provided
 if (process.env.SUBDOMAIN) {
   // In prod we use a generic domain which is routed towards the actual domain,
-  // e.g. aktnmap.kalisio.com => aktnmap.prod.kalisio.com
+  // e.g. crisis.kalisio.com => crisis.prod.kalisio.com
   // This allow us to switch our production domain transparently (blue/green deployment)
   // notably because the app domain is "hardcoded" in the mobile app configuration
   if (process.env.NODE_APP_INSTANCE === 'prod') {
-    domain = 'https://aktnmap.kalisio.com'
+    domain = 'https://crisis.kalisio.com'
   } else {
-    domain = 'https://aktnmap.' + process.env.SUBDOMAIN
+    domain = 'https://criris.' + process.env.SUBDOMAIN
   }
 }
 // On a developer machine will do domain = gateway = localhost
-const gateway = (process.env.API_GATEWAY_URL ? process.env.API_GATEWAY_URL : domain.replace('aktnmap', 'api'))
+const gateway = (process.env.API_GATEWAY_URL ? process.env.API_GATEWAY_URL : domain.replace('crisis', 'api'))
 
 const contextHelp = function (tour) {
   return Object.assign({
@@ -387,7 +387,7 @@ module.exports = {
   version: require('../package.json').version,
   buildNumber: process.env.BUILD_NUMBER,
   apiPath: API_PREFIX,
-  apiJwt: 'aktnmap-jwt',
+  apiJwt: 'crisis-jwt',
   apiTimeout: 20000,
   transport: 'websocket', // Could be 'http' or 'websocket',
   gateway,

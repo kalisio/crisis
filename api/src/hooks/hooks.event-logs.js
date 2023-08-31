@@ -4,7 +4,7 @@ import commonHooks from 'feathers-hooks-common'
 import { sendPushNotifications } from '../utils.js'
 
 const { getItems } = commonHooks
-const debug = makeDebug('aktnmap:event-logs:hooks')
+const debug = makeDebug('crisis:event-logs:hooks')
 
 export async function addLogDefaults (hook) {
   if (hook.type !== 'before') {

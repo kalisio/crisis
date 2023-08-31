@@ -1,6 +1,6 @@
 import makeDebug from 'debug'
 
-const debug = makeDebug('aktnmap:organisations:hooks')
+const debug = makeDebug('crisis:organisations:hooks')
 
 export async function removeOrganisationAlerts (hook) {
   if (hook.type !== 'after') {

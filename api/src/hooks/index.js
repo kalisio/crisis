@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { createObjectID } from '@kalisio/kdk/core.api.js'
 import makeDebug from 'debug'
-const debug = makeDebug('aktnmap:hooks')
+const debug = makeDebug('crisis:hooks')
 
 export * from './hooks.quotas.js'
 export * from './hooks.events.js'

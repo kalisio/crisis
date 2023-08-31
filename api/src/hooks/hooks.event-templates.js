@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import makeDebug from 'debug'
-const debug = makeDebug('aktnmap:event-templates:hooks')
+const debug = makeDebug('crisis:event-templates:hooks')
 
 export function updateEventTemplateResources (resourceScope) {
   return async function (hook) {
