@@ -382,7 +382,7 @@ module.exports = {
   appName,
   pwaAppName,
   pwaShortName,
-  appLogo: 'crisis-logo-color-384x128.png',  
+  appLogo: 'crisis-logo-color-384x192.png',  
   flavor: process.env.NODE_APP_INSTANCE || 'dev',
   version: require('../package.json').version,
   buildNumber: process.env.BUILD_NUMBER,
