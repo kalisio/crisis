@@ -297,17 +297,17 @@ module.exports = configure(function (ctx) {
         id: './',
         icons: [
           {
-            src: 'icons/crisis-icon-olor-64x64.png',
+            src: 'icons/crisis-icon-color-64x64.png',
             sizes: '64x64',
             type: 'image/png'
           },
           {
-            src: 'icons/crisis-icon-olor-128x128.png',
+            src: 'icons/crisis-icon-color-128x128.png',
             sizes: '128x128',
             type: 'image/png'
           },
           {
-            src: 'icons/crisis-icon-olor-256x256.png',
+            src: 'icons/crisis-icon-color-256x256.png',
             sizes: '256x256',
             type: 'image/png'
           },
@@ -318,54 +318,6 @@ module.exports = configure(function (ctx) {
           }
         ]
       }
-    },
-
-    // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-cordova-apps/configuring-cordova
-    cordova: {
-      id: process.env.PACKAGE_ID
-      // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
-    },
-
-    // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-capacitor-apps/configuring-capacitor
-    capacitor: {
-      hideSplashscreen: true
-    },
-
-    // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-electron-apps/configuring-electron
-    electron: {
-      bundler: 'packager', // 'packager' or 'builder'
-
-      packager: {
-        // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
-
-        // OS X / Mac App Store
-        // appBundleId: '',
-        // appCategoryType: '',
-        // osxSign: '',
-        // protocol: 'myapp://path',
-
-        // Windows only
-        // win32metadata: { ... }
-      },
-
-      builder: {
-        // https://www.electron.build/configuration/configuration
-
-        appId: 'kano'
-      },
-
-      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      
-      chainWebpackMain (chain) {
-        chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
-      },
-      
-      chainWebpackPreload (chain) {
-        chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
-      },
-      
     }
   }
 })
