@@ -2,10 +2,9 @@ import makeDebug from 'debug'
 import { core } from '@kalisio/kdk/test.client.js'
 import { goToOrganisationsActivity } from './organisations.mjs'
 
-const debug = makeDebug('aktnmap:test:tags')
+const debug = makeDebug('crisis:test:tags')
 
 const organisationComponent = 'OrganisationCard'
-
 export const logbookComponent = 'ArchivedEventCard'
 export const logbookBadgeComponent = 'QBadge'
 

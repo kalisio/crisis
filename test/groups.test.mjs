@@ -41,17 +41,17 @@ describe(`suite:${suite}`, () => {
     // Let enough time to process
     this.timeout(60000)
     api = new core.Api({
-      appName: 'aktnmap'
+      appName: 'crisis'
     })
     client = api.createClient()
     runner = new core.Runner(suite, {
-      appName: 'aktnmap',
+      appName: 'crisis',
       browser: {
         slowMo: 5,
         args: ['--lang=fr']
       },
       localStorage: {
-        'akt\'n\'map-welcome': false
+        'crisis-welcome': false
       }
     })
     // Prepare structure for current run

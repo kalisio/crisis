@@ -39,17 +39,17 @@ describe(`suite:${suite}`, () => {
     // Let enough time to process
     this.timeout(60000)
     api = new core.Api({
-      appName: 'aktnmap'
+      appName: 'crisis'
     })
     client = api.createClient()
     runner = new core.Runner(suite, {
-      appName: 'aktnmap',
+      appName: 'crisis',
       browser: {
         slowMo: 1,
         args: ['--lang=fr']
       },
       localStorage: {
-        'akt\'n\'map-welcome': false
+        'crisis-welcome': false
       }
     })
     // Prepare structure for current run
@@ -114,14 +114,14 @@ describe(`suite:${suite}`, () => {
     filter = { owner: false, manager: false, member: false, guest: false }
     await members.filterMembers(page, org, filter)
     expect(await members.countMembers(page, org)).to.equal(4)
-    await core.logout(page)
-    await core.goToLoginScreen(page)
   })
 
   it('member cannot manage org', async () => {
     const manager = _.find(org.members, { name: 'Manager' })
     const member = _.find(org.members, { name: 'Member' })
     const guest = _.find(org.members, { name: 'Guest' })
+    await core.logout(page)
+    await core.goToLoginScreen(page)
     await core.login(page, member)
     expect(await organisations.countOrganisations(page)).to.equal(1)
     expect(await members.countMembers(page, org)).to.equal(4)
@@ -131,14 +131,14 @@ describe(`suite:${suite}`, () => {
     expect(await members.canEditMember(page, org, guest)).beFalse()
     expect(await members.canReinviteGuest(page, org, guest)).beFalse()
     expect(await members.canEditMember(page, org, org.owner)).beFalse()
-    await core.logout(page)
-    await core.goToLoginScreen(page)
   })
 
   it('manager can manage org', async () => {
     const manager = _.find(org.members, { name: 'Manager' })
     const member = _.find(org.members, { name: 'Member' })
     const guest = _.find(org.members, { name: 'Guest' })
+    await core.logout(page)
+    await core.goToLoginScreen(page)
     await core.login(page, manager)
     expect(await organisations.countOrganisations(page)).to.equal(1)
     expect(await members.countMembers(page, org)).to.equal(4)
@@ -157,11 +157,11 @@ describe(`suite:${suite}`, () => {
     await members.removeMember(page, org, owner)
     expect(await core.isToastVisible(page)).beTrue()
     runner.clearErrors()
-    await core.logout(page)
-    await core.goToLoginScreen(page)
   })
 
   it('owner can remove manager', async () => {
+    await core.logout(page)
+    await core.goToLoginScreen(page)
     await core.login(page, org.owner)
     const manager = _.find(org.members, { name: 'Manager' })
     await members.removeMember(page, org, manager)

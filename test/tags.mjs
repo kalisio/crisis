@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { core } from '@kalisio/kdk/test.client.js'
 import { goToOrganisationsActivity } from './organisations.mjs'
 
-const debug = makeDebug('aktnmap:test:tags')
+const debug = makeDebug('crisis:test:tags')
 
 const organisationComponent = 'OrganisationCard'
 const tagComponent = 'team/KTagCard'
@@ -26,7 +26,7 @@ export async function countTags (page, organisation) {
   return count
 }
 
-export async function tagExists (page, organisation, tag, property = 'name') {
+export async function tagExists (page, organisation, tag, property = 'value') {
   await goToTagsActivity(page, organisation)
   const exists = await core.itemExists(page, tagComponent, _.get(tag, property))
   return exists
@@ -34,17 +34,11 @@ export async function tagExists (page, organisation, tag, property = 'name') {
 
 export async function tagActionExists (page, organisation, tag, action) {
   await goToTagsActivity(page, organisation)
-  const exists = await core.itemActionExists(page, tagComponent, tag.name, action)
+  const exists = await core.itemActionExists(page, tagComponent, tag.value, action)
   return exists
 }
 
-export async function canEditTag (page, organisation, tag) {
-  await goToTagsActivity(page, organisation)
-  const exists = await tagActionExists(page, organisation, tag, 'edit-item-header')
-  return exists
-}
-
-export async function canCreateTag (page, organisation, tag) {
+export async function canCreateTag (page, organisation) {
   await goToTagsActivity(page, organisation)
   const exists = await core.elementExists(page, '#create-tag')
   return exists
@@ -53,14 +47,14 @@ export async function canCreateTag (page, organisation, tag) {
 export async function createTag (page, organisation, tag, wait = 1000) {
   await goToTagsActivity(page, organisation)
   await core.clickAction(page, 'create-tag')
-  await core.type(page, '#value-field', tag.name)
+  await core.type(page, '#value-field', tag.value)
   if (tag.description) await core.type(page, '#description-field', tag.description)
   await core.clickAction(page, 'apply-button', wait)
 }
 
 export async function editTag (page, organisation, tag, value, icon = null, wait = 1000) {
   await goToTagsActivity(page, organisation)
-  await core.clickItemAction(page, tagComponent, tag.name, 'edit-item-header', 1000)
+  await core.clickItemAction(page, tagComponent, tag.value, 'edit-item-header', 1000)
   await core.type(page, '#value-field', value, false, true)
   if (icon) {
     await core.clickAction(page, 'icon-chooser-button')
@@ -77,23 +71,18 @@ export async function editTag (page, organisation, tag, value, icon = null, wait
 
 export async function editTagDescription (page, organisation, tag, description, wait = 1000) {
   await goToTagsActivity(page, organisation)
-  await core.clickItemAction(page, tagComponent, tag.name, 'edit-item-description', 1000)
+  await core.clickItemAction(page, tagComponent, tag.value, 'edit-item-description', 1000)
   await core.type(page, '#description-field', description, false, true)
   await core.click(page, '.q-dialog #apply-button', wait)
 }
 
-export async function listMembers (page, organisation, tag) {
-  await goToTagsActivity(page, organisation)
-  await core.clickItemAction(page, tagComponent, tag.value, 'list-members', 2000)
-}
-
 export async function goToTagMembersActivity (page, organisation, tag, wait = 2000) {
   await goToTagsActivity(page, organisation)
-  await core.clickItemAction(page, tagComponent, tag.name, 'list-members', wait)
+  await core.clickItemAction(page, tagComponent, tag.value, 'list-members', wait)
 }
 
 export async function removeTag (page, organisation, tag, wait = 1000) {
   await goToTagsActivity(page, organisation)
-  await core.clickItemAction(page, tagComponent, tag.name, 'remove-item-header')
+  await core.clickItemAction(page, tagComponent, tag.value, 'remove-item-header')
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }

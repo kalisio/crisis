@@ -39,25 +39,18 @@ describe(`suite:${suite}`, () => {
     eventTemplates: [{
       name: 'Workflow template',
       permission: 'manager',
+      expiryDuration: 90,
       workflow: [{
         title: 'Step 1',
         stakeholder: 'participant',
         description: 'Availability',
-        interaction: [{
-          value: 'yes', icon: { name: 'fas fa-user', color: 'teal' }
-        }, {
-          value: 'no', icon: { name: 'fas fa-user', color: 'red' }
-        }],
+        interactions: [ 'yes', 'no' ],
         end: ['no']
       }, {
         title: 'Step 2',
         stakeholder: 'coordinator',
         description: 'Engagement',
-        interaction: [{
-          value: 'yes', icon: { name: 'fas fa-bell', color: 'teal' }
-        }, {
-          value: 'no', icon: { name: 'fas fa-bell', color: 'blue-grey' }
-        }],
+        interactions: [ 'yes', 'no' ],
         end: ['no']
       }]
     }],
@@ -89,11 +82,11 @@ describe(`suite:${suite}`, () => {
     // Let enough time to process
     this.timeout(90000)
     api = new core.Api({
-      appName: 'aktnmap'
+      appName: 'crisis'
     })
     client = api.createClient()
     runner = new core.Runner(suite, {
-      appName: 'aktnmap',
+      appName: 'crisis',
       geolocation: { latitude: 43.10, longitude: 1.71 },
       browser: {
         slowMo: 1,
@@ -101,14 +94,13 @@ describe(`suite:${suite}`, () => {
         devtools: false
       },
       localStorage: {
-        'akt\'n\'map-welcome': false
+        'crisis-welcome': false
       }
     })
     // Prepare structure for current run
     await client.createOrganisation(org)
     await client.createMembers(org)
     await client.createGroups(org)
-    await client.tagMembers(org)
     await client.groupMembers(org)
     page = await runner.start()
   })
@@ -124,6 +116,7 @@ describe(`suite:${suite}`, () => {
   it('org manager can create event templates without a workflow', async () => {
     const member = _.find(org.members, { name: 'Manager' })
     await core.login(page, member)
+    await core.closeWelcomeDialog(page)
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
     await events.createEventTemplate(page, org, workflowTemplate)
     expect(await events.countEventTemplates(page, org)).to.equal(1)
@@ -177,6 +170,7 @@ describe(`suite:${suite}`, () => {
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, member)
+    await core.closeWelcomeDialog(page)
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
     // Waiting for first step
@@ -204,6 +198,7 @@ describe(`suite:${suite}`, () => {
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, member)
+    await core.closeWelcomeDialog(page)
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
     // Waiting for coordination on second step
     expect(await events.eventExists(page, org, AWAITING_COORDINATION)).beTrue()
@@ -250,9 +245,11 @@ describe(`suite:${suite}`, () => {
 
   it('org manager can edit event template with workflow', async () => {
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
-    // TODO: make edition more complete
     workflowTemplate.workflow.forEach(step => {
       step.name = 'New ' + step.name
+      step.interactions = [ 'New yes', ' New no' ],
+      step.lastInteractionsLength = 2
+      step.end = ['New no']
     })
     await events.editEventTemplateWorkflow(page, org, workflowTemplate)
     // TODO: check the updated workflow

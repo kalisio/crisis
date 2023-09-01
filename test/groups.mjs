@@ -3,7 +3,7 @@ import makeDebug from 'debug'
 import { core } from '@kalisio/kdk/test.client.js'
 import { goToOrganisationsActivity } from './organisations.mjs'
 
-const debug = makeDebug('aktnmap:test:groups')
+const debug = makeDebug('crisis:test:groups')
 
 const organisationComponent = 'OrganisationCard'
 export const groupComponent = 'team/KGroupCard'
