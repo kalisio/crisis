@@ -5,7 +5,7 @@ module.exports = {
   title: `Kalisio Crisis`,
   description: 'Situational intelligence solution to inform and coordinate fieldworkers',
   head: [
-    ['link', { rel: 'icon', href: `https://s3.eu-central-1.amazonaws.com/kalisioscope/aktnmap/aktnmap-icon-64x64.png` }],
+    ['link', { rel: 'icon', href: `https://s3.eu-central-1.amazonaws.com/kalisioscope/crisis/crisis-icon-color-64x64.png` }],
     ['link', { rel: 'manifest', href: '/manifest.json' }]
   ],
   locales: {
@@ -24,11 +24,11 @@ module.exports = {
   themeConfig: {
     docsDir: 'docs',
     banner: {
-      image: 'https://s3.eu-central-1.amazonaws.com/kalisioscope/aktnmap/aktnmap-logo-black-256x84.png',
+      image: 'https://s3.eu-central-1.amazonaws.com/kalisioscope/crisis/crisis-logo-color-256x128.png',
       slogan: 'Better decisions with instant geographic insights'
     },
     appUrl: (process.env.NODE_ENV === 'development' ?
-      `http://localhost:${clientPort}/` : 'https://aktnmap.kalisio.com/'),
+      `http://localhost:${clientPort}/` : 'https://crisis.kalisio.com/'),
     locales: {
       '/': {
         label: 'English',

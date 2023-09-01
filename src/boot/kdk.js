@@ -25,7 +25,7 @@ export default async ({ app }) => {
   services.call(api)
 
   // Initializes i18n
-  await i18n.initialize(app, ['core', 'map', 'aktnmap'])
+  await i18n.initialize(app, ['core', 'map', 'crisis'])
 
   // Register global properties to the the vue app
   app.config.globalProperties.$store = Store

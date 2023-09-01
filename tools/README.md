@@ -1,4 +1,4 @@
-<img src="https://s3.eu-central-1.amazonaws.com/kalisioscope/aktnmap/aktnmap-icon-256x256.png" width="256">
+<img src="https://s3.eu-central-1.amazonaws.com/kalisioscope/crisis/crisis-icon-color-256x256.png" width="256">
 
 ## Crisis tools
 
@@ -28,6 +28,6 @@ This script is a MongoDB Stitch Function to be used for plans archiving, please 
 
 ### Exporting application users
 
-mongoexport --uri mongodb+srv://<LOGIN>:<PASSWORD>@URL/aktnmap --collection users --fields "email" --type csv --out aktnmap-users.csv
+mongoexport --uri mongodb+srv://<LOGIN>:<PASSWORD>@URL/crisis --collection users --fields "email" --type csv --out crisis-users.csv
 
 **Take care to use the same version of mongoexport than your DB server otherwise it might raise an error like `Failed to parse: xxx`**

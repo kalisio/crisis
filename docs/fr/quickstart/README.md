@@ -5,7 +5,7 @@
 <iframe width="800" height="600" src="https://www.youtube.com/embed/T5Y2F4ZQsXg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 
-**Kalisio Crisis** est disponible sous la forme d'une application internet sur [https://aktnmap.kalisio.com](https://aktnmap.kalisio.com),
+**Kalisio Crisis** est disponible sous la forme d'une application internet sur [https://crisis.kalisio.com](https://crisis.kalisio.com),
 
 ## Disponibilité du service
 

@@ -154,7 +154,7 @@ const eventsMixin = {
         state.icon = this.getUserIcon(state, this.getWorkflowStep(state) || {}) // Take care when no workflow
       })
       // It appears that in some weird cases we can have duplicated logs,
-      // e.g. https://github.com/kalisio/aktnmap/issues/247
+      // e.g. https://github.com/kalisio/crisis/issues/247
       // As by default the list is ordered according to creation date,
       // simply keep the most recent one in case of doublons
       // Manage the case the participant is not correctly populated

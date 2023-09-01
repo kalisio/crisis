@@ -12,7 +12,7 @@ If you are a developer you can help us build a better Kalisio Crisis !
 
 Before creating an issue please make sure you have checked out the docs, you might want to also try searching Github. It's pretty likely someone has already asked a similar question.
 
-Issues can be reported in the [issue tracker](https://github.com/kalisio/aktnmap/issues).
+Issues can be reported in the [issue tracker](https://github.com/kalisio/crisis/issues).
 
 ### Pull Requests
 
