@@ -272,8 +272,10 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli-webpack/developing-pwa/configuring-pwa
     pwa: {
       workboxPluginMode: 'InjectManifest', // 'GenerateSW' or 'InjectManifest'
-      workboxOptions: {}, // only for GenerateSW
-      maximumFileSizeToCacheInBytes: 20000000,
+      workboxOptions: {
+        maximumFileSizeToCacheInBytes: 17 * 1024 * 1024
+      }, // only for GenerateSW
+      
 
       // for the custom service worker ONLY (/src-pwa/custom-service-worker.[js|ts])
       // if using workbox in InjectManifest mode
