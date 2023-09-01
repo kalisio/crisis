@@ -382,7 +382,7 @@ module.exports = {
   appName,
   pwaAppName,
   pwaShortName,
-  appLogo: 'crisis-logo.png',  
+  appLogo: 'crisis-logo-color-384x128.png',  
   flavor: process.env.NODE_APP_INSTANCE || 'dev',
   version: require('../package.json').version,
   buildNumber: process.env.BUILD_NUMBER,
@@ -484,35 +484,6 @@ module.exports = {
   engines: {
     leaflet: mapEngine
   },
-  /*accountActivity: {
-    leftPane: leftPane(),
-    topPane: {
-      content: {
-        profile: [
-          { id: 'profile', icon: 'las la-user', color: 'primary', label: 'KAccountActivity.PROFILE', disabled: true },
-          { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
-          { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'KAccountActivity.DANGER_ZONE', route: { name: 'account-activity', params: { page: 'danger-zone' } } }
-        ],
-        security: [
-          { id: 'profile', icon: 'las la-user', tooltip: 'KAccountActivity.PROFILE', route: { name: 'account-activity', params: { page: 'profile' } } },
-          { id: 'security', icon: 'las la-shield-alt', color: 'primary', label: 'KAccountActivity.SECURITY', disabled: true },
-          { id: 'danger-zone', icon: 'las la-exclamation-triangle', tooltip: 'KAccountActivity.DANGER_ZONE', route: { name: 'account-activity', params: { page: 'danger-zone' } } }
-        ],
-        'danger-zone': [
-          { id: 'profile', icon: 'las la-user', tooltip: 'KAccountActivity.PROFILE', route: { name: 'account-activity', params: { page: 'profile' } } },
-          { id: 'security', icon: 'las la-shield-alt', tooltip: 'KAccountActivity.SECURITY', route: { name: 'account-activity', params: { page: 'security' } } },
-          { id: 'danger-zone', icon: 'las la-exclamation-triangle', color: 'primary', label: 'KAccountActivity.DANGER_ZONE', disabled: true }
-        ]
-      },
-      mode: 'profile'
-    },
-    subscriptions: {
-      actions: [
-        { id: 'unsubscribe', tooltip: 'KSubscriptionCard.UNSUBSCRIBE_LABEL', icon: 'phonelink_erase', handler: 'unsubscribe',
-          scope: 'header', visible: { name: '$can', params: ['remove', 'subscriptions', ':contextId', ':item'] } }
-      ]
-    }
-  },*/
   organisationsActivity: {
     leftPane: leftPane(),
     topPane: {

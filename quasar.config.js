@@ -289,33 +289,28 @@ module.exports = configure(function (ctx) {
         description: 'Monitor real-time events on the field',
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#f0ecec',
+        background_color: '#293341',
         theme_color :  '#1b5e20',
         start_url: './',
         id: './',
         icons: [
           {
-            src: 'icons/aktnmap-icon-32x32.png',
-            sizes: '32x32',
-            type: 'image/png'
-          },
-          {
-            src: 'icons/aktnmap-icon-64x64.png',
+            src: 'icons/crisis-icon-olor-64x64.png',
             sizes: '64x64',
             type: 'image/png'
           },
           {
-            src: 'icons/aktnmap-icon-128x128.png',
+            src: 'icons/crisis-icon-olor-128x128.png',
             sizes: '128x128',
             type: 'image/png'
           },
           {
-            src: 'icons/aktnmap-icon-256x256.png',
+            src: 'icons/crisis-icon-olor-256x256.png',
             sizes: '256x256',
             type: 'image/png'
           },
           {
-            src: 'icons/aktnmap-icon-512x512.png',
+            src: 'icons/crisis-icon-color-512x512.png',
             sizes: '512x512',
             type: 'image/png'
           }
