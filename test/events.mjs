@@ -3,7 +3,7 @@ import makeDebug from 'debug'
 import { core } from '@kalisio/kdk/test.client.js'
 import { goToOrganisationsActivity } from './organisations.mjs'
 
-const debug = makeDebug('aktnmap:test:events')
+const debug = makeDebug('crisis:test:events')
 
 const organisationComponent = 'OrganisationCard'
 export const eventComponent = 'EventCard'
@@ -171,13 +171,19 @@ export async function createEventTemplateWorkflow (page, organisation, template,
     await core.type(page, '#title-field', step.title)
     if (step.stakeholder) await core.clickSelect(page, '#stakeholder-field', `#${step.stakeholder}`)
     if (step.description) await core.type(page, '#description-field', step.description)
-    const interactions = _.get(step, 'interaction', [])
+    const interactions = _.get(step, 'interactions', [])
     for (let j = 0; j < interactions.length; j++) {
       const interaction = interactions[j]
-      await core.type(page, '#interaction-field', interaction.value, true)
+      const xpath = '//input[@id="interaction-field"]'
+      const elements = await page.$x(xpath)
+      if (elements.length > 0) {
+        elements[0].type(interaction)
+        await page.waitForTimeout(wait)
+        await page.keyboard.press('Enter')
+      }
     }
     const ends = _.get(step, 'end', [])
-    await core.clickSelect(page, '#end-field', ends.map(end => `#${end}`))
+    await core.clickSelect(page, '#end-field', ends.map(end => `#${_.kebabCase(end)}`))
     // Jump to next step
     if (i < template.workflow.length - 1) {
       await core.click(page, '#add-step')
@@ -221,7 +227,31 @@ export async function editEventTemplateWorkflow (page, organisation, template, d
     const step = template.workflow[i]
     await core.type(page, '#title-field', step.title, false, true)
     if (step.description) await core.type(page, '#description-field', step.description, false, true)
-    // TODO: interaction/end
+    // Remove last 
+    for (let j = 0; j < step.lastInteractionsLength; j++) {
+      const xpath = `//div[@id="chip-0"]//i[contains(@role, "button")]`
+      const elements = await page.$x(xpath)
+      if (elements.length > 0) {
+        elements[0].click()
+        await page.waitForTimeout(wait)
+      }
+    }
+    // Update interaction
+    const interactions = _.get(step, 'interactions', [])
+    for (let j = 0; j < interactions.length; j++) {
+      const interaction = interactions[j]
+      const xpath = '//input[@id="interaction-field"]'
+      const elements = await page.$x(xpath)
+      if (elements.length > 0) {
+        elements[0].type(interaction)
+        await page.waitForTimeout(wait)
+        await page.keyboard.press('Enter')
+      }
+    }
+    const ends = _.get(step, 'end', [])
+    for (let j = 0; j < ends.length; j++) {
+      await core.clickSelect(page, '#end-field', `#${_.kebabCase(ends[j])}`)
+    }
     // Jump to next step
     if (i < template.workflow.length - 1) {
       await core.click(page, '#next-step')
@@ -242,8 +272,7 @@ export async function logParticipantEventStep (page, organisation, event, member
   await core.clickItemAction(page, eventLogComponent, member.name, 'follow-up', wait)
   await core.clickSelect(page, '#interaction-field', `#${step.value}`)
   if (step.comment) await core.type(page, '#comment-field', step.comment)
-  // As we have two dialogs on top of each others
-  await core.clickXPath(page, '//div[contains(@class, "q-dialog fullscreen")][2]//button[2]')
+  await core.click(page, '#apply-button', wait)
 }
 
 export async function removeEvent (page, organisation, event, wait = 2000) {

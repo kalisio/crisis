@@ -21,11 +21,11 @@ describe(`suite:${suite}`, () => {
     chailint(chai, util)
 
     api = new core.Api({
-      appName: 'aktnmap'
+      appName: 'crisis'
     })
     client = api.createClient()
     runner = new core.Runner(suite, {
-      appName: 'aktnmap',
+      appName: 'crisis',
       browser: {
         slowMo: 1,
         args: ['--lang=fr']

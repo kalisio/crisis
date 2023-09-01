@@ -27,10 +27,15 @@ describe(`suite:${suite}`, () => {
       name: 'Group',
       description: 'A group'
     }],
+    tags: [{
+      value: 'Tag',
+      description: 'Tag description'
+    }],
     eventTemplates: [{
       name: 'Manager template',
       description: 'Template description',
-      permission: 'manager'
+      permission: 'manager',
+      expiryDuration: '90'
     }],
     events: [{
       name: 'Manager event 1',
@@ -56,11 +61,11 @@ describe(`suite:${suite}`, () => {
     // Let enough time to process
     this.timeout(60000)
     api = new core.Api({
-      appName: 'aktnmap'
+      appName: 'crisis'
     })
     client = api.createClient()
     runner = new core.Runner(suite, {
-      appName: 'aktnmap',
+      appName: 'crisis',
       geolocation: { latitude: 43.10, longitude: 1.71 },
       browser: {
         slowMo: 1,
@@ -68,13 +73,14 @@ describe(`suite:${suite}`, () => {
         devtools: false
       },
       localStorage: {
-        'akt\'n\'map-welcome': false
+        'crisis-welcome': false
       }
     })
     // Prepare structure for current run
     await client.createOrganisation(org)
     await client.createMembers(org)
     await client.createGroups(org)
+    await client.createTags(org)
     await client.tagMembers(org)
     await client.groupMembers(org)
     page = await runner.start()

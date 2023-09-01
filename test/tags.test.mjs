@@ -27,10 +27,10 @@ describe(`suite:${suite}`, () => {
       permissions: 'member'
     }],
     tags: [{
-      name: 'Tag 1',
+      value: 'Tag 1',
       description: 'Tag 1 description'
     }, {
-      name: 'Tag 2',
+      value: 'Tag 2',
       description: 'Tag 2 description'
     }]
   }
@@ -41,17 +41,17 @@ describe(`suite:${suite}`, () => {
     // Let enough time to process
     this.timeout(60000)
     api = new core.Api({
-      appName: 'aktnmap'
+      appName: 'crisis'
     })
     client = api.createClient()
     runner = new core.Runner(suite, {
-      appName: 'aktnmap',
+      appName: 'crisis',
       browser: {
         slowMo: 1,
         args: ['--lang=fr']
       },
       localStorage: {
-        'akt\'n\'map-welcome': false
+        'crisis-welcome': false
       }
     })
     // Prepare structure for current run
@@ -70,14 +70,15 @@ describe(`suite:${suite}`, () => {
 
   it('owner can create a tag', async () => {
     await core.login(page, org.owner)
-    const tag = _.find(org.tags, { name: 'Tag 1' })
+    expect(await tags.canCreateTag(page, org)).beTrue()
+    const tag = _.find(org.tags, { value: 'Tag 1' })
     await tags.createTag(page, org, tag)
     expect(await tags.countTags(page, org)).to.equal(1)
     expect(await tags.tagExists(page, org, tag)).beTrue()
   })
 
   it('owner can tag members', async () => {
-    const tag = _.find(org.tags, { name: 'Tag 1' })
+    const tag = _.find(org.tags, { value: 'Tag 1' })
     let member = _.find(org.members, { name: 'Manager' })
     await members.addTag(page, org, tag, member)
     member = _.find(org.members, { name: 'Member' })
@@ -87,7 +88,7 @@ describe(`suite:${suite}`, () => {
   })
 
   it('owner can remove members from a tag', async () => {
-    const tag = _.find(org.tags, { name: 'Tag 1' })
+    const tag = _.find(org.tags, { value: 'Tag 1' })
     const member = _.find(org.members, { name: 'Manager' })
     await members.removeTag(page, org, tag, member)
     await tags.goToTagMembersActivity(page, org, tag)
@@ -95,9 +96,9 @@ describe(`suite:${suite}`, () => {
   })
 
   it('owner can edit a tag', async () => {
-    const tag = _.find(org.tags, { name: 'Tag 1' })
+    const tag = _.find(org.tags, { value: 'Tag 1' })
     await tags.editTag(page, org, tag, 'New Tag 1')
-    tag.name = 'New Tag 1'
+    tag.value = 'New Tag 1'
     expect(await tags.tagExists(page, org, tag)).beTrue()
     await tags.editTagDescription(page, org, tag, 'New Tag 1 description')
     tag.description = 'New Tag 1 description'
@@ -105,8 +106,8 @@ describe(`suite:${suite}`, () => {
   })
 
   it('member cannot edit tag', async () => {
-    const tag = _.find(org.tags, { name: 'New Tag 1' })
-    let member = _.find(org.members, { name: 'Member' })
+    const tag = _.find(org.tags, { value: 'New Tag 1' })
+    const member = _.find(org.members, { name: 'Member' })
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, member)
@@ -114,10 +115,13 @@ describe(`suite:${suite}`, () => {
     expect(await tags.tagActionExists(page, org, tag, 'edit-item-description')).beFalse()
     expect(await tags.tagActionExists(page, org, tag, 'remove-item-header')).beFalse()
     await members.goToMembersActivity(page, org)
-    member = _.find(org.members, { name: 'Manager' })
     await members.removeTag(page, org, tag, member)
     expect(runner.hasError()).beTrue()
     runner.clearErrors()
+  })
+
+  it('member cannot create a tag', async () => {
+    expect(await tags.canCreateTag(page, org)).beFalse()
   })
 
   it('member cannot tag members', async () => {
@@ -133,14 +137,15 @@ describe(`suite:${suite}`, () => {
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, manager)
-    const tag = _.find(org.tags, { name: 'Tag 2' })
+    expect(await tags.canCreateTag(page, org)).beTrue()
+    const tag = _.find(org.tags, { value: 'Tag 2' })
     await tags.createTag(page, org, tag)
     expect(await tags.countTags(page, org)).to.equal(2)
     expect(await tags.tagExists(page, org, tag)).beTrue()
   })
 
   it('manager can tag members', async () => {
-    const tag = _.find(org.tags, { name: 'Tag 2' })
+    const tag = _.find(org.tags, { value: 'Tag 2' })
     let member = org.owner
     await members.addTag(page, org, tag, member)
     member = _.find(org.members, { name: 'Member' })
@@ -150,7 +155,7 @@ describe(`suite:${suite}`, () => {
   })
 
   it('manager can remove members from a tag', async () => {
-    const tag = _.find(org.tags, { name: 'Tag 2' })
+    const tag = _.find(org.tags, { value: 'Tag 2' })
     const member = _.find(org.members, { name: 'Member' })
     await members.removeTag(page, org, tag, member)
     await tags.goToTagMembersActivity(page, org, tag)
@@ -158,9 +163,9 @@ describe(`suite:${suite}`, () => {
   })
 
   it('manager can edit a tag', async () => {
-    const tag = _.find(org.tags, { name: 'Tag 2' })
+    const tag = _.find(org.tags, { value: 'Tag 2' })
     await tags.editTag(page, org, tag, 'New Tag 2')
-    tag.name = 'New Tag 2'
+    tag.value = 'New Tag 2'
     expect(await tags.tagExists(page, org, tag)).beTrue()
     await tags.editTagDescription(page, org, tag, 'New Tag 2 description')
     tag.description = 'New Tag 2 description'
@@ -168,7 +173,7 @@ describe(`suite:${suite}`, () => {
   })
 
   it('manager can remove a tag', async () => {
-    const tag = _.find(org.tags, { name: 'New Tag 2' })
+    const tag = _.find(org.tags, { value: 'New Tag 2' })
     await tags.removeTag(page, org, tag)
     expect(await tags.countTags(page, org)).to.equal(1)
   })
@@ -177,14 +182,14 @@ describe(`suite:${suite}`, () => {
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, org.owner)
-    const tag = _.find(org.tags, { name: 'New Tag 1' })
+    const tag = _.find(org.tags, { value: 'New Tag 1' })
     await tags.removeTag(page, org, tag)
     expect(await tags.countTags(page, org)).to.equal(0)
   })
 
   after(async () => {
     await runner.stop()
-    // First remove groups in case removal test failed
+    // First remove tags in case removal test failed
     await client.removeTags(org)
     // Then members
     await client.removeMembers(org)

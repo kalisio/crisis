@@ -3,7 +3,7 @@ import makeDebug from 'debug'
 import { core } from '@kalisio/kdk/test.client.js'
 import { goToOrganisationsActivity } from './organisations.mjs'
 
-const debug = makeDebug('aktnmap:test:members')
+const debug = makeDebug('crisis:test:members')
 
 const organisationComponent = 'OrganisationCard'
 export const memberComponent = 'team/KMemberCard'
@@ -24,7 +24,7 @@ export async function goToMembersActivity (page, organisation, wait = 2000) {
   const url = page.url()
   if (!url.includes('members')) {
     // We can pass an object or a name
-    organisation = organisation.owner.name || organisation
+    organisation = organisation.name || organisation.owner.name || organisation
     await goToOrganisationsActivity(page)
     debug('Navigating to members activity')
     await core.expandCard(page, organisationComponent, organisation)
@@ -85,6 +85,7 @@ export async function inviteMember (page, organisation, member, wait = 5000) {
   await core.clickAction(page, 'add-member')
   await core.type(page, '#email-field', member.email)
   await core.clickAction(page, 'continue-button', 500)
+  await page.waitForTimeout(wait)
   await core.type(page, '#name-field', member.name)
   await clickRole(page, member.permissions)
   await core.clickAction(page, 'add-button', wait)
@@ -140,14 +141,14 @@ export async function joinGroup (page, organisation, group, member, permissions,
 export async function addTag (page, organisation, tag, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
   await core.clickItemAction(page, memberComponent, member.name, 'add-tag')
-  await core.type(page, '#tag-field', tag.name)
-  await core.click(page, `#${_.kebabCase(tag.name)}`)
+  await core.type(page, '#tag-field', tag.value)
+  await core.click(page, `#${_.kebabCase(tag.value)}`)
   await core.click(page, '#join-button', wait)
 }
 
 export async function removeTag (page, organisation, tag, member, wait = 1000) {
   await goToMembersActivity(page, organisation)
-  const xpath = `//div[contains(@component, "${memberComponent}") and contains(., "${member.name}")]//div[@id="${_.kebabCase(tag.name)}-pane"]//i[contains(@role, "button")]`
+  const xpath = `//div[contains(@component, "${memberComponent}") and contains(., "${member.name}")]//div[@id="${_.kebabCase(tag.value)}-pane"]//i[contains(@role, "button")]`
   const elements = await page.$x(xpath)
   if (elements.length > 0) elements[0].click()
   await page.waitForTimeout(wait)

@@ -1,7 +1,7 @@
 import makeDebug from 'debug'
 import { core } from '@kalisio/kdk/test.client.js'
 
-const debug = makeDebug('aktnmap:test:events')
+const debug = makeDebug('crisis:test:events')
 
 export const organisationComponent = 'OrganisationCard'
 
