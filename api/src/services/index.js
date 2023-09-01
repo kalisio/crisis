@@ -320,7 +320,7 @@ export default async function () {
     const packageInfo = fs.readJsonSync(path.join(__dirname, '../../package.json'))
     app.use(app.get('apiPath') + '/capabilities', (req, res, next) => {
       const response = {
-        name: 'aktnmap',
+        name: 'crisis',
         domain: app.get('domain'),
         gateway: app.get('gateway'),
         version: packageInfo.version,

@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: https://s3.eu-central-1.amazonaws.com/kalisioscope/aktnmap/aktnmap-icon-256x256.png
+heroImage: https://s3.eu-central-1.amazonaws.com/kalisioscope/crisis/crisis-icon-color-256x256.png
 actionText: Ready to start ?
 actionLink: /quickstart/
 features:

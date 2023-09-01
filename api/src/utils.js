@@ -1,5 +1,4 @@
 import _ from 'lodash'
-import { createObjectID } from '@kalisio/kdk/core.api.js'
 
 // Send a notification to participants that can be users, groups or tags
 export async function sendPushNotifications (app, participants, notification) {
@@ -8,7 +7,7 @@ export async function sendPushNotifications (app, participants, notification) {
 
   // Define data for notification
   _.defaults(notification, {
-    icon: 'https://s3.eu-central-1.amazonaws.com/kalisioscope/aktnmap/aktnmap-icon-512x512.png'
+    icon: 'https://s3.eu-central-1.amazonaws.com/kalisioscope/crisis/crisis-icon-color-512x512.png'
   })
   const data = {
     notification, 
