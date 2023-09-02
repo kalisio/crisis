@@ -291,9 +291,8 @@ module.exports = configure(function (ctx) {
         description: 'Monitor real-time events on the field',
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#293341',
-        theme_color :  '#1b5e20',
-        start_url: './',
+        background_color: '#FFFFFF',
+        theme_color :  '#293341',
         id: './',
         icons: [
           {
