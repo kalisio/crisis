@@ -24,9 +24,12 @@
           </div>
         </div>
         <div class="q-pa-xs">
-          <k-text-area class="light-paragraph q-pa-sm" :text="plan.description" />
+          <KTextArea 
+            :text="plan.description" 
+            class="light-paragraph q-pa-sm"
+          />
           <!-- Objectives section -->
-          <KCardSection>
+          <KCardSection :hide-header="true">
             <template v-for="(objective, index) in plan.objectives" :key="objective.id">
               <div class="row full-width items-center justify-between no-wrap">
                 <q-toggle 

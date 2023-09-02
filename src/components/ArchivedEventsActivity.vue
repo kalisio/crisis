@@ -23,7 +23,9 @@
           date-field="createdAt"
           :contextId="contextId"
           :list-strategy="'smart'"
-          :height="height - 124">
+          :width="width"
+          :height="height - 124"
+        >
           <template v-slot:empty-history>
             <div class="absolute-center">
               <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
@@ -407,6 +409,7 @@ export default {
     },
     onPageContentResized (size) {
       this.height = size.height - 48
+      this.width = size.width
     },
     showChartSettings () {
       this.$refs.chartSettingsModal.open()

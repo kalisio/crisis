@@ -15,7 +15,9 @@
           :renderer="renderer"
           date-field="updatedAt"
           :contextId="contextId"
-          :height="height">
+          :width="width"
+          :height="height"
+        >
           <template v-slot:empty-history>
             <div class="absolute-center">
               <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
@@ -81,6 +83,7 @@ export default {
     },
     onPageContentResized (size) {
       this.height = size.height - 110
+      this.width = size.width
     }
   },
   async created () {
