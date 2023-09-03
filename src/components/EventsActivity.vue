@@ -71,7 +71,7 @@ export default {
   watch: {
     planId: {
       handler () {
-        this.refreshFab()
+        if (this.planId) this.refreshFab()
       }
     }
   },
@@ -186,9 +186,6 @@ export default {
     onPageContentResized (size) {
       this.height = size.height - 120
     },
-    async onUserChanged () {
-      await this.refreshFab()
-    },
     onEventUpdated () {
       if (this.planId) {
         // Retrieve archived events collection
@@ -208,9 +205,6 @@ export default {
       }
     }
   },
-  created () {
-    this.$events.on('user-changed', this.refreshFab)
-  },
   mounted () {
     // Keep track of changes once loaded, done on mounted as we need the plan ID which is retrieved on before mount in composable.
     // Indeed, archived events do not emit real-time service events, we need to manually update the archived events collection.
@@ -221,6 +215,7 @@ export default {
     eventsService.on('patched', this.onEventUpdated)
     eventsService.on('updated', this.onEventUpdated)
     eventsService.on('removed', this.onEventRemoved)
+    this.$events.on('user-changed', this.refreshFab)
   },
   beforeUnmount () {
     this.$events.off('user-changed', this.refreshFab)
