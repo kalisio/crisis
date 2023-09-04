@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import makeDebug from 'debug'
 import commonHooks from 'feathers-hooks-common'
-import { sendPushNotifications } from '../utils.js'
+import { getOrganisationAvatarUrl, sendPushNotifications } from '../utils.js'
 const { populate } = commonHooks
 const debug = makeDebug('crisis:events:hooks')
 
@@ -11,9 +11,12 @@ export async function sendEventPushNotifications (hook) {
   }
   // Define data for notification
   if (hook.params.notification) {
+    // Get organisation avatar if any
+    const icon = await getOrganisationAvatarUrl(hook)
     const notification = _.defaults(hook.params.notification, {
       title: hook.result.name,
-      body: hook.result.description || ''
+      body: hook.result.description || '',
+      icon
     })
     await sendPushNotifications(hook.app, hook.result.participants, notification)
   }

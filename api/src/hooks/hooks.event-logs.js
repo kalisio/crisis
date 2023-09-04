@@ -1,7 +1,7 @@
 import makeDebug from 'debug'
 import _ from 'lodash'
 import commonHooks from 'feathers-hooks-common'
-import { sendPushNotifications } from '../utils.js'
+import { getOrganisationAvatarUrl, sendPushNotifications } from '../utils.js'
 
 const { getItems } = commonHooks
 const debug = makeDebug('crisis:event-logs:hooks')
@@ -100,12 +100,15 @@ export async function sendEventLogPushNotifications (hook) {
     if (participant && event) {
       // We need the event first to get its title as we only have the id
       const eventsService = hook.app.getService('events', hook.service.context)
-      event = await eventsService.get(event.toString())
+      event = await eventsService.get(event.toString())// Get organisation avatar if any
+      // Get organisation avatar if any
+      const icon = await getOrganisationAvatarUrl(hook)
       // We'd like to be tolerant here because the participants might have be removed from the system while the event is still alive
       try {
         const notification = {
           title: event.name,
-          body: interaction.value
+          body: interaction.value,
+          icon
         }
         await sendPushNotifications(hook.app, [participant.toString()], notification)
       } catch (error) {
