@@ -78,6 +78,24 @@ export default {
         return kdkCoreMixins.objectProxy.methods.loadObject.call(this)
       }
     },
+    updateSchema () {
+      // Not yet loaded ?
+      if (!this.schema) return
+      // When selecting organisation as participant avoid selecting external ones
+      const organisationService = _.find(_.get(this.schema.properties, 'participants.services', []), { service: 'organisations'} )
+      if (organisationService) {
+        const organisationQuery = _.get(organisationService, 'baseQuery', {})
+        organisationQuery._id = this.contextId
+      }
+    },
+    async loadSchema () {
+      // Call super
+      // Start from schema and clone it because it will be shared by all editors
+      const schema = _.cloneDeep(await kdkCoreMixins.schemaProxy.methods.loadSchema.call(this, this.getSchemaName()))
+      this.schema = schema
+      this.updateSchema()
+      return this.schema
+    },
     async onWorkflow (copyWorkflow) {
       if (copyWorkflow) this.object.workflow = _.cloneDeep(this.template.workflow)
       else delete this.object.workflow
