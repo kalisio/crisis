@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import path from 'path'
 import makeDebug from 'debug'
-import { sendPushNotifications } from '../utils.js'
+import { getOrganisationAvatarUrl, sendPushNotifications } from '../utils.js'
 
 const debug = makeDebug('crisis:storage:hooks')
 
@@ -17,10 +17,13 @@ export async function sendMediaPushNotifications (hook) {
       const eventService = hook.app.getService('events', hook.service.getContextId())
       if (!eventService) throw new Error('No valid context found to retrieve event service for storage service')
       const event = await eventService.get(tokens[0])
+      // Get organisation avatar if any
+      const icon = await getOrganisationAvatarUrl(hook)
       // Define data for notification
       const notification = _.defaults(hook.params.notification, {
         title: event.name,
-        body: event.description || ''
+        body: event.description || '',
+        icon
       })
       await sendPushNotifications(hook.app, event.participants, notification)
     }

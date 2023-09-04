@@ -1,5 +1,17 @@
 import _ from 'lodash'
 
+export async function getOrganisationAvatarUrl (hook) {
+  const orgService = hook.app.getService('organisations')
+  const organisation = await orgService.get(hook.service.getContextId(), { query: { $select: ['_id', 'avatar'] } })
+  const avatar = _.get(organisation, 'avatar.key')
+  if (avatar) {
+    // Get proxy route to object storage with a valid token (use the one of the sending user)
+    let url = `${hook.app.get('domain')}${hook.app.get('apiPath')}/${hook.service.getContextId()}/storage-objects/${avatar}`
+    url += `?jwt=${_.get(hook.params, 'authentication.accessToken')}`
+    return url
+  }
+}
+
 // Send a notification to participants that can be users, groups or tags
 export async function sendPushNotifications (app, participants, notification) {
   const pushService = app.getService('push')
