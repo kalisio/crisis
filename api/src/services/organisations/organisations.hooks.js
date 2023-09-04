@@ -2,7 +2,7 @@ import _ from 'lodash'
 import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import commonHooks from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
-import { checkOrganisationsQuotas, removeOrganisationAlerts } from '../../hooks/index.js'
+import { checkOrganisationsQuotas, removeOrganisationAlerts, updateEventTemplateResources } from '../../hooks/index.js'
 
 export default {
   before: {
@@ -16,7 +16,7 @@ export default {
   },
 
   after: {
-    all: [],
+    all: [updateEventTemplateResources('participants')],
     find: [],
     get: [],
     create: [

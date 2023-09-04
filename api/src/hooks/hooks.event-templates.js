@@ -11,8 +11,10 @@ export function updateEventTemplateResources (resourceScope) {
     if ((hook.method === 'get' || hook.method === 'find' || hook.method === 'create')) return hook
 
     const app = hook.app
-    // Retrieve the list of templates
-    const orgEventTemplatesService = app.getService('event-templates', hook.service.getContextId())
+    // Retrieve the list of templates from associated org service
+    const orgId = hook.service.getContextId() || _.get(hook.result, '_id', '').toString()
+    const orgEventTemplatesService = app.getService('event-templates', orgId)
+    if (!orgEventTemplatesService) return hook
     const templates = await orgEventTemplatesService.find({
       query: { [resourceScope]: { $elemMatch: { _id: hook.result._id } } },
       paginate: false
