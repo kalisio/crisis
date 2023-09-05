@@ -7,7 +7,7 @@ sidebarDepth: 3
 Le catalogue cartographique permet de visualiser et d'interagir avec une carte numérique. Grâce aux technologies web les plus avancées, il permet le suivi de données géospatiales en temps-réel.
 
 ::: warning Note
-Cette fonctionnalité requiert un abonnement spécifique, sans celui-ci vous ne pourrez y accéder.
+Cette fonctionnalité requiert un abonnement spécifique. Sans celui-ci, vous ne pourrez pas y accéder.
 
 :point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
 :::
@@ -32,7 +32,7 @@ Le catalogue inclut un ensemble de données de base, auxquelles vous pouvez adjo
 
 ![OpenStreetMap](../../assets/openstreetmap.png)
 
-Ces données, au format [Vecteur](https://datacarpentry.org/organization-geospatial/02-intro-vector-data/index.html) sont dites structurées selon des thématiques données (bâtiments, utilisation du sol, etc.). Elles sont proposées selon différents styles de représentations (e.g. clair, sombre, topographique). Les données sont produites par [OpenMapTiles](https://openmaptiles.com/).
+Ces données, au format [Vecteur](https://datacarpentry.org/organization-geospatial/02-intro-vector-data) sont dites structurées selon des thématiques données (bâtiments, utilisation du sol, etc.). Elles sont proposées selon différents styles de représentation (e.g. clair, sombre, topographique). Les données sont produites par [OpenMapTiles](https://openmaptiles.com/).
 
 ### BD ORTHO/ORTHO HR
 
@@ -40,7 +40,7 @@ Les jeux de données **BD ORTHO** (Base de Données Orthophotographique) et **OR
 
 ![Arc de Triomphe - Paris](../../assets/ign_orthohr.jpg)
 
-Ces données, au format [Raster](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/index.html) sont disponibles à une résolution de 50 centimètres par pixel pour le jeu de donnée **BD ORTHO** et 20 centimètres par pixel pour le jeu de donnée **ORTHO HR**. Les données sont produites par l'[Institut national de l'information géographique et forestière (IGN)](https://www.ign.fr/) et sont placées sous license ouverte à [cette addresse](https://geoservices.ign.fr/documentation/diffusion/telechargement-donnees-libres.html).
+Ces données, au format [Raster](https://datacarpentry.org/organization-geospatial/01-intro-raster-data) sont disponibles à une résolution de 50 centimètres par pixel pour le jeu de donnée **BD ORTHO** et 20 centimètres par pixel pour le jeu de donnée **ORTHO HR**. Les données sont produites par l'[Institut national de l'information géographique et forestière (IGN)](https://www.ign.fr/) et sont placées sous license ouverte à [cette addresse](https://geoservices.ign.fr/documentation/diffusion/telechargement-donnees-libres.html).
 
 ### PlanetSAT
 
@@ -59,7 +59,7 @@ Les données sont produites par [PlanetObserver](https://planetobserver.com/).
 Le niveau de risque de chacun est représenté à l'aide du code couleur suivant :
 * **Rouge**: Risque de crue majeure. Menace directe et généralisée de la sécurité des personnes et des biens
 * **Orange** : Risque de crue génératrice de débordements importants susceptibles d’avoir un impact significatif sur la vie collective et la sécurité des biens et des personnes
-* **Jaune** : Risque de crue ou de montée rapide des eaux n'entraînant pas de dommages significatifs, mais nécessitant une vigilance particulière dans le cas d'activités saisonnières et/ou exposée
+* **Jaune** : Risque de crue ou de montée rapide des eaux n'entraînant pas de dommages significatifs, mais nécessitant une vigilance particulière dans le cas d'activités saisonnières et/ou exposées
 * **Vert** : Pas de vigilance particulière requise
 
 Les données sont produites par le [Service central d’hydrométéorologie et d’appui à la prévision des inondations (SCHAPI)](https://www.ecologique-solidaire.gouv.fr/prevision-des-inondations)
@@ -90,19 +90,19 @@ Données de qualité de l'air collectées dans 93 pays par l'association [OpenAQ
 
 ### OpenRadiation
 
-Le projet [OpenRadiation](https://www.openradiation.org)  pour objectif de centraliser des mesures de la radioactivité dans l'environnement réalisées par des citoyens. Il permet aux utilisateurs de prendre les mesures à l'aide de différents dosimètres et de les exploiter à travers plusieurs outils.
+Le projet [OpenRadiation](https://www.openradiation.org) a pour objectif de centraliser des mesures de la radioactivité dans l'environnement réalisées par des citoyens. Il permet aux utilisateurs de prendre les mesures à l'aide de différents dosimètres et de les exploiter à travers plusieurs outils.
 
 ![OpenRadiation](../../assets/openradiation.png)
 
 ### Mapillary
 
-Base de données de photos géolocalisées issues de la plateforme [Mapillary](https://www.mapillary.com/) et alimenté par production participative.
+Base de données de photos géolocalisées issues de la plateforme [Mapillary](https://www.mapillary.com/) et alimentée par production participative.
 
 ![Mapillary](../../assets/mapillary.jpg)
 
 ### GSMaP
 
-Global Precipitation Measurement (GPM) est une mission opéré par plusieurs agences spatiales dont l'objectif est d'effectuer des mesures périodiques des précipitations au niveau de l'ensemble de la planète.
+Global Precipitation Measurement (GPM) est une mission opérée par plusieurs agences spatiales dont l'objectif est d'effectuer des mesures périodiques des précipitations au niveau de l'ensemble de la planète.
 
 ![GSMaP](../../assets/gsmap.png)
 
@@ -114,7 +114,7 @@ Les éléments météorologiques disponibles sont les suivants :
 * température à 2m en °C,
 * précipitations cumulées au sol (pluie et neige) sur 3h en mm/h.
 
-Les données peuvent provenir de plusieurs modèles de prévision détaillées ci-après.
+Les données peuvent provenir de plusieurs modèles de prévision détaillés ci-après.
 
 **ARPEGE** est le modèle prévisionnel de [Météo France](http://services.meteofrance.com/) grande échelle. Il existe deux variantes du modèle qui couvrent :
 * Le globe avec une maille de 14 km (0.25°)
@@ -134,7 +134,7 @@ Pour une présentation plus détaillée de ces deux modèles, reportez vous à l
 
 ### Données démographiques
 
-Sur la base des données [FiLoSoFi](https://www.insee.fr/fr/statistiques/6215217) de l'Institut national de la statistique et des études économiques (INSEE) nous proposons des informations démographiques telles que le nombre d'individus par km² (i.e. densité de population) ou le nombre d'individus par classe d'age et par carreau (1km ou 200m).
+Sur la base des données [FiLoSoFi](https://www.insee.fr/fr/statistiques/6215217) de l'Institut national de la statistique et des études économiques (INSEE) nous proposons des informations démographiques telles que le nombre d'individus par km² (i.e. densité de population) ou le nombre d'individus par classe d'âge et par carreau (1km ou 200m).
 
 ![FILOSOFI](../../assets/filosofi.png)
 
@@ -146,7 +146,7 @@ Sur la base des données [FiLoSoFi](https://www.insee.fr/fr/statistiques/6215217
 
 ## Composants graphiques
 
-Chaque composant peut être affiché/caché par l'intermédiaire de poignées visible sur les différents côtés de l'écran:
+Chaque composant peut être affiché/caché par l'intermédiaire de poignées visibles sur les différents côtés de l'écran:
 * la **barre de navigation** en haut,
 * la **ligne de temps** en bas,
 * le **panneau latéral** à droite.
@@ -199,7 +199,7 @@ En utilisant ce bouton vous pouvez:
   * En vous connectant à des services cartographiques respectant les standards OGC (WMS, WFS, TMS, WMTS).
   * En important un fichier de données au format [GeoJSON](https://geojson.org/).
   * En positionnant et dessinant vous même les entitées la composant. Vous pouvez adjoindre un fichier définissant le schéma de données des métadonnées associées aux entités (i.e. leurs propriétés) au format [JSON schema](https://json-schema.org/).
-* <i class="las la-eye-dropper"/> Sonder les prévision météorologiques du modèle actuellement actif sur un lieu donné en le sélectionnant sur la carte.
+* <i class="las la-eye-dropper"/> Sonder les prévisions météorologiques du modèle actuellement actif sur un lieu donné en le sélectionnant sur la carte.
 
 :point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel du bouton d'actions pour plus de détails
 
@@ -209,11 +209,11 @@ Un *clic droit* ou un appui tactile prolongé sur la carte affiche un menu conte
 
 Si l'élément provient d'une couche de mesures environnementales, ou que vous cliquez sur la carte à une position précise après avoir activé un élément météorologique (e.g. la vent), vous pouvez également <i class="las la-bell"/> [définir une alerte](./alert.md).
 
-Enfin, il est possible de <i class="las la-users"/> réaliser une analyse démographique sur un élément géographique de type surfacique. Cette analyse permet de calculer le nombre de personnes, par classe d'age, pouvant être impactées par un événement survenant dans la zone en question.
+Enfin, il est possible de <i class="las la-users"/> réaliser une analyse démographique sur un élément géographique de type surfacique. Cette analyse permet de calculer le nombre de personnes, par classe d'âge, pouvant être impacté par un événement survenant dans la zone en question.
 
 ### Actions des couches
 
-Suivant la couche différentes actions sont disponibles. La plus commune est *zoomer sur* <i class="las la-search-location"/> la couche pour recentrer la vue sur les données. Si les données ne sont pas visibles pour toutes les échelles l'action modifiera l'échelle de la carte pour que les données puissent être visibles lorsque la couche sera affichée.
+Suivant la couche, différentes actions sont disponibles. La plus commune est *zoomer sur* <i class="las la-search-location"/> la couche pour recentrer la vue sur les données. Si les données ne sont pas visibles pour toutes les échelles, l'action modifiera l'échelle de la carte pour que les données puissent être visibles lorsque la couche sera affichée.
 
 Plus d'actions sont disponibles pour les couches de données métier:
 * <i class="las la-save"></i> sauvegarder la couche (i.e. la rendre persistente),

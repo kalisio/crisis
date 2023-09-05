@@ -4,8 +4,8 @@ sidebarDepth: 3
 
 # Processes
 
-By default an event template is a simple information message without any interaction between participants and coordinators
-Adding a workflow you can define a sequence of interactions (i.e. multiple-choice questions) that must be fulfilled by the participant and/or the coordinator of the event
+By default an event template is a simple information message without any interaction between participants and coordinators. 
+By adding a workflow you can define a sequence of interactions (i.e. multiple-choice questions) that must be fulfilled by the participant and/or the coordinator of the event
 
 Take the following workflow example composed of two steps:
   1. awaited participant interaction: *are available or not available to intervene on this event ?*

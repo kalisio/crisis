@@ -6,7 +6,7 @@ sidebarDepth: 3
 
 Nous allons illustrer ici les *concepts de base* vous permettant de prendre en main Kalisio Crisis.
 
-Cette présentation s'accompagne parfois de petits *didacticiels* qui peuvent être exécutés directement sur l'application. Aussi il vous sera nécessaire de suivre tout d'abord les étapes vous permettant de créer un compte sur l'application puis de vous y connecter pour que cela fonctionne correctment.
+Cette présentation s'accompagne parfois de petits *didacticiels* qui peuvent être exécutés directement sur l'application. Aussi il vous sera nécessaire de suivre tout d'abord les étapes vous permettant de créer un compte sur l'application puis de vous y connecter pour que cela fonctionne correctement.
 
 Un lien peut vous permettre d'exécuter directement un didacticiel depuis la documentation, sinon rendez-vous sur l'application à l'endroit adéquat puis activez le didacticiel en cliquant sur l'icone <a href=""><i class="las la-question-circle"/></a> dans le menu principal.
 
@@ -30,7 +30,7 @@ Kalisio Crisis s'améliore et évolue de façon continue. Aussi, ce qui s’affi
 
 ## Activité
 
-Au sein de l'application les actions visant à réaliser une tâche spécifique, comme la gestion des [membres](./concepts.md#role) de son [organisation](./concepts.md#organisation) ou de son [catalogue cartographique](../gofurther/catalog.md), sont regroupés sur un même écran présentant une interface utilisateur adaptée et nommée **activité**. Lorsque plusieurs écrans sont nécessaires compte tenu du nombre d'actions possibles, ils sont affichés sous la forme d'**onglets**. La sélection d'un onglet permet de basculer sur l'écran ad-hoc.
+Au sein de l'application les actions visant à réaliser une tâche spécifique, comme la gestion des [membres](./concepts.md#role) de son [organisation](./concepts.md#organisation) ou de son [catalogue cartographique](../gofurther/catalog.md), sont regroupées sur un même écran présentant une interface utilisateur adaptée et nommée **activité**. Lorsque plusieurs écrans sont nécessaires compte tenu du nombre d'actions possibles, ils sont affichés sous la forme d'**onglets**. La sélection d'un onglet permet de basculer sur l'écran ad-hoc.
 
 Par exemple, tout ce qui a trait à votre compte et à sa sécurité est centralisé dans une activité de gestion composée de trois écrans comme illustré sur la figure suivante:
 
@@ -72,7 +72,7 @@ Comment afficher le tableau de bord depuis le <tour-link text="menu principal" p
 
 Selon les organisations, un utilisateur possède des *rôles différents* et ne dispose donc pas des même fonctionnalités. La figure suivante illustre un exemple où:
 * un utilisateur appartient à plusieurs organisations (1, 2 et 3),
-* un utilisateur gére plusieurs organisations (2),
+* un utilisateur gère plusieurs organisations (2),
 * une organisation possède plusieurs groupes (3),
 * un membre d'une organisation appartient à plusieurs groupes (3).
 
@@ -81,7 +81,7 @@ Selon les organisations, un utilisateur possède des *rôles différents* et ne 
 ### <i class="las la-graduation-cap"></i> Rôle
 
 Un **rôle** défini les droits d'un utilisateur au sein d'une organisation ou d'un groupe:
-  * en tant que <i class="las la-user"></i> *membre* il ne peut modifier l'état de l'organisation ou du groupe (droit de consultation),
+  * en tant que <i class="las la-user"></i> *membre* il ne peut pas modifier l'état de l'organisation ou du groupe (droit de consultation),
   * en tant que <i class="las la-briefcase"></i> *gestionnaire* il peut modifier l'état de l'organisation ou du groupe (droit d'édition),
   * en tant que <i class="las la-certificate"></i> *propriétaire* il peut supprimer l'organisation ou le groupe (contrôle total).
 
@@ -135,7 +135,7 @@ Comment afficher le tableau de bord depuis le <tour-link text="menu principal" p
 
 Une *chose à faire* ou une *information autour d'un fait concret* que l'on désire partager et traiter avec certains membres d'une organisation. Typiquement une information opérationnelle, une intervention sur le terrain, des actions de gestion de crise, etc.
 
-Un événement génère des *notifications* sur les mobiles des **participants** qui ont installé l'application mobile lors de sa création, mise à jour et clôture par ses **coordonnateurs**.
+Un événement génère des *notifications* sur les mobiles des **participants** qui ont installé l'application mobile lors de sa création. Il est mis à jour et clôturé par ses **coordonnateurs**.
 
 Les participants et les coordonnateurs d'un événement peuvent être choisis comme:
   * des membres de façon individuelle,
@@ -153,7 +153,7 @@ La figure suivante résume un exemple de structuration classique dans l'applicat
 A un évènement, Kalisio Crisis permet d’associer :
   * une *localisation* (adresse ou coordonnées géographiques),
   * des *photos* ou des *documents* afin de les partager entre les acteurs,
-  * un **[processus](../gofurther/workflow.md)** définissant les interaction entre les participants et les coordonnateurs.
+  * un ***[processus](../gofurther/workflow.md)*** définissant les interaction entre les participants et les coordonnateurs.
 
 :point_right: Vous êtes prêt à partager de l'information ? <tour-link text="Voir comment gérer vos événements" path="home" :params="{ organisation: 'member', route: 'events-activity' }"/>
 

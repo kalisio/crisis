@@ -8,19 +8,19 @@ L'utilisateur qui créé un plan en est par défaut le coordonnateur mais il peu
 
 Pour vous aider à suivre l'avancement de votre plan il est possible de:
 1. Définir les différents objectifs visés par le plan
-2. Suivre le niveau de progression des événements constituan le plan
+2. Suivre le niveau de progression des événements constituant le plan
 
-Un *objectif* est constitué d'un titre et d'une description, plus une éventuelle localisation (e.g. zone de danger à évacuer). Vous pouvez inclure dans la description riche des liens vers vos fiches réflexes, documents, etc. Chaque événement de votre plan pourra être associé à un objectif et les événements filtrés en fonction de vos objectifs dans chaque activité (liste d'événement, carte des événements, main courante).
+Un *objectif* est constitué d'un titre et d'une description, plus une éventuelle localisation (e.g. zone de danger à évacuer). Vous pouvez inclure dans la description des liens vers vos fiches réflexes, documents, etc. Chaque événement de votre plan pourra être associé à un objectif et les événements filtrés en fonction de vos objectifs dans chaque activité (liste d'événements, carte des événements, main courante).
 
 De plus, un plan propose un tableau Kanban de trois colonnes:
-* *A faire*: événements n'ayant encore aucun participants,
+* *A faire*: événements n'ayant encore aucun participant,
 * *En cours*: événements ayant au moins un participant et non encore clôturés,
 * *Clôturés*: événements clôturés.
 
 :point_right: Vous êtes prêt à activer un plan ? <tour-link text="Voir comment gérer vos plans" path="home" :params="{ organisation: 'member', route: 'plans-activity' }"/>
 
 ::: warning Note
-Cette fonctionnalité requiert un abonnement spécifique, sans celui-ci vous ne pourrez y accéder.
+Cette fonctionnalité requiert un abonnement spécifique. Sans celui-ci, vous ne pourrez pas y accéder.
 
 :point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
 :::
