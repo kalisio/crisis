@@ -12,7 +12,7 @@ export async function sendEventPushNotifications (hook) {
   // Define data for notification
   if (hook.params.notification) {
     // Get organisation avatar if any
-    const icon = await getOrganisationAvatarUrl(hook)
+    const icon = await getOrganisationAvatarUrl(hook, hook.result)
     const notification = _.defaults(hook.params.notification, {
       title: hook.result.name,
       body: hook.result.description || '',

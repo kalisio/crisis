@@ -102,7 +102,7 @@ export async function sendEventLogPushNotifications (hook) {
       const eventsService = hook.app.getService('events', hook.service.context)
       event = await eventsService.get(event.toString())// Get organisation avatar if any
       // Get organisation avatar if any
-      const icon = await getOrganisationAvatarUrl(hook)
+      const icon = await getOrganisationAvatarUrl(hook, event)
       // We'd like to be tolerant here because the participants might have be removed from the system while the event is still alive
       try {
         const notification = {
