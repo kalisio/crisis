@@ -73,7 +73,7 @@ describe(`suite:${suite}`, () => {
         devtools: false
       },
       localStorage: {
-        'crisis-welcome': false
+        'kalisio crisis-welcome': false
       }
     })
     // Prepare structure for current run
