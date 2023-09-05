@@ -161,7 +161,7 @@ Kalisio Crisis allows to attach to each event:
 
 An event is always created from a **template** that define its basic content. Each model includes a default title, description and/or set of participants. This way, when creating an event, only remains to complete or update some elements like the localisation.
 
-::: tip Astuce
+::: tip
 Usually, models follow a business oriented typology. For instance fire fighters would have the following templates: *Forest fire*, *Individual rescue operation* or *Public road accident*.
 
 Using a typology you can produce **[relevant statistics](../gofurther/archiving.md)** from your events.
@@ -183,7 +183,7 @@ A participant cannot modify an event although he can share documents and picture
 
 A coordinator can update and close (i.e. destroy) an event, and change its set of participants and coordinators.
 
-His has also access to a *cartographic view* summarizing the position and state of each participant according to the [workflow](../gofurther/workflow.md).
+He has also access to a *cartographic view* summarizing the position and state of each participant according to the [workflow](../gofurther/workflow.md).
 
 ## Subscriptions
 

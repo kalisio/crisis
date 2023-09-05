@@ -36,14 +36,13 @@ module.exports = {
         nav: [
           { text: 'Quickstart', link: '/quickstart/' },
           { text: 'Go further', link: '/gofurther/' },
-          { text: 'Learn More', items: [{text: 'About', link: '/about/'}, { text: 'API', link: '/api/' }]},
+          { text: 'About', link: '/about/'}
         ],
         sidebar: {
           '/quickstart/': getQuickStartSidebar(),
           '/gofurther/': getGoFurtherSidebar(),
           '/tutorials/': getTutorialsSidebar(),
-          '/about/': getAboutSidebar(),
-          '/api/': getAPISidebar()
+          '/about/': getAboutSidebar()
         }
       },
       '/fr/': {
@@ -118,13 +117,3 @@ function getAboutSidebar () {
     'contact'
   ]
 }
-
-function getAPISidebar () {
-  return [
-    '',
-    'services',
-    'hooks',
-    'components'
-  ]
-}
-

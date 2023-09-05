@@ -7,7 +7,7 @@ Les **alertes environnementales** permettent de générer un [événement](../qu
 Les alertes vous permettent ainsi d'assurer simplement vos opérations de vigilance quotidienne de façon fiable et de mobiliser vos équipes rapidement si nécessaire.
 
 ::: warning Note
-Cette fonctionnalité requiert l'abonnement pour accéder au [catalogue des données environnementales](./catalog.md), sans celui-ci vous ne pourrez y accéder.
+Cette fonctionnalité requiert l'abonnement pour accéder au [catalogue des données environnementales](./catalog.md). Sans celui-ci, vous ne pourrez pas y accéder.
 :::
 
 ## Création d'une alerte

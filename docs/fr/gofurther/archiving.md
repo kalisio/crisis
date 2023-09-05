@@ -3,7 +3,7 @@
 La **main courante** propose un archivage long-terme de vos [événements](../quickstart/concepts.md#evenement). Elle vous permet ainsi d'assurer une traçabilité complète de vos opérations et la production de statistiques sous forme de graphiques ou de cartes.
 
 ::: warning Note
-Cette fonctionnalité requiert un abonnement spécifique, sans celui-ci vous ne pourrez y accéder.
+Cette fonctionnalité requiert un abonnement spécifique. Sans celui-ci, vous ne pourrez pas y accéder.
 
 :point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
 :::

@@ -76,6 +76,6 @@ Retrouvez les fichiers permettant de définir les schémas de données utilisés
 
 ## <i class="las la-stream"></i> Gérez vos plans d'actions
 
-Cette dernière vidéo illustre le concept le plus avancé de Kalisio Crisis pour faciliter la gestion de situations à risque, à savoir la gestion d'un [plan d'actions](./plan.md):
+Cette dernière vidéo illustre le concept le plus avancé de Kalisio Crisis pour faciliter la gestion de situations à risque, à savoir la gestion d'un [plan d'actions](../gofurther/plan.md):
 
 <iframe src="https://www.youtube.com/embed?v=ibvy3hp8bt8&list=PLM-YEzjgLnA9HdhoTcS86U3bCEMOw75eC&index=11&autoplay=0" width="640" height="480" frameborder="0" allowfullscreen></iframe>
