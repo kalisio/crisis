@@ -18,7 +18,7 @@ export async function sendMediaPushNotifications (hook) {
       if (!eventService) throw new Error('No valid context found to retrieve event service for storage service')
       const event = await eventService.get(tokens[0])
       // Get organisation avatar if any
-      const icon = await getOrganisationAvatarUrl(hook)
+      const icon = await getOrganisationAvatarUrl(hook, event)
       // Define data for notification
       const notification = _.defaults(hook.params.notification, {
         title: event.name,

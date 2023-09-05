@@ -1,14 +1,25 @@
 import _ from 'lodash'
+import moment from 'moment'
 
-export async function getOrganisationAvatarUrl (hook) {
+export async function getOrganisationAvatarUrl (hook, event) {
   const orgService = hook.app.getService('organisations')
   const organisation = await orgService.get(hook.service.getContextId(), { query: { $select: ['_id', 'avatar'] } })
   const avatar = _.get(organisation, 'avatar.key')
   if (avatar) {
-    // Get proxy route to object storage with a valid token (use the one of the sending user)
+    // Get presigned url to object storage, prefered for a security reason
+    const storageService = hook.app.getService('storage', hook.service.getContextId())
+    // Expire in 7 days by default unless specified in event
+    let expiresIn = 7 * 24 * 3600
+    const expireAt = _.get(event, 'expireAt')
+    if (expireAt) expiresIn = moment.utc(expireAt).diff(moment.utc(), 'seconds')
+    const response = await storageService.create({ id: avatar, command: 'GetObject', expiresIn })
+    return response.SignedUrl
+    // Get proxy route to object storage, requires a valid token (use the one of the sending user)
+    /*
     let url = `${hook.app.get('domain')}${hook.app.get('apiPath')}/${hook.service.getContextId()}/storage-objects/${avatar}`
     url += `?jwt=${_.get(hook.params, 'authentication.accessToken')}`
     return url
+    */
   }
 }
 
