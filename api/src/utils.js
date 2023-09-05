@@ -4,7 +4,8 @@ import moment from 'moment'
 export async function getOrganisationAvatarUrl (hook, event) {
   const orgService = hook.app.getService('organisations')
   const organisation = await orgService.get(hook.service.getContextId(), { query: { $select: ['_id', 'avatar'] } })
-  const avatar = _.get(organisation, 'avatar.key')
+  // Backward compatibility as avatar key was previously stored under _id
+  const avatar = _.get(organisation, 'avatar.key', _.get(organisation, 'avatar._id'))
   if (avatar) {
     // Get presigned url to object storage, prefered for a security reason
     const storageService = hook.app.getService('storage', hook.service.getContextId())
