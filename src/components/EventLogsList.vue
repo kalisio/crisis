@@ -85,9 +85,10 @@ export default {
         }, {
           id: 'location-map',
           component: 'menu/KMenu',
-          dropdownIcon: 'las la-ellipsis-v',
           tooltip: 'EventLogsList.VIEW_LOCATION',
-          icon: 'las la-map-marker',
+          dropdownIcon: 'las la-map-marker',
+          dropdownAnimation: false,
+          dense: true,
           content: [{
             component: 'location/KLocationMap',
             editable: false,

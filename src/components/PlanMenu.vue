@@ -128,14 +128,16 @@ export default {
         actions.push({
           id: 'show-objective-description',
           component: 'menu/KMenu',
-          dropdownIcon: 'las la-ellipsis-v',
+          dropdownIcon: 'las la-file-alt',
           tooltip: 'PlanMenu.VIEW_DESCRIPTION',
-          icon: 'las la-file-alt',
+          dropdownAnimation: false,
+          dense: true,
           content: [{
             component: 'KTextArea',
             text: objective.description,
-            length: 8192,
-            class: 'q-pa-sm bg-grey-5'
+            maxHeight: '300',
+            class: 'q-pa-md bg-grey-2',
+            style: 'min-width: 300px; width: 50vw'
           }]
         })
       }
