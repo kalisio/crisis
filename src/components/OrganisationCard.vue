@@ -160,7 +160,8 @@ export default {
     },
     getUserRoleLabel () {
       const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.item._id)
-      return this.$t(_.upperCase(userRole))
+      // It appears that due to reactivity role might not be available anymore when removing a member
+      return (userRole ? this.$t(_.upperCase(userRole)) : '')
     },
     async countItems (serviceName, query = {}) {
       const service = this.$api.getService(serviceName, this.item._id)
