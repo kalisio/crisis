@@ -475,34 +475,6 @@
   "Index": {
     "ORGANISATION_NOT_FOUND": "Impossible de trouver une organisation correspondant à la requête"
   },
-  "plans": {
-    "bronze_LABEL": "Bronze",
-    "bronze_PRICE": "Gratuit",
-    "bronze_DESCRIPTION": "Notre version basique pour les personnes qui souhaitent découvrir",
-    "bronze_DETAILS": "</br>Etiquettes illimités</br>Evénements illimitées</br>Jusqu’à <b>{event-templates}</b> modèles</br>Jusqu’à <b>{groups}</b> groupes</br>Jusqu’à <b>{members}</b> membres</br></br>",
-    "silver_LABEL": "Argent",
-    "silver_PRICE": "99€ par mois",
-    "silver_DESCRIPTION": "Assez puissant pour gérer une association ou une entreprise de taille moyenne",
-    "silver_DETAILS": "</br>Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Jusqu’à <b>{groups}</b> groupes</br>Jusqu’à <b>{members}</b> membres</br></br>",
-    "gold_LABEL": "Or",
-    "gold_PRICE": "399€ par mois",
-    "gold_DESCRIPTION": "Assez puissant pour gérer une association ou une entreprise de grande taille",
-    "gold_DETAILS": "</br>Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Jusqu’à <b>{members}</b> membres</br></br>",
-    "diamond_LABEL": "Diamant",
-    "diamond_PRICE": "Parlons-en !",
-    "diamond_DESCRIPTION": "Définissons une solution adaptée à vos besoins, avec un contrôle accru et plus d’assistance",
-    "diamond_DETAILS": "Etiquettes illimitées</br>Evénements illimités</br>Modèles illimités</br>Groupes illimités</br>Membres illimités</br>Hébergement sur vos serveurs</br>Produit personnalisé</br>"
-  },
-  "options": {
-    "catalog_LABEL": "Catalogue géographique",
-    "catalog_PRICE": "99€ par mois",
-    "catalog_DESCRIPTION": "Intégrez vos propres données géographiques",
-    "catalog_DETAILS": "</br>Import GeoJson</br>Méta-données personnalisées</br>Edition ergonomique</br>Stylisation personnalisée</br></br>",
-    "archiving_LABEL": "Main courante et plans",
-    "archiving_PRICE": "99€ par mois",
-    "archiving_DESCRIPTION": "Archivage long-terme de vos actions",
-    "archiving_DETAILS": "</br>Plans d'actions personnalisés</br>Suivi d'avancement</br>Recherche temporelle</br>Statistiques</br></br></br>"
-  },
   "help": {
     "SECTION": "Choisissez une partie de l'aide",
     "BASICS": "Quelques notions pour mieux comprendre Akt’n’Map",
