@@ -40,14 +40,3 @@ export async function deleteOrganisation (page, organisation, wait = 1000) {
   await core.type(page, '.q-dialog-plugin input', organisation.name)
   await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
 }
-
-export async function editOrganisationBilling (page, client, user) {
-  await goToOrganisationsActivity(page)
-
-  await client.authenticate({ strategy: 'local', email: user.email, password: user.password })
-  const users = await client.getService('users').find({ query: { email: user.email } })
-  await client.getService('organisations').patch(users.data[0].organisations[0]._id, { billing: { subscription: { plan: 'diamond'}}})
-  await page.reload()
-  await page.waitForNavigation()
-  await page.waitForTimeout(4000)
-}
