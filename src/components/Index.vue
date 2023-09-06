@@ -9,6 +9,7 @@
 <script setup>
 import _ from 'lodash'
 import config from 'config'
+import { onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { api, permissions, composables, i18n } from '@kalisio/kdk/core.client'
 
@@ -16,6 +17,8 @@ import { api, permissions, composables, i18n } from '@kalisio/kdk/core.client'
 const $q = useQuasar()
 // Register custom redirect to handle permissions
 const { isInitialized } = composables.useSession({ redirect })
+const { installPwa } = composables.usePwa()
+
 // Functions
 async function redirect (route, result, user) {
   // Check if we'd like to redirect to an organisation
@@ -50,4 +53,9 @@ async function redirect (route, result, user) {
   }
   return result
 }
+
+// Hooks
+onMounted(() => {
+  installPwa()
+})
 </script>

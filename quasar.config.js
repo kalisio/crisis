@@ -245,30 +245,6 @@ module.exports = configure(function (ctx) {
       'fadeOut'
     ],
 
-    // https://v2.quasar.dev/quasar-cli-webpack/developing-ssr/configuring-ssr
-    ssr: {
-      pwa: false,
-
-      // manualStoreHydration: true,
-      // manualPostHydrationTrigger: true,
-
-      prodPort: 3000, // The default port that the production server should use
-                      // (gets superseded if process.env.PORT is specified at runtime)
-
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-        // Tell browser when a file from the server should expire from cache (in ms)
-
-      chainWebpackWebserver (chain) {
-        chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
-      },
-      
-      middlewares: [
-        ctx.prod ? 'compression' : '',
-        'render' // keep this as last one
-      ]
-    },
-
     // https://v2.quasar.dev/quasar-cli-webpack/developing-pwa/configuring-pwa
     pwa: {
       workboxPluginMode: 'InjectManifest', // 'GenerateSW' or 'InjectManifest'
