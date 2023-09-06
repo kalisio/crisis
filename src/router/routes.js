@@ -86,6 +86,7 @@ module.exports = [{
           name: '',
           component: 'Context',
           props: true,
+          meta: { can: ['read', 'members', ':contextId'] },
           children: {
             'default-context-view': {
               // Because this child is the default one path is empty and name is the one of the parent route

@@ -3,7 +3,10 @@ import config from 'config'
 import { Notify, Dialog } from 'quasar'
 import appHooks from '../app.hooks'
 import services from '../services'
-import { utils, initializeApi, i18n, utils as kdkCoreUtils, Store, Layout, Events, beforeGuard, authenticationGuard } from '@kalisio/kdk/core.client'
+import {
+  utils, initializeApi, i18n, utils as kdkCoreUtils, Store, Layout, Events,
+  beforeGuard, authenticationGuard, permissionsGuard
+} from '@kalisio/kdk/core.client'
 import { Geolocation } from '@kalisio/kdk/map.client.map'
 
 /* function updateThemeColors () {
@@ -93,8 +96,9 @@ export default async ({ app }) => {
   global.$layout = app.config.globalProperties.$layout
   global.$api = app.config.globalProperties.$api
 
-  // Add global guard
+  // Add global guards
   beforeGuard.registerGuard(authenticationGuard)
+  beforeGuard.registerGuard(permissionsGuard)
 
   // updateThemeColors()
 
