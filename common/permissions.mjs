@@ -132,28 +132,11 @@ function definePlanAbilities (subject, can, cannot, app) {
   }
 }
 
-function defineBillingAbilities (subject, can, cannot, app) {
-  if (subject && subject._id) {
-    if (subject.organisations) {
-      subject.organisations.forEach(organisation => {
-        const role = permissions.Roles[organisation.permissions]
-        if (role >= permissions.Roles.owner) {
-          if (organisation._id) {
-            can('service', 'billing')
-            can('all', 'billing', { billingObject: organisation._id })
-          }
-        }
-      })
-    }
-  }
-}
-
 // Hook computing contextual catalog, features, events, etc. abilities for a given user
 export function defineUserAbilities (subject, can, cannot, app) {
   defineEventAbilities(subject, can, cannot, app)
   definePlanAbilities(subject, can, cannot, app)
-  defineBillingAbilities(subject, can, cannot, app)
-
+  
   if (subject && subject._id) {
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {

@@ -1,7 +1,7 @@
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import { core } from '@kalisio/kdk/test.client.js'
-import { countOrganisations, organisationExists, createOrganisation, deleteOrganisation, editOrganisationBilling } from './organisations.mjs'
+import { countOrganisations, organisationExists, createOrganisation, deleteOrganisation } from './organisations.mjs'
 import { countMembers, memberExists, removeMember } from './members.mjs'
 
 const suite = 'account'
@@ -56,7 +56,6 @@ describe(`suite:${suite}`, () => {
 
   it('create organization', async () => {
     await createOrganisation(page, org)
-    await editOrganisationBilling(page, client, user)    
     await core.closeWelcomeDialog(page)
     expect(await organisationExists(page, org)).beTrue()
     expect(await countOrganisations(page) === 1).beTrue()
