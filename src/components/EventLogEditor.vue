@@ -6,7 +6,7 @@
     @closed="$emit('closed')"
     :buttons="getButtons()"
   >
-    <KForm ref="form" :schema="schema" @form-ready="refresh"/>
+    <KForm :ref="onFormCreated" @form-ready="onFormReady" :schema="schema"/>
   </KModal>
 </template>
 
@@ -56,25 +56,30 @@ export default {
       this.schema = this.generateSchemaForStep(this.step)
       return this.schema
     },
-    async refresh () {
-      this.refreshUser()
-      if (this.userId) {
-        // We can then load the schema
-        await this.loadSchema()
-        await this.$refs.form.build()
-        this.$refs.form.clear()
+    async onFormCreated (reference) {
+      if (this.form !== reference) {
+        this.form = reference
+        if (this.form) {
+          this.refreshUser()
+          if (this.userId) {
+            // Retrieve source log/event
+            this.state = await this.getService().get(this.logId)
+            this.event = await this.$api.getService('events', this.contextId).get(this.objectId)
+            this.step = this.getWorkflowStep(this.state)
+            await this.loadSchema()
+          }
+        } else {
+          this.schema = null
+        }
       }
     },
+    onFormReady () {
+      this.form.clear()
+    },
     async logCoordinatorState () {
-      await this.logStep(this.$refs.form, this.step, this.state)
+      await this.logStep(this.form, this.step, this.state)
       this.closeModal()
     }
-  },
-  async created () {
-    // Retrieve source log/event
-    this.state = await this.getService().get(this.logId)
-    this.event = await this.$api.getService('events', this.contextId).get(this.objectId)
-    this.step = this.getWorkflowStep(this.state)
   }
 }
 </script>

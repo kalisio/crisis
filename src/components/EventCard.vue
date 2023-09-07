@@ -143,7 +143,7 @@
       :title="followUpTitle"
       :buttons="getFollowUpButtons()"
     >
-      <k-form ref="form" :schema="schema"/>
+      <k-form :ref="onFollowUpFormCreated" :schema="schema"/>
     </k-modal>
     <!--
       Logs modal
@@ -414,13 +414,9 @@ export default {
     removeEvent () {
       this.showRemoveEventDialog(this.item)
     },
-    async followUp () {
+    followUp () {
       if (this.hasParticipantInteraction) {
         this.$refs.followUpModal.open()
-        // We can then load the schema
-        await this.loadSchema()
-        await this.$refs.form.build()
-        this.$refs.form.clear()
       } else if (this.isCoordinator) {
         this.$router.push({
           name: 'event-activity',
@@ -428,6 +424,16 @@ export default {
           // Depending if event is in a plan we get it as ID or object
           query: { plan: _.get(this.item, 'plan._id', _.get(this.item, 'plan')) }
         })
+      }
+    },
+    async onFollowUpFormCreated (reference) {
+      if (this.form !== reference) {
+        this.form = reference
+        if (this.form) {
+          await this.loadSchema()
+        } else {
+          this.schema = null
+        }
       }
     },
     async eventLogs () {
@@ -594,7 +600,7 @@ export default {
       this.configureActions()
     },
     async logParticipantState () {
-      await this.logStep(this.$refs.form, this.participantStep, this.participantState)
+      await this.logStep(this.form, this.participantStep, this.participantState)
       this.$refs.followUpModal.close()
     }
   },

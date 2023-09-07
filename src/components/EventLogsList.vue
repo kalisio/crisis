@@ -33,7 +33,7 @@
       :title="followUpTitle"
       :buttons="getFollowUpButtons()"
     >
-      <KForm ref="form" :schema="schema" />
+      <KForm :ref="onFollowUpFormCreated" @form-ready="onFollowUpFormReady" :schema="schema" />
     </KModal>
   </div>
 </template>
@@ -182,14 +182,23 @@ export default {
         handler: () => this.logParticipantStates()
       }]
     },
-    async onUserFollowUp (context) {
+    onUserFollowUp (context) {
       this.selectedParticipantState = context.item
       this.selectedParticipantStep = this.getWorkflowStep(this.selectedParticipantState)
       this.$refs.followUpModal.open()
-      // We can then load the schema and local refs in parallel
-      await this.loadSchema()
-      await this.$refs.form.build()
-      this.$refs.form.clear()
+    },
+    async onFollowUpFormCreated (reference) {
+      if (this.form !== reference) {
+        this.form = reference
+        if (this.form) {
+          await this.loadSchema()
+        } else {
+          this.schema = null
+        }
+      }
+    },
+    onFollowUpFormReady () {
+      this.form.clear()
     },
     async logParticipantStates () {
       // Check for multi-selection
@@ -213,7 +222,7 @@ export default {
       if (_.isEmpty(participants)) participants = participants.concat([this.selectedParticipantState])
       // Then proceed for each participant
       for (let i = 0; i < participants.length; i++) {
-        await this.logStep(this.$refs.form, this.selectedParticipantStep, participants[i])
+        await this.logStep(this.form, this.selectedParticipantStep, participants[i])
       }
       this.$refs.followUpModal.close()
     },
