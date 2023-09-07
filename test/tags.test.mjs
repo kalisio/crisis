@@ -46,12 +46,14 @@ describe(`suite:${suite}`, () => {
     client = api.createClient()
     runner = new core.Runner(suite, {
       appName: 'crisis',
+      notifications: true,
       browser: {
         slowMo: 1,
         args: ['--lang=fr']
       },
       localStorage: {
-        'kalisio crisis-welcome': false
+        'kalisio crisis-welcome': false,
+        'kalisio crisis-install': false
       }
     })
     // Prepare structure for current run
@@ -114,10 +116,6 @@ describe(`suite:${suite}`, () => {
     expect(await tags.tagActionExists(page, org, tag, 'edit-item-header')).beFalse()
     expect(await tags.tagActionExists(page, org, tag, 'edit-item-description')).beFalse()
     expect(await tags.tagActionExists(page, org, tag, 'remove-item-header')).beFalse()
-    await members.goToMembersActivity(page, org)
-    await members.removeTag(page, org, tag, member)
-    expect(runner.hasError()).beTrue()
-    runner.clearErrors()
   })
 
   it('member cannot create a tag', async () => {

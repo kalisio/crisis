@@ -87,13 +87,15 @@ describe(`suite:${suite}`, () => {
     runner = new core.Runner(suite, {
       appName: 'crisis',
       geolocation: { latitude: 43.10, longitude: 1.71 },
+      notifications: true,
       browser: {
         slowMo: 1,
         args: ['--lang=fr'],
         devtools: false
       },
       localStorage: {
-        'kalisio crisis-welcome': false
+        'kalisio crisis-welcome': false,
+        'kalisio crisis-install': false
       }
     })
     // Prepare structure for current run
@@ -171,11 +173,23 @@ describe(`suite:${suite}`, () => {
     expect(await events.countEvents(page, org)).to.equal(1)
   })
 
+  it('notifications are not received for plan event without participants', async () => {
+    // Check push notifications, it usually requires some time to be received
+    await page.waitForTimeout(10000)
+    expect(runner.hasInfo('New notification received: Event')).to.equal(0)
+  })
+
   it('owner can close an event', async () => {
     const eventTemplate = org.eventTemplate
     const plan = _.find(org.plans, { name: 'New plan 1' })
     await plans.closePlanEvent(page, org, plan, eventTemplate)
     expect(await plans.planArchivedEventExists(page, org, plan, eventTemplate, 'name')).beTrue()
+  })
+
+  it('notifications are not received for plan event removal without participants', async () => {
+    // Check push notifications, it usually requires some time to be received
+    await page.waitForTimeout(10000)
+    expect(runner.hasInfo('New notification received: Event')).to.equal(0)
   })
 
   it('owner can close a plan', async () => {

@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import logger from 'loglevel'
 import config from 'config'
 import { Notify, Dialog } from 'quasar'
 import appHooks from '../app.hooks'
@@ -112,4 +113,12 @@ export default async ({ app }) => {
     // Remove API gateway token if any
     api.get('storage').removeItem(config.gatewayJwt)
   })
+
+  // Install listener to log push notifications
+  if (navigator.serviceWorker) navigator.serviceWorker.onmessage = (event) => {
+    const data = event.data
+    if (data && data.type === 'push') {
+      logger.info(`New notification received: ${_.get(data, 'notification.title')}`)
+    }
+  }
 }

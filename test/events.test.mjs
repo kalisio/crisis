@@ -74,13 +74,15 @@ describe(`suite:${suite}`, () => {
     runner = new core.Runner(suite, {
       appName: 'crisis',
       geolocation: { latitude: 43.10, longitude: 1.71 },
+      notifications: true,
       browser: {
         slowMo: 1,
         args: ['--lang=fr'],
         devtools: false
       },
       localStorage: {
-        'kalisio crisis-welcome': false
+        'kalisio crisis-welcome': false,
+        'kalisio crisis-install': false
       }
     })
     // Prepare structure for current run
@@ -126,6 +128,12 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventExists(page, org, managerEvent, 'name')).beTrue()
   })
 
+  it('notifications are received for manager event', async () => {
+    // Check push notifications, it usually requires some time to be received
+    await page.waitForTimeout(10000)
+    expect(runner.hasInfo('New notification received: Manager event')).to.equal(1)
+  })
+
   it('org member cannot edit event templates', async () => {
     const template = _.find(org.eventTemplates, { name: 'Member template' })
     const member = _.find(org.members, { name: 'Member' })
@@ -154,6 +162,13 @@ describe(`suite:${suite}`, () => {
     expect(await events.countEvents(page, org)).to.equal(2)
   })
 
+  it('notifications are received for member event', async () => {
+    // Check push notifications, it usually requires some time to be received
+    await page.waitForTimeout(10000)
+    // As manager has also been logged and is in the same group we should have two subscriptions
+    expect(runner.hasInfo('New notification received: Member event')).to.equal(2)
+  })
+
   it('org member can manage event logs', async () => {
     const memberEvent = _.find(org.events, { name: 'Member event' })
     // Participant follow-up
@@ -175,7 +190,7 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventActionExists(page, org, memberEvent, 'edit-item-header')).beTrue()
     expect(await events.eventActionExists(page, org, memberEvent, 'edit-item-description')).beTrue()
     expect(await events.eventActionExists(page, org, memberEvent, 'remove-item-header')).beTrue()
-    // Edition disalloed on event if not coordinator
+    // Edition disallowed on event if not coordinator
     expect(await events.eventExists(page, org, managerEvent, 'name')).beTrue()
     await core.expandCard(page, events.eventComponent, managerEvent.name)
     expect(await events.eventActionExists(page, org, managerEvent, 'edit-item-header')).beFalse()
@@ -190,10 +205,23 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventExists(page, org, memberEvent, 'description')).beTrue()
   })
 
+  it('notifications are not received for member event editing', async () => {
+    // Check push notifications, it usually requires some time to be received
+    await page.waitForTimeout(10000)
+    expect(runner.hasInfo('New notification received: New Member event')).to.equal(0)
+  })
+
   it('org member can remove his events', async () => {
     const memberEvent = _.find(org.events, { name: 'New Member event' })
     await events.removeEvent(page, org, memberEvent)
     expect(await events.countEvents(page, org)).to.equal(1)
+  })
+
+  it('notifications are received for member event removal', async () => {
+    // Check push notifications, it usually requires some time to be received
+    await page.waitForTimeout(10000)
+    // As manager has also been logged and is in the same group we should have two subscriptions
+    expect(runner.hasInfo('New notification received: New Member event')).to.equal(2)
   })
 
   it('org manager can edit event templates', async () => {

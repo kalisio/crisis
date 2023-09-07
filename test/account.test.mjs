@@ -26,6 +26,7 @@ describe(`suite:${suite}`, () => {
     client = api.createClient()
     runner = new core.Runner(suite, {
       appName: 'crisis',
+      notifications: true,
       browser: {
         slowMo: 1,
         args: ['--lang=fr']
@@ -43,6 +44,8 @@ describe(`suite:${suite}`, () => {
   })
 
   it('create account', async () => {
+    await page.waitForTimeout(5000)
+    await core.closeInstallDialog(page)
     await core.goToRegisterScreen(page)
     await core.register(page, user)
     // await core.login(page, user)
@@ -56,7 +59,6 @@ describe(`suite:${suite}`, () => {
 
   it('create organization', async () => {
     await createOrganisation(page, org)
-    await core.closeWelcomeDialog(page)
     expect(await organisationExists(page, org)).beTrue()
     expect(await countOrganisations(page) === 1).beTrue()
   })
