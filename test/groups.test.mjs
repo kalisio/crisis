@@ -46,12 +46,14 @@ describe(`suite:${suite}`, () => {
     client = api.createClient()
     runner = new core.Runner(suite, {
       appName: 'crisis',
+      notifications: true,
       browser: {
         slowMo: 5,
         args: ['--lang=fr']
       },
       localStorage: {
-        'kalisio crisis-welcome': false
+        'kalisio crisis-welcome': false,
+        'kalisio crisis-install': false
       }
     })
     // Prepare structure for current run

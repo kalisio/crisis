@@ -67,13 +67,15 @@ describe(`suite:${suite}`, () => {
     runner = new core.Runner(suite, {
       appName: 'crisis',
       geolocation: { latitude: 43.10, longitude: 1.71 },
+      notifications: true,
       browser: {
         slowMo: 1,
         args: ['--lang=fr'],
         devtools: false
       },
       localStorage: {
-        'kalisio crisis-welcome': false
+        'kalisio crisis-welcome': false,
+        'kalisio crisis-install': false
       }
     })
     // Prepare structure for current run
@@ -110,10 +112,21 @@ describe(`suite:${suite}`, () => {
     const managerEventTwo = _.find(org.events, { name: 'Manager event 2' })
     await events.createEvent(page, org, managerTemplate, managerEventTwo)
     expect(await events.countEvents(page, org)).to.equal(2)
-    // Corriger l'erreur
+    // FIXME
     // expect(await events.eventExists(page, org, managerTemplate, 'description')).beTrue()
     expect(await events.eventExists(page, org, managerEventOne, 'name')).beTrue()
     expect(await events.eventExists(page, org, managerEventTwo, 'name')).beTrue()
+    // Check push notifications
+    await page.waitForTimeout(10000)
+    expect(runner.hasInfo('New notification received: Manager event 1')).to.equal(1)
+    expect(runner.hasInfo('New notification received: Manager event 2')).to.equal(1)
+  })
+
+  it('notifications are received for events', async () => {
+    // Check push notifications, it usually requires some time to be received
+    await page.waitForTimeout(10000)
+    expect(runner.hasInfo('New notification received: Manager event 1')).to.equal(1)
+    expect(runner.hasInfo('New notification received: Manager event 2')).to.equal(1)
   })
 
   it('org manager can remove his events', async () => {
