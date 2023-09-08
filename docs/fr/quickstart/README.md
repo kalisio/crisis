@@ -2,7 +2,7 @@
 
 **Kalisio Crisis** est une solution d'intelligence situationnelle pour informer et coordonner les acteurs de terrain lors d'événements tels que des interventions, la gestion d'une crise, etc.
 
-::: Attention
+::: warning Attention
 Kalisio Crisis était préalablement nommé Akt'n'Map. En conséquence, certains éléments de cette documentation peuvent encore se référer à Akt'n'Map mais les concepts clés restent les mêmes.
 :::
 
