@@ -294,6 +294,8 @@ let mapEngine = {
     maxBounds: [ [-90, -180], [90, 180] ],
     maxBoundsViscosity: 0.25
   },
+  // COLORS USED IN STYLES SHOULD BE PART OF THE QUASAR PALETTE NOT RANDOM RGB COLORS
+  // THIS IS DUE TO KDK EDITING COMPONENTS ONLY SUPPORTING COLORS FROM PALETTE NOW
   // Default GeoJSON layer style for polygons/lines
   featureStyle: {
     'stroke-opacity': 1,
@@ -312,8 +314,8 @@ let mapEngine = {
   },
   // Default GeoJSON layer style for points
   pointStyle: {
-    'icon-color': '#FFFFFF',
-    'marker-color': '#1b5e20',
+    'icon-color': 'white',
+    'marker-color': 'blue-grey',
     'icon-classes': 'fas fa-circle',
     'icon-x-offset': -1,
     'icon-y-offset': 0
