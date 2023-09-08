@@ -1,7 +1,8 @@
 const groups = require('../src/tours/core/groups')
 
 const website = 'https://www.kalisio.com'
-const onlineHelp = 'https://kalisio.github.io/crissi'
+const onlineHelp = 'https://doc.crisis.kalisio.com'
+const changelog = onlineHelp + '/quickstart/history.html'
 
 const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
@@ -383,6 +384,8 @@ module.exports = {
   pwaAppName,
   pwaShortName,
   appLogo: 'crisis-logo-color-384x192.png',  
+  appChangelog: changelog,
+  appOnlineHelp: onlineHelp,
   flavor: process.env.NODE_APP_INSTANCE || 'dev',
   version: require('../package.json').version,
   buildNumber: process.env.BUILD_NUMBER,
@@ -394,8 +397,6 @@ module.exports = {
   gatewayJwtField: 'jwt',
   gatewayJwt: 'crisis-gateway-jwt',
   terms: 'crisis-terms',
-  appWebsite: 'https://kalisio.com/solutions#aktnmap',
-  appOnlineHelp: onlineHelp,
   publisher: 'Kalisio',
   publisherWebsite: website,
   locale: {
