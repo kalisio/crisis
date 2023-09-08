@@ -88,7 +88,8 @@ function getQuickStartSidebar () {
     'benefits',
     'installation',
     'update',
-    'concepts'
+    'concepts',
+    'history'
   ]
 }
 
