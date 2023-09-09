@@ -692,7 +692,7 @@ module.exports = {
         'search-location': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { component: 'tools/KSearchTool' }
+          { component: 'tools/KSearchTool', geocoders: null }
         ],
         'edit-layer-data': [
           { id: 'accept', icon: 'las la-arrow-left', handler: { name: 'onEndLayerEdition', params: ['accept'] } },
@@ -1134,7 +1134,7 @@ module.exports = {
         'search-location': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
           { component: 'QSeparator', vertical: true, color: 'lightgrey' },
-          { component: 'tools/KSearchTool' }
+          { component: 'tools/KSearchTool', geocoders: null }
         ],
         'measure-tool': [
           { id: 'accept', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
