@@ -10,19 +10,20 @@
       :delay="250">
     </q-ajax-bar>
     <!-- Router view -->
-    <router-view></router-view>
+    <router-view v-if="hasCapabilities"></router-view>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
 import logger from 'loglevel'
-import { utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
+import { Store, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 
 export default {
   data () {
     return {
-      progressBarActive: false
+      progressBarActive: false,
+      hasCapabilities: Store.get('capabilities.api')
     }
   },
   methods: {
@@ -115,6 +116,9 @@ export default {
     this.$events.on('after-hook', hook => {
       this.nbCompletedRequests++
       this.stopProgress()
+    })
+    this.$events.on('capabilities-api-changed', () => {
+      this.hasCapabilities = true
     })
   }
 }
