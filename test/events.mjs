@@ -48,7 +48,7 @@ export async function goToEventMap (page, organisation, event, wait = 2000) {
 }
 
 export async function closeEventMap (page, wait = 2000) {
-  await core.clickTopPaneAction(page, 'back', wait)
+  await core.clickPaneAction(page, 'top', 'back', wait)
 }
 
 export async function goToEventTemplatesActivity (page, organisation, wait = 2000) {
