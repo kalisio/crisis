@@ -1,6 +1,6 @@
 // import { precacheAndRoute } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
-import { NetworkOnly, NetworkFirst } from 'workbox-strategies'
+import { NetworkOnly } from 'workbox-strategies'
 // import {ExpirationPlugin} from 'workbox-expiration'
 
 // Disable workbox logs 
