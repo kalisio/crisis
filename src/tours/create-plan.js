@@ -19,41 +19,16 @@ module.exports = [{
     nextDelay: 500
   }
 }, {
-  target: '#search-location',
-  title: 'tours.create-plan.SEARCH_LABEL',
-  content: 'tours.create-plan.SEARCH_ADDRESS_LABEL',
+  target: '#configure',
+  title: 'tours.create-plan.CONFIGURE_LABEL',
   params: {
-    placement: 'top',
-    clickOnNext: 'div[role=radio][1]',
-    nextDelay: 500
+    placement: 'top'
   }
 }, {
-  target: '#show-location-map',
-  content: 'tours.create-plan.GEOLOCATE_LABEL',
-  params: {
-    placement: 'top',
-    clickOnNext: 'div[role=radio][2]',
-    nextDelay: 500,
-    clickOnPrevious: 'div[role=radio][0]',
-    previousDelay: 500
-  }
-}, {
-  target: '#show-location-map',
-  content: 'tours.create-plan.SHOW_MAP_LABEL',
-  params: {
-    placement: 'top',
-    clickOnNext: 'div[role=radio][3]',
-    nextDelay: 500,
-    clickOnPrevious: 'div[role=radio][1]',
-    previousDelay: 500
-  }
-}, {
-  target: '#show-location-map',
+  target: '#draw',
   content: 'tours.create-plan.DRAW_MAP_LABEL',
   params: {
-    placement: 'top',
-    clickOnPrevious: 'div[role=radio][2]',
-    previousDelay: 500
+    placement: 'top'
   }
 }, {
   target: '#coordinators-field',

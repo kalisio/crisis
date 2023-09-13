@@ -1,4 +1,9 @@
-module.exports = [{
+const _ = require('lodash')
+const sideNav = require('./map/side-nav')
+const accountProfil = require('./core/account-profile')
+const account = require('./core/account')
+
+const home = [{
   target: '#left-opener',
   title: 'tours.side-nav.SIDENAV_LABEL',
   params: {
@@ -6,60 +11,32 @@ module.exports = [{
     hoverClickOnNext: '#left-opener'
   }
 }, {
-  target: '#logout',
-  title: 'tours.side-nav.LOGOUT_LABEL',
-  content: 'tours.side-nav.SESSION_LABEL',
-  params: {
-    placement: 'top'
-  }
-}, {
-  target: '#manage-account',
-  link: 'tours.side-nav.ACCOUNT_LINK_LABEL',
-  params: {
-    placement: 'bottom',
-    route: { name: 'account-activity', params: { page: 'profile' } }
-  }
-}, {
   target: '#my-organisations',
   content: 'tours.side-nav.ORGANISATIONS_LABEL',
   link: 'tours.side-nav.ORGANISATIONS_LINK_LABEL',
   params: {
-    placement: 'bottom',
-    route: { name: 'organisations-activity' }
+    placement: 'top',
+    clickOnLink: ['#left-opener', '#contextual-help'],
+    clickOnPrevious: '#left-opener',
+    clickOnNext: '#left-opener'
   }
 }, {
-  target: '#edit-settings',
+  target: '#settings',
   content: 'tours.side-nav.SETTINGS_LABEL',
   params: {
-    placement: 'bottom'
-  }
-}, {
-  target: '#contextual-help',
-  content: 'tours.side-nav.CONTEXT_HELP_LABEL',
-  params: {
-    placement: 'top'
+    placement: 'top',
+    clickOnPrevious: '#left-opener',
+    clickOnNext: '#left-opener'
   }
 }, {
   target: '#online-help',
   link: 'tours.side-nav.HELP_LABEL',
   params: {
     placement: 'top',
-    clickOnLink: '#online-help'
-  }
-}, {
-  target: '#about',
-  content: 'tours.side-nav.ABOUT_LABEL',
-  params: {
-    placement: 'top',
-    clickOnNext: '#about',
-    nextDelay: 500
-  }
-}, {
-  target: '#report-bug',
-  content: 'tours.side-nav.BUG_LABEL',
-  params: {
-    placement: 'top',
-    clickOnPrevious: ['#close-action', '#left-opener'],
-    previousDelay: 500
+    clickOnLink: ['#left-opener', '#online-help'],
+    clickOnPrevious: '#left-opener',
+    clickOnNext: '#left-opener'
   }
 }]
+
+module.exports = _.union(home, sideNav, accountProfil, account)
