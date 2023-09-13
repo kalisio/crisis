@@ -1,6 +1,7 @@
 import { precacheAndRoute } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
-import { NetworkFirst } from 'workbox-strategies'
+import { NetworkOnly, NetworkFirst } from 'workbox-strategies'
+import {ExpirationPlugin} from 'workbox-expiration'
 
 // Disable workbox logs 
 self.__WB_DISABLE_DEV_LOGS = true
@@ -14,11 +15,22 @@ self.addEventListener('message', event => {
 
 // Caching for offline mode
 // Preload and cache all resources defined in the manifest
-precacheAndRoute(self.__WB_MANIFEST)
+//precacheAndRoute(self.__WB_MANIFEST)
 // Register the `NetworkFirst` caching strategy for all HTTP requests
 registerRoute(
   ({url}) => url.href.startsWith('http'),
-  new NetworkFirst()
+  new NetworkOnly() /*{
+    plugins: [
+      new ExpirationPlugin({
+        // Keep at most 50 entries.
+        maxEntries: 1,
+        // Don't keep any entries for more than 30 days.
+        maxAgeSeconds: 7 * 24 * 60 * 60,
+        // Automatically cleanup if quota is exceeded.
+        purgeOnQuotaError: true
+      })
+    ]
+  })*/
 )
 
 // Web push notification
