@@ -1,7 +1,7 @@
-import { precacheAndRoute } from 'workbox-precaching'
+// import { precacheAndRoute } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
 import { NetworkOnly, NetworkFirst } from 'workbox-strategies'
-import {ExpirationPlugin} from 'workbox-expiration'
+// import {ExpirationPlugin} from 'workbox-expiration'
 
 // Disable workbox logs 
 self.__WB_DISABLE_DEV_LOGS = true
