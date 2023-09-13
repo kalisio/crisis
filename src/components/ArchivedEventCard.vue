@@ -111,7 +111,6 @@ export default {
     kdkCoreMixins.baseItem,
     kdkCoreMixins.service,
     kdkCoreMixins.schemaProxy,
-    kdkMapMixins.navigator,
     mixins.events
   ],
   props: {
