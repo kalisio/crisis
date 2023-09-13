@@ -19,11 +19,8 @@ module.exports = [{
   params: {
     placement: 'top',
     clickDelay: 500,
-    clickOnPrevious: '#start-date',
-    hoverClickOnPrevious: '#bottom-opener',
-    previousDelay: 500,
-    clickOnNext: '#start-date',
-    nextDelay: 500
+    clickOn: '#start-date',
+    hoverClickOnPrevious: '#bottom-opener'
   }
 }, {
   target: '#end-date',
@@ -32,10 +29,7 @@ module.exports = [{
   params: {
     placement: 'top',
     clickDelay: 500,
-    clickOnPrevious: '#end-date',
-    previousDelay: 500,
-    clickOnNext: '#end-date',
-    nextDelay: 500
+    clickOn: '#end-date'
   }
 }, {
   target: '#relative-time-ranges',
@@ -44,27 +38,17 @@ module.exports = [{
     placement: 'top',
     clickOn: '#relative-time-ranges',
     clickDelay: 500,
-    clickOnPrevious: '#relative-time-ranges',
-    previousDelay: 500,
-    clickOnNext: '#relative-time-ranges',
+    hoverClickOnNext: '#bottom-opener',
     nextDelay: 500
-  }
-}, {
-  target: '#history-sort',
-  title: 'tours.archived-events.SORT_LABEL',
-  params: {
-    placement: 'bottom',
-    clickOn: '#history-sort',
-    clickDelay: 1000,
-    clickOnPrevious: '#timerange-selector',
-    previousDelay: 500
   }
 }, {
   target: 'div.q-card.q-card--bordered',
   title: 'tours.archived-events.HISTORY_SCROLL_LABEL',
   params: {
     placement: 'left',
-    blockOnMiss: 'div.q-card.q-card--bordered'
+    blockOnMiss: 'div.q-card.q-card--bordered',
+    hoverClickOnPrevious: '#bottom-opener',
+    previousDelay: 500
   }
 }, {
   target: '#export-data',

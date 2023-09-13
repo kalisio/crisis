@@ -6,17 +6,17 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
-  target: '#search-plan-template',
+  target: '#search-event-template',
   content: 'tours.plan-templates.SEARCH_LABEL',
   params: {
     placement: 'bottom'
   }
 }, {
-  target: '#plan-template-sorter',
+  target: '#event-template-sorter',
   title: 'tours.plan-templates.SORT_LABEL',
   params: {
     placement: 'left',
-    clickOn: '#plan-template-sorter',
+    clickOn: '#event-template-sorter',
     clickDelay: 500,
     clickOnNext: '#plan-sorter',
     clickOnPrevious: '#plan-sorter'
@@ -50,6 +50,24 @@ module.exports = [{
     placement: 'right'
   }
 }, {
+  target: '#edit-objectives',
+  title: 'tours.plan-templates.OBJECTIVES_LABEL',
+  params: {
+    placement: 'right'
+  }
+}, {
+  target: '#edit-item-coordinators',
+  title: 'tours.plan-templates.EDIT_COORDINATORS_LABEL',
+  params: {
+    placement: 'right'
+  }
+}, {
+  target: '#edit-item-permission',
+  title: 'tours.plan-templates.EDIT_PERMISSION_LABEL',
+  params: {
+    placement: 'right'
+  }
+}, {
   target: '#copy-plan-template',
   content: 'tours.plan-templates.COPY_TEMPLATE_LABEL',
   params: {
@@ -61,26 +79,6 @@ module.exports = [{
   content: 'tours.plan-templates.REMOVE_CONFIRMATION_LABEL',
   params: {
     placement: 'left'
-  }
-}, {
-  target: '#add-item-workflow',
-  title: 'tours.plan-templates.ADD_WORKFLOW_LABEL',
-  link: 'tours.plan-templates.WORKFLOW_LINK_LABEL',
-  params: {
-    placement: 'top',
-    clickOnLink: '#add-item-workflow'
-  }
-}, {
-  target: '#edit-item-workflow',
-  title: 'tours.plan-templates.EDIT_WORKFLOW_LABEL',
-  params: {
-    placement: 'top'
-  }
-}, {
-  target: '#remove-item-workflow',
-  title: 'tours.plan-templates.REMOVE_WORKFLOW_LABEL',
-  params: {
-    placement: 'top'
   }
 }, {
   target: '#organisation-menu',

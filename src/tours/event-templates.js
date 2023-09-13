@@ -50,6 +50,50 @@ module.exports = [{
     placement: 'right'
   }
 }, {
+  target: '#edit-item-participants',
+  content: 'tours.event-templates.EDIT_PARTICIPANTS_LABEL',
+  params: {
+    placement: 'right'
+  }
+}, {
+  target: '#edit-item-coordinators',
+  content: 'tours.event-templates.EDIT_COORDINATORS_LABEL',
+  params: {
+    placement: 'right'
+  }
+}, {
+  target: '#edit-item-expiryDuration',
+  content: 'tours.event-templates.EDIT_EXPIRY_DURATION_LABEL',
+  params: {
+    placement: 'right'
+  }
+}, {
+  target: '#edit-item-permission',
+  content: 'tours.event-templates.EDIT_PERMISSION_LABEL',
+  params: {
+    placement: 'right'
+  }
+}, {
+  target: '#add-item-workflow',
+  title: 'tours.event-templates.ADD_WORKFLOW_LABEL',
+  link: 'tours.event-templates.WORKFLOW_LINK_LABEL',
+  params: {
+    placement: 'right',
+    clickOnLink: '#add-item-workflow'
+  }
+}, {
+  target: '#edit-item-workflow',
+  title: 'tours.event-templates.EDIT_WORKFLOW_LABEL',
+  params: {
+    placement: 'right'
+  }
+}, {
+  target: '#remove-item-workflow',
+  title: 'tours.event-templates.REMOVE_WORKFLOW_LABEL',
+  params: {
+    placement: 'right'
+  }
+}, {
   target: '#copy-event-template',
   content: 'tours.event-templates.COPY_TEMPLATE_LABEL',
   params: {
@@ -61,26 +105,6 @@ module.exports = [{
   content: 'tours.event-templates.REMOVE_CONFIRMATION_LABEL',
   params: {
     placement: 'left'
-  }
-}, {
-  target: '#add-item-workflow',
-  title: 'tours.event-templates.ADD_WORKFLOW_LABEL',
-  link: 'tours.event-templates.WORKFLOW_LINK_LABEL',
-  params: {
-    placement: 'top',
-    clickOnLink: '#add-item-workflow'
-  }
-}, {
-  target: '#edit-item-workflow',
-  title: 'tours.event-templates.EDIT_WORKFLOW_LABEL',
-  params: {
-    placement: 'top'
-  }
-}, {
-  target: '#remove-item-workflow',
-  title: 'tours.event-templates.REMOVE_WORKFLOW_LABEL',
-  params: {
-    placement: 'top'
   }
 }, {
   target: '#organisation-menu',
