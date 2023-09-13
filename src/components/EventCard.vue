@@ -178,7 +178,6 @@ export default {
     kCoreMixins.baseItem,
     kCoreMixins.service,
     kCoreMixins.schemaProxy,
-    kMapMixins.navigator,
     mixins.events
   ],
   props: {
