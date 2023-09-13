@@ -5,8 +5,6 @@ module.exports = {
   organisations: require('./organisations'),
   'create-organisation': require('./core/create-organisation'),
   'edit-organisation': require('./edit-organisation'),
-  'change-password': require('./core/change-password'),
-  'send-change-identity': require('./core/send-change-identity'),
   groups: require('./core/groups'),
   'create-group': require('./core/create-group'),
   members: require('./core/members'),
