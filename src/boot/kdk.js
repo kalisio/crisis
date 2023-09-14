@@ -121,4 +121,7 @@ export default async ({ app }) => {
       logger.info(`New notification received: ${_.get(data, 'notification.title')}`)
     }
   }
+
+  // For debug purpose
+  logger.debug(`[KDK] is now ready: ${JSON.stringify(Store.get('kdk'), null, 4)}`)
 }

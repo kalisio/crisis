@@ -14,31 +14,31 @@ register(location.origin + '/service-worker.js', {
   registrationOptions: { scope: './' },
 
   ready (registration) {
-    logger.debug('Service worker is active.')
+    logger.debug('[CRISIS] service worker is active.')
   },
 
   registered (registration) {
-    logger.debug('Service worker has been registered.')
+    logger.debug('[CRISIS] service worker has been registered.')
   },
 
   cached (registration) {
-    logger.debug('Content has been cached for offline use.')
+    logger.debug('[CRISIS] content has been cached for offline use.')
   },
 
   updatefound (registration) {
-    logger.debug('New content is downloading.')
+    logger.debug('[CRISIS] new content is downloading.')
   },
 
   updated (registration) {
-    logger.debug('New content is available; please refresh.')
+    logger.debug('[CRISIS] new content is available; please refresh.')
     Events.emit('pwa-updated', registration)
   },
 
   offline () {
-    logger.debug('No internet connection found. App is running in offline mode.')
+    logger.debug('[CRISIS] no internet connection found. App is running in offline mode.')
   },
 
   error (err) {
-    logger.error('Error during service worker registration:', err)
+    logger.error('[CRISIS] error during service worker registration:', err)
   }
 })

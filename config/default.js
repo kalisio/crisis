@@ -487,6 +487,10 @@ module.exports = {
   engines: {
     leaflet: mapEngine
   },
+  readers: {
+    core: ['csv', 'json'],
+    map: ['geojson', 'gpx', 'kml', 'shp']
+  },
   organisationsActivity: {
     leftPane: leftPane(),
     topPane: {

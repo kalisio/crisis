@@ -11,13 +11,13 @@ import _ from 'lodash'
 import config from 'config'
 import { onMounted } from 'vue'
 import { useQuasar } from 'quasar'
-import { api, permissions, composables, i18n } from '@kalisio/kdk/core.client'
+import { api, permissions, composables as kdkCoreComposables, i18n } from '@kalisio/kdk/core.client'
 
 // Data
 const $q = useQuasar()
 // Register custom redirect to handle permissions
-const { isInitialized } = composables.useSession({ redirect })
-const { installPwa } = composables.usePwa()
+const { isInitialized } = kdkCoreComposables.useSession({ redirect })
+const { installPwa } = kdkCoreComposables.usePwa()
 
 // Functions
 async function redirect (route, result, user) {
