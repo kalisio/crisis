@@ -22,11 +22,11 @@ module.exports = [{
     clickOnPrevious: '#event-sorter'
   }
 }, {
-  target: '.q-page',
+  target: '#top-pane',
   content: 'tours.events.TEMPLATES_LABEL',
   link: 'tours.events.TEMPLATES_LINK_LABEL',
   params: {
-    placement: 'right',
+    placement: 'bottom',
     route: { name: 'event-templates-activity' }
   }
 }, {
@@ -69,6 +69,12 @@ module.exports = [{
     placement: 'bottom'
   }
 }, {
+  target: '#navigate-menu',
+  content: 'tours.events.NAVIGATE_MENU_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
   target: '#expand-action',
   content: 'tours.events.MANAGEMENT_LABEL',
   params: {
@@ -86,6 +92,24 @@ module.exports = [{
   target: '#edit-item-description',
   title: 'tours.events.UPDATE_DESCRIPTION_LABEL',
   content: 'tours.events.UPDATE_PROPERTIES_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#edit-item-location',
+  content: 'tours.events.UPDATE_LOCATION_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#edit-item-participants',
+  content: 'tours.events.UPDATE_PARTICIPANTS_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#edit-item-coordinators',
+  content: 'tours.events.UPDATE_COORDINATORS_LABEL',
   params: {
     placement: 'bottom'
   }

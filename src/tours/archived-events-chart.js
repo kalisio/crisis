@@ -1,9 +1,9 @@
 module.exports = [{
-  target: '#chart',
+  target: '#top-pane',
   title: 'tours.archived-events.CHART_LABEL',
   content: 'tours.archived-events.CHART_SAVE_LABEL',
   params: {
-    placement: 'left'
+    placement: 'top'
   }
 }, {
   target: '#settings',
@@ -17,7 +17,7 @@ module.exports = [{
   target: '#chart-type',
   title: 'tours.archived-events.CHART_TYPE_LABEL',
   params: {
-    placement: 'left',
+    placement: 'top',
     clickOnPrevious: '#close-button',
     previousDelay: 500
   }
@@ -25,13 +25,13 @@ module.exports = [{
   target: '#count-per-chart',
   title: 'tours.archived-events.CHART_COUNT_LABEL',
   params: {
-    placement: 'left'
+    placement: 'top'
   }
 }, {
   target: '#chart-render',
   title: 'tours.archived-events.CHART_RENDER_LABEL',
   params: {
-    placement: 'left',
+    placement: 'top',
     clickOnNext: '#close-button',
     nextDelay: 500
   }

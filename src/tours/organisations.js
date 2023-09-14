@@ -82,7 +82,8 @@ module.exports = [{
   params: {
     placement: 'top',
     clickOnNext: '#expand-action',
-    clickOnPrevious: '#expand-action'
+    clickOnPrevious: '#expand-action',
+    nextDelay: 500
   }
 }, {
   target: '#organisation-members',

@@ -22,11 +22,11 @@ module.exports = [{
     clickOnPrevious: '#plan-sorter'
   }
 }, {
-  target: '.q-page',
+  target: '#top-pane',
   content: 'tours.plans.TEMPLATES_LABEL',
   link: 'tours.plans.TEMPLATES_LINK_LABEL',
   params: {
-    placement: 'right',
+    placement: 'bottom',
     route: { name: 'plan-templates-activity' }
   }
 }, {
@@ -45,14 +45,6 @@ module.exports = [{
     placement: 'right'
   }
 }, {
-  target: '#expand-action',
-  content: 'tours.plans.MANAGEMENT_LABEL',
-  params: {
-    placement: 'top',
-    clickOnNext: '#expand-action',
-    clickOnPrevious: '#expand-action'
-  }
-}, {
   target: '#edit-item-header',
   content: 'tours.plans.UPDATE_PLAN_LABEL',
   params: {
@@ -62,6 +54,30 @@ module.exports = [{
   target: '#edit-item-description',
   title: 'tours.plans.UPDATE_DESCRIPTION_LABEL',
   content: 'tours.plans.UPDATE_PROPERTIES_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#edit-objectives',
+  content: 'tours.plans.UPDATE_OBJECTIVES_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#edit-item-location',
+  content: 'tours.plans.UPDATE_LOCATION_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#edit-item-coordinators',
+  content: 'tours.plans.UPDATE_COORDINATORS_LABEL',
+  params: {
+    placement: 'bottom'
+  }
+}, {
+  target: '#plan-events',
+  content: 'tours.plans.EVENTS_LABEL',
   params: {
     placement: 'bottom'
   }
