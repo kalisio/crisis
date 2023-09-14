@@ -2,19 +2,16 @@ notifications:
   email: false
   slack:
     rooms:
-    - secure: S3xDhrrLgQ1DSBgc42M9wkJzmqYlv/FSeKhcOxDVspy8s/N2N4z4JCGpuX3RYIPEHNIaao9gTvQJ5Ddoq5hCppXncyKsmH4NvDVQ1JdjTRk5KXp6SC0mJvJ7Vh4pKhcpJu87sh9dZs9Io6VqqG/bGpcjt9SFgVz/n24DPKgeREa351GorhncFmnG3ZtItHGe5a7n5V9sM3g5uLUf0ELPew6iPvkyx5xNvyMfMrgcJDbXKHQR6S5xvp7Pw/GkXGVR7d1nQElKMsDOlEiui+l2ctRFo0ZnNGoVzvLGKygkw717Q6k215Gq7x/eZI5//Kidwxra0ks7NYhYhzayRiy+pJ2ZYH3N8c5KL6xbVzyNn8LpP733Ra48oJZK+yjk77TAIkwvBsoH0p1Hc1fi12fdgrhACHa48zy/ILMcnGILfX5BOjVwpPy2dUbiKQHmClrq4Fe+t9vK11wqEjJr/bm2WfmbqEudWn3Kb1Vpk5ZohNZuhXcqJ/PdT9ns9ac8jNHxP3mAiCulOQbRNFq95ZjYQuMscKzlw18WUNyfi/5hsMCKgi78Kbg5Bzia1SieF0w+uo3qHDNIEPiuQevrSc0zGLUaPn+G4O08tx75Gxjg23/leBvn36qv2rXG1+RjL7saj00S2sTSKEB9rXWf8unE19Rh2gXDg4Asxyr63nOLBBI=
+      secure: mJJaGh4xXg3yAqZ6t/jti6ZFiT5QHM7y+/XI8accp5ipsDYKchfnCFDf5E0+9eGDu74tsNULT4cNio1io2+GcWiGHeNJBEEL9EYAzmqdmpO/ilXBO2bgC8s9m+Sibks+19leJKeEOZ4et04CDf/Xeg2ZiW1G6+O7mHIeDWXcw48MPcoXu7xRZLmsZXKpIoBSVEP1eP/xkTUiYLbgn1dc4wtJFyZRthdxuTBfDBFF+tPTK0uXcxNczdiIPyXRYlncnBzGlhFG28M6htIa7f10JEMrb/3XRDJ4mf5U25CYz9r7+mXOO2RJuuWZRudbN6NQps/81cBDlrLoC5nKMFdWN8MJORHn7b7Q9z1dqj+c3iGq9U80lM1tdbA0i/a1KlQeB0i1YL+NN/WNcNGe4zfH44T6QM631t75EgZXUL3SasK+pkJDAThKib+mm7VACE+pXPPQMPCxHmTaweYxmVUJKsnOaigTF0zKmeGgm0T5LGAmRomGpYAxHxcVVEWCsrO+qVfYdrN7c425UEkSF/2qusp/1+GEp4GaeI8tO78Kn/406wbSt9pbTia/wCWzXf/ivyCETGnH5yrMqU8LxLbavW8mYEcjG/U0x66/1YLHIPALv0xAT9WFRQCKXebwaNJkFwtR1U8zph254+S2nCQ0D/IrfWPY+EnGnVpTsXEwqUI=
     on_success: always
     on_failure: always
-
 stages:
 - name: APP
   if: commit_message !~ /(skip[ _-]app)/
 - name: DOC
   if: commit_message =~ /\[build doc\]/
-
 jobs:
   include:
-
   - stage: APP
     os: linux
     language: node_js
@@ -24,10 +21,9 @@ jobs:
     - docker
     install: skip
     before_script:
-    - export -f travis_fold     
+    - export -f travis_fold
     script:
     - bash .travis.app.sh
-
   - stage: DOC
     os: linux
     language: node_js
@@ -41,6 +37,5 @@ jobs:
       provider: pages
       local-dir: docs/.vuepress/dist
       skip-cleanup: true
-      github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+      github-token: "$GITHUB_TOKEN"
       keep-history: true
-
