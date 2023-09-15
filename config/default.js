@@ -488,8 +488,16 @@ module.exports = {
     leaflet: mapEngine
   },
   readers: {
-    core: ['csv', 'json'],
-    map: ['geojson', 'gpx', 'kml', 'shp']
+    core: [
+      { mimeTypes: '.json', reader: 'JSONReader' },
+      { mimeTypes: '.csv', reader: 'CSVReader'}
+    ],
+    map: [
+      { mimeTypes: '.geojson', reader: 'GEOJSONReader' },
+      { mimeTypes: '.gpx', reader: 'GPXReader' },
+      { mimeTypes: '.kml', reader: 'KMLReader' },
+      { mimeTypes: '.shp', reader: 'SHPReader' }
+    ]
   },
   organisationsActivity: {
     leftPane: leftPane(),
