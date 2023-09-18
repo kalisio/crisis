@@ -592,10 +592,10 @@ export default {
     // Setup current time to now
     this.currentTime = Time.getCurrentTime()
     Time.setCurrentTime(moment.now())
-    // Check if we can create archived events
-    this.$checkQuota('archived-events', 1)
   },
   mounted () {
+    // Check if we can create archived events
+    this.$checkQuota('archived-events', 1)
     // Setup listeners
     this.$events.on('time-range-changed', this.onTimeRangeChanged)
   },

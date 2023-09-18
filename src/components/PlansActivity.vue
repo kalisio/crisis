@@ -132,7 +132,8 @@ export default {
     eventsService.on('updated', this.updateFilterQuery)
     eventsService.on('removed', this.updateFilterQuery)
     this.$events.on('filter-changed', this.updateFilterQuery)
-
+  },
+  mounted () {
     // Check if we can create plans
     this.$checkQuota('plans', 1)
   },
