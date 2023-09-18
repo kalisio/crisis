@@ -24,6 +24,7 @@
 import _ from 'lodash'
 import moment from 'moment'
 import { Store, mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
+import { utils as kdkMapUtils } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 import config from 'config'
 
@@ -104,7 +105,15 @@ export default {
         // Setup hasWorkflow tag
         this.object.hasWorkflow = !_.isNil(this.template.workflow)
         if (!_.isNil(this.longitude) && !_.isNil(this.latitude)) {
-          this.object.location = { type: 'Feature', geometry: { type: 'Point', coordinates: [this.longitude, this.latitude] } }
+          this.object.location = {
+            type: 'Feature',
+            geometry: {
+              type: 'Point', coordinates: [this.longitude, this.latitude]
+            },
+            properties: {
+              name: kdkMapUtils.formatUserCoordinates(this.latitude, this.longitude, this.$store.get('locationFormat', 'FFf'))
+            }
+          }
         } else if (this.layerId) {
           // const layer = await this.$api.getService('catalog').get(this.layerId)
           // Keep track of layer/feature ID

@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const tours = require('../tours')
 
 module.exports = [{
@@ -276,7 +277,13 @@ module.exports = [{
                 'create/:templateId/:layerId?/:featureId?/:longitude?/:latitude?': {
                   name: 'create-event',
                   component: 'EventEditor',
-                  props: true,
+                  // Required to cast to numbers
+                  props: (route) => {
+                    const props = _.get(route, 'params', {})
+                    if (_.has(props, 'longitude')) _.set(props, 'longitude', _.toNumber(_.get(props, 'longitude')))
+                    if (_.has(props, 'latitude')) _.set(props, 'latitude', _.toNumber(_.get(props, 'latitude')))
+                    return props
+                  },
                   tour: tours['create-event']
                 },
                 'edit/:objectId/:schemaProperties?': {
