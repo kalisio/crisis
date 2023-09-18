@@ -562,10 +562,10 @@ export default {
     this.registerStyle('featureStyle', this.getEventStyle)
     this.registerStyle('tooltip', this.getObjectiveTooltip)
     this.registerStyle('popup', this.getObjectivePopup)
-    // Check if we can create layers
-    this.$checkQuota('catalog', 1)
   },
   mounted () {
+    // Check if we can create layers
+    this.$checkQuota('catalog', 1)
     // Setup engine events listeners
     this.$engineEvents.on('edit-start', this.onEditStartEvent)
     this.$engineEvents.on('edit-stop', this.onEditStopEvent)

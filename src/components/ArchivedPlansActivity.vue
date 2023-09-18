@@ -98,6 +98,8 @@ export default {
     eventsService.on('patched', this.updateFilterQuery)
     eventsService.on('updated', this.updateFilterQuery)
     eventsService.on('removed', this.updateFilterQuery)
+  },
+  mounted () {
     // Check if we can create archived plans
     this.$checkQuota('archived-plans', 1)
   },
