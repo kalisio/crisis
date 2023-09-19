@@ -211,32 +211,6 @@ module.exports = {
   geocoder: {
     providers: [{ provider: 'opendatafrance' }, { provider: 'openstreetmap' }]
   },
-  billing: {
-    plans: {
-      // First plan is the default one
-      bronze: {
-        color: 'light-green-6',
-        default: true
-      },
-      silver: {
-        color: 'light-green-8'
-      },
-      gold: {
-        color: 'light-green-10'
-      },
-      diamond: {
-        color: 'green-10'
-      }
-    },
-    options: {
-      archiving: {
-        color: 'light-green-6'
-      },
-      catalog: {
-        color: 'light-green-6'
-      }
-    }
-  },
   logs: {
     Console: {
       format: winston.format.combine(winston.format.colorize(), winston.format.simple()),

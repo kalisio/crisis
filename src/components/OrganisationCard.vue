@@ -200,7 +200,8 @@ export default {
         logger.debug('No application quotas found')
         this.quotas = {}
       } else {
-        this.quotas = appQuotas
+        // Avoid referencing store object as we will update its content
+        this.quotas = _.clone(appQuotas)
       }
       _.merge(this.quotas, orgQuotas)
     },
