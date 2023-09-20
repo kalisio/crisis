@@ -1,7 +1,7 @@
 const groups = require('../src/tours/core/groups')
 
 const website = 'https://www.kalisio.com'
-const onlineHelp = 'https://doc.crisis.kalisio.com'
+const onlineHelp = 'https://doc.planet.kalisio.com'
 const changelog = onlineHelp + '/quickstart/history.html'
 
 const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
@@ -23,7 +23,7 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   pwaAppName += ' (test)'
   pwaShortName += ' (test)'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
-  domain = 'https://crisis.prod.kalisio.com'
+  domain = 'https://crisis.planet.kalisio.com'
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
