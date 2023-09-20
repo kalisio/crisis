@@ -133,4 +133,3 @@ export const checkAlertsQuotas = coreHooks.countLimit({
     return getItemsQuota(hook, 'alerts', org)
   }
 })
-

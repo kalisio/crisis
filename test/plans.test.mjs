@@ -62,17 +62,17 @@ describe(`suite:${suite}`, () => {
       permission: 'member'
     }],
     plans: [
-      { name: 'Plan 1'},
-      { name: 'Plan 2'},
-      { name: 'Plan 3'},
-      { name: 'Plan 4'}
+      { name: 'Plan 1' },
+      { name: 'Plan 2' },
+      { name: 'Plan 3' },
+      { name: 'Plan 4' }
     ],
     eventTemplate: {
       name: 'Event',
       description: 'Event description',
       permission: 'member',
       expiryDuration: '90'
-    },
+    }
   }
 
   before(async function () {

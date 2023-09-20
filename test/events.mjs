@@ -227,9 +227,9 @@ export async function editEventTemplateWorkflow (page, organisation, template, d
     const step = template.workflow[i]
     await core.type(page, '#title-field', step.title, false, true)
     if (step.description) await core.type(page, '#description-field', step.description, false, true)
-    // Remove last 
+    // Remove last
     for (let j = 0; j < step.lastInteractionsLength; j++) {
-      const xpath = `//div[@id="chip-0"]//i[contains(@role, "button")]`
+      const xpath = '//div[@id="chip-0"]//i[contains(@role, "button")]'
       const elements = await page.$x(xpath)
       if (elements.length > 0) {
         elements[0].click()

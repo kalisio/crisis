@@ -12,9 +12,9 @@
     -->
     <template v-slot:card-avatar>
       <KAvatar
-        :subject="item" 
-        :contextId="item._id" 
-        size="4rem" 
+        :subject="item"
+        :contextId="item._id"
+        size="4rem"
       />
     </template>
     <!--

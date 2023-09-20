@@ -129,7 +129,7 @@ describe(`suite:${suite}`, () => {
     expect(await members.memberActionExists(page, org, manager, 'add-tag')).beFalse()
     expect(await members.memberActionExists(page, org, member, 'add-tag')).beFalse()
   })
-  
+
   it('manager can create a tag', async () => {
     const manager = _.find(org.members, { name: 'Manager' })
     await core.logout(page)

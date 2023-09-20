@@ -24,19 +24,19 @@
           </div>
         </div>
         <div class="q-pa-xs">
-          <KTextArea 
-            :text="plan.description" 
+          <KTextArea
+            :text="plan.description"
             class="light-paragraph q-pa-sm"
           />
           <!-- Objectives section -->
           <KCardSection :hide-header="true">
             <template v-for="(objective, index) in plan.objectives" :key="objective.id">
               <div class="row full-width items-center justify-between no-wrap">
-                <q-toggle 
-                  class="col-8" 
-                  v-model="objectiveFilters" 
-                  :val="objective.name" 
-                  :label="objective.name" 
+                <q-toggle
+                  class="col-8"
+                  v-model="objectiveFilters"
+                  :val="objective.name"
+                  :label="objective.name"
                 />
                 <div class="row items-center q-gutter-x-sm no-wrap q-pr-sm">
                   <KPanel id="objective-actions" :content="getObjectiveActions(objective)" :dense="true" />

@@ -115,10 +115,12 @@ export default async ({ app }) => {
   })
 
   // Install listener to log push notifications
-  if (navigator.serviceWorker) navigator.serviceWorker.onmessage = (event) => {
-    const data = event.data
-    if (data && data.type === 'push') {
-      logger.info(`New notification received: ${_.get(data, 'notification.title')}`)
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker.onmessage = (event) => {
+      const data = event.data
+      if (data && data.type === 'push') {
+        logger.info(`New notification received: ${_.get(data, 'notification.title')}`)
+      }
     }
   }
 
