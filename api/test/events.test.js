@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import request from 'superagent'
@@ -140,7 +141,7 @@ describe('events', () => {
       checkAuthorisation: true
     })
     expect(authorisation).toExist()
-    users = await userService.find({ query: { 'profile.name': orgUserObject.name }, checkAuthorisation: true, user: orgManagerObject })
+    users = await userService.find({ query: { 'profile.name': _.get(orgUserObject, 'profile.name') }, checkAuthorisation: true, user: orgManagerObject })
     expect(users.data.length > 0).beTrue()
     // Update user with authorisations
     orgUserObject = users.data[0]
@@ -356,7 +357,7 @@ describe('events', () => {
       checkAuthorisation: true
     })
     expect(authorisation).toExist()
-    const users = await userService.find({ query: { 'profile.name': userObject.name }, checkAuthorisation: true, user: orgManagerObject })
+    const users = await userService.find({ query: { 'profile.name': _.get(userObject, 'profile.name') }, checkAuthorisation: true, user: orgManagerObject })
     expect(users.data.length > 0).beTrue()
     // Update user with authorisations
     userObject = users.data[0]
@@ -498,7 +499,7 @@ describe('events', () => {
 
   it('removes test user', async () => {
     await userService.remove(userObject._id, { user: userObject, checkAuthorisation: true })
-    const users = await userService.find({ query: { name: userObject.name }, user: userObject, checkAuthorisation: true })
+    const users = await userService.find({ query: { 'profile.name': _.get(userObject, 'profile.name') }, user: userObject, checkAuthorisation: true })
     expect(users.data.length === 0).beTrue()
   })
   // Let enough time to process
@@ -506,7 +507,7 @@ describe('events', () => {
 
   it('removes org user', async () => {
     await userService.remove(orgUserObject._id, { user: orgUserObject, checkAuthorisation: true })
-    const users = await userService.find({ query: { name: orgUserObject.name }, user: orgUserObject, checkAuthorisation: true })
+    const users = await userService.find({ query: { 'profile.name': _.get(orgUserObject, 'profile.name') }, user: orgUserObject, checkAuthorisation: true })
     expect(users.data.length === 0).beTrue()
   })
   // Let enough time to process
@@ -533,7 +534,7 @@ describe('events', () => {
 
   it('removes org manager', async () => {
     await userService.remove(orgManagerObject._id, { user: orgManagerObject, checkAuthorisation: true })
-    const users = await userService.find({ query: { name: orgManagerObject.name }, user: orgManagerObject, checkAuthorisation: true })
+    const users = await userService.find({ query: { 'profile.name': _.get(orgManagerObject, 'profile.name') }, user: orgManagerObject, checkAuthorisation: true })
     expect(users.data.length === 0).beTrue()
   })
   // Let enough time to process
