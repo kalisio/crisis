@@ -4,10 +4,14 @@ sidebarDepth: 3
 
 # Historique
 
-## 15 Septembre 2023 - v2.0.0
+## 20 Septembre 2023 - v2.0.0
+
+Akt'n'Map est renommé Kalisio Crisis et est disponible comme Progressive Web App (PWA).
 
 Voici le détail des améliorations issues de vos suggestions:\
+👉 les notifications incluent l'avatar de votre organisation,\
 👉 simplification de la gestion des comptes,\
+👉 les étiquettes se gèrent de la même façon que les groupes,\
 👉 réorganisation du catalogue des données cartographiques par onglets thématiques,\
 👉 nouvel outil de mesure de distance et d'aire d'un élément vectoriel sur la cartographie,\
 👉 possibilité de sélectionner précisément la plage des événements visualisés dans la main courante,\

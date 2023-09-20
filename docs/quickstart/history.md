@@ -9,8 +9,9 @@ sidebarDepth: 3
 Akt'n'Map is renamed Kalisio Crisis and is now available as a Progressive Web App (PWA).
 
 Here are the details of the improvements resulting from your suggestions:\
-👉 notifications now includes the avatar of your organisation if any,\
+👉 notifications now include the avatar of your organisation if any,\
 👉 simplification of account management,\
+👉 tags are now managed like groups,\
 👉 reorganization of the cartographic data catalog by thematic tabs,\
 👉 new tool for measuring distance and area of a vector element on the map,\
 👉 possibility of precisely selecting the range of events displayed in the logbook,\
