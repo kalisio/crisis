@@ -147,7 +147,7 @@ export default {
       // Not yet loaded ?
       if (!this.schema) return
       // When selecting organisation as participant avoid selecting external ones
-      const organisationService = _.find(_.get(this.schema.properties, 'participants.services', []), { service: 'organisations'} )
+      const organisationService = _.find(_.get(this.schema.properties, 'participants.services', []), { service: 'organisations' })
       if (organisationService) {
         const organisationQuery = _.get(organisationService, 'baseQuery', {})
         organisationQuery._id = this.contextId

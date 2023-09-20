@@ -1,9 +1,5 @@
 import _ from 'lodash'
-import path from 'path'
-import makeDebug from 'debug'
 import { getOrganisationAvatarUrl, sendPushNotifications } from '../utils.js'
-
-const debug = makeDebug('crisis:storage:hooks')
 
 export async function sendMediaPushNotifications (hook) {
   if (hook.type !== 'after') {

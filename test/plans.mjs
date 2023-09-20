@@ -223,7 +223,7 @@ export async function canCreatePlan (page, organisation, template) {
   if (!exists) return exists
   await core.clickAction(page, 'fab')
   exists = await core.elementExists(page, `#create-${_.kebabCase(template.name)}`)
-  return exists 
+  return exists
 }
 
 export async function canCreatePlanTemplate (page, organisation) {

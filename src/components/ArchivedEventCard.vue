@@ -101,7 +101,6 @@
 <script>
 import _ from 'lodash'
 import { mixins as kdkCoreMixins, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
-import { mixins as kdkMapMixins } from '@kalisio/kdk/map.client.map'
 import { useAlerts } from '../composables'
 import mixins from '../mixins'
 

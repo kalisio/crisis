@@ -1,9 +1,7 @@
 import _ from 'lodash'
-import makeDebug from 'debug'
 import commonHooks from 'feathers-hooks-common'
 import { getOrganisationAvatarUrl, sendPushNotifications } from '../utils.js'
 const { populate } = commonHooks
-const debug = makeDebug('crisis:events:hooks')
 
 export async function sendEventPushNotifications (hook) {
   if (hook.type !== 'after') {

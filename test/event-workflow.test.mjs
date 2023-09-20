@@ -44,13 +44,13 @@ describe(`suite:${suite}`, () => {
         title: 'Step 1',
         stakeholder: 'participant',
         description: 'Availability',
-        interactions: [ 'yes', 'no' ],
+        interactions: ['yes', 'no'],
         end: ['no']
       }, {
         title: 'Step 2',
         stakeholder: 'coordinator',
         description: 'Engagement',
-        interactions: [ 'yes', 'no' ],
+        interactions: ['yes', 'no'],
         end: ['no']
       }]
     }],
@@ -255,7 +255,7 @@ describe(`suite:${suite}`, () => {
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
     workflowTemplate.workflow.forEach(step => {
       step.name = 'New ' + step.name
-      step.interactions = [ 'New yes', ' New no' ],
+      step.interactions = ['New yes', ' New no']
       step.lastInteractionsLength = 2
       step.end = ['New no']
     })
