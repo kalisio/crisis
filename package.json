@@ -1,7 +1,7 @@
 {
   "name": "crisis",
   "description": "Kalisio Crisis Application",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "https://github.com/kalisio/crisis",
   "keywords": [
     "kalisio"
@@ -87,7 +87,7 @@
     "@geoman-io/leaflet-geoman-free": "^2.11.1",
     "@kalisio/feathers-s3": "^1.1.0",
     "@kalisio/feathers-webpush": "^1.0.1",
-    "@kalisio/kdk": "^2.1.0",
+    "@kalisio/kdk": "^2.1.1",
     "@kalisio/leaflet.donutcluster": "^1.0.0",
     "@mapbox/geojsonhint": "^3.0.1",
     "@quasar/extras": "^1.16.3",

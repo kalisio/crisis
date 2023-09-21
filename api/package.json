@@ -1,7 +1,7 @@
 {
   "name": "crisis-api",
   "description": "Kalisio ACrisis Web Services",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "https://github.com/kalisio/crisis",
   "keywords": [
     "kalisio"
@@ -64,7 +64,7 @@
     "@feathersjs/express": "^5.0.8",
     "@feathersjs/feathers": "^5.0.8",
     "@kalisio/feathers-distributed": "^2.2.1",
-    "@kalisio/kdk": "^2.1.0",
+    "@kalisio/kdk": "^2.1.1",
     "@turf/point-on-feature": "^5.1.0",
     "@weacast/core": "^2.1.5",
     "containerized": "^1.0.2",
