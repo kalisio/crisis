@@ -4,7 +4,5 @@ sidebarDepth: 3
 
 # Update
 
-## Web application
-
-The web application does not require any update workflow. When we update our online services this is done automatically.
+The web application does not require any particular update procedure. When we update our services, a pop-up window will appear to update the application.
 

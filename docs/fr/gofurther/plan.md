@@ -17,28 +17,28 @@ De plus, un plan propose un tableau Kanban de trois colonnes:
 * *En cours*: événements ayant au moins un participant et non encore clôturés,
 * *Clôturés*: événements clôturés.
 
-:point_right: Vous êtes prêt à activer un plan ? <tour-link text="Voir comment gérer vos plans" path="home" :params="{ organisation: 'member', route: 'plans-activity' }"/>
+:point_right: Vous êtes prêt à activer un plan ? <ClientOnly><tour-link text="Voir comment gérer vos plans" path="home" :params="{ organisation: 'member', route: 'plans-activity' }"/></ClientOnly>
 
 ::: warning Note
 Cette fonctionnalité requiert un abonnement spécifique. Sans celui-ci, vous ne pourrez pas y accéder.
 
-:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
+:point_right: Vous êtes propriétaire d'une organisation ? <ClientOnly><tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/></ClientOnly>
 :::
 
 ::: details Voir aussi
-Comment entrer dans l'activité de gestion des plans depuis le <tour-link text="tableau de bord" path="home/organisations"/>
+Comment entrer dans l'activité de gestion des plans depuis le <ClientOnly><tour-link text="tableau de bord" path="home/organisations"/></ClientOnly>
 
-Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
+Comment afficher le tableau de bord depuis le <ClientOnly><tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/></ClientOnly>
 :::
 
 ## Modèle de plan
 
 Un plan s'initie toujours à partir d'un **modèle** qui définit son contenu de base. Dans chaque modèle un titre, une description, et/ou des coordonnateurs par défaut pourront être définis. Ainsi, lors de la création du plan, il ne reste qu'à compléter ou amender certains éléments au besoin tels que les objectifs.
 
-:point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Voir comment gérer vos modèles" path="home" :params="{ organisation: 'manager', route: 'plan-templates-activity' }"/>
+:point_right: Vous êtes gestionnaire d'une organisation ? <ClientOnly><tour-link text="Voir comment gérer vos modèles" path="home" :params="{ organisation: 'manager', route: 'plan-templates-activity' }"/></ClientOnly>
 
 ::: details Voir aussi
-Comment entrer dans l'activité de gestion des modèles depuis le <tour-link text="tableau de bord" path="home/organisations"/>
+Comment entrer dans l'activité de gestion des modèles depuis le <ClientOnly><tour-link text="tableau de bord" path="home/organisations"/></ClientOnly>
 
-Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
+Comment afficher le tableau de bord depuis le <ClientOnly><tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/></ClientOnly>
 :::

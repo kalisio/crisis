@@ -26,4 +26,4 @@ Right click at the location where you want to check your conditions on the map f
 As the event is automatically created by the application once the alert conditions are met, it should at least contain one participant and one coordinator.
 :::
 
-![Archivage](../assets/Alert-EN.png)
+![Archivage](../.vitepress/public/images/Alert-EN.png)

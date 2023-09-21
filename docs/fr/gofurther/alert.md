@@ -26,5 +26,5 @@ Pour les prévisions météorologiques il vous suffit de faire un clic droit à 
 Etant donné que l'événement sera automatiquement créé par l'application lorsque les conditions de l'alerte seront rencontrées, le modèle doit contenir au moins un participant et un coordonnateur.
 :::
 
-![Archivage](../../assets/Alert-FR.png)
+![Archivage](../../.vitepress/public/images/Alert-FR.png)
 

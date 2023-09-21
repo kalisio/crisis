@@ -33,7 +33,4 @@ Pour les utilisateurs iOS, il est recommandé d'utiliser Safari comme navigateur
 
 Pour obtenir des instructions détaillées étape par étape sur l'installation de l'application sur les appareils Android, veuillez regarder le didacticiel vidéo ci-dessous :
 
-<div style="text-align:center">
-  <video controls width="250"><source src="../../assets/Android-Installation-FR.mp4" type="video/mp4" /></video>
-</div>
-
+<video style="margin: 0 auto;" controls width="250"><source src="../../.vitepress/public/videos/Android-Installation-FR.mp4" type="video/mp4" /></video>

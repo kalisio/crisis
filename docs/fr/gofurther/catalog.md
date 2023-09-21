@@ -9,7 +9,7 @@ Le catalogue cartographique permet de visualiser et d'interagir avec une carte n
 ::: warning Note
 Cette fonctionnalité requiert un abonnement spécifique. Sans celui-ci, vous ne pourrez pas y accéder.
 
-:point_right: Vous êtes propriétaire d'une organisation ? <tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
+:point_right: Vous êtes propriétaire d'une organisation ? <ClientOnly><tour-link text="Voir comment souscrire" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/></ClientOnly>
 :::
 
 ## Concepts de base
@@ -30,7 +30,7 @@ Le catalogue inclut un ensemble de données de base, auxquelles vous pouvez adjo
 
 [OpenStreetMap](https://www.openstreetmap.org/) est un projet collaboratif de cartographie en ligne qui vise à constituer une base de données géographiques libre du monde. 
 
-![OpenStreetMap](../../assets/openstreetmap.png)
+![OpenStreetMap](../../.vitepress/public/images/openstreetmap.png)
 
 Ces données, au format [Vecteur](https://datacarpentry.org/organization-geospatial/02-intro-vector-data) sont dites structurées selon des thématiques données (bâtiments, utilisation du sol, etc.). Elles sont proposées selon différents styles de représentation (e.g. clair, sombre, topographique). Les données sont produites par [OpenMapTiles](https://openmaptiles.com/).
 
@@ -38,7 +38,7 @@ Ces données, au format [Vecteur](https://datacarpentry.org/organization-geospat
 
 Les jeux de données **BD ORTHO** (Base de Données Orthophotographique) et **ORTHO HR** (Orthophotographie Haute Résolution) sont chacun une collection de mosaïques numériques d'[orthophotographies](https://fr.wikipedia.org/wiki/Orthophotographie) en couleurs, rectifiées dans la projection légale spécifique adaptée au territoire couvert.
 
-![Arc de Triomphe - Paris](../../assets/ign_orthohr.jpg)
+![Arc de Triomphe - Paris](../../.vitepress/public/images/ign_orthohr.jpg)
 
 Ces données, au format [Raster](https://datacarpentry.org/organization-geospatial/01-intro-raster-data) sont disponibles à une résolution de 50 centimètres par pixel pour le jeu de donnée **BD ORTHO** et 20 centimètres par pixel pour le jeu de donnée **ORTHO HR**. Les données sont produites par l'[Institut national de l'information géographique et forestière (IGN)](https://www.ign.fr/) et sont placées sous license ouverte à [cette addresse](https://geoservices.ign.fr/documentation/diffusion/telechargement-donnees-libres.html).
 
@@ -46,7 +46,7 @@ Ces données, au format [Raster](https://datacarpentry.org/organization-geospati
 
 Le jeu de données **PlanetSAT** est une collection de mosaïques numériques d'[orthophotographies](https://fr.wikipedia.org/wiki/Orthophotographie). Les données sont issues de traitements spécifiques appliqués aux résultats des missions d'observation de la terre [Sentinel-2](https://fr.wikipedia.org/wiki/Sentinel-2) et [Landsat-8](https://fr.wikipedia.org/wiki/Landsat_8) et sont disponibles à une résolution de 10 mètres par pixel.
 
-![Islande](../../assets/planetsat.jpg)
+![Islande](../../.vitepress/public/images/planetsat.jpg)
 
 Les données sont produites par [PlanetObserver](https://planetobserver.com/).
 
@@ -54,7 +54,7 @@ Les données sont produites par [PlanetObserver](https://planetobserver.com/).
 
 **Vigicrues** est une base de données qui stocke les données de vigilance des crues fournies par le service [Vigicrues](https://www.vigicrues.gouv.fr/). Ces données regroupent l'ensemble des cours d’eau intégrés au dispositif de vigilance crues sous la forme de tronçons. Chacun de ces tronçons stocke le niveau de vigilance nécessaire pour faire face aux dangers liés aux inondations susceptibles de se produire dans les 24 heures à venir.
 
-![Vigicrues](../../assets/vigicrues.jpg)
+![Vigicrues](../../.vitepress/public/images/vigicrues.jpg)
 
 Le niveau de risque de chacun est représenté à l'aide du code couleur suivant :
 * **Rouge**: Risque de crue majeure. Menace directe et généralisée de la sécurité des personnes et des biens
@@ -68,7 +68,7 @@ Les données sont produites par le [Service central d’hydrométéorologie et d
 
 **Hydrométrie Hub'Eau** est une base de données qui stocke les données du référentiel hydrométrique (sites et stations d'observations du réseau français de mesures) ainsi que les observations de **hauteur d'eau** (H) et de **débit** (Q) dites "temps réel", enregistrées toutes les 5 à 60 minutes dans la plateforme **PHyC** (opérée par le [Service Central d’Hydrométéorologie et d’Appui à la Prévision des Inondations](https://www.ecologique-solidaire.gouv.fr/prevision-des-inondations)).
 
-![Hydrométrie Hubeau](../../assets/hydrometrie-hubeau.jpg)
+![Hydrométrie Hubeau](../../.vitepress/public/images/hydrometrie-hubeau.jpg)
 
 Les données sont mises à disposition via le portail [Hub'Eau](https://hubeau.eaufrance.fr/).
 
@@ -76,7 +76,7 @@ Les données sont mises à disposition via le portail [Hub'Eau](https://hubeau.e
 
 **Téléray** est une base de données qui stocke les mesures de radioactivité ambiante acquises par le [Réseau national de télémesure Téléray](https://www.irsn.fr/FR/connaissances/Environnement/surveillance-environnement/organisation/reseaux-surveillance/Pages/1-reseaux-telesurveillance.aspx#.XyM9qJ77QuU). 
 
-![Réseau Téléray](../../assets/teleray.jpg)
+![Réseau Téléray](../../.vitepress/public/images/teleray.jpg)
 
 Le **réseau Téléray** consiste en  un ensemble de balises de mesure de la radioactivité gamma ambiante. Les mesures sont exprimées en **nSv/h** (nanosievert par heure).
 
@@ -86,25 +86,25 @@ Les données sont produites par l'[Institut de Radioprotection et Sûreté Nucl�
 
 Données de qualité de l'air collectées dans 93 pays par l'association [OpenAQ](https://openaq.org/). Elles aggrègent des mesures de particules fines PM2.5, PM10, d'ozone (O3), de dioxide de soufre (SO2), de dioxide d'azote (NO2), de monoxide de carbone (CO), et de noir de carbone (BC). 
 
-![OpenAQ](../../assets/openaq.png)
+![OpenAQ](../../.vitepress/public/images/openaq.png)
 
 ### OpenRadiation
 
 Le projet [OpenRadiation](https://www.openradiation.org) a pour objectif de centraliser des mesures de la radioactivité dans l'environnement réalisées par des citoyens. Il permet aux utilisateurs de prendre les mesures à l'aide de différents dosimètres et de les exploiter à travers plusieurs outils.
 
-![OpenRadiation](../../assets/openradiation.png)
+![OpenRadiation](../../.vitepress/public/images/openradiation.png)
 
 ### Mapillary
 
 Base de données de photos géolocalisées issues de la plateforme [Mapillary](https://www.mapillary.com/) et alimentée par production participative.
 
-![Mapillary](../../assets/mapillary.jpg)
+![Mapillary](../../.vitepress/public/images/mapillary.jpg)
 
 ### GSMaP
 
 Global Precipitation Measurement (GPM) est une mission opérée par plusieurs agences spatiales dont l'objectif est d'effectuer des mesures périodiques des précipitations au niveau de l'ensemble de la planète.
 
-![GSMaP](../../assets/gsmap.png)
+![GSMaP](../../.vitepress/public/images/gsmap.png)
 
 ### Prévision météorologiques
 
@@ -130,19 +130,19 @@ Pour une présentation plus détaillée de ces deux modèles, reportez vous à l
 
 **Global Forecast System (GFS)** est un modèle de prévision numérique du temps du [National Weather Service](https://fr.wikipedia.org/wiki/National_Weather_Service) des États-Unis. Comme son nom l'indique, il fait ses calculs en utilisant les données météorologiques sur une grille qui couvre le globe à une résolution moyenne d'environ 28 km (0.5°). Les données sont distribuées par la [National Oceanic and Atmospheric Administration](https://www.noaa.gov/)
 
-![GFS](../../assets/gfs.jpg)
+![GFS](../../.vitepress/public/images/gfs.jpg)
 
 ### Données démographiques
 
 Sur la base des données [FiLoSoFi](https://www.insee.fr/fr/statistiques/6215217) de l'Institut national de la statistique et des études économiques (INSEE) nous proposons des informations démographiques telles que le nombre d'individus par km² (i.e. densité de population) ou le nombre d'individus par classe d'âge et par carreau (1km ou 200m).
 
-![FILOSOFI](../../assets/filosofi.png)
+![FILOSOFI](../../.vitepress/public/images/filosofi.png)
 
 ### Données administratives
 
 [ADMIN EXPRESS](https://geoservices.ign.fr/adminexpress), produit par l'IGN, propose le découpage administratif du territoire français (commune, arrondissement départemental, département, région...).
 
-![ADMIN EXPRESS](../../assets/adminexpress.png)
+![ADMIN EXPRESS](../../.vitepress/public/images/adminexpress.png)
 
 ## Composants graphiques
 
@@ -153,12 +153,12 @@ Chaque composant peut être affiché/caché par l'intermédiaire de poignées vi
 
 De plus, un **bouton** <i class="las la-ellipsis-v la-2x"></i> situé en bas à droite de l'écran permet d'effectuer certaines actions.
 
-:point_right: Vous êtes gestionnaire d'une organisation ? <tour-link text="Naviguez à travers les composants du catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/>
+:point_right: Vous êtes gestionnaire d'une organisation ? <ClientOnly><tour-link text="Naviguez à travers les composants du catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/></ClientOnly>
 
 ::: details Voir aussi
-Comment entrer dans le catalogue géographique depuis le <tour-link text="tableau de bord" path="home/organisations"/>
+Comment entrer dans le catalogue géographique depuis le <ClientOnly><tour-link text="tableau de bord" path="home/organisations"/></ClientOnly>
 
-Comment afficher le tableau de bord depuis le <tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/>
+Comment afficher le tableau de bord depuis le <ClientOnly><tour-link text="menu principal" path="home" :params="{ tour: 'home' }"/></ClientOnly>
 :::
 
 ### Barre de navigation
@@ -170,7 +170,7 @@ La barre de navigation permet de réaliser des actions récurrentes:
 * <i class="las la-wrench"></i> afficher les coordonnées géographiques d'un lieu,
 * <i class="las la-expand"></i> passer en mode plein écran.
 
-:point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel de la barre de navigation pour plus de détails
+:point_right: Lancez le <ClientOnly><tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/></ClientOnly> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel de la barre de navigation pour plus de détails
 
 ### Panneau latéral
 
@@ -184,13 +184,13 @@ Dans ce cas la couche apparaitra grisée dans le panneau latéral tant que vous 
 
 En utilisant le menu <i class="las la-ellipsis-v"/> sur une couche vous pouvez accéder aux [actions disponibles](./catalog.md#actions-des-couches).
 
-:point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel du panneau latéral pour plus de détails
+:point_right: Lancez le <ClientOnly><tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/></ClientOnly> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel du panneau latéral pour plus de détails
 
 ### Ligne de temps
 
 La ligne de temps permet de rapidement sélectionner la date et l'heure des données affichées. Vous pouvez rester au présent ou bien naviguer dans le passé (i.e. historique) ou le futur (i.e. prévisions).
 
-:point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel de la ligne de temps pour plus de détails
+:point_right: Lancez le <ClientOnly><tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/></ClientOnly> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel de la ligne de temps pour plus de détails
 
 ### Bouton d'actions
 
@@ -201,7 +201,7 @@ En utilisant ce bouton vous pouvez:
   * En positionnant et dessinant vous même les entitées la composant. Vous pouvez adjoindre un fichier définissant le schéma de données des métadonnées associées aux entités (i.e. leurs propriétés) au format [JSON schema](https://json-schema.org/).
 * <i class="las la-eye-dropper"/> Sonder les prévisions météorologiques du modèle actuellement actif sur un lieu donné en le sélectionnant sur la carte.
 
-:point_right: Lancez le <tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel du bouton d'actions pour plus de détails
+:point_right: Lancez le <ClientOnly><tour-link text="didacticiel lié au catalogue" path="home" :params="{ organisation: 'manager', route: 'catalog-activity' }"/></ClientOnly> puis ouvrez le lien <i class="las la-external-link-square-alt"/> vers le didacticiel du bouton d'actions pour plus de détails
 
 ### Menu contextuel
 

@@ -1,14 +1,17 @@
 {
-  "name": "docs",
+  "name": "crisis-documentation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "vuepress dev .",
-    "build": "vuepress build .",
-    "serve": "vuepress serve .",
-    "export": "vuepress export ."
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
   },
   "devDependencies": {
-    "vuepress": "^1.7.1",
-    "vuepress-plugin-redirect": "^1.2.5",
-    "vuepress-theme-kalisio": "https://github.com/kalisio/vuepress-theme-kalisio#v0.1.0"
+    "mermaid": "^10.4.0",
+    "vitepress": "^1.0.0-rc.15",
+    "vitepress-plugin-mermaid": "^2.0.14"
   }
 }

@@ -4,6 +4,6 @@ sidebarDepth: 3
 
 # Mise à jour
 
-## Application internet
+L'application internet ne nécessite aucune procédure de mise à jour particulière. Lorsque nous mettons à jour nos services une fenêtre contextuelle apparaîtra pour mettre à jour l'application.
 
-L'application internet ne nécessite aucune procédure de mise à jour particulière. Lorque nous mettons à jour nos services cela est fait de façon automatique.
+![update-fr](../../.vitepress/public/images/update-FR.png)

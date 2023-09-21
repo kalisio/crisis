@@ -10,7 +10,7 @@ This presentation comes with small *tutorials* that can be directly run on the a
 
 A link can allow you to execute the tutorial directly from the documentation, otherwise open the application at the right place then click on the following icon <a href=""><i class="las la-question-circle"/></a> in the main menu.
 
-![launch-tour](../assets/LaunchTour-EN.png)
+![launch-tour](../.vitepress/public/images/LaunchTour-EN.png)
 
 ::: tip
 To open the main menu use the handle on the left side of your screen.
@@ -18,7 +18,7 @@ To open the main menu use the handle on the left side of your screen.
 
 You can then follow the step by step guide <a href=""><i class="las la-chevron-right"/></a> (or <i class="las la-arrow-right"/> key), go back if required <a href=""><i class="las la-chevron-left"/></a> (or <i class="las la-arrow-left"/> key) and stop anytime <a href=""><i class="las la-times"/></a> (or *escape* key) as illustrated by the following figure:
 
-![tour](../assets/Tour-EN.png)
+![tour](../.vitepress/public/images/Tour-EN.png)
 
 ::: tip
 Sometimes you can see a *beta* label on a user interface element (like a button), meaning the feature is currently under *beta test*: in order to improve the first version of the feature we collect feedback from our users.
@@ -34,9 +34,9 @@ An **activity** is the entry point used in the application for interacting with 
 
 For instance, what is related to your account and its security is managed in a specific account activity composed of three screens, as illustrated by the following figure:
 
-![account](../assets/Account-EN.png)
+![account](../.vitepress/public/images/Account-EN.png)
 
-From an activity you can always open the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/> on the left-side of the screen or switch to another activity using the **application bar** at the top of the screen.
+From an activity you can always open the <ClientOnly><tour-link text="main menu" path="home" :params="{ tour: 'home' }"/></ClientOnly> on the left-side of the screen or switch to another activity using the **application bar** at the top of the screen.
 
 ## <i class="las la-user"></i> User
 
@@ -44,14 +44,14 @@ A *person* who has been **registered** to Kalisio Crisis. This can be done throu
   * by creating his own **account** on the application,
   * by being *invited* within an organisation by another user of the application.
 
-:point_right: Don't yet have an account and wish to create one ? <tour-link text="How to create an account" path="register"/>
+:point_right: Don't yet have an account and wish to create one ? <ClientOnly><tour-link text="How to create an account" path="register"/></ClientOnly>
 
-:point_right: Already have an account but cannot connect ? <tour-link text="How to connect" path="login"/>
+:point_right: Already have an account but cannot connect ? <ClientOnly><tour-link text="How to connect" path="login"/></ClientOnly>
 
-:point_right: You have created your account and successfully connect ? <tour-link text="Browse the main menu" path="home" :params="{ tour: 'home' }"/>
+:point_right: You have created your account and successfully connect ? <ClientOnly><tour-link text="Browse the main menu" path="home" :params="{ tour: 'home' }"/></ClientOnly>
 
 ::: details See also
-<tour-link text="How to invite members" path="home" :params="{ organisation: 'manager', route: 'add-member' }" /> when you have created your organisation and want to collaborate with users
+<ClientOnly><tour-link text="How to invite members" path="home" :params="{ organisation: 'manager', route: 'add-member' }" /></ClientOnly> when you have created your organisation and want to collaborate with users
 :::
 
 ## <i class="las la-user-friends"></i> Organisation
@@ -60,14 +60,14 @@ A *shared workspace* between users where you can invite people to join and colla
 
 A *dashboard* summarizes the running events for all his organisations on the home page. All activities related to organisations management are also accessible from this dashboard. By selecting the target activity on an organisation you make it your current *context* or workspace.
 
-:point_right: How to enter into the context of an organisation or create a new one through the <tour-link text="dashboard" path="home/organisations"/>
+:point_right: How to enter into the context of an organisation or create a new one through the <ClientOnly><tour-link text="dashboard" path="home/organisations"/></ClientOnly>
 
 ::: tip
 If you belong to a single organisation you will automatically enter its context on login.
 :::
 
 ::: details See also
-How to display the dashboard from the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
+How to display the dashboard from the <ClientOnly><tour-link text="main menu" path="home" :params="{ tour: 'home' }"/></ClientOnly>
 :::
 
 A user is being assigned *different roles* in his organisations so that different features are available depending on the currently selected organisation. The following figure shows a use case where:
@@ -76,7 +76,7 @@ A user is being assigned *different roles* in his organisations so that differen
 * an organisation has multiple groups (3),
 * a member of an organisation belongs to multiple groups (3).
 
-![user-organisations](../assets/user-organisations.png)
+![user-organisations](../.vitepress/public/images/user-organisations.png)
 
 ### <i class="las la-graduation-cap"></i> Role
 
@@ -105,14 +105,14 @@ By creating an organisation you become the owner by default but you can share th
 
 A **group** allows to *delegate* the management of a shared workspace limited to its members. Users outside the group will not be able to interact with it.
 
-:point_right: You manage an organisation ? <tour-link text="How to manage your groups" path="home" :params="{ organisation: 'manager', route: 'groups-activity' }"/>
+:point_right: You manage an organisation ? <ClientOnly><tour-link text="How to manage your groups" path="home" :params="{ organisation: 'manager', route: 'groups-activity' }"/></ClientOnly>
 
-:point_right: You have created a group ? <tour-link text="How to add members to your group" path="home" :params="{ organisation: 'manager', route: 'members-activity' }"/>
+:point_right: You have created a group ? <ClientOnly><tour-link text="How to add members to your group" path="home" :params="{ organisation: 'manager', route: 'members-activity' }"/></ClientOnly>
 
 ::: details See also
-How to enter the groups management activity from the <tour-link text="dashboard" path="home/organisations"/>
+How to enter the groups management activity from the <ClientOnly><tour-link text="dashboard" path="home/organisations"/></ClientOnly>
 
-How to display the dashboard from the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
+How to display the dashboard from the <ClientOnly><tour-link text="main menu" path="home" :params="{ tour: 'home' }"/></ClientOnly>
 :::
 
 ### <i class="las la-tags"></i> Tag
@@ -121,14 +121,14 @@ A **tag** allows to *classify* a subset of your organisation members according t
 
 A tag is *transverse* to your organisation, meaning you can target with it people having the same criteria in different groups.
 
-:point_right: You manage an organisation ? <tour-link text="How to manage your tags" path="home" :params="{ organisation: 'manager', route: 'tags-activity' }"/>
+:point_right: You manage an organisation ? <ClientOnly><tour-link text="How to manage your tags" path="home" :params="{ organisation: 'manager', route: 'tags-activity' }"/></ClientOnly>
 
-:point_right: You want to tag your members ? <tour-link text="How to tag members" path="home" :params="{ organisation: 'manager', route: 'members-activity' }"/>
+:point_right: You want to tag your members ? <ClientOnly><tour-link text="How to tag members" path="home" :params="{ organisation: 'manager', route: 'members-activity' }"/></ClientOnly>
 
 ::: details See also
-How to enter the tags management activity from the <tour-link text="dashboard" path="home/organisations"/>
+How to enter the tags management activity from the <ClientOnly><tour-link text="dashboard" path="home/organisations"/></ClientOnly>
 
-How to display the dashboard from the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
+How to display the dashboard from the <ClientOnly><tour-link text="main menu" path="home" :params="{ tour: 'home' }"/></ClientOnly>
 :::
 
 ## <i class="las la-fire"></i> Event
@@ -148,14 +148,14 @@ By creating an event you become the coordinator by default but you can share thi
 
 The following figure shows a standard configuration in the application and how events can target different users at different levels:
 
-![structure](../assets/structure-EN.png)
+![structure](../.vitepress/public/images/structure-EN.png)
 
 Kalisio Crisis allows to attach to each event:
   * a *location* (address or geographic coordinates),
   * *pictures* or *documents* shared among participants,
   * a **[workflow](../gofurther/workflow.md)** defining interactions between participants and coordinators.
 
-:point_right: Ready to share some information ? <tour-link text="How to manage your events" path="home" :params="{ organisation: 'member', route: 'events-activity' }"/>
+:point_right: Ready to share some information ? <ClientOnly><tour-link text="How to manage your events" path="home" :params="{ organisation: 'member', route: 'events-activity' }"/></ClientOnly>
 
 ### Event templates
 
@@ -167,12 +167,12 @@ Usually, models follow a business oriented typology. For instance fire fighters 
 Using a typology you can produce **[relevant statistics](../gofurther/archiving.md)** from your events.
 :::
 
-:point_right: You manage an organisation ? <tour-link text="How to manage your templates" path="home" :params="{ organisation: 'manager', route: 'event-templates-activity' }"/>
+:point_right: You manage an organisation ? <ClientOnly><tour-link text="How to manage your templates" path="home" :params="{ organisation: 'manager', route: 'event-templates-activity' }"/></ClientOnly>
 
 ::: details See also
-How to enter the models management activity from the <tour-link text="dashboard" path="home/organisations"/>
+How to enter the models management activity from the <ClientOnly><tour-link text="dashboard" path="home/organisations"/></ClientOnly>
 
-How to display the dashboard from the <tour-link text="main menu" path="home" :params="{ tour: 'home' }"/>
+How to display the dashboard from the <ClientOnly><tour-link text="main menu" path="home" :params="{ tour: 'home' }"/></ClientOnly>
 :::
 
 ### Participant
@@ -194,5 +194,5 @@ Although you can use the application freely for testing or private purpose (**br
 Moreover, if your business requires some of our [powerful advanced features](../gofurther/README.md) you need to subscribe to **additional plans** to make theses features available to your members.
 
 ::: warning Note
-:point_right: You own an organisation ? <tour-link text="What are the available plans and how to subscribe" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/>
+:point_right: You own an organisation ? <ClientOnly><tour-link text="What are the available plans and how to subscribe" path="home" :params="{ organisation: 'owner', route: 'edit-organisation-billing' }"/></ClientOnly>
 :::
