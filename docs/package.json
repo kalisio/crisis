@@ -1,12 +1,9 @@
 {
   "name": "crisis-documentation",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "vitepress dev",
-    "build": "vitepress build",
+    "dev": "vitepress dev .",
+    "build": "vitepress build .",
     "preview": "vitepress preview"
   },
   "devDependencies": {
