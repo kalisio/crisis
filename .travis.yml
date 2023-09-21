@@ -32,10 +32,10 @@ jobs:
     install: true
     script:
     - cd docs && yarn install && yarn build
-    - cd .vuepress/dist
+    - cd .vitepress/dist
     deploy:
       provider: pages
-      local-dir: docs/.vuepress/dist
+      local-dir: docs/.vitepress/dist
       skip-cleanup: true
       github-token: "$GITHUB_TOKEN"
       keep-history: true

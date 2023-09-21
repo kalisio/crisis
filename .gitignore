@@ -82,3 +82,7 @@ src/tours/core
 src/tours/map
 src/css/kdk
 
+# vitepress
+docs/.vitepress/node_modules
+docs/.vitepress/cache
+docs/.vitepress/dist
