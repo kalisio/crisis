@@ -24,7 +24,7 @@
       "field": {
         "component": "form/KLocationField",
         "label": "schemas.PLANS_LOCATION_FIELD_LABEL",
-        "geocoders": [],
+        "geocoders": null,
         "geolocate": false,
         "map": ["location", "draw-point", "draw-polyline", "draw-rectangle", "draw-polygon"]
       }
