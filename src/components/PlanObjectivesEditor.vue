@@ -144,7 +144,7 @@ export default {
               component: 'form/KLocationField',
               label: 'schemas.PLAN_OBJECTIVE_LOCATION_FIELD_LABEL',
               draggable: true,
-              geocoders: [],
+              geocoders: null,
               geolocate: false,
               map: ['location', 'draw-polyline', 'draw-point', 'draw-rectangle', 'draw-polygon']
             }
