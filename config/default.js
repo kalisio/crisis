@@ -410,6 +410,7 @@ module.exports = {
   terms: 'crisis-terms',
   publisher: 'Kalisio',
   publisherWebsite: website,
+  publisherContact: 'support@kalisio.com',
   locale: {
     // If you'd like to force locale otherwise it is retrieved from browser
     // default: 'en',
