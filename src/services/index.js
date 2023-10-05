@@ -26,6 +26,7 @@ export default async function () {
     // Declare the built-in services, others are optional
     api.declareService('catalog', { context: true })
     api.declareService('features', { context: true })
+    api.declareService('projects', { context: true })
     api.declareService('alerts', { context: true })
     api.declareService('events', { context: true })
     api.declareService('event-logs', { context: true })

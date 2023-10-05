@@ -80,7 +80,11 @@
     "PLAN_OBJECTIVE_CREATE_TITLE": "Créér un nouvel objectif ?",
     "PLAN_OBJECTIVE_NAME_FIELD_LABEL": "Saisissez le nom de cet objectif",
     "PLAN_OBJECTIVE_DESCRIPTION_FIELD_LABEL": "Saisissez une description de cet objectif",
-    "PLAN_OBJECTIVE_LOCATION_FIELD_LABEL": "Saisissez une localisation pour cet objectif"
+    "PLAN_OBJECTIVE_LOCATION_FIELD_LABEL": "Saisissez une localisation pour cet objectif",
+    "CATALOG_PROJECT_CREATE_TITLE": "Créer un nouveau projet ?",
+    "CATALOG_PROJECT_NAME_FIELD_LABEL": "Saisissez le nom du projet",
+    "CATALOG_PROJECT_LAYERS_FIELD_LABEL": "Sélectionnez les couches dans ce projet",
+    "CATALOG_PROJECT_VIEWS_FIELD_LABEL": "Sélectionnez les vues dans ce projet"
   },
   "PopulationClasses": {
     "Ind": "Population totale",
@@ -450,6 +454,21 @@
     "ALERT_LTE": "inférieur(e) au seuil de",
     "POPULATION_ANALYSIS": "Analyse de population",
     "POPULATION_ANALYSIS_ERROR": "L'analyse de population a échoué, veuillez réessayer plus tard ou modifier votre paramétrage"
+  }, 
+  "CatalogProjects": {
+    "CATALOG_PROJECTS_LABEL": "Gérer mes projets",
+    "ADD_TITLE": "Ajouter un nouveau projet au catalogue",
+    "UPDATE_TITLE": "Mettre à jour un projet du catalogue",
+    "TITLE": "Gérer les projets du catalogue",
+    "SORT": "Trier les projets",
+    "CREATE_PROJECT": "Créer un nouveau projet",
+    "BACK_BUTTON": "Revenir",
+    "ADD_BUTTON": "Ajouter",
+    "EDIT_BUTTON": "Modifier",
+    "CATEGORY_LIST": "Retour à la liste",
+    "EDIT_PROJECT": "@:EDIT",
+    "VIEW_PROJECT": "@:VIEW",
+    "REMOVE_PROJECT": "@:REMOVE"
   },
   "AlertForm": {
     "TIME_PERIOD": "Période temporelle d'analyse",

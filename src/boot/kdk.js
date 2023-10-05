@@ -8,7 +8,7 @@ import {
   utils, initializeApi, i18n, utils as kdkCoreUtils, Store, Layout, Events,
   beforeGuard, authenticationGuard, permissionsGuard
 } from '@kalisio/kdk/core.client'
-import { Geolocation } from '@kalisio/kdk/map.client.map'
+import { Geolocation, setupApi } from '@kalisio/kdk/map.client.map'
 
 /* function updateThemeColors () {
   const theme = config.theme
@@ -22,7 +22,7 @@ export default async ({ app }) => {
   app.config.unwrapInjectedRef = true
 
   // Initiate the client
-  const api = initializeApi()
+  const api = initializeApi(setupApi)
   // Setup app hooks
   api.hooks(appHooks)
   // Then all services

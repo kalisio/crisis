@@ -17,6 +17,22 @@ const modelsPath = path.join(__dirname, '..', 'models')
 const servicesPath = path.join(__dirname, '..', 'services')
 const debug = makeDebug('crisis:services')
 
+export async function createProjectsService (options = {}) {
+  const app = this
+
+  debug('Creating projects service with options', options)
+  await app.createService('projects', Object.assign({
+    servicesPath,
+    modelsPath,
+    paginate: { default: 20, max: 5000 }
+  }, options))
+}
+
+export function removeProjectsService (options = {}) {
+  const app = this
+  return app.removeService(app.getService('projects', options.context))
+}
+
 export async function createEventService (options = {}) {
   const app = this
 
@@ -147,6 +163,7 @@ export async function createOrganisationServices (organisation, db) {
   await createCatalogService.call(app, { context: organisation, db })
   await createFeaturesService.call(app, { collection: 'features', context: organisation, db })
   await createAlertsService.call(app, { context: organisation, db })
+  await createProjectsService.call(app, { context: organisation, db })
   await createEventService.call(app, { context: organisation, db })
   await createEventTemplateService.call(app, { context: organisation, db })
   await createEventLogService.call(app, { context: organisation, db })
@@ -162,6 +179,7 @@ export async function removeOrganisationServices (organisation) {
   await removeFeaturesService.call(app, { collection: 'features', context: organisation })
   await removeCatalogService.call(app, { context: organisation })
   await removeAlertsService.call(app, { context: organisation })
+  await removeProjectsService.call(app, { context: organisation })
   await removeEventService.call(app, { context: organisation })
   await removeEventTemplateService.call(app, { context: organisation })
   await removeEventLogService.call(app, { context: organisation })

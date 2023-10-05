@@ -229,6 +229,11 @@ module.exports = [{
                   name: 'manage-layer-categories',
                   component: 'catalog/KLayerCategories',
                   tour: tours['catalog-categories']
+                },
+                projects: {
+                  name: 'manage-catalog-projects',
+                  component: 'CatalogProjects',
+                  tour: tours['catalog-projects']
                 }
               }
             },

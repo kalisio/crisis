@@ -79,7 +79,11 @@
     "PLAN_OBJECTIVE_CREATE_TITLE": "Create a new objective ?",
     "PLAN_OBJECTIVE_NAME_FIELD_LABEL": "Enter the name of this objective",
     "PLAN_OBJECTIVE_DESCRIPTION_FIELD_LABEL": "Enter a description of this objective",
-    "PLAN_OBJECTIVE_LOCATION_FIELD_LABEL": "Enter the location of this objective"
+    "PLAN_OBJECTIVE_LOCATION_FIELD_LABEL": "Enter the location of this objective",
+    "CATALOG_PROJECT_CREATE_TITLE": "Create a new project?",
+    "CATALOG_PROJECT_NAME_FIELD_LABEL": "Enter the name of this project",
+    "CATALOG_PROJECT_LAYERS_FIELD_LABEL": "Select the layers in this project",
+    "CATALOG_PROJECT_VIEWS_FIELD_LABEL": "Select the views in this project"
   },
   "PopulationClasses": {
     "Ind": "Total population",
@@ -443,6 +447,21 @@
     "ALERT_LTE": "lower than threshold",
     "POPULATION_ANALYSIS": "Population analysis",
     "POPULATION_ANALYSIS_ERROR": "Population analysis failed, please try again later or modify your parameters"
+  },
+  "CatalogProjects": {
+    "CATALOG_PROJECTS_LABEL": "Manage my projects",
+    "ADD_TITLE": "Add a new catalog project",
+    "UPDATE_TITLE": "Update a catalog project",
+    "TITLE": "Manage catalog projects",
+    "SORT": "Sort projects",
+    "CREATE_PROJECT": "Create a new project",
+    "BACK_BUTTON": "Back",
+    "ADD_BUTTON": "Add",
+    "EDIT_BUTTON": "Update",
+    "CATEGORY_LIST": "Back to list",
+    "EDIT_PROJECT": "@:EDIT",
+    "VIEW_PROJECT": "@:VIEW",
+    "REMOVE_PROJECT": "@:REMOVE"
   },
   "AlertForm": {
     "TIME_PERIOD": "Analysis time period",

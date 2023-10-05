@@ -741,6 +741,11 @@ module.exports = {
               icon: 'las la-cog',
               label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
               route: { name: 'manage-layer-categories' } 
+            }, {
+              id: 'manage-catalog-projects',
+              icon: 'las la-project-diagram',
+              label: 'CatalogProjects.CATALOG_PROJECTS_LABEL',
+              route: { name: 'manage-catalog-projects' } 
             }],
             class: 'justify-center'
           }

@@ -47,7 +47,7 @@ import chroma from 'chroma-js'
 import sift from 'sift'
 import { ref, toRef, computed } from 'vue'
 import { mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
+import { mixins as kMapMixins, composables as kMapComposables, utils as kMapUtils } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 import { usePlan, useAlerts } from '../composables'
 
@@ -142,6 +142,13 @@ export default {
     plan: {
       handler () {
         this.refreshObjectivesLayer()
+      }
+    },
+    $route: {
+      handler (to, from) {
+        const toProject = _.get(to, 'query.project')
+        const fromProject = _.get(from, 'query.project')
+        if (toProject !== fromProject) this.refreshLayers()
       }
     }
   },

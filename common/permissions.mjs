@@ -147,11 +147,14 @@ export function defineUserAbilities (subject, can, cannot, app) {
             can('read', 'catalog', { context: organisation._id })
             can('service', organisation._id.toString() + '/features')
             can('all', 'features', { context: organisation._id })
+            can('service', organisation._id.toString() + '/projects')
+            can('read', 'projects', { context: organisation._id })
             can('service', organisation._id.toString() + '/alerts')
             can('read', 'alerts', { context: organisation._id })
           }
           if (role >= permissions.Roles.manager) {
             can(['create', 'update', 'remove'], 'catalog', { context: organisation._id })
+            can(['create', 'update', 'remove'], 'projects', { context: organisation._id })
             can(['create', 'remove'], 'alerts', { context: organisation._id })
           }
         }
