@@ -18,6 +18,10 @@ export default async function () {
   // Set up our plugin services
   try {
     await api.configure(kdkCore)
+    // Declare custom method on account service
+    await api.createService('account', {
+      methods: ['verifyEmail']
+    })
     // Declare our matcher
     api.registerMatcher(siftMatcher)
     // Add hooks to automatically check uniqueness when creating a new user
