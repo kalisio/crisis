@@ -185,6 +185,11 @@ export default {
     getBaseQuery (object) {
       // Overriden to handle notification messages
       const query = kdkCoreMixins.baseEditor.methods.getBaseQuery.call(this)
+      // When displaying events of all plans we'd like to have the plan object directly to ease processing
+      if (!this.planId) {
+        query.planAsObject = true
+      }
+      // User can choose to notify changes on update
       if (this.notify) {
         query.notification = {
           body: (this.editorMode === 'create' ? this.$t('EventNotifications.CREATE') : this.$t('EventNotifications.UPDATE')),
