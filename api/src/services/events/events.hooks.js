@@ -12,9 +12,10 @@ const hooks = {
   before: {
     all: [
       coreHooks.convertObjectIDs(['layer', 'feature', 'alert._id', 'plan']),
-      coreHooks.convertToString(['alert.conditions'])
+      coreHooks.convertToString(['alert.conditions']),
+      marshallPlanQuery
     ],
-    find: [fuzzySearch({ fields: ['name'] }), coreHooks.diacriticSearch(), mapHooks.marshallSpatialQuery, marshallPlanQuery],
+    find: [fuzzySearch({ fields: ['name'] }), coreHooks.diacriticSearch(), mapHooks.marshallSpatialQuery],
     get: [],
     // Because expireAt comes from client convert it to Date object
     create: [
@@ -45,10 +46,12 @@ const hooks = {
   },
 
   after: {
-    all: [coreHooks.convertToJson(['alert.conditions'])],
-    find: [
+    all: [
+      coreHooks.convertToJson(['alert.conditions']),
       // Not by default for performance reason
-      commonHooks.iff(hook => _.get(hook, 'params.planAsObject'), populatePlan),
+      commonHooks.iff(hook => _.get(hook, 'params.planAsObject'), populatePlan)
+    ],
+    find: [
       mapHooks.asGeoJson({
         longitudeProperty: 'location.longitude',
         latitudeProperty: 'location.latitude',
