@@ -6,8 +6,10 @@ var containerized = require('containerized')()
 
 const N = parseInt(process.env.NODE_APP_NB_INSTANCES)
 const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
+const serverPortTeams = process.env.PORT_TEAMS || process.env.HTTPS_PORT_TEAMS || 8081
 // Required to know webpack port so that in dev we can build correct URLs
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
+const clientPortTeams = process.env.CLIENT_PORT_TEAMS || process.env.HTTPS_CLIENT_PORT_TEAMS || 8082
 const API_PREFIX = '/api'
 // Start blocking after N requests or N auth requests
 let nbRequestsPerMinute = 60 * 4
@@ -42,23 +44,28 @@ let limiter = {
     interval: 60*1000 // 1 minute window
   }
 }
-let domain, weacastApi
+let domain, domainTeams, weacastApi
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
   // For benchmarking
   apiLimiter = null
   limiter = null
   domain = 'https://crisis.dev.kalisio.xyz'
+  domainTeams = 'https://teams.dev.kalisio.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
   domain = 'https://crisis.test.kalisio.xyz'
+  domainTeams = 'https://teams.test.kalisio.xyz'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
   domain = 'https://crisis.planet.kalisio.com'
+  domainTeams = 'https://teams.planet.kalisio.com'
 } else {
   // Otherwise we are on a developer machine
   if (process.env.NODE_ENV === 'development') {
     domain = 'http://localhost:' + clientPort // Crisis app client/server port = 8080/8081
+    domainTeams = 'http://localhost:' + clientPortTeams
   } else {
     domain = 'http://localhost:' + serverPort // Crisis app client/server port = 8081
+    domainTeams = 'http://localhost:' + serverPortTeams
   }
   // For benchmarking
   //apiLimiter = null
@@ -77,6 +84,7 @@ module.exports = {
   // https://github.com/chimurai/http-proxy-middleware
   proxyTable: {},
   domain,
+  domainTeams,
   gateway,
   host: process.env.HOSTNAME || 'localhost',
   port: serverPort,

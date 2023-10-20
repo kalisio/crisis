@@ -16,7 +16,7 @@ import { Geolocation } from '@kalisio/kdk/map.client.map'
   if (theme) Theme.apply(theme)
 } */
 
-export default async ({ app }) => {
+export default async ({ app, router }) => {
   // Required to make injections reactively linked to the provider
   // https://vuejs.org/guide/components/provide-inject.html#working-with-reactivity
   app.config.unwrapInjectedRef = true
@@ -112,6 +112,12 @@ export default async ({ app }) => {
   api.on('logout', (data) => {
     // Remove API gateway token if any
     api.get('storage').removeItem(config.gatewayJwt)
+  })
+
+  router.afterEach(async (to, from, next) => {
+    // redirect to teams
+    if (to.path === '/login') window.location.href = Store.get('capabilities.api.domainTeams', '') + '/#/login?redirect_url=' + config.domain
+    next()
   })
 
   // Install listener to log push notifications

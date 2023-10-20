@@ -322,6 +322,7 @@ export default async function () {
       const response = {
         name: 'crisis',
         domain: app.get('domain'),
+        domainTeams: app.get('domainTeams'),
         gateway: app.get('gateway'),
         version: packageInfo.version,
         quotas: app.get('quotas'),
@@ -333,8 +334,8 @@ export default async function () {
       }
       res.json(response)
     })
-    app.on('service', async service => {
-      // Add app-specific hooks to required services initialized externally
+    app.on('service', async service => { 
+      // Add app-specific hooks to required services initialized externally  
       if (service.name === 'users' ||
           service.name === 'authorisations' ||
           service.name === 'organisations' ||
@@ -353,7 +354,7 @@ export default async function () {
         }
       }
       // Make remote services compliant with our internal app services so that permissions can be used
-      if (service.key === 'kano' || service.key === 'weacast') {
+      if (service.key === 'kano' || service.key === 'weacast' || service.key === 'teams') {
         debug('Configuring remote service', service)
         // Remote service are registered according to their path, ie with API prefix (but without trailing /)
         const remoteService = app.service(service.path)
@@ -374,6 +375,18 @@ export default async function () {
         })
       }
     })
+    
+    // wait 30 seconds for the distributed user service to configure
+    function sleep(ms) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, ms)
+      })
+    }
+    await sleep(30000)
+    // add user service id
+    // missing because it's a distributed service
+    app.getService('users').id = '_id'
+
     await app.configure(kCore)
     // This one is created by feathers under the hood so we cannot configure using the previous event listener,
     // which will only emit our own services
