@@ -12,7 +12,7 @@
 
 For more information please visit our websites:
 * [Kalisio Company](https://kalisio.com/)
-* [Kalisio Crisis](https://kalisio.github.io/crisis/)
+* [Kalisio Crisis](https://doc.planet.kalisio.com/)
 
 This application is based on the [Kalisio Development Kit](https://kalisio.github.io/kdk/).
 
