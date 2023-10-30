@@ -3758,19 +3758,6 @@
     lodash "^4.17.21"
     moment "^2.29.4"
 
-"@kalisio/feathers-s3@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@kalisio/feathers-s3/-/feathers-s3-1.1.0.tgz#bec52326dc6dacb3210243560c1b12a7e2bb7a7a"
-  integrity sha512-ED49LqFvWV/CfKqF/BAoVvos+zB7BC0XQU80oGryQs8NlsZ2lKEL5kDkAUlWhSKUgxSw9o6Z8fFmJ3gbTwYy1A==
-  dependencies:
-    "@aws-sdk/client-s3" "^3.209.0"
-    "@aws-sdk/s3-request-presigner" "^3.209.0"
-    "@feathersjs/commons" "^5.0.5"
-    "@feathersjs/errors" "^5.0.5"
-    debug "^4.1.0"
-    lodash "^4.17.21"
-    moment "^2.29.4"
-
 "@kalisio/feathers-s3@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@kalisio/feathers-s3/-/feathers-s3-1.2.0.tgz#ba4178e02c15973a1262e49d083e22fc086e91ac"
@@ -16028,6 +16015,6 @@ zip-stream@^4.1.0:
     readable-stream "^3.6.0"
 
 zod@^3.19.1:
-  version "3.21.4"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.21.4.tgz#10882231d992519f0a10b5dd58a38c9dabbb64db"
-  integrity sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==
+  version "3.22.4"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.4.tgz#f31c3a9386f61b1f228af56faa9255e845cf3fff"
+  integrity sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==
