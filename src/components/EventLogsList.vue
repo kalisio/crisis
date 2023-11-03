@@ -4,6 +4,7 @@
       Event logs filters
     -->
     <q-item v-if="event.hasWorkflow">
+      <q-checkbox v-model="itemsToggled" @update:modelValue="onItemsToggled(toggled)"/>
       <q-item-section><q-select id="workflow-step" v-model="selectedStep" :label="$t('EventLogsList.STEP')" stack-label
         :options="stepOptions" emit-value map-options /></q-item-section>
       <q-item-section v-if="selectedStep"><q-select id="step-interaction" v-model="selectedInteraction" :label="$t('EventLogsList.INTERACTION')" stack-label
@@ -20,8 +21,9 @@
       :base-query="baseQuery"
       :filter-query="filterQuery"
       :list-strategy="'smart'"
+      :nb-items-per-page="50"
       :processor="onCollectionRefreshed"
-      @toggle-changed="onItemToggled">
+      @item-toggled="onItemToggled">
         <template v-slot:empty-section>
           <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KList.EMPTY_LIST')" />
         </template>
@@ -69,6 +71,7 @@ export default {
       selectedInteraction: '',
       selectedParticipantState: {},
       selectedParticipantStep: {},
+      itemsToggled: false,
       toggledParticipants: []
     }
   },
@@ -94,7 +97,11 @@ export default {
             editable: false,
             style: 'min-width: 360px; max-width: 360px; min-height: 360px; max-height: 360px;'
           }]
-        }]
+        }],
+        options: {
+          // Individual toggle if not all selected
+          toggle: !this.itemsToggled
+        }
       }
     },
     baseQuery () {
@@ -158,6 +165,10 @@ export default {
       this.schema = this.generateSchemaForStep(this.selectedParticipantStep)
       return this.schema
     },
+    onItemsToggled (toggled) {
+      // Clear toggled items
+      this.toggledParticipants = []
+    },
     onItemToggled (item, toggled) {
       if (toggled) this.toggledParticipants.push(item)
       else _.remove(this.toggledParticipants, participant => participant._id === item._id)
@@ -201,8 +212,8 @@ export default {
       this.form.clear()
     },
     async logParticipantStates () {
-      // Check for multi-selection
-      let participants = this.toggledParticipants
+      // Check for multi-selection: all or individually selected items
+      let participants = (this.itemsToggled ? this.$refs.list.items : this.toggledParticipants)
       // Check if we don't mix different steps
       for (let i = 0; i < participants.length; i++) {
         const participantStep = this.getWorkflowStep(participants[i])
@@ -241,7 +252,7 @@ export default {
         })
       }
       // Define properties to be exported
-      let properties = ['participant', 'createdAt']
+      let properties = ['participant', 'email', 'createdAt']
       if (this.event.hasWorkflow) properties = properties.concat(['step', 'interaction'])
       const json = response.data.map(item => {
         const interaction = this.getUserInteraction(item)
@@ -250,6 +261,8 @@ export default {
         item.step = (interaction ? this.getUserInteractionStep(item) : this.getWorkflowStep(item))
         // Change from step ID to label
         item.step = _.get(item, 'step.title', '')
+        // Keep track of email before replacing participant object
+        item.email = _.get(item, 'participant.email', '')
         // Change from object to string
         item.participant = _.get(item, 'participant.profile.name', this.$t('EventLog.UNAMED'))
         // Delete what is not exported

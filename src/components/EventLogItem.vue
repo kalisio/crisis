@@ -1,14 +1,13 @@
 <template>
   <KItem
     v-bind="$props"
-    :options="{ toggle: true }"
     :actions="itemActions"
     :bind-actions="false">
     <!--
       Item toggle
      -->
     <template v-slot:item-toggle>
-      <q-checkbox :disable="!hasFollowUp" :disabled="!hasFollowUp" v-model="toggled" @input="onItemToggled(toggled)"/>
+      <q-checkbox :disable="!hasFollowUp" v-model="toggled" @update:modelValue="onItemToggled(toggled)"/>
     </template>
     <!--
       Item content

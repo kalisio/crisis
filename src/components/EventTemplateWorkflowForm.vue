@@ -1,5 +1,5 @@
 <template>
-  <q-stepper id="workflow" header-nav animated ref="stepper" v-model="currentStep" @input="onStepSelected">
+  <q-stepper id="workflow" header-nav animated ref="stepper" v-model="currentStep">
     <q-step v-for="(step, index) in steps" :key="step.name + '_' + index" :name="step.name"
       :title="step.title" :icon="getStepIcon(step)">
       <KForm ref="stepForm" v-show="!preview" :schema="stepSchema" :values='stepValues'
@@ -157,16 +157,6 @@ export default {
       if (!this.applyStepChanges()) return
       const index = this.getCurrentStepIndex()
       this.currentStep = this.steps[index + 1].name
-      // Restore step form when editing
-      this.refreshStep()
-    },
-    onStepSelected (step) {
-      // Apply current form changes when editing
-      // If not possible the current form is invalid so do nothing
-      // FIXME: when called the step has already been changed in model
-      // so that current step is not the right one anymore
-      // For now we don't validate
-      // if (!this.applyStepChanges()) return
       // Restore step form when editing
       this.refreshStep()
     },
