@@ -22,15 +22,14 @@ function defineEventAbilities (subject, can, cannot, app) {
             can('read', 'event-templates', { context: organisation._id })
             // A user can create an event
             can('create', 'events', { context: organisation._id })
-            // A user can access events in which he is a participant
+            // A user can access events in which he or his org is a participant
             can('read', 'events', { context: organisation._id, 'participants._id': subject._id })
+            can('read', 'events', { context: organisation._id, 'participants._id': organisation._id })
             // A coordinator can manage his events
             can('all', 'events', { context: organisation._id, 'coordinators._id': subject._id })
-            // BUG: adding org level participant/coordinator generates a bug because the org owner
-            // has the same ID than the org itself causing everybody accessing the event
-            // can('read', 'events', { context: organisation._id, 'participants._id': organisation._id })
-            // can('all', 'events', { context: organisation._id, 'coordinators._id': organisation._id })
+            // The same for archive
             can('read', 'archived-events', { context: organisation._id, 'participants._id': subject._id })
+            can('read', 'archived-events', { context: organisation._id, 'participants._id': organisation._id })
             can('read', 'archived-events', { context: organisation._id, 'coordinators._id': subject._id })
           }
           if (subject.groups) {
@@ -40,6 +39,7 @@ function defineEventAbilities (subject, can, cannot, app) {
                 can('read', 'events', { context: organisation._id, 'participants._id': group._id })
                 // A coordinator can manage events in which his group is a coordinator
                 can('all', 'events', { context: organisation._id, 'coordinators._id': group._id })
+                // The same for archive
                 can('read', 'archived-events', { context: organisation._id, 'participants._id': group._id })
                 can('read', 'archived-events', { context: organisation._id, 'coordinators._id': group._id })
               }
@@ -52,6 +52,7 @@ function defineEventAbilities (subject, can, cannot, app) {
                 can('read', 'events', { context: organisation._id, 'participants._id': tag._id })
                 // A coordinator can manage events in which his tag is a coordinator
                 can('all', 'events', { context: organisation._id, 'coordinators._id': tag._id })
+                // The same for archive
                 can('read', 'archived-events', { context: organisation._id, 'participants._id': tag._id })
                 can('read', 'archived-events', { context: organisation._id, 'coordinators._id': tag._id })
               }
