@@ -17,7 +17,7 @@
         Toggle used to copy the source template workflow on creation
       -->
       <p v-show="hasWorkflow" :class="{ 'light-dimmed': applyInProgress }" class="col-10 caption pull-left">
-        <q-toggle id="workflow-toggle" icon="las la-retweet" v-model="copyWorkflow" @input="onWorkflow">
+        <q-toggle id="workflow-toggle" icon="las la-retweet" v-model="copyWorkflow" @update:modelValue="onWorkflow">
         </q-toggle>
         <strong>{{$t('EventTemplateEditor.WORKFLOW_HELPER_LABEL')}}</strong>
       </p>
