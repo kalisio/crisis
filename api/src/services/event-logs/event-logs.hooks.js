@@ -22,7 +22,7 @@ const populateParticipant = commonHooks.populate({
           nameAs: 'participant',
           parentField: 'participant',
           childField: '_id',
-          query: { $select: ['profile.name'] }
+          query: { $select: ['profile.name', 'email'] }
         }
       ]
     }
