@@ -499,6 +499,7 @@
     "ALL_STEPS": "All",
     "INTERACTION": "Select an interaction to filter participants",
     "ALL_INTERACTIONS": "All",
+    "NB_ITEMS_PER_PAGE": "Number of participants per page",
     "VIEW_LOCATION": "View location",
     "FOLLOW_UP_MODAL_TITLE": "Enter your choice",
     "FOLLOWUP_MODAL_CANCEL_BUTTON": "@:CANCEL",

@@ -506,6 +506,7 @@
     "ALL_STEPS": "Toutes",
     "INTERACTION": "Sélectionnez une réponse pour filtrer les participants",
     "ALL_INTERACTIONS": "Toutes",
+    "NB_ITEMS_PER_PAGE": "Nombre de participants par page",
     "VIEW_LOCATION": "Voir la localisation",
     "FOLLOW_UP_MODAL_TITLE": "Entrez votre choix",
     "FOLLOWUP_MODAL_CANCEL_BUTTON": "@:CANCEL",
