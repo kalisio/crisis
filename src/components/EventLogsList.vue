@@ -9,6 +9,8 @@
         :options="stepOptions" emit-value map-options /></q-item-section>
       <q-item-section v-if="selectedStep"><q-select id="step-interaction" v-model="selectedInteraction" :label="$t('EventLogsList.INTERACTION')" stack-label
         :options="interactionOptions" emit-value map-options /></q-item-section>
+      <q-item-section><q-select id="nb-items-per-page" v-model="nbItemsPerPage" :label="$t('EventLogsList.NB_ITEMS_PER_PAGE')" stack-label
+        :options="nbItemsPerPageOptions" emit-value map-options /></q-item-section>
     </q-item>
     <!--
       Event logs list
@@ -21,7 +23,7 @@
       :base-query="baseQuery"
       :filter-query="filterQuery"
       :list-strategy="'smart'"
-      :nb-items-per-page="50"
+      :nb-items-per-page="nbItemsPerPage"
       :processor="onCollectionRefreshed"
       @item-toggled="onItemToggled">
         <template v-slot:empty-section>
@@ -71,6 +73,16 @@ export default {
       selectedInteraction: '',
       selectedParticipantState: {},
       selectedParticipantStep: {},
+      nbItemsPerPage: 50,
+      nbItemsPerPageOptions: [{
+        value: 25, label: '25'
+      }, {
+        value: 50, label: '50', default: true
+      }, {
+        value: 100, label: '100'
+      }, {
+        value: 500, label: '500'
+      }],
       itemsToggled: false,
       toggledParticipants: []
     }
