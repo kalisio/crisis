@@ -1761,10 +1761,10 @@
     lodash "^4.17.21"
     web-push "^3.6.1"
 
-"@kalisio/kdk@^2.1.6":
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/@kalisio/kdk/-/kdk-2.1.6.tgz#8c1f2c2cf39da5613ff334ccc1f4d7c7d42c429d"
-  integrity sha512-gg6UdC1XD8geAzixsdnqJXRk5o/D5++XD5GqYgM9KJE4ExdDDiCNSESfglPdICM5tWEtpK1JZvYaA/t/2YskYA==
+"@kalisio/kdk@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@kalisio/kdk/-/kdk-2.1.7.tgz#96f8a733fc9f061f45060d0e974a25387259b926"
+  integrity sha512-xLZYUmGZXyrHqovdusa+JB7TbcQAtAn/fE2vABQ6CbZIDto3rKQi3yv57yIjgvAgkj48gc8LQI4lHh4tJ6f2zQ==
   dependencies:
     "@casl/ability" "^6.1.1"
     "@casl/mongoose" "^7.1.0"
