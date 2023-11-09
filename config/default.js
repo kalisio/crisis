@@ -462,12 +462,6 @@ module.exports = {
         { id: 'login-link', label: 'KRegisterScreen.ALREADY_HAVE_AN_ACCOUNT_LABEL', route: { name: 'login' } },
         { id: 'contextual-help', label: 'KRegisterScreen.CONTEXTUAL_HELP', route: { name: 'register', query: { tour: true } } }
       ]
-    },
-    endpoint: {
-      actions: [
-        { id: 'login-link', label: 'KEndpointScreen.LOG_IN_LABEL', route: { name: 'login' } },
-        { id: 'register-link', label: 'KEndpointScreen.DONT_HAVE_AN_ACCOUNT_LABEL', route: { name: 'register' } }
-      ]
     }
   },
   layout: {

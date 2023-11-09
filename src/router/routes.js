@@ -20,7 +20,6 @@ module.exports = [{
       component: 'screen/KRegisterScreen',
       tour: tours.register
     },
-    'change-endpoint': 'screen/KEndpointScreen',
     'resend-verify-signup': {
       component: 'account/KResendVerifySignup',
       meta: { authenticated: true }
