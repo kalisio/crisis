@@ -610,7 +610,7 @@ export default {
       kdkCoreUtils.downloadAsBlob(data, (this.showMap
         ? this.$t('ArchivedEventsActivity.MAP_EXPORT_FILE')
         : this.$t('ArchivedEventsActivity.EVENTS_EXPORT_FILE')), mimeType)
-    }*/,
+    },*/
     getChartSettingsModalButtons () {
       return [
         { id: 'close-button', label: 'CLOSE', renderer: 'form-button', handler: () => this.$refs.chartSettingsModal.close() }
