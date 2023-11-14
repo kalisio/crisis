@@ -82,6 +82,9 @@ src/tours/core
 src/tours/map
 src/css/kdk
 
+# Temporary files
+api/tmp
+
 # vitepress
 docs/.vitepress/node_modules
 docs/.vitepress/cache
