@@ -237,6 +237,22 @@ module.exports = {
     },
     bucket: process.env.S3_BUCKET
   },
+  'import-export': {
+    s3Options: {
+      s3Client: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY || process.env.S3_ACCESS_KEY_ID,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
+        },
+        endpoint: process.env.S3_ENDPOINT,
+        region: process.env.S3_REGION,
+        signatureVersion: 'v4'
+      },
+      bucket: process.env.S3_BUCKET,
+      prefix: 'tmp'
+    },
+    workingDir: process.env.TMP_DIR || 'tmp',
+  },
   // When multiple instances are running we need to sync them
   sync: ((N > 1) || process.env.REDIS_URL ? {
     // When using mubsub, now deprecated see https://github.com/feathersjs-ecosystem/feathers-sync/pull/135

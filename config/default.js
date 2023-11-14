@@ -899,7 +899,8 @@ module.exports = {
               { icon: 'las la-sort-alpha-up', value: { field: 'profile.name', order: -1 } }
             ]
           },
-          { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBERS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
+          { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBERS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { id: 'export-members', icon: 'las la-download', tooltip: 'KMembersActivity.EXPORT_MEMBERS', handler: "exportMembers" },
         ],
         'filter': contextFilter('profile.name', [
           { service: 'groups', field: 'name', baseQuery: {}, icon: { name: 'las la-sitemap' } },
@@ -971,7 +972,8 @@ module.exports = {
               { icon: 'las la-sort-alpha-up', value: { field: 'value', order: -1 } }
             ]
           },
-          { id: 'search-tag', icon: 'las la-search', tooltip: 'KTagsActivity.SEARCH_TAGS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
+          { id: 'search-tag', icon: 'las la-search', tooltip: 'KTagsActivity.SEARCH_TAGS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { id: 'export-tags', icon: 'las la-download', tooltip: 'KTagsActivity.EXPORT_TAGS', handler: "exportTags" },
         ],
         'filter': contextFilter('value')
       },
@@ -1005,7 +1007,8 @@ module.exports = {
           planTemplatesAction(),
           midSeparator,          
           { id: 'group-sorter', component: 'collection/KSorter', tooltip: 'KGroupsActivity.SORT_GROUPS' },
-          { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUPS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
+          { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUPS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { id: 'export-groups', icon: 'las la-download', tooltip: 'KGroupsActivity.EXPORT_GROUPS', handler: "exportGroups" },
         ],
         'filter': contextFilter('name')
       },

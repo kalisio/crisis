@@ -52,6 +52,8 @@ export default function (app) {
       if (!permissions.hasServiceAbilities(abilities, hook.service)) {
         return false
       }
+      // Special case for 'import-export' service
+      if (resourceType === 'import-export') return true
       // Then check against the object we'd like to manage
       if (!permissions.hasResourceAbilities(abilities, 'read', resourceType, context, hook.result || hook.data)) {
         return false
