@@ -80,7 +80,7 @@ import moment from 'moment'
 import L from 'leaflet'
 import Papa from 'papaparse'
 import { colors, QSlider } from 'quasar'
-import { mixins as kdkCoreMixins, utils as kdkCoreUtils, Time } from '@kalisio/kdk/core.client'
+import { mixins as kdkCoreMixins, utils as kdkCoreUtils, Time, Exporter } from '@kalisio/kdk/core.client'
 import { mixins as kdkMapMixins } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 import { getLocationAsFeature } from '../utils.js'
@@ -528,7 +528,42 @@ export default {
       const csv = Papa.unparse(json)
       kdkCoreUtils.downloadAsBlob(csv, this.$t('ArchivedEventsActivity.CHART_EXPORT_FILE'), 'text/csv;charset=utf-8;')
     },
-    async downloadEventsData () {
+    exportEvents () {
+      Exporter.export({
+        service: 'archived-events',
+        context: this.contextId,
+        query: Object.assign({}, this.baseQuery, this.getCollectionFilterQuery()),
+        formats: [this.showMap ? { value: 'geojson', LABEL: 'GeoJSON' } : { value: 'csv', LABEL: 'CSV' }],
+        transform: {
+          csv: {
+            mapping: {
+              'location.geometry.coordinates[0]': 'longgitude',
+              'location.geometry.coordinates[1]': 'latitude',
+              'location.properties.name': 'address'
+            },
+            omit: ['icon', 'participants', 'coordinators', 'hasWorkflow', 
+                   'workflow', '_include', 'location', 'deletedAt' ]
+          },
+          geojson: {
+            mapping: {
+              'location.type': 'type',
+              'location.geometry': 'geometry',
+              'location.properties': 'properties',
+              'name': 'properties.name',
+              'description': 'properties.description',
+              'template': 'properties.template',
+              'createdAt': 'properties.createdAt',
+              'updatedAt': 'properties.updatedAt',
+              'expireAt': 'properties.expireAt',              
+            },
+            omit: ['name', 'icon', 'description','participants', 'coordinators', 'template', 'plan', 
+                   'hasWorkflow', 'workflow', 'location', '_include', 
+                   'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
+          }
+        }
+      })
+    },
+    /*async downloadEventsData () {
       let data, mimeType
       if (this.showMap) {
         const geoJson = this.toGeoJson(this.$t('ArchivedEventsActivity.EVENTS_LAYER_NAME'))
@@ -575,7 +610,7 @@ export default {
       kdkCoreUtils.downloadAsBlob(data, (this.showMap
         ? this.$t('ArchivedEventsActivity.MAP_EXPORT_FILE')
         : this.$t('ArchivedEventsActivity.EVENTS_EXPORT_FILE')), mimeType)
-    },
+    }*/,
     getChartSettingsModalButtons () {
       return [
         { id: 'close-button', label: 'CLOSE', renderer: 'form-button', handler: () => this.$refs.chartSettingsModal.close() }
