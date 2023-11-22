@@ -66,6 +66,12 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
 
+      vueLoaderOptions: {
+        compilerOptions: {
+          isCustomElement: tag => ['pinch-zoom'].includes(tag)        
+        }
+      },
+
       // transpile: false,
       // publicPath: '/',
 
