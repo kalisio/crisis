@@ -115,13 +115,11 @@ export default {
       } else if (this.hasLocation()) {
         const feature = this.getLocationAsFeature()
         // Add event marker
-        const marker = L.marker([_.get(feature, 'geometry.coordinates[1]'), _.get(feature, 'geometry.coordinates[0]')], {
-          icon: L.icon.fontAwesome({
-            iconClasses: icon,
-            // Conversion from palette to RGB color is required for markers
-            markerColor: color,
-            iconColor: '#FFFFFF'
-          })
+        const marker = L.shapeMarker([_.get(feature, 'geometry.coordinates[1]'), _.get(feature, 'geometry.coordinates[0]')], {
+          fillColor: color,
+          icon: {
+            classes: icon
+          }
         })
         // Address as popup
         marker.bindPopup(_.get(feature, 'properties.name'))

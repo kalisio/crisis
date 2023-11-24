@@ -322,13 +322,7 @@ let mapEngine = {
     'fill-color': 'green'
   },
   // Default GeoJSON layer style for points
-  pointStyle: {
-    'icon-color': 'white',
-    'marker-color': 'blue-grey',
-    'icon-classes': 'fas fa-circle',
-    'icon-x-offset': -1,
-    'icon-y-offset': 0
-  },
+  pointStyle: { },
   // Default GeoJSON layer style for points edition
   editPointStyle: {
     'marker-type': 'circleMarker',
