@@ -764,8 +764,8 @@ module.exports = {
     },
     fab: {
       content: [
-        { id: 'create-view', icon: 'las la-star', label: 'mixins.activity.CREATE_VIEW', route: { name: 'add-map-view' } },
-        { id: 'create-layer', icon: 'las la-plus', label: 'mixins.activity.CREATE_LAYER', route: { name: 'add-map-layer' } },
+        { id: 'create-view', icon: 'las la-star', label: 'mixins.activity.CREATE_VIEW', route: { name: 'create-map-view' } },
+        { id: 'add-layer', icon: 'las la-plus', label: 'mixins.activity.ADD_LAYER', route: { name: 'add-map-layer' } },
         { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'probeAtLocation' }
       ]
     },

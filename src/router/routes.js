@@ -179,9 +179,9 @@ module.exports = [{
                 fab: tours.fab
               },
               children: {
-                'add-view': {
-                  name: 'add-map-view',
-                  component: 'catalog/KAddView',
+                'create-view': {
+                  name: 'create-map-view',
+                  component: 'catalog/KCreateView',
                   tour: tours['create-view']
                 },
                 'add-layer': {
