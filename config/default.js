@@ -754,7 +754,6 @@ module.exports = {
     },
     page: {
       content: [
-        { component: 'layout/KPageSticky', position: 'left', offset: [18, 0], content: [{ component: 'KColorLegend' }] }, 
         { component: 'layout/KPageSticky', position: 'top-left', offset: [18, 18], content: [{ component: 'KUrlLegend' }] }, 
         { component: 'KFeatureActionButton' }
       ]
