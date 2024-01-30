@@ -47,7 +47,7 @@ import chroma from 'chroma-js'
 import sift from 'sift'
 import { ref, toRef, computed } from 'vue'
 import { mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
+import { mixins as kMapMixins, composables as kMapComposables, utils as kdkMapUtils } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 import { usePlan, useAlerts } from '../composables'
 
@@ -348,7 +348,7 @@ export default {
 
       const isActive = _.get(feature, 'status.active')
       const hasError = _.get(feature, 'status.error')
-      return this.createMarkerFromStyle(latlng, {
+      return kdkMapUtils.createLeafletMarkerFromStyle(latlng, {
         icon: {
           type: 'icon.fontAwesome',
           options: {
@@ -374,7 +374,7 @@ export default {
     getEventMarker (feature, latlng, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
-      return this.createMarkerFromStyle(latlng, {
+      return kdkMapUtils.createLeafletMarkerFromStyle(latlng, {
         icon: {
           type: 'icon.fontAwesome',
           options: {

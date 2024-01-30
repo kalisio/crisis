@@ -17,7 +17,7 @@ import L from 'leaflet'
 import chroma from 'chroma-js'
 import centroid from '@turf/centroid'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
+import { mixins as kMapMixins, utils as kdkMapUtils, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 import mixins from '../mixins'
 
@@ -176,7 +176,7 @@ export default {
     },
     getParticipantMarker (feature, latlng, options) {
       if (options.name !== this.$t('EventActivity.PARTICIPANTS_LAYER_NAME')) return
-      return this.createMarkerFromStyle(latlng, {
+      return kdkMapUtils.createLeafletMarkerFromStyle(latlng, {
         icon: {
           type: 'icon.fontAwesome',
           options: {

@@ -81,7 +81,7 @@ import L from 'leaflet'
 import Papa from 'papaparse'
 import { colors, QSlider } from 'quasar'
 import { mixins as kdkCoreMixins, utils as kdkCoreUtils, Time, Exporter } from '@kalisio/kdk/core.client'
-import { mixins as kdkMapMixins } from '@kalisio/kdk/map.client.map'
+import { mixins as kdkMapMixins, utils as kdkMapUtils } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 import { getLocationAsFeature } from '../utils.js'
 
@@ -333,7 +333,7 @@ export default {
     },
     getEventMarker (feature, latlng, options) {
       if (!this.templates.includes(options.name)) return
-      return this.createMarkerFromStyle(latlng, {
+      return kdkMapUtils.createLeafletMarkerFromStyle(latlng, {
         icon: {
           type: 'icon.fontAwesome',
           options: {
