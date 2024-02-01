@@ -4,6 +4,11 @@
   "title": "schemas.OBJECT_NAME",
   "description": "Event update schema",
   "type": "object",
+  "groups": {
+    "group-1": {
+      "label": "schemas.EVENTS_ADVANCED_SETTINGS"
+    }
+  },
   "properties": {
     "name": {
       "type": "string", 
@@ -41,7 +46,7 @@
     },
     "expireAt": {
       "type": "string", 
-      "group": "schemas.EVENTS_ADVANCED_SETTINGS",
+      "group": "group-1",
       "format": "date-time",
       "field": {
         "component": "form/KDatetimeField",

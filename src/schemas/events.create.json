@@ -3,6 +3,11 @@
   "$id": "http://www.kalisio.xyz/schemas/events.create.json#",
   "title": "schemas.EVENTS_CREATE_TITLE",
   "type": "object",
+  "groups": {
+    "group-1": {
+      "label": "schemas.EVENTS_ADVANCED_SETTINGS"
+    }
+  },
   "properties": {
     "name": {
       "type": "string", 
@@ -134,7 +139,7 @@
     },
     "expireAt": {
       "type": "string",
-      "group": "schemas.EVENTS_ADVANCED_SETTINGS",
+      "group": "group-1",
       "format": "date-time",
       "field": {
         "component": "form/KDatetimeField",
@@ -145,7 +150,7 @@
     },
     "hasWorkflow": {
       "type": "boolean", 
-      "group": "schemas.EVENTS_ADVANCED_SETTINGS",
+      "group": "group-1",
       "default": true,
       "field": {
         "component": "form/KToggleField",
