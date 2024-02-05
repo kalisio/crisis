@@ -1,4 +1,4 @@
-<img src="https://s3.eu-central-1.amazonaws.com/kalisioscope/crisis/crisis-logo-color-512x256.png">
+<img src="https://s3.eu-central-1.amazonaws.com/kalisioscope/crisis/crisis-logo-color-512x192.png">
 
 ## Kalisio Crisis application
 
