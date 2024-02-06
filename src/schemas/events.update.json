@@ -5,7 +5,7 @@
   "description": "Event update schema",
   "type": "object",
   "groups": {
-    "group-1": {
+    "group-advanced-settings": {
       "label": "schemas.EVENTS_ADVANCED_SETTINGS"
     }
   },
@@ -46,7 +46,7 @@
     },
     "expireAt": {
       "type": "string", 
-      "group": "group-1",
+      "group": "group-advanced-settings",
       "format": "date-time",
       "field": {
         "component": "form/KDatetimeField",
