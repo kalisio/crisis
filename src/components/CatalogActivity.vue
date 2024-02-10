@@ -340,7 +340,9 @@ export default {
       const hasError = _.get(feature, 'status.error')
       return {
         color: (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green')),
-        fillColor: (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green'))
+        stoke: {
+          color: (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green')),
+        }
       }
     },
     getAlertMarker (feature, latlng, options) {
@@ -348,14 +350,12 @@ export default {
 
       const isActive = _.get(feature, 'status.active')
       const hasError = _.get(feature, 'status.error')
-      return kdkMapUtils.createLeafletMarkerFromStyle(latlng, {
+      return kdkMapUtils.createMarkerFromPointStyle(latlng, {
+        shape: 'circle',
+        color: isActive ? '#FF0000' : '#008000',
         icon: {
-          type: 'icon.fontAwesome',
-          options: {
-            iconClasses: 'fas fa-bell',
-            markerColor: (isActive ? '#FF0000' : '#008000'),
-            iconColor: (hasError ? '#000000' : '#FFFFFF')
-          }
+          classes: 'fas fa-bell',
+          color: hasError ? '#000000' : '#FFFFFF',
         }
       })
     },
@@ -374,23 +374,24 @@ export default {
     getEventMarker (feature, latlng, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
-      return kdkMapUtils.createLeafletMarkerFromStyle(latlng, {
-        icon: {
-          type: 'icon.fontAwesome',
-          options: {
-            iconClasses: kCoreUtils.getIconName(feature) || 'fas fa-map-marker-alt',
-            // Conversion from palette to RGB color is required for markers
-            markerColor: kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color', 'blue')),
-            iconColor: '#FFFFFF'
-          }
+      return kdkMapUtils.createMarkerFromPointStyle(latlng, {
+        shape: 'circle',
+        color: kCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
+        icon: { 
+          classes: kCoreUtils.getIconName(feature) || 'las la-marker-map',
+          color: 'white'
         }
       })
     },
     getEventStyle (event, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
-      const color = kCoreUtils.getColorFromPalette(_.get(event, 'icon.color', 'blue'))
-      return { color, fillColor: chroma(color).alpha(0.5).hex() } // Transparency
+      return { 
+        color: chroma(color).alpha(0.5).hex(),  // Transparency
+        stroke: {
+          color: kCoreUtils.getHtmlColor(_.get(event, 'icon.color'), 'blue')
+        }
+      }
     },
     getEventPopup (event, layer, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
@@ -554,12 +555,12 @@ export default {
     this.setCurrentActivity(this)
     this.registerStyle('tooltip', this.getAlertTooltip)
     this.registerStyle('popup', this.getAlertPopup)
-    this.registerStyle('markerStyle', this.getAlertMarker)
-    this.registerStyle('featureStyle', this.getAlertStyle)
+    this.registerStyle('point', this.getAlertMarker)
+    this.registerStyle('polygon', this.getAlertStyle)
     this.registerStyle('tooltip', this.getEventTooltip)
     this.registerStyle('popup', this.getEventPopup)
-    this.registerStyle('markerStyle', this.getEventMarker)
-    this.registerStyle('featureStyle', this.getEventStyle)
+    this.registerStyle('point', this.getEventMarker)
+    this.registerStyle('polygon', this.getEventStyle)
     this.registerStyle('tooltip', this.getObjectiveTooltip)
     this.registerStyle('popup', this.getObjectivePopup)
   },

@@ -176,15 +176,13 @@ export default {
     },
     getParticipantMarker (feature, latlng, options) {
       if (options.name !== this.$t('EventActivity.PARTICIPANTS_LAYER_NAME')) return
-      return kdkMapUtils.createLeafletMarkerFromStyle(latlng, {
+      
+      return kdkMapUtils.createMarkerFromPointStyle(latlng, {
+        shape: 'circle',
+        color: kCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
         icon: {
-          type: 'icon.fontAwesome',
-          options: {
-            iconClasses: kCoreUtils.getIconName(feature) || 'fas fa-user',
-            // Conversion from palette to RGB color is required for markers
-            markerColor: kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color', 'blue')),
-            iconColor: '#FFFFFF'
-          }
+          classes: kCoreUtils.getIconName(feature) || 'fas fa-user',
+          color: 'white'
         }
       })
     },
@@ -292,7 +290,7 @@ export default {
     // Load the required components
     this.registerStyle('tooltip', this.getParticipantTooltip)
     this.registerStyle('popup', this.getParticipantPopup)
-    this.registerStyle('markerStyle', this.getParticipantMarker)
+    this.registerStyle('point', this.getParticipantMarker)
     // Archived mode ?
     this.archived = _.get(this.$route, 'query.archived')
   },

@@ -306,31 +306,39 @@ let mapEngine = {
   // COLORS USED IN STYLES SHOULD BE PART OF THE QUASAR PALETTE NOT RANDOM RGB COLORS
   // THIS IS DUE TO KDK EDITING COMPONENTS ONLY SUPPORTING COLORS FROM PALETTE NOW
   // Default GeoJSON layer style for polygons/lines
-  featureStyle: {
-    'stroke-opacity': 1,
-    'stroke-color': 'red',
-    'stroke-width': 3,
-    'fill-opacity': 0.5,
-    'fill-color': 'green'
-  },
-  // Default GeoJSON layer style for polygons/lines edition
-  editFeatureStyle: {
-    'stroke-opacity': 1,
-    'stroke-color': 'red',
-    'stroke-width': 3,
-    'fill-opacity': 0.5,
-    'fill-color': 'green'
-  },
-  // Default GeoJSON layer style for points
-  pointStyle: { },
-  // Default GeoJSON layer style for points edition
-  editPointStyle: {
-    'marker-type': 'circleMarker',
-    radius: 6,
-    'stroke-color': 'red',
-    'stroke-opacity': 1,
-    'fill-opacity': 0.5,
-    'fill-color': 'green'
+  style: {
+    point: { shape: 'circle', color: 'red' },
+    line: { color: 'red', width: 3 },
+    polygon: { color: 'red', opacity: 0.5, stroke: 
+      { color: 'red', opacity: 0.5 }
+    },
+    location: {
+      point: { shape: 'marker-pin', color: 'primary', size: [20, 30], icon: 
+        { classes: 'fas fa-circle', color: 'white', size: 12, translation: [ '-50%', '-90%'] } 
+      },
+      line: { color: 'primary', width: 3 },
+      polygon: { color: 'primary', opacity: 0.5, stroke: 
+        { color: 'primary' } 
+      }
+    },
+    edition: {
+      point: { shape: 'circle', color: 'yellow', stroke:
+        { color: 'red', width: 3, dashArray: '0 5 0' }
+      },
+      line: { color: 'red', width: 3, dashArray: '0 5 0' },
+      polygon: { color: 'yellow', opacity: 0.5, stroke: 
+        { color: 'red', width: 3, dashArray: '0 5 0' } 
+      }
+    },
+    selection: {
+      point: { shape: 'circle', color: 'primary', opacity: 0.5, radius: 10, stroke: 
+        { color: 'dark', width: 1 }
+      },
+      line: { color: 'primary', opacity: 0.25, width: 10 },
+      polygon: { color: 'primary', opacity: 0.25, stroke: 
+        { color: 'primary', opacity: 0.25, width: 10 } 
+      }
+    }
   },
   // Default GeoJSON infobox will display all properties
   popup: { pick: [] },

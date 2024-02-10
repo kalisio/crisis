@@ -333,15 +333,12 @@ export default {
     },
     getEventMarker (feature, latlng, options) {
       if (!this.templates.includes(options.name)) return
-      return kdkMapUtils.createLeafletMarkerFromStyle(latlng, {
+      return kdkMapUtils.createMarkerFromPointStyle(latlng, {
+        shape: 'circle',
+        color: kdkCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
         icon: {
-          type: 'icon.fontAwesome',
-          options: {
-            iconClasses: kdkCoreUtils.getIconName(feature) || 'fas fa-map-marker-alt',
-            // Conversion from palette to RGB color is required for markers
-            markerColor: kdkCoreUtils.getColorFromPalette(_.get(feature, 'icon.color', 'blue')),
-            iconColor: '#FFFFFF'
-          }
+          classes: kdkCoreUtils.getIconName(feature) || 'las la-marker-map',
+          color: white
         }
       })
     },
@@ -621,7 +618,7 @@ export default {
     // Resgister map styles
     this.registerStyle('tooltip', this.getEventTooltip)
     this.registerStyle('popup', this.getEventPopup)
-    this.registerStyle('markerStyle', this.getEventMarker)
+    this.registerStyle('point', this.getEventMarker)
     // Initialize private properties
     this.templates = []
     // Setup current time to now
