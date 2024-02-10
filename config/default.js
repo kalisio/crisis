@@ -757,7 +757,7 @@ module.exports = {
     },
     bottomPane: {
       content: [
-        { component: 'KTimeline' }
+        { component: 'time/KTimeControl' }
       ]
     },
     page: {
@@ -1191,7 +1191,7 @@ module.exports = {
     },
     bottomPane: {
       content: [
-        { component: 'KTimeline' }
+        { component: 'time/KTimeControl' }
       ]
     },
     page: {
