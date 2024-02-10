@@ -85,7 +85,6 @@ export default async ({ app }) => {
   app.component('KLocationMap', await kdkCoreUtils.loadComponent('location/KLocationMap'))
   app.component('KLocationCardSection', await kdkCoreUtils.loadComponent('location/KLocationCardSection'))
   app.component('KLayersPanel', await kdkCoreUtils.loadComponent('catalog/KLayersPanel'))
-  app.component('KColorLegend', await kdkCoreUtils.loadComponent('KColorLegend'))
   app.component('KPage', await kdkCoreUtils.loadComponent('layout/KPage'))
   app.component('KTour', await kdkCoreUtils.loadComponent('app/KTour'))
   app.component('KWelcome', await kdkCoreUtils.loadComponent('app/KWelcome'))

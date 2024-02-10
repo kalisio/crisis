@@ -1195,9 +1195,7 @@ module.exports = {
       ]
     },
     page: {
-      content: [{
-        component: 'layout/KPageSticky', position: 'left', offset: [18, 0], content: [{ component: 'KColorLegend' }]
-      }]
+      content: []
     },
     windows: {
       top: { content: topWidgets }
