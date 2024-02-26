@@ -174,17 +174,17 @@ export default {
       _.filter(this.items, (item) => this.filterItem(item)).forEach(item => this.participants.push(item))
       this.updateLayer(this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'), { type: 'FeatureCollection', features: this.participants })
     },
-    getParticipantMarker (feature, latlng, options) {
+    getParticipantMarker (feature, options) {
       if (options.name !== this.$t('EventActivity.PARTICIPANTS_LAYER_NAME')) return
       
-      return kdkMapUtils.createMarkerFromPointStyle(latlng, {
+      return {
         shape: 'circle',
-        color: kCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
+        color: kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color'), 'blue'),
         icon: {
           classes: kCoreUtils.getIconName(feature) || 'fas fa-user',
           color: 'white'
         }
-      })
+      }
     },
     getParticipantPopup (feature, layer, options) {
       if (options.name !== this.$t('EventActivity.PARTICIPANTS_LAYER_NAME')) return

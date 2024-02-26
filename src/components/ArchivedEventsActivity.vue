@@ -331,16 +331,26 @@ export default {
         await this.removeLayer(template)
       }
     },
-    getEventMarker (feature, latlng, options) {
+    getEventMarker (feature, options) {
       if (!this.templates.includes(options.name)) return
-      return kdkMapUtils.createMarkerFromPointStyle(latlng, {
+      return {
         shape: 'circle',
-        color: kdkCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
+        color: kdkCoreUtils.getColorFromPalette(_.get(feature, 'icon.color'), 'blue'),
         icon: {
           classes: kdkCoreUtils.getIconName(feature) || 'las la-marker-map',
-          color: white
+          color: 'white'
         }
-      })
+      }
+    },
+    getEventStyle (event, options) {
+      if (!this.templates.includes(options.name)) return
+      const color = kdkCoreUtils.getColorFromPalette(_.get(event, 'icon.color'), 'blue')
+      return { 
+        color: chroma(color).alpha(0.5).hex(),  // Transparency
+        stroke: {
+          color
+        }
+      }
     },
     getEventPopup (feature, layer, options) {
       if (!this.templates.includes(options.name)) return
@@ -619,6 +629,7 @@ export default {
     this.registerStyle('tooltip', this.getEventTooltip)
     this.registerStyle('popup', this.getEventPopup)
     this.registerStyle('point', this.getEventMarker)
+    this.registerStyle('polygon', this.getEventStyle)
     // Initialize private properties
     this.templates = []
     // Setup current time to now

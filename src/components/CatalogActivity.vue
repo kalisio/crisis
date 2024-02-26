@@ -371,25 +371,26 @@ export default {
       const html = this.getAlertStatusAsHtml(alert)
       return L.tooltip({ permanent: false }, layer).setContent(html)
     },
-    getEventMarker (feature, latlng, options) {
+    getEventMarker (feature, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
-      return kdkMapUtils.createMarkerFromPointStyle(latlng, {
+      return {
         shape: 'circle',
-        color: kCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
+        color: kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color'), 'blue'),
         icon: { 
           classes: kCoreUtils.getIconName(feature) || 'las la-marker-map',
           color: 'white'
         }
-      })
+      }
     },
     getEventStyle (event, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
+      const color = kCoreUtils.getColorFromPalette(_.get(event, 'icon.color'), 'blue')
       return { 
         color: chroma(color).alpha(0.5).hex(),  // Transparency
         stroke: {
-          color: kCoreUtils.getHtmlColor(_.get(event, 'icon.color'), 'blue')
+          color
         }
       }
     },
