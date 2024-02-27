@@ -212,7 +212,7 @@ const eventsMixin = {
           type: 'object',
           field: {
             component: 'form/KSelectField',
-            helper: step.description,
+            label: step.description,
             valueField: 'value',
             options
           }
@@ -227,7 +227,7 @@ const eventsMixin = {
         type: 'string',
         field: {
           component: 'form/KTextareaField',
-          helper: this.$t('schemas.EVENTS_LOG_COMMENT_FIELD_LABEL')
+          label: this.$t('schemas.EVENTS_LOG_COMMENT_FIELD_LABEL')
         }
       }
       return schema
