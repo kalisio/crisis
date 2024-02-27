@@ -40,11 +40,11 @@
           <q-item-section>
             <q-slider v-if="!isRange(variables[index])" v-model="condition.threshold" :disable="!condition.isActive"
               :min="condition.min" :max="condition.max" :step="condition.step"
-              label label-always :label-value="condition.threshold + ' ' + getUnits(variables[index])"/>
+              label label-always :label-value="condition.threshold + ' ' + getUnit(variables[index])"/>
             <q-range v-if="isRange(variables[index])" v-model="condition.threshold" :disable="!condition.isActive"
               :min="condition.min" :max="condition.max" :step="condition.step"
-              label label-always :left-label-value="condition.threshold.min + ' ' + getUnits(variables[index])"
-              :right-label-value="condition.threshold.max + ' ' + getUnits(variables[index])"/>
+              label label-always :left-label-value="condition.threshold.min + ' ' + getUnit(variables[index])"
+              :right-label-value="condition.threshold.max + ' ' + getUnit(variables[index])"/>
           </q-item-section>
         </q-item>
       </q-list>
@@ -127,14 +127,14 @@ export default {
           icon: { name: 'las la-fire' }
         }],
         field: {
-          helper: 'AlertForm.EVENT_TEMPLATE'
+          label: 'AlertForm.EVENT_TEMPLATE'
         }
       },
       closeEventFieldProperties: {
         name: 'close-event',
         default: true,
         field: {
-          helper: 'AlertForm.CLOSE_EVENT_WITH_ALERT'
+          label: 'AlertForm.CLOSE_EVENT_WITH_ALERT'
         }
       }
     }
@@ -197,10 +197,10 @@ export default {
     },
     isRange (variable) {
       const unitsWithRange = ['deg']
-      return unitsWithRange.includes(this.getUnits(variable))
+      return unitsWithRange.includes(this.getUnit(variable))
     },
-    getUnits (variable) {
-      return _.get(variable, 'units[0]', '')
+    getUnit (variable) {
+      return _.get(variable, 'unit', '')
     },
     hasActiveVariable () {
       return this.conditions.reduce((value, condition) => value || condition.isActive, false)

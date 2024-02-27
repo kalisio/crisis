@@ -20,7 +20,7 @@ export function useAlerts (options) {
       // Get corresponding variable
       const variable = _.find(_.get(alert, 'layer.variables'), { name: key })
       const label = i18n.t(variable.label) || variable.label
-      const unit = variable.units[0]
+      const unit = variable.unit || ''
       if (_.has(value, '$gte')) {
         html += isActive
           ? `${label} ` + i18n.t('CatalogActivity.ALERT_GTE') + ` ${value.$gte} ${unit}</br>`
