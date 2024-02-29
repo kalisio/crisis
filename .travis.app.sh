@@ -61,8 +61,9 @@ cd ..
 git clone https://oauth2:$GITHUB_TOKEN@github.com/kalisio/development.git
 export WORKSPACE_DIR=`pwd`/development/workspaces/apps
 
-# Configue the required env
+# Configure the required env
 source $WORKSPACE_DIR/apps.sh $APP
+export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
 
 # Install the kli
 git clone https://github.com/kalisio/kli.git kalisio && cd kalisio && yarn 
