@@ -78,6 +78,14 @@ const leftPane = function (tour) {
   }
 }
 
+// left window
+const leftWidgets = [
+  { 
+    id: 'legend-widget', label: 'KLegend.LABEL', icon: 'las la-list', scrollable: true,
+    content: { component: 'legend/KLegend' }
+  }
+]
+
 // top widgets
 const topWidgets = [{ 
   id: 'information-box', label: 'KInformationBox.LABEL', icon: 'las la-digital-tachograph', scrollable: true,
@@ -694,7 +702,8 @@ module.exports = {
             id: 'tools', component: 'menu/KMenu', icon: 'las la-wrench', tooltip: 'mixins.activity.TOOLS', actionRenderer: 'item',
             content: [
               { id: 'measure-tool', icon: 'las la-ruler-combined', label: 'KMeasureTool.TOOL_BUTTON_LABEL', handler: { name: 'setTopPaneMode', params: ['measure-tool'] } },
-              { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } }
+              { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } },
+              { id: 'display-legend', icon: 'las la-list', label: 'mixins.activity.DISPLAY_LEGEND', handler: { name: 'openWidget', params: ['legend-widget'] } }
             ]
           },
           { id: 'toggle-fullscreen', icon: 'las la-expand', tooltip: 'mixins.activity.ENTER_FULLSCREEN', visible: '$q.screen.gt.md',
@@ -766,6 +775,7 @@ module.exports = {
       ]
     },
     windows: {
+      left: { content: leftWidgets },
       top: { content: topWidgets }
     },
     fab: {
@@ -1136,7 +1146,8 @@ module.exports = {
             id: 'tools', component: 'menu/KMenu', icon: 'las la-wrench', tooltip: 'mixins.activity.TOOLS', actionRenderer: 'item',
             content: [
               { id: 'measure-tool', icon: 'las la-ruler-combined', label: 'KMeasureTool.TOOL_BUTTON_LABEL', handler: { name: 'setTopPaneMode', params: ['measure-tool'] } },
-              { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } }
+              { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } },
+              { id: 'display-legend', icon: 'las la-list', label: 'mixins.activity.DISPLAY_LEGEND', handler: { name: 'openWidget', params: ['legend-widget'] } }
             ]
           },
           { id: 'toggle-fullscreen', icon: 'las la-expand', tooltip: 'mixins.activity.ENTER_FULLSCREEN', visible: '$q.screen.gt.md',
@@ -1197,6 +1208,7 @@ module.exports = {
       content: []
     },
     windows: {
+      left: { content: leftWidgets },
       top: { content: topWidgets }
     },
     fab: {
