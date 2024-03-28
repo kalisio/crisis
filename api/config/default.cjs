@@ -3,6 +3,7 @@ var fs = require('fs')
 var winston = require('winston')
 const express = require('@feathersjs/express')
 var containerized = require('containerized')()
+const sublegends = require('./sublegends.cjs')
 
 const N = parseInt(process.env.NODE_APP_NB_INSTANCES)
 const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
@@ -167,6 +168,13 @@ module.exports = {
         name: 'Kalisio'
       }
     ]
+  },
+  catalog: {
+    sublegends,
+    paginate: {
+      default: 100,
+      max: 1000
+    }
   },
   authorisation: {
     cache: {
