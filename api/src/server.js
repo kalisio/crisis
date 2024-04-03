@@ -4,7 +4,7 @@ import https from 'https'
 import proxyMiddleware from 'http-proxy-middleware'
 import express from '@feathersjs/express'
 import sync from 'feathers-sync'
-import distribution from '@kalisio/feathers-distributed'
+import distribution, { finalize } from '@kalisio/feathers-distributed'
 import { kdk } from '@kalisio/kdk/core.api.js'
 import services, { checkInactiveOrganisations } from './services/index.js'
 import middlewares from './app.middlewares.js'
@@ -93,6 +93,7 @@ export class Server {
       app.logger.info(`Configuring HTTP server with pid ${process.pid} at port ${port}`)
       expressServer = await app.listen(port)
     }
+    expressServer.on('close', () => finalize(app))
     return expressServer
   }
 }
