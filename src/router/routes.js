@@ -7,7 +7,6 @@ module.exports = [{
   component: 'Index',
   meta: { unauthenticated: true },
   children: {
-    terms: 'app/KTerms',
     login: {
       component: 'screen/KLoginScreen',
       tour: tours.login
