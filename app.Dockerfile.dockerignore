@@ -6,10 +6,15 @@
 
 # Ignore all these
 development/*
+benchmark/*
 **/node_modules
+**/dist
+**/src-cordova
+**/logs
 **/npm-debug.log
 **/*Dockerfile
 **/docker-compose*
 **/*dockerignore
 **/.git
 **/.gitignore
+**/.quasar

@@ -1,9 +1,0 @@
-.git
-.quasar
-node_modules
-dist
-src-cordova
-api/node_modules
-api/dist
-api/logs
-benchmark
