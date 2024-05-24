@@ -6,6 +6,7 @@
 [![Build Status](https://app.travis-ci.com/kalisio/crisis.svg?branch=master)](https://app.travis-ci.com/kalisio/crisis)
 [![Code Climate](https://codeclimate.com/github/kalisio/crisis/badges/gpa.svg)](https://codeclimate.com/github/kalisio/crisis)
 [![Test Coverage](https://codeclimate.com/github/kalisio/crisis/badges/coverage.svg)](https://codeclimate.com/github/kalisio/crisis/coverage)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://kalisio.github.io/crisis/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/kalisio/crisis.svg)](https://hub.docker.com/r/kalisio/crisis/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkalisio%2Fcrisis.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkalisio%2Fcrisis?ref=badge_shield)
