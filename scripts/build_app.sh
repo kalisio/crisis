@@ -82,6 +82,8 @@ DOCKER_BUILDKIT=1 docker build \
 if [ "$PUBLISH" = true ]; then
     docker push "$IMAGE_NAME:$IMAGE_TAG"
     if [ "$NODE_VER" = "$DEFAULT_NODE_VER" ] && [ "$DEBIAN_VER" = "$DEFAULT_DEBIAN_VER" ]; then
+        docker tag "$IMAGE_NAME:$IMAGE_TAG" "$IMAGE_NAME:$VERSION-$FLAVOR"
+        docker push "$IMAGE_NAME:$VERSION-$FLAVOR"
         docker tag "$IMAGE_NAME:$IMAGE_TAG" "$IMAGE_NAME:$FLAVOR"
         docker push "$IMAGE_NAME:$FLAVOR"
     fi
