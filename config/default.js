@@ -8,29 +8,23 @@ const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
-let domain
 let appName = 'Kalisio Crisis'
 let pwaAppName = appName
 let pwaShortName = appName
 
 // If we build a specific staging instance
 if (process.env.NODE_APP_INSTANCE === 'dev') {
-  domain = 'https://crisis.dev.kalisio.xyz'
   pwaAppName += ' (dev)'
   pwaShortName += ' (dev)'
 } else if (process.env.NODE_APP_INSTANCE === 'test') {
-  domain = 'https://crisis.test.kalisio.xyz'
   pwaAppName += ' (test)'
   pwaShortName += ' (test)'
 } else if (process.env.NODE_APP_INSTANCE === 'prod') {
-  domain = 'https://crisis.planet.kalisio.com'
+  // Nothing to do
 } else {
   // Otherwise we are on a developer machine
-  if (process.env.NODE_ENV === 'development') {
-    domain = 'http://localhost:' + clientPort // Crisis app client/server port = 8080/8081
-  } else {
-    domain = 'http://localhost:' + serverPort // Crisis app client/server port = 8081
-  }
+  pwaAppName += ' (localhost)'
+  pwaShortName += ' (localhost)'
 }
 // Override defaults if env provided
 if (process.env.SUBDOMAIN) {
@@ -44,8 +38,6 @@ if (process.env.SUBDOMAIN) {
     domain = 'https://criris.' + process.env.SUBDOMAIN
   }
 }
-// On a developer machine will do domain = gateway = localhost
-const gateway = (process.env.API_GATEWAY_URL ? process.env.API_GATEWAY_URL : domain.replace('crisis', 'api'))
 
 const contextHelp = function (tour) {
   return Object.assign({
@@ -394,13 +386,6 @@ const layerActions = [{
 }]
 
 module.exports = {
-  // Special alias to host loopback interface in cordova
-  //domain: 'http://10.0.2.2:8081',
-  // If using port forwarding
-  //domain: 'http://localhost:8081',
-  // If using local IP on WiFi router
-  //domain: 'http://192.168.1.16:8081',
-  domain,
   appName,
   pwaAppName,
   pwaShortName,
@@ -414,7 +399,6 @@ module.exports = {
   apiJwt: 'crisis-jwt',
   apiTimeout: 20000,
   transport: 'websocket', // Could be 'http' or 'websocket',
-  gateway,
   gatewayJwtField: 'jwt',
   gatewayJwt: 'crisis-gateway-jwt',
   terms: 'crisis-terms',
