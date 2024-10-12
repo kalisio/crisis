@@ -389,6 +389,7 @@ module.exports = {
   appName,
   pwaAppName,
   pwaShortName,
+  buildMode: process.env.BUILD_MODE === 'pwa' ? 'pwa' : 'spa',
   appLogo: 'crisis-logo-color-384x192.png',  
   appChangelog: changelog,
   appOnlineHelp: onlineHelp,
