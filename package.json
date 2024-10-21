@@ -85,7 +85,7 @@
     "@feathersjs/client": "^5.0.8",
     "@feathersjs/commons": "^5.0.8",
     "@feathersjs/memory": "^5.0.8",
-    "@geoman-io/leaflet-geoman-free": "^2.11.1",
+    "@geoman-io/leaflet-geoman-free": "~2.15.0",
     "@kalisio/feathers-s3": "^1.2.0",
     "@kalisio/feathers-webpush": "^1.0.1",
     "@kalisio/kdk": "https://github.com/kalisio/kdk",
