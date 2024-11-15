@@ -101,10 +101,10 @@ export default async ({ app }) => {
   beforeGuard.registerGuard(permissionsGuard)
 
   // updateThemeColors()
-
+  
   api.on('authenticated', (data) => {
-    // Subscribe to webpush notifications
-    utils.subscribeToPushNotifications()
+    // User will be updated in store just after login so that we need to wait for the event
+    Events.once('user-changed', utils.subscribeToPushNotifications)
     // Store API gateway token if any
     if (data.gatewayToken) api.get('storage').setItem(config.gatewayJwt, data.gatewayToken)
   })
