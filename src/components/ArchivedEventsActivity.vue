@@ -1,76 +1,74 @@
 <template>
   <KPage :padding="!showMap" @content-resized="onPageContentResized">
-    <template v-slot:page-content>
-      <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
-        <div class="row">
-          <div class="col-12">
-          <q-slider id="heatmap-radius" v-model="heatmapRadius" :min="1" :max="100" :step="1"
-            label-always :label-value="$t('ArchivedEventsActivity.HEATMAP_RADIUS_LABEL') + ': ' + heatmapRadius + ' Kms'" @change="onHeatmapRadius"></q-slider>
-          </div>
-        </div>
-      </q-page-sticky>
-      <!--
-        Events history: switch append-items on to activate infinite scroll
-      -->
-      <div v-if="showHistory && height" class="row justify-center q-pl-lg q-pr-none">
-        <KHistory
-          style="padding-top: 80px;"
-          id="history"
-          service="archived-events"
-          :base-query="baseQuery"
-          :filter-query="filterQuery"
-          :renderer="renderer"
-          date-field="createdAt"
-          :contextId="contextId"
-          :list-strategy="'smart'"
-          :width="width"
-          :height="height - 124"
-        >
-          <template v-slot:empty-history>
-            <div class="absolute-center">
-              <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
-            </div>
-          </template>
-        </KHistory>
-      </div>
-      <!--
-        Events map
-      -->
-      <div v-show="showMap">
-        <div :ref="configureMap" :style="viewStyle">
-          <q-resize-observer @resize="onMapResized" />
+    <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
+      <div class="row">
+        <div class="col-12">
+        <q-slider id="heatmap-radius" v-model="heatmapRadius" :min="1" :max="100" :step="1"
+          label-always :label-value="$t('ArchivedEventsActivity.HEATMAP_RADIUS_LABEL') + ': ' + heatmapRadius + ' Kms'" @change="onHeatmapRadius"></q-slider>
         </div>
       </div>
-      <!--
-        Events graph
-      -->
-      <div v-show="showChart" class="fit row items-center text-center q-ma-none q-pa-none" >
-        <KStatisticsChart ref="chart" :style="chartStyle" class="col"/>
-        <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
-          icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
-        <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
-          icon="las la-chevron-right" class="absolute-right" @click="onNextChart" />
-      </div>
-      <KModal
-        id="chart-settings-modal"
-        :title="$t('ArchivedEventsActivity.CHART_SETTINGS_MODAL_TITLE')"
-        :buttons="getChartSettingsModalButtons()"
-        ref="chartSettingsModal"
+    </q-page-sticky>
+    <!--
+      Events history: switch append-items on to activate infinite scroll
+    -->
+    <div v-if="showHistory && height" class="row justify-center q-pl-lg q-pr-none">
+      <KHistory
+        style="padding-top: 80px;"
+        id="history"
+        service="archived-events"
+        :base-query="baseQuery"
+        :filter-query="filterQuery"
+        :renderer="renderer"
+        date-field="createdAt"
+        :contextId="contextId"
+        :list-strategy="'smart'"
+        :width="width"
+        :height="height - 124"
       >
-        <div>
-          <q-select id="chart-type" v-model="selectedChartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')"
-          :options="availableChartTypes" @update:modelValue="refreshChart"/>
-          <q-select id="count-per-chart" v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')"
-            :options="paginationOptions" @update:modelValue="refreshChartAndPagination"/>
-          <q-select id="chart-render" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')"
-            :options="renderOptions" @update:modelValue="refreshChart"/>
-        </div>
-      </KModal>
-      <!--
-        Router view to enable routing to modals
-      -->
-      <router-view service="archived-events"></router-view>
-    </template>
+        <template v-slot:empty-history>
+          <div class="absolute-center">
+            <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
+          </div>
+        </template>
+      </KHistory>
+    </div>
+    <!--
+      Events map
+    -->
+    <div v-show="showMap">
+      <div :ref="configureMap" :style="viewStyle">
+        <q-resize-observer @resize="onMapResized" />
+      </div>
+    </div>
+    <!--
+      Events graph
+    -->
+    <div v-show="showChart" class="fit row items-center text-center q-ma-none q-pa-none" >
+      <KStatisticsChart ref="chart" :style="chartStyle" class="col"/>
+      <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
+        icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
+      <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
+        icon="las la-chevron-right" class="absolute-right" @click="onNextChart" />
+    </div>
+    <KModal
+      id="chart-settings-modal"
+      :title="$t('ArchivedEventsActivity.CHART_SETTINGS_MODAL_TITLE')"
+      :buttons="getChartSettingsModalButtons()"
+      ref="chartSettingsModal"
+    >
+      <div>
+        <q-select id="chart-type" v-model="selectedChartType" :label="$t('ArchivedEventsActivity.CHART_LABEL')"
+        :options="availableChartTypes" @update:modelValue="refreshChart"/>
+        <q-select id="count-per-chart" v-model="nbValuesPerChart" :label="$t('ArchivedEventsActivity.PAGINATION_LABEL')"
+          :options="paginationOptions" @update:modelValue="refreshChartAndPagination"/>
+        <q-select id="chart-render" v-model="render" :label="$t('ArchivedEventsActivity.RENDER_LABEL')"
+          :options="renderOptions" @update:modelValue="refreshChart"/>
+      </div>
+    </KModal>
+    <!--
+      Router view to enable routing to modals
+    -->
+    <router-view service="archived-events"></router-view>
   </KPage>
 </template>
 

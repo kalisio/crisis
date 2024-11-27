@@ -1,5 +1,5 @@
 <template>
-  <KScrollArea :maxHeight="scrollAreaMaxHeight" :style="panelStyle">
+  <q-scroll-area class="fit">
       <template v-for="participant in participants" :key="participant._id">
         <div class="full-width row items-center q-pl-md q-pr-sm no-wrap">
           <q-btn flat round small color="primary" @click="onStateClicked(participant)">
@@ -21,20 +21,18 @@
           </q-btn>
         </div>
       </template>
-  </KScrollArea>
+  </q-scroll-area>
 </template>
 
 <script>
 import _ from 'lodash'
 import { utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins } from '@kalisio/kdk/map.client.map'
 import mixins from '../mixins'
 
 export default {
   name: 'event-activity-panel',
   mixins: [
-    mixins.events,
-    kMapMixins.catalogPanel
+    mixins.events
   ],
   props: {
     event: {

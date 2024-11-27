@@ -1,13 +1,11 @@
 <template>
   <KPage :padding="false">
-    <template v-slot:page-content>
-      <!-- Map -->
-      <div :ref="configureMap" :style="viewStyle">
-        <q-resize-observer @resize="onMapResized" />
-      </div>
-      <KMediaBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
-      <router-view service="events"></router-view>
-    </template>
+    <!-- Map -->
+    <div :ref="configureMap" :style="viewStyle">
+      <q-resize-observer @resize="onMapResized" />
+    </div>
+    <KMediaBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
+    <router-view service="events"></router-view>
   </KPage>
 </template>
 

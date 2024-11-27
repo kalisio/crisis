@@ -1,40 +1,38 @@
 <template>
   <KPage padding @content-resized="onPageContentResized">
-    <template v-slot:page-content>
-      <!--
-        Events collection
-      -->
-      <KGrid
-        v-if="!planId"
-        ref="eventsGrid"
-        service="events"
-        :renderer="renderer"
-        :contextId="contextId"
-        :base-query="baseQuery"
-        :filter-query="filterQuery"
-        :list-strategy="'smart'">
-        <template v-slot:empty-section>
-          <div class="absolute-center">
-            <KStamp
-              icon="las la-exclamation-circle"
-              icon-size="3rem"
-              :text="$t('KGrid.EMPTY_GRID')"
-            />
-          </div>
-        </template>
-      </KGrid>
-      <KBoard
-        v-else-if="height"
-        ref="eventsBoard"
-        :columns="boardColumns"
-        :height="height"
-        class="q-pa-sm"
-      />
-      <!--
-        Router view to enable routing to modals
-      -->
-      <router-view service="events"></router-view>
-    </template>
+    <!--
+      Events collection
+    -->
+    <KGrid
+      v-if="!planId"
+      ref="eventsGrid"
+      service="events"
+      :renderer="renderer"
+      :contextId="contextId"
+      :base-query="baseQuery"
+      :filter-query="filterQuery"
+      :list-strategy="'smart'">
+      <template v-slot:empty-section>
+        <div class="absolute-center">
+          <KStamp
+            icon="las la-exclamation-circle"
+            icon-size="3rem"
+            :text="$t('KGrid.EMPTY_LABEL')"
+          />
+        </div>
+      </template>
+    </KGrid>
+    <KBoard
+      v-else-if="height"
+      ref="eventsBoard"
+      :columns="boardColumns"
+      :height="height"
+      class="q-pa-sm"
+    />
+    <!--
+      Router view to enable routing to modals
+    -->
+    <router-view service="events"></router-view>
   </KPage>
 </template>
 

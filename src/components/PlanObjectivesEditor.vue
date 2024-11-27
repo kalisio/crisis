@@ -9,7 +9,7 @@
         <KPanel id="plan-objectives-toolbar" :content="toolbar" :mode="mode" class="no-wrap" />
       </q-card-section>
       <q-card-section id="plan-objectives-list" v-show="mode === 'list'">
-        <KList
+        <KGrid
           :ref="onListReferenceCreated"
           style="min-height: 50px; min-width: 200px"
           service="plan-objectives"
@@ -88,6 +88,7 @@ export default {
       savingObjective: false,
       objectiveRenderer: {
         component: 'PlanObjectiveItem',
+        class: 'col-12',
         actions: [{
           id: 'edit-plan-objective',
           icon: 'las la-edit',

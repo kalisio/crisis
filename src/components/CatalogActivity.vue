@@ -1,41 +1,39 @@
 <template>
   <KPage :padding="false">
-    <template v-slot:page-content>
-      <!--
-        Map
-      -->
-      <div id="map" :ref="configureMap" :style="viewStyle">
-        <q-resize-observer @resize="onMapResized" />
-      </div>
-      <!--
-        Event templates selector modal
-      -->
-      <KModal ref="templateModal"
-        :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
-        :buttons="getTemplateModalButtons()"
-        :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }"
-      >
-        <KList
-          ref="templates"
-          service="event-templates"
-          :contextId="contextId"
-          :list-strategy="'smart'"
-          @selection-changed="onCreateEvent"
-        />
-      </KModal>
-      <!--
-        Alert editor modal
-      -->
-      <AlertEditor
-        ref="alertEditor"
-        :layer="alertLayer"
-        :feature="alertFeature"
-        :forecastModel="forecastModel"
-        :router-mode="false"
+    <!--
+      Map
+    -->
+    <div id="map" :ref="configureMap" :style="viewStyle">
+      <q-resize-observer @resize="onMapResized" />
+    </div>
+    <!--
+      Event templates selector modal
+    -->
+    <KModal ref="templateModal"
+      :title="$t('CatalogActivity.CREATE_EVENT_TITLE')"
+      :buttons="getTemplateModalButtons()"
+      :options="{ padding: '4px', minWidth: '40vw', maxWidth: '60vw', minHeight: '20vh' }"
+    >
+      <KGrid
+        ref="templates"
+        service="event-templates"
+        :contextId="contextId"
+        :list-strategy="'smart'"
+        @selection-changed="onCreateEvent"
       />
-      <!-- Child views -->
-      <router-view />
-    </template>
+    </KModal>
+    <!--
+      Alert editor modal
+    -->
+    <AlertEditor
+      ref="alertEditor"
+      :layer="alertLayer"
+      :feature="alertFeature"
+      :forecastModel="forecastModel"
+      :router-mode="false"
+    />
+    <!-- Child views -->
+    <router-view />
   </KPage>
 </template>
 

@@ -750,35 +750,37 @@ module.exports = {
       mode: 'default'
     },
     rightPane: {
-      content: {
-        'user-layers': [
-          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-layers'),
-          { id: 'user-layers', component: 'catalog/KLayersPanel',
-            layers: ':layers', layerCategories: ':layerCategories',
-            layersFilter: { scope: { $in: ['user', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: true } } },
-          { component: 'QSpace' },
-          { id: 'catalog-footer', component: 'KPanel', content: [{
-              id: 'manage-layer-categories',
-              icon: 'las la-cog',
-              label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
-              route: { name: 'manage-layer-categories' } 
-            }],
-            class: 'justify-center'
-          }
-        ],
-        'user-views': [
-          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-views'),
-          { id: 'user-views', component: 'catalog/KViewsPanel', suspense: true },
-        ],
-        'catalog-layers': [
-          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'catalog-layers'),
-          { id: 'catalog-layers', component: 'catalog/KLayersPanel',
-            layers: ':layers', layerCategories: ':layerCategories',
-            layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
-            forecastModels: ':forecastModels' }
-        ]
-      },
-      mode: 'user-layers'
+      content: [{
+        component: 'KTab',
+        content: {
+          'user-layers': [
+            { id: 'user-layers', component: 'catalog/KLayersPanel',
+              layers: ':layers', layerCategories: ':layerCategories',
+              layersFilter: { scope: { $in: ['user', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: true } } },
+            { component: 'QSpace' },
+            { id: 'catalog-footer', component: 'KPanel', content: [{
+                id: 'manage-layer-categories',
+                icon: 'las la-cog',
+                label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
+                route: { name: 'manage-layer-categories' } 
+              }],
+              class: 'justify-center'
+            }
+          ],
+          'user-views': [
+            { id: 'user-views', component: 'catalog/KViewsPanel', suspense: true },
+          ],
+          'catalog-layers': [
+            { id: 'catalog-layers', component: 'catalog/KLayersPanel',
+              layers: ':layers', layerCategories: ':layerCategories',
+              layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
+              forecastModels: ':forecastModels' }
+          ]
+        },
+        labels: ['LAYERS_LABEL', 'VIEWS_LABEL', 'CATALOG_LABEL'],
+        mode: 'user-layers'
+      }],
+      state: 'responsive'
     },
     bottomPane: {
       content: [
@@ -842,28 +844,31 @@ module.exports = {
       mode: 'history'
     },
     rightPane: {
-      content: {
-        'history': [],
-        'user-layers': [
-          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-layers'),
-          { id: 'user-layers', component: 'catalog/KLayersPanel',
-            layers: ':layers', layerCategories: ':layerCategories',
-            layersFilter: { scope: { $in: ['user', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: true } } }
-        ],
-        'user-views': [
-          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'user-views'),
-          { id: 'user-views', component: 'catalog/KViewsPanel', suspense: true },
-        ],
-        'catalog-layers': [
-          catalogTabbar(['user-layers', 'user-views', 'catalog-layers'], 'catalog-layers'),
-          { id: 'catalog-layers', component: 'catalog/KLayersPanel',
-            layers: ':layers', layerCategories: ':layerCategories',
-            layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
-            forecastModels: ':forecastModels' }
-        ],
-        'chart': []
-      },
-      mode: 'history'
+      content: [{
+        component: 'KTab',
+        content: {
+          'history': [],
+          'user-layers': [
+            { id: 'user-layers', component: 'catalog/KLayersPanel',
+              layers: ':layers', layerCategories: ':layerCategories',
+              layersFilter: { scope: { $in: ['user', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: true } } }
+          ],
+          'user-views': [
+            { id: 'user-views', component: 'catalog/KViewsPanel', suspense: true },
+          ],
+          'catalog-layers': [
+            { id: 'catalog-layers', component: 'catalog/KLayersPanel',
+              layers: ':layers', layerCategories: ':layerCategories',
+              layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
+              forecastModels: ':forecastModels' }
+          ],
+          'chart': []
+        },
+        mode: 'history',
+        labels: ['HISTORY', 'LAYERS_LABEL', 'VIEWS_LABEL', 'CATALOG_LABEL', 'CHART'],
+        mode: 'history'
+      }],
+      state: 'responsive'
     },
     bottomPane: {
       content: [
@@ -1190,30 +1195,31 @@ module.exports = {
       mode: 'default'
     },
     rightPane: {
-      content: {
-        'event-participants': [
-          catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'event-participants'),
-          { id: 'event-participants', component: 'EventActivityPanel', event: ':event', participants: ':participants' }
-        ],
-        'user-layers': [
-          catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'user-layers'),
-          { id: 'user-layers', component: 'catalog/KLayersPanel',
-            layers: ':layers', layerCategories: ':layerCategories',
-            layersFilter: { scope: { $in: ['user', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: true } } }
-        ],
-        'user-views': [
-          catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'user-views'),
-          { id: 'user-views', component: 'catalog/KViewsPanel', suspense: true },
-        ],
-        'catalog-layers': [
-          catalogTabbar(['user-layers', 'user-views', 'catalog-layers', 'event-participants'], 'catalog-layers'),
-          { id: 'catalog-layers', component: 'catalog/KLayersPanel',
-            layers: ':layers', layerCategories: ':layerCategories',
-            layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
-            forecastModels: ':forecastModels' }
-        ]
-      },
-      mode: 'event-participants'
+      content: [{
+        component: 'KTab',
+        content: {
+          'event-participants': [
+            { id: 'event-participants', component: 'EventActivityPanel', event: ':event', participants: ':participants' }
+          ],
+          'user-layers': [
+            { id: 'user-layers', component: 'catalog/KLayersPanel',
+              layers: ':layers', layerCategories: ':layerCategories',
+              layersFilter: { scope: { $in: ['user', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: true } } }
+          ],
+          'user-views': [
+            { id: 'user-views', component: 'catalog/KViewsPanel', suspense: true },
+          ],
+          'catalog-layers': [
+            { id: 'catalog-layers', component: 'catalog/KLayersPanel',
+              layers: ':layers', layerCategories: ':layerCategories',
+              layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } }, layerCategoriesFilter: { _id: { $exists: false } },
+              forecastModels: ':forecastModels' }
+          ],
+          mode: 'event-participants'
+        },
+        labels: ['EventActivityPanel.PARTICIPANTS_LABEL', 'LAYERS_LABEL', 'VIEWS_LABEL', 'CATALOG_LABEL'],
+      }],
+      state: 'responsive'
     },
     bottomPane: {
       content: [

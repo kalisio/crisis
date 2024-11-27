@@ -15,7 +15,7 @@
     <!--
       Event logs list
     -->
-    <KList
+    <KGrid
       ref="list"
       :service="getServiceName()"
       :renderer="renderer"
@@ -27,9 +27,9 @@
       :processor="onCollectionRefreshed"
       @item-toggled="onItemToggled">
         <template v-slot:empty-section>
-          <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KList.EMPTY_LIST')" />
+          <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KGrid.EMPTY_LABEL')" />
         </template>
-      </KList>
+      </KGrid>
     <!--
       Follow up modal
     -->
@@ -91,6 +91,7 @@ export default {
     renderer () {
       return {
         component: 'EventLogItem',
+        class: 'col-12',
         event: this.event,
         actions: [{
           id: 'follow-up',

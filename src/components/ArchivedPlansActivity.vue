@@ -1,35 +1,33 @@
 <template>
   <KPage padding @content-resized="onPageContentResized">
-    <template v-slot:page-content>
-      <!--
-        Page content
-       -->
-      <div class="row justify-center q-pa-lg">
-        <KHistory
-          v-if="height"
-          id="history"
-          service="archived-plans"
-          :append-items="true"
-          :base-query="baseQuery"
-          :filter-query="filterQuery"
-          :renderer="renderer"
-          date-field="updatedAt"
-          :contextId="contextId"
-          :width="width"
-          :height="height"
-        >
-          <template v-slot:empty-history>
-            <div class="absolute-center">
-              <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
-            </div>
-          </template>
-        </KHistory>
-      </div>
-      <!--
-        Router view to enable routing to modals
+    <!--
+      Page content
       -->
-      <router-view service="archived-plans"></router-view>
-    </template>
+    <div class="row justify-center q-pa-lg">
+      <KHistory
+        v-if="height"
+        id="history"
+        service="archived-plans"
+        :append-items="true"
+        :base-query="baseQuery"
+        :filter-query="filterQuery"
+        :renderer="renderer"
+        date-field="updatedAt"
+        :contextId="contextId"
+        :width="width"
+        :height="height"
+      >
+        <template v-slot:empty-history>
+          <div class="absolute-center">
+            <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
+          </div>
+        </template>
+      </KHistory>
+    </div>
+    <!--
+      Router view to enable routing to modals
+    -->
+    <router-view service="archived-plans"></router-view>
   </KPage>
 </template>
 
