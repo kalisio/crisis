@@ -100,6 +100,7 @@
     "@pdfme/schemas": "^5.2.0",
     "@pdfme/ui": "^5.2.0",
     "@quasar/extras": "^1.16.3",
+    "@thumbmarkjs/thumbmarkjs": "^0.16.1",
     "@tmcw/togeojson": "^4.5.0",
     "@turf/along": "^6.5.0",
     "@turf/area": "^6.0.1",
