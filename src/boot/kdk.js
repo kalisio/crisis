@@ -21,15 +21,14 @@ export default async ({ app }) => {
   // https://vuejs.org/guide/components/provide-inject.html#working-with-reactivity
   app.config.unwrapInjectedRef = true
 
+  // Initializes i18n
+  await i18n.initialize(app, ['core', 'map', 'crisis'])
   // Initiate the client
   const api = initializeApi(setupApi)
   // Setup app hooks
   api.hooks(appHooks)
   // Then all services
   await services.call(api)
-
-  // Initializes i18n
-  await i18n.initialize(app, ['core', 'map', 'crisis'])
 
   // Register global properties to the the vue app
   app.config.globalProperties.$store = Store
