@@ -21,7 +21,7 @@ export default async ({ app }) => {
   // https://vuejs.org/guide/components/provide-inject.html#working-with-reactivity
   app.config.unwrapInjectedRef = true
 
-  // Initializes i18n
+  // Initializes i18n first to avoid any browser translation
   await i18n.initialize(app, ['core', 'map', 'crisis'])
   // Initiate the client
   const api = initializeApi(setupApi)
