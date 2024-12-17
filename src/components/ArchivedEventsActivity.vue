@@ -91,7 +91,6 @@ const MAX_EVENTS = 5000
 export default {
   mixins: [
     activityMixin,
-    kdkCoreMixins.baseCollection,
     kdkMapMixins.activity,
     kdkMapMixins.style,
     kdkMapMixins.context,
@@ -343,7 +342,7 @@ export default {
     getEventStyle (event, options) {
       if (!this.templates.includes(options.name)) return
       const color = kdkCoreUtils.getColorFromPalette(_.get(event, 'icon.color'), 'blue')
-      return { 
+      return {
         color: chroma(color).alpha(0.5).hex(),  // Transparency
         stroke: {
           color
@@ -546,7 +545,7 @@ export default {
               'location.geometry.coordinates[1]': 'latitude',
               'location.properties.name': 'address'
             },
-            omit: ['icon', 'participants', 'coordinators', 'hasWorkflow', 
+            omit: ['icon', 'participants', 'coordinators', 'hasWorkflow',
                    'workflow', '_include', 'location', 'deletedAt' ]
           },
           geojson: {
@@ -559,10 +558,10 @@ export default {
               'template': 'properties.template',
               'createdAt': 'properties.createdAt',
               'updatedAt': 'properties.updatedAt',
-              'expireAt': 'properties.expireAt',              
+              'expireAt': 'properties.expireAt',
             },
-            omit: ['name', 'icon', 'description','participants', 'coordinators', 'template', 'plan', 
-                   'hasWorkflow', 'workflow', 'location', '_include', 
+            omit: ['name', 'icon', 'description','participants', 'coordinators', 'template', 'plan',
+                   'hasWorkflow', 'workflow', 'location', '_include',
                    'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
           }
         }

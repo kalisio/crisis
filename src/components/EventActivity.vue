@@ -44,7 +44,6 @@ export default {
     kMapMixins.map.mapillaryLayers,
     kMapMixins.map.gsmapLayers,
     activityMixin,
-    kCoreMixins.baseCollection,
     kMapMixins.featureSelection,
     kMapMixins.featureService,
     kMapMixins.infobox,
@@ -174,7 +173,7 @@ export default {
     },
     getParticipantMarker (feature, options) {
       if (options.name !== this.$t('EventActivity.PARTICIPANTS_LAYER_NAME')) return
-      
+
       return {
         shape: 'circle',
         color: kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color'), 'blue'),
