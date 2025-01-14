@@ -6,7 +6,8 @@
 
 <script>
 import _ from 'lodash'
-import { Theme, mixins } from '@kalisio/kdk/core.client'
+import { Theme } from '@kalisio/kdk/core.client'
+import mixins from '../mixins'
 
 export default {
   name: 'context',
