@@ -13,6 +13,11 @@ on:
         default: false
         required: false
         type: boolean
+      additional_tests:
+        description: "Run additional tests"
+        default: false
+        required: false
+        type: boolean
 
 jobs:
   build_app:
