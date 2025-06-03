@@ -15,7 +15,7 @@ import L from 'leaflet'
 import chroma from 'chroma-js'
 import centroid from '@turf/centroid'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins, utils as kdkMapUtils, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
+import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 import mixins from '../mixins'
 

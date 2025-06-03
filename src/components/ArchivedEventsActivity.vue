@@ -77,11 +77,11 @@ import _ from 'lodash'
 import moment from 'moment'
 import L from 'leaflet'
 import Papa from 'papaparse'
+import chroma from 'chroma-js'
 import { colors, QSlider } from 'quasar'
 import { mixins as kdkCoreMixins, utils as kdkCoreUtils, Time, Exporter } from '@kalisio/kdk/core.client'
-import { mixins as kdkMapMixins, utils as kdkMapUtils } from '@kalisio/kdk/map.client.map'
+import { mixins as kdkMapMixins } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
-import { getLocationAsFeature } from '../utils.js'
 
 const activityMixin = kdkCoreMixins.baseActivity('archivedEventsActivity')
 
