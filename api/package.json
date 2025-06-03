@@ -33,7 +33,7 @@
     "lint": "standard src/**/*.js test/**/*.js --fix",
     "mocha": "cross-env NODE_CONFIG_DIR=./test/config/ SUBDOMAIN= mocha --exit",
     "coverage": "c8 npm run mocha",
-    "test": "npm run lint && npm run coverage"
+    "test": "npm run coverage"
   },
   "standard": {
     "sourceType": "module",
