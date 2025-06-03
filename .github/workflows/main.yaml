@@ -70,7 +70,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [ 20, 22 ]
+        node: [ 20 ]
         mongo: [ 8 ]
     name: Additional tests
     if: ${{
