@@ -337,7 +337,7 @@ export default {
       return {
         color: (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green')),
         stoke: {
-          color: (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green')),
+          color: (hasError ? (isActive ? 'darkred' : 'darkgreen') : (isActive ? 'red' : 'green'))
         }
       }
     },
@@ -351,7 +351,7 @@ export default {
         color: isActive ? '#FF0000' : '#008000',
         icon: {
           classes: 'fas fa-bell',
-          color: hasError ? '#000000' : '#FFFFFF',
+          color: hasError ? '#000000' : '#FFFFFF'
         }
       })
     },
@@ -373,7 +373,7 @@ export default {
       return {
         shape: 'circle',
         color: kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color'), 'blue'),
-        icon: { 
+        icon: {
           classes: kCoreUtils.getIconName(feature) || 'las la-marker-map',
           color: 'white'
         }
@@ -383,8 +383,8 @@ export default {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
       const color = kCoreUtils.getColorFromPalette(_.get(event, 'icon.color'), 'blue')
-      return { 
-        color: chroma(color).alpha(0.5).hex(),  // Transparency
+      return {
+        color: chroma(color).alpha(0.5).hex(), // Transparency
         stroke: {
           color
         }

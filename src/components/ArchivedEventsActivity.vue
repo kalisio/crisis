@@ -343,7 +343,7 @@ export default {
       if (!this.templates.includes(options.name)) return
       const color = kdkCoreUtils.getColorFromPalette(_.get(event, 'icon.color'), 'blue')
       return {
-        color: chroma(color).alpha(0.5).hex(),  // Transparency
+        color: chroma(color).alpha(0.5).hex(), // Transparency
         stroke: {
           color
         }
@@ -546,28 +546,28 @@ export default {
               'location.properties.name': 'address'
             },
             omit: ['icon', 'participants', 'coordinators', 'hasWorkflow',
-                   'workflow', '_include', 'location', 'deletedAt' ]
+              'workflow', '_include', 'location', 'deletedAt']
           },
           geojson: {
             mapping: {
               'location.type': 'type',
               'location.geometry': 'geometry',
               'location.properties': 'properties',
-              'name': 'properties.name',
-              'description': 'properties.description',
-              'template': 'properties.template',
-              'createdAt': 'properties.createdAt',
-              'updatedAt': 'properties.updatedAt',
-              'expireAt': 'properties.expireAt',
+              name: 'properties.name',
+              description: 'properties.description',
+              template: 'properties.template',
+              createdAt: 'properties.createdAt',
+              updatedAt: 'properties.updatedAt',
+              expireAt: 'properties.expireAt'
             },
-            omit: ['name', 'icon', 'description','participants', 'coordinators', 'template', 'plan',
-                   'hasWorkflow', 'workflow', 'location', '_include',
-                   'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
+            omit: ['name', 'icon', 'description', 'participants', 'coordinators', 'template', 'plan',
+              'hasWorkflow', 'workflow', 'location', '_include',
+              'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
           }
         }
       })
     },
-    /*async downloadEventsData () {
+    /* async downloadEventsData () {
       let data, mimeType
       if (this.showMap) {
         const geoJson = this.toGeoJson(this.$t('ArchivedEventsActivity.EVENTS_LAYER_NAME'))
@@ -614,7 +614,7 @@ export default {
       kdkCoreUtils.downloadAsBlob(data, (this.showMap
         ? this.$t('ArchivedEventsActivity.MAP_EXPORT_FILE')
         : this.$t('ArchivedEventsActivity.EVENTS_EXPORT_FILE')), mimeType)
-    },*/
+    }, */
     getChartSettingsModalButtons () {
       return [
         { id: 'close-button', label: 'CLOSE', renderer: 'form-button', handler: () => this.$refs.chartSettingsModal.close() }

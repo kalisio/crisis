@@ -99,7 +99,7 @@ export default async ({ app }) => {
   beforeGuard.registerGuard(permissionsGuard)
 
   // updateThemeColors()
-  
+
   api.on('authenticated', (data) => {
     // User will be updated in store just after login so that we need to wait for the event
     Events.once('user-changed', utils.subscribeToPushNotifications)

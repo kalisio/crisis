@@ -129,7 +129,7 @@ export default {
     header () {
       let components = [
         { component: 'QBadge', label: this.getUserRoleLabel(), color: 'grey-7' },
-        { component: 'media/KShape', options: {shape: 'circle', color: this.item.color, size: [16,16] } },
+        { component: 'media/KShape', options: { shape: 'circle', color: this.item.color, size: [16, 16] } },
         { component: 'QSpace' }
       ]
       if (this.isExpanded) components = components.concat(_.filter(this.itemActions, { scope: 'header' }))
