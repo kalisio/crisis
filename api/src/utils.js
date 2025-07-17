@@ -11,8 +11,10 @@ export async function getOrganisationAvatarUrl (hook, event) {
     const storageService = hook.app.getService('storage', hook.service.getContextId())
     // Expire in 7 days by default unless specified in event
     let expiresIn = 7 * 24 * 3600
+    /* Expiration greater than 7 days now raises an error eg on AWS: "Signature version 4 presigned URLs must have an expiration date less than one week in the future"
     const expireAt = _.get(event, 'expireAt')
     if (expireAt) expiresIn = moment.utc(expireAt).diff(moment.utc(), 'seconds')
+    */
     const response = await storageService.create({ id: avatar, command: 'GetObject', expiresIn })
     return response.SignedUrl
     // Get proxy route to object storage, requires a valid token (use the one of the sending user)
