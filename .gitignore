@@ -77,11 +77,12 @@ config/client-config.json
 test/run
 
 # KDK extras
-public/icons/kdk
-public/kalisio.png
-src/tours/core
-src/tours/map
+config/kdk
+public/kdk
+src/assets/kdk
+src/tours/kdk
 src/css/kdk
+test/kdk
 
 # Temporary files
 api/tmp

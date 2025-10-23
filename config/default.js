@@ -1,5 +1,3 @@
-const groups = require('../src/tours/core/groups')
-
 const website = 'https://www.kalisio.com'
 const onlineHelp = 'https://doc.planet.kalisio.com'
 const changelog = onlineHelp + '/quickstart/history.html'
