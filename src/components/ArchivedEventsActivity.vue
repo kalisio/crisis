@@ -332,7 +332,7 @@ export default {
       if (!this.templates.includes(options.name)) return
       return {
         shape: 'circle',
-        color: kdkCoreUtils.getColorFromPalette(_.get(feature, 'icon.color'), 'blue'),
+        color: kdkCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
         icon: {
           classes: kdkCoreUtils.getIconName(feature) || 'las la-marker-map',
           color: 'white'
@@ -341,7 +341,7 @@ export default {
     },
     getEventStyle (event, options) {
       if (!this.templates.includes(options.name)) return
-      const color = kdkCoreUtils.getColorFromPalette(_.get(event, 'icon.color'), 'blue')
+      const color = kdkCoreUtils.getHtmlColor(_.get(event, 'icon.color'), 'blue')
       return {
         color: chroma(color).alpha(0.5).hex(), // Transparency
         stroke: {

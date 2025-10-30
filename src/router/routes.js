@@ -8,16 +8,16 @@ module.exports = [{
   meta: { unauthenticated: true },
   children: {
     login: {
-      component: 'screen/KLoginScreen',
-      tour: tours.login
+      component: 'screen/KLoginScreen'
+      // tour: tours.login
     },
     logout: {
       component: 'screen/KLogoutScreen',
       meta: { authenticated: true }
     },
     register: {
-      component: 'screen/KRegisterScreen',
-      tour: tours.register
+      component: 'screen/KRegisterScreen'
+      // tour: tours.register
     },
     'resend-verify-signup': {
       component: 'account/KResendVerifySignup',
@@ -28,19 +28,19 @@ module.exports = [{
       meta: { authenticated: true }
     },
     'send-reset-password': {
-      component: 'account/KSendResetPassword',
-      tour: tours['send-reset-password']
+      component: 'account/KSendResetPassword'
+      // tour: tours['send-reset-password']
     },
     'change-password': {
       component: 'account/KChangePassword',
-      meta: { authenticated: true, unauthenticated: false },
-      tour: tours['change-password']
+      meta: { authenticated: true, unauthenticated: false }
+      // tour: tours['change-password']
     },
     'reset-password/:email': 'account/KResetPassword',
     'send-change-identity': {
       component: 'account/KSendChangeIdentity',
-      meta: { authenticated: true, unauthenticated: false },
-      tour: tours['send-change-identity']
+      meta: { authenticated: true, unauthenticated: false }
+      // tour: tours['send-change-identity']
     },
     'change-identity': {
       component: 'account/KChangeIdentity',
@@ -69,8 +69,8 @@ module.exports = [{
             create: {
               name: 'create-organisation',
               component: 'editor/KModalEditor',
-              props: true,
-              tour: tours['create-organisation']
+              props: true
+              // tour: tours['create-organisation']
             },
             'edit/:objectId/:schemaProperties?': {
               name: 'edit-organisation',
@@ -91,8 +91,8 @@ module.exports = [{
               // Because this child is the default one path is empty and name is the one of the parent route
               path: '',
               name: 'context',
-              redirect: { name: 'events-activity' },
-              tour: tours.context
+              redirect: { name: 'events-activity' }
+              // tour: tours.context
             },
             members: {
               name: 'members-activity',
@@ -102,29 +102,29 @@ module.exports = [{
                 add: {
                   name: 'add-member',
                   component: 'team/KAddMember',
-                  props: true,
-                  tour: tours['add-member']
+                  props: true
+                  // tour: tours['add-member']
                 },
                 'edit/:objectId/role': {
                   name: 'edit-member-role',
                   component: 'team/KChangeRole',
-                  props: true,
-                  tour: tours['edit-member-role']
+                  props: true
+                  // tour: tours['edit-member-role']
                 },
                 'add-tag/:objectId': {
                   name: 'add-tag',
                   component: 'team/KAddTag',
-                  props: true,
-                  tour: tours['add-tag']
+                  props: true
+                  // tour: tours['add-tag']
                 },
                 'join-group/:objectId': {
                   name: 'join-group',
                   component: 'team/KJoinGroup',
-                  props: true,
-                  tour: tours['join-group']
+                  props: true
+                  // tour: tours['join-group']
                 }
-              },
-              tour: tours.members
+              }
+              // tour: tours.members
             },
             tags: {
               name: 'tags-activity',
@@ -134,16 +134,16 @@ module.exports = [{
                 create: {
                   name: 'create-tag',
                   component: 'editor/KModalEditor',
-                  props: true,
-                  tour: tours['create-tag']
+                  props: true
+                  // tour: tours['create-tag']
                 },
                 'edit/:objectId/:schemaProperties?': {
                   name: 'edit-tag',
                   component: 'editor/KModalEditor',
                   props: true
                 }
-              },
-              tour: tours.tags
+              }
+              // tour: tours.tags
             },
             groups: {
               name: 'groups-activity',
@@ -153,16 +153,16 @@ module.exports = [{
                 create: {
                   name: 'create-group',
                   component: 'editor/KModalEditor',
-                  props: true,
-                  tour: tours['create-group']
+                  props: true
+                  // tour: tours['create-group']
                 },
                 'edit/:objectId/:schemaProperties?': {
                   name: 'edit-group',
                   component: 'editor/KModalEditor',
                   props: true
                 }
-              },
-              tour: tours.groups
+              }
+              // tour: tours.groups
             },
             'catalog/:south?/:west?/:north?/:east?': {
               name: 'catalog-activity',
@@ -170,11 +170,11 @@ module.exports = [{
               props: true,
               tour: {
                 'catalog-activity': tours.catalog,
-                'navigation-bar': tours['navigation-bar'],
-                'favorite-views': tours['favorite-views'],
-                'catalog-panel': tours['catalog-panel'],
+                // 'navigation-bar': tours['navigation-bar'],
+                // 'favorite-views': tours['favorite-views'],
+                // 'catalog-panel': tours['catalog-panel'],
                 'catalog-categories': tours['catalog-categories'],
-                timeline: tours.timeline,
+                // timeline: tours.timeline,
                 fab: tours.fab
               },
               children: {

@@ -10,9 +10,9 @@ const { authenticate } = authentication.hooks
 // Default rules for all users
 corePermissions.defineAbilities.registerHook(corePermissions.defineUserAbilities)
 // Then rules for organisations
-corePermissions.defineAbilities.registerHook(corePermissions.defineOrganisationAbilities)
+corePermissions.defineAbilities.registerHook(permissions.defineOrganisationAbilities)
 // Then rules for groups
-corePermissions.defineAbilities.registerHook(corePermissions.defineGroupAbilities)
+corePermissions.defineAbilities.registerHook(permissions.defineGroupAbilities)
 // Then rules for mapping
 corePermissions.defineAbilities.registerHook(mapPermissions.defineUserAbilities)
 // Then rules for app

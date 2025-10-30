@@ -1,4 +1,5 @@
 import { permissions } from '@kalisio/kdk/core.common.js'
+import _ from 'lodash'
 
 // FIXME: this file is duplicated in the api folder
 // Indeed, permissions files are usually isomorphic files. However, when we tried to create a common folder
@@ -137,7 +138,7 @@ function definePlanAbilities (subject, can, cannot, app) {
 export function defineUserAbilities (subject, can, cannot, app) {
   defineEventAbilities(subject, can, cannot, app)
   definePlanAbilities(subject, can, cannot, app)
-  
+
   if (subject && subject._id) {
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {
@@ -159,4 +160,73 @@ export function defineUserAbilities (subject, can, cannot, app) {
       })
     }
   }
+}
+
+// Hook computing organisation abilities for a given user
+export function defineOrganisationAbilities (subject, can, cannot) {
+  if (subject) {
+    // Create new organisations
+    can('service', 'organisations')
+    can('create', 'organisations')
+
+    if (subject.organisations) {
+      subject.organisations.forEach(organisation => {
+        if (organisation._id) {
+          // Generic rules for resources
+          permissions.defineResourceRules(subject, organisation, 'organisations', can)
+          // Specific rules for organisations
+          const role = permissions.Roles[organisation.permissions]
+          if (role >= permissions.Roles.member) {
+            // The unique identifier of a service is its path not its name.
+            // Indeed we have for instance a 'groups' service in each organisation.
+            can('service', organisation._id.toString() + '/members')
+            can('read', 'members', { context: organisation._id })
+            can('service', organisation._id.toString() + '/tags')
+            // Tags are public
+            can('read', 'tags', { context: organisation._id })
+            // Groups are private
+            can('service', organisation._id.toString() + '/groups')
+            can('service', organisation._id.toString() + '/storage')
+            can(['read', 'create', 'remove', 'createMultipartUpload', 'completeMultipartUpload', 'uploadPart', 'putObject'], 'storage', { context: organisation._id })
+          }
+          if (role >= permissions.Roles.manager) {
+            can('update', 'members', { context: organisation._id })
+            // Managers can manage all groups/tags
+            can('all', 'groups', { context: organisation._id })
+            can(['create', 'remove'], 'authorisations', { resourcesService: organisation._id.toString() + '/groups', scope: 'groups' })
+            can('all', 'tags', { context: organisation._id })
+            // Remove invited members
+            can(['remove'], 'users', { 'sponsor.organisationId': organisation._id })
+          }
+        }
+      })
+    }
+  }
+}
+
+// Hook computing group abilities for a given user
+export function defineGroupAbilities (subject, can, cannot) {
+  if (subject) {
+    if (subject.groups) {
+      subject.groups.forEach(group => {
+        if (group._id) {
+          // Specific rules for groups
+          const role = permissions.Roles[group.permissions]
+
+          if (role >= permissions.Roles.member) {
+            can('read', 'groups', { _id: group._id })
+          }
+          if (role >= permissions.Roles.manager) {
+            can(['create', 'remove'], 'authorisations', { resource: group._id, permissions: 'member' })
+          }
+        }
+      })
+    }
+  }
+}
+
+export function getRoleForOrganisation (user, organisationId) {
+  const result = _.find(user.organisations, { _id: organisationId })
+  if (!_.isUndefined(result)) return result.permissions
+  return undefined
 }

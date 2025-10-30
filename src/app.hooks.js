@@ -9,9 +9,9 @@ import * as permissions from '../common/permissions.mjs'
 corePermissions.defineAbilities.registerHook(corePermissions.defineUserAbilities)
 corePermissions.defineAbilities.registerHook(mapPermissions.defineUserAbilities)
 // Then rules for organisations
-corePermissions.defineAbilities.registerHook(corePermissions.defineOrganisationAbilities)
+corePermissions.defineAbilities.registerHook(permissions.defineOrganisationAbilities)
 // Then rules for groups
-corePermissions.defineAbilities.registerHook(corePermissions.defineGroupAbilities)
+corePermissions.defineAbilities.registerHook(permissions.defineGroupAbilities)
 // Then rules for app
 corePermissions.defineAbilities.registerHook(permissions.defineUserAbilities)
 

@@ -35,7 +35,8 @@
 import _ from 'lodash'
 import moment from 'moment'
 import { mixins as kCoreMixins, Time } from '@kalisio/kdk/core.client'
-import { permissions } from '@kalisio/kdk/core.common'
+import { permissions as corePermissions } from '@kalisio/kdk/core.common'
+import * as permissions from '../../common/permissions.mjs'
 import * as utils from '../utils'
 
 export default {
@@ -66,7 +67,7 @@ export default {
     async updateFilterQuery () {
       const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.contextId)
       // We'd like to only display plans where the user has events except if manager who can see all
-      if (permissions.isJuniorRole(userRole, 'manager')) {
+      if (corePermissions.isJuniorRole(userRole, 'manager')) {
         const values = await this.$api.getService('archived-events').find({
           query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.contextId))
         })

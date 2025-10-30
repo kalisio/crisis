@@ -1,9 +1,4 @@
-const _ = require('lodash')
-const sideNav = require('./map/side-nav')
-const accountProfil = require('./core/account-profile')
-const account = require('./core/account')
-
-const home = [{
+module.exports = [{
   target: '#left-opener',
   title: 'tours.side-nav.SIDENAV_LABEL',
   params: {
@@ -38,5 +33,3 @@ const home = [{
     clickOnNext: '#left-opener'
   }
 }]
-
-module.exports = _.union(home, sideNav, accountProfil, account)

@@ -67,10 +67,10 @@ module.exports = configure(function (ctx) {
 
       vueLoaderOptions: {
         compilerOptions: {
-          isCustomElement: tag => ['pinch-zoom'].includes(tag)        
+          isCustomElement: tag => ['pinch-zoom'].includes(tag)
         }
       },
-      
+
       chainWebpack (chain) {
         // Perform bundle analysis
         if (process.env.ANALYZE_BUNDLE) {
@@ -115,7 +115,8 @@ module.exports = configure(function (ctx) {
             path.resolve(__dirname, 'node_modules/@kalisio/kdk/core/client/i18n'),
             path.resolve(__dirname, 'node_modules/@kalisio/kdk/map/client/i18n')
           ],
-          config: path.resolve(__dirname, 'config/client-config.json')
+          config: path.resolve(__dirname, 'config/client-config.json'),
+          jsts: path.resolve(__dirname, 'src/assets/kdk/jsts.min.js')
         },
         cfg.optimization.minimize = process.env.DEBUG ? false : cfg.optimization.minimize
       }
@@ -149,7 +150,7 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
       config: {},
-      
+
       // lang: 'en-US', // Quasar language pack
 
       components: [
@@ -204,7 +205,7 @@ module.exports = configure(function (ctx) {
         'QToggle',
         'QTooltip'
       ],
-      
+
       directives: [
         'ClosePopup',
         'Ripple',
@@ -235,11 +236,10 @@ module.exports = configure(function (ctx) {
       workboxOptions: {
         maximumFileSizeToCacheInBytes: 17 * 1024 * 1024
       }, // only for GenerateSW
-      
 
       // for the custom service worker ONLY (/src-pwa/custom-service-worker.[js|ts])
       // if using workbox in InjectManifest mode
-      
+
       manifest: {
         name: clientConfig.pwaAppName,
         short_name: clientConfig.pwaShortName,
@@ -247,7 +247,7 @@ module.exports = configure(function (ctx) {
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#FFFFFF',
-        theme_color :  '#293341',
+        theme_color: '#293341',
         id: './',
         icons: [
           {

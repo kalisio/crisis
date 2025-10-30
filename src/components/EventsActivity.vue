@@ -39,7 +39,8 @@
 <script>
 import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
-import { permissions } from '@kalisio/kdk/core.common'
+import { permissions as corePermissions } from '@kalisio/kdk/core.common'
+import * as permissions from '../../common/permissions.mjs'
 import { usePlan } from '../composables'
 
 const activityMixin = kCoreMixins.baseActivity('eventsActivity')
@@ -152,7 +153,7 @@ export default {
             query: {
               $or: [
                 { permission: { $exists: false } },
-                { permission: { $in: permissions.getJuniorRoles(userRole) } }
+                { permission: { $in: corePermissions.getJuniorRoles(userRole) } }
               ],
               $skip: offset,
               $limit: batchSize,

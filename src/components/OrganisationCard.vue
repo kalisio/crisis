@@ -102,7 +102,8 @@
 <script>
 import _ from 'lodash'
 import logger from 'loglevel'
-import { permissions } from '@kalisio/kdk/core.common'
+import { permissions as corePermissions } from '@kalisio/kdk/core.common'
+import * as permissions from '../../common/permissions.mjs'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import * as utils from '../utils'
 
@@ -149,7 +150,7 @@ export default {
     },
     isMember () {
       const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.item._id)
-      return permissions.isJuniorRole(userRole, 'manager')
+      return corePermissions.isJuniorRole(userRole, 'manager')
     }
   },
   methods: {
@@ -174,7 +175,7 @@ export default {
       // Then the number of plans the user has an event in except if manager who can see all
       const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.item._id)
       let query = {}
-      if (permissions.isJuniorRole(userRole, 'manager')) {
+      if (corePermissions.isJuniorRole(userRole, 'manager')) {
         const values = await this.$api.getService('archived-events', this.item._id).find({
           query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.item._id))
         })

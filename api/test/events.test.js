@@ -22,9 +22,9 @@ describe('events', () => {
     // Default rules for all users
     corePermissions.defineAbilities.registerHook(corePermissions.defineUserAbilities)
     // Then rules for organisations
-    corePermissions.defineAbilities.registerHook(corePermissions.defineOrganisationAbilities)
+    corePermissions.defineAbilities.registerHook(permissions.defineOrganisationAbilities)
     // Then rules for groups
-    corePermissions.defineAbilities.registerHook(corePermissions.defineGroupAbilities)
+    corePermissions.defineAbilities.registerHook(permissions.defineGroupAbilities)
     // Then rules for events
     corePermissions.defineAbilities.registerHook(permissions.defineUserAbilities)
 
@@ -94,7 +94,7 @@ describe('events', () => {
     .timeout(15000)
 
   it('creates a org manager', async () => {
-    let user = await userService.create({ email: 'manager@test.org', name: 'org-manager' }, { checkAuthorisation: true })
+    const user = await userService.create({ email: 'manager@test.org', name: 'org-manager' }, { checkAuthorisation: true })
     orgManagerObject = user
     const users = await userService.find({ query: { 'profile.name': 'org-manager' }, checkAuthorisation: true, user: orgManagerObject })
     expect(users.data.length > 0).beTrue()
@@ -125,7 +125,7 @@ describe('events', () => {
     .timeout(15000)
 
   it('creates a org user', async () => {
-    let user = await userService.create({ email: 'user@test.org', name: 'org-user', password: 'Pass;word1' }, { checkAuthorisation: true })
+    const user = await userService.create({ email: 'user@test.org', name: 'org-user', password: 'Pass;word1' }, { checkAuthorisation: true })
     orgUserObject = user
     let users = await userService.find({ query: { 'profile.name': 'org-user' }, checkAuthorisation: true, user: orgUserObject })
     expect(users.data.length > 0).beTrue()

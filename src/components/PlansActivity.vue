@@ -27,7 +27,8 @@
 <script>
 import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
-import { permissions } from '@kalisio/kdk/core.common'
+import { permissions as corePermissions } from '@kalisio/kdk/core.common'
+import * as permissions from '../../common/permissions.mjs'
 import * as utils from '../utils'
 
 const activityMixin = kCoreMixins.baseActivity('plansActivity')
@@ -61,7 +62,7 @@ export default {
       this.filterQuery = _.clone(this.filter.query)
       const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.contextId)
       // We'd like to only display plans where the user has events except if manager who can see all
-      if (permissions.isJuniorRole(userRole, 'manager')) {
+      if (corePermissions.isJuniorRole(userRole, 'manager')) {
         const values = await this.$api.getService('archived-events').find({
           query: Object.assign({ $distinct: 'plan' }, utils.getEventsQuery(this.$store.get('user'), this.contextId))
         })
@@ -92,7 +93,7 @@ export default {
             query: {
               $or: [
                 { permission: { $exists: false } },
-                { permission: { $in: permissions.getJuniorRoles(userRole) } }
+                { permission: { $in: corePermissions.getJuniorRoles(userRole) } }
               ],
               $skip: offset,
               $limit: batchSize,

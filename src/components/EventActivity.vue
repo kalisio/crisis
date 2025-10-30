@@ -96,7 +96,7 @@ export default {
       // If we'd like to only work in real-time
       // Time.setCurrentTime(moment.utc())
       activityMixin.methods.configureActivity.call(this)
-      const color = kCoreUtils.getColorFromPalette(_.get(this.event, 'icon.color', 'blue'))
+      const color = kCoreUtils.getHtmlColor(_.get(this.event, 'icon.color', 'blue'))
       const icon = kCoreUtils.getIconName(this.event) || 'fas fa-circle'
       // Located event ?
       if (this.hasLocationGeometry()) {
@@ -176,7 +176,7 @@ export default {
 
       return {
         shape: 'circle',
-        color: kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color'), 'blue'),
+        color: kCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
         icon: {
           classes: kCoreUtils.getIconName(feature) || 'fas fa-user',
           color: 'white'

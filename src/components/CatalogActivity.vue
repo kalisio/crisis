@@ -372,7 +372,7 @@ export default {
 
       return {
         shape: 'circle',
-        color: kCoreUtils.getColorFromPalette(_.get(feature, 'icon.color'), 'blue'),
+        color: kCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
         icon: {
           classes: kCoreUtils.getIconName(feature) || 'las la-marker-map',
           color: 'white'
@@ -382,7 +382,7 @@ export default {
     getEventStyle (event, options) {
       if (options.name !== this.$t('CatalogActivity.EVENTS_LAYER')) return null
 
-      const color = kCoreUtils.getColorFromPalette(_.get(event, 'icon.color'), 'blue')
+      const color = kCoreUtils.getHtmlColor(_.get(event, 'icon.color'), 'blue')
       return {
         color: chroma(color).alpha(0.5).hex(), // Transparency
         stroke: {
