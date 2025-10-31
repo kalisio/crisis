@@ -1,3 +1,5 @@
+import layout from './kdk/layout.js'
+
 module.exports = [{
   target: '#catalog',
   title: 'tours.catalog.CATALOG_LABEL',
@@ -6,16 +8,7 @@ module.exports = [{
     placement: 'bottom',
     tour: 'navigation-bar'
   }
-}, {
-  target: '#right-opener',
-  title: 'tours.catalog.CATALOG_PANEL_LABEL',
-  link: 'tours.catalog.CATALOG_PANEL_LINK_LABEL',
-  params: {
-    placement: 'left',
-    hoverClickOnLink: '#right-opener',
-    tour: 'catalog-panel'
-  }
-}, {
+}, layout.rightOpener(), {
   target: '#bottom-opener',
   title: 'tours.catalog.TIMELINE_LABEL',
   link: 'tours.catalog.TIMELINE_LINK_LABEL',
@@ -24,13 +17,4 @@ module.exports = [{
     hoverClickOnLink: '#bottom-opener',
     tour: 'timeline'
   }
-}, {
-  target: '#fab',
-  title: 'tours.catalog.FAB_LABEL',
-  link: 'tours.catalog.FAB_LINK_LABEL',
-  params: {
-    placement: 'top',
-    hoverClickOnLink: 'div.q-fab__icon-holder',
-    tour: 'fab'
-  }
-}]
+}, layout.fab()]
