@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'
 import moment from 'moment'
 import pointOnFeature from '@turf/point-on-feature'
 import makeDebug from 'debug'
-import kCore, { createObjectID, permissions, decorateDistributedService } from '@kalisio/kdk/core.api.js'
+import kCore, { createDatabasesService, createObjectID, permissions, decorateDistributedService } from '@kalisio/kdk/core.api.js'
 import kMap, {
   createFeaturesService, removeFeaturesService,
   createCatalogService, removeCatalogService,
@@ -312,6 +312,55 @@ export function removeAlert (organisation) {
   }
 }
 
+export function createTagService (options = {}) {
+  const app = this
+  return app.createService('tags', Object.assign({
+    servicesPath,
+    modelsPath
+  }, options))
+}
+
+export function removeTagService (options = {}) {
+  const app = this
+  return app.removeService(app.getService('tags', options.context))
+}
+
+export async function createOrganisationService (options = {}) {
+  const app = this
+  // Create services to manage MongoDB databases, organisations, etc.
+  await createDatabasesService.call(app)
+  const orgsService = await app.createService('organisations', { modelsPath, servicesPath })
+
+  // Replication management
+  const usersService = app.getService('users')
+  const authorisationsService = app.getService('authorisations')
+  // Ensure permissions are correctly distributed when replicated
+  usersService.on('patched', user => {
+    // Patching profile should not trigger abilities update since
+    // it is a perspective and permissions are not available in this case
+    // Updating abilities in this case will result in loosing permissions for orgs/groups as none are available
+    if (_.has(user, 'organisations') || _.has(user, 'groups')) authorisationsService.updateAbilities(user)
+  })
+  // Ensure org services are correctly distributed when replicated
+  orgsService.on('created', organisation => {
+    console.log('toto', organisation)
+    // Check if already done (initiator)
+    const orgMembersService = app.getService('members', organisation)
+    if (!orgMembersService) {
+      // Jump from infos/stats to real DB object
+      const db = app.db.client.db(organisation._id.toString())
+      orgsService.createOrganisationServices(organisation, db)
+    }
+  })
+  orgsService.on('removed', organisation => {
+    // Check if already done (initiator)
+    const orgMembersService = app.getService('members', organisation)
+    if (!orgMembersService) return
+    orgsService.removeOrganisationServices(organisation)
+  })
+  return orgsService
+}
+
 export default async function () {
   const app = this
 
@@ -333,6 +382,7 @@ export default async function () {
       }
       res.json(response)
     })
+   
     app.on('service', async service => {
       // Add app-specific hooks to required services initialized externally
       if (service.name === 'users' ||
@@ -375,6 +425,7 @@ export default async function () {
     await app.configureService('authentication', app.getService('authentication'), servicesPath)
     await app.configure(kMap)
 
+    await createOrganisationService.call(app)
     const orgsService = app.getService('organisations')
     // Register services hook for organisations
     orgsService.registerOrganisationServicesHook({
@@ -387,6 +438,7 @@ export default async function () {
   }
 
   const usersService = app.getService('users')
+
   const defaultUsers = app.get('authentication').defaultUsers
   // Do not use exposed passwords on staging/prod environments
   if (defaultUsers && !process.env.NODE_APP_INSTANCE) {
@@ -402,3 +454,4 @@ export default async function () {
     }
   }
 }
+

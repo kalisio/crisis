@@ -1,8 +1,8 @@
-var path = require('path')
-var fs = require('fs')
+const path = require('path')
+const fs = require('fs')
 var winston = require('winston')
 const express = require('@feathersjs/express')
-var containerized = require('containerized')()
+const containerized = require('containerized')()
 
 const N = parseInt(process.env.NODE_APP_NB_INSTANCES)
 const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
@@ -10,15 +10,15 @@ const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
 // Start blocking after N requests or N auth requests
-let nbRequestsPerMinute = 60 * 4
-let nbAuthenticationRequestsPerMinute = 10
+const nbRequestsPerMinute = 120
+const nbAuthenticationRequestsPerMinute = 10
 // Whitelist features services from rate limiting as they use a lot of concurrent requests
 const apiLimiterWhitelist = (service) => (service.path && service.path.includes('features')) || (service.key === 'kano') || (service.key === 'weacast')
 // Global API limiter
 let apiLimiter = {
   http: {
     services: apiLimiterWhitelist,
-    windowMs: 60*1000, // 1 minute window
+    windowMs: 60 * 1000, // 1 minute window
     max: nbRequestsPerMinute // start blocking after N requests
   },
   websocket: {
@@ -225,7 +225,7 @@ module.exports = {
     adapter: 'mongodb',
     url: process.env.DB_URL || (containerized ? 'mongodb://mongodb:27017/crisis' : 'mongodb://127.0.0.1:27017/crisis')
   },
-  storage: {
+  storage: (process.env.S3_BUCKET ? {
     s3Client: {
       credentials: {
         accessKeyId: process.env.S3_ACCESS_KEY || process.env.S3_ACCESS_KEY_ID,
@@ -236,7 +236,7 @@ module.exports = {
       signatureVersion: 'v4'
     },
     bucket: process.env.S3_BUCKET
-  },
+  } : undefined),
   'import-export': {
     s3Options: {
       s3Client: {
