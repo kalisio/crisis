@@ -1,3 +1,11 @@
+const helpers = require('./kdk/helpers.js')
+const leftPane = require('./kdk/panes.left.js')
+const panesTop = require('./kdk/panes.top.js')
+const topPane = require('./kdk/panes.top.js')
+const stickies = require('./kdk/stickies.js')
+const widgetsLeft = require('./kdk/widgets.left.js')
+const widgetsTop = require('./kdk/widgets.top.js')
+
 const website = 'https://www.kalisio.com'
 const onlineHelp = 'https://doc.planet.kalisio.com'
 const changelog = onlineHelp + '/quickstart/history.html'
@@ -37,145 +45,27 @@ if (process.env.SUBDOMAIN) {
   }
 }
 
-const contextHelp = function (tour) {
-  return Object.assign({
-    id: 'contextual-help', icon: 'las la-question-circle', label: 'leftPane.CONTEXTUAL_HELP', renderer: 'item'
-  }, tour ? { handler: { name: 'launchTour', params: [tour] } } : { handler: 'launchTour' })
-}
-
 // Left pane
-const leftPane = function (tour) {
-  return {
-    content: [
-      { component: 'account/KProfile', class: 'full-width' },
-      { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
-      { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
-      {
-        id: 'settings',
-        icon: 'las la-cog',
-        label: 'SETTINGS',
-        renderer: 'item',
-        dialog: {
-          component: 'app/KSettings',
-          title: 'SETTINGS',
-          cancelAction: 'CANCEL',
-          okAction: {
-            id: 'apply-settings', label: 'APPLY', handler: 'apply'
-          }
-        }
-      },
-      { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
-      {
-        id: 'about',
-        icon: 'las la-info',
-        label: 'ABOUT',
-        renderer: 'item',
-        dialog: { component: 'app/KAbout', title: 'ABOUT', okAction: 'CLOSE' }
-      },
-      { id: 'online-help', icon: 'las la-book', label: 'leftPane.ONLINE_HELP', url: onlineHelp, renderer: 'item' },
-      contextHelp(tour),
-      { component: 'QSeparator', color: 'lightgrey', style: 'min-height: 1px; max-height: 1px;' },
-      { id: 'logout', icon: 'las la-sign-out-alt', label: 'leftPane.LOGOUT', route: { name: 'logout' }, renderer: 'item' }
-    ]
-  }
+const LEFT_PANE = {
+  content: [
+    { component: 'account/KProfile', class: 'full-width' },
+    { id: 'my-organisations', icon: 'las la-grip-horizontal', label: 'leftPane.ORGANISATIONS', route: { name: 'organisations-activity' }, renderer: 'item' },
+    helpers.horizontalSeparator(),
+    leftPane.settings(),
+    helpers.horizontalSeparator(),
+    leftPane.about(),
+    leftPane.onlineHelp({ url: onlineHelp }),
+    leftPane.contextualHelp(),
+    helpers.horizontalSeparator(),
+    leftPane.logout()
+  ]
 }
 
 // left window
-const leftWidgets = [
-  {
-    id: 'legend-widget',
-    label: 'KLegend.LABEL',
-    icon: 'las la-list',
-    scrollable: true,
-    content: { component: 'legend/KLegend' }
-  }
-]
+const leftWidgets = [widgetsLeft.LEGEND]
 
 // top widgets
-const topWidgets = [{
-  id: 'information-box',
-  label: 'KInformationBox.LABEL',
-  icon: 'las la-digital-tachograph',
-  scrollable: true,
-  content: { component: 'widget/KInformationBox' },
-  header: [{
-    id: 'center-view',
-    icon: 'las la-eye',
-    tooltip: 'KInformationBox.CENTER_ON',
-    visible: 'hasFeature',
-    handler: 'onCenterOn'
-  }, {
-    id: 'copy-properties',
-    icon: 'las la-clipboard',
-    tooltip: 'KInformationBox.COPY_PROPERTIES',
-    visible: 'hasProperties',
-    handler: 'onCopyProperties'
-  }, {
-    id: 'export-feature',
-    icon: 'kdk:json.svg',
-    tooltip: 'KInformationBox.EXPORT_FEATURE',
-    visible: 'hasFeature',
-    handler: 'onExportFeature'
-  }]
-}, {
-  id: 'time-series',
-  label: 'KTimeSeries.LABEL',
-  icon: 'las la-chart-line',
-  content: { component: 'widget/KTimeSeries' },
-  header: [{
-    id: 'absolute-time-range',
-    component: 'time/KAbsoluteTimeRange'
-  }, {
-    id: 'restore-time-range',
-    icon: 'las la-undo',
-    tooltip: 'KTimeSeries.RESTORE_TIME_RANGE',
-    visible: 'hasZoomHistory',
-    handler: 'onZoomRestored'
-  }, {
-    id: 'relative-time-ranges',
-    component: 'menu/KMenu',
-    icon: 'las la-history',
-    content: [{
-      component: 'time/KRelativeTimeRanges',
-      ranges: ['last-hour', 'last-2-hours', 'last-3-hours', 'last-6-hours',
-        'last-12-hours', 'last-day', 'last-2-days', 'last-3-days', 'last-week',
-        'next-12-hours', 'next-day', 'next-2-days', 'next-3-days']
-    }]
-  }, {
-    id: 'run-options',
-    component: 'input/KOptionsChooser',
-    icon: 'las la-clock',
-    tooltip: 'KTimeSeries.RUN',
-    visible: 'hasRunTimes',
-    hideSelected: false,
-    options: ':runOptions',
-    on: { event: 'option-chosen', listener: 'onUpdateRun' }
-  }, {
-    id: 'center-view',
-    icon: 'las la-eye',
-    tooltip: 'KTimeSeries.CENTER_ON',
-    visible: 'probedVariables',
-    handler: 'onCenterOn'
-  }, {
-    id: 'export-feature',
-    icon: 'las la-file-download',
-    tooltip: 'KTimeSeries.EXPORT_SERIES',
-    visible: 'probedVariables',
-    handler: 'onExportSeries'
-  }]
-}, {
-  id: 'mapillary-viewer',
-  label: 'KMapillaryViewer.LABEL',
-  icon: 'kdk:mapillary.png',
-  content: { component: 'widget/KMapillaryViewer' },
-  header: [{
-    id: 'center',
-    icon: 'las la-eye',
-    tooltip: 'KMapillaryViewer.CENTER_ON',
-    visible: 'hasImage',
-    handler: 'centerMap'
-  }]
-}]
+const topWidgets = [widgetsTop.INFORMATION_BOX, widgetsTop.TIME_SERIES, widgetsTop.MAPILLARY_VIEWER]
 
 // Catalog tababr
 function catalogTabbar (views, activeView) {
@@ -225,79 +115,77 @@ function catalogTabbar (views, activeView) {
   return tabbar
 }
 
-const separator = { component: 'QSeparator', vertical: true, color: 'grey-5' }
-const midSeparator = { component: 'QSeparator', vertical: true, inset: true, color: 'grey-5', style: 'max-width: 1px; min-width: 1px;' }
+const separator = helpers.verticalSeparator()
+const midSeparator = helpers.verticalSeparator({ inset: true, style: 'max-width: 1px; min-width: 1px;' })
 
-const currentActivityStamp = function (id, icon, text) {
-  return { id, component: 'KStamp', icon, iconSize: 'sm', text, direction: 'horizontal', class: 'text-grey-7' }
-}
-
-const gotoActivityAction = function (service, icon, label, contextId) {
+const plansAction = function (contextId = 'contextId') {
   return {
-    id: service,
-    icon,
-    tooltip: label,
-    visible: { name: '$can', params: ['service', service, `:${contextId}`] },
-    route: { name: `${service}-activity`, params: { contextId: `:${contextId}` } }
+    ...panesTop.activityLink('plans', 'las la-stream', 'PlansActivity.PLANS_LABEL', { contextId: `:${contextId}` }),
+    visible: { name: '$can', params: ['service', 'plans', `:${contextId}`] }
   }
 }
 
-const plansAction = function (contextId = 'contextId') {
-  return gotoActivityAction('plans', 'las la-stream', 'PlansActivity.PLANS_LABEL', contextId)
-}
-
 const archivedPlansAction = function (contextId = 'contextId') {
-  return gotoActivityAction('archived-plans', 'las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL', contextId)
+  return {
+    ...panesTop.activityLink('archived-plans', 'las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL', { contextId: `:${contextId}` }),
+    visible: { name: '$can', params: ['service', 'archived-plans', `:${contextId}`] }
+  }
 }
 
 const eventsAction = function (contextId = 'contextId') {
   return {
-    id: 'events',
-    icon: 'las la-fire',
-    tooltip: 'EventsActivity.EVENTS_LABEL',
-    visible: { name: '$can', params: ['service', 'events', `:${contextId}`] },
-    route: { name: 'events-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } }
+    ...panesTop.activityLink('events', 'las la-fire', 'EventsActivity.EVENTS_LABEL', { contextId: `:${contextId}` }, { plan: ':plan' }),
+    visible: { name: '$can', params: ['service', 'events', `:${contextId}`] }
   }
 }
 
 const mapAction = function (contextId = 'contextId') {
   return {
-    id: 'catalog',
-    icon: 'las la-map',
-    tooltip: 'Context.CATALOG',
-    visible: { name: '$can', params: ['update', 'catalog', `:${contextId}`] },
-    route: { name: 'catalog-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } }
+    ...panesTop.activityLink('catalog', 'las la-map', 'Context.CATALOG', { contextId: `:${contextId}` }, { plan: ':plan' }),
+    visible: { name: '$can', params: ['update', 'catalog', `:${contextId}`] }
   }
 }
 
 const archivedEventsAction = function (contextId = 'contextId') {
   return {
-    id: 'archived-events',
-    icon: 'las la-clipboard-list',
-    tooltip: 'Context.ARCHIVED_EVENTS',
-    visible: { name: '$can', params: ['service', 'archived-events', `:${contextId}`] },
-    route: { name: 'archived-events-activity', params: { contextId: `:${contextId}` }, query: { plan: ':plan' } }
+    ...panesTop.activityLink('archived-events', 'las la-clipboard-list', 'Context.ARCHIVED_EVENTS', { contextId: `:${contextId}` }, { plan: ':plan' }),
+    visible: { name: '$can', params: ['service', 'archived-events', `:${contextId}`] }
   }
 }
 
 const membersAction = function (contextId = 'contextId') {
-  return gotoActivityAction('members', 'las la-user-friends', 'KMembersActivity.MEMBERS_LABEL', contextId)
+  return {
+    ...panesTop.activityLink('members', 'las la-user-friends', 'KMembersActivity.MEMBERS_LABEL', { contextId: `:${contextId}` }),
+    visible: { name: '$can', params: ['service', 'members', `:${contextId}`] }
+  }
 }
 
 const tagsAction = function (contextId = 'contextId') {
-  return gotoActivityAction('tags', 'las la-tags', 'KTagsActivity.TAGS_LABEL', contextId)
+  return {
+    ...panesTop.activityLink('tags', 'las la-tags', 'KTagsActivity.TAGS_LABEL', { contextId: `:${contextId}` }),
+    visible: { name: '$can', params: ['service', 'tags', `:${contextId}`] }
+  }
 }
 
 const groupsAction = function (contextId = 'contextId') {
-  return gotoActivityAction('groups', 'las la-sitemap', 'KGroupsActivity.GROUPS_LABEL', contextId)
+  return {
+    ...panesTop.activityLink('groups', 'las la-sitemap', 'KGroupsActivity.GROUPS_LABEL', { contextId: `:${contextId}` }),
+    visible: { name: '$can', params: ['service', 'groups', `:${contextId}`] }
+  }
 }
 
 const eventTemplatesAction = function (contextId = 'contextId') {
-  return gotoActivityAction('event-templates', 'las la-fire', 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', contextId)
+  return {
+    ...panesTop.activityLink('event-templates', 'las la-fire', 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL', { contextId: `:${contextId}` }),
+    visible: { name: '$can', params: ['service', 'event-templates', `:${contextId}`] }
+  }
 }
 
 const planTemplatesAction = function (contextId = 'contextId') {
-  return gotoActivityAction('plan-templates', 'las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL', contextId)
+  return {
+    ...panesTop.activityLink('plan-templates', 'las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL', { contextId: `:${contextId}` }),
+    visible: { name: '$can', params: ['service', 'plan-templates', `:${contextId}`] }
+  }
 }
 
 const editItemAction = function (tooltip, scope = undefined, properties = undefined) {
@@ -445,7 +333,7 @@ const mapEngine = {
 const contextFilter = function (field, services = []) {
   return [
     { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
-    { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+    helpers.verticalSeparator(),
     {
       component: 'collection/KFilter', field, services
     }
@@ -558,25 +446,8 @@ module.exports = {
   },
   about: {
     actions: [
-      {
-        id: 'platform-info',
-        icon: 'las la-desktop',
-        label: 'KAbout.PLATFORM_INFO',
-        stack: true,
-        dialog: {
-          title: 'KAbout.PLATFORM_INFO',
-          component: 'app/KPlatform',
-          okAction: 'CLOSE',
-          widthPolicy: 'narrow'
-        }
-      },
-      {
-        id: 'report-bug',
-        icon: 'las la-bug',
-        label: 'KAbout.BUG_REPORT',
-        stack: true,
-        component: 'action/KBugReportAction'
-      },
+      leftPane.platformInfo(),
+      leftPane.reportBug(),
       {
         id: 'view-changelog',
         icon: 'las la-history',
@@ -598,8 +469,8 @@ module.exports = {
     login: {
       actions: [
         { id: 'reset-password-link', label: 'KLoginScreen.FORGOT_YOUR_PASSWORD_LABEL', route: { name: 'send-reset-password' } },
-        { id: 'register-link', label: 'KLoginScreen.DONT_HAVE_AN_ACCOUNT_LABEL', route: { name: 'register' } },
-        { id: 'contextual-help', label: 'KLoginScreen.CONTEXTUAL_HELP', route: { name: 'login', query: { tour: true } } }
+        { id: 'register-link', label: 'KLoginScreen.DONT_HAVE_AN_ACCOUNT_LABEL', route: { name: 'register' } }
+        // { id: 'contextual-help', label: 'KLoginScreen.CONTEXTUAL_HELP', route: { name: 'login', query: { tour: true } } }
       ]
     },
     logout: {
@@ -609,8 +480,8 @@ module.exports = {
     },
     register: {
       actions: [
-        { id: 'login-link', label: 'KRegisterScreen.ALREADY_HAVE_AN_ACCOUNT_LABEL', route: { name: 'login' } },
-        { id: 'contextual-help', label: 'KRegisterScreen.CONTEXTUAL_HELP', route: { name: 'register', query: { tour: true } } }
+        { id: 'login-link', label: 'KRegisterScreen.ALREADY_HAVE_AN_ACCOUNT_LABEL', route: { name: 'login' } }
+        // { id: 'contextual-help', label: 'KRegisterScreen.CONTEXTUAL_HELP', route: { name: 'register', query: { tour: true } } }
       ]
     }
   },
@@ -656,11 +527,11 @@ module.exports = {
     ]
   },
   organisationsActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         default: [
-          currentActivityStamp('organisations', 'las la-grip-horizontal', 'KOrganisationsActivity.ORGANISATIONS_LABEL'),
+          topPane.activityStamp('organisations', 'las la-grip-horizontal', 'KOrganisationsActivity.ORGANISATIONS_LABEL'),
           midSeparator,
           { id: 'organisation-sorter', component: 'collection/KSorter', tooltip: 'KOrganisationsActivity.SORT_ORGANISATIONS' },
           { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATIONS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
@@ -684,13 +555,13 @@ module.exports = {
     }
   },
   plansActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         default: [
           { component: 'OrganisationMenu', mode: 'plan' },
           separator,
-          currentActivityStamp('plans', 'las la-stream', 'PlansActivity.PLANS_LABEL'),
+          topPane.activityStamp('plans', 'las la-stream', 'PlansActivity.PLANS_LABEL'),
           archivedPlansAction(),
           midSeparator,
           {
@@ -739,14 +610,14 @@ module.exports = {
     }
   },
   archivedPlansActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         default: [
           { component: 'OrganisationMenu', mode: 'plan' },
           separator,
           plansAction(),
-          currentActivityStamp('archived-plans', 'las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL')
+          topPane.activityStamp('archived-plans', 'las la-archive', 'ArchivedPlansActivity.ARCHIVED_PLANS_LABEL')
         ],
         filter: contextFilter('name')
       },
@@ -779,14 +650,14 @@ module.exports = {
     }
   },
   eventsActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         default: [
           { component: 'OrganisationMenu', mode: 'run' },
           separator,
           { component: 'PlanMenu' },
-          currentActivityStamp('events', 'las la-fire', 'EventsActivity.EVENTS_LABEL'),
+          topPane.activityStamp('events', 'las la-fire', 'EventsActivity.EVENTS_LABEL'),
           mapAction(),
           archivedEventsAction(),
           midSeparator,
@@ -860,7 +731,7 @@ module.exports = {
     }
   },
   catalogActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         default: [
@@ -868,11 +739,11 @@ module.exports = {
           separator,
           { component: 'PlanMenu' },
           eventsAction(),
-          currentActivityStamp('catalog', 'las la-map', 'Context.CATALOG'),
+          topPane.activityStamp('catalog', 'las la-map', 'Context.CATALOG'),
           archivedEventsAction(),
           midSeparator,
-          { id: 'locate-user', component: 'tools/KGeolocateTool' },
-          { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
+          topPane.locateUser(),
+          topPane.activeLocationSearchMode(),
           {
             id: 'tools',
             component: 'menu/KMenu',
@@ -880,38 +751,34 @@ module.exports = {
             tooltip: 'mixins.activity.TOOLS',
             actionRenderer: 'item',
             content: [
-              { id: 'measure-tool', icon: 'las la-ruler-combined', label: 'KMeasureTool.TOOL_BUTTON_LABEL', handler: { name: 'setTopPaneMode', params: ['measure-tool'] } },
+              topPane.activeMeasureToolMode(),
               { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } },
               { id: 'display-legend', icon: 'las la-list', label: 'mixins.activity.DISPLAY_LEGEND', handler: { name: 'openWidget', params: ['legend-widget'] } }
             ]
           },
           {
-            id: 'toggle-fullscreen',
-            icon: 'las la-expand',
-            tooltip: 'mixins.activity.ENTER_FULLSCREEN',
-            visible: '$q.screen.gt.md',
-            toggle: { icon: 'las la-compress', tooltip: 'mixins.activity.EXIT_FULLSCREEN' },
-            handler: 'onToggleFullscreen'
+            ...topPane.toggleFullscreen(),
+            visible: '$q.screen.gt.md'
           }
         ],
         'display-position': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          helpers.verticalSeparator(),
           { component: 'KPositionIndicator' }
         ],
         'search-location': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          helpers.verticalSeparator(),
           { component: 'tools/KSearchTool', geocoders: null }
         ],
         'edit-layer-data': [
           { id: 'accept', icon: 'las la-arrow-left', handler: { name: 'onEndLayerEdition', params: ['accept'] } },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          helpers.verticalSeparator(),
           { component: 'KLayerEditionToolbar' }
         ],
         'measure-tool': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          helpers.verticalSeparator(),
           { component: 'KMeasureTool' }
         ]
       },
@@ -990,7 +857,7 @@ module.exports = {
     featuresChunkSize: 5000
   },
   archivedEventsActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         history: [
@@ -999,7 +866,7 @@ module.exports = {
           { component: 'PlanMenu' },
           eventsAction(),
           mapAction(),
-          currentActivityStamp('archived-events', 'las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
+          topPane.activityStamp('archived-events', 'las la-clipboard-list', 'Context.ARCHIVED_EVENTS'),
           midSeparator,
           { component: 'EventFilter' },
           { id: 'map-view', icon: 'las la-map-marked', tooltip: 'ArchivedEventsActivity.SHOW_MAP_LABEL', handler: 'onShowMap' },
@@ -1122,13 +989,13 @@ module.exports = {
     restore: { view: false, layers: false }
   },
   membersActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         default: [
           { component: 'OrganisationMenu', mode: 'admin' },
           separator,
-          currentActivityStamp('members', 'las la-user-friends', 'KMembersActivity.MEMBERS_LABEL'),
+          topPane.activityStamp('members', 'las la-user-friends', 'KMembersActivity.MEMBERS_LABEL'),
           tagsAction(),
           groupsAction(),
           eventTemplatesAction(),
@@ -1213,14 +1080,14 @@ module.exports = {
     }
   },
   tagsActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         default: [
           { component: 'OrganisationMenu', mode: 'admin' },
           separator,
           membersAction(),
-          currentActivityStamp('tags', 'las la-tags', 'KTagsActivity.TAGS_LABEL'),
+          topPane.activityStamp('tags', 'las la-tags', 'KTagsActivity.TAGS_LABEL'),
           groupsAction(),
           eventTemplatesAction(),
           planTemplatesAction(),
@@ -1259,7 +1126,7 @@ module.exports = {
     }
   },
   groupsActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         default: [
@@ -1267,7 +1134,7 @@ module.exports = {
           separator,
           membersAction(),
           tagsAction(),
-          currentActivityStamp('groups', 'las la-sitemap', 'KGroupsActivity.GROUPS_LABEL'),
+          topPane.activityStamp('groups', 'las la-sitemap', 'KGroupsActivity.GROUPS_LABEL'),
           eventTemplatesAction(),
           planTemplatesAction(),
           midSeparator,
@@ -1297,7 +1164,7 @@ module.exports = {
     }
   },
   eventTemplatesActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         default: [
@@ -1306,7 +1173,7 @@ module.exports = {
           membersAction(),
           tagsAction(),
           groupsAction(),
-          currentActivityStamp('event-templates', 'las la-fire', 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL'),
+          topPane.activityStamp('event-templates', 'las la-fire', 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL'),
           planTemplatesAction(),
           midSeparator,
           { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
@@ -1349,7 +1216,7 @@ module.exports = {
     }
   },
   planTemplatesActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         default: [
@@ -1359,7 +1226,7 @@ module.exports = {
           tagsAction(),
           groupsAction(),
           eventTemplatesAction(),
-          currentActivityStamp('plan-templates', 'las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL'),
+          topPane.activityStamp('plan-templates', 'las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL'),
           midSeparator,
           { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } }
@@ -1405,14 +1272,14 @@ module.exports = {
     }
   },
   eventActivity: {
-    leftPane: leftPane(),
+    leftPane: LEFT_PANE,
     topPane: {
       content: {
         default: [
           { id: 'back', icon: 'las la-arrow-left', handler: 'goBack' },
           separator,
-          { id: 'locate-user', component: 'tools/KGeolocateTool' },
-          { id: 'search-location', icon: 'las la-search-location', tooltip: 'mixins.activity.SEARCH_LOCATION', handler: { name: 'setTopPaneMode', params: ['search-location'] } },
+          topPane.locateUser(),
+          topPane.activeLocationSearchMode(),
           {
             id: 'tools',
             component: 'menu/KMenu',
@@ -1420,34 +1287,30 @@ module.exports = {
             tooltip: 'mixins.activity.TOOLS',
             actionRenderer: 'item',
             content: [
-              { id: 'measure-tool', icon: 'las la-ruler-combined', label: 'KMeasureTool.TOOL_BUTTON_LABEL', handler: { name: 'setTopPaneMode', params: ['measure-tool'] } },
+              topPane.activeMeasureToolMode(),
               { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } },
               { id: 'display-legend', icon: 'las la-list', label: 'mixins.activity.DISPLAY_LEGEND', handler: { name: 'openWidget', params: ['legend-widget'] } }
             ]
           },
           {
-            id: 'toggle-fullscreen',
-            icon: 'las la-expand',
-            tooltip: 'mixins.activity.ENTER_FULLSCREEN',
-            visible: '$q.screen.gt.md',
-            toggle: { icon: 'las la-compress', tooltip: 'mixins.activity.EXIT_FULLSCREEN' },
-            handler: 'onToggleFullscreen'
+            ...topPane.toggleFullscreen(),
+            visible: '$q.screen.gt.md'
           },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' }
+          helpers.verticalSeparator()
         ],
         'display-position': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          helpers.verticalSeparator(),
           { component: 'KPositionIndicator' }
         ],
         'search-location': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          helpers.verticalSeparator(),
           { component: 'tools/KSearchTool', geocoders: null }
         ],
         'measure-tool': [
           { id: 'accept', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
-          { component: 'QSeparator', vertical: true, color: 'lightgrey' },
+          helpers.verticalSeparator(),
           { component: 'KMeasureTool' }
         ]
       },
