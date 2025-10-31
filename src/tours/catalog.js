@@ -1,4 +1,4 @@
-import layout from './kdk/layout.js'
+const layout = require('./kdk/layout.js')
 
 module.exports = [{
   target: '#catalog',
