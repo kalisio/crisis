@@ -1,6 +1,6 @@
 import commonHooks from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
-import { checkInvitationsQuotas } from '../../hooks/index.js'
+import { checkInvitationsQuotas, joinOrganisation, leaveOrganisations, sendInvitationEmail, preventRemoveUser } from '../../hooks/index.js'
 
 export default {
   before: {
@@ -18,7 +18,7 @@ export default {
         coreHooks.generatePassword({
           suggestedPasswordField: 'suggestedPassword'
         }),
-        coreHooks.sendInvitationEmail,
+        sendInvitationEmail,
         coreHooks.hashPassword('password')),
       coreHooks.addVerification,
       coreHooks.convertDates(['expireAt'])
@@ -29,7 +29,7 @@ export default {
       commonHooks.iff(commonHooks.isProvider('external'), coreHooks.preventChanges(false, ['groups'])),
       coreHooks.convertDates(['expireAt'])
     ],
-    remove: [coreHooks.preventRemoveUser]
+    remove: [preventRemoveUser]
   },
 
   after: {
@@ -38,7 +38,7 @@ export default {
     get: [coreHooks.removeVerification],
     create: [
       commonHooks.iff(hook => !hook.result.sponsor, coreHooks.sendVerificationEmail),
-      commonHooks.iff(hook => hook.result.sponsor, coreHooks.joinOrganisation),
+      commonHooks.iff(hook => hook.result.sponsor, joinOrganisation),
       coreHooks.removeVerification
     ],
     update: [],
@@ -46,7 +46,7 @@ export default {
     remove: [
       coreHooks.setAsDeleted,
       coreHooks.removeAttachments('avatar'),
-      coreHooks.leaveOrganisations(),
+      leaveOrganisations(),
       coreHooks.removeVerification
     ]
   },

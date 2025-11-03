@@ -3,6 +3,8 @@ import { createObjectID } from '@kalisio/kdk/core.api.js'
 import makeDebug from 'debug'
 const debug = makeDebug('crisis:hooks')
 
+export * from './hooks.authentication.js'
+export * from './hooks.authorisations.js'
 export * from './hooks.quotas.js'
 export * from './hooks.events.js'
 export * from './hooks.event-logs.js'
@@ -12,6 +14,7 @@ export * from './hooks.organisations.js'
 export * from './hooks.groups.js'
 export * from './hooks.plans.js'
 export * from './hooks.storage.js'
+export * from './hooks.users.js'
 
 export function processNotification (hook) {
   // We use a query parameter to transport the notification body when creating, updating, removing an event

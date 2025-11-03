@@ -1,5 +1,6 @@
 import commonHooks from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
+import { verifyGuest, consentGuest } from '../../hooks/index.js'
 
 export default {
   before: {
@@ -16,7 +17,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [coreHooks.verifyGuest, coreHooks.consentGuest, commonHooks.iff(hook => process.env.API_GATEWAY_URL, async hook => {
+    create: [verifyGuest, consentGuest, commonHooks.iff(hook => process.env.API_GATEWAY_URL, async hook => {
       const config = hook.app.get('authentication')
       if (!config) return hook
       // Default appId for Crisis used to access the gateway
