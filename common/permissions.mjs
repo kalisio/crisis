@@ -5,6 +5,18 @@ import _ from 'lodash'
 // Indeed, permissions files are usually isomorphic files. However, when we tried to create a common folder
 // to share it between frontend/backend but experienced problems with webpack
 
+export const Roles = {
+  member: 0,
+  manager: 1,
+  owner: 2
+}
+
+export const RoleNames = [
+  'member',
+  'manager',
+  'owner'
+]
+
 function defineEventAbilities (subject, can, cannot, app) {
   if (subject && subject._id) {
     if (subject.organisations) {
@@ -162,6 +174,23 @@ export function defineUserAbilities (subject, can, cannot, app) {
   }
 }
 
+function buildSubjectsQueryForResource (resourceScope, resourceId, role) {
+  const query = { [resourceScope]: { $elemMatch: { _id: resourceId } } }
+  if (role) {
+    _.set(query[resourceScope], '$elemMatch.permissions', (typeof role === 'string' ? role : RoleNames[role]))
+  }
+  return query
+}
+
+export function countSubjectsForResource (subjectService, resourceScope, resourceId, role) {
+  // Build the query
+  const query = buildSubjectsQueryForResource(resourceScope, resourceId, role)
+  // Indicate we'd only like to count
+  query.$limit = 0
+  // Execute the query
+  return subjectService.find({ query })
+}
+
 // Hook computing organisation abilities for a given user
 export function defineOrganisationAbilities (subject, can, cannot) {
   if (subject) {
@@ -225,8 +254,27 @@ export function defineGroupAbilities (subject, can, cannot) {
   }
 }
 
+// Helper functions to find the members of a given group
+export function findMembersOfGroup (membersService, groupId, role) {
+  return findSubjectsForResource(membersService, 'groups', groupId, role)
+}
+
+export function countMembersWithTag (membersService, tagId) {
+  return countSubjectsForResource(membersService, 'tags', tagId)
+}
+
 export function getRoleForOrganisation (user, organisationId) {
   const result = _.find(user.organisations, { _id: organisationId })
   if (!_.isUndefined(result)) return result.permissions
   return undefined
+}
+
+export function getRoleForGroup (user, organisationId, groupId) {
+  const result = _.find(user.groups, { context: organisationId, _id: groupId })
+  if (!_.isUndefined(result)) return result.permissions
+  return undefined
+}
+
+export function findGroupsWithRole (user, organisationId, role) {
+  return _.filter(user.groups || [], { context: organisationId, permissions: (typeof role === 'string' ? role : RoleNames[role]) })
 }

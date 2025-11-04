@@ -2,7 +2,6 @@ const helpers = require('./kdk/helpers.js')
 const leftPane = require('./kdk/panes.left.js')
 const panesTop = require('./kdk/panes.top.js')
 const topPane = require('./kdk/panes.top.js')
-const stickies = require('./kdk/stickies.js')
 const widgetsLeft = require('./kdk/widgets.left.js')
 const widgetsTop = require('./kdk/widgets.top.js')
 

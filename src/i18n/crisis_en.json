@@ -776,5 +776,117 @@
     "VIEW_ARCHIVED_EVENTS": "View logbook",
     "VIEW_ARCHIVED_PLANS": "View plans archive",
     "MANAGE_ORGANISATION": "Manage organisation"
+  },
+  "KOrganizationsActivity": {
+    "ORGANISATIONS_LABEL": "My organisations",
+    "CREATE_ORGANISATION_LABEL": "Create an organisation",
+    "SEARCH_ORGANISATIONS": "Search for organisations",
+    "SORT_ORGANISATIONS": "Sort organisations"
+  },
+  "KMembersActivity": {
+    "MEMBERS_LABEL": "@:MEMBERS",
+    "SORT_MEMBERS": "Sort members",
+    "SEARCH_MEMBERS": "Search members",
+    "EXPORT_MEMBERS": "Export members",
+    "ADD_USER_LABEL": "Add a member",
+    "INVITE_GUEST_LABEL": "Invite guests"
+  },
+  "KAddMember": {
+    "TITLE": "Add one or more persons ?",
+    "EMAIL_FIELD_LABEL": "Enter the email address of the person to be added",
+    "NAME_FIELD_LABEL": "Enter the name of this person",
+    "ROLE_FIELD_LABEL": "Select the role granted to this person",
+    "ADD_MESSAGE": "<b>{email}</b> is already registered. Would you like to add this persion to your organization ?",
+    "INVITE_MESSAGE": "<b>{email}</b> is not registered. Would you like to invite this person ?",
+    "FILE_FIELD_LABEL": "Select the CSV file you want to import",
+    "OWNER_LABEL": "@:OWNER",
+    "MANAGER_LABEL": "@:MANAGER",
+    "MEMBER_LABEL": "@:MEMBER",
+    "CANCEL_BUTTON": "@:CANCEL",
+    "CONTINUE_BUTTON": "Continue",
+    "BACK_BUTTON": "Back",
+    "ADD_BUTTON": "Add",
+    "INVITE_BUTTON": "Invite",
+    "ALREADY_MEMBER_ERROR": "This person is already a member of your organization",
+    "CONTENT_FILE_ERROR": "Are you sure your file is correclty formatted ?",
+    "INVALID_FIELDS_VALUES_ERROR": "Invalid values",
+    "INVALID_FIELDS_NUMBER_ERROR": "Invalid field number",
+    "ALERT_FILE_IMPORT_MESSAGE": "No valid record detected. Please ensure your file is correctly formatted",
+    "CONFIRM_FILE_IMPORT_MESSAGE": "<b>{errors} error(s)</b> detected among {records}] record(s). Would you to continue ?",
+    "USER_ADDED_MESSAGE": "This person as been added",
+    "GUEST_ADDED_MESSAGE": "This person as been invited"
+  },
+  "KAddTag": {
+    "TITLE": "Tag {member} with an existing tag ?",
+    "TAG_FIELD_LABEL": "Enter the name of the tag",
+    "CLOSE_ACTION": "@:CLOSE",
+    "ADD_BUTTON": "Tag"
+  },
+  "KJoinGroup": {
+    "TITLE": "Add {member} to an existing group ?",
+    "GROUP_FIELD_LABEL": "Enter the name of the group",
+    "ROLE_FIELD_LABEL": "Delegate group management to this member?",
+    "OWNER_LABEL": "@:OWNER",
+    "MANAGER_LABEL": "@:MANAGER",
+    "MEMBER_LABEL": "@:MEMBER",
+    "CLOSE_ACTION": "@:CLOSE",
+    "ADD_BUTTON": "Add"
+  },
+  "KChangeRole": {
+    "TITLE": "Change role of {member} ?",
+    "ROLE_FIELD_LABEL": "Select the role to be granted to the user",
+    "CLOSE_ACTION": "@:CLOSE",
+    "UPDATE_BUTTON": "Update"
+  },
+  "KMemberCard": {
+    "EDIT_ACTION": "@:EDIT",
+    "REMOVE_ACTION": "@:REMOVE",
+    "TAGS_SECTION": "Tags",
+    "NO_TAGS_LABEL": "Update tags",
+    "TAG_ACTION": "Add a tag",
+    "REMOVE_TAG_DIALOG_TITLE": "Remove tag {tag} ?",
+    "REMOVE_TAG_DIALOG_MESSAGE": "Are you sure you want to remove tag <b>{tag}</b> for <b>{member}</b>?",
+    "GROUPS_SECTION": "Groups",
+    "NO_GROUPS_LABEL": "No groups",
+    "JOIN_GROUP_ACTION": "Join a group",
+    "EXPIRE_AT_LABEL": "Invitation expire at",
+    "CHANGE_ROLE_ACTION": "Change role",
+    "RESEND_INVITATION_ACTION": "Resend an invitation",
+    "REMOVE_DIALOG_TITLE": "Remove {member} ?",
+    "REMOVE_DIALOG_MESSAGE": "Are you sure you want to remove <b>{member}</b> from your organization ?",
+    "LEAVE_GROUP_DIALOG_TITLE": "Leave the group {group} '?",
+    "LEAVE_GROUP_DIALOG_MESSAGE": "Are you sure you want <b>{member}</b> to leave the group <b>{group}</b> ?",
+    "RESEND_INVITATION_DIALOG_TITLE": "Resend the invitation for {member} ?",
+    "RESEND_INVITATION_DIALOG_MESSAGE": "Is <b>{member}</b>'s email address correct ?"
+  },
+  "KTagsActivity": {
+    "TAGS_LABEL": "@:TAGS",
+    "SORT_TAGS": "Sort tags",
+    "SEARCH_TAGS": "Search tags",
+    "EXPORT_TAGS": "Export tags",
+    "CREATE_TAG_LABEL": "Create a tag"
+  },
+  "KTagCard": {
+    "EDIT_ACTION": "@:EDIT",
+    "REMOVE_ACTION": "@:REMOVE",
+    "MEMBERS_SECTION": "Members",
+    "MEMBERS_LABEL": "{count} member(s)",
+    "VIEW_MEMBERS_LABEL": "View members with tag"
+  },
+  "KGroupsActivity": {
+    "GROUPS_LABEL": "@:GROUPS",
+    "SORT_GROUPS": "Sort groups",
+    "SEARCH_GROUPS": "Search groups",
+    "EXPORT_GROUPS": "Export groups",
+    "CREATE_GROUP_LABEL": "Create a group"
+  },
+  "KGroupCard": {
+    "EDIT_ACTION": "@:EDIT",
+    "REMOVE_ACTION": "@:REMOVE",
+    "DESCRIPTION_SECTION": "Description",
+    "NO_DESCRIPTION_LABEL": "No description",
+    "MEMBERS_SECTION": "Members",
+    "MEMBERS_LABEL": "{count} member(s)",
+    "VIEW_MEMBERS_LABEL": "View members"
   }
 }
