@@ -1,22 +1,6 @@
 import { permissions } from '@kalisio/kdk/core.common.js'
 import _ from 'lodash'
 
-// FIXME: this file is duplicated in the api folder
-// Indeed, permissions files are usually isomorphic files. However, when we tried to create a common folder
-// to share it between frontend/backend but experienced problems with webpack
-
-export const Roles = {
-  member: 0,
-  manager: 1,
-  owner: 2
-}
-
-export const RoleNames = [
-  'member',
-  'manager',
-  'owner'
-]
-
 function defineEventAbilities (subject, can, cannot, app) {
   if (subject && subject._id) {
     if (subject.organisations) {
@@ -177,7 +161,7 @@ export function defineUserAbilities (subject, can, cannot, app) {
 function buildSubjectsQueryForResource (resourceScope, resourceId, role) {
   const query = { [resourceScope]: { $elemMatch: { _id: resourceId } } }
   if (role) {
-    _.set(query[resourceScope], '$elemMatch.permissions', (typeof role === 'string' ? role : RoleNames[role]))
+    _.set(query[resourceScope], '$elemMatch.permissions', (typeof role === 'string' ? role : permissions.RoleNames[role]))
   }
   return query
 }
@@ -276,5 +260,5 @@ export function getRoleForGroup (user, organisationId, groupId) {
 }
 
 export function findGroupsWithRole (user, organisationId, role) {
-  return _.filter(user.groups || [], { context: organisationId, permissions: (typeof role === 'string' ? role : RoleNames[role]) })
+  return _.filter(user.groups || [], { context: organisationId, permissions: (typeof role === 'string' ? role : permissions.RoleNames[role]) })
 }

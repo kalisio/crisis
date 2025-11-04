@@ -31,18 +31,6 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   pwaAppName += ' (localhost)'
   pwaShortName += ' (localhost)'
 }
-// Override defaults if env provided
-if (process.env.SUBDOMAIN) {
-  // In prod we use a generic domain which is routed towards the actual domain,
-  // e.g. crisis.kalisio.com => crisis.prod.kalisio.com
-  // This allow us to switch our production domain transparently (blue/green deployment)
-  // notably because the app domain is "hardcoded" in the mobile app configuration
-  if (process.env.NODE_APP_INSTANCE === 'prod') {
-    domain = 'https://crisis.kalisio.com'
-  } else {
-    domain = 'https://crisis.' + process.env.SUBDOMAIN
-  }
-}
 
 // Left pane
 const LEFT_PANE = {

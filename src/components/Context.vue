@@ -1,40 +1,58 @@
 <template>
-  <div v-if="contextLoaded">
-    <router-view />
+  <div v-if="CurrentOrganisation">
+    <Suspense>
+      <router-view />
+    </Suspense>
   </div>
 </template>
 
-<script>
-import _ from 'lodash'
-import { Theme } from '@kalisio/kdk/core.client'
-import mixins from '../mixins'
+<script setup>
+import logger from 'loglevel'
+import { watch, onBeforeMount, onUnmounted } from 'vue'
+import { api, Storage } from '@kalisio/kdk/core.client'
+import { useOrganisations } from '../composables'
 
-export default {
-  name: 'context',
-  mixins: [mixins.baseContext],
-  methods: {
-    setupContext (context) {
-      // Uploading can require a long time
-      if (context) {
-        this.$api.getService('storage', context).timeout = 60 * 60 * 1000 // 1h should be sufficient since we also have size limits
-        // Update the theme
-        const color = _.get(context, 'color')
-        if (!_.isEmpty(color)) Theme.apply(color)
-        else Theme.restore()
-      }
-    },
-    watchOrganisation (organisation) {
-      if (organisation._id === this.contextId) this.setContext(organisation)
-    }
-  },
-  created () {
-    this.$events.on('context-changed', this.setupContext)
-    this.service.on('patched', this.watchOrganisation)
-  },
-  beforeUnmount () {
-    this.$events.off('context-changed', this.setupContext)
-    this.service.off('patched', this.watchOrganisation)
-    Theme.restore()
+// Props
+const props = defineProps({
+  contextId: {
+    type: String,
+    required: true
   }
-}
+})
+
+// Data
+const { CurrentOrganisation, setCurrentOrganisation, clearCurrentOrganisation } = useOrganisations()
+
+// Watch
+watch(() => props.contextId, async (eventId) => {
+  // Set current event
+  logger.debug(`[CRISIS] Switching to organisation ${props.contextId}. Setting up context`)
+  await setCurrentOrganisation(props.contextId)
+}, { immediate: true })
+
+// Hooks
+onBeforeMount(() => {
+  const catalogService = api.getServiceInstance('catalog', props.contextId, { create: false })
+  if (catalogService) return
+  // Declare the organisation services if not already done
+  api.createService('catalog', { context: props.contextId })
+  api.createService('features', { context: props.contextId })
+  Storage.createService(props.contextId)
+  // Uploading can require a long time*
+  api.getService('storage', props.contextId).timeout = 60 * 60 * 1000 // 1h should be sufficient since we also have size limits
+  api.createService('alerts', { context: props.contextId })
+  api.createService('events', { context: props.contextId })
+  api.createService('event-logs', { context: props.contextId })
+  api.createService('event-templates', { context: props.contextId })
+  api.createService('archived-events', { context: props.contextId })
+  api.createService('archived-event-logs', { context: props.contextId })
+  api.createService('plans', { context: props.contextId })
+  api.createService('plan-templates', { context: props.contextId })
+  api.createService('archived-plans', { context: props.contextId })
+  logger.debug('[CRISIS] Services created for organisation', props.contextId)
+})
+onUnmounted(() => {
+  logger.debug('[CRISIS] Clearing event context')
+  clearCurrentOrganisation()
+})
 </script>

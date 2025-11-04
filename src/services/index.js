@@ -23,21 +23,6 @@ export default async function () {
     // Add hooks to automatically check uniqueness when creating a new user
     api.getService('users').hooks(usersHooks)
     await api.configure(kdkMap)
-    // Declare the built-in services, others are optional
-    // FIXME: now to be done in context component
-    /*
-    api.createService('catalog', { context: true })
-    api.createService('features', { context: true })
-    api.createService('alerts', { context: true })
-    api.createService('events', { context: true })
-    api.createService('event-logs', { context: true })
-    api.createService('event-templates', { context: true })
-    api.createService('archived-events', { context: true })
-    api.createService('archived-event-logs', { context: true })
-    api.createService('plans', { context: true })
-    api.createService('plan-templates', { context: true })
-    api.createService('archived-plans', { context: true })
-    */
     // We use an in-memory service to manage plan objectives so that we can use standard collection/form components,
     // although objectives are not autonomous objects but are stored in the plan object itself
     api.createService('plan-objectives', {
