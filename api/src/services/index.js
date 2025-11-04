@@ -217,9 +217,8 @@ export async function checkInactiveOrganisations (app) {
   }
 }
 
-export function processAlert (organisation) {
+export function processAlert (app, organisation) {
   return async function (alert) {
-    const app = this
     const isActive = _.get(alert, 'status.active')
     const checkedAt = moment.utc(_.get(alert, 'status.checkedAt'))
     const triggeredAt = moment.utc(_.get(alert, 'status.triggeredAt'))
@@ -304,29 +303,25 @@ export function processAlert (organisation) {
   }
 }
 
-export function removeAlert (organisation) {
+export function removeAlert (app, organisation) {
   return async function (alert) {
-    const app = this
     const alertsService = app.getService('alerts', organisation)
     alertsService.unregisterAlert(alert)
   }
 }
 
-export function createTagService (options = {}) {
-  const app = this
+export function createTagService (app, options = {}) {
   return app.createService('tags', Object.assign({
     servicesPath,
     modelsPath
   }, options))
 }
 
-export function removeTagService (options = {}) {
-  const app = this
+export function removeTagService (app, options = {}) {
   return app.removeService(app.getService('tags', options.context))
 }
 
-export async function createOrganisationService (options = {}) {
-  const app = this
+export async function createOrganisationService (app) {
   // Create services to manage MongoDB databases, organisations, etc.
   await createDatabasesService.call(app)
   const orgsService = await app.createService('organisations', { modelsPath, servicesPath })
@@ -343,7 +338,6 @@ export async function createOrganisationService (options = {}) {
   })
   // Ensure org services are correctly distributed when replicated
   orgsService.on('created', organisation => {
-    console.log('toto', organisation)
     // Check if already done (initiator)
     const orgMembersService = app.getService('members', organisation)
     if (!orgMembersService) {
@@ -397,9 +391,9 @@ export default async function () {
         await app.configureService(service.name, service, servicesPath)
         if (service.name === 'alerts') {
           // Create related event whenever an alert is activated
-          service.on('patched', processAlert(service.getContextId()).bind(app))
+          service.on('patched', processAlert(app, service.getContextId()))
           // Remove related cron-based task whenever an alert is removed
-          service.on('removed', removeAlert(service.getContextId()).bind(app))
+          service.on('removed', removeAlert(app, service.getContextId()))
         }
       }
       // Make remote services compliant with our internal app services so that permissions can be used
@@ -424,8 +418,7 @@ export default async function () {
     // which will only emit our own services
     await app.configureService('authentication', app.getService('authentication'), servicesPath)
     await app.configure(kMap)
-
-    await createOrganisationService.call(app)
+    await createOrganisationService(app)
     const orgsService = app.getService('organisations')
     // Register services hook for organisations
     orgsService.registerOrganisationServicesHook({

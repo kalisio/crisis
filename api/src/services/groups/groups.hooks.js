@@ -1,6 +1,6 @@
 import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
-import { checkGroupsQuotas, updateEventTemplateResources } from '../../hooks/index.js'
+import { checkGroupsQuotas, updateEventTemplateResources, updateOrganisationResource, removeGroupAuthorisations } from '../../hooks/index.js'
 
 export default {
   before: {
@@ -26,11 +26,11 @@ export default {
       // Groups can now be created as empty because org managers can manage all groups
       // coreHooks.createGroupAuthorisations
     ],
-    update: [coreHooks.updateOrganisationResource('groups')],
-    patch: [coreHooks.updateOrganisationResource('groups')],
+    update: [updateOrganisationResource('groups')],
+    patch: [updateOrganisationResource('groups')],
     remove: [
       coreHooks.setAsDeleted,
-      coreHooks.removeGroupAuthorisations
+      removeGroupAuthorisations
     ]
   },
 

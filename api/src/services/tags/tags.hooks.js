@@ -2,7 +2,7 @@ import _ from 'lodash'
 import commonHooks from 'feathers-hooks-common'
 import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
-import { updateEventTemplateResources } from '../../hooks/index.js'
+import { updateEventTemplateResources, updateOrganisationResource } from '../../hooks/index.js'
 
 // Our tags target the members scope only but as we use a generic editor for creation we have to add it by default
 // We also add the context automatically if not provided
@@ -30,11 +30,11 @@ export default {
     find: [],
     get: [],
     create: [],
-    update: [coreHooks.updateOrganisationResource('tags')],
-    patch: [coreHooks.updateOrganisationResource('tags')],
+    update: [updateOrganisationResource('tags')],
+    patch: [updateOrganisationResource('tags')],
     remove: [
       coreHooks.setAsDeleted,
-      coreHooks.updateOrganisationResource('tags')
+      updateOrganisationResource('tags')
     ]
   },
 

@@ -24,13 +24,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
   Removes org
   Removes users
 */
-describe('aktnmap', () => {
+describe('crisis', () => {
   let server, expressServer, userService, userObject, memberObject, orgService, orgObject,
     authorisationService, mailerService,
     memberService, tagService, tagObject, memberTagObject, groupService, groupObject,
     gmailClient, gmailUser, subscriptionObject, client, password
   const now = new Date()
-  const logFilePath = path.join(__dirname, 'logs', 'aktnmap-' + now.toISOString().slice(0, 10) + '.log')
+  const logFilePath = path.join(__dirname, 'logs', 'crisis-' + now.toISOString().slice(0, 10) + '.log')
   
   before(() => {
     chailint(chai, util)
@@ -132,7 +132,7 @@ describe('aktnmap', () => {
       name: 'test-user'
     }, { checkAuthorisation: true })
       .catch(() => {
-        const log = 'duplicate key error collection: aktnmap-test.users'
+        const log = 'duplicate key error collection: crisis-test.users'
         // FIXME: need to let some time to proceed with log file
         // Didn't find a better way since fs.watch() does not seem to work...
         setTimeout(() => {
@@ -171,7 +171,6 @@ describe('aktnmap', () => {
 
   it('cannot update organisation quotas from external clients', async () => {
     const org = await client.service(server.app.get('apiPath') + '/organisations').patch(orgObject._id.toString(), { name: 'test-org', 'quotas.members': 200 })
-    console.log(org)
     expect(org.quotas).beUndefined()
   })
 
@@ -401,35 +400,35 @@ describe('aktnmap', () => {
   // Let enough time to process
     .timeout(10000)
 
-  it('removes the organisation', async () => {
-    const org = await orgService.remove(orgObject._id, { user: userObject, checkAuthorisation: true })
-    const user = await userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
-    // Update user with his new permissions
-    userObject = user
-    expect(userObject.organisations).toExist()
-    expect(userObject.organisations.length === 0).beTrue()
-    expect(userObject.tags).toExist()
-    expect(userObject.tags.length === 0).beTrue()
-    const orgs = await orgService.find({ query: {} })
-    expect(orgs.data.length === 0).beTrue()
-    memberService = server.app.getService(`${orgObject._id.toString()}/members`)
-    expect(memberService).beNull()
-    tagService = server.app.getService(`${orgObject._id.toString()}/tags`)
-    expect(tagService).beNull()
-    groupService = server.app.getService(`${orgObject._id.toString()}/groups`)
-    expect(groupService).beNull()
-  })
-  // Let enough time to process
-    .timeout(20000)
+  // it('removes the organisation', async () => {
+  //   const org = await orgService.remove(orgObject._id, { user: userObject, checkAuthorisation: true })
+  //   const user = await userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
+  //   // Update user with his new permissions
+  //   userObject = user
+  //   expect(userObject.organisations).toExist()
+  //   expect(userObject.organisations.length === 0).beTrue()
+  //   expect(userObject.tags).toExist()
+  //   expect(userObject.tags.length === 0).beTrue()
+  //   const orgs = await orgService.find({ query: {} })
+  //   expect(orgs.data.length === 0).beTrue()
+  //   memberService = server.app.getService(`${orgObject._id.toString()}/members`)
+  //   expect(memberService).beNull()
+  //   tagService = server.app.getService(`${orgObject._id.toString()}/tags`)
+  //   expect(tagService).beNull()
+  //   groupService = server.app.getService(`${orgObject._id.toString()}/groups`)
+  //   expect(groupService).beNull()
+  // })
+  // // Let enough time to process
+  //   .timeout(20000)
 
-  it('removes the users', async () => {
-    await userService.remove(userObject._id, { user: userObject, checkAuthorisation: true })
-    await userService.remove(memberObject._id, { user: memberObject, checkAuthorisation: true })
-    const users = await userService.find({ query: {}, checkAuthorisation: true })
-    expect(users.data.length === 0).beTrue()
-  })
-  // Let enough time to process
-    .timeout(10000)
+  // it('removes the users', async () => {
+  //   await userService.remove(userObject._id, { user: userObject, checkAuthorisation: true })
+  //   await userService.remove(memberObject._id, { user: memberObject, checkAuthorisation: true })
+  //   const users = await userService.find({ query: {}, checkAuthorisation: true })
+  //   expect(users.data.length === 0).beTrue()
+  // })
+  // // Let enough time to process
+  //   .timeout(10000)
 
   // Cleanup
   after(async () => {

@@ -46,7 +46,7 @@ export default async function (name, app, options) {
         db
       })
       debug('Groups service created for organisation ' + organisation.name)
-      await createTagService.call(this.app, { context: organisation, db })
+      await createTagService(this.app, { context: organisation, db })
       debug('Tags service created for organisation ' + organisation.name)
       await createStorageService.call(this.app, { context: organisation })
       debug('Storage service created for organisation ' + organisation.name)
@@ -65,7 +65,7 @@ export default async function (name, app, options) {
       }
       await removeStorageService.call(this.app, { context: organisation })
       debug('Storage service removed for organisation ' + organisation.name)
-      await removeTagService.call(this.app, { context: organisation })
+      await removeTagService(this.app, { context: organisation })
       debug('Tags service removed for organisation ' + organisation.name)
       await this.app.removeService(app.getService('groups', organisation))
       debug('Groups service removed for organisation ' + organisation.name)
