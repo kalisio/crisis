@@ -85,7 +85,8 @@
 import _ from 'lodash'
 import { Dialog } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import { Roles, getRoleForOrganisation, getRoleForGroup, findGroupsWithRole } from '../../../common/permissions'
+import { getRoleForOrganisation, getRoleForGroup, findGroupsWithRole } from '../../../common/permissions'
+import { Roles } from '@kalisio/kdk/core/common/permissions'
 
 export default {
   mixins: [kCoreMixins.baseItem],

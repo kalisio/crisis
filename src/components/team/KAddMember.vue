@@ -87,7 +87,7 @@
 import _ from 'lodash'
 import { i18n, mixins as kCoreMixins, utils as kCoreUtils, Store, api } from '@kalisio/kdk/core.client'
 import { Dialog, exportFile } from 'quasar'
-import { RoleNames } from '../../../common/permissions'
+import { RoleNames } from '@kalisio/kdk/core/common/permissions'
 
 export default {
   emits: ['opened', 'closed'],

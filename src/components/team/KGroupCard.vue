@@ -26,8 +26,8 @@
 <script>
 import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
-import { findMembersOfGroup, getRoleForGroup, getRoleForOrganisation, Roles, RoleNames } from '../../../common/permissions'
-
+import { findMembersOfGroup, getRoleForGroup, getRoleForOrganisation } from '../../../common/permissions'
+import { Roles, RoleNames } from '@kalisio/kdk/core/common/permissions.js'
 export default {
   name: 'k-group-card',
   mixins: [kCoreMixins.baseItem],
