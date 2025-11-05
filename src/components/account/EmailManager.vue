@@ -64,7 +64,7 @@ const modifyEmailSchema = ref({
       format: 'password',
       field: {
         component: 'form/KPasswordField',
-        label: 'KEmailManager.PASSWORD_FIELD_LABEL'
+        label: 'EmailManager.PASSWORD_FIELD_LABEL'
       }
     },
     email: {
@@ -72,7 +72,7 @@ const modifyEmailSchema = ref({
       format: 'email',
       field: {
         component: 'form/KEmailField',
-        label: 'KEmailManager.EMAIL_FIELD_LABEL'
+        label: 'EmailManager.EMAIL_FIELD_LABEL'
       }
     }
   },
@@ -91,7 +91,7 @@ const validateEmailSchema = ref({
       tokenLength: 6,
       field: {
         component: 'form/KTokenField',
-        label: 'KEmailManager.TOKEN_LABEL'
+        label: 'EmailManager.TOKEN_LABEL'
       }
     }
   },
@@ -118,10 +118,10 @@ async function applyChanges () {
     processing.value = true
     await utils.verifySignup(values.token, User.email)
     processing.value = false
-    Notify.create({ type: 'positive', message: i18n.t('KEmailManager.EMAIL_CHANGED') })
+    Notify.create({ type: 'positive', message: i18n.t('EmailManager.EMAIL_CHANGED') })
   } catch (error) {
     processing.value = false
-    Notify.create({ type: 'negative', message: i18n.t('KEmailManager.ERROR_MESSAGE') })
+    Notify.create({ type: 'negative', message: i18n.t('EmailManager.ERROR_MESSAGE') })
   }
   dialog.value = false
 }

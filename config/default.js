@@ -444,6 +444,9 @@ module.exports = {
       }
     ]
   },
+  profile: {
+    header: 'account/ProfileHeader'
+  },
   screens: {
     actions: [{
       id: 'terms-policies',
@@ -485,8 +488,8 @@ module.exports = {
   },
   account: {
     sections: [
-      { title: 'KPasswordManager.TITLE', component: 'account/KPasswordManager', id: 'password-manager' },
-      { title: 'KEmailManager.TITLE', component: 'account/KEmailManager', id: 'email-manager' },
+      { title: 'PasswordManager.TITLE', component: 'account/PasswordManager', id: 'password-manager' },
+      { title: 'EmailManager.TITLE', component: 'account/EmailManager', id: 'email-manager' },
       {
         title: 'KSubscriptionsManager.TITLE',
         component: 'account/KSubscriptionsManager',

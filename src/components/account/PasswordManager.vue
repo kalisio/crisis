@@ -40,7 +40,7 @@ const schema = ref({
       format: 'password',
       field: {
         component: 'form/KPasswordField',
-        label: 'KPasswordManager.OLD_PASSWORD_FIELD_LABEL'
+        label: 'PasswordManager.OLD_PASSWORD_FIELD_LABEL'
       }
     },
     password: {
@@ -48,7 +48,7 @@ const schema = ref({
       format: 'password',
       field: {
         component: 'form/KPasswordField',
-        label: 'KPasswordManager.PASSWORD_FIELD_LABEL'
+        label: 'PasswordManager.PASSWORD_FIELD_LABEL'
       }
     },
     confirmPassword: {
@@ -59,7 +59,7 @@ const schema = ref({
       },
       field: {
         component: 'form/KPasswordField',
-        label: 'KPasswordManager.CONFIRM_PASSWORD_FIELD_LABEL'
+        label: 'PasswordManager.CONFIRM_PASSWORD_FIELD_LABEL'
       }
     }
   },
@@ -77,7 +77,7 @@ async function apply () {
     processing.value = false
     Notify.create({
       type: 'positive',
-      message: i18n.t('KPasswordManager.PASSWORD_CHANGED')
+      message: i18n.t('PasswordManager.PASSWORD_CHANGED')
     })
   } catch (error) {
     processing.value = false
