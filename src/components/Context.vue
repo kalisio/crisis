@@ -24,7 +24,7 @@ const props = defineProps({
 const { CurrentOrganisation, setCurrentOrganisation, clearCurrentOrganisation } = useOrganisations()
 
 // Watch
-watch(() => props.contextId, async (eventId) => {
+watch(() => props.contextId, async (contextId) => {
   // Set current event
   logger.debug(`[CRISIS] Switching to organisation ${props.contextId}. Setting up context`)
   await setCurrentOrganisation(props.contextId)
