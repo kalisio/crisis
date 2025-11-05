@@ -899,5 +899,20 @@
     "MEMBERS_SECTION": "Membres",
     "MEMBERS_LABEL": "{count} membre(s)",
     "VIEW_MEMBERS_LABEL": "Voir les membres"
+  },
+  "KPasswordManager": {
+    "TITLE": "Modifier mon mot de passe",
+    "PASSWORD_CHANGED": "Votre mot de passe a été modifié avec succès",
+    "OLD_PASSWORD_FIELD_LABEL": "Saisissez votre ancien mot de passe",
+    "PASSWORD_FIELD_LABEL": "Saisissez votre nouveau mot de passe",
+    "CONFIRM_PASSWORD_FIELD_LABEL": "Confirmez votre nouveau mot de passe"
+  },
+  "KEmailManager": {
+    "TITLE": "Modifier mon adresse mail",
+    "PASSWORD_FIELD_LABEL": "Saisissez votre mot de passe",
+    "EMAIL_FIELD_LABEL": "Saisissez votre nouvelle adresse mail",
+    "TOKEN_LABEL": "Pour valider votre nouvelle adresse mail, saisissez le code reçu par email",
+    "EMAIL_CHANGED": "Votre nouvelle adresse a été prise en compte. Un mail vous a été envoyé pour confirmer le changement.",
+    "ERROR_MESSAGE": "Code invalide"
   }
 }
