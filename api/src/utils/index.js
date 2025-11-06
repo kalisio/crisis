@@ -1,5 +1,4 @@
 import _ from 'lodash'
-import moment from 'moment'
 
 export function isTagEqual (tag1, tag2) {
   // If tags already exists in DB directly use IDs for comparison

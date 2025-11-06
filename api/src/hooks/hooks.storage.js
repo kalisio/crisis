@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { getOrganisationAvatarUrl, sendPushNotifications } from '../utils.js'
+import { getOrganisationAvatarUrl, sendPushNotifications } from '../utils/index.js'
 
 export async function sendMediaPushNotifications (hook) {
   if (hook.type !== 'after') {

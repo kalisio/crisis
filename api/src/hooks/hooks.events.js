@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import commonHooks from 'feathers-hooks-common'
-import { getOrganisationAvatarUrl, sendPushNotifications } from '../utils.js'
+import { getOrganisationAvatarUrl, sendPushNotifications } from '../utils/index.js'
 const { populate } = commonHooks
 
 export async function sendEventPushNotifications (hook) {

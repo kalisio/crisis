@@ -1,5 +1,4 @@
 import _ from 'lodash'
-import commonHooks from 'feathers-hooks-common'
 import fuzzySearch from 'feathers-mongodb-fuzzy-search'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
 import { updateEventTemplateResources, updateOrganisationResource } from '../../hooks/index.js'

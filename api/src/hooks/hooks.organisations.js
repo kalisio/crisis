@@ -2,23 +2,6 @@ import makeDebug from 'debug'
 import _ from 'lodash'
 const debug = makeDebug('crisis:organisations:hooks')
 
-export async function removeOrganisationAlerts (hook) {
-  if (hook.type !== 'after') {
-    throw new Error('The \'removeOrganisationAlerts\' hook should only be used as a \'after\' hook.')
-  }
-
-  const app = hook.app
-  const orgAlertService = app.getService('alerts', hook.result)
-  const alerts = await orgAlertService.find({ paginate: false })
-  await Promise.all(alerts.map(alert => {
-    return orgAlertService.remove(alert._id.toString(), {
-      user: hook.params.user
-    })
-  }))
-  debug('Removed alerts for organisation ' + hook.result._id)
-  return hook
-}
-
 export async function createOrganisationServices (hook) {
   if (hook.type !== 'after') {
     throw new Error('The \'createOrganisationServices\' hook should only be used as a \'after\' hook.')
@@ -45,22 +28,19 @@ export async function createOrganisationServices (hook) {
   return hook
 }
 
-export async function removeOrganisationServices (hook) {
+export async function removeOrganisationDatabasesServices (hook) {
   if (hook.type !== 'after') {
-    throw new Error('The \'removeOrganisationServices\' hook should only be used as a \'after\' hook.')
+    throw new Error('The \'removeOrganisationDatabasesServices\' hook should only be used as a \'after\' hook.')
   }
 
   const app = hook.app
-  const organisationService = hook.service
   const databaseService = app.getService('databases')
 
-  // Then we remove the organisation DB
+  // Remove the organisation DB
   await databaseService.remove(hook.result._id.toString(), {
     user: hook.params.user
   })
-
   debug('DB removed for organisation ' + hook.result.name)
-  await organisationService.removeOrganisationServices(hook.result)
   return hook
 }
 
@@ -154,12 +134,11 @@ export function removeOrganisationResources (resourceScope) {
     if (hook.type !== 'after') {
       throw new Error('The \'removeOrganisationResources\' hook should only be used as a \'after\' hook.')
     }
-
     const app = hook.app
-    const orgResourceService = app.getService(resourceScope, hook.result)
-    const resources = await orgResourceService.find({ paginate: false })
+    const organisationResourceService = app.getService(resourceScope, hook.result)
+    const resources = await organisationResourceService.find({ paginate: false })
     await Promise.all(resources.map(resource => {
-      return orgResourceService.remove(resource._id.toString(), {
+      return organisationResourceService.remove(resource._id.toString(), {
         user: hook.params.user
       })
     }))

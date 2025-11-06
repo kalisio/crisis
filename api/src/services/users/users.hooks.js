@@ -1,6 +1,6 @@
 import commonHooks from 'feathers-hooks-common'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
-import { checkInvitationsQuotas, joinOrganisation, leaveOrganisations, sendInvitationEmail, preventRemoveUser } from '../../hooks/index.js'
+import { checkInvitationsQuotas, joinOrganisation, leaveOrganisations, sendInvitationEmail, preventRemoveUser, updateUserAbilities } from '../../hooks/index.js'
 
 export default {
   before: {
@@ -42,7 +42,7 @@ export default {
       coreHooks.removeVerification
     ],
     update: [],
-    patch: [coreHooks.removeVerification],
+    patch: [coreHooks.removeVerification, updateUserAbilities],
     remove: [
       coreHooks.setAsDeleted,
       coreHooks.removeAttachments('avatar'),

@@ -4,7 +4,7 @@ import errors from '@feathersjs/errors'
 import {
   Roles, RoleNames, countSubjectsForResource
 } from '@kalisio/kdk/core/common/permissions.js'
-import { isTagEqual } from '../utils.js'
+import { isTagEqual } from '../utils/index.js'
 
 const { Forbidden } = errors
 const debug = makeDebug('crisis:authorisations:hooks')

@@ -400,35 +400,35 @@ describe('crisis', () => {
   // Let enough time to process
     .timeout(10000)
 
-  // it('removes the organisation', async () => {
-  //   const org = await orgService.remove(orgObject._id, { user: userObject, checkAuthorisation: true })
-  //   const user = await userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
-  //   // Update user with his new permissions
-  //   userObject = user
-  //   expect(userObject.organisations).toExist()
-  //   expect(userObject.organisations.length === 0).beTrue()
-  //   expect(userObject.tags).toExist()
-  //   expect(userObject.tags.length === 0).beTrue()
-  //   const orgs = await orgService.find({ query: {} })
-  //   expect(orgs.data.length === 0).beTrue()
-  //   memberService = server.app.getService(`${orgObject._id.toString()}/members`)
-  //   expect(memberService).beNull()
-  //   tagService = server.app.getService(`${orgObject._id.toString()}/tags`)
-  //   expect(tagService).beNull()
-  //   groupService = server.app.getService(`${orgObject._id.toString()}/groups`)
-  //   expect(groupService).beNull()
-  // })
-  // // Let enough time to process
-  //   .timeout(20000)
+  it('removes the organisation', async () => {
+    const org = await orgService.remove(orgObject._id, { user: userObject, checkAuthorisation: true })
+    const user = await userService.get(userObject._id, { user: userObject, checkAuthorisation: true })
+    // Update user with his new permissions
+    userObject = user
+    expect(userObject.organisations).toExist()
+    expect(userObject.organisations.length === 0).beTrue()
+    expect(userObject.tags).toExist()
+    expect(userObject.tags.length === 0).beTrue()
+    const orgs = await orgService.find({ query: {} })
+    expect(orgs.data.length === 0).beTrue()
+    memberService = server.app.getService(`${orgObject._id.toString()}/members`)
+    expect(memberService).beNull()
+    tagService = server.app.getService(`${orgObject._id.toString()}/tags`)
+    expect(tagService).beNull()
+    groupService = server.app.getService(`${orgObject._id.toString()}/groups`)
+    expect(groupService).beNull()
+  })
+  // Let enough time to process
+    .timeout(20000)
 
-  // it('removes the users', async () => {
-  //   await userService.remove(userObject._id, { user: userObject, checkAuthorisation: true })
-  //   await userService.remove(memberObject._id, { user: memberObject, checkAuthorisation: true })
-  //   const users = await userService.find({ query: {}, checkAuthorisation: true })
-  //   expect(users.data.length === 0).beTrue()
-  // })
-  // // Let enough time to process
-  //   .timeout(10000)
+  it('removes the users', async () => {
+    await userService.remove(userObject._id, { user: userObject, checkAuthorisation: true })
+    await userService.remove(memberObject._id, { user: memberObject, checkAuthorisation: true })
+    const users = await userService.find({ query: {}, checkAuthorisation: true })
+    expect(users.data.length === 0).beTrue()
+  })
+  // Let enough time to process
+    .timeout(10000)
 
   // Cleanup
   after(async () => {

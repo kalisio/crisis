@@ -1,7 +1,11 @@
 import path, { dirname } from 'path'
 import makeDebug from 'debug'
-import { createTagService, removeTagService } from '../index.js'
 import { createStorageService, removeStorageService } from '@kalisio/kdk/core.api.js'
+import {
+  createFeaturesService, removeFeaturesService,
+  createCatalogService, removeCatalogService,
+  createAlertsService, removeAlertsService
+} from '@kalisio/kdk/map.api.js'
 import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -12,22 +16,8 @@ const modelsPath = path.join(__dirname, '..', '..', 'models')
 const debug = makeDebug('kdk:core:organisations:service')
 
 export default async function (name, app, options) {
-  const config = app.get('storage')
-  debug('S3 team storage client created with config ', config)
 
   return {
-    // Hooks that can be added to customize organization services
-    organisationServicesHooks: [],
-
-    registerOrganisationServicesHook (hook) {
-      if (!this.organisationServicesHooks.includes(hook)) {
-        this.organisationServicesHooks.push(hook)
-      }
-    },
-
-    unregisterOrganisationServicesHook (hook) {
-      this.organisationServicesHooks = this.organisationServicesHooks.filter(registeredHook => registeredHook !== hook)
-    },
 
     async createOrganisationServices (organisation, db) {
       await this.app.createService('members', {
@@ -46,31 +36,115 @@ export default async function (name, app, options) {
         db
       })
       debug('Groups service created for organisation ' + organisation.name)
-      await createTagService(this.app, { context: organisation, db })
+      await this.app.createService('tags', {
+        modelsPath,
+        servicesPath,
+        context: organisation,
+        db
+      })
       debug('Tags service created for organisation ' + organisation.name)
       await createStorageService.call(this.app, { context: organisation })
       debug('Storage service created for organisation ' + organisation.name)
-      // Run registered hooks
-      for (let i = 0; i < this.organisationServicesHooks.length; i++) {
-        const hook = this.organisationServicesHooks[i]
-        await hook.createOrganisationServices.call(this.app, organisation, db)
-      }
+      await createCatalogService.call(this.app, { context: organisation, db })
+      debug('Catalog service created for organisation ' + organisation.name)
+      await createFeaturesService.call(this.app, { collection: 'features', context: organisation, db })
+      debug('Features service created for organisation ' + organisation.name)
+      await createAlertsService.call(this.app, { context: organisation, db })
+      debug('Alerts service created for organisation ' + organisation.name)
+      await this.app.createService('events', {
+        modelsPath,
+        servicesPath,
+        context: organisation,
+        paginate: { default: 20, max: 5000 },
+        db
+      })
+      debug('Events service created for organisation ' + organisation.name)
+      await this.app.createService('event-templates', {
+        modelsPath,
+        servicesPath,
+        context: organisation,
+        db
+      })
+      debug('Events templates service created for organisation ' + organisation.name)
+      await this.app.createService('event-logs', {
+        modelsPath,
+        servicesPath,
+        context: organisation,
+        paginate: { default: 1000, max: 5000 },
+        db
+      })
+      debug('Events logs service created for organisation ' + organisation.name)
+      await this.app.createService('archived-events', {
+        modelsPath,
+        servicesPath,
+        context: organisation,
+        paginate: { default: 20, max: 5000 },
+        db
+      })
+      debug('Archived events service created for organisation ' + organisation.name)
+      await this.app.createService('archived-event-logs', {
+        modelsPath,
+        servicesPath,
+        context: organisation,
+        paginate: { default: 1000, max: 5000 },
+        db
+      })
+      debug('Archived events logs service created for organisation ' + organisation.name)
+      await this.app.createService('plan-templates', {
+        modelsPath,
+        servicesPath,
+        context: organisation,
+        db
+      })
+      debug('Plan templates service created for organisation ' + organisation.name)
+      await this.app.createService('plans', {
+        modelsPath,
+        servicesPath,
+        context: organisation,
+        db
+      })
+      debug('Plans service created for organisation ' + organisation.name)
+      await this.app.createService('archived-plans', {
+        modelsPath,
+        servicesPath,
+        context: organisation,
+        paginate: { default: 20, max: 5000 },
+        db
+      })
+      debug('Archived plans service created for organisation ' + organisation.name)
     },
 
     async removeOrganisationServices (organisation) {
-      // Run registered hooks (reverse order with respect to creation)
-      for (let i = this.organisationServicesHooks.length - 1; i >= 0; i--) {
-        const hook = this.organisationServicesHooks[i]
-        await hook.removeOrganisationServices.call(this.app, organisation)
-      }
       await removeStorageService.call(this.app, { context: organisation })
       debug('Storage service removed for organisation ' + organisation.name)
-      await removeTagService(this.app, { context: organisation })
+      await this.app.removeService(this.app.getService('tags', organisation))
       debug('Tags service removed for organisation ' + organisation.name)
-      await this.app.removeService(app.getService('groups', organisation))
+      await this.app.removeService(this.app.getService('groups', organisation))
       debug('Groups service removed for organisation ' + organisation.name)
-      await this.app.removeService(app.getService('members', organisation))
+      await this.app.removeService(this.app.getService('members', organisation))
       debug('Members service removed for organisation ' + organisation.name)
+      await removeFeaturesService.call(this.app, { collection: 'features', context: organisation })
+      debug('Features service removed for organisation ' + organisation.name)
+      await removeCatalogService.call(this.app, { context: organisation })
+      debug('Catalog service removed for organisation ' + organisation.name)
+      await removeAlertsService.call(this.app, { context: organisation })
+      debug('Alerts service removed for organisation ' + organisation.name)
+      await this.app.removeService(this.app.getService('events', organisation))
+      debug('Events service removed for organisation ' + organisation.name)
+      await this.app.removeService(this.app.getService('event-templates', organisation))
+      debug('Event templates service removed for organisation ' + organisation.name)
+      await this.app.removeService(this.app.getService('event-logs', organisation))
+      debug('Event logs service removed for organisation ' + organisation.name)
+      await this.app.removeService(this.app.getService('archived-events', organisation))
+      debug('Archived events service removed for organisation ' + organisation.name)
+      await this.app.removeService(this.app.getService('archived-event-logs', organisation))
+      debug('Archived events logs service removed for organisation ' + organisation.name)
+      await this.app.removeService(this.app.getService('plan-templates', organisation))
+      debug('Plan templates service removed for organisation ' + organisation.name)
+      await this.app.removeService(this.app.getService('plans', organisation))
+      debug('Plans service removed for organisation ' + organisation.name)
+      await this.app.removeService(this.app.getService('archived-plans', organisation))
+      debug('Archived plans service removed for organisation ' + organisation.name)
     },
 
     async configureOrganisations () {

@@ -1,7 +1,7 @@
 import makeDebug from 'debug'
 import _ from 'lodash'
 import commonHooks from 'feathers-hooks-common'
-import { getOrganisationAvatarUrl, sendPushNotifications } from '../utils.js'
+import { getOrganisationAvatarUrl, sendPushNotifications } from '../utils/index.js'
 
 const { getItems } = commonHooks
 const debug = makeDebug('crisis:event-logs:hooks')

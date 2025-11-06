@@ -99,3 +99,18 @@ export async function sendInvitationEmail (hook) {
   await accountService.options.notifier('sendInvitation', hook.data)
   return hook
 }
+
+export async function updateUserAbilities (hook) {
+  if (hook.type !== 'after') {
+    throw new Error('The \'updateUserAbilities\' hook should only be used as a \'after\' hook.')
+  }
+
+  const authorisationsService = hook.app.getService('authorisations')
+  const user = hook.params.user
+
+  // Patching profile should not trigger abilities update since
+  // it is a perspective and permissions are not available in this case
+  // Updating abilities in this case will result in loosing permissions for orgs/groups as none are available
+  if (_.has(user, 'organisations') || _.has(user, 'groups')) authorisationsService.updateAbilities(user)
+  return hook
+}
