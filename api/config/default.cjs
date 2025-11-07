@@ -99,11 +99,19 @@ module.exports = {
   bodyParser: {
     json: { limit: 10 * 1024 * 1024 } // 10MB
   },
-  distribution: { // Distribute no services simply use remote ones
-    services: (service) => false,
+  distribution: { // Distribute organisation services
+    services: (service) => service.path.includes('organisation') ||
+                           service.path.includes('catalog') ||
+                           service.path.includes('features'),
+    remoteServices: (service) => (service.key === 'kano'),
     middlewares: { after: express.errorHandler() },
+    // When called internally from remote service do not authenticate,
+    // this assumes a gateway scenario where authentication is performed externally
+    authentication: false,
     key: 'crisis',
-    healthcheckPath: API_PREFIX + '/distribution/'
+    healthcheckPath: API_PREFIX + '/distribution/',
+    // Increase default timeout due to possible large data volume
+    timeout: process.env.DISTRIBUTION_TIMEOUT ? parseInt(process.env.DISTRIBUTION_TIMEOUT) : 60000
   },
   paginate: {
     default: 20,
