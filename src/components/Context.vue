@@ -26,8 +26,8 @@ const { CurrentOrganisation, setCurrentOrganisation, clearCurrentOrganisation } 
 // Watch
 watch(() => props.contextId, async (contextId) => {
   // Set current event
-  logger.debug(`[CRISIS] Switching to organisation ${props.contextId}. Setting up context`)
-  await setCurrentOrganisation(props.contextId)
+  logger.debug(`[CRISIS] Switching to organisation ${contextId}. Setting up context`)
+  await setCurrentOrganisation(contextId)
 }, { immediate: true })
 
 // Hooks
