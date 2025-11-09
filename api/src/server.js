@@ -7,17 +7,17 @@ import sync from 'feathers-sync'
 import distribution, { finalize } from '@kalisio/feathers-distributed'
 import { kdk } from '@kalisio/kdk/core.api.js'
 import services, { checkInactiveOrganisations } from './services.js'
-import middlewares from './app.middlewares.js'
-import hooks from './app.hooks.js'
-import channels from './app.channels.js'
-import webhooks from './app.webhooks.js'
+import middlewares from './middlewares.js'
+import hooks from './hooks.js'
+import channels from './channels.js'
+import webhooks from './webhooks.js'
 
 export class Server {
   constructor () {
     const app = kdk()
     this.app = app
 
-    // Listen to distributed services
+    //  Distribute services
     const distConfig = app.get('distribution')
     if (distConfig) app.configure(distribution(distConfig))
 
@@ -53,7 +53,7 @@ export class Server {
       await app.sync.ready
       app.logger.info('Configured application synchronization')
     }
-    // Set up our services (see `services/index.js`)
+    // Set up our services
     await app.configure(services)
     // Register hooks
     app.hooks(hooks)
@@ -86,11 +86,11 @@ export class Server {
         key: fs.readFileSync(httpsConfig.key),
         cert: fs.readFileSync(httpsConfig.cert)
       }, app)
-      app.logger.info(`Configuring HTTPS server with pid ${process.pid} at port ${port}`)
+      app.logger.info('Configuring HTTPS server at port ' + port.toString())
       expressServer = await server.listen(port)
     } else {
       const port = app.get('port')
-      app.logger.info(`Configuring HTTP server with pid ${process.pid} at port ${port}`)
+      app.logger.info('Configuring HTTP server at port ' + port.toString())
       expressServer = await app.listen(port)
     }
     expressServer.on('close', () => finalize(app))
@@ -129,6 +129,6 @@ export function createServer () {
 
 export async function runServer (server) {
   const expressServer = await server.run()
-  server.app.logger.info(`Server with pid ${process.pid} started listening`)
+  server.app.logger.info('Server started listening')
   return expressServer
 }

@@ -21,7 +21,7 @@ export async function getOrganisationAvatarUrl (hook, event) {
     // Get presigned url to object storage, prefered for a security reason
     const storageService = hook.app.getService('storage', hook.service.getContextId())
     // Expire in 7 days by default unless specified in event
-    let expiresIn = 7 * 24 * 3600
+    const expiresIn = 7 * 24 * 3600
     /* Expiration greater than 7 days now raises an error eg on AWS: "Signature version 4 presigned URLs must have an expiration date less than one week in the future"
     const expireAt = _.get(event, 'expireAt')
     if (expireAt) expiresIn = moment.utc(expireAt).diff(moment.utc(), 'seconds')
@@ -40,16 +40,16 @@ export async function getOrganisationAvatarUrl (hook, event) {
 // Send a notification to participants that can be users, groups or tags
 export async function sendPushNotifications (app, participants, notification) {
   const pushService = app.getService('push')
-  if (!pushService) return hook
+  if (!pushService) return
 
   // Define data for notification
   _.defaults(notification, {
     icon: 'https://s3.eu-central-1.amazonaws.com/kalisioscope/crisis/crisis-icon-color-512x512.png'
   })
   const data = {
-    notification, 
+    notification,
     subscriptionService: `${app.get('apiPath')}/users`,
-    subscriptionProperty: 'subscriptions',
+    subscriptionProperty: 'subscriptions'
   }
 
   // Define participants
@@ -62,10 +62,10 @@ export async function sendPushNotifications (app, participants, notification) {
     if (participant.service === 'tags') tagIds.push(participant._id)
     if (participant.service === 'organisations') tagIds.push(participant._id)
   })
-  
+
   // Send notification
-  if (_.size(userIds) > 0) pushService.create({ ...data, subscriptionFilter: { _id: { $in: userIds }}})
-  if (_.size(groupIds) > 0) pushService.create({ ...data, subscriptionFilter: { groups: { $elemMatch: { _id: { $in: groupIds }}}}})
-  if (_.size(tagIds) > 0) pushService.create({ ...data, subscriptionFilter: { tags: { $elemMatch: { _id: { $in: tagIds }}}}})
-  if (_.size(organisationIds) > 0) pushService.create({ ...data, subscriptionFilter: { organisations: { $elemMatch: { _id: { $in: organisationIds }}}}})
+  if (_.size(userIds) > 0) pushService.create({ ...data, subscriptionFilter: { _id: { $in: userIds } } })
+  if (_.size(groupIds) > 0) pushService.create({ ...data, subscriptionFilter: { groups: { $elemMatch: { _id: { $in: groupIds } } } } })
+  if (_.size(tagIds) > 0) pushService.create({ ...data, subscriptionFilter: { tags: { $elemMatch: { _id: { $in: tagIds } } } } })
+  if (_.size(organisationIds) > 0) pushService.create({ ...data, subscriptionFilter: { organisations: { $elemMatch: { _id: { $in: organisationIds } } } } })
 }

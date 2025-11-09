@@ -1,6 +1,6 @@
 {
   "name": "crisis-api",
-  "description": "Kalisio ACrisis Web Services",
+  "description": "Kalisio Crisis Web Services",
   "version": "2.1.0",
   "homepage": "https://github.com/kalisio/crisis",
   "keywords": [
@@ -33,7 +33,7 @@
     "lint": "standard src/**/*.js test/**/*.js --fix",
     "mocha": "cross-env NODE_CONFIG_DIR=./test/config/ SUBDOMAIN= mocha --exit",
     "coverage": "c8 npm run mocha",
-    "test": "npm run coverage"
+    "test": "npm run lint && npm run coverage"
   },
   "standard": {
     "sourceType": "module",
@@ -50,7 +50,6 @@
     "colors": "^1.1.2",
     "concat-stream": "^2.0.0",
     "cross-env": "^5.2.0",
-    "eslint": "^6.1.0",
     "googleapis": "^21.3.0",
     "mocha": "^9.1.1",
     "nodemon": "^1.11.0",

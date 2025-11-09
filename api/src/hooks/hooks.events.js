@@ -5,7 +5,7 @@ const { populate } = commonHooks
 
 export async function sendEventPushNotifications (hook) {
   if (hook.type !== 'after') {
-    throw new Error('The \'sendPushNotifications\' hook should only be used as a \'after\' hook.')
+    throw new Error('The \'sendEventPushNotifications\' hook should only be used as a \'after\' hook.')
   }
   // Define data for notification
   if (hook.params.notification) {
