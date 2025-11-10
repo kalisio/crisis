@@ -105,6 +105,8 @@ export default async ({ app }) => {
     Events.once('user-changed', utils.subscribeToPushNotifications)
     // Store API gateway token if any
     if (data.gatewayToken) api.get('storage').setItem(config.gatewayJwt, data.gatewayToken)
+    // Store Kano token if any
+    if (data.kanoToken) api.get('storage').setItem(config.kanoJwt, data.kanoToken)
   })
   api.on('logout', (data) => {
     // Remove API gateway token if any

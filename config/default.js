@@ -401,6 +401,7 @@ module.exports = {
   transport: 'websocket', // Could be 'http' or 'websocket',
   gatewayJwtField: 'jwt',
   gatewayJwt: 'crisis-gateway-jwt',
+  kanoJwt: 'crisis-kano-jwt',
   terms: 'crisis-terms',
   publisher: 'Kalisio',
   publisherWebsite: website,
@@ -719,6 +720,10 @@ module.exports = {
         }
       ]
     }
+  },
+  mapActivity: {
+    leftPane: LEFT_PANE,
+    mode: 'default'
   },
   catalogActivity: {
     leftPane: LEFT_PANE,

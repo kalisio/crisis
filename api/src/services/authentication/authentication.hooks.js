@@ -35,6 +35,18 @@ export default {
           })
         })(hook)
       }
+      // Token used to access Kano to manage map data, requires admin permissions
+      await coreHooks.createJWT({
+        name: 'kanoToken',
+        jwt: user => ({
+          subject: 'crisis',
+          // Audience is subdomain
+          audience: config.domain
+        }),
+        payload: user => ({
+          catalog: { permissions: 'owner' }
+        })
+      })(hook)
       return hook
     })],
     update: [],

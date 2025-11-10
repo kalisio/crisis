@@ -164,6 +164,11 @@ module.exports = [{
               }
               // tour: tours.groups
             },
+            'map': {
+              name: 'map-activity',
+              component: 'MapActivity',
+              props: true
+            },
             'catalog/:south?/:west?/:north?/:east?': {
               name: 'catalog-activity',
               component: 'CatalogActivity',
