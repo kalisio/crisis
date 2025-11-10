@@ -20,7 +20,7 @@ init_github_run_tests() {
 }
 
 init_github_additional_tests() {
-    install_reqs age sops nvm node20 mongo8
+    install_reqs age sops nvm node22 mongo7 mongo8
 }
 
 begin_group "Init $CI_ID for $JOB_ID"

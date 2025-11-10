@@ -4,8 +4,10 @@ import routeConfig from './routes'
 import { Store } from '@kalisio/kdk/core.client'
 import buildTours from '@kalisio/kdk/core/client/utils/utils.tours'
 
-// Util function to build the routes
-export function buildRoutes (config) {
+/*
+ * Helper function used to build the routes
+ */
+function buildRoutes (config) {
   function buildRoutesRecursively (config, routes, parentRoute) {
     _.forOwn(config, (value, key) => {
       // The key is always the path for the route
