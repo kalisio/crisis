@@ -164,7 +164,7 @@ export default {
     async refreshPercentages () {
       // Initialize the whole array as we have some async operations here
       // so that the rendering could be triggered and is refering to the array by index
-      this.objectivePercents = _.fill(Array(_.size(this.plan.objectives), 0))
+      this.objectivePercents = _.fill([...Array(_.size(this.plan.objectives))], 0)
       if (this.plan.objectives) {
         for (let i = 0; i < this.plan.objectives.length; i++) {
           const nbEvents = await this.countEvents({ objective: this.plan.objectives[i].name })

@@ -1,4 +1,5 @@
 import { route } from 'quasar/wrappers'
+import _ from 'lodash'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routeConfig from './routes'
 import { Store } from '@kalisio/kdk/core.client'

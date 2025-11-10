@@ -24,15 +24,10 @@ registerRoute(
 // Web push notification
 let clickOpenUrl
 self.addEventListener('push', event => {
-  const notification = event.data.json()
-  clickOpenUrl = notification.url
-  // Dispatch and show notification
-  clients.matchAll({ includeUncontrolled: true, type: 'window' }).then(function (clients) {
-    if (clients && clients.length) {
-      clients.forEach(client => client.postMessage({ type: 'push', notification }))
-    }
-  })
-  event.waitUntil(self.registration.showNotification(notification.title, notification))
+  const pushOptions = event.data.json()
+  clickOpenUrl = pushOptions.url
+  // Show notification
+  event.waitUntil(self.registration.showNotification(pushOptions.title, pushOptions))
 })
 self.addEventListener('notificationclick', event => {
   // Close notification if clicked
