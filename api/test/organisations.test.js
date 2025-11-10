@@ -257,7 +257,7 @@ describe('crisis:organisations', () => {
 	// it('connects member client', async () => {
 	// 	await client.logout()
 	// 	setTimeout(() => {
-  //     gmailClient.checkEmail(memberUser, mailerService.options.auth.user, 'Welcome', (err, message) => {
+  //     gmailClient.checkEmail(ownerUser, mailerService.options.auth.user, 'Welcome', (err, message) => {
   //       if (err) done(err)
   //       else {
   //         message = Buffer.from(message.body.data, 'base64').toString()
