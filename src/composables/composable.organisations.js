@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { readonly } from 'vue'
 import { Theme, composables as kdkCoreComposables } from '@kalisio/kdk/core.client.js'
 
 export function useOrganisations () {

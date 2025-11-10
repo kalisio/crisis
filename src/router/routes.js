@@ -164,7 +164,7 @@ module.exports = [{
               }
               // tour: tours.groups
             },
-            'map': {
+            map: {
               name: 'map-activity',
               component: 'MapActivity',
               props: true
