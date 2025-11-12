@@ -2,6 +2,8 @@ import path, { dirname } from 'path'
 import makeDebug from 'debug'
 import { createStorageService, removeStorageService } from '@kalisio/kdk/core.api.js'
 import {
+  createStylesService, removeStylesService,
+  createProjectsService, removeProjectsService,
   createFeaturesService, removeFeaturesService,
   createCatalogService, removeCatalogService,
   createAlertsService, removeAlertsService
@@ -49,6 +51,10 @@ export default async function (name, app, options) {
       debug('Catalog service created for organisation ' + organisation.name)
       await createFeaturesService.call(this.app, { collection: 'features', context: organisation, db })
       debug('Features service created for organisation ' + organisation.name)
+      await createProjectsService.call(this.app, { context: organisation, db })
+      debug('Projects service created for organisation ' + organisation.name)
+      await createStylesService.call(this.app, { context: organisation, db })
+      debug('Styles service created for organisation ' + organisation.name)
       await createAlertsService.call(this.app, { context: organisation, db })
       debug('Alerts service created for organisation ' + organisation.name)
       await this.app.createService('events', {
@@ -123,6 +129,10 @@ export default async function (name, app, options) {
       debug('Groups service removed for organisation ' + organisation.name)
       await this.app.removeService(this.app.getService('members', organisation))
       debug('Members service removed for organisation ' + organisation.name)
+      await removeStylesService.call(this.app, { context: organisation })
+      debug('Styles service removed for organisation ' + organisation.name)
+      await removeProjectsService.call(this.app, { context: organisation })
+      debug('Projects service removed for organisation ' + organisation.name)
       await removeFeaturesService.call(this.app, { collection: 'features', context: organisation })
       debug('Features service removed for organisation ' + organisation.name)
       await removeCatalogService.call(this.app, { context: organisation })

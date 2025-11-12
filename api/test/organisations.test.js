@@ -15,7 +15,7 @@ describe('crisis:organisations', () => {
   let server, expressServer, client, app, userService, authorisationService, organisationsService, accountService,
   authenticationService, storageService, mailerService, pushService, databasesService, gmailClient, gmailUser,
 	ownerUser, organisation, organisationMembersService, organisationGroupsService, organisationTagsService,
-	organisationStorageService, organisationCatalogService, organisationFeaturesService, organisationAlertsService,
+	organisationStorageService, organisationCatalogService, organisationFeaturesService, organisationStylesService, organisationProjectsService, organisationAlertsService,
 	organisationEventsService, organisationEventTemplatesService, organisationEventLogsService, organisationArchivedEventsService,
 	organisationArchivedEventLogsService, organisationPlanTemplatesService, organisationPlansService, organisationArchivedPlansService,
 	memberUser, managerUser, memberPassword
@@ -149,6 +149,10 @@ describe('crisis:organisations', () => {
     expect(organisationCatalogService).toExist()
 		organisationFeaturesService = app.getService(`${context}/features`)
     expect(organisationFeaturesService).toExist()
+		organisationStylesService = app.getService(`${context}/styles`)
+    expect(organisationStylesService).toExist()
+		organisationProjectsService = app.getService(`${context}/projects`)
+    expect(organisationProjectsService).toExist()
 		organisationAlertsService = app.getService(`${context}/alerts`)
     expect(organisationAlertsService).toExist()
 		organisationEventsService = app.getService(`${context}/events`)

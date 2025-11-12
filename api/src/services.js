@@ -27,6 +27,7 @@ export default async function () {
         name: 'crisis',
         domain: app.get('domain'),
         gateway: app.get('gateway'),
+        planets: app.get('planets'),
         version: packageInfo.version,
         quotas: app.get('quotas'),
         mapillary: app.get('mapillary'),

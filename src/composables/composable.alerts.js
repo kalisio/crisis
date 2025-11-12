@@ -23,16 +23,16 @@ export function useAlerts (options) {
       const unit = variable.unit || ''
       if (_.has(value, '$gte')) {
         html += isActive
-          ? `${label} ` + i18n.t('CatalogActivity.ALERT_GTE') + ` ${value.$gte} ${unit}</br>`
-          : `${label} ` + i18n.t('CatalogActivity.ALERT_LTE') + ` ${value.$gte} ${unit}</br>`
+          ? `${label} ` + i18n.t('MapActivity.ALERT_GTE') + ` ${value.$gte} ${unit}</br>`
+          : `${label} ` + i18n.t('MapActivity.ALERT_LTE') + ` ${value.$gte} ${unit}</br>`
       }
       if (_.has(value, '$lte')) {
         html += isActive
-          ? `${label} ` + i18n.t('CatalogActivity.ALERT_LTE') + ` ${value.$lte} ${unit}</br>`
-          : `${label} ` + i18n.t('CatalogActivity.ALERT_GTE') + ` ${value.$lte} ${unit}</br>`
+          ? `${label} ` + i18n.t('MapActivity.ALERT_LTE') + ` ${value.$lte} ${unit}</br>`
+          : `${label} ` + i18n.t('MapActivity.ALERT_GTE') + ` ${value.$lte} ${unit}</br>`
       }
     })
-    html += i18n.t('CatalogActivity.ALERT_CHECKED_AT') + ` ${formatAlertDateTime(checkedAt)}</br>`
+    html += i18n.t('MapActivity.ALERT_CHECKED_AT') + ` ${formatAlertDateTime(checkedAt)}</br>`
     if (isActive) {
       // Order triggers by time to get nearest one easily, take care to unify weather/measure triggers
       const triggers = _.sortBy(_.get(alert, 'status.triggers',
@@ -45,9 +45,9 @@ export function useAlerts (options) {
       const now = moment.utc()
       const nearestTrigger = (Math.abs(now.diff(firstTriggerAt)) < Math.abs(now.diff(lastTriggerAt)) ? firstTrigger : lastTrigger)
       const nearestTriggerAt = new Date(nearestTrigger.time || nearestTrigger.forecastTime)
-      html += (nearestTrigger === lastTrigger ? i18n.t('CatalogActivity.ALERT_LAST') : i18n.t('CatalogActivity.ALERT_FIRST'))
-      html += i18n.t('CatalogActivity.ALERT_THRESHOLD_AT') + ` ${formatAlertDateTime(nearestTriggerAt)}</br>`
-      html += i18n.t('CatalogActivity.ALERT_TRIGGERED_AT') + ` ${formatAlertDateTime(triggeredAt)}</br>`
+      html += (nearestTrigger === lastTrigger ? i18n.t('MapActivity.ALERT_LAST') : i18n.t('MapActivity.ALERT_FIRST'))
+      html += i18n.t('MapActivity.ALERT_THRESHOLD_AT') + ` ${formatAlertDateTime(nearestTriggerAt)}</br>`
+      html += i18n.t('MapActivity.ALERT_TRIGGERED_AT') + ` ${formatAlertDateTime(triggeredAt)}</br>`
     }
     if (hasError) {
       html += '</br><i class="la la-exclamation la-lg"></i><b>' +
@@ -59,8 +59,8 @@ export function useAlerts (options) {
     const isActive = _.get(alert, 'status.active')
     const hasError = _.get(alert, 'status.error')
     let html = ''
-    if (isActive) html += '<b>' + i18n.t('CatalogActivity.ALERT_ACTIVE') + '</b></br>'
-    else html += '<b>' + i18n.t('CatalogActivity.ALERT_INACTIVE') + '</b></br>'
+    if (isActive) html += '<b>' + i18n.t('MapActivity.ALERT_ACTIVE') + '</b></br>'
+    else html += '<b>' + i18n.t('MapActivity.ALERT_INACTIVE') + '</b></br>'
     // Layer name can be a translation key
     html += (i18n.t(`${alert.layer.name}`) ? i18n.t(`${alert.layer.name}`) : `${alert.layer.name}`)
     if (_.has(alert, 'feature')) {

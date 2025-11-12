@@ -8,7 +8,7 @@ import {
   utils, initializeApi, i18n, utils as kdkCoreUtils, Store, Layout, Events,
   beforeGuard, authenticationGuard, permissionsGuard
 } from '@kalisio/kdk/core.client'
-import { Geolocation, setupApi } from '@kalisio/kdk/map.client.map'
+import { Geolocation, setupApi, Planets } from '@kalisio/kdk/map.client.map'
 
 /* function updateThemeColors () {
   const theme = config.theme
@@ -29,6 +29,8 @@ export default async ({ app }) => {
   api.hooks(appHooks)
   // Then all services
   await services.call(api)
+  // Register app as its own planet
+  Planets.set('crisis', api)
 
   // Register global properties to the the vue app
   app.config.globalProperties.$store = Store
@@ -60,6 +62,8 @@ export default async ({ app }) => {
   }
 
   // Register global components
+  app.component('KLayout', await kdkCoreUtils.loadComponent('layout/KLayout'))
+  app.component('KActivity', await kdkCoreUtils.loadComponent('KActivity'))
   app.component('KAction', await kdkCoreUtils.loadComponent('action/KAction'))
   app.component('KPanel', await kdkCoreUtils.loadComponent('KPanel'))
   app.component('KStamp', await kdkCoreUtils.loadComponent('KStamp'))
@@ -100,17 +104,17 @@ export default async ({ app }) => {
 
   // updateThemeColors()
 
-  api.on('authenticated', (data) => {
+  api.on('login', (data) => {
     // User will be updated in store just after login so that we need to wait for the event
     Events.once('user-changed', utils.subscribeToPushNotifications)
     // Store API gateway token if any
     if (data.gatewayToken) api.get('storage').setItem(config.gatewayJwt, data.gatewayToken)
-    // Store Kano token if any
-    if (data.kanoToken) api.get('storage').setItem(config.kanoJwt, data.kanoToken)
-  })
-  api.on('logout', (data) => {
-    // Remove API gateway token if any
-    api.get('storage').removeItem(config.gatewayJwt)
+    // Store planet tokens if any
+    if (data.planetTokens) {
+      _.forOwn(data.planetTokens, (token, key) => {
+        api.get('storage').setItem(_.get(config.planets, `${key}.apiJwt`), token)
+      })
+    }
   })
 
   // Install listener to log push notifications

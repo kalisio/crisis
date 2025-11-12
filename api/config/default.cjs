@@ -68,8 +68,6 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
 if (process.env.SUBDOMAIN) {
   domain = 'https://crisis.' + process.env.SUBDOMAIN
 }
-// On a developer machine will do domain = gateway = localhost
-const gateway = (process.env.API_GATEWAY_URL ? process.env.API_GATEWAY_URL : domain.replace('crisis', 'api'))
 
 module.exports = {
   // Proxy your API if using any.
@@ -77,7 +75,6 @@ module.exports = {
   // https://github.com/chimurai/http-proxy-middleware
   proxyTable: {},
   domain,
-  gateway,
   host: process.env.HOSTNAME || 'localhost',
   port: serverPort,
   distPath: fs.existsSync(path.join(__dirname, '../../dist/pwa')) ? path.join(__dirname, '../../dist/pwa') : path.join(__dirname, '../../dist/spa'),
@@ -88,6 +85,15 @@ module.exports = {
     port: serverPort
   },
   */
+  planets: {
+    'kalisio-planet': {
+      domain: process.env.KALISIO_PLANET_KANO_URL || domain.replace('crisis', 'kano'),
+      gateway: process.env.KALISIO_PLANET_GATEWAY_URL || domain.replace('crisis', 'api')
+    }
+  },
+  planetTokens: {
+    'kalisio-planet': process.env.KALISIO_PLANET_KANO_JWT
+  },
   apiPath: API_PREFIX,
   socketio: {
     // This avoid the issue of disconnecting the socket when sending a large amout of data

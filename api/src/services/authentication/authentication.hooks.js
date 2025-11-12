@@ -17,27 +17,33 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [verifyGuest, consentGuest, commonHooks.iff(hook => process.env.API_GATEWAY_URL, async hook => {
-      const config = hook.app.get('authentication')
-      if (!config) return hook
-      // Default appId for Crisis used to access the gateway
-      const appId = config.appId
-      if (appId) {
-        await coreHooks.createJWT({
-          name: 'gatewayToken',
-          jwt: user => ({
-            subject: appId,
-            // Audience is target subdomain
-            audience: process.env.API_GATEWAY_URL.replace('https://api.', '')
-          }),
-          payload: user => ({
-            userId: (user ? user._id : undefined)
-          })
-        })(hook)
+    create: [verifyGuest, consentGuest, hook => {
+      hook.result.planetTokens = hook.app.get('planetTokens')
+      if (process.env.API_GATEWAY_JWT) {
+        hook.result.gatewayToken = hook.app.get('gatewayToken')
+      } else {
+        const config = hook.app.get('authentication')
+        if (!config) return hook
+        // Default appId for Crisis used to access the gateway
+        const appId = config.appId
+        if (appId) {
+          await coreHooks.createJWT({
+            name: 'gatewayToken',
+            jwt: user => ({
+              subject: appId,
+              // Audience is target subdomain
+              audience: process.env.SUBDOMAIN
+            }),
+            payload: user => ({
+              userId: (user ? user._id : undefined)
+            })
+          })(hook)
+        }
       }
-      // Token used to access Kano to manage map data, requires admin permissions
+      // Token used to access Kalisio planet to view/manage map data, might requires admin permissions
+      /*
       await coreHooks.createJWT({
-        name: 'kanoToken',
+        name: 'planetToken',
         jwt: user => ({
           subject: 'crisis',
           // Audience is subdomain
@@ -47,8 +53,9 @@ export default {
           catalog: { permissions: 'owner' }
         })
       })(hook)
+      */
       return hook
-    })],
+    }],
     update: [],
     patch: [],
     remove: []

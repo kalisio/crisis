@@ -12,6 +12,7 @@ const changelog = onlineHelp + '/quickstart/history.html'
 const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 // Required to know webpack port so that in dev we can build correct URLs
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
+const APP_SLUG = 'crisis'
 const API_PREFIX = '/api'
 const appName = 'Kalisio Crisis'
 let pwaAppName = appName
@@ -47,8 +48,26 @@ const LEFT_PANE = {
     leftPane.logout()
   ]
 }
-
-// left window
+const mapTools = () => {
+  return [
+    {
+      id: 'map-tools',
+      component: 'menu/KMenu',
+      icon: 'las la-wrench',
+      tooltip: 'mixins.activity.TOOLS',
+      actionRenderer: 'item',
+      content: [
+        topPane.activeMeasureToolMode(),
+        topPane.toggleLegend(),
+        topPane.togglePosition(),
+        topPane.toggleNorthArrow(),
+        helpers.horizontalSeparator(),
+        topPane.toggleFullscreen()
+      ]
+    }
+  ]
+}
+// Left window
 const leftWidgets = [widgetsLeft.LEGEND]
 
 // top widgets
@@ -127,6 +146,13 @@ const eventsAction = function (contextId = 'contextId') {
 }
 
 const mapAction = function (contextId = 'contextId') {
+  return {
+    ...panesTop.activityLink('map', 'las la-map', 'Context.MAP', { contextId: `:${contextId}` }, { plan: ':plan' }),
+    visible: { name: '$can', params: ['read', 'catalog', `:${contextId}`] }
+  }
+}
+
+const catalogAction = function (contextId = 'contextId') {
   return {
     ...panesTop.activityLink('catalog', 'las la-map', 'Context.CATALOG', { contextId: `:${contextId}` }, { plan: ':plan' }),
     visible: { name: '$can', params: ['update', 'catalog', `:${contextId}`] }
@@ -386,22 +412,32 @@ const layerActions = [{
 
 module.exports = {
   appName,
+  appSlug: APP_SLUG,
   pwaAppName,
   pwaShortName,
   buildMode: process.env.BUILD_MODE === 'pwa' ? 'pwa' : 'spa',
-  appLogo: 'crisis-logo-color-384x192.png',
+  appLogo: `${APP_SLUG}-logo-color-384x192.png`,
   appChangelog: changelog,
   appOnlineHelp: onlineHelp,
   flavor: process.env.NODE_APP_INSTANCE || 'dev',
   version: require('../package.json').version,
   buildNumber: process.env.BUILD_NUMBER,
   apiPath: API_PREFIX,
-  apiJwt: 'crisis-jwt',
+  apiJwt: `${APP_SLUG}-jwt`,
   apiTimeout: 20000,
   transport: 'websocket', // Could be 'http' or 'websocket',
   gatewayJwtField: 'jwt',
-  gatewayJwt: 'crisis-gateway-jwt',
-  kanoJwt: 'crisis-kano-jwt',
+  gatewayJwt: `${APP_SLUG}-gateway-jwt`,
+  planets: {
+    'kalisio-planet': {
+      apiJwt: 'kalisio-planet-jwt',
+      gatewayJwtField: 'jwt',
+      gatewayJwt: 'kalisio-planet-gateway-jwt',
+      project: {
+        default: { identifier: APP_SLUG }
+      }
+    }
+  },
   terms: 'crisis-terms',
   publisher: 'Kalisio',
   publisherWebsite: website,
@@ -721,11 +757,13 @@ module.exports = {
       ]
     }
   },
-  mapActivity: {
+  catalogActivity: {
+    padding: false,
     leftPane: LEFT_PANE,
     mode: 'default'
   },
-  catalogActivity: {
+  mapActivity: {
+    padding: false,
     leftPane: LEFT_PANE,
     topPane: {
       content: {
@@ -734,27 +772,12 @@ module.exports = {
           separator,
           { component: 'PlanMenu' },
           eventsAction(),
-          topPane.activityStamp('catalog', 'las la-map', 'Context.CATALOG'),
+          topPane.activityStamp('catalog', 'las la-map', 'Context.MAP'),
           archivedEventsAction(),
           midSeparator,
           topPane.locateUser(),
           topPane.activeLocationSearchMode(),
-          {
-            id: 'tools',
-            component: 'menu/KMenu',
-            icon: 'las la-wrench',
-            tooltip: 'mixins.activity.TOOLS',
-            actionRenderer: 'item',
-            content: [
-              topPane.activeMeasureToolMode(),
-              { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } },
-              { id: 'display-legend', icon: 'las la-list', label: 'mixins.activity.DISPLAY_LEGEND', handler: { name: 'openWidget', params: ['legend-widget'] } }
-            ]
-          },
-          {
-            ...topPane.toggleFullscreen(),
-            visible: '$q.screen.gt.md'
-          }
+          ...mapTools()
         ],
         'display-position': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
@@ -791,18 +814,6 @@ module.exports = {
               layerCategories: ':layerCategories',
               layersFilter: { scope: { $in: ['user', 'activity'] } },
               layerCategoriesFilter: { _id: { $exists: true } }
-            },
-            { component: 'QSpace' },
-            {
-              id: 'catalog-footer',
-              component: 'KPanel',
-              content: [{
-                id: 'manage-layer-categories',
-                icon: 'las la-cog',
-                label: 'KLayerCategories.LAYER_CATEGORIES_LABEL',
-                route: { name: 'manage-layer-categories' }
-              }],
-              class: 'justify-center'
             }
           ],
           'user-views': [
@@ -995,6 +1006,7 @@ module.exports = {
           groupsAction(),
           eventTemplatesAction(),
           planTemplatesAction(),
+          catalogAction(),
           midSeparator,
           { component: 'team/KMemberFilter' },
           {
@@ -1086,6 +1098,7 @@ module.exports = {
           groupsAction(),
           eventTemplatesAction(),
           planTemplatesAction(),
+          catalogAction(),
           midSeparator,
           {
             component: 'collection/KSorter',
@@ -1132,6 +1145,7 @@ module.exports = {
           topPane.activityStamp('groups', 'las la-sitemap', 'KGroupsActivity.GROUPS_LABEL'),
           eventTemplatesAction(),
           planTemplatesAction(),
+          catalogAction(),
           midSeparator,
           { id: 'group-sorter', component: 'collection/KSorter', tooltip: 'KGroupsActivity.SORT_GROUPS' },
           { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUPS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
@@ -1170,6 +1184,7 @@ module.exports = {
           groupsAction(),
           topPane.activityStamp('event-templates', 'las la-fire', 'EventTemplatesActivity.EVENT_TEMPLATES_LABEL'),
           planTemplatesAction(),
+          catalogAction(),
           midSeparator,
           { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } }
@@ -1222,6 +1237,7 @@ module.exports = {
           groupsAction(),
           eventTemplatesAction(),
           topPane.activityStamp('plan-templates', 'las la-stream', 'PlanTemplatesActivity.PLAN_TEMPLATES_LABEL'),
+          catalogAction(),
           midSeparator,
           { id: 'event-template-sorter', component: 'collection/KSorter', tooltip: 'EventTemplatesActivity.SORT_EVENT_TEMPLATES' },
           { id: 'search-event-template', icon: 'las la-search', tooltip: 'EventTemplatesActivity.SEARCH_EVENT_TEMPLATES', handler: { name: 'setTopPaneMode', params: ['filter'] } }

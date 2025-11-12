@@ -369,6 +369,9 @@
     "CONTEXTUAL_HELP": "@:CONTEXTUAL_HELP",
     "LOGOUT": "Logout"
   },
+  "Home": {
+    "KALISIO_PLANET_UNREACHABLE": "Kalisio Planet is unreachable"
+  },
   "Context": {
     "ORGANISATION": "Organisation",
     "EVENTS": "Events & Templates",
@@ -376,7 +379,8 @@
     "MEMBERS": "Members",
     "TAGS": "Tags",
     "GROUPS": "Groups",
-    "CATALOG": "Cartography",
+    "MAP": "Map",
+    "CATALOG": "Map data",
     "SEARCH": "Search",
     "CONTEXTUAL_HELP": "@:CONTEXTUAL_HELP",
     "REFRESH": "Refresh",
@@ -389,7 +393,7 @@
     "VIEW_EVENTS": "View events",
     "VIEW_PLANS": "View plans",
     "PLANS_LABEL": "{count} plan(s)",
-    "VIEW_CATALOG": "View map",
+    "VIEW_MAP": "View map",
     "VIEW_ARCHIVED_EVENTS": "View logbook",
     "VIEW_ARCHIVED_PLANS": "View plans archive",
     "CATALOG": "Map",
@@ -416,7 +420,7 @@
     "PROPERTIES": "Properties",
     "SUBSCRIPTIONS": "Subscriptions"
   },
-  "CatalogActivity": {
+  "MapActivity": {
     "CREATE_MEASURE_ALERT_ACTION": "Create an alert on this sensor",
     "CREATE_WEATHER_ALERT_ACTION": "Create a weather alert",
     "CREATE_EVENT_FEATURE_ACTION": "Create an event on this object",
@@ -730,7 +734,7 @@
     "EVENTS_SECTION": "Events",
     "EVENTS": "{count} event(s)",
     "VIEW_PLANS": "View plans",
-    "VIEW_CATALOG": "View map",
+    "VIEW_MAP": "View map",
     "VIEW_ARCHIVED_EVENTS": "View logbook"
   },
   "PlanTemplatesActivity": {
@@ -775,7 +779,7 @@
   "OrganisationMenu": {
     "EVENTS_LABEL": "{count} event(s)",
     "PLANS_LABEL": "{count} plan(s)",
-    "VIEW_CATALOG": "View map",
+    "VIEW_MAP": "View map",
     "VIEW_ARCHIVED_EVENTS": "View logbook",
     "VIEW_ARCHIVED_PLANS": "View plans archive",
     "MANAGE_ORGANISATION": "Manage organisation"

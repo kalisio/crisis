@@ -36,11 +36,11 @@
           />
           <q-space />
           <KAction
-            v-if="canAccessCatalog"
-            id="plan-catalog"
+            v-if="canAccessMap"
+            id="plan-map"
             icon="las la-map"
-            :tooltip="$t('PlanCard.VIEW_CATALOG')"
-            :route="{ name: 'catalog-activity', params: { contextId }, query: { plan: item._id } }"
+            :tooltip="$t('PlanCard.VIEW_MAP')"
+            :route="{ name: 'map-activity', params: { contextId }, query: { plan: item._id } }"
           />
           <KAction
             v-if="canAccessArchivedEvents"
@@ -82,8 +82,8 @@ export default {
     coordinatorsActions () {
       return _.filter(this.itemActions, { scope: 'coordinators' })
     },
-    canAccessCatalog () {
-      return this.$can('update', 'catalog', this.contextId)
+    canAccessMap () {
+      return this.$can('read', 'catalog', this.contextId)
     },
     canAccessArchivedEvents () {
       return this.$can('read', 'archived-events', this.contextId)

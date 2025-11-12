@@ -376,6 +376,9 @@
     "CONTEXTUAL_HELP": "@:CONTEXTUAL_HELP",
     "LOGOUT": "Se déconnecter"
   },
+  "Home": {
+    "KALISIO_PLANET_UNREACHABLE": "Kalisio Planet est inaccessible"
+  },
   "Context": {
     "ORGANISATION": "Organisation",
     "EVENTS": "Evénements & modèles",
@@ -383,7 +386,8 @@
     "MEMBERS": "Membres",
     "TAGS": "Etiquettes",
     "GROUPS": "Groupes",
-    "CATALOG": "Cartographie",
+    "MAP": "Cartographie",
+    "CATALOG": "Données cartographiques",
     "SEARCH": "Rechercher",
     "CONTEXTUAL_HELP": "@:CONTEXTUAL_HELP",    
     "REFRESH": "Rafraîchir",
@@ -396,7 +400,7 @@
     "VIEW_EVENTS": "Voir les événements",
     "VIEW_PLANS": "Voir les plans",
     "PLANS_LABEL": "{count} plan(s)",
-    "VIEW_CATALOG": "Voir la carte",
+    "VIEW_MAP": "Voir la carte",
     "VIEW_ARCHIVED_EVENTS": "Voir la main courante",
     "VIEW_ARCHIVED_PLANS": "Voir l'archive de plans",
     "CATALOG": "Cartographie",
@@ -423,7 +427,7 @@
     "PROPERTIES": "Propriétés",
     "SUBSCRIPTIONS": "Abonnements"
   },
-  "CatalogActivity": {
+  "MapActivity": {
     "CREATE_MEASURE_ALERT_ACTION": "Créer une alerte sur la sonde",
     "CREATE_WEATHER_ALERT_ACTION": "Créer une alerte météorologique",
     "CREATE_EVENT_FEATURE_ACTION": "Créer un évènement localisé sur cet objet",
@@ -737,7 +741,7 @@
     "EVENTS_SECTION": "Evénements",
     "EVENTS": "{count} événements(s)",
     "VIEW_PLANS": "Voir les plans",
-    "VIEW_CATALOG": "Voir la carte",
+    "VIEW_MAP": "Voir la carte",
     "VIEW_ARCHIVED_EVENTS": "Voir la main courante"
   },
   "PlanTemplatesActivity": {
@@ -782,7 +786,7 @@
   "OrganisationMenu": {
     "EVENTS_LABEL": "{count} événement(s)",
     "PLANS_LABEL": "{count} plan(s)",
-    "VIEW_CATALOG": "Voir la carte",
+    "VIEW_MAP": "Voir la carte",
     "VIEW_ARCHIVED_EVENTS": "Voir la main courante",
     "VIEW_ARCHIVED_PLANS": "Voir l'archive des plans",
     "MANAGE_ORGANISATION": "Gérer l'organisation"

@@ -37,11 +37,11 @@
               />
               <q-space />
               <KAction
-                v-if="canAccessCatalog"
-                id= "organisation-catalog"
+                v-if="canAccessMap"
+                id= "organisation-map"
                 icon= "las la-map"
-                :tooltip="$t('OrganisationMenu.VIEW_CATALOG')"
-                @triggered="routeTo('catalog-activity')"
+                :tooltip="$t('OrganisationMenu.VIEW_MAP')"
+                @triggered="routeTo('map-activity')"
               />
               <KAction
                 v-if="canAccessArchivedEvents"
@@ -144,8 +144,8 @@ export default {
     canAccessArchivedPlans () {
       return this.$can('service', 'archived-plans', this.organisation._id)
     },
-    canAccessCatalog () {
-      return this.$can('update', 'catalog', this.organisation._id)
+    canAccessMap () {
+      return this.$can('read', 'catalog', this.organisation._id)
     },
     canAccessArchivedEvents () {
       return this.$can('service', 'archived-events', this.organisation._id)

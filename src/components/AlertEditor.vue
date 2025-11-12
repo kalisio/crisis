@@ -1,6 +1,6 @@
 <template>
   <KModal
-    :title="$t('CatalogActivity.CREATE_ALERT_TITLE')"
+    :title="$t('MapActivity.CREATE_ALERT_TITLE')"
     :buttons="buttons"
     v-model="isModalOpened"
   >
