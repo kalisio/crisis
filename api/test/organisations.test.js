@@ -258,30 +258,6 @@ describe('crisis:organisations', () => {
 	// Let enough time to process
 		.timeout(5000)
 
-	// it('connects member client', async () => {
-	// 	await client.logout()
-	// 	setTimeout(() => {
-  //     gmailClient.checkEmail(ownerUser, mailerService.options.auth.user, 'Welcome', (err, message) => {
-  //       if (err) done(err)
-  //       else {
-  //         message = Buffer.from(message.body.data, 'base64').toString()
-  //         const passwordEntry = 'password: '
-  //         const passwordIndex = message.indexOf(passwordEntry) + passwordEntry.length
-  //         memberPassword = message.substring(passwordIndex, passwordIndex + 8)
-  //         done()
-  //       }
-  //     })
-  //   }, 10000)
-	// 	const response = await client.authenticate({
-	// 		strategy: 'local',
-	// 		email: gmailUser.replace('com', 'net'),
-	// 		password: memberPassword
-	// 	})
-	// 	expect(response.user._id.toString()).to.equal(memberUser._id.toString())
-	// })
-	// // Let enough time to process
-	// 	.timeout(20000)
-
   // Cleanup
   after(async () => {
     if (expressServer) await expressServer.close()

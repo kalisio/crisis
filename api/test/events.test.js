@@ -1,78 +1,78 @@
-// import _ from 'lodash'
-// import chai, { util, expect } from 'chai'
-// import chailint from 'chai-lint'
-// import request from 'superagent'
-// import { Blob } from 'buffer'
-// import fuzzySearch from 'feathers-mongodb-fuzzy-search'
-// import core, { kdk, hooks as coreHooks, permissions as corePermissions } from '@kalisio/kdk/core.api.js'
-// import * as permissions from '../../common/permissions.mjs'
-// import { createOrganisationServices, removeOrganisationServices } from '../src/services/index.js'
-// import webhooks from '../src/app.webhooks.js'
+import _ from 'lodash'
+import chai, { util, expect } from 'chai'
+import chailint from 'chai-lint'
+import request from 'superagent'
+import { Blob } from 'buffer'
+import fuzzySearch from 'feathers-mongodb-fuzzy-search'
+import core, { kdk, hooks as coreHooks, permissions as corePermissions } from '@kalisio/kdk/core.api.js'
+import * as permissions from '../../common/permissions.mjs'
+import { createOrganisationServices, removeOrganisationServices } from '../src/services/index.js'
+import webhooks from '../src/app.webhooks.js'
 
-// describe('events', () => {
-//   let app, server, port, baseUrl, accessToken,
-//     userService, userObject, orgManagerObject, orgObject, orgUserObject, orgService, authorisationService,
-//     storageService, storageObject, eventService, eventObject, eventTemplateService, eventLogService,
-//     archivedEventService, archivedEventLogService
+describe('events', () => {
+  let app, server, port, baseUrl, accessToken,
+    userService, userObject, orgManagerObject, orgObject, orgUserObject, orgService, authorisationService,
+    storageService, storageObject, eventService, eventObject, eventTemplateService, eventLogService,
+    archivedEventService, archivedEventLogService
 
-//   before(() => {
-//     chailint(chai, util)
+  before(() => {
+    chailint(chai, util)
 
-//     // Register all default hooks for authorisation
-//     // Default rules for all users
-//     corePermissions.defineAbilities.registerHook(corePermissions.defineUserAbilities)
-//     // Then rules for organisations
-//     corePermissions.defineAbilities.registerHook(permissions.defineOrganisationAbilities)
-//     // Then rules for groups
-//     corePermissions.defineAbilities.registerHook(permissions.defineGroupAbilities)
-//     // Then rules for events
-//     corePermissions.defineAbilities.registerHook(permissions.defineUserAbilities)
+    // Register all default hooks for authorisation
+    // Default rules for all users
+    corePermissions.defineAbilities.registerHook(corePermissions.defineUserAbilities)
+    // Then rules for organisations
+    corePermissions.defineAbilities.registerHook(permissions.defineOrganisationAbilities)
+    // Then rules for groups
+    corePermissions.defineAbilities.registerHook(permissions.defineGroupAbilities)
+    // Then rules for events
+    corePermissions.defineAbilities.registerHook(permissions.defineUserAbilities)
 
-//     app = kdk()
-//     // Register authorisation/log hook
-//     app.hooks({
-//       before: { all: [coreHooks.authorise], find: [fuzzySearch({ fields: ['name'] })] },
-//       error: { all: coreHooks.log }
-//     })
-//     // Add hooks for contextual services
-//     app.on('service', service => {
-//       if (service.name === 'groups') {
-//         service.hooks({
-//           after: {
-//             create: [coreHooks.createGroupAuthorisations],
-//             remove: [coreHooks.removeGroupAuthorisations]
-//           }
-//         })
-//       }
-//     })
+    app = kdk()
+    // Register authorisation/log hook
+    app.hooks({
+      before: { all: [coreHooks.authorise], find: [fuzzySearch({ fields: ['name'] })] },
+      error: { all: coreHooks.log }
+    })
+    // Add hooks for contextual services
+    app.on('service', service => {
+      if (service.name === 'groups') {
+        service.hooks({
+          after: {
+            create: [coreHooks.createGroupAuthorisations],
+            remove: [coreHooks.removeGroupAuthorisations]
+          }
+        })
+      }
+    })
 
-//     port = app.get('port')
-//     baseUrl = `http://localhost:${app.get('port')}${app.get('apiPath')}`
+    port = app.get('port')
+    baseUrl = `http://localhost:${app.get('port')}${app.get('apiPath')}`
 
-//     return app.db.connect()
-//   })
+    return app.db.connect()
+  })
 
-//   it('registers the global services', async () => {
-//     await app.configure(core)
-//     userService = app.getService('users')
-//     expect(userService).toExist()
-//     orgService = app.getService('organisations')
-//     expect(orgService).toExist()
-//     // Register services hook for organisations
-//     orgService.registerOrganisationServicesHook({
-//       createOrganisationServices, removeOrganisationServices
-//     })
-//     orgService.hooks({
-//       after: {
-//         create: [coreHooks.createOrganisationServices, coreHooks.createOrganisationAuthorisations],
-//         remove: [coreHooks.removeOrganisationAuthorisations, coreHooks.removeOrganisationServices]
-//       }
-//     })
-//     authorisationService = app.getService('authorisations')
-//     expect(authorisationService).toExist()
-//   })
-//   // Let enough time to process
-//     .timeout(5000)
+  it('registers the global services', async () => {
+    await app.configure(core)
+    userService = app.getService('users')
+    expect(userService).toExist()
+    orgService = app.getService('organisations')
+    expect(orgService).toExist()
+    // Register services hook for organisations
+    orgService.registerOrganisationServicesHook({
+      createOrganisationServices, removeOrganisationServices
+    })
+    orgService.hooks({
+      after: {
+        create: [coreHooks.createOrganisationServices, coreHooks.createOrganisationAuthorisations],
+        remove: [coreHooks.removeOrganisationAuthorisations, coreHooks.removeOrganisationServices]
+      }
+    })
+    authorisationService = app.getService('authorisations')
+    expect(authorisationService).toExist()
+  })
+  // Let enough time to process
+    .timeout(5000)
 
 //   it('launch the server for webhooks', async () => {
 //     // Register webhooks
@@ -540,11 +540,11 @@
 //   // Let enough time to process
 //     .timeout(5000)
 
-//   // Cleanup
-//   after(async () => {
-//     await userService.Model.drop()
-//     await orgService.Model.drop()
-//     await app.db.instance.dropDatabase()
-//     await app.db.disconnect()
-//   })
-// })
+  // Cleanup
+  after(async () => {
+    await userService.Model.drop()
+    await orgService.Model.drop()
+    await app.db.instance.dropDatabase()
+    await app.db.disconnect()
+  })
+})
