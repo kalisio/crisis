@@ -112,7 +112,7 @@
       "type": "array",
       "multiselect": true,
       "uniqueItems": true,
-      "minItems": 1,
+      "minItems": 0,
       "services": [{
         "service": "members",
         "field": "profile.name",
