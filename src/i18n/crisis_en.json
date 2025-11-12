@@ -79,7 +79,11 @@
     "PLAN_OBJECTIVE_CREATE_TITLE": "Create a new objective ?",
     "PLAN_OBJECTIVE_NAME_FIELD_LABEL": "Enter the name of this objective",
     "PLAN_OBJECTIVE_DESCRIPTION_FIELD_LABEL": "Enter a description of this objective",
-    "PLAN_OBJECTIVE_LOCATION_FIELD_LABEL": "Enter the location of this objective"
+    "PLAN_OBJECTIVE_LOCATION_FIELD_LABEL": "Enter the location of this objective",
+    "TAGS_CREATE_TITLE": "Create a new tag ?",
+    "TAGS_NAME_FIELD_LABEL": "Enter the name of this tag",
+    "TAGS_ICON_FIELD_LABEL": "Set the icon of this tag",
+    "TAGS_DESCRIPTION_FIELD_LABEL": "Enter a description of this tag"
   },
   "PopulationClasses": {
     "Ind": "Total population",

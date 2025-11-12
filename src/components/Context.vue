@@ -39,6 +39,9 @@ onBeforeMount(() => {
   api.createService('features', { context: props.contextId })
   api.createService('styles', { context: props.contextId })
   api.createService('projects', { context: props.contextId })
+  api.createService('groups', { context: props.contextId })
+  api.createService('members', { context: props.contextId })
+  api.createService('tags', { context: props.contextId })
   Storage.createService(props.contextId)
   // Uploading can require a long time*
   api.getService('storage', props.contextId).timeout = 60 * 60 * 1000 // 1h should be sufficient since we also have size limits

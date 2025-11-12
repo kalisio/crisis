@@ -32,7 +32,7 @@
         :context="$props"
         :dense="dense">
         <div v-if="hasTags" id="tags-section">
-          <KChipsPane id="tags-pane" class="q-pa-sm" :remove="true" @chip-removed="onRemoveTag" :chips="tags" />
+          <ChipsPane id="tags-pane" class="q-pa-sm" :remove="true" @chip-removed="onRemoveTag" :chips="tags" />
         </div>
         <div v-else>
           {{ $t('KMemberCard.NO_TAGS_LABEL')}}
@@ -87,6 +87,7 @@ import { Dialog } from 'quasar'
 import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
 import { getRoleForOrganisation, getRoleForGroup, findGroupsWithRole } from '../../../common/permissions'
 import { Roles } from '@kalisio/kdk/core/common/permissions'
+import ChipsPane from '../ChipsPane.vue'
 
 export default {
   mixins: [kCoreMixins.baseItem],

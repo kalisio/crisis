@@ -13,7 +13,7 @@ function addMembersScope (hook) {
 export default {
   before: {
     all: [],
-    find: [fuzzySearch({ fields: ['value'] }), coreHooks.diacriticSearch()],
+    find: [fuzzySearch({ fields: ['value'] }), coreHooks.diacriticSearch(), coreHooks.marshallComparisonQuery],
     get: [],
     create: [addMembersScope],
     update: [addMembersScope],

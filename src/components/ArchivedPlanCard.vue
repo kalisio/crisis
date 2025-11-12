@@ -20,7 +20,7 @@
         :context="$props"
         :dense="dense"
       >
-        <KChipsPane v-if="item.objectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
+        <ChipsPane v-if="item.objectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
         <KStamp v-else :text="'ArchivedPlanCard.NO_OBJECTIVES_LABEL'" direction="horizontal" />
       </KCardSection>
       <!-- location section -->
@@ -38,7 +38,7 @@
         v-if="isExpanded"
         :title="$t('ArchivedPlanCard.COORDINATORS_SECTION')"
         :context="$props">
-        <KChipsPane class="q-pl-sm" :chips="item.coordinators" :valuePath="['profile.name', 'value', 'name']" />
+        <ChipsPane class="q-pl-sm" :chips="item.coordinators" :valuePath="['profile.name', 'value', 'name']" />
       </KCardSection>
       <!-- Timestamps section -->
       <KCardSection
@@ -64,6 +64,7 @@
 <script>
 import _ from 'lodash'
 import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
+import ChipsPane from './ChipsPane.vue'
 
 export default {
   name: 'archived-plan-card',

@@ -80,7 +80,11 @@
     "PLAN_OBJECTIVE_CREATE_TITLE": "Créér un nouvel objectif ?",
     "PLAN_OBJECTIVE_NAME_FIELD_LABEL": "Saisissez le nom de cet objectif",
     "PLAN_OBJECTIVE_DESCRIPTION_FIELD_LABEL": "Saisissez une description de cet objectif",
-    "PLAN_OBJECTIVE_LOCATION_FIELD_LABEL": "Saisissez une localisation pour cet objectif"
+    "PLAN_OBJECTIVE_LOCATION_FIELD_LABEL": "Saisissez une localisation pour cet objectif",
+    "TAGS_CREATE_TITLE": "Créer une nouvelle étiquette ?",
+    "TAGS_NAME_FIELD_LABEL": "Saisissez le nom de l'étiquette",
+    "TAGS_ICON_FIELD_LABEL": "Choisissez l'icône de l'étiquette",
+    "TAGS_DESCRIPTION_FIELD_LABEL": "Saisissez une description de l'étiquette"
   },
   "PopulationClasses": {
     "Ind": "Population totale",

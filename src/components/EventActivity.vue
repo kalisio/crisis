@@ -4,7 +4,7 @@
     <div :ref="configureMap" :style="viewStyle">
       <q-resize-observer @resize="onMapResized" />
     </div>
-    <KMediaBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
+    <KBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
     <router-view service="events"></router-view>
   </KPage>
 </template>
