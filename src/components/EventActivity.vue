@@ -4,7 +4,7 @@
     <div :ref="configureMap" :style="viewStyle">
       <q-resize-observer @resize="onMapResized" />
     </div>
-    <KBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
+    <MediaBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
     <router-view service="events"></router-view>
   </KPage>
 </template>
@@ -18,6 +18,7 @@ import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.cl
 import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 import mixins from '../mixins'
+import MediaBrowser from './MediaBrowser.vue'
 
 const name = 'eventActivity'
 const activityMixin = kCoreMixins.baseActivity(name)

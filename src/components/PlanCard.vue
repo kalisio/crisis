@@ -10,7 +10,7 @@
     <template v-slot:card-content>
       <!-- Objectives section -->
       <KCardSection :title="$t('PlanCard.OBJECTIVES_SECTION')" :actions="objectivesActions">
-        <k-chips-pane v-if="hasObjectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
+        <ChipsPane v-if="hasObjectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
         <KStamp v-else :text="'PlanCard.NO_OBJECTIVES_LABEL'" direction="horizontal" />
       </KCardSection>
       <!-- location section -->
@@ -23,7 +23,7 @@
         :title="$t('PlanCard.COORDINATORS_SECTION')"
         :actions="coordinatorsActions"
         :context="$props">
-        <k-chips-pane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
+        <ChipsPane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
       </KCardSection>
       <!-- Events section -->
       <KCardSection :title="$t('PlanCard.EVENTS_SECTION')">
@@ -58,6 +58,7 @@
 <script>
 import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import ChipsPane from './ChipsPane.vue'
 
 export default {
   name: 'plan-card',

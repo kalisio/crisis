@@ -80,7 +80,6 @@ export default async ({ app }) => {
   app.component('KItem', await kdkCoreUtils.loadComponent('collection/KItem'))
   app.component('KCard', await kdkCoreUtils.loadComponent('collection/KCard'))
   app.component('KCardSection', await kdkCoreUtils.loadComponent('collection/KCardSection'))
-  app.component('KBrowser', await kdkCoreUtils.loadComponent('media/KBrowser'))
   app.component('KShape', await kdkCoreUtils.loadComponent('media/KShape'))
   app.component('KStatisticsChart', await kdkCoreUtils.loadComponent('chart/KStatisticsChart'))
   app.component('KLocationMap', await kdkCoreUtils.loadComponent('location/KLocationMap'))

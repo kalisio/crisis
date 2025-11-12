@@ -97,7 +97,7 @@
           :dense="dense"
         >
           <div v-if="hasParticipants">
-            <k-chips-pane
+            <ChipsPane
               class="q-pl-sm"
               :chips="item.participants"
               :value-path="['profile.name', 'value', 'name']" />
@@ -113,7 +113,7 @@
           :context="$props"
           :dense="dense"
         >
-          <k-chips-pane
+          <ChipsPane
             class="q-pl-sm"
             :chips="item.coordinators"
             :value-path="['profile.name', 'value', 'name']" />
@@ -158,20 +158,24 @@
     <!--
       Media browser
     -->
-    <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()"/>
+    <MediaBrowser ref="mediaBrowser" :options="mediaBrowserOptions()"/>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
 import { mixins as kCoreMixins, utils as kCoreUtils, Storage } from '@kalisio/kdk/core.client'
-import { useAlerts } from '../composables'
+import { useAlerts, useOrganisations } from '../composables'
 import mixins from '../mixins'
+import ChipsPane from './ChipsPane.vue'
+import MediaBrowser from './MediaBrowser.vue'
 
 export default {
   name: 'event-card',
   components: {
-    EventLogsList: kCoreUtils.loadComponent('EventLogsList')
+    EventLogsList: kCoreUtils.loadComponent('EventLogsList'),
+    ChipsPane,
+    MediaBrowser
   },
   mixins: [
     kCoreMixins.baseItem,
@@ -271,6 +275,10 @@ export default {
     },
     hasPosition () {
       return _.has(this.item, 'location.geometry.coordinates')
+    },
+    contextId () {
+      const { CurrentOrganisation } = useOrganisations()
+      return CurrentOrganisation.value._id
     }
   },
   data () {

@@ -60,7 +60,7 @@
           :dense="dense"
         >
           <div v-if="hasParticipants">
-            <k-chips-pane class="q-pl-sm" :chips="item.participants" :value-path="['profile.name', 'value', 'name']" />
+            <chips-pane class="q-pl-sm" :chips="item.participants" :value-path="['profile.name', 'value', 'name']" />
           </div>
           <div v-else>
             {{ $t('ArchivedEventCard.NO_PARTICIPANTS_LABEL')}}
@@ -73,7 +73,7 @@
           :context="$props"
           :dense="dense"
         >
-          <k-chips-pane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
+          <chips-pane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
         </KCardSection>
         <!-- Timestamps section -->
         <KCardSection
@@ -94,7 +94,7 @@
         </KCardSection>
       </template>
     </k-card>
-    <k-media-browser ref="mediaBrowser" :options="mediaBrowserOptions()" />
+    <MediaBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
   </div>
 </template>
 
@@ -103,9 +103,13 @@ import _ from 'lodash'
 import { mixins as kdkCoreMixins, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 import { useAlerts } from '../composables'
 import mixins from '../mixins'
+import MediaBrowser from './MediaBrowser.vue'
 
 export default {
   name: 'event-card',
+  components: {
+    MediaBrowser
+  },
   mixins: [
     kdkCoreMixins.baseItem,
     kdkCoreMixins.service,

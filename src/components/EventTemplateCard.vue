@@ -13,7 +13,7 @@
         :actions="participantsActions"
         :context="$props">
         <div v-if="hasParticipants">
-          <k-chips-pane
+          <ChipsPane
             :chips="item.participants"
             :value-path="['profile.name', 'value', 'name']" />
         </div>
@@ -27,7 +27,7 @@
         :actions="coordinatorsActions"
         :context="$props">
         <div v-if="hasCoordinators">
-          <k-chips-pane
+          <ChipsPane
             :chips="item.coordinators"
             :value-path="['profile.name', 'value', 'name']" />
         </div>
@@ -74,6 +74,7 @@
 import _ from 'lodash'
 import { Dialog } from 'quasar'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import ChipsPane from './ChipsPane.vue'
 
 export default {
   name: 'event-template-card',

@@ -13,7 +13,7 @@
         :actions="objectivesActions"
         :context="$props">
         <div v-if="hasObjectives">
-          <k-chips-pane :chips="item.objectives" :value-path="'name'" />
+          <ChipsPane :chips="item.objectives" :value-path="'name'" />
         </div>
         <div v-else>
           {{ $t('PlanTemplateCard.NO_OBJECTIVES_LABEL')}}
@@ -25,7 +25,7 @@
         :actions="coordinatorsActions"
         :context="$props">
         <div v-if="hasCoordinators">
-          <k-chips-pane
+          <ChipsPane
 
             :chips="item.coordinators"
             :value-path="['profile.name', 'value', 'name']" />
@@ -48,6 +48,7 @@
 <script>
 import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import ChipsPane from './ChipsPane.vue'
 
 export default {
   name: 'plan-template-card',
