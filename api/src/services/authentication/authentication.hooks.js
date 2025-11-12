@@ -17,7 +17,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [verifyGuest, consentGuest, hook => {
+    create: [verifyGuest, consentGuest, async hook => {
       hook.result.planetTokens = hook.app.get('planetTokens')
       if (process.env.API_GATEWAY_JWT) {
         hook.result.gatewayToken = hook.app.get('gatewayToken')
