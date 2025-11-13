@@ -28,7 +28,7 @@ const hooks = {
   },
 
   after: {
-    all: [],
+    all: [archive],
     find: [],
     get: [mapHooks.asGeoJson({
       longitudeProperty: 'location.longitude',
@@ -52,12 +52,6 @@ const hooks = {
     patch: [],
     remove: []
   }
-}
-
-// Add archiving feature
-// This is only in dev/preprod mode, in prod this feature is managed by MongoDB Stitch
-if (process.env.NODE_APP_INSTANCE !== 'prod') {
-  hooks.after.all.push(archive)
 }
 
 export default hooks

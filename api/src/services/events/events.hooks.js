@@ -49,7 +49,8 @@ const hooks = {
     all: [
       coreHooks.convertToJson(['alert.conditions']),
       // Not by default for performance reason
-      commonHooks.iff(hook => _.get(hook, 'params.planAsObject'), populatePlan)
+      commonHooks.iff(hook => _.get(hook, 'params.planAsObject'), populatePlan),
+      archive
     ],
     find: [
       mapHooks.asGeoJson({
@@ -75,12 +76,6 @@ const hooks = {
     patch: [],
     remove: []
   }
-}
-
-// Add archiving feature
-// This is only in dev/preprod mode, in prod this feature is managed by MongoDB Stitch
-if (process.env.NODE_APP_INSTANCE !== 'prod') {
-  hooks.after.all.push(archive)
 }
 
 export default hooks

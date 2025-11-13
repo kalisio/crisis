@@ -15,7 +15,7 @@ const __dirname = dirname(__filename)
 const servicesPath = path.join(__dirname, '..', '..', 'services')
 const modelsPath = path.join(__dirname, '..', '..', 'models')
 
-const debug = makeDebug('kdk:core:organisations:service')
+const debug = makeDebug('organisations:service')
 
 export default async function (name, app, options) {
 
