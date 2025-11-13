@@ -438,6 +438,9 @@ module.exports = {
       }
     }
   },
+  geocoder: {
+    planet: 'kalisio-planet'
+  },
   terms: 'crisis-terms',
   publisher: 'Kalisio',
   publisherWebsite: website,
