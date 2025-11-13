@@ -32,7 +32,7 @@
             id="plan-events"
             icon="las la-fire"
             :label="$t('PlanCard.EVENTS', { count: eventsCount })"
-            :route="{ name: 'events-activity', params: { contextId }, query: { plan: item._id } }"
+            :route="{ name: 'events-activity', params: { contextId: contextId }, query: { plan: item._id } }"
           />
           <q-space />
           <KAction
@@ -40,14 +40,14 @@
             id="plan-map"
             icon="las la-map"
             :tooltip="$t('PlanCard.VIEW_MAP')"
-            :route="{ name: 'map-activity', params: { contextId }, query: { plan: item._id } }"
+            :route="{ name: 'map-activity', params: { contextId: contextId }, query: { plan: item._id } }"
           />
           <KAction
             v-if="canAccessArchivedEvents"
             id="plan-archived-events"
             icon= "las la-clipboard-list"
             :tooltip="$t('PlanCard.VIEW_ARCHIVED_EVENTS')"
-            :route="{ name: 'archived-events-activity', params: { contextId }, query: { plan: item._id } }"
+            :route="{ name: 'archived-events-activity', params: { contextId: contextId }, query: { plan: item._id } }"
           />
         </div>
       </KCardSection>
@@ -59,10 +59,14 @@
 import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import ChipsPane from './ChipsPane.vue'
+import { useOrganisations } from '../composables'
 
 export default {
   name: 'plan-card',
   mixins: [kCoreMixins.baseItem],
+  components: {
+    ChipsPane
+  },
   computed: {
     header () {
       const components = _.filter(this.itemActions, { scope: 'header' })
@@ -88,6 +92,10 @@ export default {
     },
     canAccessArchivedEvents () {
       return this.$can('read', 'archived-events', this.contextId)
+    },
+    contextId () {
+      const { CurrentOrganisation } = useOrganisations()
+      return CurrentOrganisation.value._id
     }
   },
   data () {

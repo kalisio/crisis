@@ -69,6 +69,9 @@ import ChipsPane from './ChipsPane.vue'
 export default {
   name: 'archived-plan-card',
   mixins: [kdkCoreMixins.baseItem],
+  components: {
+    ChipsPane
+  },
   props: {
     dense: {
       type: Boolean,

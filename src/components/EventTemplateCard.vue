@@ -75,10 +75,14 @@ import _ from 'lodash'
 import { Dialog } from 'quasar'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import ChipsPane from './ChipsPane.vue'
+import { useOrganisations } from '../composables'
 
 export default {
   name: 'event-template-card',
   mixins: [kCoreMixins.baseItem],
+  components: {
+    ChipsPane
+  },
   computed: {
     participantsActions () {
       return _.filter(this.itemActions, { scope: 'participants' })
@@ -109,6 +113,10 @@ export default {
     },
     hasWorkflow () {
       return !_.isEmpty(this.item.workflow)
+    },
+    contextId () {
+      const { CurrentOrganisation } = useOrganisations()
+      return CurrentOrganisation.value._id
     }
   },
   data () {

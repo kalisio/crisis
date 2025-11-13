@@ -25,7 +25,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import { Store, mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 import { utils as kdkMapUtils } from '@kalisio/kdk/map.client.map'
-import { usePlan } from '../composables'
+import { useOrganisations, usePlan } from '../composables'
 import config from 'config'
 
 export default {
@@ -77,6 +77,10 @@ export default {
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
         { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
       ]
+    },
+    contextId () {
+      const { CurrentOrganisation } = useOrganisations()
+      return CurrentOrganisation.value._id
     }
   },
   methods: {

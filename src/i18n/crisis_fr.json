@@ -552,6 +552,7 @@
   },
   "EventCard": {
     "DESCRIPTION_SECTION": "Description",
+    "NO_DESRIPTION_LABEL": "Aucune description",
     "COMMENT_SECTION": "Commentaire",
     "PLAN_SECTION": "Plan",
     "PLAN_ACTION": "Voir le plan",

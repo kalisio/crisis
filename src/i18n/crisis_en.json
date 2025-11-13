@@ -545,6 +545,7 @@
   },
   "EventCard": {
     "DESCRIPTION_SECTION": "Description",
+    "NO_DESRIPTION_LABEL": "No description",
     "COMMENT_SECTION": "Comment",
     "PLAN_SECTION": "Plan",
     "PLAN_ACTION": "View plan",

@@ -26,7 +26,6 @@
         :context="$props">
         <div v-if="hasCoordinators">
           <ChipsPane
-
             :chips="item.coordinators"
             :value-path="['profile.name', 'value', 'name']" />
         </div>
@@ -53,6 +52,9 @@ import ChipsPane from './ChipsPane.vue'
 export default {
   name: 'plan-template-card',
   mixins: [kCoreMixins.baseItem],
+  components: {
+    ChipsPane
+  },
   computed: {
     objectivesActions () {
       return _.filter(this.itemActions, { scope: 'objectives' })

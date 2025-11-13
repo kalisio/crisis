@@ -88,9 +88,13 @@ import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.cl
 import { getRoleForOrganisation, getRoleForGroup, findGroupsWithRole } from '../../../common/permissions'
 import { Roles } from '@kalisio/kdk/core/common/permissions'
 import ChipsPane from '../ChipsPane.vue'
+import { useOrganisations } from '../../composables'
 
 export default {
   mixins: [kCoreMixins.baseItem],
+  components: {
+    ChipsPane
+  },
   computed: {
     header () {
       const components = _.filter(this.itemActions, { scope: 'header' })
@@ -141,6 +145,10 @@ export default {
     },
     dense () {
       return this.$q.screen.lt.sm
+    },
+    contextId () {
+      const { CurrentOrganisation } = useOrganisations()
+      return CurrentOrganisation.value._id
     }
   },
   methods: {

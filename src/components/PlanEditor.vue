@@ -16,6 +16,7 @@
 
 <script>
 import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
+import { useOrganisations } from '../composables'
 
 export default {
   mixins: [
@@ -37,6 +38,10 @@ export default {
         { id: 'close-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
         { id: 'apply-button', label: this.applyButton, renderer: 'form-button', handler: () => this.apply() }
       ]
+    },
+    contextId () {
+      const { CurrentOrganisation } = useOrganisations()
+      return CurrentOrganisation.value._id
     }
   },
   methods: {
