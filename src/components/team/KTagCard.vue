@@ -1,5 +1,5 @@
 <template>
-  <KCard
+  <Card
     v-bind="$props"
     :actions="itemActions"
     :bind-actions="false"
@@ -20,16 +20,20 @@
         />
       </KCardSection>
     </template>
-  </KCard>
+  </Card>
 </template>
 
 <script>
 import { countMembersWithTag } from '../../../common/permissions'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import Card from '../Card.vue'
 
 export default {
   name: 'k-tag-card',
   mixins: [kCoreMixins.baseItem],
+  components: {
+    Card
+  },
   data () {
     return {
       membersCount: 0

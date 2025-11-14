@@ -1,5 +1,5 @@
 <template>
-  <KCard
+  <Card
     v-bind="$props"
     :header="header"
     :actions="itemActions"
@@ -20,7 +20,7 @@
         />
       </KCardSection>
     </template>
-  </KCard>
+  </Card>
 </template>
 
 <script>
@@ -28,9 +28,14 @@ import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { findMembersOfGroup, getRoleForGroup, getRoleForOrganisation } from '../../../common/permissions'
 import { Roles, RoleNames } from '@kalisio/kdk/core/common/permissions.js'
+import Card from '../Card.vue'
+
 export default {
   name: 'k-group-card',
   mixins: [kCoreMixins.baseItem],
+  components: {
+    Card
+  },
   data () {
     return {
       membersCount: 0,

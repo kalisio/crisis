@@ -1,5 +1,5 @@
 <template>
-  <KCard
+  <Card
     v-bind="$props"
     :header="header"
     :actions="itemActions"
@@ -78,7 +78,7 @@
         </div>
       </KCardSection>
     </template>
-  </KCard>
+  </Card>
 </template>
 
 <script>
@@ -89,11 +89,13 @@ import { getRoleForOrganisation, getRoleForGroup, findGroupsWithRole } from '../
 import { Roles } from '@kalisio/kdk/core/common/permissions'
 import ChipsPane from '../ChipsPane.vue'
 import { useOrganisations } from '../../composables'
+import Card from '../Card.vue'
 
 export default {
   mixins: [kCoreMixins.baseItem],
   components: {
-    ChipsPane
+    ChipsPane,
+    Card
   },
   computed: {
     header () {

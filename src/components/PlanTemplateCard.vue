@@ -1,5 +1,5 @@
 <template>
-  <KCard
+  <Card
     v-bind="$props"
     :actions="itemActions"
     :bind-actions="false">
@@ -41,19 +41,21 @@
         <q-chip :label="permission" outline square dense color="grey-10" />
       </KCardSection>
     </template>
-  </KCard>
+  </Card>
 </template>
 
 <script>
 import _ from 'lodash'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import ChipsPane from './ChipsPane.vue'
+import Card from './Card.vue'
 
 export default {
   name: 'plan-template-card',
   mixins: [kCoreMixins.baseItem],
   components: {
-    ChipsPane
+    ChipsPane,
+    Card
   },
   computed: {
     objectivesActions () {

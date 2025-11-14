@@ -1,5 +1,5 @@
 <template>
-  <KCard
+  <Card
     v-bind="$props"
     :header="header"
     :actions="itemActions"
@@ -96,7 +96,7 @@
         </KCardSection>
       </div>
     </template>
-  </KCard>
+  </Card>
 </template>
 
 <script>
@@ -106,10 +106,14 @@ import { permissions as corePermissions } from '@kalisio/kdk/core.common'
 import * as permissions from '../../common/permissions.mjs'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import * as utils from '../utils'
+import Card from './Card.vue'
 
 export default {
   name: 'organisation-card',
   mixins: [kCoreMixins.baseItem],
+  components: {
+    Card
+  },
   data () {
     return {
       isExpanded: false,

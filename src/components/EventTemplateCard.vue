@@ -1,5 +1,5 @@
 <template>
-  <KCard
+  <Card
     v-bind="$props"
     :actions="itemActions"
     :bind-actions="false">
@@ -67,7 +67,7 @@
         </div>
       </KCardSection>
     </template>
-  </KCard>
+  </Card>
 </template>
 
 <script>
@@ -76,12 +76,14 @@ import { Dialog } from 'quasar'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import ChipsPane from './ChipsPane.vue'
 import { useOrganisations } from '../composables'
+import Card from './Card.vue'
 
 export default {
   name: 'event-template-card',
   mixins: [kCoreMixins.baseItem],
   components: {
-    ChipsPane
+    ChipsPane,
+    Card
   },
   computed: {
     participantsActions () {
