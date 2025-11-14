@@ -14,6 +14,7 @@ import { Planets } from '@kalisio/kdk/map.client.map'
 // Data
 const context = Context.get()
 const baseUrl = Planets.get('kalisio-planet').getConfig().domain
+const planetJwt = Planets.get('kalisio-planet').getConfig().apiJwt
 const origin = ref(`${baseUrl}/#/home/${context._id}/map`)
 
 postRobot.on('kano-ready', async () => {
@@ -24,7 +25,7 @@ postRobot.on('kano-ready', async () => {
     'layout.panes.left.opener': false
   })
   // Authenticate automatically
-  const accessToken = await api.get('storage').getItem(config.planetJwt)
+  const accessToken = await api.get('storage').getItem(planetJwt)
   await postRobot.send(kano, 'setLocalStorage', {
     'kano-jwt': accessToken
   })
