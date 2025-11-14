@@ -550,9 +550,13 @@
     "DOING_LABEL": "En cours",
     "DONE_LABEL": "Cloturés"
   },
-  "EventCard": {
+  "Card": {
     "DESCRIPTION_SECTION": "Description",
-    "NO_DESRIPTION_LABEL": "Aucune description",
+    "NO_DESCRIPTION_LABEL": "Aucune description",
+    "MORE_ACTION": "Plus de détails",
+    "LESS_ACTION": "Moins de détails"    
+  },
+  "EventCard": {
     "COMMENT_SECTION": "Commentaire",
     "PLAN_SECTION": "Plan",
     "PLAN_ACTION": "Voir le plan",

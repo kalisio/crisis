@@ -151,7 +151,7 @@ export default {
       return this.$can('service', 'archived-events', this.organisation._id)
     },
     canManageOrganisation () {
-      return this.$can('update', 'organisations', null, this.organisation)
+      return this.$can('update', 'organisations', 'global', this.organisation)
     }
   },
   methods: {

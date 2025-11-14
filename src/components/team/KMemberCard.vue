@@ -271,7 +271,7 @@ export default {
       const userRole = getRoleForOrganisation(user, this.contextId)
       if (Roles[userRole] >= Roles.manager) return true
       // Group managers can manage members of their own groups
-      else return this.$can('create', 'authorisations', null, { resource: group._id, permissions: 'member' })
+      else return this.$can('create', 'authorisations', 'global', { resource: group._id, permissions: 'member' })
     },
     canLeaveGroup (group) {
       const user = this.$store.get('user')
@@ -279,7 +279,7 @@ export default {
       const role = getRoleForOrganisation(user, this.contextId)
       if (Roles[role] >= Roles.manager) return true
       // Group managers can manage members of their own groups
-      else return this.$can('remove', 'authorisations', null, { resource: group._id, permissions: 'member' })
+      else return this.$can('remove', 'authorisations', 'global', { resource: group._id, permissions: 'member' })
     },
     onChangeRoleInGroup (group) {
       this.$router.push({

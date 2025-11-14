@@ -543,9 +543,13 @@
     "DOING_LABEL": "Doing",
     "DONE_LABEL": "Done"
   },
-  "EventCard": {
+  "Card": {
     "DESCRIPTION_SECTION": "Description",
-    "NO_DESRIPTION_LABEL": "No description",
+    "NO_DESCRIPTION_LABEL": "No description",
+    "MORE_ACTION": "More details",
+    "LESS_ACTION": "Less details"
+  },
+  "EventCard": {
     "COMMENT_SECTION": "Comment",
     "PLAN_SECTION": "Plan",
     "PLAN_ACTION": "View plan",

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <k-card
+    <Card
       v-bind="$props"
       :header="header"
       :actions="itemActions"
@@ -9,26 +9,6 @@
       :expandable="true"
       @expanded="isExpanded = true"
       @collapsed="isExpanded = false">
-      <template v-slot:card-description>
-        <!-- Description -->
-        <KCardSection
-          :title="$t('KCard.DESCRIPTION_SECTION')"
-          :actions="descriptionActions"
-          :hideHeader="!isExpanded"
-          :dense="dense"
-        >
-          <div v-if="hasDescription">
-            <div class="q-pa-sm event-card-description"
-              v-bind:class="{ 'event-card-description-zoomed': zoomedDescription === true }"
-              @click="zoomedDescription =! zoomedDescription">
-              <k-text-area :text="item.description" :length="150" />
-            </div>
-          </div>
-          <div v-else>
-            {{ $t('KCard.NO_DESCRIPTION_LABEL')}}
-          </div>
-        </KCardSection>
-      </template>
       <!--
         Card content
        -->
@@ -135,7 +115,7 @@
           </div>
         </KCardSection>
       </template>
-    </k-card>
+    </Card>
     <!--
       Follow up modal
     -->
@@ -169,13 +149,15 @@ import { useAlerts, useOrganisations } from '../composables'
 import mixins from '../mixins'
 import ChipsPane from './ChipsPane.vue'
 import MediaBrowser from './MediaBrowser.vue'
+import Card from './Card.vue'
 
 export default {
   name: 'event-card',
   components: {
     EventLogsList: kCoreUtils.loadComponent('EventLogsList'),
     ChipsPane,
-    MediaBrowser
+    MediaBrowser,
+    Card
   },
   mixins: [
     kCoreMixins.baseItem,
