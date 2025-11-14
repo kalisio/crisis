@@ -48,7 +48,7 @@
         <!-- Location section -->
         <KLocationCardSection
           v-if="isExpanded"
-          :location="item.location"
+          :item="item"
           :actions="locationActions"
           :context="$props"
           :dense="dense"

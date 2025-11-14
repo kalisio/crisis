@@ -240,7 +240,7 @@ export function defineGroupAbilities (subject, can, cannot) {
 
 // Helper functions to find the members of a given group
 export function findMembersOfGroup (membersService, groupId, role) {
-  return findSubjectsForResource(membersService, 'groups', groupId, role)
+  return permissions.findSubjectsForResource(membersService, 'groups', groupId, role)
 }
 
 export function countMembersWithTag (membersService, tagId) {

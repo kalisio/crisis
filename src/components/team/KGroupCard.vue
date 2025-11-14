@@ -29,6 +29,7 @@ import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import { findMembersOfGroup, getRoleForGroup, getRoleForOrganisation } from '../../../common/permissions'
 import { Roles, RoleNames } from '@kalisio/kdk/core/common/permissions.js'
 import Card from '../Card.vue'
+import { useOrganisations } from '../../composables'
 
 export default {
   name: 'k-group-card',
@@ -64,6 +65,10 @@ export default {
     },
     dense () {
       return this.$q.screen.lt.sm
+    },
+    contextId () {
+      const { CurrentOrganisation } = useOrganisations()
+      return CurrentOrganisation.value._id
     }
   },
   methods: {
