@@ -913,6 +913,13 @@
     "MEMBERS_LABEL": "{count} membre(s)",
     "VIEW_MEMBERS_LABEL": "Voir les membres"
   },
+  "KMemberFilter": {
+    "NONE": "Aucun",
+    "OWNER": "Propriétaire",
+    "MANAGER": "Gestionnaire",
+    "MEMBER": "Membre",
+    "GUEST": "Invité"
+  },
   "PasswordManager": {
     "TITLE": "Modifier mon mot de passe",
     "PASSWORD_CHANGED": "Votre mot de passe a été modifié avec succès",

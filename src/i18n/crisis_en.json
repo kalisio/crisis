@@ -905,6 +905,13 @@
     "MEMBERS_LABEL": "{count} member(s)",
     "VIEW_MEMBERS_LABEL": "View members"
   },
+  "KMemberFilter": {
+    "NONE": "None",
+    "OWNER": "Owner",
+    "MANAGER": "Manager",
+    "MEMBER": "Member",
+    "GUEST": "Guest"
+  },
   "PasswordManager": {
     "TITLE": "Change my password",
     "PASSWORD_CHANGED": "Your password has been successfully changed",
