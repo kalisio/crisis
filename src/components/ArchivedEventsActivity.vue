@@ -76,11 +76,14 @@
 import _ from 'lodash'
 import moment from 'moment'
 import L from 'leaflet'
+import config from 'config'
+import logger from 'loglevel'
 import Papa from 'papaparse'
 import chroma from 'chroma-js'
+import { ref, toRef, computed } from 'vue'
 import { colors, QSlider } from 'quasar'
-import { mixins as kdkCoreMixins, utils as kdkCoreUtils, Time, Exporter } from '@kalisio/kdk/core.client'
-import { mixins as kdkMapMixins } from '@kalisio/kdk/map.client.map'
+import { mixins as kdkCoreMixins, composables as kCoreComposables, utils as kdkCoreUtils, Store, Time, Exporter } from '@kalisio/kdk/core.client'
+import { Planets, mixins as kdkMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 
 const activityMixin = kdkCoreMixins.baseActivity('archivedEventsActivity')
@@ -90,17 +93,17 @@ const MAX_EVENTS = 5000
 
 export default {
   mixins: [
-    activityMixin,
-    kdkMapMixins.activity,
-    kdkMapMixins.style,
-    kdkMapMixins.context,
     kdkMapMixins.map.baseMap,
     kdkMapMixins.map.geojsonLayers,
     kdkMapMixins.map.heatmapLayers,
     kdkMapMixins.map.style,
     kdkMapMixins.map.tooltip,
     kdkMapMixins.map.popup,
-    kdkMapMixins.map.activity
+    kdkMapMixins.map.activity,
+    activityMixin,
+    kdkMapMixins.activity,
+    kdkMapMixins.style,
+    kdkMapMixins.context
   ],
   components: {
     QSlider
@@ -115,6 +118,51 @@ export default {
     contextId: {
       type: String,
       default: ''
+    }
+  },
+  data () {
+    const availableChartTypes = ['pie', 'polarArea', 'radar', 'bar'].map(
+      type => ({ value: type, label: this.$i18n.t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`) }))
+    const paginationOptions = [{
+      value: 0, label: this.$i18n.t('ArchivedEventsActivity.ALL_VALUES')
+    }, {
+      value: 5, label: '5'
+    }, {
+      value: 10, label: '10'
+    }, {
+      value: 20, label: '20'
+    }]
+    const renderOptions = [{
+      value: 'count', label: this.$i18n.t('ArchivedEventsActivity.COUNT_LABEL')
+    }, {
+      value: 'percentage', label: this.$i18n.t('ArchivedEventsActivity.PERCENTAGE_LABEL')
+    }, {
+      value: 'participants', label: this.$i18n.t('ArchivedEventsActivity.PARTICIPANT_COUNT_LABEL')
+    }]
+
+    return {
+      filters: [],
+      heatmap: false,
+      byTemplate: false,
+      heatmapRadius: 1,
+      // TODO
+      sortBy: {
+        label: this.$i18n.t('ArchivedEventsActivity.SORT_BY_CREATED_DATE_LABEL'),
+        value: 'createdAt'
+      },
+      availableChartTypes,
+      selectedChartType: _.find(availableChartTypes, { value: 'pie' }),
+      chartType: null,
+      chartLabels: [],
+      chartDatasets: [],
+      chartOptions: {},
+      chartData: [],
+      currentChart: 1,
+      nbValuesPerChart: _.find(paginationOptions, { value: 10 }),
+      paginationOptions,
+      renderOptions,
+      render: _.find(renderOptions, { value: 'count' }),
+      height: undefined
     }
   },
   computed: {
@@ -142,68 +190,15 @@ export default {
         dense: this.$q.screen.lt.sm
       }, this.activityOptions.items)
     },
-    baseQuery () {
-      const query = { $sort: { createdAt: -1 } }
-      // When displaying events of all plans we'd like to have the plan object directly to ease processing
-      if (!this.planId && this.showHistory) Object.assign(query, { planAsObject: true })
-      Object.assign(query, this.planQuery)
-      const stateFilters = _.intersection(['open', 'closed'], this.filters)
-      // Filtering open + closed or none of them is equivalent to no filter
-      if (stateFilters.length === 1) {
-        Object.assign(query, { deletedAt: { $exists: stateFilters.includes('closed') } })
-      }
-      return query
-    },
-    filterQuery () {
-      const query = _.clone(this.filter.query)
-      Object.assign(query, this.planObjectiveQuery)
-      return query
-    }
+    // FIXME: Need to add this computed in order to be able to watch
+    // Should be fixed when component will be migrated to composition API
+    archivedEventItems () { return this.archivedEvents.items.value }
   },
-  data () {
-    const availableChartTypes = ['pie', 'polarArea', 'radar', 'bar'].map(
-      type => ({ value: type, label: this.$i18n.t(`ArchivedEventsActivity.CHART_LABEL_${type.toUpperCase()}`) }))
-    const paginationOptions = [{
-      value: 0, label: this.$i18n.t('ArchivedEventsActivity.ALL_VALUES')
-    }, {
-      value: 5, label: '5'
-    }, {
-      value: 10, label: '10'
-    }, {
-      value: 20, label: '20'
-    }]
-    const renderOptions = [{
-      value: 'count', label: this.$i18n.t('ArchivedEventsActivity.COUNT_LABEL')
-    }, {
-      value: 'percentage', label: this.$i18n.t('ArchivedEventsActivity.PERCENTAGE_LABEL')
-    }, {
-      value: 'participants', label: this.$i18n.t('ArchivedEventsActivity.PARTICIPANT_COUNT_LABEL')
-    }]
-
-    return {
-      filter: this.$store.get('filter'),
-      filters: [],
-      heatmap: false,
-      byTemplate: false,
-      heatmapRadius: 1,
-      // TODO
-      sortBy: {
-        label: this.$i18n.t('ArchivedEventsActivity.SORT_BY_CREATED_DATE_LABEL'),
-        value: 'createdAt'
-      },
-      availableChartTypes,
-      selectedChartType: _.find(availableChartTypes, { value: 'pie' }),
-      chartType: null,
-      chartLabels: [],
-      chartDatasets: [],
-      chartOptions: {},
-      chartData: [],
-      currentChart: 1,
-      nbValuesPerChart: _.find(paginationOptions, { value: 10 }),
-      paginationOptions,
-      renderOptions,
-      render: _.find(renderOptions, { value: 'count' }),
-      height: undefined
+  watch: {
+    archivedEventItems: {
+      handler () {
+        this.onArchivedEventsCollectionRefreshed()
+      }
     }
   },
   methods: {
@@ -244,31 +239,6 @@ export default {
         // The higher the blur factor is, the smoother the gradients will be
         blur: 0.8
       }
-    },
-    getService () {
-      return this.$api.getService('archived-events')
-    },
-    loadLogsService () {
-      return this.$api.getService('archived-event-logs')
-    },
-    getCollectionBaseQuery () {
-      // No pagination in this case (map) and filter required data
-      return Object.assign({
-        geoJson: true,
-        $skip: 0,
-        $limit: MAX_EVENTS,
-        $select: ['_id', 'name', 'description', 'icon', 'template', 'location',
-          'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
-      }, this.baseQuery)
-    },
-    getCollectionFilterQuery () {
-      const query = _.clone(this.filterQuery)
-      Object.assign(query, _.clone(Time.getRangeQuery()))
-      return query
-    },
-    getCollectionPaginationQuery () {
-      // No pagination on map items
-      return {}
     },
     async refreshEventsLayers () {
       await this.clearEventsLayers()
@@ -362,7 +332,7 @@ export default {
       const date = new Date(_.get(feature, 'createdAt'))
       return tooltip.setContent('<b>' + name + '</b> - ' + this.formatDate(date))
     },
-    onCollectionRefreshed () {
+    onArchivedEventsCollectionRefreshed () {
       if (this.nbTotalItems > MAX_EVENTS) {
         this.$q.dialog({
           title: this.$t('ArchivedEventsActivity.MATCHING_RESULTS', { total: this.nbTotalItems }),
@@ -428,7 +398,7 @@ export default {
       // Then count events or participants for each value
       let data
       if (this.render.value === 'participants') {
-        const response = await this.loadLogsService()
+        const response = await this.$api.getService('archived-event-logs')
           .find({
             query: Object.assign({ $aggregate: 'template', lastInEvent: true },
               this.baseQuery, { createdAt: { $gte: Time.getRange().start.format(), $lte: Time.getRange().end.format() } })
@@ -622,7 +592,8 @@ export default {
     }
   },
   async created () {
-    // Resgister map styles
+    this.setCurrentActivity(this)
+    // Register map styles
     this.registerStyle('tooltip', this.getEventTooltip)
     this.registerStyle('popup', this.getEventPopup)
     this.registerStyle('point', this.getEventMarker)
@@ -647,9 +618,62 @@ export default {
     // Releases listeners
     this.$events.off('time-range-changed', this.onTimeRangeChanged)
   },
-  setup (props) {
+  async setup (props) {
+    // Initialize state
+    const activity = kMapComposables.useActivity(name, {
+      state: {}
+    })
+    const plan = usePlan({ contextId: props.contextId })
+    const baseQuery = computed(() => {
+      const query = { $sort: { createdAt: -1 } }
+      // When displaying events of all plans we'd like to have the plan object directly to ease processing
+      //if (!plan.planId.value && showHistory.value) Object.assign(query, { planAsObject: true })
+      Object.assign(query, plan.planQuery.value)
+      /*
+      const stateFilters = _.intersection(['open', 'closed'], this.filters)
+      // Filtering open + closed or none of them is equivalent to no filter
+      if (stateFilters.length === 1) {
+        Object.assign(query, { deletedAt: { $exists: stateFilters.includes('closed') } })
+      }
+      */
+      return Object.assign({
+        geoJson: true,
+        $skip: 0,
+        $limit: MAX_EVENTS,
+        $select: ['_id', 'name', 'description', 'icon', 'template', 'location',
+          'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
+      }, query)
+    })
+    const filterQuery = computed(() => Object.assign({}, Store.get('filter'), Time.getRangeQuery(), plan.planObjectiveQuery.value))
+    const archivedEvents = kCoreComposables.useCollection({
+      service: ref('archived-events'),
+      contextId: toRef(props, 'contextId'),
+      baseQuery,
+      filterQuery,
+      nbItemsPerPage: ref(0)
+    })
+    // Initialize project
+    const { project, loadProject } = kMapComposables.useProject({ route: false, planetApi: Planets.get('kalisio-planet') })
+    // Select the right project, to be done after some composables like useActivity because await setup and no lifecycle hooks should be registered after
+    const projectQuery = _.get(config, 'planets.kalisio-planet.project.default')
+    await loadProject(projectQuery)
+    logger.info('[CRISIS] Kalisio Planet project loaded')
+    // Use planet catalog
+    const { getCategories, getLayers, getSublegends } = kMapComposables.useCatalog({ project: project.value, planetApi: Planets.get('kalisio-planet') })
+    
     return {
-      ...usePlan({ contextId: props.contextId })
+      ..._.omit(activity, 'CurrentActivityContext'),
+      ...activity.CurrentActivityContext,
+      ...kMapComposables.useWeather(name),
+      getLayers,
+      getCategories,
+      getSublegends,
+      // We need to flag which API to be used to retrieve forecast models
+      getWeacastApi: () => Planets.get('kalisio-planet'),
+      ...plan,
+      baseQuery,
+      filterQuery,
+      archivedEvents
     }
   }
 }

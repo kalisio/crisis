@@ -1,5 +1,5 @@
 <template>
-  <KPage :padding="false">
+  <KPage>
     <!-- Map -->
     <div :ref="configureMap" :style="viewStyle">
       <q-resize-observer @resize="onMapResized" />
@@ -11,11 +11,15 @@
 
 <script>
 import _ from 'lodash'
+import config from 'config'
+import logger from 'loglevel'
 import L from 'leaflet'
 import chroma from 'chroma-js'
 import centroid from '@turf/centroid'
-import { mixins as kCoreMixins, utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import { mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
+import { ref, toRef } from 'vue'
+import { useRoute } from 'vue-router'
+import { mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils } from '@kalisio/kdk/core.client'
+import { Planets, mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 import mixins from '../mixins'
 import MediaBrowser from './MediaBrowser.vue'
@@ -30,10 +34,12 @@ export default {
       kMap: this
     }
   },
+  components: {
+    MediaBrowser
+  },
   mixins: [
     kMapMixins.map.baseMap,
     kMapMixins.map.geojsonLayers,
-    kMapMixins.map.forecastLayers,
     kMapMixins.map.fileLayers,
     kMapMixins.map.editLayers,
     kMapMixins.map.style,
@@ -69,6 +75,18 @@ export default {
       participants: []
     }
   },
+  computed: {
+    // FIXME: Need to add this computed in order to be able to watch
+    // Should be fixed when component will be migrated to composition API
+    eventLogsItems () { return this.eventLogs.items.value }
+  },
+  watch: {
+    eventLogsItems: {
+      handler () {
+        this.onEventLogsCollectionRefreshed()
+      }
+    }
+  },
   methods: {
     async configureMap (container) {
       // Avoid reentrance during awaited operations
@@ -77,20 +95,7 @@ export default {
       // Wait until map is ready
       await this.initializeMap(container)
     },
-    getService () {
-      // Archived mode ?
-      return this.$api.getService(this.archived ? 'archived-event-logs' : 'event-logs')
-    },
-    getCollectionBaseQuery () {
-      return { lastInEvent: true, event: this.objectId, $sort: { createdAt: -1 } }
-    },
-    getCollectionPaginationQuery () {
-      // No pagination on map items
-      return {}
-    },
     async configureActivity () {
-      // Archived mode ?
-      this.archived = _.get(this.$route, 'query.archived')
       this.event = await this.$api.getService(this.archived ? 'archived-events' : 'events', this.contextId).get(this.objectId)
       await this.loadAttachments()
       this.refreshUser()
@@ -127,8 +132,20 @@ export default {
       }
       // Add participants layer if coordinator or archived mode as managers can see all
       if (this.isCoordinator || this.archived) {
-        this.refreshCollection()
+        this.eventLogs.refreshCollection()
       }
+    },
+    async getCatalogLayers () {
+      const planetLayers = await this.getLayers()
+      return planetLayers
+    },
+    async getCatalogCategories () {
+      const planetCategories = await this.getCategories()
+      return planetCategories
+    },
+    async getCatalogSublegends () {
+      const planetSublegends = await this.getSublegends()
+      return planetSublegends
     },
     browseMedia () {
       this.$refs.mediaBrowser.show(this.attachments)
@@ -169,7 +186,7 @@ export default {
         })
       }
       this.participants.splice(0, this.participants.length)
-      _.filter(this.items, (item) => this.filterItem(item)).forEach(item => this.participants.push(item))
+      _.filter(this.processedEventLogs, (log) => this.filterItem(log)).forEach(log => this.participants.push(log))
       this.updateLayer(this.$t('EventActivity.PARTICIPANTS_LAYER_NAME'), { type: 'FeatureCollection', features: this.participants })
     },
     getParticipantMarker (feature, options) {
@@ -260,17 +277,17 @@ export default {
       }
       this.refreshParticipantsLayer()
     },
-    onCollectionRefreshed () {
+    onEventLogsCollectionRefreshed () {
       // Process logs to make it usable as a more conveient object by adding icon, etc.
       // It will also avoid any doublon in case of data duplication
-      const count = this.items.length
-      this.items = this.processStates(this.items)
+      let count = this.eventLogsItems.length
+      this.processedEventLogs = this.processStates(this.eventLogsItems)
       // Update total count accordingly
-      if (count > this.items.length) {
-        this.nbTotalItems -= (count - this.items.length)
+      if (count > this.processedEventLogs.length) {
+        this.eventLogs.nbTotalItems -= (count - this.processedEventLogs.length)
       }
       // We do not manage pagination now
-      if (this.items.length < this.nbTotalItems) {
+      if (this.eventLogsItems.length < this.eventLogs.nbTotalItems) {
         this.$events.emit('error', new Error(this.$t('errors.EVENT_LOG_LIMIT')))
       }
       this.refreshParticipantsLayer()
@@ -283,14 +300,12 @@ export default {
       this.$router.push(route)
     }
   },
-  async created () {
+  created () {
     this.setCurrentActivity(this)
     // Load the required components
     this.registerStyle('tooltip', this.getParticipantTooltip)
     this.registerStyle('popup', this.getParticipantPopup)
     this.registerStyle('point', this.getParticipantMarker)
-    // Archived mode ?
-    this.archived = _.get(this.$route, 'query.archived')
   },
   mounted () {
     // Setup event connections
@@ -308,10 +323,43 @@ export default {
     this.$events.off('zoom-to-participant', this.onZoomToParticipant)
     this.$events.off('filter-participant-states', this.onFilterParticipantStates)
   },
-  setup (props) {
+  async setup (props) {
+    // Initialize state
+    const activity = kMapComposables.useActivity(name, {
+      state: {}
+    })
+    const plan = usePlan({ contextId: props.contextId })
+    // Archived mode ?
+    const route = useRoute()
+    const archived = _.get(route, 'query.archived')
+    const eventLogs = kCoreComposables.useCollection({
+      service: ref(archived ? 'archived-event-logs' : 'event-logs'),
+      contextId: toRef(props, 'contextId'),
+      baseQuery: ref({ lastInEvent: true, event: props.objectId, $sort: { createdAt: -1 } }),
+      filterQuery: ref({}),
+      nbItemsPerPage: ref(0)
+    })
+    // Initialize project
+    const { project, loadProject } = kMapComposables.useProject({ route: false, planetApi: Planets.get('kalisio-planet') })
+    // Select the right project, to be done after some composables like useActivity because await setup and no lifecycle hooks should be registered after
+    const projectQuery = _.get(config, 'planets.kalisio-planet.project.default')
+    await loadProject(projectQuery)
+    logger.info('[CRISIS] Kalisio Planet project loaded')
+    // Use planet catalog
+    const { getCategories, getLayers, getSublegends } = kMapComposables.useCatalog({ project: project.value, planetApi: Planets.get('kalisio-planet') })
+    
     return {
-      ...kMapComposables.useActivity(name),
-      ...usePlan({ contextId: props.contextId })
+      ..._.omit(activity, 'CurrentActivityContext'),
+      ...activity.CurrentActivityContext,
+      ...kMapComposables.useWeather(name),
+      getLayers,
+      getCategories,
+      getSublegends,
+      // We need to flag which API to be used to retrieve forecast models
+      getWeacastApi: () => Planets.get('kalisio-planet'),
+      archived,
+      eventLogs,
+      ...plan
     }
   }
 }

@@ -360,53 +360,7 @@ const layerActions = [{
   actionRenderer: 'item',
   propagate: false,
   content: [
-    { id: 'zoom-to-layer', label: 'mixins.activity.ZOOM_TO_LABEL', icon: 'las la-search-location', handler: 'onZoomToLayer', visible: ':isVisible' },
-    { id: 'save-layer', label: 'mixins.activity.SAVE_LABEL', icon: 'las la-save', handler: 'onSaveLayer', visible: 'isLayerStorable' },
-    {
-      id: 'filter-layer-data',
-      label: 'mixins.activity.FILTER_DATA_LABEL',
-      icon: 'las la-filter',
-      visible: ['isFeatureLayer', 'hasFeatureSchema'],
-      route: { name: 'map-layer-filter', params: { contextId: ':contextId', layerId: ':_id', layerName: ':name' } }
-    },
-    {
-      id: 'view-layer-data',
-      label: 'mixins.activity.VIEW_DATA_LABEL',
-      icon: 'las la-th-list',
-      visible: ['isFeatureLayer', 'hasFeatureSchema'],
-      route: { name: 'map-layer-table', params: { contextId: ':contextId', layerId: ':_id', layerName: ':name' } }
-    },
-    {
-      id: 'chart-layer-data',
-      label: 'mixins.activity.CHART_DATA_LABEL',
-      icon: 'las la-chart-pie',
-      visible: ['isFeatureLayer', 'hasFeatureSchema'],
-      route: { name: 'map-layer-chart', params: { contextId: ':contextId', layerId: ':_id', layerName: ':name' } }
-    },
-    {
-      id: 'edit-layer',
-      label: 'mixins.activity.EDIT_LABEL',
-      icon: 'las la-file-alt',
-      visible: 'isLayerEditable',
-      route: { name: 'edit-map-layer', params: { contextId: ':contextId', layerId: ':_id', layerName: ':name' } }
-    },
-    {
-      id: 'edit-layer-style',
-      label: 'mixins.activity.EDIT_LAYER_STYLE_LABEL',
-      icon: 'las la-border-style',
-      visible: 'isLayerStyleEditable',
-      route: { name: 'edit-map-layer-style', params: { contextId: ':contextId', layerId: ':_id', layerName: ':name' } }
-    },
-    {
-      id: 'edit-layer-data',
-      label: 'mixins.activity.START_EDIT_DATA_LABEL',
-      icon: 'las la-edit',
-      handler: 'onEditLayerData',
-      visible: 'isLayerDataEditable',
-      toggle: { icon: 'las la-edit', tooltip: 'mixins.activity.STOP_EDIT_DATA_LABEL' },
-      component: 'KEditLayerData'
-    },
-    { id: 'remove-layer', label: 'mixins.activity.REMOVE_LABEL', icon: 'las la-trash', handler: 'onRemoveLayer', visible: 'isLayerRemovable' }
+    { id: 'zoom-to-layer', label: 'mixins.activity.ZOOM_TO_LABEL', icon: 'las la-search-location', handler: 'onZoomToLayer', visible: ':isVisible' }
   ]
 }]
 
@@ -855,7 +809,6 @@ module.exports = {
     },
     fab: {
       content: [
-        { id: 'create-view', icon: 'las la-star', label: 'mixins.activity.CREATE_VIEW', route: { name: 'create-map-view' } },
         { id: 'add-layer', icon: 'las la-plus', label: 'mixins.activity.ADD_LAYER', route: { name: 'add-map-layer' } },
         { id: 'probe-location', icon: 'las la-eye-dropper', label: 'mixins.activity.PROBE', handler: 'probeAtLocation' }
       ]
@@ -942,8 +895,7 @@ module.exports = {
           chart: []
         },
         mode: 'history',
-        labels: ['HISTORY', 'LAYERS_LABEL', 'VIEWS_LABEL', 'CATALOG_LABEL', 'CHART'],
-        mode: 'history'
+        labels: ['HISTORY', 'LAYERS_LABEL', 'VIEWS_LABEL', 'CATALOG_LABEL', 'CHART']
       }],
       state: 'responsive'
     },
@@ -1286,6 +1238,7 @@ module.exports = {
     }
   },
   eventActivity: {
+    padding: false,
     leftPane: LEFT_PANE,
     topPane: {
       content: {
@@ -1294,23 +1247,7 @@ module.exports = {
           separator,
           topPane.locateUser(),
           topPane.activeLocationSearchMode(),
-          {
-            id: 'tools',
-            component: 'menu/KMenu',
-            icon: 'las la-wrench',
-            tooltip: 'mixins.activity.TOOLS',
-            actionRenderer: 'item',
-            content: [
-              topPane.activeMeasureToolMode(),
-              { id: 'display-position', icon: 'las la-plus', label: 'mixins.activity.DISPLAY_POSITION', handler: { name: 'setTopPaneMode', params: ['display-position'] } },
-              { id: 'display-legend', icon: 'las la-list', label: 'mixins.activity.DISPLAY_LEGEND', handler: { name: 'openWidget', params: ['legend-widget'] } }
-            ]
-          },
-          {
-            ...topPane.toggleFullscreen(),
-            visible: '$q.screen.gt.md'
-          },
-          helpers.verticalSeparator()
+          ...mapTools()
         ],
         'display-position': [
           { id: 'back', icon: 'las la-arrow-left', handler: { name: 'setTopPaneMode', params: ['default'] } },
@@ -1360,9 +1297,9 @@ module.exports = {
               layerCategoriesFilter: { _id: { $exists: false } },
               forecastModels: ':forecastModels'
             }
-          ],
-          mode: 'event-participants'
+          ]
         },
+        mode: 'event-participants',
         labels: ['EventActivityPanel.PARTICIPANTS_LABEL', 'LAYERS_LABEL', 'VIEWS_LABEL', 'CATALOG_LABEL']
       }],
       state: 'responsive'

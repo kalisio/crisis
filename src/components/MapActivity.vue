@@ -611,15 +611,15 @@ export default {
       filterQuery,
       nbItemsPerPage: ref(0)
     })
-    // Use planet catalog
-    const { getCategories, getLayers, getSublegends } = kMapComposables.useCatalog({ planetApi: Planets.get('kalisio-planet') })
     // Initialize project
     const { project, loadProject } = kMapComposables.useProject({ route: false, planetApi: Planets.get('kalisio-planet') })
     // Select the right project, to be done after some composables like useActivity because await setup and no lifecycle hooks should be registered after
     const projectQuery = _.get(config, 'planets.kalisio-planet.project.default')
     await loadProject(projectQuery)
     logger.info('[CRISIS] Kalisio Planet project loaded')
-
+    // Use planet catalog
+    const { getCategories, getLayers, getSublegends } = kMapComposables.useCatalog({ project: project.value, planetApi: Planets.get('kalisio-planet') })
+    
     return {
       ..._.omit(activity, 'CurrentActivityContext'),
       ...activity.CurrentActivityContext,
