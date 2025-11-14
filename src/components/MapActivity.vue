@@ -588,7 +588,7 @@ export default {
   async setup (props) {
     // Initialize state
     const activity = kMapComposables.useActivity(name, {
-      state: {}
+      state: { timeSeries: [] }
     })
     const plan = usePlan({ contextId: props.contextId })
     const alerts = kCoreComposables.useCollection({

@@ -210,9 +210,17 @@ export default {
       await this.initializeMap(container)
     },
     async getCatalogLayers () {
-      const layers = await kdkMapMixins.activity.methods.getCatalogLayers.call(this)
+      const planetLayers = await this.getLayers()
       // We only want base layers
-      return _.filter(layers, { type: 'BaseLayer' })
+      return _.filter(planetLayers, { type: 'BaseLayer' })
+    },
+    async getCatalogCategories () {
+      const planetCategories = await this.getCategories()
+      return planetCategories
+    },
+    async getCatalogSublegends () {
+      const planetSublegends = await this.getSublegends()
+      return planetSublegends
     },
     formatDate (date) {
       return date.toLocaleString(kdkCoreUtils.getLocale(),
@@ -243,10 +251,10 @@ export default {
     async refreshEventsLayers () {
       await this.clearEventsLayers()
       this.templates = (this.byTemplate
-        ? _.uniq(this.items.map(item => item.template))
+        ? _.uniq(this.archivedEventItems.map(item => item.template))
         : [this.$t('ArchivedEventsActivity.EVENTS_LAYER_NAME')])
       // Filter events without a location
-      const events = _.filter(this.items, item => _.get(item, 'geometry'))
+      const events = _.filter(this.archivedEventItems, item => _.get(item, 'geometry'))
       for (let i = 0; i < this.templates.length; i++) {
         const template = this.templates[i]
         if (this.heatmap) {
@@ -333,9 +341,9 @@ export default {
       return tooltip.setContent('<b>' + name + '</b> - ' + this.formatDate(date))
     },
     onArchivedEventsCollectionRefreshed () {
-      if (this.nbTotalItems > MAX_EVENTS) {
+      if (this.archivedEvents.nbTotalItems > MAX_EVENTS) {
         this.$q.dialog({
-          title: this.$t('ArchivedEventsActivity.MATCHING_RESULTS', { total: this.nbTotalItems }),
+          title: this.$t('ArchivedEventsActivity.MATCHING_RESULTS', { total: this.archivedEvents.nbTotalItems }),
           message: this.$t('ArchivedEventsActivity.MAXIMUM_RESULTS', { max: MAX_EVENTS })
         })
       }
@@ -358,9 +366,9 @@ export default {
     },
     onShowMap () {
       this.setTopPaneMode('map')
-      this.setRightPaneMode('user-layers')
+      this.setRightPaneMode('map')
       // Refresh layer data
-      this.refreshCollection()
+      this.archivedEvents.refreshCollection()
     },
     onShowChart () {
       this.setTopPaneMode('chart')
@@ -376,7 +384,7 @@ export default {
     },
     onTimeRangeChanged () {
       // Refresh layer data
-      if (this.showMap) this.refreshCollection()
+      if (this.showMap) this.archivedEvents.refreshCollection()
       // Refresh chart data
       else if (this.showChart) this.refreshChart()
       // History automatically takes care of time range
@@ -390,7 +398,7 @@ export default {
     },
     async getChartData () {
       // Get possible values
-      this.values = await this.getService().find({ query: { $distinct: 'template' } })
+      this.values = await this.$api.getService('archived-events').find({ query: { $distinct: 'template' } })
       // Due to a change in the data structure to enhance archiving some old events do not have a "template" field resulting in a null value
       this.values.forEach((value, index) => {
         if (!value) this.values[index] = this.$t('ArchivedEventsActivity.NULL_VALUE_LABEL')
@@ -406,7 +414,7 @@ export default {
         data = response.map(item => ({ value: item._id, count: item.count }))
       } else {
         data = await Promise.all(this.values.map(async value => {
-          const response = await this.getService()
+          const response = await this.$api.getService('archived-events')
             .find({ query: Object.assign({ $limit: 0, template: value }, this.baseQuery, this.filterQuery, Time.getRangeQuery()) })
           return { value, count: response.total }
         }))
@@ -506,7 +514,7 @@ export default {
       Exporter.export({
         service: 'archived-events',
         context: this.contextId,
-        query: Object.assign({}, this.baseQuery, this.getCollectionFilterQuery()),
+        query: Object.assign({}, this.baseQuery, this.filterQuery),
         formats: [this.showMap ? { value: 'geojson', LABEL: 'GeoJSON' } : { value: 'csv', LABEL: 'CSV' }],
         transform: {
           csv: {
@@ -621,15 +629,15 @@ export default {
   async setup (props) {
     // Initialize state
     const activity = kMapComposables.useActivity(name, {
-      state: {}
+      state: { timeSeries: [] }
     })
     const plan = usePlan({ contextId: props.contextId })
     const baseQuery = computed(() => {
       const query = { $sort: { createdAt: -1 } }
-      // When displaying events of all plans we'd like to have the plan object directly to ease processing
-      //if (!plan.planId.value && showHistory.value) Object.assign(query, { planAsObject: true })
-      Object.assign(query, plan.planQuery.value)
       /*
+      // When displaying events of all plans we'd like to have the plan object directly to ease processing
+      if (!plan.planId.value && this.showHistory) Object.assign(query, { planAsObject: true })
+      Object.assign(query, plan.planQuery.value)
       const stateFilters = _.intersection(['open', 'closed'], this.filters)
       // Filtering open + closed or none of them is equivalent to no filter
       if (stateFilters.length === 1) {
@@ -644,7 +652,7 @@ export default {
           'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
       }, query)
     })
-    const filterQuery = computed(() => Object.assign({}, Store.get('filter'), Time.getRangeQuery(), plan.planObjectiveQuery.value))
+    const filterQuery = computed(() => Object.assign({}, Store.get('filter').query, Time.getRangeQuery(), plan.planObjectiveQuery.value))
     const archivedEvents = kCoreComposables.useCollection({
       service: ref('archived-events'),
       contextId: toRef(props, 'contextId'),

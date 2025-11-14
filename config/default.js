@@ -864,39 +864,42 @@ module.exports = {
       mode: 'history'
     },
     rightPane: {
-      content: [{
-        component: 'KTab',
-        content: {
-          history: [],
-          'user-layers': [
-            {
-              id: 'user-layers',
-              component: 'catalog/KLayersPanel',
-              layers: ':layers',
-              layerCategories: ':layerCategories',
-              layersFilter: { scope: { $in: ['user', 'activity'] } },
-              layerCategoriesFilter: { _id: { $exists: true } }
-            }
-          ],
-          'user-views': [
-            { id: 'user-views', component: 'catalog/KViewsPanel', suspense: true }
-          ],
-          'catalog-layers': [
-            {
-              id: 'catalog-layers',
-              component: 'catalog/KLayersPanel',
-              layers: ':layers',
-              layerCategories: ':layerCategories',
-              layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } },
-              layerCategoriesFilter: { _id: { $exists: false } },
-              forecastModels: ':forecastModels'
-            }
-          ],
-          chart: []
-        },
-        mode: 'history',
-        labels: ['HISTORY', 'LAYERS_LABEL', 'VIEWS_LABEL', 'CATALOG_LABEL', 'CHART']
-      }],
+      content: {
+        history: [],
+        map: [{
+          component: 'KTab',
+          content: {
+            'user-layers': [
+              {
+                id: 'user-layers',
+                component: 'catalog/KLayersPanel',
+                layers: ':layers',
+                layerCategories: ':layerCategories',
+                layersFilter: { scope: { $in: ['user', 'activity'] } },
+                layerCategoriesFilter: { _id: { $exists: true } }
+              }
+            ],
+            'user-views': [
+              { id: 'user-views', component: 'catalog/KViewsPanel', suspense: true }
+            ],
+            'catalog-layers': [
+              {
+                id: 'catalog-layers',
+                component: 'catalog/KLayersPanel',
+                layers: ':layers',
+                layerCategories: ':layerCategories',
+                layersFilter: { scope: { $nin: ['user', 'system', 'activity'] } },
+                layerCategoriesFilter: { _id: { $exists: false } },
+                forecastModels: ':forecastModels'
+              }
+            ]
+          },
+          mode: 'user-layers',
+          labels: ['LAYERS_LABEL', 'VIEWS_LABEL', 'CATALOG_LABEL']
+        }],
+        chart: []
+      },
+      mode: 'history',
       state: 'responsive'
     },
     bottomPane: {
