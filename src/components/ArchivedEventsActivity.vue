@@ -209,19 +209,6 @@ export default {
       // Wait until map is ready
       await this.initializeMap(container)
     },
-    async getCatalogLayers () {
-      const planetLayers = await this.getLayers()
-      // We only want base layers
-      return _.filter(planetLayers, { type: 'BaseLayer' })
-    },
-    async getCatalogCategories () {
-      const planetCategories = await this.getCategories()
-      return planetCategories
-    },
-    async getCatalogSublegends () {
-      const planetSublegends = await this.getSublegends()
-      return planetSublegends
-    },
     formatDate (date) {
       return date.toLocaleString(kdkCoreUtils.getLocale(),
         { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
@@ -678,6 +665,7 @@ export default {
       getSublegends,
       // We need to flag which API to be used to retrieve forecast models
       getWeacastApi: () => Planets.get('kalisio-planet'),
+      project,
       ...plan,
       baseQuery,
       filterQuery,

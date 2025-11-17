@@ -10,6 +10,7 @@
 import logger from 'loglevel'
 import { watch, onBeforeMount, onUnmounted } from 'vue'
 import { api, Storage } from '@kalisio/kdk/core.client'
+import { Planets } from '@kalisio/kdk/map.client.map'
 import { useOrganisations } from '../composables'
 
 // Props
@@ -32,13 +33,15 @@ watch(() => props.contextId, async (contextId) => {
 
 // Hooks
 onBeforeMount(() => {
-  const catalogService = api.getServiceInstance('catalog', props.contextId, { create: false })
+  // Some services are only used to access Kalisio Planet
+  const planetApi = Planets.get('kalisio-planet')
+  const catalogService = planetApi.getServiceInstance('catalog', props.contextId, { create: false })
   if (catalogService) return
   // Declare the organisation services if not already done
-  api.createService('catalog', { context: props.contextId })
-  api.createService('features', { context: props.contextId })
-  api.createService('styles', { context: props.contextId })
-  api.createService('projects', { context: props.contextId })
+  planetApi.createService('catalog', { context: props.contextId })
+  planetApi.createService('features', { context: props.contextId })
+  planetApi.createService('styles', { context: props.contextId })
+  planetApi.createService('projects', { context: props.contextId })
   api.createService('groups', { context: props.contextId })
   api.createService('members', { context: props.contextId })
   api.createService('tags', { context: props.contextId })

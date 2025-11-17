@@ -108,7 +108,10 @@ module.exports = {
   distribution: { // Distribute organisation services
     services: (service) => service.path.includes('organisation') ||
                            service.path.includes('catalog') ||
-                           service.path.includes('features'),
+                           service.path.includes('features') ||
+                           service.path.includes('projects') ||
+                           service.path.includes('styles') ||
+                           service.path.includes('alerts'),
     remoteServices: (service) => (service.key === 'kano'),
     middlewares: { after: express.errorHandler() },
     // When called internally from remote service do not authenticate,

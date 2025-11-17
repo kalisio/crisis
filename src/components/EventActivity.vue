@@ -135,18 +135,6 @@ export default {
         this.eventLogs.refreshCollection()
       }
     },
-    async getCatalogLayers () {
-      const planetLayers = await this.getLayers()
-      return planetLayers
-    },
-    async getCatalogCategories () {
-      const planetCategories = await this.getCategories()
-      return planetCategories
-    },
-    async getCatalogSublegends () {
-      const planetSublegends = await this.getSublegends()
-      return planetSublegends
-    },
     browseMedia () {
       this.$refs.mediaBrowser.show(this.attachments)
     },
@@ -357,6 +345,7 @@ export default {
       getSublegends,
       // We need to flag which API to be used to retrieve forecast models
       getWeacastApi: () => Planets.get('kalisio-planet'),
+      project,
       archived,
       eventLogs,
       ...plan
