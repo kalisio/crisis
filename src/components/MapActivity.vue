@@ -1,14 +1,10 @@
 <template>
   <KPage>
-    <!--
-      Map
-    -->
+    <!-- Map -->
     <div id="map" :ref="configureMap" :style="viewStyle">
       <q-resize-observer @resize="onMapResized" />
     </div>
-    <!--
-      Event templates selector modal
-    -->
+    <!-- Event templates selector modal -->
     <KModal ref="templateModal"
       :title="$t('MapActivity.CREATE_EVENT_TITLE')"
       :buttons="getTemplateModalButtons()"
@@ -22,9 +18,7 @@
         @selection-changed="onCreateEvent"
       />
     </KModal>
-    <!--
-      Alert editor modal
-    -->
+    <!-- Alert editor modal -->
     <AlertEditor
       ref="alertEditor"
       :layer="alertLayer"
@@ -32,6 +26,8 @@
       :forecastModel="forecastModel"
       :router-mode="false"
     />
+    <!-- Feature actions menu -->
+    <KFeatureActionButton/>
   </KPage>
 </template>
 
@@ -46,6 +42,7 @@ import sift from 'sift'
 import { ref, toRef, computed } from 'vue'
 import { mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { Planets, mixins as kMapMixins, composables as kMapComposables, utils as kdkMapUtils } from '@kalisio/kdk/map.client.map'
+import KFeatureActionButton from '@kalisio/kdk/map/client/components/KFeatureActionButton.vue'
 import mixins from '../mixins'
 import { usePlan, useAlerts } from '../composables'
 
@@ -59,7 +56,8 @@ const MAX_ITEMS = 5000
 
 export default {
   components: {
-    AlertEditor
+    AlertEditor,
+    KFeatureActionButton
   },
   mixins: [
     kMapMixins.map.baseMap,
@@ -605,16 +603,11 @@ export default {
     const projectQuery = _.get(config, 'planets.kalisio-planet.project.default')
     await loadProject(projectQuery)
     logger.info('[CRISIS] Kalisio Planet project loaded')
-    // Use planet catalog
-    const { getCategories, getLayers, getSublegends } = kMapComposables.useCatalog({ project: project.value, planetApi: Planets.get('kalisio-planet') })
     
     return {
       ..._.omit(activity, 'CurrentActivityContext'),
       ...activity.CurrentActivityContext,
       ...kMapComposables.useWeather(name),
-      getLayers,
-      getCategories,
-      getSublegends,
       // We need to flag which API to be used to retrieve forecast models
       getWeacastApi: () => Planets.get('kalisio-planet'),
       project,

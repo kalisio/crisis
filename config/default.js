@@ -4,6 +4,7 @@ const panesTop = require('./kdk/panes.top.js')
 const topPane = require('./kdk/panes.top.js')
 const widgetsLeft = require('./kdk/widgets.left.js')
 const widgetsTop = require('./kdk/widgets.top.js')
+const stickies = require('./kdk/stickies.js')
 
 const website = 'https://www.kalisio.com'
 const onlineHelp = 'https://doc.planet.kalisio.com'
@@ -48,6 +49,16 @@ const LEFT_PANE = {
     leftPane.logout()
   ]
 }
+
+// Map stickies
+const MAP_STICKIES = [
+  stickies.position({ offset: [0, 80] }),
+  stickies.target(),
+  stickies.northArrow({ visible: false }),
+  stickies.zoomControl(),
+  stickies.levelSlider(),
+  stickies.attribution()
+]
 const mapTools = () => {
   return [
     {
@@ -57,20 +68,23 @@ const mapTools = () => {
       tooltip: 'mixins.activity.TOOLS',
       actionRenderer: 'item',
       content: [
-        topPane.activeMeasureToolMode(),
         topPane.toggleLegend(),
+        helpers.horizontalSeparator(),
         topPane.togglePosition(),
         topPane.toggleNorthArrow(),
+        topPane.toggleZoomControl(),
+        topPane.activeMeasureToolMode(),
         helpers.horizontalSeparator(),
         topPane.toggleFullscreen()
       ]
     }
   ]
 }
+
 // Left window
 const leftWidgets = [widgetsLeft.LEGEND]
 
-// top widgets
+// Top widgets
 const topWidgets = [widgetsTop.INFORMATION_BOX, widgetsTop.TIME_SERIES, widgetsTop.MAPILLARY_VIEWER]
 
 // Catalog tababr
@@ -798,9 +812,9 @@ module.exports = {
         { component: 'time/KTimeControl' }
       ]
     },
-    page: {
+    stickies: {
       content: [
-        { component: 'KFeatureActionButton' }
+        ...MAP_STICKIES
       ]
     },
     windows: {
@@ -915,6 +929,11 @@ module.exports = {
             ranges: ['last-hour', 'last-2-hours', 'last-3-hours', 'last-6-hours', 'last-12-hours', 'last-day', 'last-week', 'last-month', 'last-3-months', 'last-6-months', 'last-year']
           }]
         }
+      ]
+    },
+    stickies: {
+      content: [
+        ...MAP_STICKIES
       ]
     },
     items: {
@@ -1310,6 +1329,11 @@ module.exports = {
     bottomPane: {
       content: [
         { component: 'time/KTimeControl' }
+      ]
+    },
+    stickies: {
+      content: [
+        ...MAP_STICKIES
       ]
     },
     page: {

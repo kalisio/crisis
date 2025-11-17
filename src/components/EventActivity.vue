@@ -333,16 +333,11 @@ export default {
     const projectQuery = _.get(config, 'planets.kalisio-planet.project.default')
     await loadProject(projectQuery)
     logger.info('[CRISIS] Kalisio Planet project loaded')
-    // Use planet catalog
-    const { getCategories, getLayers, getSublegends } = kMapComposables.useCatalog({ project: project.value, planetApi: Planets.get('kalisio-planet') })
     
     return {
       ..._.omit(activity, 'CurrentActivityContext'),
       ...activity.CurrentActivityContext,
       ...kMapComposables.useWeather(name),
-      getLayers,
-      getCategories,
-      getSublegends,
       // We need to flag which API to be used to retrieve forecast models
       getWeacastApi: () => Planets.get('kalisio-planet'),
       project,
