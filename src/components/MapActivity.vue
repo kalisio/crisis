@@ -27,7 +27,7 @@
       :router-mode="false"
     />
     <!-- Feature actions menu -->
-    <KFeatureActionButton/>
+    <KFeatureActionButton color="primary"/>
   </KPage>
 </template>
 
@@ -40,7 +40,7 @@ import moment from 'moment'
 import chroma from 'chroma-js'
 import sift from 'sift'
 import { ref, toRef, computed } from 'vue'
-import { mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
+import { Layout, mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
 import { Planets, mixins as kMapMixins, composables as kMapComposables, utils as kdkMapUtils } from '@kalisio/kdk/map.client.map'
 import KFeatureActionButton from '@kalisio/kdk/map/client/components/KFeatureActionButton.vue'
 import mixins from '../mixins'
@@ -327,6 +327,44 @@ export default {
       this.updateLayer(this.$t('MapActivity.OBJECTIVES_LAYER'),
         { type: 'FeatureCollection', features: objectives })
     },
+    async updateSelection () {
+      await kMapMixins.featureSelection.methods.updateSelection.call(this)
+      if (!this.hasProbedLocation() && !this.hasSelectedItems()) {
+        // Hide the window
+        Layout.setWindowVisible('top', false)
+      }
+    },
+    async updateProbedLocationHighlight () {
+      await kMapMixins.featureSelection.methods.updateProbedLocationHighlight.call(this)
+      if (this.hasProbedLocation()) {
+        this.unhighlight(this.getProbedLocation(), this.getProbedLayer() || { name: kMapUtils.ForecastProbeId })
+        // Find time serie for probe, probed location is shared by all series
+        const probedLocation = await _.get(this.state.timeSeries, '[0].series[0].probedLocationData')
+        if (!probedLocation) return
+        const isWeatherProbe = this.isWeatherProbe(probedLocation)
+        const feature = (isWeatherProbe
+          ? this.getProbedLocationForecastAtCurrentTime(probedLocation)
+          : this.getProbedLocationMeasureAtCurrentTime(probedLocation))
+        this.highlight(feature, this.getProbedLayer() || { name: kMapUtils.ForecastProbeId })
+      }
+    },
+    getHighlightMarker (feature, options) {
+      if ((options.name === kMapComposables.HighlightsLayerName) && this.isWeatherProbe(feature)) {
+        return {
+          icon: this.createWindBarbIcon(feature)
+        }
+      }
+    },
+    getHighlightTooltip (feature, layer, options) {
+      if ((options.name === kMapComposables.HighlightsLayerName) && this.isWeatherProbe(feature)) {
+        // Get labels from forecast layers
+        const layers = _.values(this.layers).filter(sift({ tags: ['weather', 'forecast'] }))
+        const variables = _.reduce(layers, (result, layer) => result.concat(_.get(layer, 'variables', [])), [])
+        const fields = this.getProbedLocationForecastFields(variables)
+        const html = this.getForecastAsHtml(feature, fields)
+        return L.tooltip({ permanent: false }, layer).setContent(`<b>${html}</b>`)
+      }
+    },
     getAlertStyle (feature, options) {
       if (options.name !== this.$t('MapActivity.ALERTS_LAYER')) return null
 
@@ -597,17 +635,21 @@ export default {
       filterQuery,
       nbItemsPerPage: ref(0)
     })
+    const weather = kMapComposables.useWeather()
+    const measure = kMapComposables.useMeasure()
     // Initialize project
     const { project, loadProject } = kMapComposables.useProject({ route: false, planetApi: Planets.get('kalisio-planet') })
     // Select the right project, to be done after some composables like useActivity because await setup and no lifecycle hooks should be registered after
     const projectQuery = _.get(config, 'planets.kalisio-planet.project.default')
     await loadProject(projectQuery)
     logger.info('[CRISIS] Kalisio Planet project loaded')
+    activity.setSelectionMode('multiple')
     
     return {
       ..._.omit(activity, 'CurrentActivityContext'),
       ...activity.CurrentActivityContext,
-      ...kMapComposables.useWeather(name),
+      ...weather,
+      ...measure,
       // We need to flag which API to be used to retrieve forecast models
       getWeacastApi: () => Planets.get('kalisio-planet'),
       project,
