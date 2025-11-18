@@ -424,9 +424,7 @@ module.exports = {
     // Nothing specific, use defaults
   },
   settings: {
-    propertyMapping: {
-      // Nothing specific, use defaults
-    }
+    // Nothing specific, use defaults
   },
   storage: {
     useProxy: true
