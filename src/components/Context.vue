@@ -38,6 +38,7 @@ onBeforeMount(() => {
   const catalogService = planetApi.getServiceInstance('catalog', props.contextId, { create: false })
   if (catalogService) return
   // Declare the organisation services if not already done
+  planetApi.createService('configurations', { context: props.contextId })
   planetApi.createService('catalog', { context: props.contextId })
   planetApi.createService('features', { context: props.contextId })
   planetApi.createService('styles', { context: props.contextId })

@@ -107,6 +107,7 @@ module.exports = {
   },
   distribution: { // Distribute organisation services
     services: (service) => service.path.includes('organisation') ||
+                           service.path.includes('configurations') ||
                            service.path.includes('catalog') ||
                            service.path.includes('features') ||
                            service.path.includes('projects') ||
@@ -183,6 +184,30 @@ module.exports = {
       maxUsers: 100000
     }
   },
+  defaultConfigurations: [{
+    name: 'userCategoriesOrder',
+    value: []
+  }, {
+    name: 'defaultCategoriesOrder',
+    value: [
+      "Categories.LAB_LAYERS",
+      "Categories.ADMINISTRATIVE_LAYERS",
+      "Categories.ATMOSPHERIC_LAYERS",
+      "Categories.BUSINESS_LAYERS",
+      "Categories.HYDROGRAPHY_LAYERS",
+      "Categories.INFRASTRUCTURE_LAYERS",
+      "Categories.RADIOACTIVITY_LAYERS",
+      "Categories.SENSOR_LAYERS",
+      "Categories.SHOT_LAYERS",
+      "Categories.WEATHER_MEASURE_LAYERS",
+      "Categories.WEATHER_FORECAST_LAYERS",
+      "Categories.TERRAIN_LAYERS",
+      "Categories.BASE_LAYERS",
+    ],
+  }, {
+    name: 'userOrphanLayersOrder',
+    value: []
+  }],
   organisations: {
     inactivityDuration: (process.env.NODE_ENV === 'development' ? 'P-7D' : 'P-1Y')
   },

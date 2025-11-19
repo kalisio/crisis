@@ -1,6 +1,9 @@
 import path, { dirname } from 'path'
 import makeDebug from 'debug'
-import { createStorageService, removeStorageService } from '@kalisio/kdk/core.api.js'
+import {
+  createConfigurationsService, removeConfigurationsService, createDefaultConfigurations,
+  createStorageService, removeStorageService
+} from '@kalisio/kdk/core.api.js'
 import {
   createStylesService, removeStylesService,
   createProjectsService, removeProjectsService,
@@ -45,6 +48,9 @@ export default async function (name, app, options) {
         db
       })
       debug('Tags service created for organisation ' + organisation.name)
+      await createConfigurationsService.call(this.app, { context: organisation, db })
+      await createDefaultConfigurations.call(this.app, organisation)
+      debug('Configurations service created for organisation ' + organisation.name)
       await createStorageService.call(this.app, { context: organisation })
       debug('Storage service created for organisation ' + organisation.name)
       await createCatalogService.call(this.app, { context: organisation, db })
@@ -121,6 +127,8 @@ export default async function (name, app, options) {
     },
 
     async removeOrganisationServices (organisation) {
+      await removeConfigurationsService.call(this.app, { context: organisation })
+      debug('Configurations service removed for organisation ' + organisation.name)
       await removeStorageService.call(this.app, { context: organisation })
       debug('Storage service removed for organisation ' + organisation.name)
       await this.app.removeService(this.app.getService('tags', organisation))
