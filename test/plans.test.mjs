@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
-import { core } from '@kalisio/kdk/test.client.js'
+import { core } from './kdk/index.mjs'
 import * as plans from './plans.mjs'
 import * as events from './events.mjs'
 
@@ -175,7 +175,7 @@ describe(`suite:${suite}`, () => {
 
   it('notifications are not received for plan event without participants', async () => {
     // Check push notifications, it usually requires some time to be received
-    await page.waitForTimeout(10000)
+    await core.waitForTimeout(10000)
     expect(runner.hasInfo('New notification received: Event')).to.equal(0)
   })
 
@@ -188,7 +188,7 @@ describe(`suite:${suite}`, () => {
 
   it('notifications are not received for plan event removal without participants', async () => {
     // Check push notifications, it usually requires some time to be received
-    await page.waitForTimeout(10000)
+    await core.waitForTimeout(10000)
     expect(runner.hasInfo('New notification received: Event')).to.equal(0)
   })
 

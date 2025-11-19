@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
-import { core } from '@kalisio/kdk/test.client.js'
+import { core } from './kdk/index.mjs'
 import * as events from './events.mjs'
 
 const suite = 'event-workflow'
@@ -152,7 +152,7 @@ describe(`suite:${suite}`, () => {
 
   it('notifications are received for workflow event', async () => {
     // Check push notifications, it usually requires some time to be received
-    await page.waitForTimeout(10000)
+    await core.waitForTimeout(10000)
     expect(runner.hasInfo('New notification received: Workflow event')).to.equal(1)
   })
 

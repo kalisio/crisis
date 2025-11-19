@@ -1,5 +1,5 @@
 import makeDebug from 'debug'
-import { core } from '@kalisio/kdk/test.client.js'
+import { core } from './kdk/index.mjs'
 import { goToOrganisationsActivity } from './organisations.mjs'
 
 const debug = makeDebug('crisis:test:tags')
@@ -32,14 +32,14 @@ export async function countLogbookBadges (page, status) {
 
 export async function countLogbookOpenedEvents (page, organisation, wait = 2000) {
   await goToLogbook(page, organisation)
-  page.waitForTimeout(wait)
+  core.waitForTimeout(wait)
   const count = await countLogbookBadges(page, 'Opened')
   return count
 }
 
 export async function countLogbookClosedEvents (page, organisation, wait = 2000) {
   await goToLogbook(page, organisation)
-  page.waitForTimeout(wait)
+  core.waitForTimeout(wait)
   const count = await countLogbookBadges(page, 'Closed')
   return count
 }

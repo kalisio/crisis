@@ -207,6 +207,7 @@
     "pixelmatch": "^5.2.0",
     "pngjs": "^5.0.0",
     "prettier": "^2.5.1",
+    "puppeteer": "^24.10.2",
     "shelljs": "^0.8.5",
     "shx": "^0.3.4",
     "sns-mobile": "https://github.com/kalisio/sns-mobile",

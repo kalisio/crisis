@@ -1,6 +1,6 @@
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
-import { core } from '@kalisio/kdk/test.client.js'
+import { core } from './kdk/index.mjs'
 import { countOrganisations, organisationExists, createOrganisation, deleteOrganisation } from './organisations.mjs'
 import { countMembers, memberExists, removeMember } from './members.mjs'
 
@@ -44,7 +44,7 @@ describe(`suite:${suite}`, () => {
   })
 
   it('create account', async () => {
-    await page.waitForTimeout(5000)
+    await core.waitForTimeout(10000)
     await core.closeInstallDialog(page)
     await core.goToRegisterScreen(page)
     await core.register(page, user)

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import makeDebug from 'debug'
-import { core } from '@kalisio/kdk/test.client.js'
+import { core } from './kdk/index.mjs'
 import { goToOrganisationsActivity } from './organisations.mjs'
 
 const debug = makeDebug('crisis:test:events')
@@ -18,7 +18,7 @@ export async function clickPermission (page, permission, wait = 250) {
   const elements = await page.$x(xpath)
   if (elements.length > 0) {
     elements[0].click()
-    await page.waitForTimeout(wait)
+    await core.waitForTimeout(wait)
   }
 }
 
@@ -158,7 +158,7 @@ export async function createEventTemplate (page, organisation, template, wait = 
   const elements = await page.$x(xpath)
   if (elements.length > 0) {
     elements[0].click()
-    await page.waitForTimeout(wait)
+    await core.waitForTimeout(wait)
   }
   await core.clickAction(page, 'apply-button', wait)
 }
@@ -178,7 +178,7 @@ export async function createEventTemplateWorkflow (page, organisation, template,
       const elements = await page.$x(xpath)
       if (elements.length > 0) {
         elements[0].type(interaction)
-        await page.waitForTimeout(wait)
+        await core.waitForTimeout(wait)
         await page.keyboard.press('Enter')
       }
     }
@@ -233,7 +233,7 @@ export async function editEventTemplateWorkflow (page, organisation, template, d
       const elements = await page.$x(xpath)
       if (elements.length > 0) {
         elements[0].click()
-        await page.waitForTimeout(wait)
+        await core.waitForTimeout(wait)
       }
     }
     // Update interaction
@@ -244,7 +244,7 @@ export async function editEventTemplateWorkflow (page, organisation, template, d
       const elements = await page.$x(xpath)
       if (elements.length > 0) {
         elements[0].type(interaction)
-        await page.waitForTimeout(wait)
+        await core.waitForTimeout(wait)
         await page.keyboard.press('Enter')
       }
     }

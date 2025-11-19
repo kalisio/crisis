@@ -1,5 +1,5 @@
 import makeDebug from 'debug'
-import { core } from '@kalisio/kdk/test.client.js'
+import { core } from './kdk/index.mjs'
 
 const debug = makeDebug('crisis:test:events')
 

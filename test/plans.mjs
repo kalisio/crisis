@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import makeDebug from 'debug'
-import { core } from '@kalisio/kdk/test.client.js'
+import { core } from './kdk/index.mjs'
 import { goToOrganisationsActivity } from './organisations.mjs'
 
 const debug = makeDebug('crisis:test:plans')
@@ -44,7 +44,7 @@ export async function clickPermission (page, permissions, wait = 250) {
   const elements = await page.$x(xpath)
   if (elements.length > 0) {
     elements[0].click()
-    await page.waitForTimeout(wait)
+    await core.waitForTimeout(wait)
   }
 }
 
@@ -140,7 +140,7 @@ export async function editPlanDescription (page, organisation, plan, description
 export async function closePlan (page, organisation, plan, wait = 2000) {
   await goToPlansActivity(page, organisation)
   await core.clickItemAction(page, planComponent, plan.name, 'remove-item-header')
-  await page.waitForTimeout(wait)
+  await core.waitForTimeout(wait)
   await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
 }
 
@@ -148,7 +148,7 @@ export async function closePlanEvent (page, organisation, plan, event, wait = 20
   await goToPlanEvents(page, organisation, plan)
   await core.clickItemAction(page, eventComponent, event.name, 'expand-action', wait)
   await core.clickItemAction(page, eventComponent, event.name, 'remove-item-header', wait)
-  await page.waitForTimeout(wait)
+  await core.waitForTimeout(wait)
   await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
 }
 

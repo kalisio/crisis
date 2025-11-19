@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
-import { core } from '@kalisio/kdk/test.client.js'
+import { core } from './kdk/index.mjs'
 import * as events from './events.mjs'
 import * as logbooks from './logbooks.mjs'
 
@@ -117,14 +117,14 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventExists(page, org, managerEventOne, 'name')).beTrue()
     expect(await events.eventExists(page, org, managerEventTwo, 'name')).beTrue()
     // Check push notifications
-    await page.waitForTimeout(10000)
+    await core.waitForTimeout(10000)
     expect(runner.hasInfo('New notification received: Manager event 1')).to.equal(1)
     expect(runner.hasInfo('New notification received: Manager event 2')).to.equal(1)
   })
 
   it('notifications are received for events', async () => {
     // Check push notifications, it usually requires some time to be received
-    await page.waitForTimeout(10000)
+    await core.waitForTimeout(10000)
     expect(runner.hasInfo('New notification received: Manager event 1')).to.equal(1)
     expect(runner.hasInfo('New notification received: Manager event 2')).to.equal(1)
   })
@@ -138,18 +138,18 @@ describe(`suite:${suite}`, () => {
 
   it('logbook shows 2 events', async () => {
     await logbooks.goToLogbook(page, org)
-    await page.waitForTimeout(10000)
+    await core.waitForTimeout(10000)
     expect(await logbooks.countLogbookEvents(page, org)).to.equal(2)
   })
 
   it('logbook shows 1 active event', async () => {
     await logbooks.goToLogbook(page, org)
-    await page.waitForTimeout(2000)
+    await core.waitForTimeout(2000)
     expect(await logbooks.countLogbookOpenedEvents(page, org)).to.equal(1)
   })
 
   it('logbook shows 1 closed event', async () => {
-    await page.waitForTimeout(2000)
+    await core.waitForTimeout(2000)
     expect(await logbooks.countLogbookClosedEvents(page, org)).to.equal(1)
   })
 

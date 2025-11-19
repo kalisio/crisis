@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
-import { core } from '@kalisio/kdk/test.client.js'
+import { core } from './kdk/index.mjs'
 import * as events from './events.mjs'
 
 const suite = 'events'
@@ -130,7 +130,7 @@ describe(`suite:${suite}`, () => {
 
   it('notifications are received for manager event', async () => {
     // Check push notifications, it usually requires some time to be received
-    await page.waitForTimeout(10000)
+    await core.waitForTimeout(10000)
     expect(runner.hasInfo('New notification received: Manager event')).to.equal(1)
   })
 
@@ -164,7 +164,7 @@ describe(`suite:${suite}`, () => {
 
   it('notifications are received for member event', async () => {
     // Check push notifications, it usually requires some time to be received
-    await page.waitForTimeout(10000)
+    await core.waitForTimeout(10000)
     // As manager has also been logged and is in the same group we should have two subscriptions
     expect(runner.hasInfo('New notification received: Member event')).to.equal(2)
   })
@@ -207,7 +207,7 @@ describe(`suite:${suite}`, () => {
 
   it('notifications are not received for member event editing', async () => {
     // Check push notifications, it usually requires some time to be received
-    await page.waitForTimeout(10000)
+    await core.waitForTimeout(10000)
     expect(runner.hasInfo('New notification received: New Member event')).to.equal(0)
   })
 
@@ -219,7 +219,7 @@ describe(`suite:${suite}`, () => {
 
   it('notifications are received for member event removal', async () => {
     // Check push notifications, it usually requires some time to be received
-    await page.waitForTimeout(10000)
+    await core.waitForTimeout(10000)
     // As manager has also been logged and is in the same group we should have two subscriptions
     expect(runner.hasInfo('New notification received: New Member event')).to.equal(2)
   })

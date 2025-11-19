@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import makeDebug from 'debug'
-import { core } from '@kalisio/kdk/test.client.js'
+import { core } from './kdk/index.mjs'
 import { goToOrganisationsActivity } from './organisations.mjs'
 
 const debug = makeDebug('crisis:test:groups')
