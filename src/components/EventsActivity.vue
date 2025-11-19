@@ -38,7 +38,10 @@
 
 <script>
 import _ from 'lodash'
+import config from 'config'
+import logger from 'loglevel'
 import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import { Planets, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import { permissions as corePermissions } from '@kalisio/kdk/core.common'
 import * as permissions from '../../common/permissions.mjs'
 import { usePlan } from '../composables'
@@ -226,9 +229,17 @@ export default {
     eventsService.off('removed', this.onEventUpdated)
     eventsService.off('removed', this.onEventRemoved)
   },
-  setup (props) {
+  async setup (props) {
+    const plan = usePlan({ contextId: props.contextId })
+    // Initialize project, required for location maps to work
+    const { project, loadProject } = kMapComposables.useProject({ route: false, planetApi: Planets.get('kalisio-planet') })
+    // Select the right project, to be done after some composables like useActivity because await setup and no lifecycle hooks should be registered after
+    const projectQuery = _.get(config, 'planets.kalisio-planet.project.default')
+    await loadProject(projectQuery)
+    logger.info('[CRISIS] Kalisio Planet project loaded')
     return {
-      ...usePlan({ contextId: props.contextId })
+      project,
+      ...plan
     }
   }
 }
