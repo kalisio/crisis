@@ -1,5 +1,5 @@
 <template>
-  <k-card
+  <Card
     v-bind="$props"
     :header="header"
     :actions="itemActions"
@@ -58,19 +58,21 @@
         </div>
       </KCardSection>
     </template>
-  </k-card>
+  </Card>
 </template>
 
 <script>
 import _ from 'lodash'
 import { mixins as kdkCoreMixins } from '@kalisio/kdk/core.client'
 import ChipsPane from './ChipsPane.vue'
+import Card from './Card.vue'
 
 export default {
   name: 'archived-plan-card',
   mixins: [kdkCoreMixins.baseItem],
   components: {
-    ChipsPane
+    ChipsPane,
+    Card
   },
   props: {
     dense: {

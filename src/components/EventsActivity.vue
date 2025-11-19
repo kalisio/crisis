@@ -23,6 +23,7 @@
       </template>
     </KGrid>
     <KBoard
+      v-else-if="height"
       ref="eventsBoard"
       :columns="boardColumns"
       :height="height"
@@ -63,7 +64,8 @@ export default {
     return {
       sorter: this.$store.get('sorter'),
       filter: this.$store.get('filter'),
-      height: undefined
+      height: undefined,
+      width: undefined
     }
   },
   watch: {
@@ -214,6 +216,8 @@ export default {
     eventsService.on('updated', this.onEventUpdated)
     eventsService.on('removed', this.onEventRemoved)
     this.$events.on('user-changed', this.refreshFab)
+    this.height = this.$q.screen.height
+    this.width = this.$q.screen.width
   },
   beforeUnmount () {
     this.$events.off('user-changed', this.refreshFab)

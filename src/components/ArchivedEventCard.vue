@@ -1,6 +1,6 @@
 <template>
   <div>
-    <k-card
+    <Card
       v-bind="$props"
       :header="header"
       :actions="itemActions"
@@ -60,7 +60,7 @@
           :dense="dense"
         >
           <div v-if="hasParticipants">
-            <chips-pane class="q-pl-sm" :chips="item.participants" :value-path="['profile.name', 'value', 'name']" />
+            <ChipsPane class="q-pl-sm" :chips="item.participants" :value-path="['profile.name', 'value', 'name']" />
           </div>
           <div v-else>
             {{ $t('ArchivedEventCard.NO_PARTICIPANTS_LABEL')}}
@@ -73,7 +73,7 @@
           :context="$props"
           :dense="dense"
         >
-          <chips-pane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
+          <ChipsPane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
         </KCardSection>
         <!-- Timestamps section -->
         <KCardSection
@@ -93,7 +93,7 @@
           </div>
         </KCardSection>
       </template>
-    </k-card>
+    </Card>
     <MediaBrowser ref="mediaBrowser" :options="mediaBrowserOptions()" />
   </div>
 </template>
@@ -101,14 +101,18 @@
 <script>
 import _ from 'lodash'
 import { mixins as kdkCoreMixins, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
-import { useAlerts } from '../composables'
+import { useAlerts, useOrganisations } from '../composables'
 import mixins from '../mixins'
+import ChipsPane from './ChipsPane.vue'
 import MediaBrowser from './MediaBrowser.vue'
+import Card from './Card.vue'
 
 export default {
   name: 'event-card',
   components: {
-    MediaBrowser
+    MediaBrowser,
+    Card,
+    ChipsPane
   },
   mixins: [
     kdkCoreMixins.baseItem,
@@ -176,6 +180,9 @@ export default {
     planActions () {
       return _.filter(this.itemActions, { scope: 'plan' })
     },
+    locationActions () {
+      return _.filter(this.itemActions, { scope: 'location' })
+    },
     objective () {
       return this.item.objective
     },
@@ -190,6 +197,10 @@ export default {
     },
     deletedAt () {
       return this.item.deletedAt ? new Date(this.item.deletedAt) : null
+    },
+    contextId () {
+      const { CurrentOrganisation } = useOrganisations()
+      return CurrentOrganisation.value._id
     }
   },
   data () {

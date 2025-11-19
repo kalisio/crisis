@@ -162,7 +162,8 @@ export default {
       paginationOptions,
       renderOptions,
       render: _.find(renderOptions, { value: 'count' }),
-      height: undefined
+      height: undefined,
+      width: undefined
     }
   },
   computed: {
@@ -604,6 +605,8 @@ export default {
     this.$checkQuota('archived-events', 1)
     // Setup listeners
     this.$events.on('time-range-changed', this.onTimeRangeChanged)
+    this.height = this.$q.screen.height
+    this.width = this.$q.screen.width
   },
   beforeUnmount () {
     // Release the chart if nay
@@ -636,7 +639,7 @@ export default {
         $skip: 0,
         $limit: MAX_EVENTS,
         $select: ['_id', 'name', 'description', 'icon', 'template', 'location',
-          'createdAt', 'updatedAt', 'expireAt', 'deletedAt']
+          'createdAt', 'updatedAt', 'expireAt', 'deletedAt', 'participants', 'coordinators']
       }, query)
     })
     const filterQuery = computed(() => Object.assign({}, Store.get('filter').query, Time.getRangeQuery(), plan.planObjectiveQuery.value))
@@ -653,7 +656,7 @@ export default {
     const projectQuery = _.get(config, 'planets.kalisio-planet.project.default')
     await loadProject(projectQuery)
     logger.info('[CRISIS] Kalisio Planet project loaded')
-    
+
     return {
       ..._.omit(activity, 'CurrentActivityContext'),
       ...activity.CurrentActivityContext,
