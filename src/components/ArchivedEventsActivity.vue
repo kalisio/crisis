@@ -103,6 +103,7 @@ export default {
     activityMixin,
     kdkMapMixins.activity,
     kdkMapMixins.style,
+    kdkMapMixins.featureService,
     kdkMapMixins.context
   ],
   components: {
@@ -503,11 +504,11 @@ export default {
         service: 'archived-events',
         context: this.contextId,
         query: Object.assign({}, this.baseQuery, this.filterQuery),
-        formats: [this.showMap ? { value: 'geojson', LABEL: 'GeoJSON' } : { value: 'csv', LABEL: 'CSV' }],
+        formats: [this.showMap ? { format: 'geojson', label: 'GeoJSON' } : { format: 'csv', label: 'CSV' }],
         transform: {
           csv: {
             mapping: {
-              'location.geometry.coordinates[0]': 'longgitude',
+              'location.geometry.coordinates[0]': 'longitude',
               'location.geometry.coordinates[1]': 'latitude',
               'location.properties.name': 'address'
             },

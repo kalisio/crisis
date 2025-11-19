@@ -101,8 +101,8 @@ export default {
         service: 'members',
         context: this.contextId,
         formats: [
-          { label: 'CSV', value: 'csv' },
-          { label: 'JSON', value: 'json' }
+          { label: 'CSV', format: 'csv' },
+          { label: 'JSON', format: 'json' }
         ],
         gzip: false
       })
