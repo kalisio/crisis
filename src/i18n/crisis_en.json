@@ -415,6 +415,7 @@
     "VIEW_EVENT_TEMPLATES": "View event templates",
     "PLAN_TEMPLATES": "{count} plan template(s)",
     "VIEW_PLAN_TEMPLATES": "View plan templates",
+    "CATALOG": "Map data",
     "MANAGE_SUBSCRIPTIONS": "Manage your subscriptions",
     "EDIT_ACTION": "@:EDIT_LABEL",
     "REMOVE_ACTION": "@:REMOVE_LABEL",

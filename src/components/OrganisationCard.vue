@@ -92,6 +92,13 @@
                 <q-badge v-if="!isMember" :label="`${quotas[element.name] || 0} max`" color="grey-7" />
               </div>
             </template>
+            <KAction
+              :id="`organisation-catalog`"
+              icon="las la-map"
+              :label="$t('OrganisationCard.CATALOG')"
+              @triggered="routeTo('catalog-activity')"
+              style="max-width: 75%"
+            />
           </div>
         </KCardSection>
       </div>
