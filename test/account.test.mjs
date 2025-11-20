@@ -2,7 +2,7 @@ import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import { core } from './kdk/index.mjs'
 import { countOrganisations, organisationExists, createOrganisation, deleteOrganisation } from './organisations.mjs'
-import { countMembers, memberExists, removeMember } from './members.mjs'
+import { countMembers, memberExists } from './members.mjs'
 
 const suite = 'account'
 
