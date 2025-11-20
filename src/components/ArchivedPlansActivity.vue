@@ -3,9 +3,9 @@
     <!--
       Page content
       -->
-    <div class="row justify-center q-pa-lg">
-      <KHistory
-        v-if="height"
+    <div v-if="height" class="row justify-center q-pa-lg">
+      <History
+        style="padding-top: 80px;"
         id="history"
         service="archived-plans"
         :append-items="true"
@@ -19,10 +19,10 @@
       >
         <template v-slot:empty-history>
           <div class="absolute-center">
-            <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
+            <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('History.EMPTY_HISTORY')" />
           </div>
         </template>
-      </KHistory>
+      </History>
     </div>
     <!--
       Router view to enable routing to modals
@@ -38,6 +38,7 @@ import { mixins as kCoreMixins, Time } from '@kalisio/kdk/core.client'
 import { permissions as corePermissions } from '@kalisio/kdk/core.common'
 import * as permissions from '../../common/permissions.mjs'
 import * as utils from '../utils'
+import History from './History.vue'
 
 export default {
   mixins: [kCoreMixins.baseActivity('archivedPlansActivity')],
@@ -46,6 +47,9 @@ export default {
       type: String,
       default: ''
     }
+  },
+  components: {
+    History
   },
   computed: {
     renderer () {
@@ -60,7 +64,8 @@ export default {
     return {
       baseQuery: { $sort: { createdAt: -1 } },
       filterQuery: {},
-      height: undefined
+      height: undefined,
+      width: undefined
     }
   },
   methods: {
@@ -101,6 +106,8 @@ export default {
   mounted () {
     // Check if we can create archived plans
     this.$checkQuota('archived-plans', 1)
+    this.height = this.$q.screen.height
+    this.width = this.$q.screen.width
   },
   beforeUnmount () {
     // Restore the current time

@@ -947,5 +947,11 @@
     "EMAIL_VERIFIED": "Your address has been verified. An email has been sent to you to confirm the change.",
     "ACTION": "Resend verification code",
     "ERROR_MESSAGE": "Invalid code, request a new one"
+  },
+  "History": {
+    "EMPTY_HISTORY": "@:NO_ITEM"
+  },
+  "Column": {
+    "EMPTY_COLUMN": "@:NO_ITEM"
   }
 }

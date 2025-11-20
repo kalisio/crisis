@@ -122,10 +122,6 @@ export default {
       type: Boolean,
       default: false
     },
-    avatar: {
-      type: Boolean,
-      default: true
-    },
     shadow: {
       type: Number,
       default: 0,

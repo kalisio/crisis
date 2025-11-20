@@ -12,7 +12,7 @@
       Events history: switch append-items on to activate infinite scroll
     -->
     <div v-if="showHistory && height" class="row justify-center q-pl-lg q-pr-none">
-      <KHistory
+      <History
         style="padding-top: 80px;"
         id="history"
         service="archived-events"
@@ -27,10 +27,10 @@
       >
         <template v-slot:empty-history>
           <div class="absolute-center">
-            <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('KHistory.EMPTY_HISTORY')" />
+            <KStamp icon="las la-exclamation-circle" icon-size="3rem" :text="$t('History.EMPTY_HISTORY')" />
           </div>
         </template>
-      </KHistory>
+      </History>
     </div>
     <!--
       Events map
@@ -85,6 +85,7 @@ import { colors, QSlider } from 'quasar'
 import { mixins as kdkCoreMixins, composables as kCoreComposables, utils as kdkCoreUtils, Store, Time, Exporter } from '@kalisio/kdk/core.client'
 import { Planets, mixins as kdkMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
+import History from './History.vue'
 
 const name = 'archivedEventsActivity'
 const activityMixin = kdkCoreMixins.baseActivity(name)
@@ -108,7 +109,8 @@ export default {
     kdkMapMixins.context
   ],
   components: {
-    QSlider
+    QSlider,
+    History
   },
   provide () {
     return {

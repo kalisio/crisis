@@ -955,5 +955,11 @@
     "EMAIL_VERIFIED": "Votre adresse a été vérifiée. Un mail vous a été envoyé pour confirmer le changement.",
     "ACTION": "Me renvoyer un code de vérification",
     "ERROR_MESSAGE": "Code invalide, demandez-en un nouveau"
+  },
+  "History": {
+    "EMPTY_HISTORY": "@:NO_ITEM"
+  },
+  "Column": {
+    "EMPTY_COLUMN": "@:NO_ITEM"
   }
 }

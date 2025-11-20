@@ -76,7 +76,6 @@ export default async ({ app }) => {
   app.component('KForm', await kdkCoreUtils.loadComponent('form/KForm'))
   app.component('KGrid', await kdkCoreUtils.loadComponent('collection/KGrid'))
   app.component('KBoard', await kdkCoreUtils.loadComponent('collection/KBoard'))
-  app.component('KHistory', await kdkCoreUtils.loadComponent('collection/KHistory'))
   app.component('KItem', await kdkCoreUtils.loadComponent('collection/KItem'))
   app.component('KCardSection', await kdkCoreUtils.loadComponent('collection/KCardSection'))
   app.component('KDescriptionCardSection', await kdkCoreUtils.loadComponent('collection/KDescriptionCardSection'))
