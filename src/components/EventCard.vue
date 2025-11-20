@@ -144,7 +144,8 @@
 
 <script>
 import _ from 'lodash'
-import { mixins as kCoreMixins, utils as kCoreUtils, Storage } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kCoreUtils, Storage, Store } from '@kalisio/kdk/core.client'
+import { Navigator } from '@kalisio/kdk/map.client.map'
 import { useAlerts, useOrganisations } from '../composables'
 import mixins from '../mixins'
 import ChipsPane from './ChipsPane.vue'
@@ -382,19 +383,16 @@ export default {
       return _.get(this.item, 'location.geometry.coordinates[0]')
     },
     launchGoogleMaps () {
-      let url = 'https://www.google.com/maps/dir/?api=1'
-      if (this.hasPosition) url = `${url}&destination=${this.getLatitude()},${this.getLongitude()}`
-      window.open(url)
+      Store.set('navigator', 'google-maps')
+      if (this.hasPosition) Navigator.navigateTo(this.getLatitude(), this.getLongitude())
     },
     launchApplePlans () {
-      let url = 'https://maps.apple.com/'
-      if (this.hasPosition) url = `${url}place?ll=${this.getLatitude()},${this.getLongitude()}`
-      window.open(url)
+      Store.set('navigator', 'apple-plan')
+      if (this.hasPosition) Navigator.navigateTo(this.getLatitude(), this.getLongitude())
     },
     launchWaze () {
-      let url = 'https://waze.com/ul'
-      if (this.hasPosition) url = `${url}?q=${this.getLatitude()},${this.getLongitude()}`
-      window.open(url)
+      Store.set('navigator', 'waze')
+      if (this.hasPosition) Navigator.navigateTo(this.getLatitude(), this.getLongitude())
     },
     browseMedia () {
       this.$refs.mediaBrowser.show(this.attachments)
