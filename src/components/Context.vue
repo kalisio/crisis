@@ -38,18 +38,25 @@ onBeforeMount(() => {
   const catalogService = planetApi.getServiceInstance('catalog', props.contextId, { create: false })
   if (catalogService) return
   // Declare the organisation services if not already done
+  // As map services are distributed they are available in both app and planet API
+  planetApi.createService('configurations', { context: props.contextId })
   planetApi.createService('catalog', { context: props.contextId })
   planetApi.createService('features', { context: props.contextId })
   planetApi.createService('styles', { context: props.contextId })
   planetApi.createService('projects', { context: props.contextId })
+  planetApi.createService('alerts', { context: props.contextId })
   api.createService('configurations', { context: props.contextId })
+  api.createService('catalog', { context: props.contextId })
+  api.createService('features', { context: props.contextId })
+  api.createService('styles', { context: props.contextId })
+  api.createService('projects', { context: props.contextId })
+  api.createService('alerts', { context: props.contextId })
   api.createService('groups', { context: props.contextId })
   api.createService('members', { context: props.contextId })
   api.createService('tags', { context: props.contextId })
   Storage.createService(props.contextId)
   // Uploading can require a long time*
   api.getService('storage', props.contextId).timeout = 60 * 60 * 1000 // 1h should be sufficient since we also have size limits
-  api.createService('alerts', { context: props.contextId })
   api.createService('events', { context: props.contextId })
   api.createService('event-logs', { context: props.contextId })
   api.createService('event-templates', { context: props.contextId })
