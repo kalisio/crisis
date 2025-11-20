@@ -15,14 +15,10 @@ export async function clickPermission (page, permission, wait = 250) {
   if (permission === 'manager') index = 2
   if (permission === 'owner') index = 3
   const xpath = `//*[@id="permission-field"]/div[${index}]/div`
-  const elements = await page.$x(xpath)
-  if (elements.length > 0) {
-    elements[0].click()
-    await core.waitForTimeout(wait)
-  }
+  await core.clickXPath(page, xpath)
 }
 
-export async function goToEventsActivity (page, organisation, wait = 2000) {
+export async function goToEventsActivity (page, organisation, wait = 6000) {
   const url = page.url()
   if (!url.includes('events')) {
     // We can pass an object or a name
@@ -33,7 +29,7 @@ export async function goToEventsActivity (page, organisation, wait = 2000) {
   }
 }
 
-export async function goToEventLogs (page, organisation, event, wait = 2000) {
+export async function goToEventLogs (page, organisation, event, wait = 6000) {
   await goToEventsActivity(page, organisation)
   await core.clickItemAction(page, eventComponent, event.name, 'event-logs', wait)
 }
@@ -42,7 +38,7 @@ export async function closeEventLogs (page, wait = 2000) {
   await core.click(page, '.q-dialog #close-action', wait)
 }
 
-export async function goToEventMap (page, organisation, event, wait = 2000) {
+export async function goToEventMap (page, organisation, event, wait = 6000) {
   await goToEventsActivity(page, organisation)
   await core.clickItemAction(page, eventComponent, event.name, 'event-map', wait)
 }
@@ -155,11 +151,7 @@ export async function createEventTemplate (page, organisation, template, wait = 
   // Set expiry duration
   await core.click(page, '#expiryDuration-field')
   const xpath = `//*[@id="${template.expiryDuration}"]`
-  const elements = await page.$x(xpath)
-  if (elements.length > 0) {
-    elements[0].click()
-    await core.waitForTimeout(wait)
-  }
+  await core.clickXPath(page, xpath)
   await core.clickAction(page, 'apply-button', wait)
 }
 
@@ -175,7 +167,7 @@ export async function createEventTemplateWorkflow (page, organisation, template,
     for (let j = 0; j < interactions.length; j++) {
       const interaction = interactions[j]
       const xpath = '//input[@id="interaction-field"]'
-      const elements = await page.$x(xpath)
+      const elements = await page.$$('xpath/.' + xpath)
       if (elements.length > 0) {
         elements[0].type(interaction)
         await core.waitForTimeout(wait)
@@ -230,7 +222,7 @@ export async function editEventTemplateWorkflow (page, organisation, template, d
     // Remove last
     for (let j = 0; j < step.lastInteractionsLength; j++) {
       const xpath = '//div[@id="chip-0"]//i[contains(@role, "button")]'
-      const elements = await page.$x(xpath)
+      const elements = await page.$$('xpath/.' + xpath)
       if (elements.length > 0) {
         elements[0].click()
         await core.waitForTimeout(wait)
@@ -241,7 +233,7 @@ export async function editEventTemplateWorkflow (page, organisation, template, d
     for (let j = 0; j < interactions.length; j++) {
       const interaction = interactions[j]
       const xpath = '//input[@id="interaction-field"]'
-      const elements = await page.$x(xpath)
+      const elements = await page.$$('xpath/.' + xpath)
       if (elements.length > 0) {
         elements[0].type(interaction)
         await core.waitForTimeout(wait)

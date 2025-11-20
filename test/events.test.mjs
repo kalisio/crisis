@@ -3,6 +3,7 @@ import chai, { util, expect } from 'chai'
 import chailint from 'chai-lint'
 import { core } from './kdk/index.mjs'
 import * as events from './events.mjs'
+import * as utilsClient from './utils.client.mjs'
 
 const suite = 'events'
 
@@ -81,17 +82,17 @@ describe(`suite:${suite}`, () => {
         devtools: false
       },
       localStorage: {
-        'kalisio crisis-welcome': false,
-        'kalisio crisis-install': false
+        'crisis-welcome': false,
+        'crisis-install': false
       }
     })
     // Prepare structure for current run
-    await client.createOrganisation(org)
-    await client.createMembers(org)
-    await client.createGroups(org)
-    await client.createTags(org)
-    await client.tagMembers(org)
-    await client.groupMembers(org)
+    await utilsClient.createOrganisation(org, client)
+    await utilsClient.createMembers(org, client)
+    await utilsClient.createGroups(org, client)
+    await utilsClient.createTags(org, client)
+    await utilsClient.tagMembers(org, client)
+    await utilsClient.groupMembers(org, client)
     page = await runner.start()
   })
 
@@ -252,10 +253,10 @@ describe(`suite:${suite}`, () => {
     this.timeout(60000)
     await runner.stop()
     // First remove groups in case removal test failed
-    await client.removeGroups(org)
+    await utilsClient.removeGroups(org, client)
     // Then members
-    await client.removeMembers(org)
+    await utilsClient.removeMembers(org, client)
     // Then organisation/owner
-    await client.removeOrganisation(org)
+    await utilsClient.removeOrganisation(org, client)
   })
 })

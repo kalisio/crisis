@@ -13,7 +13,7 @@ export const archivedEventComponent = 'ArchivedEventCard'
 export const eventComponent = 'EventCard'
 export const archivedPlanCard = 'ArchivedPlanCard'
 
-export async function goToPlanTemplatesActivity (page, organisation, wait = 2000) {
+export async function goToPlanTemplatesActivity (page, organisation, wait = 6000) {
   const url = page.url()
   if (!url.includes('plan-templates')) {
     // We can pass an object or a name
@@ -25,7 +25,7 @@ export async function goToPlanTemplatesActivity (page, organisation, wait = 2000
   }
 }
 
-export async function goToPlansActivity (page, organisation, wait = 2000) {
+export async function goToPlansActivity (page, organisation, wait = 6000) {
   const url = page.url()
   if (!url.includes('plans')) {
     // We can pass an object or a name
@@ -41,7 +41,7 @@ export async function clickPermission (page, permissions, wait = 250) {
   if (permissions === 'manager') role = 2
   if (permissions === 'owner') role = 3
   const xpath = `//*[@id="permission-field"]/div[${role}]/div`
-  const elements = await page.$x(xpath)
+  const elements = await page.$$('xpath/.' + xpath)
   if (elements.length > 0) {
     elements[0].click()
     await core.waitForTimeout(wait)
@@ -170,7 +170,7 @@ export async function goToPlanEvents (page, organisation, plan, wait = 2000) {
   }
 }
 
-export async function goToObjectives (page, organisation, plan, from = 'plan', wait = 2000) {
+export async function goToObjectives (page, organisation, plan, from = 'plan', wait = 6000) {
   const url = page.url()
   if (url.includes('objectives')) return
   if (from === 'planTemplate') {

@@ -4,6 +4,7 @@ import chailint from 'chai-lint'
 import { core } from './kdk/index.mjs'
 import * as members from './members.mjs'
 import * as organisations from './organisations.mjs'
+import * as utilsClient from './utils.client.mjs'
 
 const suite = 'members'
 
@@ -50,12 +51,12 @@ describe(`suite:${suite}`, () => {
         args: ['--lang=fr']
       },
       localStorage: {
-        'kalisio crisis-welcome': false,
-        'kalisio crisis-install': false
+        'crisis-welcome': false,
+        'crisis-install': false
       }
     })
     // Prepare structure for current run
-    await client.createOrganisation(org)
+    await utilsClient.createOrganisation(org, client)
     // Create members outside organisation
     await client.createUser(_.find(org.members, { name: 'Member' }))
     await client.createUser(_.find(org.members, { name: 'Manager' }))
@@ -173,8 +174,8 @@ describe(`suite:${suite}`, () => {
   after(async () => {
     await runner.stop()
     // First remove members in case removal test failed
-    await client.removeMembers(org)
+    await utilsClient.removeMembers(org, client)
     // Then organisation/owner
-    await client.removeOrganisation(org)
+    await utilsClient.removeOrganisation(org, client)
   })
 })

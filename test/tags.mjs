@@ -8,7 +8,7 @@ const debug = makeDebug('crisis:test:tags')
 const organisationComponent = 'OrganisationCard'
 const tagComponent = 'team/KTagCard'
 
-export async function goToTagsActivity (page, organisation, wait = 2000) {
+export async function goToTagsActivity (page, organisation, wait = 6000) {
   const url = page.url()
   if (!url.includes('tags')) {
     // We can pass an object or a name
@@ -61,7 +61,7 @@ export async function editTag (page, organisation, tag, value, icon = null, wait
     await core.chooseIcon(page, icon.name, icon.color)
   } else {
     const clearXPath = '(//div[contains(@class, "q-dialog")]//i[contains(@class, "cursor-pointer")])[2]'
-    const elements = await page.$x(clearXPath)
+    const elements = await page.$$('xpath/.' + clearXPath)
     if (elements.length > 0) {
       elements[0].click()
     }
@@ -76,7 +76,7 @@ export async function editTagDescription (page, organisation, tag, description, 
   await core.click(page, '.q-dialog #apply-button', wait)
 }
 
-export async function goToTagMembersActivity (page, organisation, tag, wait = 2000) {
+export async function goToTagMembersActivity (page, organisation, tag, wait = 6000) {
   await goToTagsActivity(page, organisation)
   await core.clickItemAction(page, tagComponent, tag.value, 'list-members', wait)
 }

@@ -4,6 +4,7 @@ import chailint from 'chai-lint'
 import { core } from './kdk/index.mjs'
 import * as groups from './groups.mjs'
 import * as members from './members.mjs'
+import * as utilsClient from './utils.client.mjs'
 
 const suite = 'groups'
 
@@ -52,13 +53,13 @@ describe(`suite:${suite}`, () => {
         args: ['--lang=fr']
       },
       localStorage: {
-        'kalisio crisis-welcome': false,
-        'kalisio crisis-install': false
+        'crisis-welcome': false,
+        'crisis-install': false
       }
     })
     // Prepare structure for current run
-    await client.createOrganisation(org)
-    await client.createMembers(org)
+    await utilsClient.createOrganisation(org, client)
+    await utilsClient.createMembers(org, client)
     // Groups will be manually created by test
     // await client.createGroups(org)
     page = await runner.start()
@@ -87,6 +88,7 @@ describe(`suite:${suite}`, () => {
     member = _.find(org.members, { name: 'Member' })
     await members.joinGroup(page, org, group, member, 'member')
     await groups.goToGroupMembersActivity(page, org, group)
+    await core.waitForTimeout(1000)
     expect(await members.countMembers(page, org)).to.equal(2)
   })
 
@@ -102,6 +104,7 @@ describe(`suite:${suite}`, () => {
     expect(await groups.groupActionExists(page, org, group, 'remove-item-header')).beFalse()
     // Neither on members
     await members.goToMembersActivity(page, org)
+    await core.waitForTimeout(1000)
     expect(await members.memberActionExists(page, org, org.owner, 'join-group')).beFalse()
     await core.clickItemAction(page, members.memberComponent, org.owner.name, `${_.kebabCase(group.name)}-button`)
     expect(await core.elementExists(page, '#leave-group')).beFalse()
@@ -115,6 +118,7 @@ describe(`suite:${suite}`, () => {
     const member = _.find(org.members, { name: 'Manager' })
     await members.leaveGroup(page, org, group, member)
     await groups.goToGroupMembersActivity(page, org, group)
+    await core.waitForTimeout(1000)
     expect(await members.countMembers(page, org)).to.equal(1)
   })
 
@@ -145,6 +149,7 @@ describe(`suite:${suite}`, () => {
     await core.login(page, member)
     const group = _.find(org.groups, { name: 'Group 2' })
     await groups.createGroup(page, org, group)
+    await core.waitForTimeout(5000)
     expect(await groups.countGroups(page, org)).to.equal(2)
     expect(await groups.groupExists(page, org, group)).beTrue()
   })
@@ -216,10 +221,10 @@ describe(`suite:${suite}`, () => {
   after(async () => {
     await runner.stop()
     // First remove groups in case removal test failed
-    await client.removeGroups(org)
+    await utilsClient.removeGroups(org, client)
     // Then members
-    await client.removeMembers(org)
+    await utilsClient.removeMembers(org, client)
     // Then organisation/owner
-    await client.removeOrganisation(org)
+    await utilsClient.removeOrganisation(org, client)
   })
 })

@@ -14,7 +14,8 @@ describe(`suite:${suite}`, () => {
     password: 'Pass;word1'
   }
   const org = {
-    name: user.name
+    name: user.name,
+    description: 'My org'
   }
 
   before(async () => {
@@ -69,9 +70,7 @@ describe(`suite:${suite}`, () => {
   })
 
   it('check member removal is forbidden', async () => {
-    await removeMember(page, org, user)
-    expect(runner.hasError()).beTrue()
-    runner.clearErrors()
+    expect(await core.isElementVisible(page, '#remove-member')).beFalse()
   })
 
   it('check account deletion is forbidden', async () => {

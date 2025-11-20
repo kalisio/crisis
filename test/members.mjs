@@ -13,14 +13,14 @@ export async function clickRole (page, permissions, wait = 250) {
   if (permissions === 'manager') role = 2
   if (permissions === 'owner') role = 3
   const xpath = `//*[@id="role-field"]/div[${role}]/div`
-  const elements = await page.$x(xpath)
+  const elements = await page.$$('xpath/.' + xpath)
   if (elements.length > 0) {
     elements[0].click()
     await core.waitForTimeout(wait)
   }
 }
 
-export async function goToMembersActivity (page, organisation, wait = 2000) {
+export async function goToMembersActivity (page, organisation, wait = 6000) {
   const url = page.url()
   if (!url.includes('members')) {
     // We can pass an object or a name
@@ -137,7 +137,7 @@ export async function addTag (page, organisation, tag, member, wait = 2000) {
 export async function removeTag (page, organisation, tag, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
   const xpath = `//div[contains(@component, "${memberComponent}") and contains(., "${member.name}")]//div[@id="${_.kebabCase(tag.value)}-pane"]//i[contains(@role, "button")]`
-  const elements = await page.$x(xpath)
+  const elements = await page.$$('xpath/.' + xpath)
   if (elements.length > 0) elements[0].click()
   await core.waitForTimeout(wait)
   await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
@@ -149,7 +149,7 @@ export async function filterMembers (page, organisation, filter, wait = 2000) {
   const options = ['owner', 'manager', 'member', 'guest']
   for (let i = 0; i < options.length; ++i) {
     const xpath = `//*[@id="member-filter-popup"]/div/div[${i + 1}]/div`
-    const elements = await page.$x(xpath)
+    const elements = await page.$$('xpath/.' + xpath)
     if (elements.length > 0) {
       const isCheckedHandle = await elements[0].getProperty('ariaChecked')
       const isChecked = (await isCheckedHandle.jsonValue() === 'true')

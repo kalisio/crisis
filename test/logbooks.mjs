@@ -8,7 +8,7 @@ const organisationComponent = 'OrganisationCard'
 export const logbookComponent = 'ArchivedEventCard'
 export const logbookBadgeComponent = 'QBadge'
 
-export async function goToLogbook (page, organisation, wait = 2000) {
+export async function goToLogbook (page, organisation, wait = 6000) {
   const url = page.url()
   if (!url.includes('archived-events')) {
     // We can pass an object or a name

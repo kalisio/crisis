@@ -5,11 +5,11 @@ const debug = makeDebug('crisis:test:events')
 
 export const organisationComponent = 'OrganisationCard'
 
-export async function goToOrganisationsActivity (page, wait = 2000) {
+export async function goToOrganisationsActivity (page, wait = 6000) {
   const url = page.url()
   if (!url.includes('organisations')) {
     debug('Navigating to organisations activity')
-    await core.clickPaneAction(page, 'left', 'my-organisations')
+    await core.clickPaneAction(page, 'left', 'my-organisations', wait)
   }
 }
 

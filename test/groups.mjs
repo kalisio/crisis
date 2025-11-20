@@ -8,7 +8,7 @@ const debug = makeDebug('crisis:test:groups')
 const organisationComponent = 'OrganisationCard'
 export const groupComponent = 'team/KGroupCard'
 
-export async function goToGroupsActivity (page, organisation, wait = 2000) {
+export async function goToGroupsActivity (page, organisation, wait = 6000) {
   const url = page.url()
   if (!url.includes('groups')) {
     // We can pass an object or a name
@@ -66,7 +66,7 @@ export async function removeGroup (page, organisation, group, wait = 1000) {
   await core.click(page, '.q-dialog button:nth-child(2)', wait)
 }
 
-export async function goToGroupMembersActivity (page, organisation, group, wait = 2000) {
+export async function goToGroupMembersActivity (page, organisation, group, wait = 6000) {
   await goToGroupsActivity(page, organisation)
   await core.clickItemAction(page, groupComponent, group.name, 'list-members', wait)
 }

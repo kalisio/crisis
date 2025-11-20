@@ -4,6 +4,7 @@ import chailint from 'chai-lint'
 import { core } from './kdk/index.mjs'
 import * as members from './members.mjs'
 import * as tags from './tags.mjs'
+import * as utilsClient from './utils.client.mjs'
 
 const suite = 'tags'
 
@@ -52,13 +53,13 @@ describe(`suite:${suite}`, () => {
         args: ['--lang=fr']
       },
       localStorage: {
-        'kalisio crisis-welcome': false,
-        'kalisio crisis-install': false
+        'crisis-welcome': false,
+        'crisis-install': false
       }
     })
     // Prepare structure for current run
-    await client.createOrganisation(org)
-    await client.createMembers(org)
+    await utilsClient.createOrganisation(org, client)
+    await utilsClient.createMembers(org, client)
     page = await runner.start()
   })
 
@@ -188,10 +189,10 @@ describe(`suite:${suite}`, () => {
   after(async () => {
     await runner.stop()
     // First remove tags in case removal test failed
-    await client.removeTags(org)
+    await utilsClient.removeTags(org, client)
     // Then members
-    await client.removeMembers(org)
+    await utilsClient.removeMembers(org, client)
     // Then organisation/owner
-    await client.removeOrganisation(org)
+    await utilsClient.removeOrganisation(org, client)
   })
 })
