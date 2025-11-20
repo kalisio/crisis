@@ -10,11 +10,14 @@ function defineEventAbilities (subject, can, cannot, app) {
           if (organisation._id) {
             // The unique identifier of a service is its path not its name.
             // Indeed we have for instance a 'events' service in each organisation.
+            can('service', organisation._id.toString() + '/configurations')
             can('service', organisation._id.toString() + '/events')
             can('service', organisation._id.toString() + '/event-logs')
             can('service', organisation._id.toString() + '/event-templates')
             can('service', organisation._id.toString() + '/archived-events')
             can('service', organisation._id.toString() + '/archived-event-logs')
+            // A user can access app configurations
+            can('read', 'configurations', { context: organisation._id })
             // A user can access the templates to create an event
             can('read', 'event-templates', { context: organisation._id })
             // A user can create an event

@@ -40,8 +40,8 @@ import moment from 'moment'
 import chroma from 'chroma-js'
 import sift from 'sift'
 import { ref, toRef, computed } from 'vue'
-import { Layout, mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
-import { Planets, mixins as kMapMixins, composables as kMapComposables, utils as kdkMapUtils } from '@kalisio/kdk/map.client.map'
+import { Configurations, Layout, mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
+import { Planets, mixins as kMapMixins, composables as kMapComposables, utils as kMapUtils } from '@kalisio/kdk/map.client.map'
 import KFeatureActionButton from '@kalisio/kdk/map/client/components/KFeatureActionButton.vue'
 import mixins from '../mixins'
 import { usePlan, useAlerts } from '../composables'
@@ -158,6 +158,30 @@ export default {
       this.alerts.refreshCollection()
       this.events.refreshCollection()
       this.refreshObjectivesLayer()
+    },
+    async getCatalogCategories () {
+      const categories = await kMapMixins.activity.methods.getCatalogCategories()
+      
+      // Order categories using the configuration objects
+      const userCategoriesOrder = await Configurations.getValue('userCategoriesOrder')
+      const defaultCategoriesOrder = await Configurations.getValue('defaultCategoriesOrder')
+      
+      // Reorder default categories
+      kMapUtils.orderCatalogItemsBy(categories, defaultCategoriesOrder)
+
+      // Reorder user categories, unordered first
+      const unorderedUserCategoriesOrder = categories.filter(category => category._id && !userCategoriesOrder.includes(category._id)).map(category => category._id)
+      kMapUtils.orderCatalogItemsBy(categories, unorderedUserCategoriesOrder)
+      // Then ordered ones
+      kMapUtils.orderCatalogItemsBy(categories, userCategoriesOrder)
+
+      return categories
+    },
+    async getOrphanLayers () {
+      const layers = await kMapMixins.activity.methods.getOrphanLayers.call(this)
+      const userOrphanLayersOrder = await Configurations.getValue('userOrphanLayersOrder')
+      kMapUtils.orderCatalogItemsBy(layers, userOrphanLayersOrder)
+      return layers
     },
     getFeatureActions (feature, layer) {
       const featureActions = []
@@ -337,7 +361,7 @@ export default {
     async updateProbedLocationHighlight () {
       await kMapMixins.featureSelection.methods.updateProbedLocationHighlight.call(this)
       if (this.hasProbedLocation()) {
-        this.unhighlight(this.getProbedLocation(), this.getProbedLayer() || { name: kdkMapUtils.ForecastProbeId })
+        this.unhighlight(this.getProbedLocation(), this.getProbedLayer() || { name: kMapUtils.ForecastProbeId })
         // Find time serie for probe, probed location is shared by all series
         const probedLocation = await _.get(this.state.timeSeries, '[0].series[0].probedLocationData')
         if (!probedLocation) return
@@ -345,7 +369,7 @@ export default {
         const feature = (isWeatherProbe
           ? this.getProbedLocationForecastAtCurrentTime(probedLocation)
           : this.getProbedLocationMeasureAtCurrentTime(probedLocation))
-        this.highlight(feature, this.getProbedLayer() || { name: kdkMapUtils.ForecastProbeId })
+        this.highlight(feature, this.getProbedLayer() || { name: kMapUtils.ForecastProbeId })
       }
     },
     getHighlightMarker (feature, options) {
@@ -382,7 +406,7 @@ export default {
 
       const isActive = _.get(feature, 'status.active')
       const hasError = _.get(feature, 'status.error')
-      return kdkMapUtils.createMarkerFromPointStyle(latlng, {
+      return kMapUtils.createMarkerFromPointStyle(latlng, {
         shape: 'circle',
         color: isActive ? '#FF0000' : '#008000',
         icon: {
