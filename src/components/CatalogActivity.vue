@@ -7,7 +7,6 @@
 <script setup>
 import { ref } from 'vue'
 import postRobot from 'post-robot'
-import config from 'config'
 import { api, Context } from '@kalisio/kdk/core.client'
 import { Planets } from '@kalisio/kdk/map.client.map'
 

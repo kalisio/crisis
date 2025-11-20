@@ -86,7 +86,8 @@ import { mixins as kdkCoreMixins, composables as kCoreComposables, utils as kdkC
 import { Planets, mixins as kdkMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 
-const activityMixin = kdkCoreMixins.baseActivity('archivedEventsActivity')
+const name = 'archivedEventsActivity'
+const activityMixin = kdkCoreMixins.baseActivity(name)
 
 // For mapping or statistics we get all events at once to avoid managing pagination
 const MAX_EVENTS = 5000

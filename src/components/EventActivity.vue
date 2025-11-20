@@ -268,7 +268,7 @@ export default {
     onEventLogsCollectionRefreshed () {
       // Process logs to make it usable as a more conveient object by adding icon, etc.
       // It will also avoid any doublon in case of data duplication
-      let count = this.eventLogsItems.length
+      const count = this.eventLogsItems.length
       this.processedEventLogs = this.processStates(this.eventLogsItems)
       // Update total count accordingly
       if (count > this.processedEventLogs.length) {
@@ -333,7 +333,7 @@ export default {
     const projectQuery = _.get(config, 'planets.kalisio-planet.project.default')
     await loadProject(projectQuery)
     logger.info('[CRISIS] Kalisio Planet project loaded')
-    
+
     return {
       ..._.omit(activity, 'CurrentActivityContext'),
       ...activity.CurrentActivityContext,

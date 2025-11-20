@@ -337,7 +337,7 @@ export default {
     async updateProbedLocationHighlight () {
       await kMapMixins.featureSelection.methods.updateProbedLocationHighlight.call(this)
       if (this.hasProbedLocation()) {
-        this.unhighlight(this.getProbedLocation(), this.getProbedLayer() || { name: kMapUtils.ForecastProbeId })
+        this.unhighlight(this.getProbedLocation(), this.getProbedLayer() || { name: kdkMapUtils.ForecastProbeId })
         // Find time serie for probe, probed location is shared by all series
         const probedLocation = await _.get(this.state.timeSeries, '[0].series[0].probedLocationData')
         if (!probedLocation) return
@@ -345,7 +345,7 @@ export default {
         const feature = (isWeatherProbe
           ? this.getProbedLocationForecastAtCurrentTime(probedLocation)
           : this.getProbedLocationMeasureAtCurrentTime(probedLocation))
-        this.highlight(feature, this.getProbedLayer() || { name: kMapUtils.ForecastProbeId })
+        this.highlight(feature, this.getProbedLayer() || { name: kdkMapUtils.ForecastProbeId })
       }
     },
     getHighlightMarker (feature, options) {
@@ -644,7 +644,7 @@ export default {
     await loadProject(projectQuery)
     logger.info('[CRISIS] Kalisio Planet project loaded')
     activity.setSelectionMode('multiple')
-    
+
     return {
       ..._.omit(activity, 'CurrentActivityContext'),
       ...activity.CurrentActivityContext,
