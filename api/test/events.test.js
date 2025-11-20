@@ -254,91 +254,91 @@ describe('events', () => {
   // Let enough time to process
     .timeout(10000)
 
-  // it('org member can create event', () => {
-  //   const operation = eventService.create({
-  //     name: 'member event',
-  //     template: 'template',
-  //     participants: [{ _id: orgManagerObject._id, service: 'members' }]
-  //   },
-  //   {
-  //     notification: { body: 'event created' },
-  //     user: orgUserObject,
-  //     checkAuthorisation: true
-  //   })
-  //     .then(event => {
-  //       eventObject = event
-  //       return eventService.find({ query: { name: 'member event' }, user: orgUserObject, checkAuthorisation: true })
-  //     })
-  //     .then(events => {
-  //       expect(events.data.length > 0).beTrue()
-  //       eventObject = events.data[0]
-  //       // Check for creator to be registered as coordinator
-  //       expect(eventObject.coordinators.length > 0).beTrue()
-  //       expect(eventObject.coordinators[0]._id.toString()).to.equal(orgUserObject._id.toString())
-  //     })
-  //   return operation
-  // })
-  // // Let enough time to process
-  //   .timeout(15000)
+  it('org member can create event', () => {
+    const operation = eventService.create({
+      name: 'member event',
+      template: 'template',
+      participants: [{ _id: orgManagerObject._id, service: 'members' }]
+    },
+    {
+      notification: { body: 'event created' },
+      user: orgUserObject,
+      checkAuthorisation: true
+    })
+      .then(event => {
+        eventObject = event
+        return eventService.find({ query: { name: 'member event' }, user: orgUserObject, checkAuthorisation: true })
+      })
+      .then(events => {
+        expect(events.data.length > 0).beTrue()
+        eventObject = events.data[0]
+        // Check for creator to be registered as coordinator
+        expect(eventObject.coordinators.length > 0).beTrue()
+        expect(eventObject.coordinators[0]._id.toString()).to.equal(orgUserObject._id.toString())
+      })
+    return operation
+  })
+  // Let enough time to process
+    .timeout(15000)
 
-  // it('org member can update event', () => {
-  //   const operation = eventService.patch(eventObject._id, {
-  //     name: 'updated member event'
-  //   }, {
-  //     notification: { body: 'event updated' },
-  //     user: orgUserObject,
-  //     checkAuthorisation: true
-  //   })
-  //     .then(event => {
-  //       eventObject = event
-  //       return eventService.find({ query: { name: 'updated member event' }, user: orgUserObject, checkAuthorisation: true })
-  //     })
-  //     .then(events => {
-  //       expect(events.data.length > 0).beTrue()
-  //     })
-  //   return operation
-  // })
-  // // Let enough time to process
-  //   .timeout(15000)
+  it('org member can update event', () => {
+    const operation = eventService.patch(eventObject._id, {
+      name: 'updated member event'
+    }, {
+      notification: { body: 'event updated' },
+      user: orgUserObject,
+      checkAuthorisation: true
+    })
+      .then(event => {
+        eventObject = event
+        return eventService.find({ query: { name: 'updated member event' }, user: orgUserObject, checkAuthorisation: true })
+      })
+      .then(events => {
+        expect(events.data.length > 0).beTrue()
+      })
+    return operation
+  })
+  // Let enough time to process
+    .timeout(15000)
 
-//   it('org member can delete an event', async () => {
-//     await eventService.remove(eventObject._id, {
-//       notification: { body: 'event updated' },
-//       user: orgUserObject,
-//       checkAuthorisation: true
-//     })
-//     const events = await eventService.find({ query: { name: 'updated member event' }, user: orgUserObject, checkAuthorisation: true })
-//     expect(events.data.length === 0).beTrue()
-//   })
-//   // Let enough time to process
-//     .timeout(10000)
+  it('org member can delete an event', async () => {
+    await eventService.remove(eventObject._id, {
+      notification: { body: 'event updated' },
+      user: orgUserObject,
+      checkAuthorisation: true
+    })
+    const events = await eventService.find({ query: { name: 'updated member event' }, user: orgUserObject, checkAuthorisation: true })
+    expect(events.data.length === 0).beTrue()
+  })
+  // Let enough time to process
+    .timeout(10000)
 
-  // it('org manager can create event', () => {
-  //   const operation = eventService.create({
-  //     name: 'event',
-  //     template: 'template',
-  //     participants: [{ _id: orgUserObject._id, service: 'members' }]
-  //   },
-  //   {
-  //     notification: { body: 'event created' },
-  //     user: orgManagerObject,
-  //     checkAuthorisation: true
-  //   })
-  //     .then(event => {
-  //       eventObject = event
-  //       return eventService.find({ query: { name: 'event' }, user: orgManagerObject, checkAuthorisation: true })
-  //     })
-  //     .then(events => {
-  //       expect(events.data.length > 0).beTrue()
-  //       eventObject = events.data[0]
-  //       // Check for creator to be registered as coordinator
-  //       expect(eventObject.coordinators.length > 0).beTrue()
-  //       expect(eventObject.coordinators[0]._id.toString()).to.equal(orgManagerObject._id.toString())
-  //     })
-  //   return operation
-  // })
-  // // Let enough time to process
-  //   .timeout(15000)
+  it('org manager can create event', () => {
+    const operation = eventService.create({
+      name: 'event',
+      template: 'template',
+      participants: [{ _id: orgUserObject._id, service: 'members' }]
+    },
+    {
+      notification: { body: 'event created' },
+      user: orgManagerObject,
+      checkAuthorisation: true
+    })
+      .then(event => {
+        eventObject = event
+        return eventService.find({ query: { name: 'event' }, user: orgManagerObject, checkAuthorisation: true })
+      })
+      .then(events => {
+        expect(events.data.length > 0).beTrue()
+        eventObject = events.data[0]
+        // Check for creator to be registered as coordinator
+        expect(eventObject.coordinators.length > 0).beTrue()
+        expect(eventObject.coordinators[0]._id.toString()).to.equal(orgManagerObject._id.toString())
+      })
+    return operation
+  })
+  // Let enough time to process
+    .timeout(15000)
 
   it('non-members cannot access events', async () => {
     try {
@@ -370,136 +370,136 @@ describe('events', () => {
   // Let enough time to process
     .timeout(5000)
 
-//   it('members cannot access events when they are not participants', async () => {
-//     const events = await eventService.find({ query: {}, user: userObject, checkAuthorisation: true })
-//     expect(events.data.length === 0).beTrue()
-//   })
+  it('members cannot access events when they are not participants', async () => {
+    const events = await eventService.find({ query: {}, user: userObject, checkAuthorisation: true })
+    expect(events.data.length === 0).beTrue()
+  })
 
-//   it('event coordinators can update events', () => {
-//     const operation = eventService.patch(eventObject._id, {
-//       name: 'updated event'
-//     }, {
-//       notification: { body: 'event updated' },
-//       user: orgManagerObject,
-//       checkAuthorisation: true
-//     })
-//       .then(event => {
-//         eventObject = event
-//         return eventService.find({ query: { name: 'updated event' }, user: orgManagerObject, checkAuthorisation: true })
-//       })
-//       .then(events => {
-//         expect(events.data.length > 0).beTrue()
-//       })
-//     return operation
-//   })
-//   // Let enough time to process
-//     .timeout(15000)
+  it('event coordinators can update events', () => {
+    const operation = eventService.patch(eventObject._id, {
+      name: 'updated event'
+    }, {
+      notification: { body: 'event updated' },
+      user: orgManagerObject,
+      checkAuthorisation: true
+    })
+      .then(event => {
+        eventObject = event
+        return eventService.find({ query: { name: 'updated event' }, user: orgManagerObject, checkAuthorisation: true })
+      })
+      .then(events => {
+        expect(events.data.length > 0).beTrue()
+      })
+    return operation
+  })
+  // Let enough time to process
+    .timeout(15000)
 
-//   it('event coordinators can upload/download data to/from event storage', async () => {
-//     const fileId = `${eventObject._id}/buffer.txt`
-//     const content = 'some buffered data'
-//     const blob = new Blob([content], { type: 'text/plain' })
-//     storageObject = await storageService.putObject({
-//       id: fileId,
-//       type: blob.type,
-//       buffer: await blob.arrayBuffer()
-//     })
-//     expect(storageObject._id).to.equal(fileId)
-//     let response = await storageService.get(fileId)
-//     expect(response.buffer).toExist()
-//     expect(response.type).to.equal(blob.type)
-//     const buffer = storageService.atob(response.buffer)
-//     expect(buffer.toString()).to.equal(content)
-//     response = await storageService.remove(fileId)
-//     expect(response._id).to.equal(fileId)
-//     expect(response.$metadata.httpStatusCode).to.equal(204)
-//   })
-//     .timeout(15000)
+  it('event coordinators can upload/download data to/from event storage', async () => {
+    const fileId = `${eventObject._id}/buffer.txt`
+    const content = 'some buffered data'
+    const blob = new Blob([content], { type: 'text/plain' })
+    storageObject = await storageService.putObject({
+      id: fileId,
+      type: blob.type,
+      buffer: await blob.arrayBuffer()
+    })
+    expect(storageObject._id).to.equal(fileId)
+    let response = await storageService.get(fileId)
+    expect(response.buffer).toExist()
+    expect(response.type).to.equal(blob.type)
+    const buffer = storageService.atob(response.buffer)
+    expect(buffer.toString()).to.equal(content)
+    response = await storageService.remove(fileId)
+    expect(response._id).to.equal(fileId)
+    expect(response.$metadata.httpStatusCode).to.equal(204)
+  })
+    .timeout(15000)
 
-//   it('members can access events when they are participants', async () => {
-//     const events = await eventService.find({ query: {}, user: orgUserObject, checkAuthorisation: true })
-//     expect(events.data.length === 1).beTrue()
-//   })
-//   // Let enough time to process
-//     .timeout(5000)
+  it('members can access events when they are participants', async () => {
+    const events = await eventService.find({ query: {}, user: orgUserObject, checkAuthorisation: true })
+    expect(events.data.length === 1).beTrue()
+  })
+  // Let enough time to process
+    .timeout(5000)
 
-//   it('participants can create event logs', async () => {
-//     await eventLogService.create({ event: eventObject._id }, { user: orgUserObject, checkAuthorisation: true })
-//     const logs = await eventLogService.find({ query: { lastInEvent: true }, user: orgUserObject, checkAuthorisation: true })
-//     expect(logs.data.length === 1).beTrue()
-//   })
-//   // Let enough time to process
-//     .timeout(5000)
+  it('participants can create event logs', async () => {
+    await eventLogService.create({ event: eventObject._id }, { user: orgUserObject, checkAuthorisation: true })
+    const logs = await eventLogService.find({ query: { lastInEvent: true }, user: orgUserObject, checkAuthorisation: true })
+    expect(logs.data.length === 1).beTrue()
+  })
+  // Let enough time to process
+    .timeout(5000)
 
-//   it('coordinators can create event logs', () => {
-//     const operation = eventLogService.create({
-//       event: eventObject._id,
-//       participant: orgUserObject._id,
-//       stakeholder: 'coordinator',
-//       properties: { interaction: { value: 'go' } }
-//     }, { user: orgManagerObject, checkAuthorisation: true })
-//       .then(log => {
-//         return eventLogService.find({ query: { lastInEvent: true }, user: orgManagerObject, checkAuthorisation: true })
-//       })
-//       .then(logs => {
-//         expect(logs.data.length === 1).beTrue()
-//       })
-//     return operation
-//   })
-//   // Let enough time to process
-//     .timeout(5000)
+  it('coordinators can create event logs', () => {
+    const operation = eventLogService.create({
+      event: eventObject._id,
+      participant: orgUserObject._id,
+      stakeholder: 'coordinator',
+      properties: { interaction: { value: 'go' } }
+    }, { user: orgManagerObject, checkAuthorisation: true })
+      .then(log => {
+        return eventLogService.find({ query: { lastInEvent: true }, user: orgManagerObject, checkAuthorisation: true })
+      })
+      .then(logs => {
+        expect(logs.data.length === 1).beTrue()
+      })
+    return operation
+  })
+  // Let enough time to process
+    .timeout(5000)
 
-//   it('events and logs are replicated in archive', async () => {
-//     const events = await archivedEventService.find({ query: {}, user: orgManagerObject, checkAuthorisation: true })
-//     expect(events.data.length).to.equal(3)
-//     const logs = await archivedEventLogService.find({ query: {}, user: orgManagerObject, checkAuthorisation: true })
-//     expect(logs.data.length).to.equal(2)
-//   })
+  it('events and logs are replicated in archive', async () => {
+    const events = await archivedEventService.find({ query: {}, user: orgManagerObject, checkAuthorisation: true })
+    expect(events.data.length).to.equal(3)
+    const logs = await archivedEventLogService.find({ query: {}, user: orgManagerObject, checkAuthorisation: true })
+    expect(logs.data.length).to.equal(2)
+  })
 
-//   it('participants can be counted on archived event logs', async () => {
-//     // Count by event
-//     let result = await archivedEventLogService.find({
-//       query: { $aggregate: true, event: eventObject._id },
-//       user: orgManagerObject,
-//       checkAuthorisation: true
-//     })
-//     expect(result.length).to.equal(1)
-//     expect(result[0]._id.toString()).to.equal(eventObject._id.toString())
-//     expect(result[0].count).to.equal(2)
-//     // Count by event template
-//     result = await archivedEventLogService.find({
-//       query: { $aggregate: 'template', event: eventObject._id },
-//       user: orgManagerObject,
-//       checkAuthorisation: true
-//     })
-//     expect(result.length).to.equal(1)
-//     expect(result[0]._id).to.equal('template')
-//     expect(result[0].count).to.equal(2)
-//   })
-//   // Let enough time to process
-//     .timeout(10000)
+  it('participants can be counted on archived event logs', async () => {
+    // Count by event
+    let result = await archivedEventLogService.find({
+      query: { $aggregate: true, event: eventObject._id },
+      user: orgManagerObject,
+      checkAuthorisation: true
+    })
+    expect(result.length).to.equal(1)
+    expect(result[0]._id.toString()).to.equal(eventObject._id.toString())
+    expect(result[0].count).to.equal(2)
+    // Count by event template
+    result = await archivedEventLogService.find({
+      query: { $aggregate: 'template', event: eventObject._id },
+      user: orgManagerObject,
+      checkAuthorisation: true
+    })
+    expect(result.length).to.equal(1)
+    expect(result[0]._id).to.equal('template')
+    expect(result[0].count).to.equal(2)
+  })
+  // Let enough time to process
+    .timeout(10000)
 
-//   it('event coordinators can remove events', () => {
-//     const operation = eventService.remove(eventObject._id, {
-//       notification: { body: 'event removed' },
-//       user: orgManagerObject,
-//       checkAuthorisation: true
-//     })
-//       .then(event => {
-//         eventObject = event
-//         return eventService.find({ query: { name: 'updated event' }, user: orgManagerObject, checkAuthorisation: true })
-//       })
-//       .then(events => {
-//         expect(events.data.length === 0).beTrue()
-//         return storageService.get('buffer.txt')
-//       })
-//       .catch(error => {
-//         expect(error).toExist()
-//       })
-//     return operation
-//   })
-//   // Let enough time to process
-//     .timeout(10000)
+  it('event coordinators can remove events', () => {
+    const operation = eventService.remove(eventObject._id, {
+      notification: { body: 'event removed' },
+      user: orgManagerObject,
+      checkAuthorisation: true
+    })
+      .then(event => {
+        eventObject = event
+        return eventService.find({ query: { name: 'updated event' }, user: orgManagerObject, checkAuthorisation: true })
+      })
+      .then(events => {
+        expect(events.data.length === 0).beTrue()
+        return storageService.get('buffer.txt')
+      })
+      .catch(error => {
+        expect(error).toExist()
+      })
+    return operation
+  })
+  // Let enough time to process
+    .timeout(10000)
 
   it('removes test user', async () => {
     await userService.remove(userObject._id, { user: userObject, checkAuthorisation: true })
