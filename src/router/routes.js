@@ -69,8 +69,8 @@ module.exports = [{
             create: {
               name: 'create-organisation',
               component: 'editor/KModalEditor',
-              props: true
-              // tour: tours['create-organisation']
+              props: true,
+              tour: tours['create-organisation']
             },
             'edit/:objectId/:schemaProperties?': {
               name: 'edit-organisation',
@@ -102,29 +102,29 @@ module.exports = [{
                 add: {
                   name: 'add-member',
                   component: 'team/KAddMember',
-                  props: true
-                  // tour: tours['add-member']
+                  props: true,
+                  tour: tours['add-member']
                 },
                 'edit/:objectId/role': {
                   name: 'edit-member-role',
                   component: 'team/KChangeRole',
-                  props: true
-                  // tour: tours['edit-member-role']
+                  props: true,
+                  tour: tours['edit-member-role']
                 },
                 'add-tag/:objectId': {
                   name: 'add-tag',
                   component: 'team/KAddTag',
-                  props: true
-                  // tour: tours['add-tag']
+                  props: true,
+                  tour: tours['add-tag']
                 },
                 'join-group/:objectId': {
                   name: 'join-group',
                   component: 'team/KJoinGroup',
-                  props: true
-                  // tour: tours['join-group']
+                  props: true,
+                  tour: tours['join-group']
                 }
-              }
-              // tour: tours.members
+              },
+              tour: tours.members
             },
             tags: {
               name: 'tags-activity',
@@ -134,16 +134,16 @@ module.exports = [{
                 create: {
                   name: 'create-tag',
                   component: 'editor/KModalEditor',
-                  props: true
-                  // tour: tours['create-tag']
+                  props: true,
+                  tour: tours['create-tag']
                 },
                 'edit/:objectId/:schemaProperties?': {
                   name: 'edit-tag',
                   component: 'editor/KModalEditor',
                   props: true
                 }
-              }
-              // tour: tours.tags
+              },
+              tour: tours.tags
             },
             groups: {
               name: 'groups-activity',
@@ -153,16 +153,16 @@ module.exports = [{
                 create: {
                   name: 'create-group',
                   component: 'editor/KModalEditor',
-                  props: true
-                  // tour: tours['create-group']
+                  props: true,
+                  tour: tours['create-group']
                 },
                 'edit/:objectId/:schemaProperties?': {
                   name: 'edit-group',
                   component: 'editor/KModalEditor',
                   props: true
                 }
-              }
-              // tour: tours.groups
+              },
+              tour: tours.groups
             },
             catalog: {
               name: 'catalog-activity',
