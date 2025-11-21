@@ -536,6 +536,7 @@ describe('events', () => {
 
   // Cleanup
   after(async () => {
+    if (server) await server.close()
     await userService.Model.drop()
     await orgService.Model.drop()
     // await app.db.instance.dropDatabase()
