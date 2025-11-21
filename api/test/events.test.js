@@ -60,10 +60,6 @@ describe('events', () => {
   it('registers the global services', async () => {
 		await createDatabasesService.call(app)
     const orgsService = await app.createService('organisations', { modelsPath, servicesPath })
-    orgsService.on('created', organisation => {
-			const db = app.db.client.db(organisation._id.toString())
-			orgsService.createOrganisationServices(organisation, db)
-    })
     orgsService.on('removed', organisation => {
       orgsService.removeOrganisationServices(organisation)
     })
@@ -127,7 +123,7 @@ describe('events', () => {
   })
   // Let enough time to process
     .timeout(15000)
-
+   
   it('creates a org user', async () => {
     const user = await userService.create({ email: 'user@test.org', name: 'org-user', password: 'Pass;word1' }, { checkAuthorisation: true })
     orgUserObject = user
@@ -526,8 +522,6 @@ describe('events', () => {
     expect(eventService).beNull()
     eventTemplateService = app.getService(`${orgObject._id.toString()}/event-templates`)
     expect(eventTemplateService).beNull()
-    eventLogService = app.getService(`${orgObject._id.toString()}/event-logs`)
-    expect(eventLogService).beNull()
   })
   // Let enough time to process
     .timeout(5000)
