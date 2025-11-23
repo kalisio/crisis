@@ -226,6 +226,7 @@
       "EDIT_WORKFLOW_LABEL": "Modifiez le processus de votre modèle en sélectionnant cette option.",
       "REMOVE_WORKFLOW_LABEL": "Supprimez le processus de votre modèle en sélectionnant cette option.",
       "COPY_TEMPLATE_LABEL": "Gagnez du temps en créant un nouveau modèle à partir de celui-ci via cette action.",
+      "TEMPLATE_OVERFLOW_MENU_LABEL": "@:tours.CARD_OVERFLOW_MENU_LABEL",
       "REMOVE_TEMPLATE_LABEL": "Supprimez votre modèle via cette action.",
       "REMOVE_CONFIRMATION_LABEL": "@:tours.REMOVE_CONFIRMATION_LABEL",
       "ORGANISATION_MENU_LABEL": "Utilisez le menu déroulant supérieur pour revenir facilement à vos événements ou aux plans votre organisation.",
