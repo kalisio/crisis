@@ -29,9 +29,14 @@ describe(`suite:${suite}`, () => {
       appName: 'crisis',
       notifications: true,
       browser: {
-        slowMo: 1,
-        args: ['--lang=fr']
-      }
+        slowMo: 5,
+        args: ['--window-size=1280,1024']
+      },
+      localStorage: {
+        'crisis-welcome': false,
+        'crisis-install': false
+      },
+      lang: 'fr'
     })
     page = await runner.start()
   })
@@ -46,11 +51,8 @@ describe(`suite:${suite}`, () => {
 
   it('create account', async () => {
     await core.waitForTimeout(10000)
-    await core.closeInstallDialog(page)
     await core.goToRegisterScreen(page)
     await core.register(page, user)
-    // await core.login(page, user)
-    await core.closeWelcomeDialog(page)
   })
 
   it('check that the user has no organization', async () => {
@@ -82,7 +84,8 @@ describe(`suite:${suite}`, () => {
   it('update profile', async () => {
     await core.updateAccountProfile(page, 'My new name', runner.getDataPath('avatar.png'))
     user.name = 'My new name'
-    // await core.clickLeftOpener(page)
+    // await core.openPane(page, 'left')
+    // await core.waitForTimeout(5000)
     // expect(await runner.captureAndMatch('profile')).beTrue()
   })
 

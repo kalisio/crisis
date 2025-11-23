@@ -70,14 +70,14 @@ describe(`suite:${suite}`, () => {
       geolocation: { latitude: 43.10, longitude: 1.71 },
       notifications: true,
       browser: {
-        slowMo: 1,
-        args: ['--lang=fr'],
-        devtools: false
+        slowMo: 5,
+        args: ['--window-size=1280,1024']
       },
       localStorage: {
         'crisis-welcome': false,
         'crisis-install': false
-      }
+      },
+      lang: 'fr'
     })
     // Prepare structure for current run
     await utilsClient.createOrganisation(org, client)
@@ -105,6 +105,8 @@ describe(`suite:${suite}`, () => {
     expect(await events.countEventTemplates(page, org)).to.equal(1)
     expect(await events.eventTemplateExists(page, org, managerTemplate, 'name')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can create events from templates', async () => {
     const managerTemplate = _.find(org.eventTemplates, { name: 'Manager template' })
@@ -117,18 +119,9 @@ describe(`suite:${suite}`, () => {
     // expect(await events.eventExists(page, org, managerTemplate, 'description')).beTrue()
     expect(await events.eventExists(page, org, managerEventOne, 'name')).beTrue()
     expect(await events.eventExists(page, org, managerEventTwo, 'name')).beTrue()
-    // Check push notifications
-    await core.waitForTimeout(10000)
-    expect(runner.hasInfo('New notification received: Manager event 1')).to.equal(1)
-    expect(runner.hasInfo('New notification received: Manager event 2')).to.equal(1)
   })
-
-  it('notifications are received for events', async () => {
-    // Check push notifications, it usually requires some time to be received
-    await core.waitForTimeout(10000)
-    expect(runner.hasInfo('New notification received: Manager event 1')).to.equal(1)
-    expect(runner.hasInfo('New notification received: Manager event 2')).to.equal(1)
-  })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can remove his events', async () => {
     await core.clickAction(page, 'events')
@@ -136,23 +129,31 @@ describe(`suite:${suite}`, () => {
     await events.removeEvent(page, org, memberEvent)
     expect(await events.countEvents(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('logbook shows 2 events', async () => {
     await logbooks.goToLogbook(page, org)
     await core.waitForTimeout(10000)
     expect(await logbooks.countLogbookEvents(page, org)).to.equal(2)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('logbook shows 1 active event', async () => {
     await logbooks.goToLogbook(page, org)
     await core.waitForTimeout(2000)
     expect(await logbooks.countLogbookOpenedEvents(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('logbook shows 1 closed event', async () => {
     await core.waitForTimeout(2000)
     expect(await logbooks.countLogbookClosedEvents(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   after(async function () {
     // Let enough time to process

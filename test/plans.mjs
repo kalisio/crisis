@@ -22,6 +22,7 @@ export async function goToPlanTemplatesActivity (page, organisation, wait = 6000
     debug('Navigating to plan templates activity')
     await core.expandCard(page, organisationComponent, organisation)
     await core.clickItemAction(page, organisationComponent, organisation, 'organisation-plan-templates', wait)
+    await core.waitForTimeout(1000)
   }
 }
 
@@ -33,10 +34,12 @@ export async function goToPlansActivity (page, organisation, wait = 6000) {
     await goToOrganisationsActivity(page, wait)
     debug('Navigating to plans activity')
     await core.clickItemAction(page, organisationComponent, organisation, 'organisation-plans', wait)
+    await core.waitForTimeout(1000)
   }
 }
 
 export async function clickPermission (page, permissions, wait = 250) {
+  await core.waitForTimeout(1000)
   let role = 1
   if (permissions === 'manager') role = 2
   if (permissions === 'owner') role = 3
@@ -50,6 +53,7 @@ export async function clickPermission (page, permissions, wait = 250) {
 
 export async function createPlanTemplate (page, organisation, template, wait = 2000) {
   await goToPlanTemplatesActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickAction(page, 'create-plan-template')
   await core.type(page, '#name-field', template.name)
   if (template.description) await core.type(page, '#description-field', template.description)
@@ -66,12 +70,14 @@ export async function createPlanTemplate (page, organisation, template, wait = 2
 
 export async function countPlanTemplates (page, organisation) {
   await goToPlanTemplatesActivity(page, organisation)
+  await core.waitForTimeout(1000)
   const count = await core.countItems(page, planTemplateComponent)
   return count
 }
 
 export async function planTemplateExists (page, organisation, template, property) {
   await goToPlanTemplatesActivity(page, organisation)
+  await core.waitForTimeout(1000)
   // Can provide an object with a property to match or a text input
   const exists = await core.itemExists(page, planTemplateComponent, property ? _.get(template, property) : template)
   return exists
@@ -79,6 +85,7 @@ export async function planTemplateExists (page, organisation, template, property
 
 export async function editPlanTemplate (page, organisation, planTemplate, value, wait = 1000) {
   await goToPlanTemplatesActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickItemAction(page, planTemplateComponent, planTemplate.name, 'edit-item-header', 1000)
   await core.type(page, '#name-field', value, false, true)
   await core.click(page, '#apply-button', wait)
@@ -86,6 +93,7 @@ export async function editPlanTemplate (page, organisation, planTemplate, value,
 
 export async function editPlanTemplateDescription (page, organisation, planTemplate, description, wait = 1000) {
   await goToPlanTemplatesActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickItemAction(page, planTemplateComponent, planTemplate.name, 'edit-item-description', 1000)
   await core.type(page, '#description-field', description, false, true)
   await core.click(page, '#apply-button', wait)
@@ -93,12 +101,14 @@ export async function editPlanTemplateDescription (page, organisation, planTempl
 
 export async function countPlans (page, organisation) {
   await goToPlansActivity(page, organisation)
+  await core.waitForTimeout(1000)
   const count = await core.countItems(page, planComponent)
   return count
 }
 
 export async function createPlan (page, organisation, template, plan, wait = 2000) {
   await goToPlansActivity(page, organisation)
+  await core.waitForTimeout(1000)
   // Open FAB if it does exist
   const fab = await core.elementExists(page, '#fab')
   if (fab) await core.clickAction(page, 'fab')
@@ -118,6 +128,7 @@ export async function createPlan (page, organisation, template, plan, wait = 200
 
 export async function planExists (page, organisation, plan, property) {
   await goToPlansActivity(page, organisation)
+  await core.waitForTimeout(1000)
   // Can provide an object with a property to match or a text input
   const exists = await core.itemExists(page, planComponent, property ? _.get(plan, property) : plan)
   return exists
@@ -125,6 +136,7 @@ export async function planExists (page, organisation, plan, property) {
 
 export async function editPlan (page, organisation, plan, value, wait = 1000) {
   await goToPlansActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickItemAction(page, planComponent, plan.name, 'edit-item-header', 1000)
   await core.type(page, '#name-field', value, false, true)
   await core.click(page, '#apply-button', wait)
@@ -132,6 +144,7 @@ export async function editPlan (page, organisation, plan, value, wait = 1000) {
 
 export async function editPlanDescription (page, organisation, plan, description, wait = 1000) {
   await goToPlansActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickItemAction(page, planComponent, plan.name, 'edit-item-description', 1000)
   await core.type(page, '#description-field', description, false, true)
   await core.click(page, '#apply-button', wait)
@@ -139,6 +152,7 @@ export async function editPlanDescription (page, organisation, plan, description
 
 export async function closePlan (page, organisation, plan, wait = 2000) {
   await goToPlansActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickItemAction(page, planComponent, plan.name, 'remove-item-header')
   await core.waitForTimeout(wait)
   await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
@@ -146,6 +160,7 @@ export async function closePlan (page, organisation, plan, wait = 2000) {
 
 export async function closePlanEvent (page, organisation, plan, event, wait = 2000) {
   await goToPlanEvents(page, organisation, plan)
+  await core.waitForTimeout(1000)
   await core.clickItemAction(page, eventComponent, event.name, 'expand-action', wait)
   await core.clickItemAction(page, eventComponent, event.name, 'remove-item-header', wait)
   await core.waitForTimeout(wait)
@@ -154,6 +169,7 @@ export async function closePlanEvent (page, organisation, plan, event, wait = 20
 
 export async function planArchivedEventExists (page, organisation, plan, event, property = 'name') {
   await goToPlanEvents(page, organisation, plan)
+  await core.waitForTimeout(1000)
   // Can provide an object with a property to match or a text input
   const exists = await core.itemExists(page, archivedEventComponent, property ? _.get(event, property) : event)
   return exists
@@ -168,6 +184,7 @@ export async function goToPlanEvents (page, organisation, plan, wait = 2000) {
     debug('Navigating to plan events')
     await core.clickItemAction(page, planComponent, plan.name, 'plan-events', wait)
   }
+  await core.waitForTimeout(1000)
 }
 
 export async function goToObjectives (page, organisation, plan, from = 'plan', wait = 6000) {
@@ -180,10 +197,12 @@ export async function goToObjectives (page, organisation, plan, from = 'plan', w
     await goToPlansActivity(page, organisation, wait)
     await core.clickItemAction(page, planComponent, plan.name, 'edit-objectives', wait)
   }
+  await core.waitForTimeout(1000)
 }
 
 export async function createPlanObjective (page, organisation, plan, objective, from, wait = 2000) {
   await goToObjectives(page, organisation, plan, from)
+  await core.waitForTimeout(1000)
   if (await core.elementExists(page, '#add-plan-objective')) await core.click(page, '#add-plan-objective', wait)
   await core.type(page, '#name-field', objective.name)
   await core.type(page, '#description-field', objective.description)
@@ -193,6 +212,7 @@ export async function createPlanObjective (page, organisation, plan, objective, 
 
 export async function countPlanObjectives (page, organisation, plan, from) {
   await goToObjectives(page, organisation, plan, from)
+  await core.waitForTimeout(1000)
   const count = await core.countItems(page, objectiveComponent)
   await core.click(page, '#close-button')
   return count
@@ -206,11 +226,13 @@ export async function goToArchivedPlans (page, organisation, wait = 2000) {
     await goToPlansActivity(page, organisation)
     debug('Navigating to logbook archives')
     await core.clickItemAction(page, organisationComponent, organisation, 'archived-plans', wait)
+    await core.waitForTimeout(1000)
   }
 }
 
 export async function planArchivedExists (page, organisation, plan, property = 'name') {
   await goToArchivedPlans(page, organisation)
+  await core.waitForTimeout(1000)
   // Can provide an object with a property to match or a text input
   const exists = await core.itemExists(page, archivedPlanCard, property ? _.get(plan, property) : plan)
   return exists
@@ -218,6 +240,7 @@ export async function planArchivedExists (page, organisation, plan, property = '
 
 export async function canCreatePlan (page, organisation, template) {
   await goToPlansActivity(page, organisation)
+  await core.waitForTimeout(1000)
   // Open FAB if it does exist
   let exists = await core.elementExists(page, '#fab')
   if (!exists) return exists
@@ -228,12 +251,14 @@ export async function canCreatePlan (page, organisation, template) {
 
 export async function canCreatePlanTemplate (page, organisation) {
   await goToPlanTemplatesActivity(page, organisation)
+  await core.waitForTimeout(1000)
   const exists = await core.elementExists(page, '#create-plan-template')
   return exists
 }
 
 export async function planTemplateActionExists (page, organisation, planTemplate, action) {
   await goToPlanTemplatesActivity(page, organisation)
+  await core.waitForTimeout(1000)
   const exists = await core.itemActionExists(page, planTemplateComponent, planTemplate.name, action)
   return exists
 }

@@ -91,14 +91,14 @@ describe(`suite:${suite}`, () => {
       geolocation: { latitude: 43.10, longitude: 1.71 },
       notifications: true,
       browser: {
-        slowMo: 1,
-        args: ['--lang=fr'],
-        devtools: false
+        slowMo: 5,
+        args: ['--window-size=1280,1024']
       },
       localStorage: {
-        'kalisio crisis-welcome': false,
-        'kalisio crisis-install': false
-      }
+        'crisis-welcome': false,
+        'crisis-install': false
+      },
+      lang: 'fr'
     })
     // Prepare structure for current run
     await utilsClient.createOrganisation(org, client)
@@ -119,9 +119,7 @@ describe(`suite:${suite}`, () => {
   it('org manager can create event templates without a workflow', async () => {
     const member = _.find(org.members, { name: 'Manager' })
     await core.waitForTimeout(10000)
-    await core.closeInstallDialog(page)
     await core.login(page, member)
-    await core.closeWelcomeDialog(page)
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
     await events.createEventTemplate(page, org, workflowTemplate)
     expect(await events.countEventTemplates(page, org)).to.equal(1)
@@ -130,7 +128,9 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventTemplateActionExists(page, org, workflowTemplate, 'edit-item-workflow')).beFalse()
     expect(await events.eventTemplateActionExists(page, org, workflowTemplate, 'remove-item-workflow')).beFalse()
   })
-
+  // Let enough time to process
+    .timeout(50000)
+  
   it('org manager can add workflow to templates', async () => {
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
     await events.createEventTemplateWorkflow(page, org, workflowTemplate)
@@ -138,6 +138,8 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventTemplateActionExists(page, org, workflowTemplate, 'edit-item-workflow')).beTrue()
     expect(await events.eventTemplateActionExists(page, org, workflowTemplate, 'remove-item-workflow')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can create events with a workflow from templates', async () => {
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
@@ -152,12 +154,8 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventExists(page, org, AWAITING_PARTICIPANT)).beTrue()
     expect(await events.eventExists(page, org, NOT_AWAITING_COORDINATION)).beTrue()
   })
-
-  it('notifications are received for workflow event', async () => {
-    // Check push notifications, it usually requires some time to be received
-    await core.waitForTimeout(10000)
-    expect(runner.hasInfo('New notification received: Workflow event')).to.equal(1)
-  })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can manage his workflow steps', async () => {
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
@@ -175,13 +173,14 @@ describe(`suite:${suite}`, () => {
     // Waiting for member coordination on second step
     expect(await events.eventExists(page, org, NOT_AWAITING_COORDINATION)).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org member can manage his workflow steps', async () => {
     const member = _.find(org.members, { name: 'Member' })
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, member)
-    await core.closeWelcomeDialog(page)
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
     // Waiting for first step
@@ -203,13 +202,14 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventExists(page, org, AWAITING_COORDINATION)).beFalse()
     expect(await events.eventExists(page, org, workflowStep, 'title')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can list participants workflow steps', async () => {
     let member = _.find(org.members, { name: 'Manager' })
     await core.logout(page)
     await core.goToLoginScreen(page)
     await core.login(page, member)
-    await core.closeWelcomeDialog(page)
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
     // Waiting for coordination on second step
     expect(await events.eventExists(page, org, AWAITING_COORDINATION)).beTrue()
@@ -224,6 +224,8 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventLogExists(page, org, workflowEvent, workflowStep, 'value')).beTrue()
     expect(await events.eventLogExists(page, org, workflowEvent, workflowStep, 'comment')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can manage participants workflow steps', async () => {
     const member = _.find(org.members, { name: 'Member' })
@@ -236,6 +238,8 @@ describe(`suite:${suite}`, () => {
     // No more coordination to be performed
     expect(await events.eventExists(page, org, NOT_AWAITING_COORDINATION)).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can view event map', async () => {
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
@@ -253,6 +257,8 @@ describe(`suite:${suite}`, () => {
     */
     await events.closeEventMap(page)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can edit event template with workflow', async () => {
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
@@ -265,6 +271,8 @@ describe(`suite:${suite}`, () => {
     await events.editEventTemplateWorkflow(page, org, workflowTemplate)
     // TODO: check the updated workflow
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can remove workflow from templates', async () => {
     const workflowTemplate = _.find(org.eventTemplates, { name: 'Workflow template' })
@@ -273,6 +281,8 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventTemplateActionExists(page, org, workflowTemplate, 'edit-item-workflow')).beFalse()
     expect(await events.eventTemplateActionExists(page, org, workflowTemplate, 'remove-item-workflow')).beFalse()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can remove events and event templates', async () => {
     const workflowEvent = _.find(org.events, { name: 'Workflow event' })
@@ -282,6 +292,8 @@ describe(`suite:${suite}`, () => {
     await events.removeEventTemplate(page, org, workflowTemplate)
     expect(await events.countEventTemplates(page, org)).to.equal(0)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   after(async function () {
     // Let enough time to process

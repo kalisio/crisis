@@ -50,12 +50,13 @@ describe(`suite:${suite}`, () => {
       notifications: true,
       browser: {
         slowMo: 5,
-        args: ['--lang=fr']
+        args: ['--window-size=1280,1024']
       },
       localStorage: {
         'crisis-welcome': false,
         'crisis-install': false
-      }
+      },
+      lang: 'fr'
     })
     // Prepare structure for current run
     await utilsClient.createOrganisation(org, client)
@@ -80,6 +81,8 @@ describe(`suite:${suite}`, () => {
     expect(await groups.countGroups(page, org)).to.equal(1)
     expect(await groups.groupExists(page, org, group)).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org owner can add members to a group', async () => {
     const group = _.find(org.groups, { name: 'Group 1' })
@@ -91,6 +94,8 @@ describe(`suite:${suite}`, () => {
     await core.waitForTimeout(1000)
     expect(await members.countMembers(page, org)).to.equal(2)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org member cannot edit his group', async () => {
     const group = _.find(org.groups, { name: 'Group 1' })
@@ -109,6 +114,8 @@ describe(`suite:${suite}`, () => {
     await core.clickItemAction(page, members.memberComponent, org.owner.name, `${_.kebabCase(group.name)}-button`)
     expect(await core.elementExists(page, '#leave-group')).beFalse()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org owner can remove members from a group', async () => {
     await core.logout(page)
@@ -121,6 +128,8 @@ describe(`suite:${suite}`, () => {
     await core.waitForTimeout(1000)
     expect(await members.countMembers(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org owner can edit a group', async () => {
     const group = _.find(org.groups, { name: 'Group 1' })
@@ -131,6 +140,8 @@ describe(`suite:${suite}`, () => {
     group.description = 'Group 1 description'
     expect(await groups.groupExists(page, org, group, 'description')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   // Now managers can manage all groups it can be left empty
   it('last member can be removed from a group', async () => {
@@ -141,6 +152,8 @@ describe(`suite:${suite}`, () => {
     // expect(await core.isToastVisible(page)).beTrue()
     // runner.clearErrors()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can create a group', async () => {
     await core.logout(page)
@@ -153,6 +166,8 @@ describe(`suite:${suite}`, () => {
     expect(await groups.countGroups(page, org)).to.equal(2)
     expect(await groups.groupExists(page, org, group)).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can add members to a group', async () => {
     const group = _.find(org.groups, { name: 'Group 2' })
@@ -161,6 +176,8 @@ describe(`suite:${suite}`, () => {
     await groups.goToGroupMembersActivity(page, org, group)
     expect(await members.countMembers(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('group manager can add members to his group', async () => {
     const member = _.find(org.members, { name: 'Member' })
@@ -172,6 +189,8 @@ describe(`suite:${suite}`, () => {
     await groups.goToGroupMembersActivity(page, org, group)
     expect(await members.countMembers(page, org)).to.equal(2)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('group manager can remove members from his group', async () => {
     const group = _.find(org.groups, { name: 'Group 2' })
@@ -179,6 +198,8 @@ describe(`suite:${suite}`, () => {
     await groups.goToGroupMembersActivity(page, org, group)
     expect(await members.countMembers(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('group manager cannot edit his group', async () => {
     const group = _.find(org.groups, { name: 'Group 2' })
@@ -187,6 +208,8 @@ describe(`suite:${suite}`, () => {
     expect(await groups.groupActionExists(page, org, group, 'edit-item-description')).beFalse()
     expect(await groups.groupActionExists(page, org, group, 'remove-item-header')).beFalse()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can edit a group', async () => {
     const member = _.find(org.members, { name: 'Manager' })
@@ -201,12 +224,16 @@ describe(`suite:${suite}`, () => {
     group.description = 'Group 2 description'
     expect(await groups.groupExists(page, org, group, 'description')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can remove a group', async () => {
     const group = _.find(org.groups, { name: 'New Group 2' })
     await groups.removeGroup(page, org, group)
     expect(await groups.countGroups(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org owner can remove a group', async () => {
     await core.logout(page)
@@ -217,6 +244,8 @@ describe(`suite:${suite}`, () => {
     expect(await groups.countGroups(page, org)).to.equal(0)
     await core.logout(page)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   after(async () => {
     await runner.stop()

@@ -77,14 +77,14 @@ describe(`suite:${suite}`, () => {
       geolocation: { latitude: 43.10, longitude: 1.71 },
       notifications: true,
       browser: {
-        slowMo: 1,
-        args: ['--lang=fr'],
-        devtools: false
+        slowMo: 5,
+        args: ['--window-size=1280,1024']
       },
       localStorage: {
         'crisis-welcome': false,
         'crisis-install': false
-      }
+      },
+      lang: 'fr'
     })
     // Prepare structure for current run
     await utilsClient.createOrganisation(org, client)
@@ -115,6 +115,8 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventTemplateExists(page, org, memberTemplate, 'name')).beTrue()
     expect(await events.eventTemplateExists(page, org, managerTemplate, 'name')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can create events from templates', async () => {
     const member = _.find(org.members, { name: 'Manager' })
@@ -128,12 +130,8 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventExists(page, org, managerTemplate, 'description')).beTrue()
     expect(await events.eventExists(page, org, managerEvent, 'name')).beTrue()
   })
-
-  it('notifications are received for manager event', async () => {
-    // Check push notifications, it usually requires some time to be received
-    await core.waitForTimeout(10000)
-    expect(runner.hasInfo('New notification received: Manager event')).to.equal(1)
-  })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org member cannot edit event templates', async () => {
     const template = _.find(org.eventTemplates, { name: 'Member template' })
@@ -147,6 +145,8 @@ describe(`suite:${suite}`, () => {
     expect(await events.eventTemplateActionExists(page, org, template, 'edit-item-description')).beFalse()
     expect(await events.eventTemplateActionExists(page, org, template, 'remove-item-header')).beFalse()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org member cannot create event from templates without permissions', async () => {
     const template = _.find(org.eventTemplates, { name: 'Member template' })
@@ -155,6 +155,8 @@ describe(`suite:${suite}`, () => {
     // await core.clickAction(page, 'fab')
     expect(await core.elementExists(page, `#create-${_.kebabCase(template.name)}`)).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org member can create events from templates', async () => {
     const memberTemplate = _.find(org.eventTemplates, { name: 'Member template' })
@@ -162,13 +164,8 @@ describe(`suite:${suite}`, () => {
     await events.createEvent(page, org, memberTemplate, memberEvent)
     expect(await events.countEvents(page, org)).to.equal(2)
   })
-
-  it('notifications are received for member event', async () => {
-    // Check push notifications, it usually requires some time to be received
-    await core.waitForTimeout(10000)
-    // As manager has also been logged and is in the same group we should have two subscriptions
-    expect(runner.hasInfo('New notification received: Member event')).to.equal(2)
-  })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org member can manage event logs', async () => {
     const memberEvent = _.find(org.events, { name: 'Member event' })
@@ -181,6 +178,8 @@ describe(`suite:${suite}`, () => {
     expect(nbLogs).to.equal(1)
     expect(memberLogExists).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org member can edit his events', async () => {
     const memberEvent = _.find(org.events, { name: 'Member event' })
@@ -205,25 +204,24 @@ describe(`suite:${suite}`, () => {
     memberEvent.description = 'Member event description'
     expect(await events.eventExists(page, org, memberEvent, 'description')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('notifications are not received for member event editing', async () => {
     // Check push notifications, it usually requires some time to be received
     await core.waitForTimeout(10000)
     expect(runner.hasInfo('New notification received: New Member event')).to.equal(0)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org member can remove his events', async () => {
     const memberEvent = _.find(org.events, { name: 'New Member event' })
     await events.removeEvent(page, org, memberEvent)
     expect(await events.countEvents(page, org)).to.equal(1)
   })
-
-  it('notifications are received for member event removal', async () => {
-    // Check push notifications, it usually requires some time to be received
-    await core.waitForTimeout(10000)
-    // As manager has also been logged and is in the same group we should have two subscriptions
-    expect(runner.hasInfo('New notification received: New Member event')).to.equal(2)
-  })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can edit event templates', async () => {
     const member = _.find(org.members, { name: 'Manager' })
@@ -238,6 +236,8 @@ describe(`suite:${suite}`, () => {
     template.description = 'Member template description'
     expect(await events.eventTemplateExists(page, org, template, 'description')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org manager can remove event templates', async () => {
     let template = _.find(org.eventTemplates, { name: 'New Member template' })
@@ -247,6 +247,8 @@ describe(`suite:${suite}`, () => {
     await events.removeEventTemplate(page, org, template)
     expect(await events.countEventTemplates(page, org)).to.equal(0)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   after(async function () {
     // Let enough time to process

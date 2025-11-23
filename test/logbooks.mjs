@@ -16,11 +16,13 @@ export async function goToLogbook (page, organisation, wait = 6000) {
     await goToOrganisationsActivity(page, wait)
     debug('Navigating to logbook archives')
     await core.clickItemAction(page, organisationComponent, organisation, 'organisation-archived-events', wait)
+    await core.waitForTimeout(1000)
   }
 }
 
 export async function countLogbookEvents (page, organisation) {
   await goToLogbook(page, organisation)
+  await core.waitForTimeout(1000)
   const count = await core.countItems(page, logbookComponent)
   return count
 }

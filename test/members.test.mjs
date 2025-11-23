@@ -47,13 +47,14 @@ describe(`suite:${suite}`, () => {
       appName: 'crisis',
       notifications: true,
       browser: {
-        slowMo: 1,
-        args: ['--lang=fr']
+        slowMo: 5,
+        args: ['--window-size=1280,1024']
       },
       localStorage: {
         'crisis-welcome': false,
         'crisis-install': false
-      }
+      },
+      lang: 'fr'
     })
     // Prepare structure for current run
     await utilsClient.createOrganisation(org, client)
@@ -84,6 +85,8 @@ describe(`suite:${suite}`, () => {
     expect(await members.countMembers(page, org)).to.equal(3)
     expect(await members.memberExists(page, org, member)).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org owner can invite member', async () => {
     const guest = _.find(org.members, { name: 'Guest' })
@@ -91,6 +94,8 @@ describe(`suite:${suite}`, () => {
     expect(await members.countMembers(page, org)).to.equal(4)
     expect(await members.memberExists(page, org, guest)).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('org owner can filter members', async () => {
     // Owners
@@ -118,6 +123,8 @@ describe(`suite:${suite}`, () => {
     await members.filterMembers(page, org, filter)
     expect(await members.countMembers(page, org)).to.equal(4)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('member cannot manage org', async () => {
     const manager = _.find(org.members, { name: 'Manager' })
@@ -135,6 +142,8 @@ describe(`suite:${suite}`, () => {
     expect(await members.canReinviteGuest(page, org, guest)).beFalse()
     expect(await members.canEditMember(page, org, org.owner)).beFalse()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('manager can manage org', async () => {
     const manager = _.find(org.members, { name: 'Manager' })
@@ -154,6 +163,8 @@ describe(`suite:${suite}`, () => {
     await members.removeMember(page, org, member)
     expect(await members.countMembers(page, org)).to.equal(3)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('manager cannot remove owner', async () => {
     const owner = org.owner
@@ -161,6 +172,8 @@ describe(`suite:${suite}`, () => {
     expect(await core.isToastVisible(page)).beTrue()
     runner.clearErrors()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can remove manager', async () => {
     await core.logout(page)
@@ -170,6 +183,8 @@ describe(`suite:${suite}`, () => {
     await members.removeMember(page, org, manager)
     expect(await members.countMembers(page, org)).to.equal(2)
   })
+  // Let enough time to process
+    .timeout(70000)
 
   after(async () => {
     await runner.stop()

@@ -49,13 +49,14 @@ describe(`suite:${suite}`, () => {
       appName: 'crisis',
       notifications: true,
       browser: {
-        slowMo: 1,
-        args: ['--lang=fr']
+        slowMo: 5,
+        args: ['--window-size=1280,1024']
       },
       localStorage: {
         'crisis-welcome': false,
         'crisis-install': false
-      }
+      },
+      lang: 'fr'
     })
     // Prepare structure for current run
     await utilsClient.createOrganisation(org, client)
@@ -79,6 +80,8 @@ describe(`suite:${suite}`, () => {
     expect(await tags.countTags(page, org)).to.equal(1)
     expect(await tags.tagExists(page, org, tag)).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can tag members', async () => {
     const tag = _.find(org.tags, { value: 'Tag 1' })
@@ -89,6 +92,8 @@ describe(`suite:${suite}`, () => {
     await tags.goToTagMembersActivity(page, org, tag)
     expect(await members.countMembers(page, org)).to.equal(2)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can remove members from a tag', async () => {
     const tag = _.find(org.tags, { value: 'Tag 1' })
@@ -97,6 +102,8 @@ describe(`suite:${suite}`, () => {
     await tags.goToTagMembersActivity(page, org, tag)
     expect(await members.countMembers(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can edit a tag', async () => {
     const tag = _.find(org.tags, { value: 'Tag 1' })
@@ -107,6 +114,8 @@ describe(`suite:${suite}`, () => {
     tag.description = 'New Tag 1 description'
     expect(await tags.tagExists(page, org, tag, 'description')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('member cannot edit tag', async () => {
     const tag = _.find(org.tags, { value: 'New Tag 1' })
@@ -118,10 +127,14 @@ describe(`suite:${suite}`, () => {
     expect(await tags.tagActionExists(page, org, tag, 'edit-item-description')).beFalse()
     expect(await tags.tagActionExists(page, org, tag, 'remove-item-header')).beFalse()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('member cannot create a tag', async () => {
     expect(await tags.canCreateTag(page, org)).beFalse()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('member cannot tag members', async () => {
     const manager = _.find(org.members, { name: 'Manager' })
@@ -130,6 +143,8 @@ describe(`suite:${suite}`, () => {
     expect(await members.memberActionExists(page, org, manager, 'add-tag')).beFalse()
     expect(await members.memberActionExists(page, org, member, 'add-tag')).beFalse()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('manager can create a tag', async () => {
     const manager = _.find(org.members, { name: 'Manager' })
@@ -142,6 +157,8 @@ describe(`suite:${suite}`, () => {
     expect(await tags.countTags(page, org)).to.equal(2)
     expect(await tags.tagExists(page, org, tag)).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('manager can tag members', async () => {
     const tag = _.find(org.tags, { value: 'Tag 2' })
@@ -152,6 +169,8 @@ describe(`suite:${suite}`, () => {
     await tags.goToTagMembersActivity(page, org, tag)
     expect(await members.countMembers(page, org)).to.equal(2)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('manager can remove members from a tag', async () => {
     const tag = _.find(org.tags, { value: 'Tag 2' })
@@ -160,6 +179,8 @@ describe(`suite:${suite}`, () => {
     await tags.goToTagMembersActivity(page, org, tag)
     expect(await members.countMembers(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('manager can edit a tag', async () => {
     const tag = _.find(org.tags, { value: 'Tag 2' })
@@ -170,12 +191,16 @@ describe(`suite:${suite}`, () => {
     tag.description = 'New Tag 2 description'
     expect(await tags.tagExists(page, org, tag, 'description')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('manager can remove a tag', async () => {
     const tag = _.find(org.tags, { value: 'New Tag 2' })
     await tags.removeTag(page, org, tag)
     expect(await tags.countTags(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can remove a tag', async () => {
     await core.logout(page)
@@ -185,6 +210,8 @@ describe(`suite:${suite}`, () => {
     await tags.removeTag(page, org, tag)
     expect(await tags.countTags(page, org)).to.equal(0)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   after(async () => {
     await runner.stop()

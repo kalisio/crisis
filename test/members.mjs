@@ -29,28 +29,33 @@ export async function goToMembersActivity (page, organisation, wait = 6000) {
     debug('Navigating to members activity')
     await core.expandCard(page, organisationComponent, organisation)
     await core.clickItemAction(page, organisationComponent, organisation, 'organisation-members', wait)
+    await core.waitForTimeout(1000)
   }
 }
 
 export async function countMembers (page, organisation) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   const count = await core.countItems(page, memberComponent)
   return count
 }
 
 export async function memberExists (page, organisation, member) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   const exists = await core.itemExists(page, memberComponent, member.name)
   return exists
 }
 
 export async function memberActionExists (page, organisation, member, action) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   const exists = await core.itemActionExists(page, memberComponent, member.name, action)
   return exists
 }
 
 export async function canEditMember (page, organisation, member) {
+  await core.waitForTimeout(1000)
   // Do no take into account the join-group action as a group must exists
   let exists = await memberActionExists(page, organisation, member, 'edit-member-role')
   if (!exists) return false
@@ -61,18 +66,21 @@ export async function canEditMember (page, organisation, member) {
 }
 
 export async function canReinviteGuest (page, organisation, guest) {
+  await core.waitForTimeout(1000)
   const exists = await memberActionExists(page, organisation, guest, 'reissue-invitation')
   return exists
 }
 
 export async function canAddMember (page, organisation) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   const exists = await core.elementExists(page, '#add-member')
   return exists
 }
 
 export async function addMember (page, organisation, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickAction(page, 'add-member')
   await core.type(page, '#email-field', member.email)
   await core.clickAction(page, 'continue-button', 500)
@@ -82,6 +90,7 @@ export async function addMember (page, organisation, member, wait = 2000) {
 
 export async function inviteMember (page, organisation, member, wait = 5000) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickAction(page, 'add-member')
   await core.type(page, '#email-field', member.email)
   await core.clickAction(page, 'continue-button', 500)
@@ -93,23 +102,27 @@ export async function inviteMember (page, organisation, member, wait = 5000) {
 
 export async function reissueMemberInvitation (page, organisation, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickItemAction(page, memberComponent, member.name, 'reissue-invitation')
   await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
 }
 
 export async function removeMember (page, organisation, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickItemAction(page, memberComponent, member.name, 'remove-member')
   await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
 }
 
 export async function canEdit (page, organisation, member) {
+  await core.waitForTimeout(1000)
   const exists = await core.elementExists(page, '')
   return exists
 }
 
 export async function joinGroup (page, organisation, group, member, permissions, wait = 2000) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickItemAction(page, memberComponent, member.name, 'join-group')
   await core.type(page, '#group-field', group.name)
   await core.click(page, `#${_.kebabCase(group.name)}`)
@@ -121,6 +134,7 @@ export async function joinGroup (page, organisation, group, member, permissions,
 
 export async function leaveGroup (page, organisation, group, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickItemAction(page, memberComponent, member.name, `${_.kebabCase(group.name)}-button`)
   await core.click(page, '#leave-group')
   await core.click(page, '.q-dialog-plugin button:nth-child(2)', wait)
@@ -128,6 +142,7 @@ export async function leaveGroup (page, organisation, group, member, wait = 2000
 
 export async function addTag (page, organisation, tag, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.clickItemAction(page, memberComponent, member.name, 'add-tag')
   await core.type(page, '#tag-field', tag.value)
   await core.click(page, `#${_.kebabCase(tag.value)}`)
@@ -136,6 +151,7 @@ export async function addTag (page, organisation, tag, member, wait = 2000) {
 
 export async function removeTag (page, organisation, tag, member, wait = 2000) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   const xpath = `//div[contains(@component, "${memberComponent}") and contains(., "${member.name}")]//div[@id="${_.kebabCase(tag.value)}-pane"]//i[contains(@role, "button")]`
   const elements = await page.$$('xpath/.' + xpath)
   if (elements.length > 0) elements[0].click()
@@ -145,6 +161,7 @@ export async function removeTag (page, organisation, tag, member, wait = 2000) {
 
 export async function filterMembers (page, organisation, filter, wait = 2000) {
   await goToMembersActivity(page, organisation)
+  await core.waitForTimeout(1000)
   await core.click(page, '#member-filter', wait)
   const options = ['owner', 'manager', 'member', 'guest']
   for (let i = 0; i < options.length; ++i) {

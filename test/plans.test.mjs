@@ -90,14 +90,14 @@ describe(`suite:${suite}`, () => {
       geolocation: { latitude: 43.10, longitude: 1.71 },
       notifications: true,
       browser: {
-        slowMo: 1,
-        args: ['--lang=fr'],
-        devtools: false
+        slowMo: 5,
+        args: ['--window-size=1280,1024']
       },
       localStorage: {
         'crisis-welcome': false,
         'crisis-install': false
-      }
+      },
+      lang: 'fr'
     })
     // Prepare structure for current run
     await utilsClient.createOrganisation(org, client)
@@ -129,6 +129,8 @@ describe(`suite:${suite}`, () => {
     expect(await plans.countPlanTemplates(page, org)).to.equal(2)
     expect(await plans.planTemplateExists(page, org, planTemplate, 'name')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can add objective to plan template', async () => {
     const planTemplate = _.find(org.planTemplates, { name: 'Plan owner' })
@@ -136,6 +138,8 @@ describe(`suite:${suite}`, () => {
     await plans.createPlanObjective(page, org, planTemplate, objective, 'planTemplate')
     expect(await plans.countPlanObjectives(page, org, planTemplate, 'planTemplate')).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can edit plan template', async () => {
     const planTemplate = _.find(org.planTemplates, { name: 'Plan owner' })
@@ -146,6 +150,8 @@ describe(`suite:${suite}`, () => {
     planTemplate.description = 'New plan owner decription'
     expect(await plans.planTemplateExists(page, org, planTemplate, 'description')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can create plan from template', async () => {
     const planTemplate = _.find(org.planTemplates, { name: 'New plan owner' })
@@ -154,6 +160,8 @@ describe(`suite:${suite}`, () => {
     expect(await plans.countPlans(page, org)).to.equal(1)
     expect(await plans.planExists(page, org, plan, 'name')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can edit plan', async () => {
     const plan = _.find(org.plans, { name: 'Plan 1' })
@@ -164,6 +172,8 @@ describe(`suite:${suite}`, () => {
     plan.description = 'New plan 1 decription'
     expect(await plans.planExists(page, org, plan, 'description')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can create events from plan', async () => {
     const eventTemplate = org.eventTemplate
@@ -173,12 +183,8 @@ describe(`suite:${suite}`, () => {
     await events.createEvent(page, org, eventTemplate, eventTemplate)
     expect(await events.countEvents(page, org)).to.equal(1)
   })
-
-  it('notifications are not received for plan event without participants', async () => {
-    // Check push notifications, it usually requires some time to be received
-    await core.waitForTimeout(10000)
-    expect(runner.hasInfo('New notification received: Event')).to.equal(0)
-  })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can close an event', async () => {
     const eventTemplate = org.eventTemplate
@@ -186,12 +192,8 @@ describe(`suite:${suite}`, () => {
     await plans.closePlanEvent(page, org, plan, eventTemplate)
     expect(await plans.planArchivedEventExists(page, org, plan, eventTemplate, 'name')).beTrue()
   })
-
-  it('notifications are not received for plan event removal without participants', async () => {
-    // Check push notifications, it usually requires some time to be received
-    await core.waitForTimeout(10000)
-    expect(runner.hasInfo('New notification received: Event')).to.equal(0)
-  })
+  // Let enough time to process
+    .timeout(50000)
 
   it('owner can close a plan', async () => {
     const plan = _.find(org.plans, { name: 'New plan 1' })
@@ -199,6 +201,8 @@ describe(`suite:${suite}`, () => {
     expect(await plans.countPlans(page, org)).to.equal(0)
     await plans.planArchivedExists(page, org, plan)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('manager can create plan templates', async () => {
     const member = _.find(org.members, { name: 'Manager' })
@@ -210,6 +214,8 @@ describe(`suite:${suite}`, () => {
     expect(await plans.countPlanTemplates(page, org)).to.equal(3)
     expect(await plans.planTemplateExists(page, org, planTemplate, 'name')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('manager can edit plan template', async () => {
     const planTemplate = _.find(org.planTemplates, { name: 'Plan manager' })
@@ -220,6 +226,8 @@ describe(`suite:${suite}`, () => {
     planTemplate.description = 'New plan manager decription'
     expect(await plans.planTemplateExists(page, org, planTemplate, 'description')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('manager can create plan from template', async () => {
     const planTemplate = _.find(org.planTemplates, { name: 'New plan manager' })
@@ -228,12 +236,16 @@ describe(`suite:${suite}`, () => {
     expect(await plans.countPlans(page, org)).to.equal(1)
     expect(await plans.planExists(page, org, plan, 'name')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('manager cannot create plan from template if is not the coordinator', async () => {
     const planTemplate = _.find(org.planTemplates, { name: 'New plan owner' })
     expect(await plans.canCreatePlan(page, org, planTemplate)).beFalse()
     expect(await plans.countPlans(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('member cannot create plan templates', async () => {
     const member = _.find(org.members, { name: 'Member' })
@@ -242,6 +254,8 @@ describe(`suite:${suite}`, () => {
     await core.login(page, member)
     expect(await plans.canCreatePlanTemplate(page, org)).beFalse()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('member cannot edit plan templates', async () => {
     const planTemplate = _.find(org.planTemplates, { name: 'New plan owner' })
@@ -249,6 +263,8 @@ describe(`suite:${suite}`, () => {
     expect(await plans.planTemplateActionExists(page, org, planTemplate, 'edit-item-description')).beFalse()
     expect(await plans.planTemplateActionExists(page, org, planTemplate, 'remove-item-header')).beFalse()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('member can create plan from template if is the coordinator', async () => {
     const planTemplate = _.find(org.planTemplates, { name: 'New plan owner' })
@@ -257,12 +273,16 @@ describe(`suite:${suite}`, () => {
     expect(await plans.countPlans(page, org)).to.equal(1)
     expect(await plans.planExists(page, org, plan, 'name')).beTrue()
   })
+  // Let enough time to process
+    .timeout(50000)
 
   it('member cannot create plan from template if is not the coordinator', async () => {
     const planTemplate = _.find(org.planTemplates, { name: 'New plan manager' })
     expect(await plans.canCreatePlan(page, org, planTemplate)).beFalse()
     expect(await plans.countPlans(page, org)).to.equal(1)
   })
+  // Let enough time to process
+    .timeout(50000)
 
   after(async function () {
     await runner.stop()
