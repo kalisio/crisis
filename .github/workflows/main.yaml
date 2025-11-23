@@ -8,6 +8,11 @@ on:
         default: false
         required: false
         type: boolean
+      build_e2e_tests:
+        description: "Build end-to-end tests"
+        default: false
+        required: false
+        type: boolean
       run_tests:
         description: "Run tests"
         default: false
@@ -47,6 +52,29 @@ jobs:
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: bash ./scripts/build_app.sh -p -r ${{ github.job }} -n ${{ matrix.node }} -d ${{ matrix.debian }}
+
+  build_e2e_tests:
+    name: Build e2e tests
+    if: ${{
+      github.event_name == 'workflow_dispatch' && inputs.build_e2e_tests ||
+      github.event_name == 'push' && contains(github.event.head_commit.message, 'e2e')
+      }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Init runner
+        run: bash ./scripts/init_runner.sh ${{ github.job }}
+      - name: Setup workspace
+        env:
+          KALISIO_GITHUB_URL: ${{ secrets.KALISIO_GITHUB_URL }}
+        run: bash ./scripts/setup_workspace.sh -k kli
+      - name: Build e2e tests
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: bash ./scripts/build_e2e_tests.sh -p -r ${{ github.job }}
 
   run_tests:
     name: Run tests
