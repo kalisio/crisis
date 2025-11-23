@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import logger from 'loglevel'
 import { memory } from '@feathersjs/memory'
-import kdkCore from '@kalisio/kdk/core.client'
+import kdkCore, { Storage } from '@kalisio/kdk/core.client'
 import kdkMap from '@kalisio/kdk/map.client.map'
 import usersHooks from './users.hooks'
 
@@ -33,6 +33,7 @@ export default async function () {
         filters: { $locale: true }
       })
     })
+    Storage.createService()
     // Restore previous settings if any
     const settingsService = api.getService('settings')
     if (settingsService) settingsService.restoreSettings()

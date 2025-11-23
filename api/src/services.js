@@ -4,7 +4,7 @@ import fs from 'fs-extra'
 import moment from 'moment'
 import { fileURLToPath } from 'url'
 import makeDebug from 'debug'
-import kdkCore, { createDatabasesService, permissions, decorateDistributedService, createDefaultUsers, createObjectID } from '@kalisio/kdk/core.api.js'
+import kdkCore, { createDatabasesService, permissions, decorateDistributedService, createDefaultUsers, createObjectID, createStorageService } from '@kalisio/kdk/core.api.js'
 import kdkMap from '@kalisio/kdk/map.api.js'
 import pointOnFeature from '@turf/point-on-feature'
 
@@ -81,6 +81,7 @@ export default async function () {
     await app.configure(kdkMap)
 
     // Create app services
+    await createStorageService.call(app)
     await createDatabasesService.call(app)
     const orgsService = await app.createService('organisations', { modelsPath, servicesPath })
     orgsService.on('removed', organisation => {
