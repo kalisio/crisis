@@ -20,7 +20,8 @@
       }
     },
     "location": {
-      "type": "object", 
+      "type": ["object", "null"], 
+      "default": null,
       "field": {
         "component": "form/KLocationField",
         "label": "schemas.PLANS_LOCATION_FIELD_LABEL",
@@ -33,7 +34,7 @@
       "type": "array",
       "multiselect": true,
       "uniqueItems": true,
-      "minItems": 1,
+      "minItems": 0,
       "default": [],
       "services": [{
         "service": "members",
