@@ -50,7 +50,7 @@ export default {
       filter: this.$store.get('filter'),
       // Make this configurable from app
       renderer: _.merge({
-        component: 'team/KGroupCard'
+        component: 'team/GroupCard'
       }, this.activityOptions.items)
     }
   },

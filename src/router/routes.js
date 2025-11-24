@@ -8,16 +8,16 @@ module.exports = [{
   meta: { unauthenticated: true },
   children: {
     login: {
-      component: 'screen/KLoginScreen'
-      // tour: tours.login
+      component: 'screen/KLoginScreen',
+      tour: tours.login
     },
     logout: {
       component: 'screen/KLogoutScreen',
       meta: { authenticated: true }
     },
     register: {
-      component: 'screen/KRegisterScreen'
-      // tour: tours.register
+      component: 'screen/KRegisterScreen',
+      tour: tours.register
     },
     'resend-verify-signup': {
       component: 'account/KResendVerifySignup',
@@ -28,24 +28,24 @@ module.exports = [{
       meta: { authenticated: true }
     },
     'send-reset-password': {
-      component: 'account/KSendResetPassword'
-      // tour: tours['send-reset-password']
+      component: 'account/KSendResetPassword',
+      tour: tours['send-reset-password']
     },
-    'change-password': {
-      component: 'account/KChangePassword',
-      meta: { authenticated: true, unauthenticated: false }
-      // tour: tours['change-password']
-    },
-    'reset-password/:email': 'account/KResetPassword',
-    'send-change-identity': {
-      component: 'account/KSendChangeIdentity',
-      meta: { authenticated: true, unauthenticated: false }
-      // tour: tours['send-change-identity']
-    },
-    'change-identity': {
-      component: 'account/KChangeIdentity',
-      meta: { authenticated: true }
-    },
+    // 'change-password': {
+    //   component: 'account/KChangePassword',
+    //   meta: { authenticated: true, unauthenticated: false }
+    //   // tour: tours['change-password']
+    // },
+    // 'reset-password/:email': 'account/KResetPassword',
+    // 'send-change-identity': {
+    //   component: 'account/KSendChangeIdentity',
+    //   meta: { authenticated: true, unauthenticated: false }
+    //   // tour: tours['send-change-identity']
+    // },
+    // 'change-identity': {
+    //   component: 'account/KChangeIdentity',
+    //   meta: { authenticated: true }
+    // },
     home: {
       // The name of the route has to be set the default child
       name: '',
@@ -61,7 +61,7 @@ module.exports = [{
         },
         organisations: {
           name: 'organisations-activity',
-          component: 'team/KOrganisationsActivity',
+          component: 'team/OrganisationsActivity',
           tour: {
             'organisations-activity': tours.organisations
           },
@@ -96,30 +96,30 @@ module.exports = [{
             },
             members: {
               name: 'members-activity',
-              component: 'team/KMembersActivity',
+              component: 'team/MembersActivity',
               props: true,
               children: {
                 add: {
                   name: 'add-member',
-                  component: 'team/KAddMember',
+                  component: 'team/AddMember',
                   props: true,
                   tour: tours['add-member']
                 },
                 'edit/:objectId/role': {
                   name: 'edit-member-role',
-                  component: 'team/KChangeRole',
+                  component: 'team/ChangeRole',
                   props: true,
                   tour: tours['edit-member-role']
                 },
                 'add-tag/:objectId': {
                   name: 'add-tag',
-                  component: 'team/KAddTag',
+                  component: 'team/AddTag',
                   props: true,
                   tour: tours['add-tag']
                 },
                 'join-group/:objectId': {
                   name: 'join-group',
-                  component: 'team/KJoinGroup',
+                  component: 'team/JoinGroup',
                   props: true,
                   tour: tours['join-group']
                 }
@@ -128,7 +128,7 @@ module.exports = [{
             },
             tags: {
               name: 'tags-activity',
-              component: 'team/KTagsActivity',
+              component: 'team/TagsActivity',
               props: true,
               children: {
                 create: {
@@ -147,7 +147,7 @@ module.exports = [{
             },
             groups: {
               name: 'groups-activity',
-              component: 'team/KGroupsActivity',
+              component: 'team/GroupsActivity',
               props: true,
               children: {
                 create: {

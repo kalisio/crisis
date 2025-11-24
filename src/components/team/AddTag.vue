@@ -38,7 +38,7 @@ export default {
   computed: {
     title () {
       if (this.member === null) return ''
-      return this.$t('KAddTag.TITLE', { member: this.member.name })
+      return this.$t('AddTag.TITLE', { member: this.member.name })
     },
     schema () {
       if (this.member === null) return {}
@@ -67,7 +67,7 @@ export default {
             }],
             field: {
               component: 'form/KItemField',
-              label: 'KAddTag.TAG_FIELD_LABEL'
+              label: 'AddTag.TAG_FIELD_LABEL'
             }
           }
         },
@@ -85,7 +85,7 @@ export default {
     getButtons () {
       return [
         { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
-        { id: 'join-button', label: 'KAddTag.ADD_BUTTON', renderer: 'form-button', handler: (event, done) => this.tag(event, done) }
+        { id: 'join-button', label: 'AddTag.ADD_BUTTON', renderer: 'form-button', handler: (event, done) => this.tag(event, done) }
       ]
     },
     getService () {

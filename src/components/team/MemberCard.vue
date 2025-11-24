@@ -27,7 +27,7 @@
     <template v-slot:card-content>
       <!-- Tags section -->
       <KCardSection v-if="!item.expireAt"
-        :title="$t('KMemberCard.TAGS_SECTION')"
+        :title="$t('MemberCard.TAGS_SECTION')"
         :actions="tagsActions"
         :context="$props"
         :dense="dense">
@@ -35,12 +35,12 @@
           <ChipsPane id="tags-pane" class="q-pa-sm" :remove="true" @chip-removed="onRemoveTag" :chips="tags" />
         </div>
         <div v-else>
-          {{ $t('KMemberCard.NO_TAGS_LABEL')}}
+          {{ $t('MemberCard.NO_TAGS_LABEL')}}
         </div>
       </KCardSection>
       <!-- Groups section -->
       <KCardSection v-if="!item.expireAt"
-        :title="$t('KMemberCard.GROUPS_SECTION')"
+        :title="$t('MemberCard.GROUPS_SECTION')"
         :actions="groupsActions"
         :context="$props"
         :dense="dense"
@@ -65,14 +65,14 @@
           </template>
         </div>
         <div v-else>
-          {{ $t('KMemberCard.NO_GROUPS_LABEL')}}
+          {{ $t('MemberCard.NO_GROUPS_LABEL')}}
         </div>
       </KCardSection>
       <!-- Expiration section -->
       <KCardSection v-if="item.expireAt" :dense="dense">
         <div class="row full-width justify-between items-center no-wrap">
           <span class="text-warning text-weight-bold" v-if="expireAt">
-            {{$t('KMemberCard.EXPIRE_AT_LABEL')}} {{expireAt.toLocaleString()}}
+            {{$t('MemberCard.EXPIRE_AT_LABEL')}} {{expireAt.toLocaleString()}}
           </span>
           <k-panel :content="expirationActions" />
         </div>
@@ -156,8 +156,8 @@ export default {
   methods: {
     resendInvitation () {
       Dialog.create({
-        title: this.$t('KMemberCard.RESEND_INVITATION_DIALOG_TITLE', { member: _.get(this.item, 'profile.name') }),
-        message: this.$t('KMemberCard.RESEND_INVITATION_DIALOG_MESSAGE', { member: _.get(this.item, 'profile.name') }),
+        title: this.$t('MemberCard.RESEND_INVITATION_DIALOG_TITLE', { member: _.get(this.item, 'profile.name') }),
+        message: this.$t('MemberCard.RESEND_INVITATION_DIALOG_MESSAGE', { member: _.get(this.item, 'profile.name') }),
         html: true,
         prompt: {
           model: this.item.email,
@@ -191,8 +191,8 @@ export default {
     },
     removeMember () {
       Dialog.create({
-        title: this.$t('KMemberCard.REMOVE_DIALOG_TITLE', { member: _.get(this.item, 'profile.name') }),
-        message: this.$t('KMemberCard.REMOVE_DIALOG_MESSAGE', { member: _.get(this.item, 'profile.name') }),
+        title: this.$t('MemberCard.REMOVE_DIALOG_TITLE', { member: _.get(this.item, 'profile.name') }),
+        message: this.$t('MemberCard.REMOVE_DIALOG_MESSAGE', { member: _.get(this.item, 'profile.name') }),
         html: true,
         ok: {
           label: this.$t('OK'),
@@ -216,8 +216,8 @@ export default {
     },
     onRemoveTag (removedTag) {
       Dialog.create({
-        title: this.$t('KMemberCard.REMOVE_TAG_DIALOG_TITLE', { tag: removedTag.value }),
-        message: this.$t('KMemberCard.REMOVE_TAG_DIALOG_MESSAGE', { tag: removedTag.value, member: _.get(this.item, 'profile.name') }),
+        title: this.$t('MemberCard.REMOVE_TAG_DIALOG_TITLE', { tag: removedTag.value }),
+        message: this.$t('MemberCard.REMOVE_TAG_DIALOG_MESSAGE', { tag: removedTag.value, member: _.get(this.item, 'profile.name') }),
         html: true,
         ok: {
           label: this.$t('OK'),
@@ -295,8 +295,8 @@ export default {
     },
     onLeaveGroup (group) {
       Dialog.create({
-        title: this.$t('KMemberCard.LEAVE_GROUP_DIALOG_TITLE', { group: group.name }),
-        message: this.$t('KMemberCard.LEAVE_GROUP_DIALOG_MESSAGE', { group: group.name, member: _.get(this.item, 'profile.name') }),
+        title: this.$t('MemberCard.LEAVE_GROUP_DIALOG_TITLE', { group: group.name }),
+        message: this.$t('MemberCard.LEAVE_GROUP_DIALOG_MESSAGE', { group: group.name, member: _.get(this.item, 'profile.name') }),
         html: true,
         ok: {
           label: this.$t('OK'),

@@ -1,7 +1,7 @@
 module.exports = {
-  // login: require('./core/login'),
-  // 'send-reset-password': require('./core/send-reset-password'),
-  // register: require('./core/register'),
+  login: require('./login'),
+  'send-reset-password': require('./send-reset-password'),
+  register: require('./register'),
   organisations: require('./organisations'),
   'create-organisation': require('./create-organisation'),
   'edit-organisation': require('./edit-organisation'),

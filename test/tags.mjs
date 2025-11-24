@@ -6,7 +6,7 @@ import { goToOrganisationsActivity } from './organisations.mjs'
 const debug = makeDebug('crisis:test:tags')
 
 const organisationComponent = 'OrganisationCard'
-const tagComponent = 'team/KTagCard'
+const tagComponent = 'team/TagCard'
 
 export async function goToTagsActivity (page, organisation, wait = 6000) {
   const url = page.url()

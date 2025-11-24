@@ -40,7 +40,7 @@ export default {
   computed: {
     title () {
       if (this.member === null) return ''
-      return this.$t('KJoinGroup.TITLE', { member: this.member.name })
+      return this.$t('JoinGroup.TITLE', { member: this.member.name })
     },
     schema () {
       if (this.member === null) return {}
@@ -68,7 +68,7 @@ export default {
             }],
             field: {
               component: 'form/KItemField',
-              label: 'KJoinGroup.GROUP_FIELD_LABEL'
+              label: 'JoinGroup.GROUP_FIELD_LABEL'
             }
           }
         },
@@ -80,7 +80,7 @@ export default {
           default: false,
           field: {
             component: 'form/KToggleField',
-            label: 'KJoinGroup.ROLE_FIELD_LABEL'
+            label: 'JoinGroup.ROLE_FIELD_LABEL'
           }
         })
       }
@@ -96,7 +96,7 @@ export default {
     getButtons () {
       return [
         { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
-        { id: 'join-button', label: 'KJoinGroup.ADD_BUTTON', renderer: 'form-button', handler: (event, done) => this.doJoin(event, done) }
+        { id: 'join-button', label: 'JoinGroup.ADD_BUTTON', renderer: 'form-button', handler: (event, done) => this.doJoin(event, done) }
       ]
     },
     getService () {

@@ -70,7 +70,7 @@ export default {
       filters: [],
       // Make this configurable from app
       renderer: _.merge({
-        component: 'team/KMemberCard',
+        component: 'team/MemberCard',
         options: {
           descriptionField: 'email'
         }

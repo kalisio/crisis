@@ -805,13 +805,13 @@
     "VIEW_ARCHIVED_PLANS": "Voir l'archive des plans",
     "MANAGE_ORGANISATION": "Gérer l'organisation"
   },
-  "KOrganisationsActivity": {
+  "OrganisationsActivity": {
     "ORGANISATIONS_LABEL": "Mes organisations",
     "CREATE_ORGANISATION_LABEL": "Créer une organisation",
     "SEARCH_ORGANISATIONS": "Rechercher des organisations",
     "SORT_ORGANISATIONS": "Trier les organisations"
   },
-  "KMembersActivity": {
+  "MembersActivity": {
     "MEMBERS_LABEL": "@:MEMBERS",
     "SORT_MEMBERS": "Trier les membres",
     "SEARCH_MEMBERS": "Rechercher des membres",
@@ -819,7 +819,7 @@
     "ADD_USER_LABEL": "Ajouter un membre",
     "INVITE_GUEST_LABEL": "Inviter des personnes"
   },
-  "KAddMember": {
+  "AddMember": {
     "TITLE": "Ajouter une ou plusieurs personnes ?",
     "EMAIL_FIELD_LABEL": "Saisissez l'adresse mail de la personne à ajouter",
     "NAME_FIELD_LABEL": "Saisissez le nom de la personne",
@@ -845,13 +845,13 @@
     "USER_ADDED_MESSAGE": "Cette personne a été ajoutée",
     "GUEST_ADDED_MESSAGE": "Cette personne a été invitée"
   },
-  "KAddTag": {
+  "AddTag": {
     "TITLE": "Étiqueter {member} avec une étiquette existante ?",
     "TAG_FIELD_LABEL": "Saisissez le nom de l'étiquette",
     "CLOSE_ACTION": "@:CLOSE_ACTION",
     "ADD_BUTTON": "Étiqueter"
   },
-  "KJoinGroup": {
+  "JoinGroup": {
     "TITLE": "Ajouter {member} à un groupe existant ?",
     "GROUP_FIELD_LABEL": "Saisissez le nom du groupe",
     "ROLE_FIELD_LABEL": "Déléguer la gestion du groupe à ce membre ?",
@@ -861,13 +861,13 @@
     "CLOSE_ACTION": "@:CLOSE_ACTION",
     "ADD_BUTTON": "Ajouter"
   },
-  "KChangeRole": {
+  "ChangeRole": {
     "TITLE": "Changer le rôle de {member} ?",
     "ROLE_FIELD_LABEL": "Sélectionnez le rôle à attribuer",
     "CLOSE_ACTION": "@:CLOSE_ACTION",
     "UPDATE_BUTTON": "Mettre à jour"
   },
-  "KMemberCard": {
+  "MemberCard": {
     "EDIT_ACTION": "@:EDIT",    
     "REMOVE_ACTION": "@:REMOVE",
     "TAGS_SECTION": "Etiquettes",
@@ -888,28 +888,28 @@
     "RESEND_INVITATION_DIALOG_TITLE": "Renvoyer une invitation à {member} ?",
     "RESEND_INVITATION_DIALOG_MESSAGE": "L'adresse mail de <b>{member}</b> est-elle correcte ?"
   },
-  "KTagsActivity": {
+  "TagsActivity": {
     "TAGS_LABEL": "@:TAGS",
     "SORT_TAGS": "Trier les étiquettes",
     "SEARCH_TAGS": "Rechercher des étiquettes",
     "EXPORT_TAGS": "Exporter les étiquettes",
     "CREATE_TAG_LABEL": "Créer une étiquette"
   },
-  "KTagCard": {
+  "TagCard": {
     "EDIT_ACTION": "@:EDIT",
     "REMOVE_ACTION": "@:REMOVE",
     "MEMBERS_SECTION": "Membres",
     "MEMBERS_LABEL": "{count} membre(s)",
     "VIEW_MEMBERS_LABEL": "Voir les membres possédant l'étiquette"
   },
-  "KGroupsActivity": {
+  "GroupsActivity": {
     "GROUPS_LABEL": "@:GROUPS",
     "SORT_GROUPS": "Trier les groupes",
     "SEARCH_GROUPS": "Rechercher des groupes",
     "EXPORT_GROUPS": "Exporter les groupes",
     "CREATE_GROUP_LABEL": "Créer un groupe"
   },
-  "KGroupCard": {
+  "GroupCard": {
     "EDIT_ACTION": "@:EDIT", 
     "REMOVE_ACTION": "@:REMOVE",
     "DESCRIPTION_SECTION": "Description",
@@ -918,7 +918,7 @@
     "MEMBERS_LABEL": "{count} membre(s)",
     "VIEW_MEMBERS_LABEL": "Voir les membres"
   },
-  "KMemberFilter": {
+  "MemberFilter": {
     "NONE": "Aucun",
     "OWNER": "Propriétaire",
     "MANAGER": "Gestionnaire",

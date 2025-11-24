@@ -10,12 +10,12 @@
      -->
     <template v-slot:card-content>
       <!-- Members -->
-      <KCardSection :title="$t('KTagCard.MEMBERS_SECTION')" :dense="dense">
+      <KCardSection :title="$t('TagCard.MEMBERS_SECTION')" :dense="dense">
         <KAction
           id="list-members"
           icon="las la-user-friends"
-          :label="$t('KTagCard.MEMBERS_LABEL', { count: membersCount })"
-          :tooltip="$t('KTagCard.VIEW_MEMBERS_LABEL')"
+          :label="$t('TagCard.MEMBERS_LABEL', { count: membersCount })"
+          :tooltip="$t('TagCard.VIEW_MEMBERS_LABEL')"
           @triggered="onListMembers"
         />
       </KCardSection>

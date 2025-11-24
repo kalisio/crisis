@@ -11,7 +11,7 @@ module.exports = [layout.leftOpener(), {
     clickOnNext: '#left-opener'
   }
 }, {
-  target: '#settings',
+  target: '#settings-action',
   content: 'tours.side-nav.SETTINGS_LABEL',
   params: {
     placement: 'top',

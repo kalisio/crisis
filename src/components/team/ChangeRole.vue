@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     title () {
-      return this.$t('KChangeRole.TITLE', { member: this.member ? this.member.name : '' })
+      return this.$t('ChangeRole.TITLE', { member: this.member ? this.member.name : '' })
     },
     schema () {
       const scope = this.getScope()
@@ -57,7 +57,7 @@ export default {
             default: currentRole,
             field: {
               component: 'form/KRoleField',
-              label: 'KChangeRole.ROLE_FIELD_LABEL',
+              label: 'ChangeRole.ROLE_FIELD_LABEL',
               roles
             }
           }
@@ -71,7 +71,7 @@ export default {
       member: null,
       buttons: [
         { id: 'cancel-button', label: 'CANCEL', renderer: 'form-button', outline: true, handler: () => this.closeModal() },
-        { id: 'update-button', label: 'KChangeRole.UPDATE_BUTTON', renderer: 'form-button', handler: () => this.doUpdate() }
+        { id: 'update-button', label: 'ChangeRole.UPDATE_BUTTON', renderer: 'form-button', handler: () => this.doUpdate() }
       ]
     }
   },

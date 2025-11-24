@@ -6,7 +6,7 @@ import { goToOrganisationsActivity } from './organisations.mjs'
 const debug = makeDebug('crisis:test:groups')
 
 const organisationComponent = 'OrganisationCard'
-export const groupComponent = 'team/KGroupCard'
+export const groupComponent = 'team/GroupCard'
 
 export async function goToGroupsActivity (page, organisation, wait = 6000) {
   const url = page.url()

@@ -6,7 +6,7 @@ import { goToOrganisationsActivity } from './organisations.mjs'
 const debug = makeDebug('crisis:test:members')
 
 const organisationComponent = 'OrganisationCard'
-export const memberComponent = 'team/KMemberCard'
+export const memberComponent = 'team/MemberCard'
 
 export async function clickRole (page, permissions, wait = 250) {
   let role = 1

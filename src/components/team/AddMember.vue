@@ -1,7 +1,7 @@
 <template>
   <KModal
     id="add-member-modal"
-    :title="$t('KAddMember.TITLE')"
+    :title="$t('AddMember.TITLE')"
     v-model="isModalOpened"
   >
     <div>
@@ -21,13 +21,13 @@
               <div class="row justify-end q-gutter-x-sm">
                 <k-action
                   id="cancel-button"
-                  label="KAddMember.CANCEL_BUTTON"
+                  label="AddMember.CANCEL_BUTTON"
                   renderer="form-button"
                   :outline="true"
                   :handler="() => this.closeModal()" />
                 <k-action
                   id="continue-button"
-                  label="KAddMember.CONTINUE_BUTTON"
+                  label="AddMember.CONTINUE_BUTTON"
                   :loading="waiting"
                   renderer="form-button"
                   :handler="onContinueClicked" />
@@ -43,20 +43,20 @@
               <div class="row justify-start q-gutter-x-sm">
                 <k-action
                   id="back-button"
-                  label="KAddMember.BACK_BUTTON"
+                  label="AddMember.BACK_BUTTON"
                   :outline="true"
                   renderer="form-button"
                   :handler="() => { step = 1 }" />
                 <q-space />
                 <k-action
                   id="cancel-button"
-                  label="KAddMember.CANCEL_BUTTON"
+                  label="AddMember.CANCEL_BUTTON"
                   renderer="form-button"
                   :outline="true"
                   :handler="() => this.closeModal()" />
                 <k-action
                   id="add-button"
-                  :label="user ? 'KAddMember.ADD_BUTTON' : 'KAddMember.INVITE_BUTTON'"
+                  :label="user ? 'AddMember.ADD_BUTTON' : 'AddMember.INVITE_BUTTON'"
                   :loading="waiting"
                   renderer="form-button"
                   :handler="onAddUniqueClicked" />
@@ -71,7 +71,7 @@
             <div class="row justify-end">
               <k-action
                 id="add-button"
-                label="KAddMember.ADD_BUTTON"
+                label="AddMember.ADD_BUTTON"
                 :loading="waiting"
                 renderer="form-button"
                 :handler="onAddMultipleClicked" />
@@ -102,8 +102,8 @@ export default {
   },
   computed: {
     message () {
-      if (this.user) return this.$t('KAddMember.ADD_MESSAGE', { email: this.user.email })
-      return this.$t('KAddMember.INVITE_MESSAGE', { email: this.email })
+      if (this.user) return this.$t('AddMember.ADD_MESSAGE', { email: this.user.email })
+      return this.$t('AddMember.INVITE_MESSAGE', { email: this.email })
     }
   },
   data () {
@@ -128,7 +128,7 @@ export default {
             format: 'email',
             field: {
               component: 'form/KEmailField',
-              label: 'KAddMember.EMAIL_FIELD_LABEL'
+              label: 'AddMember.EMAIL_FIELD_LABEL'
             }
           }
         },
@@ -143,7 +143,7 @@ export default {
         default: this.user ? _.get(this.user, 'profile.name') : '',
         field: {
           component: 'form/KTextField',
-          label: this.user ? '' : 'KAddMember.NAME_FIELD_LABEL',
+          label: this.user ? '' : 'AddMember.NAME_FIELD_LABEL',
           disabled: this.user
         }
       }
@@ -152,7 +152,7 @@ export default {
         default: 'member',
         field: {
           component: 'form/KRoleField',
-          label: 'KAddMember.ROLE_FIELD_LABEL',
+          label: 'AddMember.ROLE_FIELD_LABEL',
           default: 'member'
         }
       }
@@ -188,7 +188,7 @@ export default {
             type: 'object',
             field: {
               component: 'form/KFileField',
-              label: 'KAddMember.FILE_FIELD_LABEL',
+              label: 'AddMember.FILE_FIELD_LABEL',
               mimeTypes: '.csv,text/csv'
             }
           }
@@ -208,7 +208,7 @@ export default {
           // Check whether the user belong to the organisation
           const user = response.data[0]
           if (_.find(user.organisations, { _id: this.contextId })) {
-            this.$refs.userEmailForm.getField('email').error = this.$t('KAddMember.ALREADY_MEMBER_ERROR')
+            this.$refs.userEmailForm.getField('email').error = this.$t('AddMember.ALREADY_MEMBER_ERROR')
           } else {
             this.user = user
             this.step = 2
@@ -276,16 +276,16 @@ export default {
               }
               records.push(record)
             } else {
-              errors[i + 1] = this.$t('KAddMember.INVALID_FIELDS_VALUES_ERROR')
+              errors[i + 1] = this.$t('AddMember.INVALID_FIELDS_VALUES_ERROR')
             }
           } else {
-            errors[i + 1] = this.$t('KAddMember.INVALID_FIELDS_NUMBER_ERROR')
+            errors[i + 1] = this.$t('AddMember.INVALID_FIELDS_NUMBER_ERROR')
           }
         }
         if (records.length === 0) {
           exportFile('errors.json', JSON.stringify(errors, null, '\t'))
           Dialog.create({
-            message: this.$t('KAddMember.ALERT_FILE_IMPORT_MESSAGE'),
+            message: this.$t('AddMember.ALERT_FILE_IMPORT_MESSAGE'),
             ok: {
               label: this.$t('OK'),
               flat: true
@@ -294,10 +294,10 @@ export default {
         } else if (!_.isEmpty(errors)) {
           exportFile('errors.json', JSON.stringify(errors, null, '\t'))
           Dialog.create({
-            message: this.$t('KAddMember.CONFIRM_FILE_IMPORT_MESSAGE', { errors: _.keys(errors).length, records: fileContent.length }),
+            message: this.$t('AddMember.CONFIRM_FILE_IMPORT_MESSAGE', { errors: _.keys(errors).length, records: fileContent.length }),
             html: true,
             ok: {
-              label: this.$t('KAddMember.CONTINUE_BUTTON'),
+              label: this.$t('AddMember.CONTINUE_BUTTON'),
               flat: true
             },
             cancel: {
@@ -330,7 +330,7 @@ export default {
       if (response.total === 1) {
         // Check whether the user belong to the organisation
         const user = response.data[0]
-        if (_.find(user.organisations, { _id: contextId })) return i18n.t('KAddMember.ALREADY_MEMBER_ERROR')
+        if (_.find(user.organisations, { _id: contextId })) return i18n.t('AddMember.ALREADY_MEMBER_ERROR')
         // Add the person
         const authorisationService = api.getService('authorisations')
         await authorisationService.create({
@@ -341,7 +341,7 @@ export default {
           resource: contextId,
           resourcesService: 'organisations'
         })
-        return i18n.t('KAddMember.USER_ADDED_MESSAGE')
+        return i18n.t('AddMember.USER_ADDED_MESSAGE')
       } else {
         const guest = {
           locale: kCoreUtils.getLocale(),
@@ -354,7 +354,7 @@ export default {
           email: record.email
         }
         await usersService.create(guest)
-        return i18n.t('KAddMember.GUEST_ADDED_MESSAGE')
+        return i18n.t('AddMember.GUEST_ADDED_MESSAGE')
       }
     }
   },

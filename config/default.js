@@ -182,21 +182,21 @@ const archivedEventsAction = function (contextId = 'contextId') {
 
 const membersAction = function (contextId = 'contextId') {
   return {
-    ...panesTop.activityLink('members', 'las la-user-friends', 'KMembersActivity.MEMBERS_LABEL', { contextId: `:${contextId}` }),
+    ...panesTop.activityLink('members', 'las la-user-friends', 'MembersActivity.MEMBERS_LABEL', { contextId: `:${contextId}` }),
     visible: { name: '$can', params: ['service', 'members', `:${contextId}`] }
   }
 }
 
 const tagsAction = function (contextId = 'contextId') {
   return {
-    ...panesTop.activityLink('tags', 'las la-tags', 'KTagsActivity.TAGS_LABEL', { contextId: `:${contextId}` }),
+    ...panesTop.activityLink('tags', 'las la-tags', 'TagsActivity.TAGS_LABEL', { contextId: `:${contextId}` }),
     visible: { name: '$can', params: ['service', 'tags', `:${contextId}`] }
   }
 }
 
 const groupsAction = function (contextId = 'contextId') {
   return {
-    ...panesTop.activityLink('groups', 'las la-sitemap', 'KGroupsActivity.GROUPS_LABEL', { contextId: `:${contextId}` }),
+    ...panesTop.activityLink('groups', 'las la-sitemap', 'GroupsActivity.GROUPS_LABEL', { contextId: `:${contextId}` }),
     visible: { name: '$can', params: ['service', 'groups', `:${contextId}`] }
   }
 }
@@ -527,10 +527,10 @@ module.exports = {
     topPane: {
       content: {
         default: [
-          topPane.activityStamp('organisations', 'las la-grip-horizontal', 'KOrganisationsActivity.ORGANISATIONS_LABEL'),
+          topPane.activityStamp('organisations', 'las la-grip-horizontal', 'OrganisationsActivity.ORGANISATIONS_LABEL'),
           midSeparator,
-          { id: 'organisation-sorter', component: 'collection/KSorter', tooltip: 'KOrganisationsActivity.SORT_ORGANISATIONS' },
-          { id: 'search-organisation', icon: 'las la-search', tooltip: 'KOrganisationsActivity.SEARCH_ORGANISATIONS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
+          { id: 'organisation-sorter', component: 'collection/KSorter', tooltip: 'OrganisationsActivity.SORT_ORGANISATIONS' },
+          { id: 'search-organisation', icon: 'las la-search', tooltip: 'OrganisationsActivity.SEARCH_ORGANISATIONS', handler: { name: 'setTopPaneMode', params: ['filter'] } }
         ],
         filter: contextFilter('name')
       },
@@ -538,7 +538,7 @@ module.exports = {
     },
     fab: {
       content: [
-        { id: 'create-organisation', icon: 'las la-plus', tooltip: 'KOrganisationsActivity.CREATE_ORGANISATION_LABEL', route: { name: 'create-organisation' } }
+        { id: 'create-organisation', icon: 'las la-plus', tooltip: 'OrganisationsActivity.CREATE_ORGANISATION_LABEL', route: { name: 'create-organisation' } }
       ]
     },
     items: {
@@ -976,25 +976,25 @@ module.exports = {
         default: [
           { component: 'OrganisationMenu', mode: 'admin' },
           separator,
-          topPane.activityStamp('members', 'las la-user-friends', 'KMembersActivity.MEMBERS_LABEL'),
+          topPane.activityStamp('members', 'las la-user-friends', 'MembersActivity.MEMBERS_LABEL'),
           tagsAction(),
           groupsAction(),
           eventTemplatesAction(),
           planTemplatesAction(),
           catalogAction(),
           midSeparator,
-          { component: 'team/KMemberFilter' },
+          { component: 'team/MemberFilter' },
           {
             component: 'collection/KSorter',
             id: 'member-sorter',
-            tooltip: 'KMembersActivity.SORT_MEMBERS',
+            tooltip: 'MembersActivity.SORT_MEMBERS',
             options: [
               { icon: 'las la-sort-alpha-down', value: { field: 'profile.name', order: 1 }, default: true },
               { icon: 'las la-sort-alpha-up', value: { field: 'profile.name', order: -1 } }
             ]
           },
-          { id: 'search-member', icon: 'las la-search', tooltip: 'KMembersActivity.SEARCH_MEMBERS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
-          { id: 'export-members', icon: 'las la-download', tooltip: 'KMembersActivity.EXPORT_MEMBERS', handler: 'exportMembers' }
+          { id: 'search-member', icon: 'las la-search', tooltip: 'MembersActivity.SEARCH_MEMBERS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { id: 'export-members', icon: 'las la-download', tooltip: 'MembersActivity.EXPORT_MEMBERS', handler: 'exportMembers' }
         ],
         filter: contextFilter('profile.name', [
           { service: 'groups', field: 'name', baseQuery: {}, icon: { name: 'las la-sitemap' } },
@@ -1007,7 +1007,7 @@ module.exports = {
       content: [{
         id: 'add-member',
         icon: 'las la-plus',
-        tooltip: 'KMembersActivity.ADD_USER_LABEL',
+        tooltip: 'MembersActivity.ADD_USER_LABEL',
         visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
         route: { name: 'add-member' }
       }]
@@ -1017,7 +1017,7 @@ module.exports = {
         {
           id: 'edit-member-role',
           icon: 'las la-graduation-cap',
-          tooltip: 'KMemberCard.CHANGE_ROLE_ACTION',
+          tooltip: 'MemberCard.CHANGE_ROLE_ACTION',
           size: 'sm',
           visible: ['!item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }],
           route: { name: 'edit-member-role', params: { contextId: ':contextId', objectId: ':item._id' } },
@@ -1026,7 +1026,7 @@ module.exports = {
         {
           id: 'remove-member',
           icon: 'las la-trash',
-          tooltip: 'KMemberCard.REMOVE_ACTION',
+          tooltip: 'MemberCard.REMOVE_ACTION',
           size: 'sm',
           visible: ['!item.expireAt', { name: '$can', params: ['remove', 'authorisations', ':contextId', { resource: ':contextId' }] }],
           handler: 'removeMember',
@@ -1035,7 +1035,7 @@ module.exports = {
         {
           id: 'add-tag',
           icon: 'las la-plus-circle',
-          tooltip: 'KMemberCard.TAG_ACTION',
+          tooltip: 'MemberCard.TAG_ACTION',
           size: 'sm',
           visible: 'canEditItem',
           route: { name: 'add-tag', params: { contextId: ':contextId', objectId: ':item._id' } },
@@ -1044,7 +1044,7 @@ module.exports = {
         {
           id: 'join-group',
           icon: 'las la-plus-circle',
-          tooltip: 'KMemberCard.JOIN_GROUP_ACTION',
+          tooltip: 'MemberCard.JOIN_GROUP_ACTION',
           size: 'sm',
           visible: 'canJoinGroup',
           route: { name: 'join-group', params: { contextId: ':contextId', objectId: ':item._id' } },
@@ -1053,7 +1053,7 @@ module.exports = {
         {
           id: 'reissue-invitation',
           icon: 'las la-envelope',
-          tooltip: 'KMemberCard.RESEND_INVITATION_ACTION',
+          tooltip: 'MemberCard.RESEND_INVITATION_ACTION',
           visible: ['item.expireAt', { name: '$can', params: ['update', 'members', ':contextId'] }],
           handler: 'resendInvitation',
           scope: 'expiration'
@@ -1069,7 +1069,7 @@ module.exports = {
           { component: 'OrganisationMenu', mode: 'admin' },
           separator,
           membersAction(),
-          topPane.activityStamp('tags', 'las la-tags', 'KTagsActivity.TAGS_LABEL'),
+          topPane.activityStamp('tags', 'las la-tags', 'TagsActivity.TAGS_LABEL'),
           groupsAction(),
           eventTemplatesAction(),
           planTemplatesAction(),
@@ -1078,14 +1078,14 @@ module.exports = {
           {
             component: 'collection/KSorter',
             id: 'tag-sorter',
-            tooltip: 'KTagsActivity.SORT_TAGS',
+            tooltip: 'TagsActivity.SORT_TAGS',
             options: [
               { icon: 'las la-sort-alpha-down', value: { field: 'value', order: 1 }, default: true },
               { icon: 'las la-sort-alpha-up', value: { field: 'value', order: -1 } }
             ]
           },
-          { id: 'search-tag', icon: 'las la-search', tooltip: 'KTagsActivity.SEARCH_TAGS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
-          { id: 'export-tags', icon: 'las la-download', tooltip: 'KTagsActivity.EXPORT_TAGS', handler: 'exportTags' }
+          { id: 'search-tag', icon: 'las la-search', tooltip: 'TagsActivity.SEARCH_TAGS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { id: 'export-tags', icon: 'las la-download', tooltip: 'TagsActivity.EXPORT_TAGS', handler: 'exportTags' }
         ],
         filter: contextFilter('value')
       },
@@ -1095,16 +1095,16 @@ module.exports = {
       content: [{
         id: 'create-tag',
         icon: 'las la-plus',
-        tooltip: 'KTagsActivity.CREATE_TAG_LABEL',
+        tooltip: 'TagsActivity.CREATE_TAG_LABEL',
         visible: { name: '$can', params: ['create', 'tags', ':contextId'] },
         route: { name: 'create-tag', params: { contextId: ':contextId' } }
       }]
     },
     items: {
       actions: [
-        editItemAction('KTagCard.EDIT_ACTION', 'header', 'value,icon'),
-        removeItemAction('KTagCard.REMOVE_ACTION', 'header', 'confirm', 'value'),
-        editItemAction('KTagCard.EDIT_ACTION', 'description')
+        editItemAction('TagCard.EDIT_ACTION', 'header', 'value,icon'),
+        removeItemAction('TagCard.REMOVE_ACTION', 'header', 'confirm', 'value'),
+        editItemAction('TagCard.EDIT_ACTION', 'description')
       ]
     }
   },
@@ -1117,14 +1117,14 @@ module.exports = {
           separator,
           membersAction(),
           tagsAction(),
-          topPane.activityStamp('groups', 'las la-sitemap', 'KGroupsActivity.GROUPS_LABEL'),
+          topPane.activityStamp('groups', 'las la-sitemap', 'GroupsActivity.GROUPS_LABEL'),
           eventTemplatesAction(),
           planTemplatesAction(),
           catalogAction(),
           midSeparator,
-          { id: 'group-sorter', component: 'collection/KSorter', tooltip: 'KGroupsActivity.SORT_GROUPS' },
-          { id: 'search-group', icon: 'las la-search', tooltip: 'KGroupsActivity.SEARCH_GROUPS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
-          { id: 'export-groups', icon: 'las la-download', tooltip: 'KGroupsActivity.EXPORT_GROUPS', handler: 'exportGroups' }
+          { id: 'group-sorter', component: 'collection/KSorter', tooltip: 'GroupsActivity.SORT_GROUPS' },
+          { id: 'search-group', icon: 'las la-search', tooltip: 'GroupsActivity.SEARCH_GROUPS', handler: { name: 'setTopPaneMode', params: ['filter'] } },
+          { id: 'export-groups', icon: 'las la-download', tooltip: 'GroupsActivity.EXPORT_GROUPS', handler: 'exportGroups' }
         ],
         filter: contextFilter('name')
       },
@@ -1134,16 +1134,16 @@ module.exports = {
       content: [{
         id: 'create-group',
         icon: 'las la-plus',
-        tooltip: 'KGroupsActivity.CREATE_GROUP_LABEL',
+        tooltip: 'GroupsActivity.CREATE_GROUP_LABEL',
         visible: { name: '$can', params: ['create', 'groups', ':contextId'] },
         route: { name: 'create-group', params: { contextId: ':contextId' } }
       }]
     },
     items: {
       actions: [
-        editItemAction('KGroupCard.EDIT_ACTION', 'header', 'name'),
-        removeItemAction('KGroupCard.REMOVE_ACTION', 'header'),
-        editItemAction('KGroupCard.EDIT_ACTION', 'description')
+        editItemAction('GroupCard.EDIT_ACTION', 'header', 'name'),
+        removeItemAction('GroupCard.REMOVE_ACTION', 'header'),
+        editItemAction('GroupCard.EDIT_ACTION', 'description')
       ]
     }
   },

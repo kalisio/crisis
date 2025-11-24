@@ -34,10 +34,10 @@ export default {
   async created () {
     // Intiializes the options
     this.options = [
-      { label: this.$t('KMemberFilter.OWNER'), value: 'owner' },
-      { label: this.$t('KMemberFilter.MANAGER'), value: 'manager' },
-      { label: this.$t('KMemberFilter.MEMBER'), value: 'member' },
-      { label: this.$t('KMemberFilter.GUEST'), value: 'guest' }
+      { label: this.$t('MemberFilter.OWNER'), value: 'owner' },
+      { label: this.$t('MemberFilter.MANAGER'), value: 'manager' },
+      { label: this.$t('MemberFilter.MEMBER'), value: 'member' },
+      { label: this.$t('MemberFilter.GUEST'), value: 'guest' }
     ]
   }
 }
