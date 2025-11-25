@@ -140,7 +140,7 @@ export default {
             }
           },
           location: {
-            type: 'object',
+            type: ['object', 'null'],
             field: {
               component: 'form/KLocationField',
               label: 'schemas.PLAN_OBJECTIVE_LOCATION_FIELD_LABEL',

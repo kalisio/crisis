@@ -20,7 +20,7 @@
       }
     },
     "location": {
-      "type": "object", 
+      "type": ["object", "null"],
       "draggable": true,
       "field": {
         "component": "form/KLocationField",
@@ -34,7 +34,7 @@
       "type": "array",
       "multiselect": true,
       "uniqueItems": true,
-      "minItems": 1,
+      "minItems": 0,
       "services": [{
         "service": "members",
         "field": "profile.name",
