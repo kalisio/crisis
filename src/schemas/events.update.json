@@ -19,14 +19,14 @@
       }
     },
     "description": {
-      "type": "string", 
+      "type": ["string", "null"], 
       "field": {
         "component": "form/KTextareaField",
         "label": "schemas.EVENTS_DESCRIPTION_FIELD_LABEL"
       }
     },
     "objective": {
-      "type": "string",
+      "type": ["string", "null"],
       "field": {
         "component": "form/KSelectField",
         "label": "schemas.EVENTS_OBJECTIVE_FIELD_LABEL",
@@ -34,7 +34,7 @@
       }
     },
     "location": {
-      "type": "object", 
+      "type": ["object", "null"], 
       "draggable": true,
       "field": {
         "component": "form/KLocationField",
@@ -45,7 +45,7 @@
       }
     },
     "expireAt": {
-      "type": "string", 
+      "type": ["string", "null"], 
       "group": "group-advanced-settings",
       "format": "date-time",
       "field": {
@@ -150,6 +150,6 @@
       }
     }
   },
-  "required": ["name", "coordinators"]
+  "required": ["name", "coordinators", "participants"]
 }
 

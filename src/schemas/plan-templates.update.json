@@ -21,14 +21,14 @@
       }
     },
     "description": {
-      "type": "string", 
+      "type": ["string", "null"], 
       "field": {
         "component": "form/KTextareaField",
         "label": "schemas.PLAN_TEMPLATES_DESCRIPTION_FIELD_LABEL"
       }
     },
     "coordinators": { 
-      "type": "array",
+      "type": ["array", "null"],
       "multiselect": true,
       "uniqueItems": true,
       "services": [{
@@ -76,5 +76,5 @@
       }
     }
   },
-  "required": ["name", "description"]
+  "required": ["name", "icon", "permission"]
 }

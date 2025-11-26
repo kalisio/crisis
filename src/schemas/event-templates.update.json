@@ -22,14 +22,14 @@
       }
     },
     "description": {
-      "type": "string", 
+      "type": ["string", "null"], 
       "field": {
         "component": "form/KTextareaField",
         "label": "schemas.EVENT_TEMPLATES_DESCRIPTION_FIELD_LABEL"
       }
     },
     "participants": { 
-      "type": "array",
+      "type": ["array", "null"],
       "multiselect": true,
       "uniqueItems": true,
       "services": [{
@@ -80,7 +80,7 @@
       }
     },
     "coordinators": { 
-      "type": "array",
+      "type": ["array", "null"],
       "multiselect": true,
       "uniqueItems": true,
       "services": [{
@@ -121,7 +121,7 @@
     },
     "expiryDuration": {
       "type": "integer",
-      "default": "7",
+      "default": 7,
       "field": {
         "component": "form/KSelectField",
         "label": "schemas.EVENT_TEMPLATES_EXPIRY_DURATION_FIELD_LABEL",
@@ -138,7 +138,7 @@
       }
     },
     "permission": {
-      "type": "string",
+      "type": ["string", "null"],
       "default": "member",
       "field": {
         "component": "form/KRoleField",
@@ -146,6 +146,6 @@
       }
     }
   },
-  "required": ["name", "icon"]
+  "required": ["name", "icon", "expiryDuration"]
 }
 

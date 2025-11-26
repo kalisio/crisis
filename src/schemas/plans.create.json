@@ -13,7 +13,7 @@
       }
     },
     "description": {
-      "type": "string", 
+      "type": ["string", "null"], 
       "field": {
         "component": "form/KTextareaField",
         "label": "schemas.PLANS_DESCRIPTION_FIELD_LABEL"
@@ -31,7 +31,7 @@
       }
     },
     "coordinators": { 
-      "type": "array",
+      "type": ["array", "null"],
       "multiselect": true,
       "uniqueItems": true,
       "minItems": 0,

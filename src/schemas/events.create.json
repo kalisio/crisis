@@ -18,14 +18,14 @@
       }
     },
     "description": {
-      "type": "string",
+      "type": ["string", "null"],
       "field": {
         "component": "form/KTextareaField",
         "label": "schemas.EVENTS_DESCRIPTION_FIELD_LABEL"
       }
     },
     "objective": {
-      "type": "string",
+      "type": ["string", "null"],
       "field": {
         "component": "form/KSelectField",
         "label": "schemas.EVENTS_OBJECTIVE_FIELD_LABEL",
@@ -33,7 +33,7 @@
       }
     },
     "location": {
-      "type": "object", 
+      "type": ["object", "null"], 
       "field": {
         "component": "form/KLocationField",
         "label": "schemas.EVENTS_LOCATION_FIELD_LABEL",
@@ -96,7 +96,7 @@
       }
     },
     "coordinators": { 
-      "type": "array",
+      "type": ["array", "null"],
       "multiselect": true,
       "uniqueItems": true,
       "minItems": 0,
@@ -138,7 +138,7 @@
       }
     },
     "expireAt": {
-      "type": "string",
+      "type": ["string", "null"],
       "group": "group-advanced-settings",
       "format": "date-time",
       "field": {
@@ -149,7 +149,7 @@
       }
     },
     "hasWorkflow": {
-      "type": "boolean", 
+      "type": ["boolean", "null"], 
       "group": "group-advanced-settings",
       "default": true,
       "field": {
@@ -158,6 +158,6 @@
       }
     }
   },
-  "required": ["name"]
+  "required": ["name", "participants"]
 }
 

@@ -15,7 +15,7 @@
       }
     },
     "description": {
-      "type": "string", 
+      "type": ["string", "null"], 
       "maxLength": 2048,
       "field": {
         "component": "form/KTextField",
@@ -23,7 +23,7 @@
       }
     },
     "avatar": { 
-      "type": "object",
+      "type": ["object", "null"],
       "field": {
         "component": "form/KFileField",
         "label": "schemas.AVATAR_FIELD_LABEL",
@@ -37,7 +37,7 @@
       }
     },
     "color" : {
-      "type": "string",
+      "type": ["string", "null"],
       "field": {
         "component": "form/KColorField",
         "label": "schemas.COLOR_FIELD_LABEL"

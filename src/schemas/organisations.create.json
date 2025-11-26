@@ -15,7 +15,7 @@
       }
     },
     "description": {
-      "type": "string", 
+      "type": ["string", "null"], 
       "maxLength": 2048,
       "field": {
         "component": "form/KTextField",

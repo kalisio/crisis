@@ -53,7 +53,7 @@
       }
     },
     "end": {
-      "type": "array", 
+      "type": ["array", "null"], 
       "uniqueItems": true,
       "multiselect": true,
       "field": {
