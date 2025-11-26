@@ -709,19 +709,12 @@ module.exports = {
           scope: 'footer'
         },
         {
-          id: 'navigate-menu',
-          scope: 'footer',
-          component: 'menu/KMenu',
-          icon: 'las la-location-arrow',
+          id: 'navigate-to-location',
           tooltip: 'EventCard.NAVIGATE_LABEL',
-          actionRenderer: 'item',
-          dense: true,
+          icon: 'las la-compass',
           visible: 'hasAnyLocation',
-          content: [
-            { id: 'navigate-google-maps', icon: 'fab fa-google', label: 'EventCard.GOOGLE_MAPS_LABEL', handler: 'launchGoogleMaps' },
-            { id: 'navigate-apple-plans', icon: 'fab fa-apple', label: 'EventCard.APPLE_PLANS_LABEL', handler: 'launchApplePlans' },
-            { id: 'navigate-waze-map', icon: 'fab fa-waze', label: 'EventCard.WAZE_LABEL', handler: 'launchWaze' }
-          ]
+          handler: 'onNavigateTo',
+          scope: 'footer'
         }
       ]
     }

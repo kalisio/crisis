@@ -382,16 +382,7 @@ export default {
     getLongitude () {
       return _.get(this.item, 'location.geometry.coordinates[0]')
     },
-    launchGoogleMaps () {
-      Store.set('navigator', 'google-maps')
-      if (this.hasPosition) Navigator.navigateTo(this.getLatitude(), this.getLongitude())
-    },
-    launchApplePlans () {
-      Store.set('navigator', 'apple-plan')
-      if (this.hasPosition) Navigator.navigateTo(this.getLatitude(), this.getLongitude())
-    },
-    launchWaze () {
-      Store.set('navigator', 'waze')
+    onNavigateTo () {
       if (this.hasPosition) Navigator.navigateTo(this.getLatitude(), this.getLongitude())
     },
     browseMedia () {
