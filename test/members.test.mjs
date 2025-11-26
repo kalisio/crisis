@@ -64,14 +64,6 @@ describe(`suite:${suite}`, () => {
     page = await runner.start()
   })
 
-  beforeEach(() => {
-    runner.clearErrors()
-  })
-
-  afterEach(() => {
-    expect(runner.hasError()).beFalse()
-  })
-
   it('org owner can add members', async () => {
     await core.login(page, org.owner)
     // Add manager

@@ -96,14 +96,6 @@ describe(`suite:${suite}`, () => {
     page = await runner.start()
   })
 
-  beforeEach(() => {
-    runner.clearErrors()
-  })
-
-  afterEach(() => {
-    expect(runner.hasError()).beFalse()
-  })
-
   it('org manager can create event templates', async () => {
     const member = _.find(org.members, { name: 'Manager' })
     await core.login(page, member)

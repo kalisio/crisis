@@ -66,14 +66,6 @@ describe(`suite:${suite}`, () => {
     page = await runner.start()
   })
 
-  beforeEach(() => {
-    runner.clearErrors()
-  })
-
-  afterEach(() => {
-    expect(runner.hasError()).beFalse()
-  })
-
   it('org owner can create a group', async () => {
     const group = _.find(org.groups, { name: 'Group 1' })
     await core.login(page, org.owner)

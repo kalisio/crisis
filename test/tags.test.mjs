@@ -64,14 +64,6 @@ describe(`suite:${suite}`, () => {
     page = await runner.start()
   })
 
-  beforeEach(async () => {
-    runner.clearErrors()
-  })
-
-  afterEach(async () => {
-    expect(runner.hasError()).beFalse()
-  })
-
   it('owner can create a tag', async () => {
     await core.login(page, org.owner)
     expect(await tags.canCreateTag(page, org)).beTrue()

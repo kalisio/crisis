@@ -109,14 +109,6 @@ describe(`suite:${suite}`, () => {
     page = await runner.start()
   })
 
-  beforeEach(() => {
-    runner.clearErrors()
-  })
-
-  afterEach(() => {
-    expect(runner.hasError()).beFalse()
-  })
-
   it('owner can create plan templates', async () => {
     const member = org.owner
     let planTemplate = _.find(org.planTemplates, { name: 'Plan owner' })

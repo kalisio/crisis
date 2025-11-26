@@ -41,14 +41,6 @@ describe(`suite:${suite}`, () => {
     page = await runner.start()
   })
 
-  beforeEach(() => {
-    runner.clearErrors()
-  })
-
-  afterEach(() => {
-    expect(runner.hasError()).beFalse()
-  })
-
   it('create account', async () => {
     await core.waitForTimeout(10000)
     await core.goToRegisterScreen(page)

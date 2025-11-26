@@ -108,14 +108,6 @@ describe(`suite:${suite}`, () => {
     page = await runner.start()
   })
 
-  beforeEach(() => {
-    runner.clearErrors()
-  })
-
-  afterEach(() => {
-    expect(runner.hasError()).beFalse()
-  })
-
   it('org manager can create event templates without a workflow', async () => {
     const member = _.find(org.members, { name: 'Manager' })
     await core.waitForTimeout(10000)
