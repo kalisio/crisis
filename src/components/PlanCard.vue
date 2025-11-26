@@ -10,7 +10,7 @@
     <template v-slot:card-content>
       <!-- Objectives section -->
       <KCardSection :title="$t('PlanCard.OBJECTIVES_SECTION')" :actions="objectivesActions">
-        <ChipsPane v-if="hasObjectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" @chip-removed="onChipRemoved" />
+        <ChipsPane v-if="hasObjectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" :removable="canEditItem" @chip-removed="onObjectiveRemoved" />
         <KStamp v-else :text="'PlanCard.NO_OBJECTIVES_LABEL'" direction="horizontal" />
       </KCardSection>
       <!-- location section -->
@@ -23,7 +23,7 @@
         :title="$t('PlanCard.COORDINATORS_SECTION')"
         :actions="coordinatorsActions"
         :context="$props">
-        <ChipsPane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
+        <ChipsPane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" :removable="canEditItem" @chip-removed="onCoordinatorRemoved" />
       </KCardSection>
       <!-- Events section -->
       <KCardSection :title="$t('PlanCard.EVENTS_SECTION')">
@@ -95,6 +95,9 @@ export default {
     canAccessArchivedEvents () {
       return this.$can('read', 'archived-events', this.contextId)
     },
+    canEditItem () {
+      return this.$can('update', 'plans', this.contextId, this.item)
+    },
     contextId () {
       const { CurrentOrganisation } = useOrganisations()
       return CurrentOrganisation.value._id
@@ -111,10 +114,15 @@ export default {
         name: 'edit-plan-objectives', params: { objectId: this.item._id }
       })
     },
-    async onChipRemoved (chip) {
+    async onObjectiveRemoved (chip) {
       const service = this.$api.getService('plans', this.contextId)
       const objectives = this.item.objectives.filter(objective => objective.id !== chip.id)
       const response = await service.patch(this.item._id, { objectives })
+    },
+    async onCoordinatorRemoved (chip) {
+      const service = this.$api.getService('plans', this.contextId)
+      const coordinators = this.item.coordinators.filter(coordinator => coordinator._id !== chip._id)
+      const response = await service.patch(this.item._id, { coordinators })
     }
   },
   async created () {
