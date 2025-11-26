@@ -23,6 +23,7 @@
       </template>
     </KGrid>
     <KBoard
+      v-else-if="height"
       ref="eventsBoard"
       :columns="boardColumns"
       :height="height"
