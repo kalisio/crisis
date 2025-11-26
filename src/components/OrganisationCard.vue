@@ -93,6 +93,7 @@
               </div>
             </template>
             <KAction
+              v-if="canAccessCatalog"
               :id="`organisation-catalog`"
               icon="las la-map"
               :label="$t('OrganisationCard.CATALOG')"
@@ -158,6 +159,9 @@ export default {
     },
     canAccessArchivedEvents () {
       return this.$can('service', 'archived-events', this.item._id)
+    },
+    canAccessCatalog () {
+      return this.$can('update', 'catalog', this.item._id)
     },
     isMember () {
       const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.item._id)

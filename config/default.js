@@ -1001,7 +1001,7 @@ module.exports = {
         id: 'add-member',
         icon: 'las la-plus',
         tooltip: 'MembersActivity.ADD_USER_LABEL',
-        visible: { name: '$can', params: ['update', 'organisations', null, { _id: ':contextId' }] },
+        visible: { name: '$can', params: ['update', 'organisations', 'global', { _id: ':contextId' }] },
         route: { name: 'add-member' }
       }]
     },
@@ -1021,7 +1021,7 @@ module.exports = {
           icon: 'las la-trash',
           tooltip: 'MemberCard.REMOVE_ACTION',
           size: 'sm',
-          visible: ['!item.expireAt', { name: '$can', params: ['remove', 'authorisations', ':contextId', { resource: ':contextId' }] }],
+          visible: ['!item.expireAt', { name: '$can', params: ['remove', 'authorisations', 'global', { resource: ':contextId' }] }],
           handler: 'removeMember',
           scope: 'header'
         },
