@@ -3,23 +3,22 @@
     id="event-filter"
     icon="las la-filter"
     :color="filters.length > 0 ? 'accent' : 'grey-7'">
-    <template v-slot:content>
-      <q-popup-proxy
-        id="event-filter-popup"
-        transition-show="scale"
-        transition-hide="scale">
-        <q-option-group
-          class="q-pl-xs q-pr-md bg-white"
-          v-model="filters"
-          :options="options"
-          type="toggle" />
-      </q-popup-proxy>
-    </template>
+    <q-popup-proxy
+      id="event-filter-popup"
+      transition-show="scale"
+      transition-hide="scale">
+      <q-option-group
+        class="q-pl-xs q-pr-md bg-white"
+        v-model="filters"
+        :options="options"
+        type="toggle" />
+    </q-popup-proxy>
   </KAction>
 </template>
 
 <script>
 import { QOptionGroup } from 'quasar'
+
 export default {
   name: 'event-filter',
   components: {

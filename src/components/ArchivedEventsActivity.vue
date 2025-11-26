@@ -82,7 +82,7 @@ import Papa from 'papaparse'
 import chroma from 'chroma-js'
 import { ref, toRef, computed } from 'vue'
 import { colors, QSlider } from 'quasar'
-import { mixins as kdkCoreMixins, composables as kCoreComposables, utils as kdkCoreUtils, Store, Time, Exporter } from '@kalisio/kdk/core.client'
+import { Layout, mixins as kdkCoreMixins, composables as kCoreComposables, utils as kdkCoreUtils, Store, Time, Exporter } from '@kalisio/kdk/core.client'
 import { Planets, mixins as kdkMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 import History from './History.vue'
@@ -145,7 +145,6 @@ export default {
     }]
 
     return {
-      filters: [],
       heatmap: false,
       byTemplate: false,
       heatmapRadius: 1,
@@ -171,15 +170,6 @@ export default {
     }
   },
   computed: {
-    showMap () {
-      return this.getTopPaneMode() === 'map'
-    },
-    showChart () {
-      return this.getTopPaneMode() === 'chart'
-    },
-    showHistory () {
-      return this.getTopPaneMode() === 'history'
-    },
     chartStyle () {
       const min = Math.min(this.$q.screen.width, this.$q.screen.height)
       return `width: ${min * 0.75}px;`
@@ -621,6 +611,11 @@ export default {
     this.$events.off('time-range-changed', this.onTimeRangeChanged)
   },
   async setup (props) {
+    const filters = ref([])
+    const showMap = computed(() => Layout.getPane('top').mode === 'map')
+    const showChart = computed(() => Layout.getPane('top').mode === 'chart')
+    const showHistory = computed(() => Layout.getPane('top').mode === 'history')
+
     // Initialize state
     const activity = kMapComposables.useActivity(name, {
       state: { timeSeries: [] }
@@ -628,16 +623,14 @@ export default {
     const plan = usePlan({ contextId: props.contextId })
     const baseQuery = computed(() => {
       const query = { $sort: { createdAt: -1 } }
-      /*
       // When displaying events of all plans we'd like to have the plan object directly to ease processing
-      if (!plan.planId.value && this.showHistory) Object.assign(query, { planAsObject: true })
+      if (!plan.planId.value && showHistory.value) Object.assign(query, { planAsObject: true })
       Object.assign(query, plan.planQuery.value)
-      const stateFilters = _.intersection(['open', 'closed'], this.filters)
+      const stateFilters = _.intersection(['open', 'closed'], filters.value)
       // Filtering open + closed or none of them is equivalent to no filter
       if (stateFilters.length === 1) {
         Object.assign(query, { deletedAt: { $exists: stateFilters.includes('closed') } })
       }
-      */
       return Object.assign({
         geoJson: true,
         $skip: 0,
@@ -669,6 +662,10 @@ export default {
       getWeacastApi: () => Planets.get('kalisio-planet'),
       project,
       ...plan,
+      filters,
+      showMap,
+      showChart,
+      showHistory,
       baseQuery,
       filterQuery,
       archivedEvents
