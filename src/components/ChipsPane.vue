@@ -4,6 +4,7 @@
       <q-chip
         v-if="getValue(chip)"
         :key="getValue(chip)"
+        :style="{border: `1px solid ${getColor(chip)}`}"
         :color="getColor(chip)"
         text-color="white"
         :removable="canRemoveTag()"
