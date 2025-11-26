@@ -287,7 +287,7 @@ module.exports = {
       prefix: 'tmp'
     },
     workingDir: process.env.TMP_DIR || 'tmp',
-    allowedServicePaths: ['^[a-f0-9]{24}/archived-events$', '^[a-f0-9]{24}/groups$', '^[a-f0-9]{24}/members$', '^[a-f0-9]{24}/tags$']
+    allowedServicePaths: ['^api/[a-f0-9]{24}/archived-events', '^api/[a-f0-9]{24}/groups', '^api/[a-f0-9]{24}/members', '^api/[a-f0-9]{24}/tags']
   },
   // When multiple instances are running we need to sync them
   sync: ((N > 1) || process.env.REDIS_URL ? {
