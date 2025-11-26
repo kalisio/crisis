@@ -10,7 +10,7 @@
     <template v-slot:card-content>
       <!-- Objectives section -->
       <KCardSection :title="$t('PlanCard.OBJECTIVES_SECTION')" :actions="objectivesActions">
-        <ChipsPane v-if="hasObjectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
+        <ChipsPane v-if="hasObjectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" @chip-removed="onChipRemoved" />
         <KStamp v-else :text="'PlanCard.NO_OBJECTIVES_LABEL'" direction="horizontal" />
       </KCardSection>
       <!-- location section -->
@@ -110,6 +110,11 @@ export default {
       this.$router.push({
         name: 'edit-plan-objectives', params: { objectId: this.item._id }
       })
+    },
+    async onChipRemoved (chip) {
+      const service = this.$api.getService('plans', this.contextId)
+      const objectives = this.item.objectives.filter(objective => objective.id !== chip.id)
+      const response = await service.patch(this.item._id, { objectives })
     }
   },
   async created () {
