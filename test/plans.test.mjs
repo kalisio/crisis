@@ -176,10 +176,13 @@ describe(`suite:${suite}`, () => {
     .timeout(50000)
 
   it('owner can create events from plan', async () => {
-    const eventTemplate = org.eventTemplate
+    let eventTemplate = org.eventTemplate
     const plan = _.find(org.plans, { name: 'New plan 1' })
     await events.createEventTemplate(page, org, eventTemplate)
     await plans.goToPlanEvents(page, org, plan)
+    eventTemplate.participants = [{
+      name: 'Member'
+    }]
     await events.createEvent(page, org, eventTemplate, eventTemplate)
     expect(await events.countEvents(page, org)).to.equal(1)
   })

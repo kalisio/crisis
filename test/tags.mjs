@@ -66,13 +66,14 @@ export async function editTag (page, organisation, tag, value, icon = null, wait
   if (icon) {
     await core.clickAction(page, 'icon-chooser-button')
     await core.chooseIcon(page, icon.name, icon.color)
-  } else {
-    const clearXPath = '(//div[contains(@class, "q-dialog")]//i[contains(@class, "cursor-pointer")])[2]'
-    const elements = await page.$$('xpath/.' + clearXPath)
-    if (elements.length > 0) {
-      elements[0].click()
-    }
-  }
+  } 
+  // else {
+  //   const clearXPath = '(//div[contains(@class, "q-dialog")]//i[contains(@class, "cursor-pointer")])[2]'
+  //   const elements = await page.$$('xpath/.' + clearXPath)
+  //   if (elements.length > 0) {
+  //     elements[0].click()
+  //   }
+  // }
   await core.click(page, '#apply-button', wait)
 }
 
