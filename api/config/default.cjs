@@ -287,6 +287,7 @@ module.exports = {
       prefix: 'tmp'
     },
     workingDir: process.env.TMP_DIR || 'tmp',
+    allowedSertvicePaths: '^[a-f0-9]{24}/archive-events$'
   },
   // When multiple instances are running we need to sync them
   sync: ((N > 1) || process.env.REDIS_URL ? {
