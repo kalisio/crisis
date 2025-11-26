@@ -23,7 +23,6 @@
       </template>
     </KGrid>
     <KBoard
-      v-else-if="height"
       ref="eventsBoard"
       :columns="boardColumns"
       :height="height"
@@ -112,6 +111,7 @@ export default {
       return [{
         label: 'EventsActivity.TODO_LABEL',
         value: 'todo',
+        name: 'todo',
         props: _.defaults({
           baseQuery: Object.assign({ participants: { $eq: [] } }, this.baseQuery)
         }, props),
@@ -119,6 +119,7 @@ export default {
       }, {
         label: 'EventsActivity.DOING_LABEL',
         value: 'doing',
+        name: 'doing',
         props: _.defaults({
           baseQuery: Object.assign({ participants: { $ne: [] } }, this.baseQuery)
         }, props),
@@ -126,6 +127,7 @@ export default {
       }, {
         label: 'EventsActivity.DONE_LABEL',
         value: 'done',
+        name: 'done',
         props: _.defaults({
           // Override service & component
           service: 'archived-events',
@@ -189,23 +191,23 @@ export default {
     onPageContentResized (size) {
       this.height = size.height - 120
     },
-    onEventUpdated () {
-      if (this.planId) {
-        // Retrieve archived events collection
-        const board = this.$refs.eventsBoard
-        const columns = board.getColumns(['todo', 'doing'])
-        // Force a refresh
-        columns.forEach(column => column.resetCollection())
-      }
+    async onEventUpdated () {
+      if (!this.planId) return
+      await this.$nextTick()
+      // Retrieve archived events collection
+      const board = this.$refs.eventsBoard
+      const columns = board.getColumns(['todo', 'doing'])
+      // Force a refresh
+      columns.forEach(column => column.resetCollection())
     },
-    onEventRemoved () {
-      if (this.planId) {
-        // Retrieve archived events collection
-        const board = this.$refs.eventsBoard
-        const column = board.getColumn('done')
-        // Force a refresh
-        column.refreshCollection()
-      }
+    async onEventRemoved () {
+      if (!this.planId) return
+      await this.$nextTick()
+      // Retrieve archived events collection
+      const board = this.$refs.eventsBoard
+      const column = board.getColumn('done')
+      // Force a refresh
+      column.refreshCollection()
     }
   },
   mounted () {
