@@ -148,7 +148,7 @@
 
 <script>
 import _ from 'lodash'
-import { mixins as kCoreMixins, utils as kCoreUtils, Storage, Store } from '@kalisio/kdk/core.client'
+import { mixins as kCoreMixins, utils as kCoreUtils, Storage } from '@kalisio/kdk/core.client'
 import { Navigator } from '@kalisio/kdk/map.client.map'
 import { useAlerts, useOrganisations } from '../composables'
 import mixins from '../mixins'
