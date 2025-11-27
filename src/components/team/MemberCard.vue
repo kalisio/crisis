@@ -32,7 +32,7 @@
         :context="$props"
         :dense="dense">
         <div v-if="hasTags" id="tags-section">
-          <ChipsPane id="tags-pane" class="q-pa-sm" :remove="true" @chip-removed="onRemoveTag" :chips="tags" />
+          <ChipsPane id="tags-pane" class="q-pa-sm" :removable="canEditItem()" @chip-removed="onRemoveTag" :chips="tags" />
         </div>
         <div v-else>
           {{ $t('MemberCard.NO_TAGS_LABEL')}}
@@ -106,9 +106,6 @@ export default {
         id: 'role-badge', component: 'QBadge', label: (roleLabel ? this.$t(roleLabel) : ''), color: 'grey-7'
       }, { component: 'QSpace' })
       return components
-    },
-    avatar () {
-
     },
     role () {
       const role = getRoleForOrganisation(this.item, this.contextId)

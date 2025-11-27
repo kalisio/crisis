@@ -80,7 +80,9 @@
             <ChipsPane
               class="q-pl-sm"
               :chips="item.participants"
-              :value-path="['profile.name', 'value', 'name']" />
+              :value-path="['profile.name', 'value', 'name']"
+              :removable="canEditItem()"
+              @chip-removed="onParticipantRemoved" />
           </div>
           <div v-else>
             {{ $t('EventCard.UNDEFINED_PARTICIPANTS_LABEL')}}
@@ -96,7 +98,9 @@
           <ChipsPane
             class="q-pl-sm"
             :chips="item.coordinators"
-            :value-path="['profile.name', 'value', 'name']" />
+            :value-path="['profile.name', 'value', 'name']"
+            :removable="canEditItem()"
+            @chip-removed="onCoordinatorRemoved" />
         </KCardSection>
         <!-- Timestamps section -->
         <KCardSection v-if="isExpanded" :dense="dense">
@@ -579,6 +583,16 @@ export default {
     async logParticipantState () {
       await this.logStep(this.form, this.participantStep, this.participantState)
       this.$refs.followUpModal.close()
+    },
+    async onParticipantRemoved (chip) {
+      const service = this.$api.getService('events', this.contextId)
+      const participants = this.item.participants.filter(participant => participant._id !== chip._id)
+      await service.patch(this.item._id, { participants })
+    },
+    async onCoordinatorRemoved (chip) {
+      const service = this.$api.getService('events', this.contextId)
+      const coordinators = this.item.coordinators.filter(coordinator => coordinator._id !== chip._id)
+      await service.patch(this.item._id, { coordinators })
     }
   },
   async created () {

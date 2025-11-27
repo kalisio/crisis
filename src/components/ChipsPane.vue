@@ -7,7 +7,7 @@
         :style="{border: `1px solid ${getColor(chip)}`}"
         :color="getColor(chip)"
         text-color="white"
-        :removable="canRemoveTag()"
+        :removable="removable"
         @remove="onRemove(chip)"
         :id="getID(chip)"
         dense
@@ -27,8 +27,6 @@
 <script>
 import _ from 'lodash'
 import { utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
-import { Roles } from '@kalisio/kdk/core/common/permissions'
-import { getRoleForOrganisation, findGroupsWithRole } from '../../common/permissions'
 
 export default {
   props: {
@@ -42,7 +40,7 @@ export default {
     },
     removable: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data () {
@@ -74,15 +72,6 @@ export default {
     },
     getID (chip) {
       return `${_.kebabCase(chip.value)}-pane`
-    },
-    canRemoveTag () {
-      if (!this.removable) return false
-      const user = this.$store.get('user')
-      const contextId = this.$store.get('context')
-      const role = getRoleForOrganisation(user, contextId._id)
-      if (Roles[role] >= Roles.manager) return true
-      const groups = findGroupsWithRole(user, contextId._id, Roles.manager)
-      return groups.length > 0
     },
     onRemove (chip) {
       this.$emit('chip-removed', chip)

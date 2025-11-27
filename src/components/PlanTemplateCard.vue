@@ -13,7 +13,7 @@
         :actions="objectivesActions"
         :context="$props">
         <div v-if="hasObjectives">
-          <ChipsPane :chips="item.objectives" :value-path="'name'" />
+          <ChipsPane :chips="item.objectives" :value-path="'name'" :removable="canEditItem()" @chip-removed="onObjectiveRemoved" />
         </div>
         <div v-else>
           {{ $t('PlanTemplateCard.NO_OBJECTIVES_LABEL')}}
@@ -27,7 +27,9 @@
         <div v-if="hasCoordinators">
           <ChipsPane
             :chips="item.coordinators"
-            :value-path="['profile.name', 'value', 'name']" />
+            :value-path="['profile.name', 'value', 'name']"
+            :removable="canEditItem()"
+            @chip-removed="onCoordinatorRemoved" />
         </div>
         <div v-else>
           {{ $t('PlanTemplateCard.NO_COORDINATORS_LABEL')}}
@@ -82,6 +84,16 @@ export default {
       this.$router.push({
         name: 'edit-plan-template-objectives', params: { objectId: this.item._id }
       })
+    },
+    async onObjectiveRemoved (chip) {
+      const service = this.$api.getService('plan-templates', this.contextId)
+      const objectives = this.item.objectives.filter(objective => objective.id !== chip.id)
+      await service.patch(this.item._id, { objectives })
+    },
+    async onCoordinatorRemoved (chip) {
+      const service = this.$api.getService('plan-templates', this.contextId)
+      const coordinators = this.item.coordinators.filter(coordinator => coordinator._id !== chip._id)
+      await service.patch(this.item._id, { coordinators })
     }
   }
 }

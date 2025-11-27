@@ -20,7 +20,7 @@
         :context="$props"
         :dense="dense"
       >
-        <ChipsPane v-if="item.objectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" />
+        <ChipsPane v-if="item.objectives" class="q-pl-sm" :chips="item.objectives" :value-path="'name'" :removable="false" />
         <KStamp v-else :text="'ArchivedPlanCard.NO_OBJECTIVES_LABEL'" direction="horizontal" />
       </KCardSection>
       <!-- location section -->
@@ -38,7 +38,7 @@
         v-if="isExpanded"
         :title="$t('ArchivedPlanCard.COORDINATORS_SECTION')"
         :context="$props">
-        <ChipsPane class="q-pl-sm" :chips="item.coordinators" :valuePath="['profile.name', 'value', 'name']" />
+        <ChipsPane class="q-pl-sm" :chips="item.coordinators" :valuePath="['profile.name', 'value', 'name']" :removable="false" />
       </KCardSection>
       <!-- Timestamps section -->
       <KCardSection

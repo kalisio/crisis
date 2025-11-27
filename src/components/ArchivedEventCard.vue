@@ -60,7 +60,7 @@
           :dense="dense"
         >
           <div v-if="hasParticipants">
-            <ChipsPane class="q-pl-sm" :chips="item.participants" :value-path="['profile.name', 'value', 'name']" />
+            <ChipsPane class="q-pl-sm" :chips="item.participants" :value-path="['profile.name', 'value', 'name']" :removable="false" />
           </div>
           <div v-else>
             {{ $t('ArchivedEventCard.NO_PARTICIPANTS_LABEL')}}
@@ -73,7 +73,7 @@
           :context="$props"
           :dense="dense"
         >
-          <ChipsPane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" />
+          <ChipsPane class="q-pl-sm" :chips="item.coordinators" :value-path="['profile.name', 'value', 'name']" :removable="false" />
         </KCardSection>
         <!-- Timestamps section -->
         <KCardSection

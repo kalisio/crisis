@@ -15,7 +15,9 @@
         <div v-if="hasParticipants">
           <ChipsPane
             :chips="item.participants"
-            :value-path="['profile.name', 'value', 'name']" />
+            :value-path="['profile.name', 'value', 'name']"
+            :removable="canEditItem()"
+            @chip-removed="onParticipantRemoved" />
         </div>
         <div v-else>
           {{ $t('EventTemplateCard.NO_PARTICIPANTS_LABEL')}}
@@ -29,7 +31,9 @@
         <div v-if="hasCoordinators">
           <ChipsPane
             :chips="item.coordinators"
-            :value-path="['profile.name', 'value', 'name']" />
+            :value-path="['profile.name', 'value', 'name']"
+            :removable="canEditItem()"
+            @chip-removed="onCoordinatorRemoved" />
         </div>
         <div v-else>
           {{ $t('PlanTemplateCard.NO_COORDINATORS_LABEL')}}
@@ -142,6 +146,16 @@ export default {
       }).onOk(() => {
         this.$api.getService('event-templates').patch(this.item._id, { workflow: null, hasWorkflow: false })
       })
+    },
+    async onParticipantRemoved (chip) {
+      const service = this.$api.getService('event-templates', this.contextId)
+      const participants = this.item.participants.filter(participant => participant._id !== chip._id)
+      await service.patch(this.item._id, { participants })
+    },
+    async onCoordinatorRemoved (chip) {
+      const service = this.$api.getService('event-templates', this.contextId)
+      const coordinators = this.item.coordinators.filter(coordinator => coordinator._id !== chip._id)
+      await service.patch(this.item._id, { coordinators })
     }
   }
 }
