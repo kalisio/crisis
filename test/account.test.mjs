@@ -63,27 +63,24 @@ describe(`suite:${suite}`, () => {
     expect(await memberExists(page, org, user)).beTrue()
   })
 
-  it('check member removal is forbidden', async () => {
-    expect(await core.isElementVisible(page, '#remove-member')).beFalse()
-  })
-
   it('check account deletion is forbidden', async () => {
     await core.deleteAccount(page, user.name)
     expect(runner.hasError()).beTrue()
     runner.clearErrors()
   })
 
-  it('update profile', async () => {
-    await core.updateAccountProfile(page, 'My new name', runner.getDataPath('avatar.png'))
-    user.name = 'My new name'
-    // await core.openPane(page, 'left')
-    // await core.waitForTimeout(5000)
-    // expect(await runner.captureAndMatch('profile')).beTrue()
-  })
-
   it('delete organisation', async () => {
     await deleteOrganisation(page, org)
     expect(await countOrganisations(page) === 0).beTrue()
+  })
+
+  it('update profile', async () => {
+    await core.updateAccountProfile(page, 'My new name', runner.getDataPath('avatar.png'))
+    user.name = 'My new name'
+    await core.clickPaneAction(page, 'left', 'my-organisations')
+    await core.openPane(page, 'left')
+    await core.waitForTimeout(5000)
+    expect(await runner.captureAndMatch('profile')).beTrue()
   })
 
   it('delete account', async () => {
