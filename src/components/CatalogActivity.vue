@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeMount, onBeforeUnmount } from 'vue'
 import postRobot from 'post-robot'
 import { api, Context } from '@kalisio/kdk/core.client'
 import { Planets } from '@kalisio/kdk/map.client.map'
@@ -15,8 +15,10 @@ const context = Context.get()
 const baseUrl = Planets.get('kalisio-planet').getConfig().domain
 const planetJwt = Planets.get('kalisio-planet').getConfig().apiJwt
 const origin = ref(`${baseUrl}/#/home/${context._id}/map`)
+let initializeListener
 
-postRobot.on('kano-ready', async () => {
+// Functions
+async function initialize () {
   let kano = document.getElementById('kano')
   if (kano) kano = kano.contentWindow
   await postRobot.send(kano, 'setConfiguration', {
@@ -28,6 +30,15 @@ postRobot.on('kano-ready', async () => {
   await postRobot.send(kano, 'setLocalStorage', {
     'kano-jwt': accessToken
   })
+}
+
+// Hooks
+onBeforeMount(() => {
+  initializeListener = postRobot.on('kano-ready', initialize)
+})
+
+onBeforeUnmount(() => {
+  if (initializeListener) initializeListener.cancel()
 })
 
 </script>
