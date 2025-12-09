@@ -1,7 +1,7 @@
 {
   "name": "crisis-api",
   "description": "Kalisio Crisis Web Services",
-  "version": "2.2.0",
+  "version": "2.1.0",
   "homepage": "https://github.com/kalisio/crisis",
   "keywords": [
     "kalisio"
