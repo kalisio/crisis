@@ -11,7 +11,7 @@
     -->
     <template v-slot:card-avatar>
       <KAvatar :subject="item" size="3.2rem"
-        :options="{ nameField: 'profile.name', avatarField: 'profile.avatar' }"/>
+        :options="{ nameField: 'profile.name', avatarField: 'profile.avatar', context: 'global' }"/>
     </template>
     <!--
       Card descriptions
