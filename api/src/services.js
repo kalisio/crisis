@@ -176,12 +176,7 @@ export function processAlert (app, organisation) {
       // We don't keep ref/link for simplicity and making archived events will be self-consistent
       // No need to keep track of templates that have been removed, etc.
       event.template = template.name
-      const type = _.get(alert, 'geometry.type', 'Point')
-      const coordinates = (type === 'Point'
-        ? _.get(alert, 'geometry.coordinates')
-        : _.get(pointOnFeature(alert), 'geometry.coordinates'))
-      _.set(event, 'location.longitude', coordinates[0])
-      _.set(event, 'location.latitude', coordinates[1])
+      _.set(event, 'location', _.pick(alert, ['type', 'geometry', 'properties']))
       // Remove unrelevant properties from alert
       _.set(event, 'alert', _.omit(alert, ['eventTemplate', 'closeEvent']))
       if (!previousEvent) {
