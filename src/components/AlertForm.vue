@@ -32,7 +32,7 @@
       <q-list dense class="q-pa-md">
         <q-item class="row items-center justify-around" v-for="(condition, index) in conditions" :key="variables[index].name">
           <q-item-section avatar>
-            <q-toggle v-model="conditions[index].isActive"/>{{$t(variables[index].label)}}
+            <q-toggle v-model="conditions[index].isActive"/>{{getLabel(variables[index])}}
           </q-item-section>
           <q-item-section avatar>
             <q-select v-model="conditions[index].operator" :disable="!conditions[index].isActive" :options="getOperators(variables[index])" emit-value map-options/>
@@ -70,7 +70,7 @@
 import _ from 'lodash'
 import moment from 'moment'
 import logger from 'loglevel'
-import { mixins as kdkCoreMixins, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
+import { i18n, mixins as kdkCoreMixins, utils as kdkCoreUtils } from '@kalisio/kdk/core.client'
 import { QSlider, QRange } from 'quasar'
 
 export default {
@@ -181,17 +181,23 @@ export default {
       if (!_.isNil(every)) options = options.filter(option => (option.value >= every.asMinutes()))
       return options
     },
+    getLabel (variable) {
+      // We allow variable name to be customized based on level information
+      return _.template(i18n.tie(variable.label))({
+        level: null, levelUnit: ''
+      })
+    },
     getOperators (variable) {
       return this.isRange(variable)
         ? [{
-            label: this.$i18n.t('AlertForm.RANGE'),
+            label: i18n.t('AlertForm.RANGE'),
             value: '$range'
           }]
         : [{
-            label: this.$i18n.t('AlertForm.GREATER_THAN'),
+            label: i18n.t('AlertForm.GREATER_THAN'),
             value: '$gte'
           }, {
-            label: this.$i18n.t('AlertForm.LOWER_THAN'),
+            label: i18n.t('AlertForm.LOWER_THAN'),
             value: '$lte'
           }]
     },
