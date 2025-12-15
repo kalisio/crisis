@@ -13,7 +13,7 @@
     <template v-slot:card-avatar>
       <KAvatar
         :subject="item"
-        :options="{ context: item._id }""
+        :options="{ context: item._id }"
         size="4rem"
       />
     </template>
