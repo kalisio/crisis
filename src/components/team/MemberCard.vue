@@ -171,7 +171,10 @@ export default {
         }
       }).onOk(async (email) => {
         // Extract invitation data from user
-        const user = _.pick(this.item, ['email', 'name', 'locale'])
+        const user = _.pick(this.item, ['email', 'profile.name', 'locale'])
+        // When registering name is provided as data input then serialized into profile
+        user.name = _.get(user, 'profile.name')
+        _.unset(user, 'profile.name')
         if (email) user.email = email
         // Add the sponsor information
         user.sponsor = {
