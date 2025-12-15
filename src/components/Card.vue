@@ -34,8 +34,7 @@
               <KAvatar
                 :subject="item"
                 :size="dense ? 'sm' : 'md'"
-                :contextId="contextId"
-                :options="options"
+                :options="{ ...options, context: contextId }"
               />
             </slot>
           </div>
