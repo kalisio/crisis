@@ -16,7 +16,7 @@ init_github_build_app() {
 }
 
 init_github_run_tests() {
-    install_reqs age sops nvm node20 mongo7
+    install_reqs age sops nvm node20 mongo7 sonar_scanner_cli
 }
 
 init_github_additional_tests() {
