@@ -47,10 +47,11 @@ const hooks = {
 
   after: {
     all: [
+      // Archive first to avoid polutting object with client-side information that could be added afterwards
+      archive,
       coreHooks.convertToJson(['alert.conditions']),
       // Not by default for performance reason
       commonHooks.iff(hook => _.get(hook, 'params.planAsObject'), populatePlan),
-      archive
     ],
     find: [
       mapHooks.asGeoJson({

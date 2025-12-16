@@ -41,6 +41,7 @@ const hooks = {
   },
 
   after: {
+    // Archive first to avoid polutting object with client-side information that could be added afterwards
     all: [archive],
     find: [populatePreviousLog, populateParticipant],
     get: [],
