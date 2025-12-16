@@ -213,7 +213,7 @@ export default {
       let uri
       // We only display image preview not pdf preview
       if (mimeType === 'application/pdf') {
-        uri = 'icons/kdk/pdf.png'
+        uri = 'kdk/pdf.png'
       } else {
         uri = await Storage.getPresignedUrl({ key: media.key, context: this.context, expiresIn: 60 })
       }
