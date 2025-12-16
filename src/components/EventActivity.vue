@@ -19,7 +19,7 @@ import centroid from '@turf/centroid'
 import { ref, toRef } from 'vue'
 import { useRoute } from 'vue-router'
 import { mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils } from '@kalisio/kdk/core.client'
-import { Planets, mixins as kMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
+import { Planets, mixins as kMapMixins, composables as kMapComposables, utils as kMapUtils } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 import mixins from '../mixins'
 import MediaBrowser from './MediaBrowser.vue'
@@ -119,9 +119,11 @@ export default {
         const feature = this.getLocationAsFeature()
         // Add event marker
         const marker = L.shapeMarker([_.get(feature, 'geometry.coordinates[1]'), _.get(feature, 'geometry.coordinates[0]')], {
-          fillColor: color,
+          shape: 'circle',
+          color,
           icon: {
-            classes: icon
+            classes: icon,
+            color: 'white'
           }
         })
         // Address as popup
@@ -179,15 +181,15 @@ export default {
     },
     getParticipantMarker (feature, options) {
       if (options.name !== this.$t('EventActivity.PARTICIPANTS_LAYER_NAME')) return
-
-      return {
+      const coordinates = _.get(feature, 'geometry.coordinates')
+      return kMapUtils.createMarkerFromPointStyle([coordinates[1], coordinates[0]], {
         shape: 'circle',
         color: kCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
         icon: {
           classes: kCoreUtils.getIconName(feature) || 'fas fa-user',
           color: 'white'
         }
-      }
+      })
     },
     getParticipantPopup (feature, layer, options) {
       if (options.name !== this.$t('EventActivity.PARTICIPANTS_LAYER_NAME')) return

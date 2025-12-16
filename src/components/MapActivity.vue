@@ -430,15 +430,15 @@ export default {
     },
     getEventMarker (feature, options) {
       if (options.name !== this.$t('MapActivity.EVENTS_LAYER')) return null
-
-      return {
+      const coordinates = _.get(feature, 'geometry.coordinates')
+      return kMapUtils.createMarkerFromPointStyle([coordinates[1], coordinates[0]], {
         shape: 'circle',
         color: kCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
         icon: {
           classes: kCoreUtils.getIconName(feature) || 'las la-marker-map',
           color: 'white'
         }
-      }
+      })
     },
     getEventStyle (event, options) {
       if (options.name !== this.$t('MapActivity.EVENTS_LAYER')) return null
