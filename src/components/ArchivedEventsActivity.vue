@@ -1,5 +1,5 @@
 <template>
-  <KPage :padding="!showMap" @content-resized="onPageContentResized">
+  <KPage @content-resized="onPageContentResized">
     <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
       <div class="row">
         <div class="col-12">
@@ -344,6 +344,7 @@ export default {
       this.setTopPaneMode('history')
       this.setRightPaneMode('history')
       this.setStickiesMode('history')
+      this.setPadding(true)
       // Cleanup
       this.clearEventsLayers()
       this.templates = []
@@ -352,6 +353,7 @@ export default {
       this.setTopPaneMode('map')
       this.setRightPaneMode('map')
       this.setStickiesMode('map')
+      this.setPadding(false)
       // Refresh layer data
       this.archivedEvents.refreshCollection()
     },
@@ -359,6 +361,7 @@ export default {
       this.setTopPaneMode('chart')
       this.setRightPaneMode('chart')
       this.setStickiesMode('chart')
+      this.setPadding(true)
       // Cleanup
       this.clearEventsLayers()
       this.templates = []
