@@ -1,6 +1,6 @@
 <template>
   <KActivity name="catalog">
-    <iframe id="kano" style="width: 100%; height: 100%; fontWeight: normal; zIndex: 0; position: absolute;" title="Kano" allow="geolocation *" allowfullscreen frameborder="0" :src="origin"/>
+    <iframe id="kano" style="width: 100%; height: 100%; font-weight: normal; z-index: 0; position: absolute;" title="Kano" allow="geolocation *" allowfullscreen frameborder="0" :src="origin"/>
   </KActivity>
 </template>
 
