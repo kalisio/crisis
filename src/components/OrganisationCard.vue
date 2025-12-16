@@ -112,7 +112,7 @@ import _ from 'lodash'
 import logger from 'loglevel'
 import { permissions as corePermissions } from '@kalisio/kdk/core.common'
 import * as permissions from '../../common/permissions.mjs'
-import { mixins as kCoreMixins } from '@kalisio/kdk/core.client'
+import { Storage, mixins as kCoreMixins } from '@kalisio/kdk/core.client'
 import * as utils from '../utils'
 import Card from './Card.vue'
 
@@ -229,6 +229,9 @@ export default {
       }
       this.isExpanded = true
     }
+  },
+  async mounted () {
+    Storage.createService(this.item._id)
   },
   async created () {
     await this.loadQuotas()
