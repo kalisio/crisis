@@ -923,9 +923,14 @@ module.exports = {
       ]
     },
     stickies: {
-      content: [
-        ...MAP_STICKIES
-      ]
+      content: {
+        history: [],
+        map: [
+          ...MAP_STICKIES
+        ],
+        chart: []
+      },
+      mode: 'history'
     },
     items: {
       actions: [
