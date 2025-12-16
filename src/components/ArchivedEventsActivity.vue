@@ -638,13 +638,13 @@ export default {
       if (stateFilters.length === 1) {
         Object.assign(query, { deletedAt: { $exists: stateFilters.includes('closed') } })
       }
-      return Object.assign({
+      return (showMap.value ? Object.assign({
         geoJson: true,
         $skip: 0,
         $limit: MAX_EVENTS,
         $select: ['_id', 'name', 'description', 'icon', 'template', 'location',
           'createdAt', 'updatedAt', 'expireAt', 'deletedAt', 'participants', 'coordinators']
-      }, query)
+      }, query) : query)
     })
     const filterQuery = computed(() => Object.assign({}, Store.get('filter').query, Time.getRangeQuery(), plan.planObjectiveQuery.value))
     const archivedEvents = kCoreComposables.useCollection({
