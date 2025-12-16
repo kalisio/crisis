@@ -401,17 +401,18 @@ export default {
         }
       }
     },
-    getAlertMarker (feature, latlng, options) {
+    getAlertMarker (feature, options) {
       if (options.name !== this.$t('MapActivity.ALERTS_LAYER')) return null
-
+      const coordinates = _.get(feature, 'geometry.coordinates')
       const isActive = _.get(feature, 'status.active')
       const hasError = _.get(feature, 'status.error')
-      return kMapUtils.createMarkerFromPointStyle(latlng, {
+      return kMapUtils.createMarkerFromPointStyle([coordinates[1], coordinates[0]], {
         shape: 'circle',
-        color: isActive ? '#FF0000' : '#008000',
+        radius: 12,
+        color: isActive ? 'red' : 'green',
         icon: {
           classes: 'fas fa-bell',
-          color: hasError ? '#000000' : '#FFFFFF'
+          color: hasError ? 'black' : 'white'
         }
       })
     },
