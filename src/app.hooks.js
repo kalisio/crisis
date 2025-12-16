@@ -26,8 +26,8 @@ export default {
     patch: [(hook) => {
       if (_.get(hook, 'service.path', '').endsWith('users') ||
           _.get(hook, 'service.path', '').endsWith('members')) {
-        delete _.unset(hook, 'data.organisations')
-        delete _.unset(hook, 'data.groups')
+        _.unset(hook, 'data.organisations')
+        _.unset(hook, 'data.groups')
       }
     }],
     remove: []

@@ -193,7 +193,7 @@ export function processAlert (app, organisation) {
           await eventsService.create(event, params)
         } catch (error) {
           // This could be possible if we have replication and multiple instances check alert simultaneously
-          if (_.get(error, 'data.code' === 11000)) {
+          if (_.get(error, 'data.code') === 11000) {
             debug('Skipping creating event for alert as it does already exist', alert)
           } else {
             app.logger.error(error.message)
