@@ -342,6 +342,7 @@ export default {
     onShowHistory () {
       this.setTopPaneMode('history')
       this.setRightPaneMode('history')
+      this.setStickiesMode('history')
       // Cleanup
       this.clearEventsLayers()
       this.templates = []
@@ -349,12 +350,14 @@ export default {
     onShowMap () {
       this.setTopPaneMode('map')
       this.setRightPaneMode('map')
+      this.setStickiesMode('map')
       // Refresh layer data
       this.archivedEvents.refreshCollection()
     },
     onShowChart () {
       this.setTopPaneMode('chart')
       this.setRightPaneMode('chart')
+      this.setStickiesMode('chart')
       // Cleanup
       this.clearEventsLayers()
       this.templates = []
