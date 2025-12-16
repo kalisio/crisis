@@ -13,7 +13,7 @@
           <KAvatar
             id="organisation-avatar"
             :subject="organisation"
-            :contextId="organisation._id"
+            :options="{ context: organisation._id }"
             :size="$q.screen.lt.sm ? '1.5rem' : '2rem'"
           />
         </div>
