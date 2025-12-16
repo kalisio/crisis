@@ -83,7 +83,7 @@ import chroma from 'chroma-js'
 import { ref, toRef, computed } from 'vue'
 import { colors, QSlider } from 'quasar'
 import { Layout, mixins as kdkCoreMixins, composables as kCoreComposables, utils as kdkCoreUtils, Store, Time, Exporter } from '@kalisio/kdk/core.client'
-import { Planets, mixins as kdkMapMixins, composables as kMapComposables } from '@kalisio/kdk/map.client.map'
+import { Planets, mixins as kdkMapMixins, composables as kMapComposables, utils as kMapUtils } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
 import History from './History.vue'
 
@@ -290,14 +290,15 @@ export default {
     },
     getEventMarker (feature, options) {
       if (!this.templates.includes(options.name)) return
-      return {
+      const coordinates = _.get(feature, 'geometry.coordinates')
+      return kMapUtils.createMarkerFromPointStyle([coordinates[1], coordinates[0]], {
         shape: 'circle',
         color: kdkCoreUtils.getHtmlColor(_.get(feature, 'icon.color'), 'blue'),
         icon: {
           classes: kdkCoreUtils.getIconName(feature) || 'las la-marker-map',
           color: 'white'
         }
-      }
+      })
     },
     getEventStyle (event, options) {
       if (!this.templates.includes(options.name)) return
