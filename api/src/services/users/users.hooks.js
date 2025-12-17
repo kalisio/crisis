@@ -27,6 +27,7 @@ export default {
     patch: [
       commonHooks.iff(commonHooks.isProvider('external'), coreHooks.preventChanges(false, ['organisations'])),
       commonHooks.iff(commonHooks.isProvider('external'), coreHooks.preventChanges(false, ['groups'])),
+      commonHooks.iff(commonHooks.isProvider('external'), coreHooks.preventChanges(false, ['permissions'])),
       coreHooks.convertDates(['expireAt'])
     ],
     remove: [preventRemoveUser]
