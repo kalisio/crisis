@@ -1,6 +1,15 @@
 import { permissions } from '@kalisio/kdk/core.common.js'
 import _ from 'lodash'
 
+// Specific super admin role for app
+export const Roles = {
+  administrator: 0
+}
+
+export const RoleNames = [
+  'administrator'
+]
+
 function defineEventAbilities (subject, can, cannot, app) {
   if (subject && subject._id) {
     if (subject.organisations) {
@@ -155,6 +164,55 @@ export function defineUserAbilities (subject, can, cannot, app) {
             can(['create', 'update', 'remove'], 'catalog', { context: organisation._id })
             can(['create', 'remove'], 'alerts', { context: organisation._id })
           }
+        }
+      })
+    }
+    if (subject.permissions) {
+      const roles = (Array.isArray(subject.permissions) ? subject.permissions : [subject.permissions])
+      roles.forEach(role => {
+        // Process app-related roles only
+        if (!_.has(Roles, role)) return
+        // Map from name to ID
+        role = Roles[role]
+        if (role >= Roles.administrator) {
+          can('service', 'authorisations')
+          can('all', 'authorisations')
+          can('service', 'users')
+          can('all', 'users')
+          can('service', 'organisations')
+          can('all', 'organisations')
+          can('service', '*/configurations')
+          can('all', 'configurations')
+          can('service', '*/groups')
+          can('all', 'groups')
+          can('service', '*/tags')
+          can('all', 'tags')
+          can('service', '*/members')
+          can('all', 'members')
+          can('service', '*/storage')
+          can('all', 'storage')
+          can('service', '*/catalog')
+          can('all', 'catalog')
+          can('service', '*/features')
+          can('all', 'features')
+          can('service', '*/alerts')
+          can('all', 'alerts')
+          can('service', '*/plans')
+          can('all', 'plans')
+          can('service', '*/plan-templates')
+          can('all', 'plan-templates')
+          can('service', '*/archived-plans')
+          can('all', 'archived-plans')
+          can('service', '*/events')
+          can('all', 'events')
+          can('service', '*/events-logs')
+          can('all', 'events-logs')
+          can('service', '*/event-templates')
+          can('all', 'event-templates')
+          can('service', '*/archived-events')
+          can('all', 'archived-events')
+          can('service', '*/archived-events-logs')
+          can('all', 'archived-events-logs')
         }
       })
     }
