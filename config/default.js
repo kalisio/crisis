@@ -34,6 +34,12 @@ if (process.env.NODE_APP_INSTANCE === 'dev') {
   pwaShortName += ' (localhost)'
 }
 
+const contextHelp = function (tour) {
+  return Object.assign({
+    id: 'contextual-help-action', icon: 'las la-question-circle', label: 'layout.CONTEXTUAL_HELP', renderer: 'item'
+  }, tour ? { handler: { name: 'launchTour', params: [tour] } } : { handler: 'launchTour' })
+}
+
 // Left pane
 const LEFT_PANE = {
   content: [
@@ -44,7 +50,7 @@ const LEFT_PANE = {
     helpers.horizontalSeparator(),
     leftPane.about(),
     leftPane.onlineHelp({ url: onlineHelp }),
-    leftPane.contextualHelp(),
+    contextHelp(),
     helpers.horizontalSeparator(),
     leftPane.logout()
   ]
