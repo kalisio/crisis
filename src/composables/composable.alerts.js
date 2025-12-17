@@ -19,7 +19,11 @@ export function useAlerts (options) {
     _.forOwn(alert.conditions, (value, key) => {
       // Get corresponding variable
       const variable = _.find(_.get(alert, 'layer.variables'), { name: key })
-      const label = i18n.t(variable.label) || variable.label
+      // We allow variable name to be customized based on level information,
+      // this does not apply on alerts however
+      const label = _.template(i18n.tie(variable.label))({
+        level: null, levelUnit: ''
+      })
       const unit = variable.unit || ''
       if (_.has(value, '$gte')) {
         html += isActive
