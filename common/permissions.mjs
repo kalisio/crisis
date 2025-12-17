@@ -211,8 +211,8 @@ export function defineUserAbilities (subject, can, cannot, app) {
           can('all', 'event-templates')
           can('service', '*/archived-events')
           can('all', 'archived-events')
-          can('service', '*/archived-events-logs')
-          can('all', 'archived-events-logs')
+          can('service', '*/archived-event-logs')
+          can('all', 'archived-event-logs')
         }
       })
     }
