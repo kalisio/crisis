@@ -1,6 +1,11 @@
-const layout = require('./kdk/layout.js')
-
-module.exports = [layout.leftOpener(), {
+module.exports = [{
+  target: '#left-opener',
+  title: 'tours.side-nav.SIDENAV_LABEL',
+  params: {
+    placement: 'right',
+    hoverClickOnNext: '#left-opener'
+  }
+}, {
   target: '#my-organisations',
   content: 'tours.side-nav.ORGANISATIONS_LABEL',
   link: 'tours.side-nav.ORGANISATIONS_LINK_LABEL',
