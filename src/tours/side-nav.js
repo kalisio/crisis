@@ -19,11 +19,11 @@ module.exports = [layout.leftOpener(), {
     clickOnNext: '#left-opener'
   }
 }, {
-  target: '#online-help',
+  target: '#online-help-action',
   link: 'tours.side-nav.HELP_LABEL',
   params: {
     placement: 'top',
-    clickOnLink: ['#left-opener', '#online-help'],
+    clickOnLink: ['#left-opener', '#online-help-action'],
     clickOnPrevious: '#left-opener',
     clickOnNext: '#left-opener'
   }

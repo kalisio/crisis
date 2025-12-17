@@ -1,5 +1,5 @@
 module.exports = [{
-  target: '#organisations',
+  target: '#organisations-activity-stamp',
   title: 'tours.organisations.ORGANISATIONS_LABEL',
   content: 'tours.organisations.ORGANISATION_DEFINITION_LABEL',
   params: {
