@@ -13,7 +13,6 @@
     -->
     <div v-if="showHistory && height" class="row justify-center q-pl-lg q-pr-none">
       <History
-        style="padding-top: 80px;"
         id="history"
         service="archived-events"
         :base-query="baseQuery"
@@ -638,13 +637,15 @@ export default {
       if (stateFilters.length === 1) {
         Object.assign(query, { deletedAt: { $exists: stateFilters.includes('closed') } })
       }
-      return (showMap.value ? Object.assign({
-        geoJson: true,
-        $skip: 0,
-        $limit: MAX_EVENTS,
-        $select: ['_id', 'name', 'description', 'icon', 'template', 'location',
-          'createdAt', 'updatedAt', 'expireAt', 'deletedAt', 'participants', 'coordinators']
-      }, query) : query)
+      return (showMap.value
+        ? Object.assign({
+          geoJson: true,
+          $skip: 0,
+          $limit: MAX_EVENTS,
+          $select: ['_id', 'name', 'description', 'icon', 'template', 'location',
+            'createdAt', 'updatedAt', 'expireAt', 'deletedAt', 'participants', 'coordinators']
+        }, query)
+        : query)
     })
     const filterQuery = computed(() => Object.assign({}, Store.get('filter').query, Time.getRangeQuery(), plan.planObjectiveQuery.value))
     const archivedEvents = kCoreComposables.useCollection({
