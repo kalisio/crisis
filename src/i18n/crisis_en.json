@@ -1,4 +1,5 @@
 {
+  "SERVICE_UNAVAILABLE_LABEL": "Site temporarily unavailable",
   "EVENTS_LABEL": "Events",
   "EVENT_TEMPLATES_LABEL": "Event templates",
   "REMOVE_LABEL": "Remove",

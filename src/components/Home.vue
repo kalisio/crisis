@@ -1,21 +1,25 @@
 <template>
-  <div>
-    <!-- Content -->
-    <div v-if="kalisioPlanetState === 'ready' && User">
-      <Suspense>
-        <KLayout />
-      </Suspense>
-    </div>
-    <!-- Error -->
+  <!-- App section -->
+  <div v-if="kalisioPlanetState === 'ready' && User">
+    <Suspense>
+      <KLayout />
+    </Suspense>
+  </div>
+  <div class="row items-center justify-center q-pa-md" style="height: 100vh;" v-else>
+    <!--
+      Pending section
+    -->
+    <q-spinner
+      v-if="kalisioPlanetState === 'pending'"
+      color="primary"
+      size="10em"
+    />
+    <!--
+      Service unavailable section
+    -->
     <div v-if="kalisioPlanetState === 'error'">
-      <KStamp
-        icon="las la-frown"
-        icon-size="4rem"
-        :text="$t('Home.KALISIO_PLANET_UNREACHABLE')"
-        text-size="1.2rem"
-        direction="vertical"
-        class="absolute-center"
-      />
+      <q-img src="unavailable.png" style="max-width: 300px;" />
+      <h6>{{ $t('SERVICE_UNAVAILABLE_LABEL') }}</h6>
     </div>
   </div>
 </template>
@@ -36,7 +40,7 @@ const kalisioPlanetState = ref('pending')
 // Functions
 async function connectToKalisioPlanet () {
   await Planets.connect('kalisio-planet', kalisioPlanetConfig)
-  kalisioPlanetState.value = Planets.isConnected('kalisio-planet') ? 'ready' : 'state'
+  kalisioPlanetState.value = Planets.isConnected('kalisio-planet') ? 'ready' : 'error'
 }
 async function disconnectFromKalisioPlanet () {
   await Planets.disconnect('kalisio-planet')
