@@ -1,4 +1,5 @@
 {
+  "SERVICE_UNAVAILABLE_LABEL": "Site momentanément indisponible",
   "EVENTS_LABEL": "Evénements",
   "EVENT_TEMPLATES_LABEL": "Modèles d'événement",
   "REMOVE_LABEL": "Supprimer",
