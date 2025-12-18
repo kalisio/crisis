@@ -4,8 +4,8 @@
 
 [![Latest Release](https://img.shields.io/github/v/tag/kalisio/crisis?sort=semver&label=latest)](https://github.com/kalisio/crisis/releases)
 [![Build Status](https://app.travis-ci.com/kalisio/crisis.svg?branch=master)](https://app.travis-ci.com/kalisio/crisis)
-[![Code Climate](https://codeclimate.com/github/kalisio/crisis/badges/gpa.svg)](https://codeclimate.com/github/kalisio/crisis)
-[![Test Coverage](https://codeclimate.com/github/kalisio/crisis/badges/coverage.svg)](https://codeclimate.com/github/kalisio/crisis/coverage)
+[![Maintainability Issues](https://sonar.portal.kalisio.com/api/project_badges/measure?project=kalisio-crisis&metric=software_quality_maintainability_issues&token=sqb_59d619647a713f9fb0fc0273ba8c787d0269d207)](https://sonar.portal.kalisio.com/dashboard?id=kalisio-crisis)
+[![Coverage](https://sonar.portal.kalisio.com/api/project_badges/measure?project=kalisio-crisis&metric=coverage&token=sqb_59d619647a713f9fb0fc0273ba8c787d0269d207)](https://sonar.portal.kalisio.com/dashboard?id=kalisio-crisis)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://kalisio.github.io/crisis/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/kalisio/crisis.svg)](https://hub.docker.com/r/kalisio/crisis/)
