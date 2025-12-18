@@ -127,7 +127,7 @@ export default {
               component: 'form/KFileField',
               label: 'KMediaBrowser.UPLOAD_FILE_FIELD_LABEL',
               mimeTypes: 'image/*,application/pdf',
-              maxSize: 20485760,
+              maxFileSize: 50485760,
               storage: {
                 context: this.context,
                 path: `${this.prefix}/<%= fileName %>`,

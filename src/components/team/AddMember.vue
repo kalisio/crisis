@@ -189,7 +189,8 @@ export default {
             field: {
               component: 'form/KFileField',
               label: 'AddMember.FILE_FIELD_LABEL',
-              mimeTypes: '.csv,text/csv'
+              mimeTypes: '.csv,text/csv',
+              maxFileSize: 20971520
             }
           }
         },
