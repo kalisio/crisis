@@ -28,7 +28,7 @@
         "component": "form/KFileField",
         "label": "schemas.AVATAR_FIELD_LABEL",
         "acceptedFiles": ".png,.jpg,.jpeg,.webp",
-        "maxFilesize": 524288,
+        "maxFileSize": 20971520,
         "readContent": false,
         "storage": {
           "context": "<%= _id %>",
