@@ -64,6 +64,18 @@ echo "Will use kli file $KLI_FILE to install and link modules ..."
 
 IMAGE_NAME="$KALISIO_DOCKERHUB_URL/kalisio/$APP"
 IMAGE_TAG="$VERSION-$FLAVOR-node$NODE_VER-$DEBIAN_VER"
+DEBUG=
+
+case "$FLAVOR" in
+     "prod")
+         ;;
+     "test")
+         ;;
+     *)
+         # Suppress minification in dev mode
+         DEBUG=1
+         ;;
+esac
 
 begin_group "Building container $IMAGE_NAME:$IMAGE_TAG ..."
 
@@ -72,6 +84,7 @@ docker login --username "$KALISIO_DOCKERHUB_USERNAME" --password-stdin "$KALISIO
 DOCKER_BUILDKIT=1 docker build \
     --build-arg APP="$APP" \
     --build-arg FLAVOR="$FLAVOR" \
+    --build-arg DEBUG="$DEBUG" \
     --build-arg BUILD_NUMBER="$(get_git_commit_short_sha "$ROOT_DIR")" \
     --build-arg NODE_VERSION="$NODE_VER" \
     --build-arg DEBIAN_VERSION="$DEBIAN_VER" \
