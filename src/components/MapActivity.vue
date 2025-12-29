@@ -548,40 +548,21 @@ export default {
     },
     async onAnalyzePopulation (data) {
       const populationService = this.$api.getService('population')
-      const properties = ['Ind', 'Ind_0_3', 'Ind_4_5', 'Ind_6_10', 'Ind_11_17', 'Ind_18_24',
-        'Ind_25_39', 'Ind_40_54', 'Ind_55_64', 'Ind_65_79', 'Ind_80p']
-      // We aggregate all feature within the zone
-      const matchStage = {
-        geometry: {
-          $geoIntersects: {
-            $geometry: data.feature.geometry
-          }
+      // We analyze all population features within the zone
+      const query = {
+        $aggregation: {
+          pipeline: []
         }
       }
-      const groupStage = {
-        _id: null
-      }
-      properties.forEach(property => {
-        groupStage[property] = { $sum: `$properties.${property}` }
-      })
-      // Now perform aggregation
-      const result = await populationService.find({
-        query: {
-          $aggregation: {
-            pipeline: [{
-              $match: matchStage
-            }, {
-              $group: groupStage
-            }]
-          }
-        }
-      })
+      // Now perform analysis
+      const result = await populationService.find({ query })
       // Then display result
-      if (result.length) {
+      if (result) {
+        const properties = Object.keys(result)
         const formatter = new Intl.NumberFormat()
         let html = ''
         properties.forEach(property => {
-          const count = formatter.format(Math.round(result[0][property]))
+          const count = formatter.format(Math.round(result[property]))
           html += this.$t(`PopulationClasses.${property}`) + `: ${count}</br>`
         })
         await kCoreUtils.dialog({
