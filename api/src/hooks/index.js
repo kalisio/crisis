@@ -54,3 +54,37 @@ export function addCreatorAsCoordinator (hook) {
   }
   return hook
 }
+
+export async function populationAnalysis (hook) {
+  const query = hook.params.query
+  if (!query) return
+  const service = hook.service
+  const data = hook.data
+  if (query.$analysis) {
+    const properties = ['Ind', 'Ind_0_3', 'Ind_4_5', 'Ind_6_10', 'Ind_11_17', 'Ind_18_24',
+        'Ind_25_39', 'Ind_40_54', 'Ind_55_64', 'Ind_65_79', 'Ind_80p']
+    const groupStage = {
+      _id: null
+    }
+    properties.forEach(property => {
+      groupStage[property] = { $sum: `$properties.${property}` }
+    })
+    // We aggregate all features matching the query
+    hook.result = await service.find({
+      query: {
+        $aggregation: {
+          pipeline: [{
+            $match: { geometry: query.$analysis }
+          }, {
+            $group: groupStage
+          }]
+        }
+      }
+    })
+    delete query.$analysis
+    // We should have a single object with accumulated population per age class like
+    // { Ind: xxx, Ind_0_3: yyy, ... }
+    if (hook.result && hook.result.length) hook.result = _.omit(hook.result[0], '_id')
+  }
+  return hook
+}

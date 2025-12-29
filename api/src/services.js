@@ -7,9 +7,8 @@ import makeDebug from 'debug'
 import kdkCore, { createDatabasesService, permissions, decorateDistributedService, createDefaultUsers, createObjectID, createStorageService } from '@kalisio/kdk/core.api.js'
 import kdkMap from '@kalisio/kdk/map.api.js'
 import pointOnFeature from '@turf/point-on-feature'
-
+import { populationAnalysis } from './hooks/index.js'
 const debug = makeDebug('crisis:services')
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const servicesPath = path.join(__dirname, 'services')
 const modelsPath = path.join(__dirname, 'models')
@@ -73,6 +72,10 @@ export default async function () {
         // We then need to update abilities cache
         const authorisationService = app.getService('authorisations')
         if (authorisationService) authorisationService.clearAbilities()
+        if (service.name === 'population') {
+          // Add custom hook for population analysis
+          service.hooks({ before: { find: populationAnalysis } })
+        }
       }
     })
     // Create KDK base services
