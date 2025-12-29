@@ -74,7 +74,7 @@ export default async function () {
         if (authorisationService) authorisationService.clearAbilities()
         if (service.name === 'population') {
           // Add custom hook for population analysis
-          service.hooks({ before: { find: populationAnalysis } })
+          await app.configureService(service.name, service, servicesPath)
         }
       }
     })
