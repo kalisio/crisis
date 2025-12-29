@@ -550,8 +550,10 @@ export default {
       const populationService = this.$api.getService('population')
       // We analyze all population features within the zone
       const query = {
-        $aggregation: {
-          pipeline: []
+        $analysis: {
+          $geoIntersects: {
+            $geometry: data.feature.geometry
+          }
         }
       }
       // Now perform analysis
