@@ -59,7 +59,6 @@ export async function populationAnalysis (hook) {
   const query = hook.params.query
   if (!query) return
   const service = hook.service
-  const data = hook.data
   if (query.$analysis) {
     const properties = ['Ind', 'Ind_0_3', 'Ind_4_5', 'Ind_6_10', 'Ind_11_17', 'Ind_18_24',
         'Ind_25_39', 'Ind_40_54', 'Ind_55_64', 'Ind_65_79', 'Ind_80p']
