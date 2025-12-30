@@ -604,6 +604,8 @@ export default {
     this.registerStyle('polygon', this.getEventStyle)
     this.registerStyle('tooltip', this.getObjectiveTooltip)
     this.registerStyle('popup', this.getObjectivePopup)
+    this.registerStyle('point', this.getHighlightMarker)
+    this.registerStyle('tooltip', this.getHighlightTooltip)
   },
   mounted () {
     // Check if we can create layers
@@ -616,6 +618,18 @@ export default {
     this.clearHighlights()
     this.$engineEvents.off('edit-start', this.onEditStartEvent)
     this.$engineEvents.off('edit-stop', this.onEditStopEvent)
+    this.unregisterStyle('tooltip', this.getAlertTooltip)
+    this.unregisterStyle('popup', this.getAlertPopup)
+    this.unregisterStyle('point', this.getAlertMarker)
+    this.unregisterStyle('polygon', this.getAlertStyle)
+    this.unregisterStyle('tooltip', this.getEventTooltip)
+    this.unregisterStyle('popup', this.getEventPopup)
+    this.unregisterStyle('point', this.getEventMarker)
+    this.unregisterStyle('polygon', this.getEventStyle)
+    this.unregisterStyle('tooltip', this.getObjectiveTooltip)
+    this.unregisterStyle('popup', this.getObjectivePopup)
+    this.unregisterStyle('point', this.getHighlightMarker)
+    this.unregisterStyle('tooltip', this.getHighlightTooltip)
   },
   async setup (props) {
     // Initialize state
