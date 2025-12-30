@@ -13,6 +13,7 @@
       <KGrid
         ref="templates"
         service="event-templates"
+        :baseQuery="baseTemplateQuery"
         :contextId="contextId"
         :list-strategy="'smart'"
         @selection-changed="onCreateEvent"
@@ -40,11 +41,12 @@ import moment from 'moment'
 import chroma from 'chroma-js'
 import sift from 'sift'
 import { ref, toRef, computed } from 'vue'
-import { Configurations, Layout, mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time } from '@kalisio/kdk/core.client'
+import { Configurations, Layout, mixins as kCoreMixins, composables as kCoreComposables, utils as kCoreUtils, Time, permissions as corePermissions } from '@kalisio/kdk/core.client'
 import { Planets, mixins as kMapMixins, composables as kMapComposables, utils as kMapUtils } from '@kalisio/kdk/map.client.map'
 import KFeatureActionButton from '@kalisio/kdk/map/client/components/KFeatureActionButton.vue'
 import mixins from '../mixins'
 import { usePlan, useAlerts } from '../composables'
+import * as permissions from '../../common/permissions.mjs'
 
 import AlertEditor from './AlertEditor.vue'
 
@@ -96,9 +98,14 @@ export default {
     }
   },
   data () {
+    const userRole = permissions.getRoleForOrganisation(this.$store.get('user'), this.contextId)
     return {
       baseTemplateQuery: {
-        $sort: { name: 1 }
+        $sort: { name: 1 },
+        $or: [
+          { permission: { $exists: false } },
+          { permission: { $in: corePermissions.getJuniorRoles(userRole) } }
+        ]
       },
       alertLayer: null,
       alertFeature: null,
@@ -161,11 +168,11 @@ export default {
     },
     async getCatalogCategories () {
       const categories = await kMapMixins.activity.methods.getCatalogCategories()
-      
+
       // Order categories using the configuration objects
       const userCategoriesOrder = await Configurations.getValue('userCategoriesOrder')
       const defaultCategoriesOrder = await Configurations.getValue('defaultCategoriesOrder')
-      
+
       // Reorder default categories
       kMapUtils.orderCatalogItemsBy(categories, defaultCategoriesOrder)
 
