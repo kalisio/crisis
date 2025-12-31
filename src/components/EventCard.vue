@@ -581,7 +581,7 @@ export default {
       this.configureActions()
     },
     async logParticipantState () {
-      await this.logStep(this.form, this.participantStep, this.participantState)
+      this.logStep(this.form, this.participantStep, this.participantState)
       this.$refs.followUpModal.close()
     },
     async onParticipantRemoved (chip) {
