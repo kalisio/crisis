@@ -250,7 +250,7 @@ const eventsMixin = {
       }
       // Participant position as geometry
       if (log.stakeholder === 'participant') {
-        await Geolocation.update()
+        await Geolocation.update({ timeout: 5000, enableHighAccuracy: false })
         if (Geolocation.hasLocation()) {
           log.geometry = Geolocation.getGeometry()
         }
