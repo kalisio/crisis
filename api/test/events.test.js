@@ -14,7 +14,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const servicesPath = path.join(__dirname, '../src/services')
 const modelsPath = path.join(__dirname, '../src/models')
 
-describe('events', () => {
+describe('crisis:events', () => {
   let app, server, port, baseUrl, accessToken,
     userService, userObject, orgManagerObject, orgObject, orgUserObject, orgService, authorisationService,
     storageService, storageObject, eventService, eventObject, eventTemplateService, eventLogService,

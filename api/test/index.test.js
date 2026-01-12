@@ -24,7 +24,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
   Removes org
   Removes users
 */
-describe('crisis', () => {
+describe('crisis:main', () => {
   let server, expressServer, userService, userObject, memberObject, orgService, orgObject,
     authorisationService, mailerService,
     memberService, tagService, tagObject, memberTagObject, groupService, groupObject,
@@ -172,6 +172,27 @@ describe('crisis', () => {
   it('cannot update organisation quotas from external clients', async () => {
     const org = await client.service(server.app.get('apiPath') + '/organisations').patch(orgObject._id.toString(), { name: 'test-org', 'quotas.members': 200 })
     expect(org.quotas).beUndefined()
+  })
+
+  it('cannot generate kano token without org permissions for external clients', async () => {
+    try {
+      await client.service(server.app.get('apiPath') + '/tokens').create({
+        type: 'kano',
+        context: 'unknown'
+      })
+      assert.fail('should not be able to create token for org without permissions')
+    } catch(error) {
+      expect(error).toExist()
+      expect(error.name).to.equal('Forbidden')
+    }
+  })
+
+  it('can generate kano org token for external clients', async () => {
+    const accessToken = await client.service(server.app.get('apiPath') + '/tokens').create({
+      type: 'kano',
+      context: orgObject._id.toString()
+    })
+    expect(accessToken).toExist()
   })
 
   it('disconnects user client', async () => {

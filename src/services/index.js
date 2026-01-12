@@ -33,6 +33,7 @@ export default async function () {
         filters: { $locale: true }
       })
     })
+    api.createService('tokens')
     Storage.createService()
     // Restore previous settings if any
     const settingsService = api.getService('settings')
