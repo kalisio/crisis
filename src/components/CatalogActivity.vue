@@ -13,7 +13,6 @@ import { Planets } from '@kalisio/kdk/map.client.map'
 // Data
 const context = Context.get()
 const baseUrl = Planets.get('kalisio-planet').getConfig().domain
-const planetJwt = Planets.get('kalisio-planet').getConfig().apiJwt
 const origin = ref(`${baseUrl}/#/home/${context._id}/map`)
 let initializeListener
 
