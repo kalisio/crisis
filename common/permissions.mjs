@@ -242,6 +242,9 @@ export function defineOrganisationAbilities (subject, can, cannot) {
     // Create new organisations
     can('service', 'organisations')
     can('create', 'organisations')
+    // Access tokens for kano
+    can('service', 'tokens')
+    can('create', 'tokens')
 
     if (subject.organisations) {
       subject.organisations.forEach(organisation => {
@@ -309,13 +312,13 @@ export function countMembersWithTag (membersService, tagId) {
 }
 
 export function getRoleForOrganisation (user, organisationId) {
-  const result = _.find(user.organisations, { _id: organisationId })
+  const result = _.find(user.organisations, organisation => organisation._id && (organisation._id.toString() === organisationId.toString()))
   if (!_.isUndefined(result)) return result.permissions
   return undefined
 }
 
 export function getRoleForGroup (user, organisationId, groupId) {
-  const result = _.find(user.groups, { context: organisationId, _id: groupId })
+  const result = _.find(user.groups, group => group._id && (group._id.toString() === groupId.toString()) && group.context && (group.context.toString() === organisationId.toString()))
   if (!_.isUndefined(result)) return result.permissions
   return undefined
 }

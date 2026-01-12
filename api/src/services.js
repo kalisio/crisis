@@ -84,6 +84,7 @@ export default async function () {
     await app.configure(kdkMap)
 
     // Create app services
+    await app.createService('tokens', { servicesPath })
     await createStorageService.call(app)
     await createDatabasesService.call(app)
     const orgsService = await app.createService('organisations', { modelsPath, servicesPath })
