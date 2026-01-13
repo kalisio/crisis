@@ -84,13 +84,16 @@
     ]
   },
   "dependencies": {
+    "@automerge/automerge-repo": "^2.4.0",
+    "@automerge/automerge-repo-network-websocket": "^2.4.0",
+    "@automerge/automerge-repo-storage-indexeddb": "^2.4.0",
     "@casl/ability": "^6.1.1",
     "@casl/mongoose": "^7.1.0",
     "@feathersjs/client": "^5.0.8",
     "@feathersjs/commons": "^5.0.8",
     "@feathersjs/memory": "^5.0.8",
     "@geoman-io/leaflet-geoman-free": "2.18.3",
-    "@kalisio/feathers-localforage": "^1.2.0",
+    "@kalisio/feathers-automerge": "^0.3.8",
     "@kalisio/feathers-s3": "^1.4.0",
     "@kalisio/feathers-webpush": "^1.0.1",
     "@kalisio/kdk": "https://github.com/kalisio/kdk",
