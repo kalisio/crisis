@@ -1,7 +1,6 @@
 <template>
   <div>
     <KTour ref="tour" v-if="isInitialized" />
-    <KWelcome />
     <suspense>
       <router-view/>
     </suspense>
@@ -20,6 +19,7 @@ const $q = useQuasar()
 // Register custom redirect to handle permissions
 const { isInitialized } = kdkCoreComposables.useSession({ redirect })
 const { installPwa } = kdkCoreComposables.usePwa()
+kdkCoreComposables.useWelcome()
 
 // Functions
 async function redirect (route, result, user) {
