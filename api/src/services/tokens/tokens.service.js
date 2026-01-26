@@ -24,7 +24,7 @@ class TokenService {
         const planetTokens = this.app.get('planetTokens')
         let accessToken = _.get(planetTokens, 'kalisio-planet')
         if (!accessToken) throw new BadRequest('No planet token configured')
-        // Check user has appripriate permissions to do so
+        // Check user has appropriate permissions to do so
         const user = params.user
         const userRole = permissions.getRoleForOrganisation(user, context)
         if (_.isNil(userRole) || corePermissions.isJuniorRole(userRole, 'manager')) throw new Forbidden('You need appropriate permissions to generate tokens for your organisation')
