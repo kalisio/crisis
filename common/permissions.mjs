@@ -311,13 +311,25 @@ export function countMembersWithTag (membersService, tagId) {
   return countSubjectsForResource(membersService, 'tags', tagId)
 }
 
+export function isAdministrator (user) {
+  if (user && user.permissions) {
+    const roles = (Array.isArray(user.permissions) ? user.permissions : [user.permissions])
+    return roles.find(role => role === RoleNames[Roles.administrator])
+  }
+  return false
+}
+
 export function getRoleForOrganisation (user, organisationId) {
+  // Check for global administrator of all organisations
+  if (isAdministrator(user)) return permissions.RoleNames[permissions.Roles.owner]
   const result = _.find(user.organisations, organisation => organisation._id && (organisation._id.toString() === organisationId.toString()))
   if (!_.isUndefined(result)) return result.permissions
   return undefined
 }
 
 export function getRoleForGroup (user, organisationId, groupId) {
+  // Check for global administrator of all organisations
+  if (isAdministrator(user)) return permissions.RoleNames[permissions.Roles.owner]
   const result = _.find(user.groups, group => group._id && (group._id.toString() === groupId.toString()) && group.context && (group.context.toString() === organisationId.toString()))
   if (!_.isUndefined(result)) return result.permissions
   return undefined
