@@ -10,7 +10,7 @@ const serverPort = process.env.PORT || process.env.HTTPS_PORT || 8081
 const clientPort = process.env.CLIENT_PORT || process.env.HTTPS_CLIENT_PORT || 8080
 const API_PREFIX = '/api'
 // Start blocking after N requests or N auth requests
-const nbRequestsPerMinute = 240
+const nbRequestsPerMinute = 600
 const nbAuthenticationRequestsPerMinute = 10
 // Whitelist features services from rate limiting as they use a lot of concurrent requests
 const apiLimiterWhitelist = (service) => (service.path && service.path.includes('features')) || (service.key === 'kano') || (service.key === 'weacast')
