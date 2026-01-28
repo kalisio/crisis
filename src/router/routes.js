@@ -31,21 +31,7 @@ module.exports = [{
       component: 'account/KSendResetPassword',
       tour: tours['send-reset-password']
     },
-    // 'change-password': {
-    //   component: 'account/KChangePassword',
-    //   meta: { authenticated: true, unauthenticated: false }
-    //   // tour: tours['change-password']
-    // },
-    // 'reset-password/:email': 'account/KResetPassword',
-    // 'send-change-identity': {
-    //   component: 'account/KSendChangeIdentity',
-    //   meta: { authenticated: true, unauthenticated: false }
-    //   // tour: tours['send-change-identity']
-    // },
-    // 'change-identity': {
-    //   component: 'account/KChangeIdentity',
-    //   meta: { authenticated: true }
-    // },
+    'reset-password/:email': 'account/KResetPassword',
     home: {
       // The name of the route has to be set the default child
       name: '',
