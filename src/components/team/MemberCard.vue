@@ -26,7 +26,7 @@
     -->
     <template v-slot:card-content>
       <!-- Tags section -->
-      <KCardSection v-if="!item.expireAt"
+      <KCardSection v-if="!expireAt"
         :title="$t('MemberCard.TAGS_SECTION')"
         :actions="tagsActions"
         :context="$props"
@@ -39,7 +39,7 @@
         </div>
       </KCardSection>
       <!-- Groups section -->
-      <KCardSection v-if="!item.expireAt"
+      <KCardSection v-if="!expireAt"
         :title="$t('MemberCard.GROUPS_SECTION')"
         :actions="groupsActions"
         :context="$props"
@@ -69,7 +69,7 @@
         </div>
       </KCardSection>
       <!-- Expiration section -->
-      <KCardSection v-if="item.expireAt" :dense="dense">
+      <KCardSection v-if="expireAt" :dense="dense">
         <div class="row full-width justify-between items-center no-wrap">
           <span class="text-warning text-weight-bold" v-if="expireAt">
             {{$t('MemberCard.EXPIRE_AT_LABEL')}} {{expireAt.toLocaleString()}}

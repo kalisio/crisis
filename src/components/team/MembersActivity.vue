@@ -5,7 +5,7 @@
       but using authorisations on users
     -->
     <KGrid
-      ref="membersGrid"
+      :ref="onGridReferenceCreated"
       service="members"
       :renderer="renderer"
       :contextId="contextId"
@@ -78,6 +78,11 @@ export default {
     }
   },
   methods: {
+    onGridReferenceCreated (reference) {
+      if (reference) {
+        this.membersGrid = reference
+      }
+    },
     configureActivity () {
       activityMixin.methods.configureActivity.call(this)
       this.subscribeUsers()
@@ -108,16 +113,15 @@ export default {
       })
     },
     refresh (user) {
-      const grid = this.$refs.membersGrid
-      if (grid) {
-        const member = _.find(grid.items, { _id: user._id })
+      if (this.membersGrid) {
+        const member = _.find(this.membersGrid.items, { _id: user._id })
         const role = getRoleForOrganisation(user, this.contextId)
         // If the user has a role in this organisation and
         // was not in our list he might have been added so refresh
-        if (role && !member) this.$refs.membersGrid.refreshCollection()
+        if (role && !member) this.membersGrid.refreshCollection()
         // If the user has not a role in this organisation and
         // was in our list he might have been removed so refresh
-        else if (!role && member) this.$refs.membersGrid.refreshCollection()
+        else if (!role && member) this.membersGrid.refreshCollection()
       }
     }
   },
