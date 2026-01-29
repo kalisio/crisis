@@ -1,7 +1,7 @@
 <template>
   <KPage padding>
     <!--
-      Members collection, cannot use smart strategy here because membership is not managed at service level
+      Members collection, cannot rely on smart strategy here because membership is not managed at service level
       but using authorisations on users
     -->
     <KGrid
@@ -96,10 +96,12 @@ export default {
       // any remove operation when adding/removing permissions,
       // thus it will not update the member list automatically
       usersService.on('patched', this.refresh)
+      usersService.on('removed', this.refresh)
     },
     unsubscribeUsers () {
       const usersService = this.$api.getService('users')
       usersService.off('patched', this.refresh)
+      usersService.off('removed', this.refresh)
     },
     exportMembers () {
       Exporter.export({
@@ -118,10 +120,16 @@ export default {
         const role = getRoleForOrganisation(user, this.contextId)
         // If the user has a role in this organisation and
         // was not in our list he might have been added so refresh
-        if (role && !member) this.membersGrid.refreshCollection()
+        const newMember = (role && !member)
         // If the user has not a role in this organisation and
         // was in our list he might have been removed so refresh
-        else if (!role && member) this.membersGrid.refreshCollection()
+        const oldMember = (!role && member) 
+        // If the user was invited in this organisation and
+        // he has initialized his account refresh
+        const isInvited = (member && member.expireAt)
+        if (newMember || oldMember || isInvited) {
+          this.membersGrid.refreshCollection()
+        }
       }
     }
   },
