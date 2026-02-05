@@ -7,7 +7,7 @@
 
     </div>
     <div v-else class="fit row justify-center items-center">
-      <img :src="source" style="max-width:100%; max-height:100%" />
+      <img :src="source" style="max-width:100%; max-height:100%" :onload="onLoaded" />
     </div>
     <q-spinner
       class="absolute-center"
