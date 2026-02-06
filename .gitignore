@@ -86,6 +86,7 @@ test/kdk
 
 # Temporary files
 api/tmp
+mongodump
 
 # vitepress
 docs/.vitepress/node_modules
