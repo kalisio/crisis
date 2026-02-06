@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { hooks as coreHooks } from '@kalisio/kdk/core.api.js'
 import commonHooks from 'feathers-hooks-common'
+import * as permissions from '../../../../common/permissions.mjs'
 import { checkMembersQuotas, preventRemovingLastOwner, removeOrganisationTagsAuthorisations, removeOrganisationGroupsAuthorisations } from '../../hooks/index.js'
 
 export default {
@@ -10,20 +11,20 @@ export default {
     get: [],
     create: [
       // No escalation possible on groups as there are only group managers now (no more owners)
-      commonHooks.when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations', coreHooks.preventEscalation),
-      commonHooks.when(hook => hook.params.resource,
+      commonHooks.when(hook => !permissions.isAdministrator(_.get(hook.params, 'user')) && ((_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations'), coreHooks.preventEscalation),
+      commonHooks.when(hook => !permissions.isAdministrator(_.get(hook.params, 'user')) && hook.params.resource,
         preventRemovingLastOwner('organisations')),
       // Groups can now be left as empty because org managers can manage all groups
       // preventRemovingLastOwner('groups')),
-      commonHooks.when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations', checkMembersQuotas)
+      commonHooks.when(hook => !permissions.isAdministrator(_.get(hook.params, 'user')) && ((_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations'), checkMembersQuotas)
     ],
     update: [],
     patch: [],
     remove: [
       // No escalation possible on groups as there are only group managers now (no more owners)
-      commonHooks.when(hook => (_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations', coreHooks.preventEscalation),
+      commonHooks.when(hook => !permissions.isAdministrator(_.get(hook.params, 'user')) && ((_.get(hook, 'data.scope') || _.get(hook.params, 'query.scope')) === 'organisations'), coreHooks.preventEscalation),
       // Except when the resource is deleted by a owner check to keep at least one
-      commonHooks.when(hook => hook.params.resource && !hook.params.resource.deleted,
+      commonHooks.when(hook => !permissions.isAdministrator(_.get(hook.params, 'user')) && hook.params.resource && !hook.params.resource.deleted,
         preventRemovingLastOwner('organisations')),
       // Groups can now be left as empty because org managers can manage all groups
       // coreHooks.preventRemovingLastOwner('groups')),
