@@ -43,7 +43,7 @@
       Events graph
     -->
     <div v-show="showChart" class="fit row items-center text-center q-ma-none q-pa-none" >
-      <KStatisticsChart ref="chart" :format="render.value === 'percentage' ? 'percentage' : 'value'" :style="chartStyle" class="col"/>
+      <KStatisticsChart ref="chart" :format="chartFormat" :style="chartStyle" class="col"/>
       <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
         icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
       <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
@@ -135,13 +135,6 @@ export default {
     }, {
       value: 20, label: '20'
     }]
-    const renderOptions = [{
-      value: 'count', label: this.$i18n.t('ArchivedEventsActivity.COUNT_LABEL')
-    }, {
-      value: 'percentage', label: this.$i18n.t('ArchivedEventsActivity.PERCENTAGE_LABEL')
-    }, {
-      value: 'participants', label: this.$i18n.t('ArchivedEventsActivity.PARTICIPANT_COUNT_LABEL')
-    }]
 
     return {
       heatmap: false,
@@ -162,16 +155,32 @@ export default {
       currentChart: 1,
       nbValuesPerChart: _.find(paginationOptions, { value: 10 }),
       paginationOptions,
-      renderOptions,
-      render: _.find(renderOptions, { value: 'count' }),
+      render: null,
       height: undefined,
       width: undefined
     }
   },
   computed: {
+    renderOptions () {
+      const renderOptions = [{
+        value: 'count', label: this.$i18n.t('ArchivedEventsActivity.COUNT_LABEL')
+      }, {
+        value: 'percentage', label: this.$i18n.t('ArchivedEventsActivity.PERCENTAGE_LABEL')
+      }]
+      // Logs do not have the plan property so that we don't know how to count in this case
+      if (!this.planId) {
+        renderOptions.push({
+          value: 'participants', label: this.$i18n.t('ArchivedEventsActivity.PARTICIPANT_COUNT_LABEL')
+        })
+      }
+      return renderOptions
+    },
     chartStyle () {
       const min = Math.min(this.$q.screen.width, this.$q.screen.height)
       return `width: ${min * 0.75}px;`
+    },
+    chartFormat () {
+      return (this.render && (this.render.value === 'percentage') ? 'percentage' : 'value')
     },
     nbCharts () {
       if (!this.chartData.length || (this.nbValuesPerChart.value === 0)) return 1
@@ -189,6 +198,12 @@ export default {
     archivedEventItems () { return this.archivedEvents.items.value }
   },
   watch: {
+    renderOptions: {
+      handler () {
+        // Reset chart type on options changed
+        if (!this.render || !_.find(this.renderOptions, { value: this.render.value })) this.render = this.renderOptions[0]
+      }
+    },
     archivedEventItems: {
       handler () {
         this.onArchivedEventsCollectionRefreshed()
@@ -393,7 +408,7 @@ export default {
       })
       // Then count events or participants for each value
       let data
-      if (this.render.value === 'participants') {
+      if (this.render && (this.render.value === 'participants')) {
         const response = await this.$api.getService('archived-event-logs')
           .find({
             query: Object.assign({ $aggregate: 'template', lastInEvent: true },
