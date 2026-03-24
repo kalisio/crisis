@@ -455,8 +455,6 @@ export default {
         _.set(this.chartOptions, 'scales.x.ticks.minRotation', 70)
         _.set(this.chartOptions, 'scales.y.ticks.beginAtZero', true)
         _.set(this.chartOptions, 'scales.y.ticks.precision', 0)
-      } else if (this.chartType === 'polarArea') {
-        // FIXME: not working
       }
     },
     async refreshChart () {
