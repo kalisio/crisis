@@ -43,7 +43,7 @@
       Events graph
     -->
     <div v-show="showChart" class="fit row items-center text-center q-ma-none q-pa-none" >
-      <KStatisticsChart ref="chart" :style="chartStyle" class="col"/>
+      <KStatisticsChart ref="chart" :format="render.value === 'percentage' ? 'percentage' : 'value'" :style="chartStyle" class="col"/>
       <q-btn v-show="currentChart > 1" size="1rem" flat round color="primary"
         icon="las la-chevron-left" class="absolute-left" @click="onPreviousChart"/>
       <q-btn v-show="currentChart < nbCharts" size="1rem" flat round color="primary"
@@ -80,7 +80,7 @@ import logger from 'loglevel'
 import Papa from 'papaparse'
 import chroma from 'chroma-js'
 import { ref, toRef, computed } from 'vue'
-import { colors, QSlider } from 'quasar'
+import { getCssVar, QSlider } from 'quasar'
 import { Layout, mixins as kdkCoreMixins, composables as kCoreComposables, utils as kdkCoreUtils, Store, Time, Exporter } from '@kalisio/kdk/core.client'
 import { Planets, mixins as kdkMapMixins, composables as kMapComposables, utils as kMapUtils } from '@kalisio/kdk/map.client.map'
 import { usePlan } from '../composables'
@@ -439,27 +439,24 @@ export default {
       }
       // ticks.precision = 0 means round displayed values to integers
       if (this.chartType === 'radar') {
-        const color = colors.getBrand('primary')
-        const backgroundColor = colors.getBrand('accent')
+        const color = getCssVar('primary')
+        const backgroundColor = getCssVar('accent')
         _.set(this.chartDatasets[0], 'fill', true)
         _.set(this.chartDatasets[0], 'borderColor', color)
         _.set(this.chartDatasets[0], 'backgroundColor', backgroundColor)
         _.set(this.chartDatasets[0], 'pointBorderColor', '#fff')
         _.set(this.chartDatasets[0], 'pointBackgroundColor', color)
         _.set(this.chartOptions, 'plugins.legend.display', false)
-        _.set(this.chartOptions, 'scales[0].ticks.beginAtZero', true)
-        _.set(this.chartOptions, 'scales[0].ticks.precision', 0)
-      }
-      if (this.chartType === 'bar') {
+        _.set(this.chartOptions, 'scales.r.beginAtZero', true)
+        _.set(this.chartOptions, 'scales.r.startAngle', 0)
+      } else if (this.chartType === 'bar') {
         _.set(this.chartOptions, 'plugins.legend.display', false)
         _.set(this.chartOptions, 'scales.x.ticks.maxRotation', 90)
         _.set(this.chartOptions, 'scales.x.ticks.minRotation', 70)
         _.set(this.chartOptions, 'scales.y.ticks.beginAtZero', true)
         _.set(this.chartOptions, 'scales.y.ticks.precision', 0)
       } else if (this.chartType === 'polarArea') {
-
-        // FIXME: does not work
-        // _.set(this.chartOptions, '.scale.display', false)
+        // FIXME: not working
       }
     },
     async refreshChart () {
