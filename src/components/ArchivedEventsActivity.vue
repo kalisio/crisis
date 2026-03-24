@@ -1,10 +1,10 @@
 <template>
   <KPage @content-resized="onPageContentResized">
-    <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" style="z-index: 1">
+    <q-page-sticky v-show="showMap && heatmap" position="bottom" :offset="[0, 16]" class="k-sticky">
       <div class="row">
         <div class="col-12">
-        <q-slider id="heatmap-radius" v-model="heatmapRadius" :min="1" :max="100" :step="1"
-          label-always :label-value="$t('ArchivedEventsActivity.HEATMAP_RADIUS_LABEL') + ': ' + heatmapRadius + ' Kms'" @change="onHeatmapRadius"></q-slider>
+        <q-slider id="heatmap-radius" v-model="heatmapRadius" :min="1" :max="100" :step="1" style="min-height: 60px; width: 300px;"
+          label-always :label-value="$t('ArchivedEventsActivity.HEATMAP_RADIUS_LABEL') + ': ' + heatmapRadius + ' pixels'" @change="onHeatmapRadius"></q-slider>
         </div>
       </div>
     </q-page-sticky>
@@ -139,7 +139,7 @@ export default {
     return {
       heatmap: false,
       byTemplate: false,
-      heatmapRadius: 1,
+      heatmapRadius: 20,
       // TODO
       sortBy: {
         label: this.$i18n.t('ArchivedEventsActivity.SORT_BY_CREATED_DATE_LABEL'),
@@ -224,24 +224,20 @@ export default {
     },
     getHeatmapOptions () {
       return {
-        // The unit is in pixel, meaning
-        // 1 pixel radius (2 pixel diameter) at zoom level 0
-        // ...
-        // 64 pixel radius (128 pixel diameter) at zoom level 6
-        // ...
-        // We'd like an event to cover a range expressed as Km
-        // According to https://groups.google.com/forum/#!topic/google-maps-js-api-v3/hDRO4oHVSeM
-        // this means 1 pixel at level 7 so at level 0 we get 1 / 2^7
-        radius: this.heatmapRadius * 0.0078,
+        // We use a fixed radius in pixels to make things easier to understand for the user
+        radius: this.heatmapRadius,
         minOpacity: 0,
         maxOpacity: 0.5,
         // scales the radius based on map zoom
-        scaleRadius: true,
+        //scaleRadius: true,
         // uses the data maximum within the current map boundaries
         // (there will always be a red spot with useLocalExtremas true)
         useLocalExtrema: true,
         // The higher the blur factor is, the smoother the gradients will be
-        blur: 0.8
+        blur: 0.8,
+        latField: 'lat',
+        lngField: 'lng',
+        valueField: 'count'
       }
     },
     async refreshEventsLayers () {
@@ -291,10 +287,10 @@ export default {
             type: 'FeatureCollection',
             features: this.byTemplate ? _.filter(events, { template }) : events
           })
+          // Zoom on first layer
+          if (this.templates.length > 0) this.zoomToLayer(this.templates[0])
         }
       }
-      // Zoom on first layer
-      if (this.templates.length > 0) this.zoomToLayer(this.templates[0])
     },
     async clearEventsLayers () {
       for (let i = 0; i < this.templates.length; i++) {
