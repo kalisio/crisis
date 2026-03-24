@@ -726,7 +726,7 @@
     "SHOW_CHART_LABEL": "View graph",
     "SHOW_MARKERS_LABEL": "View positions",
     "SHOW_HEATMAP_LABEL": "View distribution",
-    "HEATMAP_RADIUS_LABEL": "Footprint",
+    "HEATMAP_RADIUS_LABEL": "Footprint size",
     "CHART_SETTINGS_MODAL_TITLE": "Graph settings",
     "CHART_LABEL": "Chart type",
     "PAGINATION_LABEL": "Number of values per chart",

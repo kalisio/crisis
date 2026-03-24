@@ -724,7 +724,7 @@
     "SHOW_CHART_LABEL": "Afficher le graphique",
     "SHOW_MARKERS_LABEL": "Afficher les positions",
     "SHOW_HEATMAP_LABEL": "Afficher la distribution",
-    "HEATMAP_RADIUS_LABEL": "Empreinte",
+    "HEATMAP_RADIUS_LABEL": "Taille d'empreinte",
     "CHART_SETTINGS_MODAL_TITLE": "Paramétrage du graphique",
     "CHART_LABEL": "Type de graphique",
     "PAGINATION_LABEL": "Nombre de valeurs par graphique",
