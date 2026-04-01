@@ -482,8 +482,8 @@ module.exports = {
     },
     register: {
       actions: [
-        { id: 'login-link', label: 'KRegisterScreen.ALREADY_HAVE_AN_ACCOUNT_LABEL', route: { name: 'login' } }
-        // { id: 'contextual-help', label: 'KRegisterScreen.CONTEXTUAL_HELP', route: { name: 'register', query: { tour: true } } }
+        { id: 'login-link', label: 'KRegisterScreen.ALREADY_HAVE_AN_ACCOUNT_LINK', route: { name: 'login' } },
+        { id: 'contextual-help', label: 'KRegisterScreen.CONTEXTUAL_HELP', route: { name: 'register', query: { tour: true } } }
       ]
     }
   },
