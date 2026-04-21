@@ -113,7 +113,10 @@ module.exports = {
                            service.path.includes('projects') ||
                            service.path.includes('styles') ||
                            service.path.includes('alerts'),
-    remoteServices: (service) => (service.key === 'weacast') || (service.key === 'kano'),
+    // We don't use some kano services like events broadcast service and also have internal services per organisation
+    // with the same names so that we skip it to avoid messing permissions
+    remoteServices: (service) => (service.key === 'weacast') ||
+      ((service.key === 'kano') && !service.path.endsWith('events') && !service.path.endsWith('tags') && !service.path.endsWith('styles')),
     middlewares: { after: express.errorHandler() },
     // When called internally from remote service do not authenticate,
     // this assumes a gateway scenario where authentication is performed externally
