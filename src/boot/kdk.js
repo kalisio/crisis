@@ -5,7 +5,10 @@ import { Notify, Dialog } from 'quasar'
 import appHooks from '../app.hooks'
 import services from '../services'
 import {
-  utils, initializeApi, i18n, utils as kdkCoreUtils, Store, Layout, Events,
+  initializeApi, i18n,
+  directives as kdkCoreDirectives,
+  utils as kdkCoreUtils,
+  Store, Layout, Events,
   beforeGuard, authenticationGuard, permissionsGuard
 } from '@kalisio/kdk/core.client'
 import { Geolocation, setupApi, Planets } from '@kalisio/kdk/map.client.map'
@@ -107,7 +110,7 @@ export default async ({ app }) => {
 
   api.on('login', (data) => {
     // User will be updated in store just after login so that we need to wait for the event
-    Events.once('user-changed', utils.subscribeToPushNotifications)
+    Events.once('user-changed', kdkCoreUtils.subscribeToPushNotifications)
     // Store API gateway token if any
     if (data.gatewayToken) api.get('storage').setItem(config.gatewayJwt, data.gatewayToken)
     // Store planet tokens if any
