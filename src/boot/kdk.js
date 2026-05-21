@@ -61,6 +61,11 @@ export default async ({ app }) => {
     }
   }
 
+  // Register global directives
+  app.directive('drop-file', kdkCoreDirectives.vDropFile)
+  app.directive('hover', kdkCoreDirectives.vHover)
+  app.directive('safe-html', kdkCoreDirectives.vSafeHtml)
+
   // Register global components
   app.component('KLayout', await kdkCoreUtils.loadComponent('layout/KLayout'))
   app.component('KActivity', await kdkCoreUtils.loadComponent('KActivity'))
