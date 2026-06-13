@@ -9,6 +9,10 @@ WORKSPACE_DIR="$(dirname "$ROOT_DIR")"
 
 . "$THIS_DIR/kash/kash.sh"
 
+slack_report() {
+    slack_ci_report "$ROOT_DIR" "$CI_STEP_NAME" "$KASH_EXIT_CODE" "$SLACK_WEBHOOK_APPS"
+}
+
 ## Parse options
 ##
 
@@ -32,7 +36,7 @@ while getopts "d:n:pr:" option; do
         r) # report outcome to slack
             CI_STEP_NAME=$OPTARG
             load_env_files "$WORKSPACE_DIR/development/common/SLACK_WEBHOOK_APPS.enc.env"
-            trap 'slack_ci_report "$ROOT_DIR" "$CI_STEP_NAME" "$?" "$SLACK_WEBHOOK_APPS"' EXIT
+            add_function_to_trap slack_report
             ;;
         *)
             ;;
@@ -51,7 +55,6 @@ FLAVOR=$(get_app_flavor)
 echo "About to build $APP v$VERSION-$FLAVOR ..."
 
 load_env_files "$WORKSPACE_DIR/development/common/kalisio_dockerhub.enc.env"
-load_value_files "$WORKSPACE_DIR/development/common/KALISIO_DOCKERHUB_PASSWORD.enc.value"
 
 ## Build container
 ##
@@ -79,7 +82,8 @@ esac
 
 begin_group "Building container $IMAGE_NAME:$IMAGE_TAG ..."
 
-docker login --username "$KALISIO_DOCKERHUB_USERNAME" --password-stdin "$KALISIO_DOCKERHUB_URL" < "$KALISIO_DOCKERHUB_PASSWORD"
+decrypt_stdout "$WORKSPACE_DIR/development/common/KALISIO_DOCKERHUB_PASSWORD.enc.value" | docker login --username "$KALISIO_DOCKERHUB_USERNAME" --password-stdin "$KALISIO_DOCKERHUB_URL"
+
 # DOCKER_BUILDKIT is here to be able to use Dockerfile specific dockerginore (app.Dockerfile.dockerignore)
 DOCKER_BUILDKIT=1 docker build \
     --build-arg APP="$APP" \
